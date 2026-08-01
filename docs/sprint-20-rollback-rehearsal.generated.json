@@ -1,0 +1,18 @@
+{
+  "ok": true,
+  "generatedAt": "2026-07-25T21:06:05.010Z",
+  "elapsedMs": 16,
+  "error": null,
+  "detail": {
+    "switched": {
+      "current": "rel-b-new",
+      "previous": "rel-a-old"
+    },
+    "rolled": {
+      "current": "rel-a-old",
+      "previous": "rel-b-new"
+    },
+    "elapsedMs": 13,
+    "note": "Filesystem layout rehearsal only — run scripts/rollback-release.sh on the server for PM2/live proof"
+  }
+}

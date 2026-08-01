@@ -1,0 +1,218 @@
+import Link from "next/link";
+import { AccaIndexAnalytics } from "@/components/acca-publication/AccaIndexAnalytics";
+import { PublicAccaCard } from "@/components/acca-publication/PublicAccaCard";
+import { PublicAccaFilters } from "@/components/acca-publication/PublicAccaFilters";
+import { PublicAccaPagination } from "@/components/acca-publication/PublicAccaPagination";
+import { ACCA_ODDS_STALE_AFTER_HOURS } from "@/lib/acca-publication/freshness";
+import { CAPTURED_ODDS_NOTE, NOT_ADVICE_NOTE } from "@/lib/acca-publication/presentation";
+import {
+ EMPTY_INDEX_QUERY,
+ PUBLIC_ACCA_MAX_SCAN,
+ type PublicAccaFacets,
+ type PublicAccaIndexPage,
+ type PublicAccaIndexQuery,
+} from "@/lib/acca-publication/publicIndex";
+import type { PublicAccaView } from "@/lib/acca-publication/publicView";
+
+/**
+ * Public Acca index (Sprint 20B-B stage B5; extended in Sprint 24).
+ *
+ * SERVER-RENDERED CONTENT, END TO END. Every card, every filter link and every page link is in
+ * the HTML the server returns. The only client code on this page is `AccaIndexAnalytics`, which
+ * renders nothing and exists solely to measure. Disable JavaScript and the index still lists,
+ * filters, paginates and links — that is a requirement of the surface, not an optimisation.
+ *
+ * The empty state is deliberate and is the common case at launch: rather than rendering a
+ * skeleton page that exists only to hold a URL, it says plainly that nothing is published yet and
+ * points at the research surfaces that DO have content. The page is also marked non-indexable in
+ * that state by its route, so an empty listing never enters the index.
+ *
+ * TWO GROUPS, NOT A RANKING. Rows are split into what is still ahead and what has closed, in
+ * publication order within each. They are never sorted by odds, confidence or apparent quality:
+ * ordering research by how good it looks is the first step to a tipster feed.
+ */
+
+const AHEAD = new Set(["ACTIVE", "PARTIALLY_STARTED"]);
+
+export function PublicAccaIndexView({
+ locale,
+ views,
+ page,
+ query,
+ facets,
+ builderEntryEnabled = true,
+}: {
+ locale: string;
+ /** The rows on this page, already projected and already ordered. */
+ views: PublicAccaView[];
+ /** Paging model. Absent when a caller renders a single unpaginated list. */
+ page?: PublicAccaIndexPage;
+ query?: PublicAccaIndexQuery;
+ facets?: PublicAccaFacets;
+ /** Whether the Builder is being offered at all. Follows the existing combo route flag. */
+ builderEntryEnabled?: boolean;
+}) {
+ const ahead = views.filter((view) => AHEAD.has(view.freshness.availability));
+ const closed = views.filter((view) => !AHEAD.has(view.freshness.availability));
+ const filtered = Boolean(query && (query.profile || query.competition || query.state));
+
+ return (
+ <div className="container-wide pb-20">
+ <AccaIndexAnalytics
+ locale={locale}
+ page={page?.page ?? 1}
+ resultCount={page?.total ?? views.length}
+ filtered={filtered}
+ />
+
+ <header className="pt-8">
+ <h1 className="text-2xl font-semibold">Published accumulators</h1>
+ <p className="mt-2 max-w-2xl text-sm text-[var(--ink-secondary)]">
+ Multi-selection combinations assembled from our qualified fixture lists, published with
+ the evidence they were built on and the price recorded at the time. {NOT_ADVICE_NOTE}
+ </p>
+ <p className="mt-2 max-w-2xl text-sm text-[var(--ink-secondary)]">
+ Each one is a deterministic combination of selections that already qualified for our
+ published lists — never a hand-picked selection, and never re-scored after the fact. Its
+ page states which selections it contains, what was recorded in support of each, when it
+ was generated and published, and whether its fixtures have kicked off.
+ </p>
+ </header>
+
+ {facets && query ? (
+ <PublicAccaFilters locale={locale} facets={facets} query={query} />
+ ) : null}
+
+ {views.length === 0 ? (
+ <section className="mt-8 card p-6">
+ <h2 className="text-base font-semibold">
+ {filtered ? "Nothing matches that filter" : "Nothing published yet"}
+ </h2>
+ <p className="mt-2 max-w-2xl text-sm text-[var(--ink-secondary)]">
+ {filtered
+ ? "No published Acca matches the filters you selected. Clear them to see everything published for this language."
+ : "No Accas have been published for this language. Rather than fill this page with placeholder content, it stays empty until there is something real to show."}
+ </p>
+ <ul className="mt-4 space-y-2 text-sm">
+ <li>
+ <Link
+ href={`/${locale}`}
+ className="text-brand underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ >
+ Today&apos;s qualified fixtures
+ </Link>{""}
+ — the lists these are built from.
+ </li>
+ {builderEntryEnabled ? (
+ <li data-acca-builder-entry="">
+ <Link
+ href={`/${locale}/acca/builder`}
+ className="text-brand underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ >
+ Acca Builder
+ </Link>{""}
+ — assemble your own from the same evidence.
+ </li>
+ ) : null}
+ <li>
+ <Link
+ href={`/${locale}/archive`}
+ className="text-brand underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ >
+ Prediction archive
+ </Link>{""}
+ — settled results, wins and losses alike.
+ </li>
+ </ul>
+ </section>
+ ) : (
+ <>
+ {ahead.length > 0 ? (
+ <section className="mt-8" aria-labelledby="accas-ahead">
+ <h2 id="accas-ahead" className="text-lg font-semibold">
+ Still ahead
+ </h2>
+ <p className="mt-1 text-sm text-[var(--ink-secondary)]">
+ Newest first. At least one fixture in each of these has not kicked off.
+ </p>
+ <div className="mt-4 grid gap-4 sm:grid-cols-2">
+ {ahead.map((view, index) => (
+ <PublicAccaCard key={view.publicId} view={view} position={index + 1} />
+ ))}
+ </div>
+ </section>
+ ) : null}
+
+ {closed.length > 0 ? (
+ <section className="mt-10" aria-labelledby="accas-closed">
+ <h2 id="accas-closed" className="text-lg font-semibold">
+ Closed
+ </h2>
+ <p className="mt-1 text-sm text-[var(--ink-secondary)]">
+ Every fixture in these has kicked off. They stay published as a record of what was
+ said beforehand. Outcomes are not recorded on an Acca page — settled single
+ predictions are in the{""}
+ <Link
+ href={`/${locale}/archive`}
+ className="text-brand underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ >
+ archive
+ </Link>
+ .
+ </p>
+ <div className="mt-4 grid gap-4 sm:grid-cols-2">
+ {closed.map((view, index) => (
+ <PublicAccaCard
+ key={view.publicId}
+ view={view}
+ position={ahead.length + index + 1}
+ />
+ ))}
+ </div>
+ </section>
+ ) : null}
+
+ {page ? (
+ <PublicAccaPagination
+ locale={locale}
+ page={page}
+ query={query ?? EMPTY_INDEX_QUERY}
+ />
+ ) : null}
+
+ {page?.truncated ? (
+ <p className="mt-4 max-w-2xl text-xs text-muted-foreground">
+ This listing examines the most recent {PUBLIC_ACCA_MAX_SCAN} published Accas for
+ this language. Older ones exist in storage and are not shown here.
+ </p>
+ ) : null}
+
+ <p className="mt-6 max-w-2xl text-xs text-muted-foreground">
+ {CAPTURED_ODDS_NOTE} A page marks its prices as older once more than{""}
+ {ACCA_ODDS_STALE_AFTER_HOURS} hours have passed since they were captured.
+ </p>
+ </>
+ )}
+
+ <p className="mt-6 text-sm">
+ <Link
+ href={`/${locale}/methodology`}
+ className="text-brand underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ >
+ How these are built
+ </Link>
+ </p>
+
+ {views.length > 0 && builderEntryEnabled ? (
+ <p className="mt-2 text-sm" data-acca-builder-entry="">
+ <Link
+ href={`/${locale}/acca/builder`}
+ className="text-brand underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ >
+ Build your own from the same qualified lists
+ </Link>
+ </p>
+ ) : null}
+ </div>
+ );
+}

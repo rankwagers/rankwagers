@@ -1,0 +1,12 @@
+# M10 benchmark artifacts — GENERATED at run time by later Stage-2E slices.
+# Keep the directory structure; never commit run outputs (JSON/CSV/summary/logs).
+*
+!.gitignore
+!json/
+!csv/
+!summary/
+!logs/
+!json/.gitkeep
+!csv/.gitkeep
+!summary/.gitkeep
+!logs/.gitkeep

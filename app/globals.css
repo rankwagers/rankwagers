@@ -1,0 +1,433 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  /* RankWagers Design Bible — semantic tokens (Flutter-mappable names). */
+  --canvas-primary: #f6f3ec;
+  --canvas-secondary: #fbf9f4;
+  --canvas: var(--canvas-primary);
+  --surface-elevated: #ffffff;
+  --ink-primary: #13251f;
+  --ink-secondary: #4f5d58;
+  /*
+   * #6d7773 until the launch a11y pass. It is the site's dominant secondary text colour (it backs
+   * --muted-foreground), and it measured 4.40:1 on --canvas-secondary and 4.18:1 on
+   * --canvas-primary — both short of the 4.5:1 WCAG 2.1 AA floor for normal text, which put it
+   * behind the large majority of the axe-core colour-contrast findings across every audited page.
+   * #646e6a is the smallest hue-preserving darkening that clears the floor on BOTH surfaces
+   * (5.01:1 and 4.76:1) and it stays clearly lighter than --ink-secondary (6.57:1), so the
+   * three-step ink hierarchy is unchanged.
+   */
+  --ink-muted: #646e6a;
+  --ink-subtle: #7c8581;
+  --green-primary: #0e6b4f;
+  --green-primary-rgb: 14 107 79;
+  --green-deep: #174c3c;
+  --green-deep-rgb: 23 76 60;
+  --green-surface: #eaf3ed;
+  --green-surface-rgb: 234 243 237;
+  /*
+   * #15966a until the launch a11y pass. It backs `text-brand-light` (29 usages) and so is read as
+   * body-sized text, where it measured 3.56:1 on --canvas-secondary — well under the 4.5:1 AA
+   * floor. #107a56 clears it on every light surface (5.07:1, 4.81:1, 4.79:1) and stays lighter
+   * than --green-primary (#0e6b4f), so it still reads as the lighter positive green.
+   * Known residual: on the --green-surface-strong badge fill (#bad3c9) this reaches only 3.36:1.
+   * That single pairing needs a background change rather than a foreground one and is recorded in
+   * docs/plans/world-class-visual-launch-implementation.md rather than guessed at here.
+   */
+  --green-positive: #107a56;
+  --green-positive-rgb: 16 122 86;
+  --comparison-away: #4f5d58;
+  /*
+   * #9a6510 until the launch a11y pass. Used as text in 58 places (void/limits headings, risk and
+   * confidence labels), it measured 4.47:1 on --canvas-primary and 4.45:1 on --amber-surface —
+   * marginally under the 4.5:1 AA floor rather than badly wrong. #94610f clears both (4.77:1 and
+   * 4.75:1) and is a small enough step to leave the amber reading as amber.
+   */
+  --amber-primary: #94610f;
+  --amber-primary-rgb: 148 97 15;
+  --amber-surface: #fbf2df;
+  --amber-border: #e5c782;
+  --red-primary: #a93f36;
+  --red-primary-rgb: 169 63 54;
+  --red-surface: #faece9;
+  --info-primary: #1f5f8b;
+  --info-surface: #e8f2f8;
+  --border-default: #dedbd3;
+  --border-default-rgb: 222 219 211;
+  --border-subtle: #e9e6de;
+  --border-strong: #bfc4be;
+  --canvas-primary-rgb: 246 243 236;
+  --canvas-secondary-rgb: 251 249 244;
+  --ink-primary-rgb: 19 37 31;
+  --background: var(--canvas-primary);
+  --foreground: var(--ink-primary);
+  --card: var(--canvas-secondary);
+  --border: var(--border-default);
+  --primary: var(--green-primary);
+  --muted-foreground: var(--ink-muted);
+
+  /* Spacing (4px rhythm) */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --touch-min: 2.75rem;
+  --container-max: 1440px;
+
+  /* Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-full: 9999px;
+
+  /* Elevation / shadow */
+  --shadow-card: 0 4px 20px -6px rgba(19, 37, 31, 0.12);
+  --shadow-elevated: 0 12px 32px -12px rgba(19, 37, 31, 0.18);
+  --shadow-focus: 0 0 0 3px rgba(14, 107, 79, 0.28);
+  /*
+   * 0.45 until the launch a11y pass, and hand-written as 0.4/0.5/0.6 in six components besides.
+   * At 0.4 the Acca panel's six disabled controls and the fixture-explorer pager measured 2.39:1
+   * against the card — the state was legible as "off" but the label itself was not legible at all.
+   * axe-core does not report this: WCAG 1.4.3 exempts inactive components from the 4.5:1 floor,
+   * so the defect is invisible to the scan and was found by measuring the rendered controls.
+   * 0.60 puts --ink-primary at 4.24:1 on --canvas-secondary, clearing the 3:1 UI-component bar
+   * with margin while staying far off the 15.6:1 of an enabled control, so "disabled" still reads
+   * as disabled at a glance. It is now the single source for every disabled control (spec §20.1).
+   */
+  --opacity-disabled: 0.6;
+  --opacity-backdrop: 0.4;
+  /* The one modal/sheet scrim. Was four hand-written rgba() literals across BottomSheet,
+     MobileNav and ComboOperatorSheet; spec §20.1 permits no colour literal. */
+  --backdrop: rgb(var(--ink-primary-rgb) / var(--opacity-backdrop));
+
+  /* Status (prediction settlement) */
+  --status-won-fg: var(--green-deep);
+  --status-won-bg: var(--green-surface);
+  --status-lost-fg: var(--red-primary);
+  --status-lost-bg: var(--red-surface);
+  --status-void-fg: var(--amber-primary);
+  --status-void-bg: var(--amber-surface);
+  --status-pending-fg: var(--ink-muted);
+  --status-pending-bg: var(--canvas-primary);
+  --status-live-fg: var(--red-primary);
+  --status-live-bg: var(--red-surface);
+
+  /* Risk (Acca) */
+  --risk-low-fg: var(--green-deep);
+  --risk-low-bg: var(--green-surface);
+  --risk-balanced-fg: var(--ink-secondary);
+  --risk-balanced-bg: var(--canvas-secondary);
+  --risk-aggressive-fg: var(--amber-primary);
+  --risk-aggressive-bg: var(--amber-surface);
+  --risk-very-aggressive-fg: var(--red-primary);
+  --risk-very-aggressive-bg: var(--red-surface);
+
+  /* Confidence band accents */
+  --confidence-high: var(--green-positive);
+  --confidence-mid: var(--amber-primary);
+  --confidence-low: var(--ink-muted);
+
+  /* Motion */
+  --motion-fast: 150ms;
+  --motion-base: 220ms;
+  --motion-slow: 360ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --font-size: 16px;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+  --text-h1: 2.25rem;
+  --text-h2: 1.75rem;
+  --text-h3: 1.375rem;
+  --text-body: 1rem;
+  --text-body-sm: 0.875rem;
+  --text-caption: 0.75rem;
+  --text-metadata: 0.6875rem;
+  --leading-heading: 1.2;
+  --leading-body: 1.5;
+}
+
+/*
+ * Future dark theme slots (not activated — light defines the brand).
+ * When approved, set color-scheme: dark and override layered surfaces
+ * (avoid pure #000; prefer elevated canvases).
+ */
+/* :root[data-theme="dark"] { --canvas-primary: #15201c; --canvas-secondary: #1c2924; ... } */
+
+html {
+  scroll-behavior: smooth;
+  font-size: var(--font-size);
+}
+
+body {
+  @apply bg-background text-foreground antialiased overflow-x-hidden;
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  line-height: var(--leading-body);
+}
+
+a {
+  @apply transition-colors;
+}
+
+button,
+a,
+input,
+select,
+textarea,
+[tabindex]:not([tabindex="-1"]) {
+  outline-offset: 3px;
+}
+
+.fixture-detail-enter {
+  animation: fixture-detail-enter var(--motion-base) var(--ease-out) both;
+}
+
+.sheet-enter {
+  animation: sheet-enter var(--motion-base) var(--ease-out) both;
+}
+
+.panel-enter {
+  animation: panel-enter var(--motion-fast) var(--ease-out) both;
+}
+
+.metric-progress {
+  transform-origin: left center;
+  animation: metric-progress-enter 420ms ease-out both;
+}
+
+@keyframes fixture-detail-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes sheet-enter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes panel-enter {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes metric-progress-enter {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+:focus-visible {
+  outline: 2px solid var(--green-primary);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .fixture-detail-enter,
+  .sheet-enter,
+  .panel-enter,
+  .metric-progress,
+  .animate-pulse {
+    animation: none !important;
+  }
+}
+
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] body {
+  font-family: ui-sans-serif, system-ui, "Segoe UI", "Noto Sans Arabic", Tahoma, Arial, sans-serif;
+}
+
+[dir="rtl"] .hero-title-gradient {
+  color: var(--foreground);
+  -webkit-text-fill-color: var(--foreground);
+  background-image: none;
+}
+
+@layer components {
+  /* One container (spec §13). `.container-page` and `bible.page` retired into this. */
+  .container-wide {
+    @apply mx-auto w-full max-w-[var(--container-max)] px-4 sm:px-6 lg:px-10;
+  }
+
+  /* ---------------------------------------------------------------- *
+   * Cards (spec §8) — one card, two paddings, two elevations.
+   * `.bible-article` retired and folded in here.
+   * ---------------------------------------------------------------- */
+  .card {
+    @apply rounded-lg border border-[var(--border-subtle)] bg-card;
+  }
+
+  .card-padded {
+    @apply p-4;
+  }
+
+  .card-compact {
+    @apply p-3;
+  }
+
+  /* Level 1 — only when a card must separate from a busy region. */
+  .card-raised {
+    @apply shadow-card;
+  }
+
+  /* ---------------------------------------------------------------- *
+   * Buttons (spec §7) — four variants x two sizes.
+   * Default 36px / px-4 / body-sm 500. Small 28px / px-3 / caption 500.
+   * Radius md. Focus defers to the global :focus-visible ring (§6).
+   * ---------------------------------------------------------------- */
+  .btn {
+    @apply inline-flex h-9 items-center justify-center gap-2 rounded-md px-4 text-sm font-medium transition-colors duration-fast focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-brand disabled:pointer-events-none disabled:opacity-[var(--opacity-disabled)];
+  }
+
+  .btn-sm {
+    @apply h-7 gap-1.5 px-3 text-xs;
+  }
+
+  .btn-primary {
+    @apply btn bg-brand text-white hover:bg-brand-dark active:translate-y-px;
+  }
+
+  .btn-secondary {
+    @apply btn border border-border bg-muted text-foreground hover:border-[var(--border-strong)] active:translate-y-px;
+  }
+
+  .btn-ghost {
+    @apply btn bg-transparent text-[var(--ink-secondary)] hover:text-foreground active:translate-y-px;
+  }
+
+  .btn-destructive {
+    @apply btn border border-destructive bg-transparent text-destructive hover:bg-[var(--red-surface)] active:translate-y-px;
+  }
+
+  /* ---------------------------------------------------------------- *
+   * Badge + chip (spec §11) — one geometry each.
+   * Micro-label type, rounded-full, 1px border, semantic pair colours.
+   * No shadow, no ring, no gradient, no font-black.
+   * ---------------------------------------------------------------- */
+  .badge {
+    @apply inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-transparent px-2 py-0.5 text-metadata font-medium uppercase tracking-label;
+  }
+
+  .badge-neutral {
+    @apply border-border bg-background text-muted-foreground;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-border bg-transparent px-2 py-0.5 text-metadata font-medium uppercase tracking-label text-[var(--ink-secondary)] transition-colors duration-fast hover:border-[var(--border-strong)] hover:text-foreground disabled:pointer-events-none disabled:opacity-[var(--opacity-disabled)];
+  }
+
+  .chip-selected {
+    @apply border-foreground bg-foreground text-background;
+  }
+
+  /* ---------------------------------------------------------------- *
+   * Tables (spec §9) — the dominant correct pattern, made law.
+   * Text left, numbers right, status centred. No zebra, no vertical rules.
+   * ---------------------------------------------------------------- */
+  .table-shell {
+    @apply w-full overflow-x-auto rounded-lg border border-border;
+  }
+
+  .table-base {
+    @apply min-w-full border-collapse text-left;
+  }
+
+  .table-base thead {
+    @apply bg-background;
+  }
+
+  .table-base th {
+    @apply border-b border-border px-3 py-2 text-metadata font-medium uppercase tracking-label text-muted-foreground;
+  }
+
+  .table-base td {
+    @apply border-t border-[var(--border-subtle)] px-3 py-2 text-sm text-foreground;
+  }
+
+  .table-base tbody tr:hover {
+    @apply bg-muted;
+  }
+
+  /* Numeric column: mono + tabular, right-aligned, header matches. */
+  .table-num {
+    @apply text-right font-mono tabular-nums;
+  }
+
+
+
+
+  .wc-ticker-scroll {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-snap-type: x proximity;
+  }
+
+  .wc-ticker-scroll::-webkit-scrollbar {
+    display: none;
+  }
+
+  .wc-ticker-fade-edge {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 2.5rem;
+    z-index: 1;
+    background: linear-gradient(to left, rgba(246, 243, 236, 0.95) 0%, transparent 100%);
+  }
+
+
+
+
+
+
+
+  .btn-play-now:hover .btn-play-now-shine {
+    animation-duration: 1.6s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+

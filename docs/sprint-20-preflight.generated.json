@@ -1,0 +1,69 @@
+{
+  "ok": false,
+  "engineeringGatesOk": true,
+  "livePromoteReady": false,
+  "generatedAt": "2026-07-25T21:07:22.058Z",
+  "node": "v24.16.0",
+  "platform": "win32",
+  "gates": [
+    {
+      "label": "tests",
+      "ok": true,
+      "exitCode": 0,
+      "ms": 10043
+    },
+    {
+      "label": "lint",
+      "ok": true,
+      "exitCode": 0,
+      "ms": 8946
+    },
+    {
+      "label": "typecheck",
+      "ok": true,
+      "exitCode": 0,
+      "ms": 5386
+    },
+    {
+      "label": "security_scan",
+      "ok": true,
+      "exitCode": 0,
+      "ms": 338
+    },
+    {
+      "label": "cta_boundary",
+      "ok": true,
+      "exitCode": 0,
+      "ms": 357
+    },
+    {
+      "label": "route_inventory",
+      "ok": true,
+      "exitCode": 0,
+      "ms": 184
+    },
+    {
+      "label": "build",
+      "ok": true,
+      "exitCode": 0,
+      "ms": 0,
+      "skipped": true
+    },
+    {
+      "label": "production_site_url",
+      "ok": false,
+      "exitCode": 1,
+      "ms": 0,
+      "host": "gercek-domainin.com",
+      "placeholder": true,
+      "message": "SITE_URL is missing or a placeholder — live promote blocked"
+    },
+    {
+      "label": "staging_base_url",
+      "ok": false,
+      "exitCode": 1,
+      "ms": 0,
+      "message": "STAGING_BASE_URL unset — live staging smoke blocked"
+    }
+  ]
+}

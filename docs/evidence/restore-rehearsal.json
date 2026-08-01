@@ -1,0 +1,19 @@
+{
+  "ok": true,
+  "blocked": false,
+  "startedAt": "2026-08-01T06:24:32.652Z",
+  "backupDurationMs": 543,
+  "restoreDurationMs": 4583,
+  "backupSizeBytes": 75791,
+  "checks": {
+    "affiliate_clicks": "missing_or_error",
+    "affiliate_conversions": "missing_or_error",
+    "provider_snapshots": 1,
+    "active_snapshots": 0
+  },
+  "notes": [
+    "Destroy RESTORE_VERIFY_DATABASE_URL after review."
+  ],
+  "durationMs": 5723,
+  "finishedAt": "2026-08-01T06:24:38.375Z"
+}

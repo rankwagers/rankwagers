@@ -1,0 +1,85 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master, develop, "sprint-*"]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      APP_ENV: development
+      NODE_ENV: test
+      # Safe CI profile — never production secrets
+      SITE_URL: http://localhost:3000
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Unit & integration tests
+        run: npm test
+
+      - name: Security scan
+        run: node scripts/security-scan.mjs
+
+      - name: Route inventory
+        run: node scripts/route-inventory.mjs
+
+      - name: Migration files present
+        run: |
+          test -f db/migrations/20260724_create_odds_history.sql
+          test -f db/migrations/20260725_create_affiliate_attribution.sql
+          test -f db/migrations/20260726_create_provider_snapshots.sql
+
+      - name: Production build (safe CI profile)
+        env:
+          APP_ENV: development
+          SITE_URL: http://localhost:3000
+          NEXT_DIST_DIR: .next-ci
+        run: npm run build
+
+      - name: Client bundle secret scan (post-build)
+        run: node scripts/security-scan.mjs
+
+      - name: Client CTA signing boundary
+        run: npm run scan:cta-boundary
+
+      - name: Upload test/build artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-artifacts
+          path: |
+            docs/route-inventory.generated.md
+          retention-days: 14
+
+  # Production deploy is intentionally NOT automated.
+  # Staging deploy (optional) requires manual environment approval.
+  staging-gate:
+    needs: validate
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    environment: staging
+    steps:
+      - uses: actions/checkout@v4
+      - name: Manual staging approval placeholder
+        run: echo "Staging deploy requires environment secrets + manual approval. No production deploy from CI."

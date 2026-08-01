@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "exclude": [
+    "node_modules",
+    "aff-panel",
+    "telegram-invite-bots",
+    "telegram-eng",
+    "design",
+    "marketingskills",
+    "tests",
+    "scripts",
+    ".next",
+    ".next-build",
+    ".next-ci"
+  ]
+}

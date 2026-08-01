@@ -1,0 +1,11 @@
+# Poll health/backup/cron every 5 minutes (starts 2 min after boot).
+[Unit]
+Description=RankWagers health monitor (every 5 minutes)
+
+[Timer]
+OnBootSec=120
+OnUnitActiveSec=300
+Unit=rankwagers-health-monitor.service
+
+[Install]
+WantedBy=timers.target

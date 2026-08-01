@@ -1,0 +1,557 @@
+{
+  "generatedFor": "development",
+  "siteUrl": "http://localhost:3000",
+  "summary": {
+    "pass": 19,
+    "fail": 3,
+    "blocked": 9,
+    "launchable": false
+  },
+  "conditions": [
+    {
+      "id": "env.boot-validation-wired",
+      "category": "environment",
+      "status": "pass",
+      "title": "Invalid configuration fails at boot, not at first request",
+      "detail": "Boot-time validation is wired; staging/production refuse to serve with invalid config.",
+      "evidence": "instrumentation.register() calls assertRuntimeEnvOrThrow (lib/config/env.ts)",
+      "limitation": null,
+      "blocker": null
+    },
+    {
+      "id": "env.secrets-present-and-strong",
+      "category": "environment",
+      "status": "fail",
+      "title": "Every required secret is present and not trivially weak",
+      "detail": "Weak or missing: ADMIN_KEY, AFFILIATE_REDIRECT_SECRET, ANALYTICS_SIGNING_SECRET, CRON_SECRET, DIAGNOSTICS_SECRET. These are read by signed redirects, admin auth, cron access and diagnostics — a weak value is an open door.",
+      "evidence": "isInsecureSecret + validateRuntimeEnv (lib/config/env.ts)",
+      "limitation": null,
+      "blocker": null
+    },
+    {
+      "id": "env.public-origin-is-real",
+      "category": "environment",
+      "status": "blocked",
+      "title": "SITE_URL is a real HTTPS origin, not a placeholder or localhost",
+      "detail": "SITE_URL is currently http://localhost:3000, which cannot serve production. This is a configuration input, not a code defect — nothing in the repo can satisfy it.",
+      "evidence": "resolveSiteUrl + FORBIDDEN_PROD_HOSTS (lib/config/env.ts)",
+      "limitation": null,
+      "blocker": {
+        "requires": "a real production HTTPS domain",
+        "unblockedWhen": "SITE_URL is set to the live origin in the deployment environment"
+      }
+    },
+    {
+      "id": "flags.no-unintended-dark-flows",
+      "category": "feature-flags",
+      "status": "fail",
+      "title": "Every major product flow is either enabled or deliberately dark",
+      "detail": "2 major flow(s) would be dark at launch:\n      - postbackIngestionEnabled=false → affiliate postback ingestion — conversion tracking\n      - operatorApprovalEnabled=false → Builder approval and the entire Acca publication chain\n      Each must be an explicit decision before launch, not a default.",
+      "evidence": "getFeatureFlags() resolved for the target environment (lib/config/featureFlags.ts)",
+      "limitation": "This condition proves the flags were LOOKED AT, not that the chosen values are right. That decision is the owner's.",
+      "blocker": null
+    },
+    {
+      "id": "flags.unknown-values-fail-safe",
+      "category": "feature-flags",
+      "status": "pass",
+      "title": "An unparseable flag value falls back to the conservative default",
+      "detail": "Unknown values resolve to the conservative fallback rather than enabling a flow by accident.",
+      "evidence": "parseBool in lib/config/featureFlags.ts; covered by executed tests",
+      "limitation": null,
+      "blocker": null
+    },
+    {
+      "id": "durability.memory-only-limits-documented",
+      "category": "durability",
+      "status": "pass",
+      "title": "The memory-only durability limits are documented and warned at boot",
+      "detail": "The limitation is surfaced at boot. It is a documented constraint, not a solved problem.",
+      "evidence": "warnIfMultiInstanceMemoryLimiter (lib/security/rateLimit.ts), called from instrumentation",
+      "limitation": "HTTP idempotency and rate limiting are process-local and do NOT survive a restart or coordinate across instances. Cross-process correctness rests on expectedVersion optimistic concurrency in the persistence layer, not on replay caching.",
+      "blocker": null
+    },
+    {
+      "id": "durability.single-instance-deployment",
+      "category": "durability",
+      "status": "pass",
+      "title": "The deployment runs one instance, or accepts per-instance limits",
+      "detail": "Instance count is 1; memory-only limiters are coherent.",
+      "evidence": "WEB_CONCURRENCY / PM2_INSTANCES as observed in the environment",
+      "limitation": null,
+      "blocker": null
+    },
+    {
+      "id": "db.postgres-adapter-structure",
+      "category": "database",
+      "status": "pass",
+      "title": "The PostgreSQL adapter's SQL structure is verified",
+      "detail": "The adapter's statements, columns and guards match the contract, by executed tests.",
+      "evidence": "tests/accaPostgresStructure.test.ts (executed)",
+      "limitation": "Structural verification reads the SQL. It proves shape, not behaviour: no statement in this adapter has ever been executed against a server.",
+      "blocker": null
+    },
+    {
+      "id": "db.postgres-runtime-validated",
+      "category": "database",
+      "status": "blocked",
+      "title": "The PostgreSQL adapter has been exercised against a real server",
+      "detail": "NOT EXECUTED. Migrations, constraints, transaction semantics and concurrent conversion behaviour are all unproven. This is the single largest unknown before launch.",
+      "evidence": "Requires an executed connection. Structural tests deliberately do NOT satisfy this.",
+      "limitation": null,
+      "blocker": {
+        "requires": "a reachable PostgreSQL server",
+        "unblockedWhen": "a real DATABASE_URL is reachable and the adapter suite runs against it with exit code 0"
+      }
+    },
+    {
+      "id": "build.production-build-executed",
+      "category": "build",
+      "status": "blocked",
+      "title": "A full production build completes with exit code 0",
+      "detail": "NOT EXECUTED. The prepare-dev guard correctly refuses to build against a localhost SITE_URL. A localhost build is not a substitute and must not be recorded as one.",
+      "evidence": "npm run build against a real HTTPS SITE_URL",
+      "limitation": null,
+      "blocker": {
+        "requires": "a real production HTTPS domain",
+        "unblockedWhen": "SITE_URL is a live HTTPS origin and npm run build exits 0"
+      }
+    },
+    {
+      "id": "build.script-present.build-verify.mjs",
+      "category": "build",
+      "status": "pass",
+      "title": "Release tooling present: build-verify.mjs",
+      "detail": "build-verify.mjs is present.",
+      "evidence": "scripts/build-verify.mjs",
+      "limitation": null,
+      "blocker": null
+    },
+    {
+      "id": "build.script-present.smoke-staging.mjs",
+      "category": "build",
+      "status": "pass",
+      "title": "Release tooling present: smoke-staging.mjs",
+      "detail": "smoke-staging.mjs is present.",
+      "evidence": "scripts/smoke-staging.mjs",
+      "limitation": null,
+      "blocker": null
+    },
+    {
+      "id": "build.script-present.backup-postgres.mjs",
+      "category": "build",
+      "status": "pass",
+      "title": "Release tooling present: backup-postgres.mjs",
+      "detail": "backup-postgres.mjs is present.",
+      "evidence": "scripts/backup-postgres.mjs",
+      "limitation": null,
+      "blocker": null
+    },
+    {
+      "id": "build.script-present.restore-rehearsal.mjs",
+      "category": "build",
+      "status": "pass",
+      "title": "Release tooling present: restore-rehearsal.mjs",
+      "detail": "restore-rehearsal.mjs is present.",
+      "evidence": "scripts/restore-rehearsal.mjs",
+      "limitation": null,
+      "blocker": null
+    },
+    {
+      "id": "build.script-present.rehearse-migrations.mjs",
+      "category": "build",
+      "status": "pass",
+      "title": "Release tooling present: rehearse-migrations.mjs",
+      "detail": "rehearse-migrations.mjs is present.",
+      "evidence": "scripts/rehearse-migrations.mjs",
+      "limitation": null,
+      "blocker": null
+    },
+    {
+      "id": "build.script-present.rollback-release.sh",
+      "category": "build",
+      "status": "pass",
+      "title": "Release tooling present: rollback-release.sh",
+      "detail": "rollback-release.sh is present.",
+      "evidence": "scripts/rollback-release.sh",
+      "limitation": null,
+      "blocker": null
+    },
+    {
+      "id": "staging.smoke-executed",
+      "category": "staging",
+      "status": "blocked",
+      "title": "Staging smoke tests pass against a deployed staging origin",
+      "detail": "NOT EXECUTED. No staging environment exists and starting one is out of scope.",
+      "evidence": "scripts/smoke-staging.mjs against STAGING_BASE_URL",
+      "limitation": null,
+      "blocker": {
+        "requires": "a deployed staging environment",
+        "unblockedWhen": "STAGING_BASE_URL resolves and smoke-staging exits 0"
+      }
+    },
+    {
+      "id": "postback.verification-wired",
+      "category": "environment",
+      "status": "pass",
+      "title": "Postback requests are authenticated before they are processed",
+      "detail": "Incoming postbacks are verified before any conversion is recorded.",
+      "evidence": "verifyPostbackRequest (lib/affiliate/postbacks/verify.ts)",
+      "limitation": null,
+      "blocker": null
+    },
+    {
+      "id": "postback.allowlist-configured",
+      "category": "environment",
+      "status": "blocked",
+      "title": "The postback IP allowlist is configured",
+      "detail": "Not configured. The addresses are supplied by each affiliate network and cannot be invented here.",
+      "evidence": "AFFILIATE_POSTBACK_IP_ALLOWLIST (lib/affiliate/postbacks/verify.ts)",
+      "limitation": null,
+      "blocker": {
+        "requires": "the network origins each affiliate network posts from",
+        "unblockedWhen": "AFFILIATE_POSTBACK_IP_ALLOWLIST lists those origins in the deployment"
+      }
+    },
+    {
+      "id": "postback.ingestion-enabled",
+      "category": "feature-flags",
+      "status": "fail",
+      "title": "Postback ingestion is enabled, so conversions are actually recorded",
+      "detail": "postbackIngestionEnabled resolves FALSE in production. Affiliate revenue would be unattributable at launch: clicks would go out and conversions would come back to a closed door. This is the single highest-value flag decision before shipping.",
+      "evidence": "postbackIngestionEnabled (lib/config/featureFlags.ts), resolved for production",
+      "limitation": "Enabling ingestion records conversions. It does not retroactively recover any that arrived while the flag was off — those are lost, not queued.",
+      "blocker": null
+    },
+    {
+      "id": "seo.robots-route",
+      "category": "build",
+      "status": "pass",
+      "title": "robots.txt is served",
+      "detail": "robots.txt is generated by the app.",
+      "evidence": "app/robots.ts",
+      "limitation": null,
+      "blocker": null
+    },
+    {
+      "id": "seo.staging-noindex",
+      "category": "build",
+      "status": "pass",
+      "title": "Non-production environments are held out of the index",
+      "detail": "Staging can be excluded from indexing.",
+      "evidence": "STAGING_NOINDEX honoured in app/robots.ts and app/layout.tsx",
+      "limitation": null,
+      "blocker": null
+    },
+    {
+      "id": "seo.sitemap-route",
+      "category": "build",
+      "status": "pass",
+      "title": "A sitemap is generated",
+      "detail": "A sitemap route exists.",
+      "evidence": "app/sitemap.ts",
+      "limitation": "Presence is verified here. Whether every intended URL is included, and whether the shard count is right, is only observable against a real build.",
+      "blocker": null
+    },
+    {
+      "id": "seo.canonical-wired",
+      "category": "build",
+      "status": "pass",
+      "title": "Canonical and hreflang come from a single source",
+      "detail": "Canonical and hreflang are emitted from one helper, so they cannot drift apart.",
+      "evidence": "alternatesFor (lib/seo.ts), built on the resolved site origin",
+      "limitation": "Canonical URLs are derived from SITE_URL. While SITE_URL is localhost every canonical the app emits is a localhost URL — correct by construction, wrong in production until the real origin is set.",
+      "blocker": null
+    },
+    {
+      "id": "seo.structured-data",
+      "category": "build",
+      "status": "pass",
+      "title": "JSON-LD structured data is emitted",
+      "detail": "Structured data modules are present.",
+      "evidence": "schema/structured-data modules under lib/",
+      "limitation": "Emission is verified. Validity against Google's parsers is not — that requires the Rich Results test against live URLs.",
+      "blocker": null
+    },
+    {
+      "id": "seo.search-console-verified",
+      "category": "staging",
+      "status": "blocked",
+      "title": "The production property is verified in Search Console",
+      "detail": "No verification token is configured. Verification cannot precede owning the domain, so this necessarily follows the HTTPS item. Without it there is no index coverage data, no query data and no way to submit the sitemap.",
+      "evidence": "A verification token served from the production origin",
+      "limitation": null,
+      "blocker": {
+        "requires": "ownership of the production domain and a Search Console property",
+        "unblockedWhen": "the verification token is configured and Google confirms ownership"
+      }
+    },
+    {
+      "id": "ops.analytics-configured",
+      "category": "environment",
+      "status": "blocked",
+      "title": "An analytics measurement id is configured",
+      "detail": "Not configured. Launching without it means the first traffic is unmeasured and unrecoverable — there is no backfill for sessions nobody recorded.",
+      "evidence": "NEXT_PUBLIC_GTM_ID",
+      "limitation": null,
+      "blocker": {
+        "requires": "an analytics property for the production domain",
+        "unblockedWhen": "NEXT_PUBLIC_GTM_ID is set in the production environment"
+      }
+    },
+    {
+      "id": "ops.error-logging-wired",
+      "category": "environment",
+      "status": "pass",
+      "title": "Errors are logged structurally, including unhandled ones",
+      "detail": "Structured logging is wired and process-level failures are captured.",
+      "evidence": "lib/monitoring/logger.ts; unhandledRejection and uncaughtException handlers registered in instrumentation.ts",
+      "limitation": null,
+      "blocker": null
+    },
+    {
+      "id": "ops.health-endpoint",
+      "category": "environment",
+      "status": "pass",
+      "title": "A health endpoint is served for uptime checks",
+      "detail": "A health endpoint is available for an external monitor to poll.",
+      "evidence": "app/api/health, lib/monitoring/health.ts",
+      "limitation": "The endpoint exists. Nothing is polling it — external uptime monitoring is a deployment concern and is not satisfied by this condition.",
+      "blocker": null
+    },
+    {
+      "id": "ops.backup-rehearsed",
+      "category": "database",
+      "status": "blocked",
+      "title": "A backup has been taken and restored from",
+      "detail": "NOT EXECUTED. The scripts exist, which is not the same as a backup that has been proven to restore. An untested backup is an assumption, not a safety net.",
+      "evidence": "scripts/backup-postgres.mjs + scripts/restore-rehearsal.mjs, EXECUTED",
+      "limitation": null,
+      "blocker": {
+        "requires": "a reachable PostgreSQL server",
+        "unblockedWhen": "a backup is taken and a restore rehearsal completes with exit code 0"
+      }
+    },
+    {
+      "id": "ops.rollback-rehearsed",
+      "category": "staging",
+      "status": "blocked",
+      "title": "A rollback has been rehearsed against a real deployment",
+      "detail": "NOT EXECUTED. Script presence is already covered separately; this item is about having run it. The first rollback should not happen during the first incident.",
+      "evidence": "scripts/rollback-release.sh + scripts/sprint20-rollback-rehearse.mjs, EXECUTED",
+      "limitation": null,
+      "blocker": {
+        "requires": "a deployed environment to roll back",
+        "unblockedWhen": "a rollback rehearsal completes against staging with exit code 0"
+      }
+    }
+  ],
+  "checklist": [
+    "[external] a real production HTTPS domain → SITE_URL is set to the live origin in the deployment environment",
+    "[external] a reachable PostgreSQL server → a real DATABASE_URL is reachable and the adapter suite runs against it with exit code 0",
+    "[external] a real production HTTPS domain → SITE_URL is a live HTTPS origin and npm run build exits 0",
+    "[external] a deployed staging environment → STAGING_BASE_URL resolves and smoke-staging exits 0",
+    "[external] the network origins each affiliate network posts from → AFFILIATE_POSTBACK_IP_ALLOWLIST lists those origins in the deployment",
+    "[external] ownership of the production domain and a Search Console property → the verification token is configured and Google confirms ownership",
+    "[external] an analytics property for the production domain → NEXT_PUBLIC_GTM_ID is set in the production environment",
+    "[external] a reachable PostgreSQL server → a backup is taken and a restore rehearsal completes with exit code 0",
+    "[external] a deployed environment to roll back → a rollback rehearsal completes against staging with exit code 0",
+    "[repo] Every required secret is present and not trivially weak",
+    "[repo] Every major product flow is either enabled or deliberately dark",
+    "[repo] Postback ingestion is enabled, so conversions are actually recorded"
+  ],
+  "launchChecklistV1": {
+    "progress": {
+      "done": 6,
+      "total": 15,
+      "percent": 40
+    },
+    "items": [
+      {
+        "id": "postgresql",
+        "title": "PostgreSQL",
+        "status": "blocked",
+        "conditions": [
+          {
+            "id": "db.postgres-adapter-structure",
+            "status": "pass"
+          },
+          {
+            "id": "db.postgres-runtime-validated",
+            "status": "blocked"
+          }
+        ]
+      },
+      {
+        "id": "production-build",
+        "title": "Production build",
+        "status": "blocked",
+        "conditions": [
+          {
+            "id": "build.production-build-executed",
+            "status": "blocked"
+          }
+        ]
+      },
+      {
+        "id": "https",
+        "title": "HTTPS",
+        "status": "blocked",
+        "conditions": [
+          {
+            "id": "env.public-origin-is-real",
+            "status": "blocked"
+          }
+        ]
+      },
+      {
+        "id": "feature-flags",
+        "title": "Feature flags",
+        "status": "fail",
+        "conditions": [
+          {
+            "id": "flags.no-unintended-dark-flows",
+            "status": "fail"
+          },
+          {
+            "id": "flags.unknown-values-fail-safe",
+            "status": "pass"
+          }
+        ]
+      },
+      {
+        "id": "postback",
+        "title": "Postback",
+        "status": "fail",
+        "conditions": [
+          {
+            "id": "postback.verification-wired",
+            "status": "pass"
+          },
+          {
+            "id": "postback.allowlist-configured",
+            "status": "blocked"
+          },
+          {
+            "id": "postback.ingestion-enabled",
+            "status": "fail"
+          }
+        ]
+      },
+      {
+        "id": "robots",
+        "title": "Robots",
+        "status": "pass",
+        "conditions": [
+          {
+            "id": "seo.robots-route",
+            "status": "pass"
+          },
+          {
+            "id": "seo.staging-noindex",
+            "status": "pass"
+          }
+        ]
+      },
+      {
+        "id": "sitemap",
+        "title": "Sitemap",
+        "status": "pass",
+        "conditions": [
+          {
+            "id": "seo.sitemap-route",
+            "status": "pass"
+          }
+        ]
+      },
+      {
+        "id": "canonical",
+        "title": "Canonical",
+        "status": "pass",
+        "conditions": [
+          {
+            "id": "seo.canonical-wired",
+            "status": "pass"
+          }
+        ]
+      },
+      {
+        "id": "structured-data",
+        "title": "Structured Data",
+        "status": "pass",
+        "conditions": [
+          {
+            "id": "seo.structured-data",
+            "status": "pass"
+          }
+        ]
+      },
+      {
+        "id": "search-console",
+        "title": "Search Console",
+        "status": "blocked",
+        "conditions": [
+          {
+            "id": "seo.search-console-verified",
+            "status": "blocked"
+          }
+        ]
+      },
+      {
+        "id": "analytics",
+        "title": "Analytics",
+        "status": "blocked",
+        "conditions": [
+          {
+            "id": "ops.analytics-configured",
+            "status": "blocked"
+          }
+        ]
+      },
+      {
+        "id": "error-logging",
+        "title": "Error logging",
+        "status": "pass",
+        "conditions": [
+          {
+            "id": "ops.error-logging-wired",
+            "status": "pass"
+          }
+        ]
+      },
+      {
+        "id": "backup",
+        "title": "Backup",
+        "status": "blocked",
+        "conditions": [
+          {
+            "id": "ops.backup-rehearsed",
+            "status": "blocked"
+          }
+        ]
+      },
+      {
+        "id": "rollback",
+        "title": "Rollback",
+        "status": "blocked",
+        "conditions": [
+          {
+            "id": "ops.rollback-rehearsed",
+            "status": "blocked"
+          }
+        ]
+      },
+      {
+        "id": "monitoring",
+        "title": "Monitoring",
+        "status": "pass",
+        "conditions": [
+          {
+            "id": "ops.health-endpoint",
+            "status": "pass"
+          }
+        ]
+      }
+    ]
+  }
+}

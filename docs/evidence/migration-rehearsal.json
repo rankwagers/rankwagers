@@ -1,0 +1,19 @@
+{
+  "ok": true,
+  "mode": "inventory_only",
+  "startedAt": "2026-07-25T17:40:16.607Z",
+  "migrations": [
+    "20260724_create_odds_history.sql",
+    "20260725_create_affiliate_attribution.sql",
+    "20260726_create_provider_snapshots.sql"
+  ],
+  "before": null,
+  "after": null,
+  "durationMs": 2,
+  "notes": [
+    "STAGING_DATABASE_URL unset — inventory-only rehearsal. Ops must re-run with staging DB."
+  ],
+  "blocked": true,
+  "blockCode": "staging_database_missing",
+  "finishedAt": "2026-07-25T17:40:16.608Z"
+}

@@ -1,0 +1,15 @@
+node_modules
+.next
+out
+.env
+.env.local
+telegram-eng/.env
+telegram-eng/.venv
+telegram-invite-bots/.env
+telegram-invite-bots/.venv
+*.log
+.git
+.agents
+marketingskills
+data/events.log
+data/clicks.log

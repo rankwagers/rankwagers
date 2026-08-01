@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Redirect</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #0d1117;
+      color: #f0f6fc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      text-align: center;
+    }
+    a { color: #58a6ff; }
+  </style>
+</head>
+<body>
+  <div>
+    <p>Redirecting...</p>
+    <p><a id="link" href="#">Tap here if nothing happens</a></p>
+  </div>
+  <script>
+    const TARGET = "https://example.com/your-affiliate-link";
+    const tg = window.Telegram && window.Telegram.WebApp;
+    if (tg) tg.ready();
+    const link = document.getElementById("link");
+    link.href = TARGET;
+    window.location.replace(TARGET);
+  </script>
+</body>
+</html>

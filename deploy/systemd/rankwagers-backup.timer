@@ -1,0 +1,12 @@
+# Daily production backup at 03:17 with jitter. Persistent = catch up after downtime.
+[Unit]
+Description=RankWagers daily production backup
+
+[Timer]
+OnCalendar=*-*-* 03:17:00
+RandomizedDelaySec=600
+Persistent=true
+Unit=rankwagers-backup.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,12 @@
+{
+  "ok": false,
+  "blocked": true,
+  "blockCode": "drill_not_executed",
+  "scenario": "bad_deploy_readiness_failure",
+  "notes": [
+    "Operator must execute tabletop/controlled drill per docs/incident-response.md and fill timestamps."
+  ],
+  "detectionAt": null,
+  "rollbackAt": null,
+  "verifiedAt": null
+}

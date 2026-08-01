@@ -1,0 +1,22 @@
+# Production backup (Postgres dumps + file archives). Oneshot; scheduled by the paired .timer.
+# Install (as root):
+#   cp deploy/systemd/rankwagers-backup.* /etc/systemd/system/
+#   systemctl daemon-reload && systemctl enable --now rankwagers-backup.timer
+#   systemctl start rankwagers-backup.service   # run once to verify
+# Reads DB URLs + OUT_DIR/RETAIN_DAYS from the shared env file (adjust the path if needed).
+[Unit]
+Description=RankWagers production backup (Postgres + file archives)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=rankdev
+WorkingDirectory=/var/www/rankwagers
+EnvironmentFile=-/opt/rankwagers/shared/.env
+Environment=OUT_DIR=/opt/rankwagers/backups
+Environment=RETAIN_DAYS=14
+ExecStart=/usr/bin/node scripts/ops/backup-production.mjs
+Nice=10
+IOSchedulingClass=idle
+# A failed backup is surfaced by the exit code; the health monitor alerts on stale backup-last.json.

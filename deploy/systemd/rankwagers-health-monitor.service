@@ -1,0 +1,19 @@
+# Dead-man's-switch health monitor. Oneshot; scheduled by the paired .timer (every 5 min).
+# Install (as root):
+#   cp deploy/systemd/rankwagers-health-monitor.* /etc/systemd/system/
+#   systemctl daemon-reload && systemctl enable --now rankwagers-health-monitor.timer
+# Set ALERT_WEBHOOK_URL (Slack/Discord/webhook) in the env file to receive alerts.
+[Unit]
+Description=RankWagers health / backup-freshness / cron-staleness monitor
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=rankdev
+WorkingDirectory=/var/www/rankwagers
+EnvironmentFile=-/opt/rankwagers/shared/.env
+Environment=BASE_URL=http://127.0.0.1:3000
+Environment=OUT_DIR=/opt/rankwagers/backups
+Environment=PM2_APP_NAME=rankwagers
+ExecStart=/usr/bin/node scripts/ops/health-monitor.mjs

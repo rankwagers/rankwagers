@@ -1,0 +1,106 @@
+{
+  "ok": true,
+  "base": "http://127.0.0.1:3460",
+  "generatedAt": "2026-07-26T09:12:57.091Z",
+  "passed": 14,
+  "failed": 0,
+  "results": [
+    {
+      "name": "health_liveness",
+      "ok": true,
+      "ms": 124,
+      "detail": {
+        "requestId": "req_4a96089811d24eab"
+      }
+    },
+    {
+      "name": "health_ready",
+      "ok": true,
+      "ms": 13,
+      "detail": {
+        "status": 200,
+        "requestId": "req_7ab3b158945743f4"
+      }
+    },
+    {
+      "name": "homepage",
+      "ok": true,
+      "ms": 508,
+      "detail": {
+        "requestId": "req_5cef849330914370",
+        "csp": true
+      }
+    },
+    {
+      "name": "search",
+      "ok": true,
+      "ms": 85,
+      "detail": null
+    },
+    {
+      "name": "archive",
+      "ok": true,
+      "ms": 159,
+      "detail": null
+    },
+    {
+      "name": "methodology",
+      "ok": true,
+      "ms": 33,
+      "detail": null
+    },
+    {
+      "name": "acca",
+      "ok": true,
+      "ms": 34,
+      "detail": null
+    },
+    {
+      "name": "operators_hub",
+      "ok": true,
+      "ms": 34,
+      "detail": null
+    },
+    {
+      "name": "go_rejects_destination_override",
+      "ok": true,
+      "ms": 11,
+      "detail": null
+    },
+    {
+      "name": "go_invalid_token_safe",
+      "ok": true,
+      "ms": 8,
+      "detail": null
+    },
+    {
+      "name": "security_headers",
+      "ok": true,
+      "ms": 31,
+      "detail": {
+        "hsts": "max-age=63072000",
+        "referrer": "strict-origin-when-cross-origin"
+      }
+    },
+    {
+      "name": "robots",
+      "ok": true,
+      "ms": 6,
+      "detail": {
+        "bytes": 222
+      }
+    },
+    {
+      "name": "sitemap_static_shard",
+      "ok": true,
+      "ms": 19,
+      "detail": null
+    },
+    {
+      "name": "404_handling",
+      "ok": true,
+      "ms": 114,
+      "detail": null
+    }
+  ]
+}

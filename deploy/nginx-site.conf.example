@@ -1,0 +1,98 @@
+# Örnek — rankwagers.com → Next.js (127.0.0.1:3000)
+# Cloudflare kullanıyorsanız SSL genelde CF tarafında; origin HTTP veya CF Full SSL.
+#
+# 1) map bloğunu /etc/nginx/nginx.conf içinde http { } altına (server'lardan önce) ekleyin:
+#    include /var/www/aff-site/deploy/nginx-admin-map.conf;
+#    veya deploy/nginx-admin-ip.conf içindeki map satırlarını kopyalayın.
+#
+# 2) Bu dosyayı sites-available'a kopyalayın, domain'i düzenleyin:
+#    sudo cp deploy/nginx-site.conf.example /etc/nginx/sites-available/rankwagers
+#    sudo ln -sf /etc/nginx/sites-available/rankwagers /etc/nginx/sites-enabled/
+#    sudo nginx -t && sudo systemctl reload nginx
+#
+# Rate limit zones — http { } bloğuna bir kez ekleyin:
+#   limit_req_zone $binary_remote_addr zone=rw_go:10m rate=10r/s;
+#   limit_req_zone $binary_remote_addr zone=rw_api:10m rate=20r/s;
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name rankwagers.com www.rankwagers.com;
+
+    client_max_body_size 20m;
+
+    # Edge security headers (app also sets these; nginx duplicates for static/proxy safety)
+    add_header X-Frame-Options "DENY" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+    add_header Permissions-Policy "camera=(), microphone=(), geolocation=()" always;
+
+    location = /api/health {
+        proxy_pass http://127.0.0.1:3000;
+        include /etc/nginx/proxy_params;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        access_log off;
+    }
+
+    # /admin — sadece izinli IP (map: $rw_admin_allowed)
+    location ^~ /admin {
+        if ($rw_admin_allowed = 0) {
+            return 403;
+        }
+
+        proxy_pass http://127.0.0.1:3000;
+        include /etc/nginx/proxy_params;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header CF-Connecting-IP $http_cf_connecting_ip;
+        proxy_set_header CF-IPCountry $http_cf_ipcountry;
+    }
+
+    location ^~ /go/ {
+        limit_req zone=rw_go burst=20 nodelay;
+        proxy_pass http://127.0.0.1:3000;
+        include /etc/nginx/proxy_params;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header CF-Connecting-IP $http_cf_connecting_ip;
+        proxy_set_header CF-IPCountry $http_cf_ipcountry;
+    }
+
+    location ^~ /api/ {
+        limit_req zone=rw_api burst=40 nodelay;
+        proxy_pass http://127.0.0.1:3000;
+        include /etc/nginx/proxy_params;
+        proxy_http_version 1.1;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header CF-Connecting-IP $http_cf_connecting_ip;
+        proxy_set_header CF-IPCountry $http_cf_ipcountry;
+    }
+
+    location / {
+        proxy_pass http://127.0.0.1:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header CF-Connecting-IP $http_cf_connecting_ip;
+        proxy_set_header CF-IPCountry $http_cf_ipcountry;
+    }
+}

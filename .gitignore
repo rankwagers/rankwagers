@@ -1,0 +1,118 @@
+# ---------------------------------------------------------------------------
+# RankWagers — local repository ignore rules.
+#
+# This working tree IS the deployed production source root, so it holds runtime
+# state, build output and live credentials alongside the source. Everything that
+# is generated, mutable at runtime, or secret-bearing is excluded here.
+#
+# Ordering matters: broad excludes first, then explicit re-includes for the few
+# template files that must stay tracked.
+# ---------------------------------------------------------------------------
+
+# --- Secrets -------------------------------------------------------------
+# `.env.local` is a symlink to /opt/rankwagers/shared/.env. Git stores a symlink
+# as its target path, which would disclose the production secret location even
+# though git cannot read the file itself. Excluded as a path, not just content.
+.env
+.env.*
+*.env
+.env.local
+.env.local.backup*
+telegram-eng/.env
+telegram-invite-bots/.env
+!.env.example
+!**/.env.example
+
+# Credential material of any kind.
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+*.keystore
+credentials.json
+secrets.json
+.netrc
+.pgpass
+
+# --- Dependencies --------------------------------------------------------
+node_modules/
+**/node_modules/
+.venv/
+**/.venv/
+__pycache__/
+*.pyc
+
+# --- Build output --------------------------------------------------------
+.next
+.next-*
+out/
+build/
+dist/
+*.tsbuildinfo
+
+# --- Runtime data, archives and logs -------------------------------------
+# Append-only evidence, odds and provider archives are production records, not
+# source. They are backed up separately and must never enter git history.
+/data/
+data/daily-archives/
+data/decision-ledger/
+evidence-archive/
+provider-archive/
+provider-archive-raw/
+raw-provider-archive/
+**/evidence-archive/
+**/provider-archive*/
+telegram-eng/data/signals_*.json
+telegram-eng/data/watchlist_*.json
+logs/
+*.log
+
+# Stray PM2 home checked into the tree.
+307/
+.pm2/
+**/.pm2/
+
+# --- Database dumps and archives -----------------------------------------
+# NOTE: db/migrations/*.sql are SOURCE and stay tracked — only dumps and
+# compressed archives are excluded.
+*.dump
+*.sql.gz
+*.sql.bz2
+*.tar
+*.tar.gz
+*.tgz
+*.zip
+*.bak
+backups/
+
+# --- QA artifacts, rollback copies, scratch ------------------------------
+.continuation-backups/
+rollback/
+**/rollback-*/
+qa-artifacts/
+screenshots/
+playwright-report/
+test-results/
+coverage/
+.nyc_output/
+tmp/
+temp/
+.tmp/
+*.tmp
+*.orig
+*.rej
+
+# --- OS and editor -------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+*~
+.idea/
+.vscode/
+
+# --- Local agent/tooling state -------------------------------------------
+.claude/settings.local.json
