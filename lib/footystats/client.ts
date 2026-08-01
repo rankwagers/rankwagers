@@ -75,13 +75,23 @@ async function fetchJsonResult<T>(
   const { executeProviderCall, ProviderError } = await import(
     "@/lib/providers/reliability"
   );
-  const key = getFootyStatsApiKey();
-  const url = new URL(`${FOOTYSTATS_BASE_URL}/${endpoint}`);
-  url.searchParams.set("key", key);
-  for (const [k, v] of Object.entries(params)) {
-    url.searchParams.set(k, v);
-  }
   try {
+    // Credential resolution and URL assembly sit INSIDE the try deliberately.
+    //
+    // `getFootyStatsApiKey()` throws when the key is missing or blank. With that call outside the
+    // try, the throw escaped this function entirely, skipped the failure classification, and left
+    // the day looking like an application error rather than a provider one — so the same-day
+    // archive fallback never engaged and the page rendered empty. Isolated verification of the
+    // 2026-08-01 candidate reproduced exactly that: 0 qualified fixtures and no stale notice.
+    //
+    // A missing or rotated credential is operationally a provider outage: we cannot reach the
+    // provider, and the last good archive is the right thing to serve.
+    const key = getFootyStatsApiKey();
+    const url = new URL(`${FOOTYSTATS_BASE_URL}/${endpoint}`);
+    url.searchParams.set("key", key);
+    for (const [k, v] of Object.entries(params)) {
+      url.searchParams.set(k, v);
+    }
     const result = await executeProviderCall<T>({
       provider: "footystats",
       operation,

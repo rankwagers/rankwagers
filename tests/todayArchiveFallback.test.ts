@@ -484,6 +484,33 @@ test("fallback module performs no network and no clock reads of its own", () => 
   assert.match(src, /options\.nowMs \?\? Date\.now\(\)/);
 });
 
+test("a credential fault is classified as provider failure, not an application error", () => {
+  // Regression, 2026-08-01 candidate verification. `getFootyStatsApiKey()` throws when the key is
+  // missing or blank. It originally sat OUTSIDE the try that classifies provider failures, so the
+  // throw escaped `fetchJsonResult`, never produced an `unavailable` provenance, and the same-day
+  // fallback never engaged — the isolated candidate rendered 0 qualified fixtures with no stale
+  // notice while a valid 132-fixture archive sat on disk.
+  const src = require("node:fs").readFileSync(
+    path.join(__dirname, "../lib/footystats/client.ts"),
+    "utf8"
+  ) as string;
+  const fn = src.slice(
+    src.indexOf("async function fetchJsonResult"),
+    src.indexOf("/** Soft accessor retained")
+  );
+  const tryIdx = fn.indexOf("try {");
+  const keyIdx = fn.indexOf("getFootyStatsApiKey()");
+  const catchIdx = fn.indexOf("} catch (error)");
+  assert.ok(tryIdx > 0 && keyIdx > 0 && catchIdx > 0, "function shape recognised");
+  assert.ok(
+    keyIdx > tryIdx && keyIdx < catchIdx,
+    "credential resolution must sit inside the classified try block"
+  );
+  // URL assembly must be guarded too — a malformed base URL is equally a provider-side fault.
+  const urlIdx = fn.indexOf("new URL(");
+  assert.ok(urlIdx > tryIdx && urlIdx < catchIdx, "URL assembly must be inside the try block");
+});
+
 test("emptyLists reports the unavailable source for its requested date", async () => {
   const { emptyLists } = await import("../lib/footystats/client");
   const lists: DailyMatchLists = emptyLists("2026-08-01");
