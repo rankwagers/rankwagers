@@ -93,10 +93,10 @@ export function LiveFeaturedCard({
  const showScoreLine = !o25WonLive;
 
  const shellClass = isWon
- ? "border-2 border-[var(--green-primary)] via-ink-card"
+ ? "border border-[var(--green-primary)]"
  : isWinPending
- ? "border border-[var(--amber-border)] via-ink-card to-ink-soft animate-[pulse_2.5s_ease-in-out_infinite]"
- : "border border-brand/25 from-ink-soft to-ink-card";
+ ? "border border-[var(--amber-border)] animate-[pulse_2.5s_ease-in-out_infinite]"
+ : "border border-brand/25";
 
  return (
  <article className={`relative overflow-hidden rounded-xl p-3 ${shellClass}`}>
@@ -432,7 +432,7 @@ export function UpcomingFeaturedCard({ match }: { match: UpcomingMatchPublic }) 
  const countdown = hours > 0 ? `${hours}h ${mins}m` : `${mins}m`;
 
  return (
- <article className="rounded-xl border border-[var(--info-primary)] from-ink-soft to-ink-card p-3">
+ <article className="rounded-xl border border-[var(--info-primary)] p-3">
  <div className="mb-2 flex items-center justify-between gap-2">
  <span className="rounded-md bg-[var(--info-surface)] px-1.5 py-0.5 text-metadata font-semibold uppercase text-[var(--info-primary)]">
  {match.marketLabel}

@@ -2,26 +2,29 @@ export type BrandLogoSize = "sm" | "md" | "lg";
 
 const SIZE: Record<
  BrandLogoSize,
- { shell: string; inner: string; img: string }
+ { shell: string; inner: string; img: string; initials: string }
 > = {
  sm: {
- shell: "h-11 w-[4.75rem] rounded-xl",
- inner: "rounded-lg px-2 py-1.5",
+ shell: "h-11 w-[4.75rem] rounded-lg",
+ inner: "rounded-md px-2 py-1.5",
  img: "max-h-[1.75rem]",
+ initials: "text-sm",
  },
  md: {
- shell: "h-[4.75rem] w-[7.5rem] rounded-xl",
- inner: "rounded-lg px-3 py-2.5",
+ shell: "h-[4.75rem] w-[7.5rem] rounded-lg",
+ inner: "rounded-md px-3 py-2.5",
  img: "max-h-[3rem]",
+ initials: "text-lg",
  },
  lg: {
- shell: "h-24 w-[8.75rem] rounded-xl",
- inner: "rounded-lg px-3.5 py-3",
+ shell: "h-24 w-[8.75rem] rounded-lg",
+ inner: "rounded-md px-3.5 py-3",
  img: "max-h-[3.75rem]",
+ initials: "text-xl",
  },
 };
 
-/** Koyu, gradient çerçeveli logo kutusu — affiliate listelerinde tutarlı “premium” görünüm. */
+/** Logo container. A hairline-bordered surface so every operator mark sits in the same box. */
 export function BrandLogo({
  src,
  alt,
@@ -36,10 +39,10 @@ export function BrandLogo({
  const s = SIZE[size];
  return (
  <div
- className={`brand-logo-shell relative shrink-0 aspect-[5/3] ${s.shell} ${className}`}
+ className={`relative shrink-0 overflow-hidden border border-[var(--border-subtle)] bg-[var(--canvas-secondary)] ${s.shell} ${className}`}
  >
  <div
- className={`brand-logo-inner flex h-full w-full items-center justify-center ${s.inner}`}
+ className={`flex h-full w-full items-center justify-center ${s.inner}`}
  >
  {/* eslint-disable-next-line @next/next/no-img-element */}
  <img
@@ -73,12 +76,12 @@ export function BrandLogoFallback({
 
  return (
  <div
- className={`brand-logo-shell relative shrink-0 aspect-[5/3] ${s.shell} ${className}`}
+ className={`relative shrink-0 overflow-hidden border border-[var(--border-subtle)] bg-[var(--canvas-secondary)] ${s.shell} ${className}`}
  >
  <div
- className={`brand-logo-inner flex h-full w-full items-center justify-center from-ink-soft to-ink-card ${s.inner}`}
+ className={`flex h-full w-full items-center justify-center ${s.inner}`}
  >
- <span className="from-brand-light to-brand bg-clip-text text-xl font-semibold tracking-display text-transparent">
+ <span className={`font-semibold tracking-display text-[var(--ink-secondary)] ${s.initials}`}>
  {initials}
  </span>
  </div>

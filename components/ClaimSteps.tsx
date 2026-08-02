@@ -12,7 +12,7 @@ export function ClaimSteps({ dict }: { dict: Dictionary }) {
  <div className="grid gap-4 sm:grid-cols-3">
  {steps.map((s) => (
  <div key={s.n} className="card relative p-5">
- <div className="flex h-9 w-9 items-center justify-center rounded-full from-brand-light to-brand-dark font-semibold text-background">
+ <div className="flex h-9 w-9 items-center justify-center rounded-full bg-brand font-semibold text-background">
  {s.n}
  </div>
  <div className="mt-3 font-semibold text-foreground">{s.title}</div>

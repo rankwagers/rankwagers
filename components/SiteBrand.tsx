@@ -47,7 +47,7 @@ export function SiteBrandBadge({
 }) {
  return (
  <span
- className={`flex shrink-0 items-center justify-center from-brand-light to-brand-dark font-semibold tracking-display text-background shadow-card ${badgeSizes[size]} ${className}`}
+ className={`flex shrink-0 items-center justify-center bg-brand font-semibold tracking-display text-background shadow-card ${badgeSizes[size]} ${className}`}
  aria-hidden
  >
  RW
