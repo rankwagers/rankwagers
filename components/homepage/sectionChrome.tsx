@@ -28,7 +28,7 @@ export function SectionHeading({
   lead?: boolean;
 }) {
   return (
-    <div className="mb-5">
+    <div className="mb-6 md:mb-8">
       {eyebrow ? (
         <p className="mb-1 text-metadata font-medium uppercase tracking-label text-muted-foreground">
           {eyebrow}
@@ -36,7 +36,7 @@ export function SectionHeading({
       ) : null}
       <h2
         id={id}
-        className="flex items-center gap-2 font-display text-2xl font-semibold tracking-display text-foreground"
+        className="flex items-center gap-2 font-display text-2xl font-semibold leading-tight tracking-display text-foreground md:text-3xl"
       >
         {icon}
         {title}
@@ -45,7 +45,7 @@ export function SectionHeading({
         <p
           className={
             lead
-              ? "mt-3 max-w-[38rem] text-base leading-relaxed text-[var(--ink-secondary)]"
+              ? "mt-4 max-w-[38rem] text-base leading-relaxed text-[var(--ink-secondary)] md:text-lg"
               : "mt-2 max-w-2xl text-sm leading-relaxed text-[var(--ink-secondary)]"
           }
         >

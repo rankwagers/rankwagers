@@ -193,7 +193,7 @@ export function RankWagersHome({
         id="today"
         data-analytics-section="hero"
         aria-labelledby="homepage-hero-heading"
-        className="pb-10 pt-6 md:pb-12 md:pt-8"
+        className="pb-14 pt-8 md:pb-20 md:pt-12"
       >
         <h1
           id="homepage-hero-heading"
@@ -201,11 +201,11 @@ export function RankWagersHome({
         >
           {p.heroTitle}
         </h1>
-        <p className="mt-5 max-w-[38rem] text-base leading-relaxed text-[var(--ink-secondary)] md:text-lg">
+        <p className="mt-6 max-w-[34rem] text-lg leading-relaxed text-[var(--ink-secondary)] md:text-xl">
           {p.heroSubtitle}
         </p>
         {assessedLabel ? (
-          <p className="mt-6 text-sm text-[var(--ink-secondary)]">
+          <p className="mt-8 text-sm text-muted-foreground">
             <time dateTime={trust.verified.lastUpdatedAt ?? undefined}>{assessedLabel}</time>
           </p>
         ) : null}
@@ -214,7 +214,7 @@ export function RankWagersHome({
           bias, and it makes no promise about its own effect — it points at the published criteria
           so the reader can check rather than believe.
         */}
-        <p className="mt-3 max-w-[38rem] text-xs leading-relaxed text-[var(--ink-secondary)]">
+        <p className="mt-2 max-w-[34rem] text-xs leading-relaxed text-muted-foreground">
           {p.heroDisclosure}
         </p>
       </section>
@@ -241,7 +241,7 @@ export function RankWagersHome({
         id="verified-performance"
         data-analytics-section="verified_performance"
         aria-labelledby="verified-performance-heading"
-        className="-mx-4 scroll-mt-28 border-y border-[var(--border-subtle)] bg-[var(--canvas-secondary)] px-4 py-10 sm:-mx-6 sm:px-6 md:py-12 lg:-mx-10 lg:px-10"
+        className="-mx-4 scroll-mt-28 border-y border-[var(--border-subtle)] bg-[var(--canvas-secondary)] px-4 py-14 sm:-mx-6 sm:px-6 md:py-20 lg:-mx-10 lg:px-10"
       >
         <SectionHeading
           id="verified-performance-heading"
@@ -260,7 +260,7 @@ export function RankWagersHome({
                 section, which also contains recent-results and runs most of the page height. */}
             <dl
               id="verified-performance-figures"
-              className="mt-8 grid max-w-[72rem] grid-cols-2 items-stretch gap-4 sm:gap-5 lg:grid-cols-4"
+              className="mt-10 grid max-w-[72rem] grid-cols-2 items-stretch gap-px overflow-hidden rounded-lg border border-border bg-border sm:gap-px lg:grid-cols-4"
             >
               <MetricCard
                 label={p.verifiedSettled}
@@ -284,7 +284,7 @@ export function RankWagersHome({
             <div
               id="recent-results"
               data-analytics-section="recent_results"
-              className="mt-8 max-w-[72rem] scroll-mt-28"
+              className="mt-14 max-w-[72rem] scroll-mt-28"
             >
               <h3
                 id="recent-results-heading"
@@ -376,7 +376,7 @@ export function RankWagersHome({
         id="top-picks"
         data-analytics-section="top_picks"
         aria-labelledby="top-picks-heading"
-        className="scroll-mt-28 py-10 md:py-12"
+        className="scroll-mt-28 py-12 md:py-16"
       >
         <SectionHeading
           id="top-picks-heading"
@@ -459,36 +459,42 @@ export function RankWagersHome({
         )}
 
         {topFixtures.length ? (
-          <div className="mt-6 grid max-w-[72rem] gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {topFixtures.map((fixture, index) => (
+          <div className="mt-10 grid max-w-[72rem] gap-5 sm:grid-cols-2 md:gap-6 lg:grid-cols-3">
+            {topFixtures.map((fixture) => (
               <article
                 key={fixture.id}
-                className="flex flex-col rounded-lg border border-border bg-[var(--canvas-secondary)] p-5"
+                className="flex flex-col rounded-lg border border-border bg-[var(--canvas-secondary)] p-5 md:p-6"
               >
-                <div className="flex items-start justify-between gap-3">
-                  <p className="text-metadata font-medium uppercase tracking-label text-muted-foreground">
-                    #{index + 1} · {fixture.league}
-                  </p>
-                  <strong className="font-mono text-2xl font-semibold tabular-nums text-brand">
-                    {fixture.modelProbability}%
-                  </strong>
-                </div>
-                <p className="mt-4 text-lg font-semibold leading-snug text-foreground">
+                {/*
+                  The fixture leads. Previously the largest, most saturated element in this card was
+                  the model percentage — 24px, brand green, above a 16px team name — which is the
+                  house style of the genre this publication exists to separate from. The estimate is
+                  now a qualifier set in the same measure as the market it qualifies, and the match
+                  is the thing the eye lands on.
+
+                  Three deletions, no additions: the `#1 · #2 · #3` leaderboard ordinal (position in
+                  a list is not evidence), the restated evidence line (it printed the same number a
+                  second time in the same card), and the accent colour on the figure.
+                */}
+                <p className="text-metadata font-medium uppercase tracking-label text-muted-foreground">
+                  {fixture.league}
+                </p>
+                <p className="mt-3 font-display text-xl font-semibold leading-snug text-foreground">
                   {fixture.home}{" "}
-                  <span className="font-normal text-muted-foreground">vs</span>{" "}
+                  <span className="font-normal text-[var(--ink-secondary)]">vs</span>{" "}
                   {fixture.away}
                 </p>
-                <p className="mt-2 text-sm text-[var(--ink-secondary)]">
+                <p className="mt-3 text-sm text-[var(--ink-secondary)]">
                   {fixture.market} ·{" "}
                   <time dateTime={fixture.kickoffDateTime}>{fixture.kickoff}</time>
                 </p>
-                <p className="mt-2 text-sm text-muted-foreground">
-                  {formatDict(p.topPicksEvidence, {
-                    pct: String(fixture.modelProbability),
-                    market: fixture.market,
-                  })}
+                <p className="mt-1 text-sm text-[var(--ink-secondary)]">
+                  <span className="font-mono tabular-nums">{fixture.modelProbability}%</span>{" "}
+                  model estimate
                 </p>
-                <p className="mt-2 text-xs text-muted-foreground">
+                {/* Provenance. Raised off the 10px step: this is the sentence that makes the card
+                    research rather than a tip, and it was the smallest thing on it. */}
+                <p className="mt-3 text-xs text-muted-foreground">
                   Observed <time dateTime={fixture.updatedDateTime}>{fixture.updatedAt}</time>
                 </p>
                 <div className="mt-4 flex flex-wrap items-center gap-2">
@@ -565,7 +571,7 @@ export function RankWagersHome({
         data-analytics-section="live_matches"
         id="live-signals"
         aria-labelledby="live-matches-heading"
-        className="scroll-mt-28 border-t border-[var(--border-subtle)] py-8 md:py-10"
+        className="scroll-mt-28 border-t border-[var(--border-subtle)] py-10 md:py-12"
       >
         <SectionHeading
           id="live-matches-heading"
@@ -590,7 +596,7 @@ export function RankWagersHome({
         data-analytics-section="recently_qualified"
         id="fixtures"
         aria-labelledby="recently-qualified"
-        className="scroll-mt-28 border-t border-[var(--border-subtle)] py-8 md:py-10"
+        className="scroll-mt-28 border-t border-[var(--border-subtle)] py-10 md:py-12"
       >
         <h2
           id="recently-qualified"
@@ -662,50 +668,22 @@ export function RankWagersHome({
       </section>
 
       {/*
-        S6 — Bookmakers. After every research surface, without exception.
-
-        The strip already states that the research above is separate from commercial offers. Placed
-        here, that claim becomes literally true of the layout — which is what a reader actually
-        believes, rather than the sentence.
-      */}
-      <section
-        data-analytics-section="top_operators"
-        className="border-t border-[var(--border-subtle)] py-8 md:py-10"
-      >
-        <div className="max-w-[72rem]">
-          <BibleOperatorStrip
-            dict={dict}
-            locale={locale}
-            subidBase="homepage-top-operators"
-            countryContext={countryContext}
-            featuredLeagues={trust.featuredLeagues}
-          />
-          <div className="mt-6">
-            <HomepageAccaEntry
-              locale={locale}
-              title={p.accaEntryTitle}
-              body={p.accaEntryBody}
-              ctaLabel={p.accaEntryCta}
-            />
-          </div>
-        </div>
-      </section>
-
-      {/*
-        S7 — How This Works. Separated by whitespace, not a rule: the page opens and closes at the
+        S6 — Method. Separated by whitespace, not a rule: the page opens and closes at the
         same editorial measure, which is what makes it read as composed rather than assembled.
 
         Merges `#why-trust`, `#research-notes`/`#methodology` and `#prediction-archive` — three
         sections that made the same argument in three places. The five reasons lose their card
         chrome and become text rows; a bordered box around a sentence adds height, not meaning.
 
-        Ending on method rather than on monetisation is the positioning, expressed as an order.
+        Placed BEFORE commerce, not after it. A reader meets the method that produced the record
+        while the record is still in mind, and the commercial block is the last thing on the page
+        rather than an interruption between two research surfaces.
       */}
       <section
         id="why-trust"
         data-analytics-section="why_trust"
         aria-labelledby="why-trust-heading"
-        className="scroll-mt-28 pb-12 pt-10 md:pb-16 md:pt-12"
+        className="scroll-mt-28 py-12 md:py-16"
       >
         <SectionHeading id="why-trust-heading" eyebrow={p.whyEyebrow} title={p.whyTitle} />
         <ol className="mt-8 max-w-[46rem] space-y-4">
@@ -782,6 +760,37 @@ export function RankWagersHome({
           </div>
         </div>
       </section>
+      {/*
+        S7 — Bookmakers. After every research surface, without exception.
+
+        The strip already states that the research above is separate from commercial offers. Placed
+        here — last on the page, after the method as well as the research — that claim becomes
+        literally true of the layout, which is what a reader actually believes rather than the
+        sentence. The accumulator entry travels with it: it is a commercial funnel, not research.
+      */}
+      <section
+        data-analytics-section="top_operators"
+        className="border-t border-[var(--border-subtle)] pb-16 pt-10 md:pb-20 md:pt-12"
+      >
+        <div className="max-w-[72rem]">
+          <BibleOperatorStrip
+            dict={dict}
+            locale={locale}
+            subidBase="homepage-top-operators"
+            countryContext={countryContext}
+            featuredLeagues={trust.featuredLeagues}
+          />
+          <div className="mt-6">
+            <HomepageAccaEntry
+              locale={locale}
+              title={p.accaEntryTitle}
+              body={p.accaEntryBody}
+              ctaLabel={p.accaEntryCta}
+            />
+          </div>
+        </div>
+      </section>
+
     </div>
   );
 }
@@ -806,7 +815,7 @@ function MetricCard({
   detail?: string;
 }) {
   return (
-    <div className="flex h-full flex-col rounded-lg border border-border bg-[var(--canvas-primary)] p-5">
+    <div className="flex h-full flex-col bg-[var(--canvas-primary)] p-5 md:p-6">
       <dt className="text-metadata font-medium uppercase tracking-label text-[var(--ink-secondary)]">
         {label}
       </dt>
@@ -814,7 +823,7 @@ function MetricCard({
         The largest numerals on the homepage. Reserved for the settled record — no other figure on
         the page may use this step, or the record stops being the loudest thing on it.
       */}
-      <dd className="mt-3 font-mono text-4xl font-semibold leading-none tabular-nums text-foreground">
+      <dd className="mt-4 font-mono text-4xl font-semibold leading-none tracking-tight tabular-nums text-foreground">
         {value}
       </dd>
       {/*
