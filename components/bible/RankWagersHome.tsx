@@ -36,6 +36,17 @@ const marketNames = {
   sh: "2nd half goal",
 } as const;
 
+/*
+ * Editorial masthead copy. A journal announces itself before it reports — the nameplate is the one
+ * element that frames every section below as edited copy rather than a dashboard readout. This is a
+ * masthead (the publication's subject), NOT the section eyebrow that S1 deliberately dropped: that
+ * eyebrow paraphrased the headline; this names the publication. Hardcoded like the other in-component
+ * English strings (`Live matches`, `Recently qualified`, `Saved`) so it moves with this layout.
+ */
+const MASTHEAD_KICKER = "Football Intelligence";
+const MASTHEAD_REMIT =
+  "An independent, evidence-led football review. Every projection is published before kickoff and settled, in public, against the result.";
+
 /**
  * Render the hero dateline from the settled record's own timestamp.
  *
@@ -195,6 +206,19 @@ export function RankWagersHome({
         aria-labelledby="homepage-hero-heading"
         className="pb-14 pt-8 md:pb-20 md:pt-12"
       >
+        {/*
+          Masthead. The publication nameplate, above the headline, with a rule beneath it — the
+          journal states what it is before it states anything. Not a heading (the H1 below is the
+          page's only H1); a decorative nameplate, so screen readers meet the headline first.
+        */}
+        <div className="mb-8 border-b border-[var(--border-subtle)] pb-6">
+          <p className="font-display text-metadata font-semibold uppercase tracking-label text-foreground">
+            {MASTHEAD_KICKER}
+          </p>
+          <p className="mt-2 max-w-[46rem] text-sm leading-relaxed text-muted-foreground">
+            {MASTHEAD_REMIT}
+          </p>
+        </div>
         <h1
           id="homepage-hero-heading"
           className="max-w-[46rem] font-display text-4xl font-semibold leading-[1.05] tracking-display text-foreground md:text-5xl"
@@ -227,8 +251,29 @@ export function RankWagersHome({
         row. The asymmetry a reader expects to find here is the thing the rest of the page is worth,
         and diminishing the loss count would forfeit it.
 
-        The sample note is promoted from a footnote to the lead: a platform declining to publish a
-        flattering number it cannot substantiate is the strongest sentence on the page.
+        Two tiers, not four equal cards. `Won` and `Lost` are the argument and are sized as such;
+        `Settled`, `Hit rate`, `Pending` and `Void` are the context that makes them readable and sit
+        a full step down. Four cards of identical weight made this a dashboard — and a dashboard has
+        no message, because nothing in it is more important than anything else.
+
+        Won and Lost keep IDENTICAL numerals — same size, same weight, same ink. Colour appears only
+        in the state dot, the proportional bar and the form strip, never in the figures themselves.
+        The invariant is that the loss is never diminished; it is not that the two may never be
+        distinguished.
+
+        The bar is the visual proof. It carries no arithmetic — the two segments are flex children
+        given `flexGrow` of the won and lost counts themselves, so the ratio is laid out by the
+        browser rather than computed here. It exists because a reader who will not do division still
+        understands a length, and because it makes the loss unmissable rather than merely disclosed.
+
+        The form strip is the historical confidence: the actual settled sequence, newest first, in
+        the order `recentResults` already supplies. A summary asserts a record; a sequence shows one.
+
+        The sample note moves from the lead to a footnote beneath the figures. It is the most honest
+        sentence on the page and it was also 199 characters of internal vocabulary standing between
+        the reader and the numbers. `verifiedDescription` — written for this section and never wired
+        — leads instead, and the precise version sits directly under the figures where a sceptic
+        looks. Nothing is softened; the order is changed.
 
         `#recent-results` is merged in below the totals it reconciles with — the individual outcomes
         and their summary are one argument, and splitting them across a rule made the reader assemble
@@ -246,39 +291,78 @@ export function RankWagersHome({
         <SectionHeading
           id="verified-performance-heading"
           title={p.verifiedTitle}
-          description={trust.verified.sampleNote}
+          description={p.verifiedDescription}
           lead
         />
         {trust.verified.availability === "available" ? (
           <div>
             <p className="mt-1 text-sm text-[var(--ink-secondary)]">{trust.verified.windowLabel}</p>
-            {/*
-              Never `grid-cols-1`. WON and LOST must sit side by side on every viewport — the
-              comparison is the message, and stacking them destroys it.
-            */}
+
             {/* Targeted by AccaChrome's launcher yield — the figures themselves, not the whole
                 section, which also contains recent-results and runs most of the page height. */}
-            <dl
-              id="verified-performance-figures"
-              className="mt-10 grid max-w-[72rem] grid-cols-2 items-stretch gap-px overflow-hidden rounded-lg border border-border bg-border sm:gap-px lg:grid-cols-4"
-            >
-              <MetricCard
-                label={p.verifiedSettled}
-                value={String(trust.verified.settledPredictions)}
-                detail={`${trust.verified.pendingPredictions} ${p.verifiedPending.toLowerCase()}`}
+            <div id="verified-performance-figures" className="mt-10 max-w-[52rem]">
+              {/*
+                Never `grid-cols-1`. WON and LOST must sit side by side on every viewport — the
+                comparison is the message, and stacking them destroys it.
+              */}
+              <dl className="grid grid-cols-2 items-stretch gap-px overflow-hidden rounded-lg border border-border bg-border">
+                <VerdictFigure
+                  label={p.verifiedWon}
+                  value={String(trust.verified.won)}
+                  tone="won"
+                />
+                <VerdictFigure
+                  label={p.verifiedLost}
+                  value={String(trust.verified.lost)}
+                  tone="lost"
+                />
+              </dl>
+
+              <ProofBar
+                won={trust.verified.won}
+                lost={trust.verified.lost}
+                wonLabel={p.verifiedWon}
+                lostLabel={p.verifiedLost}
               />
-              <MetricCard label={p.verifiedWon} value={String(trust.verified.won)} />
-              <MetricCard label={p.verifiedLost} value={String(trust.verified.lost)} />
-              <MetricCard
-                label={p.verifiedHitRate}
-                value={
-                  trust.verified.hitRatePct != null
-                    ? `${trust.verified.hitRatePct}%`
-                    : "—"
-                }
-                detail={`${p.verifiedVoid}: ${trust.verified.voidPredictions}`}
-              />
-            </dl>
+
+              {/*
+                Context, one step down. The denominator leads it: "over how many?" is the first
+                question a sceptic asks of a rate, and answering it before the rate is stated costs
+                nothing and pre-empts the objection.
+              */}
+              <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-4">
+                <ContextFigure
+                  label={p.verifiedSettled}
+                  value={String(trust.verified.settledPredictions)}
+                />
+                <ContextFigure
+                  label={p.verifiedHitRate}
+                  value={
+                    trust.verified.hitRatePct != null
+                      ? `${trust.verified.hitRatePct}%`
+                      : "—"
+                  }
+                />
+                <ContextFigure
+                  label={p.verifiedPending}
+                  value={String(trust.verified.pendingPredictions)}
+                />
+                <ContextFigure
+                  label={p.verifiedVoid}
+                  value={String(trust.verified.voidPredictions)}
+                />
+              </dl>
+
+              <FormStrip results={trust.recentResults} label={p.recentTitle} />
+
+              {/*
+                The sample note, in its proper place: under the figures it qualifies, at caption
+                size, where a reader who doubts the numbers will look for exactly this.
+              */}
+              <p className="mt-6 max-w-[46rem] text-caption leading-relaxed text-[var(--ink-secondary)]">
+                {trust.verified.sampleNote}
+              </p>
+            </div>
 
             {/* #recent-results — merged into the band, directly beneath the totals. */}
             <div
@@ -292,18 +376,18 @@ export function RankWagersHome({
               >
                 {p.recentTitle}
               </h3>
-              <p className="mt-2 max-w-[38rem] text-sm leading-relaxed text-[var(--ink-secondary)]">
+              <p className="mt-2 max-w-[38rem] text-base leading-relaxed text-[var(--ink-secondary)]">
                 {p.recentDescription}
               </p>
               {trust.recentResults.length ? (
-                <ul className="mt-4 divide-y divide-[var(--border-subtle)] rounded-lg border border-border bg-[var(--canvas-primary)]">
+                <ul className="list-enter mt-4 divide-y divide-[var(--border-subtle)] rounded-lg border border-border bg-[var(--canvas-primary)]">
                   {trust.recentResults.map((row) => (
                     <li key={row.id}>
                       <SectionTrackLink
                         href={row.matchHref}
                         section="recent_results"
                         locale={locale}
-                        className="flex flex-col gap-2 px-4 py-3 transition-colors hover:bg-[var(--canvas-secondary)] sm:flex-row sm:items-center sm:justify-between"
+                        className="press flex flex-col gap-2 px-4 py-3 hover:bg-[var(--canvas-secondary)] sm:flex-row sm:items-center sm:justify-between"
                       >
                         <div className="min-w-0">
                           <p className="text-lg font-semibold text-foreground">
@@ -341,7 +425,11 @@ export function RankWagersHome({
               )}
             </div>
 
-            <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+            {/* Internal links presented as an editorial cross-reference, not a button row. */}
+            <p className="mt-8 text-metadata font-medium uppercase tracking-label text-muted-foreground">
+              Further reading
+            </p>
+            <div className="mt-2 flex flex-wrap gap-x-6 gap-y-2 text-sm">
               <SectionTrackLink
                 href={trust.verified.methodologyHref}
                 section="verified_performance"
@@ -437,7 +525,7 @@ export function RankWagersHome({
                   })}
                   section="trending_markets"
                   locale={locale}
-                  className="inline-flex min-h-11 items-center gap-2 rounded-md border border-border bg-[var(--canvas-secondary)] px-3 text-sm text-foreground transition-colors hover:border-[var(--border-strong)]"
+                  className="press inline-flex min-h-11 items-center gap-2 rounded-md border border-border bg-[var(--canvas-secondary)] px-3 text-sm text-foreground hover:border-[var(--border-strong)]"
                 >
                   <span>{market.label}</span>
                   <span className="font-mono tabular-nums text-[var(--ink-secondary)]">
@@ -459,7 +547,7 @@ export function RankWagersHome({
         )}
 
         {topFixtures.length ? (
-          <div className="mt-10 grid max-w-[72rem] gap-5 sm:grid-cols-2 md:gap-6 lg:grid-cols-3">
+          <div className="list-enter mt-10 grid max-w-[72rem] gap-5 sm:grid-cols-2 md:gap-6 lg:grid-cols-3">
             {topFixtures.map((fixture) => (
               <article
                 key={fixture.id}
@@ -510,7 +598,7 @@ export function RankWagersHome({
                     className="btn-primary min-h-10"
                   >
                     {p.topPicksOpenMatch}
-                    <ArrowUpRight className="h-3.5 w-3.5" aria-hidden />
+                    <ArrowUpRight className="h-3.5 w-3.5 shrink-0" aria-hidden />
                   </SectionTrackLink>
                   <AddToAccaButton
                     labelAdd={p.topPicksAddAcca}
@@ -571,10 +659,11 @@ export function RankWagersHome({
         data-analytics-section="live_matches"
         id="live-signals"
         aria-labelledby="live-matches-heading"
-        className="scroll-mt-28 border-t border-[var(--border-subtle)] py-10 md:py-12"
+        className="scroll-mt-28 border-t border-[var(--border-subtle)] py-12 md:py-16"
       >
         <SectionHeading
           id="live-matches-heading"
+          eyebrow="Live desk"
           title="Live matches"
           description="No live data for these matches yet. Scores appear once the provider reports them."
           lead
@@ -596,14 +685,21 @@ export function RankWagersHome({
         data-analytics-section="recently_qualified"
         id="fixtures"
         aria-labelledby="recently-qualified"
-        className="scroll-mt-28 border-t border-[var(--border-subtle)] py-10 md:py-12"
+        className="scroll-mt-28 border-t border-[var(--border-subtle)] py-12 md:py-16"
       >
+        <p className="mb-1 text-metadata font-medium uppercase tracking-label text-muted-foreground">
+          Research desk
+        </p>
         <h2
           id="recently-qualified"
           className="font-display text-xl font-semibold tracking-display text-foreground"
         >
           Recently qualified
         </h2>
+        <p className="mt-3 max-w-[38rem] text-sm leading-relaxed text-[var(--ink-secondary)]">
+          Fixtures that cleared the model&rsquo;s qualification threshold, with the full explorer and
+          the competitions driving today&rsquo;s list.
+        </p>
 
         {/* #featured-leagues */}
         <div id="featured-leagues" className="mt-4 scroll-mt-28">
@@ -637,11 +733,11 @@ export function RankWagersHome({
                 className="inline-flex min-h-11 items-center gap-1 font-medium text-foreground underline decoration-[var(--border-subtle)] underline-offset-4 hover:decoration-current"
               >
                 {p.leaguesAll}
-                <ArrowUpRight className="h-3.5 w-3.5" aria-hidden />
+                <ArrowUpRight className="h-3.5 w-3.5 shrink-0" aria-hidden />
               </SectionTrackLink>
             </li>
           </ul>
-          <p className="mt-3 max-w-[38rem] text-sm leading-relaxed text-[var(--ink-secondary)]">
+          <p className="mt-3 max-w-[38rem] text-base leading-relaxed text-[var(--ink-secondary)]">
             {p.leaguesDescription}
           </p>
         </div>
@@ -658,7 +754,7 @@ export function RankWagersHome({
           >
             Saved
           </h3>
-          <p className="mt-2 max-w-[38rem] text-sm leading-relaxed text-[var(--ink-secondary)]">
+          <p className="mt-2 max-w-[38rem] text-base leading-relaxed text-[var(--ink-secondary)]">
             Fixtures you save stay in this browser so you can reopen match evidence quickly.
           </p>
           <div className="mt-4">
@@ -683,9 +779,15 @@ export function RankWagersHome({
         id="why-trust"
         data-analytics-section="why_trust"
         aria-labelledby="why-trust-heading"
-        className="scroll-mt-28 py-12 md:py-16"
+        className="scroll-mt-28 border-t border-[var(--border-subtle)] py-12 md:py-16"
       >
-        <SectionHeading id="why-trust-heading" eyebrow={p.whyEyebrow} title={p.whyTitle} />
+        <SectionHeading
+          id="why-trust-heading"
+          eyebrow={p.whyEyebrow}
+          title={p.whyTitle}
+          description="How this publication is produced — and how every figure above can be checked against the record rather than taken on trust."
+          lead
+        />
         <ol className="mt-8 max-w-[46rem] space-y-4">
           {[p.whyPublished, p.whyEvidence, p.whyLive, p.whySettlement, p.whyArchive].map(
             (item, index) => (
@@ -717,7 +819,7 @@ export function RankWagersHome({
           <div id="methodology" className="mt-4 scroll-mt-28">
             <BibleHomeNotes dict={dict} locale={locale} />
           </div>
-          <p className="mt-4 max-w-[46rem] text-sm text-muted-foreground">
+          <p className="mt-4 max-w-[46rem] text-base leading-relaxed text-muted-foreground">
             {p.trustFooterNote}
           </p>
         </div>
@@ -770,7 +872,7 @@ export function RankWagersHome({
       */}
       <section
         data-analytics-section="top_operators"
-        className="border-t border-[var(--border-subtle)] pb-16 pt-10 md:pb-20 md:pt-12"
+        className="border-t border-[var(--border-subtle)] pb-16 pt-12 md:pb-20 md:pt-16"
       >
         <div className="max-w-[72rem]">
           <BibleOperatorStrip
@@ -796,44 +898,143 @@ export function RankWagersHome({
 }
 
 /**
- * One figure from the settled record.
+ * A verdict figure — `Won` or `Lost`. The two largest numerals on the homepage.
  *
  * Renders as a `dt`/`dd` pair inside the row's `dl`, so a screen reader announces "Lost, 43" as one
  * term and its definition. As sibling paragraphs the label and the numeral were two unrelated
  * announcements, and a reader who cannot see the card had no way to bind them.
  *
+ * The numeral is identical in size, weight and ink for both tones — only the state dot carries
+ * colour. Diminishing the loss by size, weight, a paler ink or position would forfeit the one claim
+ * this section exists to make.
+ *
  * `text-[var(--ink-secondary)]` on the label rather than `text-muted-foreground`: at 11px the muted
  * token measures 4.4:1 against this canvas, under the 4.5:1 AA floor for text this size.
  */
-function MetricCard({
+function VerdictFigure({
   label,
   value,
-  detail,
+  tone,
 }: {
   label: string;
   value: string;
-  detail?: string;
+  tone: "won" | "lost";
 }) {
+  const dot =
+    tone === "won" ? "bg-[var(--status-won-fg)]" : "bg-[var(--status-lost-fg)]";
   return (
-    <div className="flex h-full flex-col bg-[var(--canvas-primary)] p-5 md:p-6">
+    <div className="flex h-full flex-col bg-[var(--canvas-primary)] p-5 md:p-7">
+      <dt className="flex items-center gap-2 text-metadata font-medium uppercase tracking-label text-[var(--ink-secondary)]">
+        <span aria-hidden className={`h-2 w-2 shrink-0 rounded-full ${dot}`} />
+        {label}
+      </dt>
+      <dd className="mt-4 font-mono text-5xl font-semibold leading-none tracking-tight tabular-nums text-foreground md:text-6xl">
+        {value}
+      </dd>
+    </div>
+  );
+}
+
+/**
+ * A context figure — the denominator, the rate, and the two states that are neither won nor lost.
+ *
+ * A full step below a verdict figure in every dimension: no card, no fill, no rule, a numeral at a
+ * third of the size. These exist to make the pair above readable, not to compete with it. Four
+ * figures of equal weight is a dashboard, and a dashboard has no message.
+ */
+function ContextFigure({ label, value }: { label: string; value: string }) {
+  return (
+    <div>
       <dt className="text-metadata font-medium uppercase tracking-label text-[var(--ink-secondary)]">
         {label}
       </dt>
-      {/*
-        The largest numerals on the homepage. Reserved for the settled record — no other figure on
-        the page may use this step, or the record stops being the loudest thing on it.
-      */}
-      <dd className="mt-4 font-mono text-4xl font-semibold leading-none tracking-tight tabular-nums text-foreground">
+      <dd className="mt-1 font-mono text-xl font-semibold tabular-nums text-foreground">
         {value}
       </dd>
-      {/*
-        The detail line is always rendered, empty or not. Two of the four cards carry one, and
-        without a reserved slot their numerals would sit on a different baseline from the other two
-        — the row would read as four cards rather than one comparison.
-      */}
-      <dd className="mt-3 min-h-[1.25rem] text-xs leading-5 text-[var(--ink-secondary)]">
-        {detail ?? " "}
-      </dd>
+    </div>
+  );
+}
+
+/**
+ * The proportional bar — won against lost, at a glance.
+ *
+ * Carries NO arithmetic. The two segments are flex children whose `flexGrow` is the won and lost
+ * count itself, so the ratio is resolved by the layout engine rather than computed here; nothing in
+ * this file divides, rounds or derives a percentage. It exists because a reader who will not do
+ * division still understands a length, and because it makes the loss unmissable rather than merely
+ * disclosed.
+ *
+ * Renders nothing when nothing has settled: a bar of zero width states a ratio that does not exist.
+ *
+ * `aria-hidden` — every figure it depicts is announced by the `dl` above it, and a bar that
+ * re-announces them adds noise to a screen reader without adding information.
+ */
+function ProofBar({
+  won,
+  lost,
+  wonLabel,
+  lostLabel,
+}: {
+  won: number;
+  lost: number;
+  wonLabel: string;
+  lostLabel: string;
+}) {
+  if (won + lost <= 0) return null;
+  return (
+    <div className="mt-5" aria-hidden>
+      <div className="flex h-2.5 w-full overflow-hidden rounded-full border border-border bg-[var(--canvas-primary)]">
+        <span style={{ flexGrow: won }} className="block bg-[var(--status-won-fg)]" />
+        <span style={{ flexGrow: lost }} className="block bg-[var(--status-lost-fg)]" />
+      </div>
+      <div className="mt-2 flex justify-between text-metadata font-medium uppercase tracking-label text-[var(--ink-secondary)]">
+        <span>{wonLabel}</span>
+        <span>{lostLabel}</span>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * The form strip — the settled sequence, most recent first.
+ *
+ * A summary asserts a record; a sequence shows one. Four totals describe a lucky streak and a long
+ * grind identically, and a reader has no way to tell which they are looking at. This is the rows
+ * already rendered below it, reduced to their outcome and placed in order.
+ *
+ * Pending rows are excluded rather than drawn in a third colour: this is the settled record, and an
+ * unsettled fixture has no outcome to show. Renders nothing when nothing has settled.
+ */
+function FormStrip({
+  results,
+  label,
+}: {
+  results: HomepageTrustModel["recentResults"];
+  label: string;
+}) {
+  const settled = results.filter((row) => row.status !== "pending");
+  if (!settled.length) return null;
+  const tone: Record<string, string> = {
+    won: "bg-[var(--status-won-fg)]",
+    lost: "bg-[var(--status-lost-fg)]",
+    void: "bg-[var(--border-strong)]",
+  };
+  return (
+    <div className="mt-6">
+      <p className="text-metadata font-medium uppercase tracking-label text-[var(--ink-secondary)]">
+        {label}
+      </p>
+      <ol className="mt-2 flex flex-wrap gap-1.5">
+        {settled.map((row) => (
+          <li key={row.id}>
+            <span
+              className={`block h-6 w-2.5 rounded-sm ${tone[row.status] ?? tone.void}`}
+            >
+              <span className="sr-only">{`${row.home} vs ${row.away}: ${row.status}`}</span>
+            </span>
+          </li>
+        ))}
+      </ol>
     </div>
   );
 }
