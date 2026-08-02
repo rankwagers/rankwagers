@@ -1,29 +1,46 @@
 import type { BaselineRelation, EvidenceStrength } from "./types";
 
-/** Shared presentation tokens mapped to Design Bible CSS variables. */
+/**
+ * Shared presentation tokens mapped to Design Bible CSS variables.
+ *
+ * Enclosure is tonal, not drawn. `card` carries the only border in the evidence surface — a
+ * hairline at the subtle step — and everything nested inside it separates by background tone
+ * alone. A bordered box inside a bordered box reads as a form; tone inside a hairline reads as a
+ * page.
+ */
 export const evidenceUiTokens = {
   section: "border-b border-[var(--border-subtle)] py-8",
-  card: "rounded-md border border-border bg-[var(--canvas-secondary)] px-3 py-3",
-  cardMuted: "rounded-md border border-border bg-[var(--canvas-primary)] px-3 py-3",
+  card: "rounded-lg border border-[var(--border-subtle)] bg-[var(--canvas-secondary)] p-5",
+  /** Nested block. Deliberately borderless: it sits inside `card` and is separated by tone. */
+  cardMuted: "rounded-lg bg-[var(--canvas-primary)] p-4",
   label: "text-metadata font-medium uppercase tracking-label text-muted-foreground",
-  value: "font-mono text-lg font-semibold text-foreground",
-  note: "text-xs leading-snug text-muted-foreground",
+  /** The focal figure of a card. Tabular so a column of values shares one optical rhythm. */
+  value: "font-mono text-2xl font-semibold leading-none tabular-nums text-foreground",
+  note: "text-caption leading-relaxed text-muted-foreground",
   stickyNav:
     "sticky top-14 z-20 -mx-4 mb-4 flex gap-2 overflow-x-auto border-b border-border bg-[var(--canvas-primary)]/95 px-4 py-2 backdrop-blur md:top-16",
   touchTarget: "min-h-11 min-w-11",
 } as const;
 
+/**
+ * Evidence strength, expressed in tone rather than hue.
+ *
+ * Strength is not an outcome. Green/amber/red here competed directly with the settlement palette —
+ * a "strong" chip and a "won" badge rendered the same green, so colour meant two things on one
+ * card. The scale now descends through ink weight: inverted ink is strongest, plain canvas is
+ * weakest. Chroma inside evidence content is reserved for won · lost · void · pending.
+ */
 export function strengthBadgeClass(strength: EvidenceStrength): string {
   switch (strength) {
     case "very_strong":
     case "strong":
-      return "border-[var(--green-primary)]/30 bg-[var(--green-surface)] text-[var(--green-deep)]";
+      return "bg-[var(--ink-primary)] text-[var(--canvas-primary)]";
     case "moderate":
-      return "border-border bg-[var(--canvas-secondary)] text-foreground";
+      return "bg-[var(--canvas-primary)] text-foreground";
     case "limited":
-      return "border-[var(--amber-border)] bg-[var(--amber-surface)] text-[var(--amber-primary)]";
+      return "bg-[var(--canvas-primary)] text-[var(--ink-secondary)]";
     case "insufficient":
-      return "border-[var(--red-primary)]/25 bg-[var(--red-surface)] text-[var(--red-primary)]";
+      return "bg-transparent text-muted-foreground";
   }
 }
 

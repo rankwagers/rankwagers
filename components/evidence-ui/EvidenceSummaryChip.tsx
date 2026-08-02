@@ -14,7 +14,7 @@ export function EvidenceSummaryChip({
   const label = evidenceStrengthLabel(strength);
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-md border px-2 py-1 text-metadata font-medium ${strengthBadgeClass(strength)}`}
+      className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1 text-metadata font-medium uppercase tracking-label ${strengthBadgeClass(strength)}`}
       title={
         sampleSize != null
           ? `Evidence strength ${label} · sample ${sampleSize}`

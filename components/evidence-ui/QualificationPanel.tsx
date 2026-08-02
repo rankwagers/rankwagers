@@ -11,7 +11,7 @@ function ListBlock({ title, items }: { title: string; items: string[] }) {
   return (
     <div>
       <h3 className={evidenceUiTokens.label}>{title}</h3>
-      <ul className="mt-2 list-disc space-y-1 pl-5 text-sm text-foreground">
+      <ul className="mt-2.5 list-disc space-y-1.5 pl-5 text-body-sm leading-relaxed text-foreground">
         {items.map((item) => (
           <li key={item}>{item}</li>
         ))}
@@ -48,21 +48,23 @@ export function QualificationPanel({
 
   return (
     <section className={evidenceUiTokens.card} aria-labelledby="qualification-panel">
-      <h2 id="qualification-panel" className="font-display text-lg font-semibold text-foreground">
+      <h2 id="qualification-panel" className="font-display text-h3 text-foreground">
         Qualification
       </h2>
       {(qualification.threshold != null || qualification.difference != null) && (
-        <dl className="mt-3 grid gap-2 sm:grid-cols-2">
+        <dl className="mt-4 grid gap-3 sm:grid-cols-2">
           {qualification.threshold != null ? (
             <div className={evidenceUiTokens.cardMuted}>
               <dt className={evidenceUiTokens.label}>Threshold</dt>
-              <dd className="font-mono font-semibold">{qualification.threshold}%</dd>
+              <dd className="mt-1.5 font-mono text-lg font-semibold tabular-nums text-foreground">
+                {qualification.threshold}%
+              </dd>
             </div>
           ) : null}
           {qualification.difference != null ? (
             <div className={evidenceUiTokens.cardMuted}>
               <dt className={evidenceUiTokens.label}>Difference</dt>
-              <dd className="font-mono font-semibold">
+              <dd className="mt-1.5 font-mono text-lg font-semibold tabular-nums text-foreground">
                 {qualification.difference >= 0 ? "+" : ""}
                 {Math.round(qualification.difference)} pp
               </dd>
@@ -70,7 +72,7 @@ export function QualificationPanel({
           ) : null}
         </dl>
       )}
-      <div className="mt-4 grid gap-4 md:grid-cols-2">
+      <div className="mt-6 grid gap-6 md:grid-cols-2">
         <ListBlock title="Included because" items={qualification.included} />
         <ListBlock title="Excluded because" items={qualification.excluded} />
         <ListBlock title="Qualification rules" items={qualification.rules} />

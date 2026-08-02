@@ -9,12 +9,16 @@ export function BaselineComparison({ baseline }: { baseline: BaselineView }) {
   return (
     <div className={evidenceUiTokens.cardMuted} aria-label={`Baseline comparison: ${relation}`}>
       <p className={evidenceUiTokens.label}>{baseline.label}</p>
-      <div className="mt-1 flex flex-wrap items-baseline justify-between gap-2">
-        <p className="font-mono text-base font-semibold text-foreground">{baseline.displayValue}</p>
-        <p className="text-sm text-foreground" role="status">
+      <div className="mt-2 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+        <p className="font-mono text-lg font-semibold tabular-nums text-foreground">
+          {baseline.displayValue}
+        </p>
+        <p className="text-body-sm text-[var(--ink-secondary)]" role="status">
           {relation}
           {baseline.deltaDisplay ? (
-            <span className="ml-2 font-mono text-muted-foreground">({baseline.deltaDisplay})</span>
+            <span className="ml-2 font-mono tabular-nums text-muted-foreground">
+              {baseline.deltaDisplay}
+            </span>
           ) : null}
         </p>
       </div>

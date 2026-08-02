@@ -56,10 +56,15 @@ export function SectionHeading({
   );
 }
 
+/**
+ * Empty state. Borderless: a drawn box around an absence emphasises the absence. Tone and generous
+ * padding hold the space instead, so a section with nothing in it reads as composed rather than
+ * broken.
+ */
 export function EmptySection({ text }: { text: string }) {
   return (
     <p
-      className="rounded-lg border border-border bg-[var(--canvas-secondary)] px-4 py-6 text-sm text-muted-foreground"
+      className="rounded-lg bg-[var(--canvas-secondary)] px-5 py-8 text-body-sm leading-relaxed text-muted-foreground"
       role="status"
     >
       {text}
@@ -76,7 +81,7 @@ export function StatusBadge({
 }) {
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full border border-transparent px-2 py-0.5 text-metadata font-medium uppercase tracking-label ${STATUS_TONE_CLASS[status]}`}
+      className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1 text-metadata font-medium uppercase tracking-label ${STATUS_TONE_CLASS[status]}`}
     >
       <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-current" />
       <span className="sr-only">Status: </span>
