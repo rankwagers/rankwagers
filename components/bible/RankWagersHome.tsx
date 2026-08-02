@@ -44,8 +44,49 @@ const marketNames = {
  * English strings (`Live matches`, `Recently qualified`, `Saved`) so it moves with this layout.
  */
 const MASTHEAD_KICKER = "Football Intelligence";
-const MASTHEAD_REMIT =
-  "An independent, evidence-led football review. Every projection is published before kickoff and settled, in public, against the result.";
+
+/**
+ * The hero's single supporting visual: one half of a pitch, drawn to regulation proportion in
+ * hairlines.
+ *
+ * A diagram rather than an image, and that is the whole point. Photography of crowds or stadiums is
+ * the visual language of the category this product is trying not to belong to, and it would say
+ * nothing true about what the page contains. A measured plan says the subject is football and the
+ * method is measurement — which is the actual proposition — and it cannot be mistaken for a casino.
+ *
+ * Set at the border step so it reads as drafting on paper, never as an illustration competing with
+ * the headline. Bleeds off the top-right so the composition stays asymmetric.
+ *
+ * `aria-hidden`: decoration. It carries no information the text does not.
+ */
+function PitchMark() {
+  return (
+    <svg
+      aria-hidden
+      viewBox="0 0 340 480"
+      fill="none"
+      stroke="var(--border-default)"
+      strokeWidth="1"
+      vectorEffect="non-scaling-stroke"
+      className="pointer-events-none absolute -right-24 -top-16 h-[26rem] w-auto opacity-50 sm:-right-16 sm:h-[32rem] md:right-0 md:h-[38rem] md:opacity-70 lg:h-[42rem]"
+    >
+      {/* Touchlines + goal line. The halfway line is the open top edge. */}
+      <path d="M20 0 V460 H320 V0" />
+      {/* Centre circle, bisected by the halfway line, and the centre spot. */}
+      <path d="M110 0 A60 60 0 0 0 230 0" />
+      <circle cx="170" cy="0" r="2" fill="var(--border-default)" stroke="none" />
+      {/* Penalty area, goal area, penalty spot. */}
+      <path d="M70 460 V340 H270 V460" />
+      <path d="M125 460 V410 H215 V460" />
+      <circle cx="170" cy="382" r="2" fill="var(--border-default)" stroke="none" />
+      {/* Penalty arc — only the segment outside the area, as it is marked on a real pitch. */}
+      <path d="M129 340 A50 50 0 0 0 211 340" />
+      {/* Corner arcs. */}
+      <path d="M20 452 A8 8 0 0 0 28 460" />
+      <path d="M312 460 A8 8 0 0 0 320 452" />
+    </svg>
+  );
+}
 
 /**
  * Render the hero dateline from the settled record's own timestamp.
@@ -113,9 +154,22 @@ function formatArchiveCaptureTime(capturedAt?: string): string {
  *   S5 ← `#featured-leagues` + `#fixtures` + `#saved`
  *   S7 ← `#why-trust` + `#research-notes`/`#methodology` + `#prediction-archive`
  *
- * Separation is not uniform (spec §1.4) — three treatments, so the page has a rhythm rather
- * than a pulse: S2 is the only full-bleed band; S4–S6 are hairline-ruled; S1→S2→S3 and
- * S6→S7 are separated by whitespace alone.
+ * Rhythm (spec §1.4). Separation is not uniform, and neither is tempo — a page whose sections all
+ * breathe at `py-16` behind an identical hairline reads as one section repeated, however different
+ * its contents. Four separator devices, each carrying a different weight of break:
+ *
+ *   full-bleed tonal band  S2 — the only one, and the loudest movement on the page
+ *   full-width hairline    S5 — the only one, opening the widest and densest section
+ *   short editorial rule   S4, S7 — the two quiet movements
+ *   whitespace + a pause   S3, S6 — the two structural joints, ~248px of air at md
+ *
+ * Tempo alternates rather than repeats. Total vertical padding at md, in order:
+ * 160 · 192 · [128] · 88 · 96 · 160 · [128] · 136 · 128 — loud, loudest, rest, quiet, quiet,
+ * loud, rest, medium, quiet. Bracketed values are `SectionPause`.
+ *
+ * Composition alternates too, so no two adjacent sections are laid out alike: full-bleed statement
+ * (S1) → tonal figure band (S2) → three-column card grid (S3) → two-column split, the only one on
+ * the page (S4) → full-width explorer (S5) → narrow numbered list at 46rem (S6) → strip (S7).
  *
  * Measures (spec §1.1): editorial `46rem` · reading `38rem` · data `72rem` · panel `2xl`.
  * No section is shell-width for text.
@@ -187,61 +241,87 @@ export function RankWagersHome({
       {/*
         S1 — Hero.
 
-        A statement, one sentence, a dateline, and the disclosure. Nothing else.
+        Four elements and no fifth: nameplate, headline, one sentence, one action. Everything else
+        that has ever lived here — two CTAs, the search field, the live count, the date control, the
+        model-version rail, the remit paragraph — is either downstream where it is used or gone.
 
-        What left, and where it went: the eyebrow (it paraphrased the headline), both calls to
-        action (the reader is about to scroll into the record; a button to it is noise), the search
-        field, the live count and the date control — all three are returning-reader tools and now sit
-        with the fixtures they operate on. The model-version string is gone entirely: a version
-        number is an engineering fact, and it was occupying the highest-value space on the site.
+        Composition. The headline is the only dominant element and it is set as large as the measure
+        allows; the pitch diagram is a counterweight, not an illustration, and it is the single
+        supporting visual on the page. Reading order runs down the left column while the mark holds
+        the right — the asymmetry is what stops it reading as a marketing banner, which is always
+        centred.
 
-        What arrived: the dateline, and the commission disclosure. A publication states when it was
-        compiled and who pays for it before it states anything else.
+        Background. Flat canvas. The tinted radial wash that used to sit here implied a light source,
+        and paper does not have one. The elegance has to come from the type and the space around it,
+        because that is the only kind a reader cannot dismiss as decoration.
 
-        No bottom rule: S2's own full-bleed edge is the separation, and a border here would double it.
+        The dateline and the commission disclosure survive as a metadata rule at the foot — not
+        composition, and not removable: a publication states when it was compiled and who pays for it.
       */}
       <section
         id="today"
         data-analytics-section="hero"
         aria-labelledby="homepage-hero-heading"
-        className="-mx-4 bg-mesh px-4 pb-16 pt-10 sm:-mx-6 sm:px-6 md:pb-24 md:pt-16 lg:-mx-10 lg:px-10"
+        className="relative -mx-4 overflow-hidden px-4 pb-16 pt-10 sm:-mx-6 sm:px-6 md:pb-24 md:pt-16 lg:-mx-10 lg:px-10"
       >
-        {/*
-          Masthead. The publication nameplate, above the headline, with a rule beneath it — the
-          journal states what it is before it states anything. Not a heading (the H1 below is the
-          page's only H1); a decorative nameplate, so screen readers meet the headline first.
-        */}
-        <div className="mb-8 border-b border-[var(--border-subtle)] pb-6">
+        <PitchMark />
+
+        <div className="relative">
+          {/*
+            Nameplate. One line, stating the subject of the publication. Not a heading — the H1
+            below is the page's only H1 — so a screen reader meets the headline first.
+          */}
           <p className="font-display text-metadata font-semibold uppercase tracking-label text-foreground">
             {MASTHEAD_KICKER}
           </p>
-          <p className="mt-2 max-w-[46rem] text-sm leading-relaxed text-muted-foreground">
-            {MASTHEAD_REMIT}
+          <span
+            aria-hidden
+            className="mt-5 block h-[3px] w-10 bg-[var(--ink-primary)] md:mt-6"
+          />
+
+          <h1
+            id="homepage-hero-heading"
+            className="mt-7 max-w-[15ch] font-display text-5xl font-semibold leading-[0.95] tracking-display text-foreground sm:text-6xl md:mt-9 md:max-w-[13ch] md:text-7xl lg:text-8xl"
+          >
+            {p.heroTitle}
+          </h1>
+
+          <p className="mt-8 max-w-[42ch] font-display text-xl leading-[1.45] text-[var(--ink-secondary)] md:mt-10 md:text-2xl">
+            {p.heroSubtitle}
           </p>
-        </div>
-        <h1
-          id="homepage-hero-heading"
-          className="max-w-[20ch] font-display text-[2.75rem] font-semibold leading-[0.98] tracking-display text-foreground sm:text-6xl md:max-w-[16ch] md:text-7xl"
-        >
-          {p.heroTitle}
-        </h1>
-        <p className="mt-7 max-w-[38ch] font-display text-xl leading-[1.45] text-[var(--ink-secondary)] md:mt-8 md:text-2xl">
-          {p.heroSubtitle}
-        </p>
-        <div className="mt-12 max-w-[46rem] border-t border-[var(--border-subtle)] pt-5 md:mt-16">
-          {assessedLabel ? (
-            <p className="text-sm text-muted-foreground">
-              <time dateTime={trust.verified.lastUpdatedAt ?? undefined}>{assessedLabel}</time>
+
+          {/*
+            One action. It points at the record rather than at the picks: the argument this page
+            makes is that the evidence comes first, and the hero should hand the reader the proof
+            before it hands them the output.
+          */}
+          <div className="mt-10 md:mt-12">
+            <SectionTrackLink
+              href={`/${locale}#verified-performance`}
+              section="hero"
+              locale={locale}
+              className="btn-primary min-h-11"
+            >
+              {p.heroCtaSecondary}
+              <ArrowUpRight className="h-4 w-4" aria-hidden />
+            </SectionTrackLink>
+          </div>
+
+          <div className="mt-14 max-w-[46rem] border-t border-[var(--border-subtle)] pt-5 md:mt-20">
+            {assessedLabel ? (
+              <p className="text-caption text-muted-foreground">
+                <time dateTime={trust.verified.lastUpdatedAt ?? undefined}>{assessedLabel}</time>
+              </p>
+            ) : null}
+            {/*
+              Trust hierarchy, tier 1. The commercial interest is disclosed before any figure it
+              could bias, and it makes no promise about its own effect — it points at the published
+              criteria so the reader can check rather than believe.
+            */}
+            <p className="mt-2 max-w-[62ch] text-caption leading-relaxed text-muted-foreground">
+              {p.heroDisclosure}
             </p>
-          ) : null}
-        {/*
-          Trust hierarchy, tier 1. The commercial interest is disclosed before any figure it could
-          bias, and it makes no promise about its own effect — it points at the published criteria
-          so the reader can check rather than believe.
-        */}
-          <p className="mt-2 max-w-[52ch] text-xs leading-relaxed text-muted-foreground">
-            {p.heroDisclosure}
-          </p>
+          </div>
         </div>
       </section>
 
@@ -288,7 +368,7 @@ export function RankWagersHome({
         id="verified-performance"
         data-analytics-section="verified_performance"
         aria-labelledby="verified-performance-heading"
-        className="-mx-4 scroll-mt-28 border-y border-[var(--border-subtle)] bg-[var(--canvas-secondary)] px-4 py-14 sm:-mx-6 sm:px-6 md:py-20 lg:-mx-10 lg:px-10"
+        className="-mx-4 scroll-mt-28 border-y border-[var(--border-subtle)] bg-[var(--canvas-secondary)] px-4 py-16 sm:-mx-6 sm:px-6 md:py-24 lg:-mx-10 lg:px-10"
       >
         <SectionHeading
           id="verified-performance-heading"
@@ -345,6 +425,7 @@ export function RankWagersHome({
                       ? `${trust.verified.hitRatePct}%`
                       : "—"
                   }
+                  emphasis
                 />
                 <ContextFigure
                   label={p.verifiedPending}
@@ -375,7 +456,7 @@ export function RankWagersHome({
             >
               <h3
                 id="recent-results-heading"
-                className="font-display text-base font-semibold text-foreground md:text-lg"
+                className="font-display text-h3 tracking-display text-foreground"
               >
                 {p.recentTitle}
               </h3>
@@ -463,11 +544,13 @@ export function RankWagersHome({
         standing as its own destination — same links, same data, a fraction of the height, and now
         functioning as context for the grid it sits above.
       */}
+      <SectionPause />
+
       <section
         id="top-picks"
         data-analytics-section="top_picks"
         aria-labelledby="top-picks-heading"
-        className="scroll-mt-28 py-12 md:py-16"
+        className="scroll-mt-28 pb-12 pt-4 md:pb-16 md:pt-6"
       >
         <SectionHeading
           id="top-picks-heading"
@@ -662,17 +745,24 @@ export function RankWagersHome({
         data-analytics-section="live_matches"
         id="live-signals"
         aria-labelledby="live-matches-heading"
-        className="scroll-mt-28 border-t border-[var(--border-subtle)] py-12 md:py-16"
+        className="scroll-mt-28 py-10 md:py-12"
       >
-        <SectionHeading
-          id="live-matches-heading"
-          eyebrow="Live desk"
-          title="Live matches"
-          description="No live data for these matches yet. Scores appear once the provider reports them."
-          lead
-        />
-        <div className="mt-6 max-w-2xl">
-          <LiveFeedPanel dict={dict} />
+        <EditorialRule />
+        {/*
+          The only two-column composition on the page. Every other section stacks heading over
+          content; this one sets the heading beside it, which is what makes S4 read as an aside
+          rather than another instalment. Collapses to the stacked default below lg.
+        */}
+        <div className="mt-8 gap-10 lg:grid lg:grid-cols-[minmax(0,17rem)_minmax(0,1fr)] lg:gap-16">
+          <SectionHeading
+            id="live-matches-heading"
+            eyebrow="Live desk"
+            title="Live matches"
+            description="No live data for these matches yet. Scores appear once the provider reports them."
+          />
+          <div className="mt-6 max-w-2xl lg:mt-0">
+            <LiveFeedPanel dict={dict} />
+          </div>
         </div>
       </section>
 
@@ -688,7 +778,7 @@ export function RankWagersHome({
         data-analytics-section="recently_qualified"
         id="fixtures"
         aria-labelledby="recently-qualified"
-        className="scroll-mt-28 border-t border-[var(--border-subtle)] py-12 md:py-16"
+        className="scroll-mt-28 border-t border-[var(--border-default)] pb-16 pt-14 md:pb-24 md:pt-16"
       >
         <p className="mb-1 text-metadata font-medium uppercase tracking-label text-muted-foreground">
           Research desk
@@ -753,7 +843,7 @@ export function RankWagersHome({
         <div data-analytics-section="saved" id="saved" className="mt-10 scroll-mt-28">
           <h3
             id="saved-heading"
-            className="font-display text-base font-semibold text-foreground md:text-lg"
+            className="font-display text-h3 tracking-display text-foreground"
           >
             Saved
           </h3>
@@ -778,11 +868,13 @@ export function RankWagersHome({
         while the record is still in mind, and the commercial block is the last thing on the page
         rather than an interruption between two research surfaces.
       */}
+      <SectionPause />
+
       <section
         id="why-trust"
         data-analytics-section="why_trust"
         aria-labelledby="why-trust-heading"
-        className="scroll-mt-28 border-t border-[var(--border-subtle)] py-12 md:py-16"
+        className="scroll-mt-28 pb-20 pt-4 md:pb-28 md:pt-6"
       >
         <SectionHeading
           id="why-trust-heading"
@@ -791,13 +883,29 @@ export function RankWagersHome({
           description="How this publication is produced — and how every figure above can be checked against the record rather than taken on trust."
           lead
         />
-        <ol className="mt-8 max-w-[46rem] space-y-4">
+        {/*
+          The method, as a ruled procedure rather than a bulleted list.
+
+          Numbered steps separated by hairlines is the typographic form of a specification — a
+          standard, a protocol, a lab method. It is the form a reader already associates with
+          "this was written down before it was carried out", which is precisely the claim the
+          section is making. The previous treatment set the numerals at 14px muted and gave the
+          steps no enclosure, so the one element on the page that evidences a *process* read as
+          the least considered thing on it.
+
+          The numeral column is fixed-width and tabular so the rules align down the page; the
+          steps are the only place on this surface where a rule sits between every row.
+        */}
+        <ol className="mt-8 max-w-[46rem] border-t border-[var(--border-subtle)]">
           {[p.whyPublished, p.whyEvidence, p.whyLive, p.whySettlement, p.whyArchive].map(
             (item, index) => (
-              <li key={item} className="flex gap-4">
+              <li
+                key={item}
+                className="grid grid-cols-[2.25rem_1fr] gap-x-4 border-b border-[var(--border-subtle)] py-4 md:grid-cols-[3rem_1fr] md:gap-x-6 md:py-5"
+              >
                 <span
                   aria-hidden
-                  className="font-mono text-sm tabular-nums text-muted-foreground"
+                  className="font-mono text-body-sm font-semibold tabular-nums text-[var(--ink-muted)] md:text-body"
                 >
                   {String(index + 1).padStart(2, "0")}
                 </span>
@@ -808,14 +916,21 @@ export function RankWagersHome({
         </ol>
 
         {/* #research-notes / #methodology */}
+        {/*
+          Evidence and archive are the section's other two arguments, and they were previously
+          stacked as bare `mt-10` divs behind headings a half-step above body text. A trust
+          argument presented at body weight reads as a footnote to the one above it. Each is now
+          a ruled block with a `text-h3` heading, so the section reads as three stated claims of
+          equal standing — method, evidence, record — rather than one list and two afterthoughts.
+        */}
         <div
           data-analytics-section="latest_insights"
           id="research-notes"
-          className="mt-10 scroll-mt-28"
+          className="mt-12 border-t border-[var(--border-subtle)] pt-8 scroll-mt-28"
         >
           <h3
             id="methodology-heading"
-            className="font-display text-base font-semibold text-foreground md:text-lg"
+            className="font-display text-h3 tracking-display text-foreground"
           >
             How qualification works
           </h3>
@@ -831,14 +946,14 @@ export function RankWagersHome({
         <div
           id="prediction-archive"
           data-analytics-section="prediction_archive"
-          className="mt-10 max-w-[46rem] scroll-mt-28"
+          className="mt-12 max-w-[46rem] border-t border-[var(--border-subtle)] pt-8 scroll-mt-28"
         >
           <p className="text-metadata font-medium uppercase tracking-label text-muted-foreground">
             {p.archiveEyebrow}
           </p>
           <h3
             id="prediction-archive-heading"
-            className="mt-1 font-display text-base font-semibold text-foreground md:text-lg"
+            className="mt-1 font-display text-h3 tracking-display text-foreground"
           >
             {p.archiveTitle}
           </h3>
@@ -858,7 +973,7 @@ export function RankWagersHome({
               href={`/${locale}/archive`}
               section="prediction_archive"
               locale={locale}
-              className="inline-flex min-h-11 items-center rounded-md border border-border bg-[var(--canvas-secondary)] px-4 text-sm font-semibold text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              className="btn-secondary min-h-11"
             >
               {p.archiveCtaDate}
             </SectionTrackLink>
@@ -875,9 +990,10 @@ export function RankWagersHome({
       */}
       <section
         data-analytics-section="top_operators"
-        className="border-t border-[var(--border-subtle)] pb-16 pt-12 md:pb-20 md:pt-16"
+        className="pb-16 pt-10 md:pb-20 md:pt-12"
       >
-        <div className="max-w-[72rem]">
+        <EditorialRule />
+        <div className="mt-8 max-w-[72rem]">
           <BibleOperatorStrip
             dict={dict}
             locale={locale}
@@ -948,13 +1064,39 @@ function VerdictFigure({
  * third of the size. These exist to make the pair above readable, not to compete with it. Four
  * figures of equal weight is a dashboard, and a dashboard has no message.
  */
-function ContextFigure({ label, value }: { label: string; value: string }) {
+function ContextFigure({
+  label,
+  value,
+  emphasis = false,
+}: {
+  label: string;
+  value: string;
+  /**
+   * The accuracy rate only.
+   *
+   * Settled, pending and void are bookkeeping — they say how much of the record has resolved. The
+   * hit rate is the one derived claim in this row, and at equal weight it read as the second of
+   * four equivalent counters, indistinguishable from "void / postponed". A third tier between the
+   * verdict pair and the counters gives the section three levels instead of two: the outcome, the
+   * rate it produces, and the arithmetic behind both. The denominator still leads it, so the
+   * sceptic's "over how many?" is still answered before the rate is stated.
+   */
+  emphasis?: boolean;
+}) {
   return (
     <div>
-      <dt className="text-metadata font-medium uppercase tracking-label text-[var(--ink-secondary)]">
+      <dt
+        className={`text-metadata font-medium uppercase tracking-label ${
+          emphasis ? "text-foreground" : "text-[var(--ink-secondary)]"
+        }`}
+      >
         {label}
       </dt>
-      <dd className="mt-1 font-mono text-xl font-semibold tabular-nums text-foreground">
+      <dd
+        className={`mt-1 font-mono font-semibold tabular-nums tracking-tight text-foreground ${
+          emphasis ? "text-3xl leading-none md:text-4xl" : "text-xl"
+        }`}
+      >
         {value}
       </dd>
     </div>
@@ -1043,4 +1185,39 @@ function FormStrip({
       </ol>
     </div>
   );
+}
+
+/**
+ * A visual pause — the page's paragraph break.
+ *
+ * Whitespace alone stops separating once every section is separated by whitespace: the eye reads a
+ * uniform gap as no gap at all. This is a deliberate rest with a mark in it — a short centred rule
+ * carrying more vertical space than any section boundary on the page.
+ *
+ * Used exactly twice, at the two structural joints: after the settled record, and before the method
+ * that closes. A third use would make it a divider, and a divider used everywhere is the monotony it
+ * exists to break.
+ */
+function SectionPause() {
+  return (
+    <div className="flex justify-center py-12 md:py-16" aria-hidden>
+      <span className="h-px w-10 bg-[var(--border-strong)]" />
+    </div>
+  );
+}
+
+/**
+ * A short editorial rule — the quiet separator.
+ *
+ * Left-aligned and 4rem wide, so it reads as the opening of a movement rather than the close of the
+ * previous one. It exists because the page had ONE separator device — a full-width hairline — used
+ * for four consecutive section boundaries and for the top of every fixture card, so section
+ * separation and card separation were typographically identical and neither ranked.
+ *
+ * The vocabulary is now four devices, each carrying a different weight of break: the full-bleed
+ * tonal band (S2), the full-width hairline (S5 only), this short rule (S4, S7), and open whitespace
+ * with a pause (S3, S6).
+ */
+function EditorialRule() {
+  return <span aria-hidden className="block h-px w-16 bg-[var(--border-strong)]" />;
 }
