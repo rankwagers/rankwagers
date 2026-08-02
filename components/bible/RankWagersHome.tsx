@@ -204,7 +204,7 @@ export function RankWagersHome({
         id="today"
         data-analytics-section="hero"
         aria-labelledby="homepage-hero-heading"
-        className="pb-14 pt-8 md:pb-20 md:pt-12"
+        className="-mx-4 bg-mesh px-4 pb-16 pt-10 sm:-mx-6 sm:px-6 md:pb-24 md:pt-16 lg:-mx-10 lg:px-10"
       >
         {/*
           Masthead. The publication nameplate, above the headline, with a rule beneath it — the
@@ -221,26 +221,28 @@ export function RankWagersHome({
         </div>
         <h1
           id="homepage-hero-heading"
-          className="max-w-[46rem] font-display text-4xl font-semibold leading-[1.05] tracking-display text-foreground md:text-5xl"
+          className="max-w-[20ch] font-display text-[2.75rem] font-semibold leading-[0.98] tracking-display text-foreground sm:text-6xl md:max-w-[16ch] md:text-7xl"
         >
           {p.heroTitle}
         </h1>
-        <p className="mt-6 max-w-[34rem] text-lg leading-relaxed text-[var(--ink-secondary)] md:text-xl">
+        <p className="mt-7 max-w-[38ch] font-display text-xl leading-[1.45] text-[var(--ink-secondary)] md:mt-8 md:text-2xl">
           {p.heroSubtitle}
         </p>
-        {assessedLabel ? (
-          <p className="mt-8 text-sm text-muted-foreground">
-            <time dateTime={trust.verified.lastUpdatedAt ?? undefined}>{assessedLabel}</time>
-          </p>
-        ) : null}
+        <div className="mt-12 max-w-[46rem] border-t border-[var(--border-subtle)] pt-5 md:mt-16">
+          {assessedLabel ? (
+            <p className="text-sm text-muted-foreground">
+              <time dateTime={trust.verified.lastUpdatedAt ?? undefined}>{assessedLabel}</time>
+            </p>
+          ) : null}
         {/*
           Trust hierarchy, tier 1. The commercial interest is disclosed before any figure it could
           bias, and it makes no promise about its own effect — it points at the published criteria
           so the reader can check rather than believe.
         */}
-        <p className="mt-2 max-w-[34rem] text-xs leading-relaxed text-muted-foreground">
-          {p.heroDisclosure}
-        </p>
+          <p className="mt-2 max-w-[52ch] text-xs leading-relaxed text-muted-foreground">
+            {p.heroDisclosure}
+          </p>
+        </div>
       </section>
 
       {/*
@@ -305,7 +307,7 @@ export function RankWagersHome({
                 Never `grid-cols-1`. WON and LOST must sit side by side on every viewport — the
                 comparison is the message, and stacking them destroys it.
               */}
-              <dl className="grid grid-cols-2 items-stretch gap-px overflow-hidden rounded-lg border border-border bg-border">
+              <dl className="grid grid-cols-2 items-stretch border-t border-[var(--border-subtle)]">
                 <VerdictFigure
                   label={p.verifiedWon}
                   value={String(trust.verified.won)}
@@ -315,6 +317,7 @@ export function RankWagersHome({
                   label={p.verifiedLost}
                   value={String(trust.verified.lost)}
                   tone="lost"
+                  inset
                 />
               </dl>
 
@@ -380,7 +383,7 @@ export function RankWagersHome({
                 {p.recentDescription}
               </p>
               {trust.recentResults.length ? (
-                <ul className="list-enter mt-4 divide-y divide-[var(--border-subtle)] rounded-lg border border-border bg-[var(--canvas-primary)]">
+                <ul className="list-enter mt-6 divide-y divide-[var(--border-subtle)] border-y border-[var(--border-subtle)]">
                   {trust.recentResults.map((row) => (
                     <li key={row.id}>
                       <SectionTrackLink
@@ -481,7 +484,7 @@ export function RankWagersHome({
         {staleNotice ? (
           <p
             role="status"
-            className="mt-6 max-w-[38rem] rounded-lg border border-border bg-[var(--canvas-secondary)] px-4 py-3 text-sm leading-relaxed text-[var(--ink-secondary)]"
+            className="mt-8 max-w-[52ch] border-l-2 border-[var(--border-strong)] pl-5 text-sm leading-relaxed text-[var(--ink-secondary)]"
           >
             {staleNotice}
           </p>
@@ -551,7 +554,7 @@ export function RankWagersHome({
             {topFixtures.map((fixture) => (
               <article
                 key={fixture.id}
-                className="flex flex-col rounded-lg border border-border bg-[var(--canvas-secondary)] p-5 md:p-6"
+                className="flex flex-col border-t border-[var(--border-subtle)] pt-6"
               >
                 {/*
                   The fixture leads. Previously the largest, most saturated element in this card was
@@ -915,15 +918,18 @@ function VerdictFigure({
   label,
   value,
   tone,
+  inset = false,
 }: {
   label: string;
   value: string;
   tone: "won" | "lost";
+  /** Left padding on the trailing figure, so the dividing rule sits between two columns. */
+  inset?: boolean;
 }) {
   const dot =
     tone === "won" ? "bg-[var(--status-won-fg)]" : "bg-[var(--status-lost-fg)]";
   return (
-    <div className="flex h-full flex-col bg-[var(--canvas-primary)] p-5 md:p-7">
+    <div className={`flex h-full flex-col py-7 pr-6 first:border-r first:border-[var(--border-subtle)] md:py-9 md:pr-10 ${inset ? "pl-6 md:pl-10" : ""}`}>
       <dt className="flex items-center gap-2 text-metadata font-medium uppercase tracking-label text-[var(--ink-secondary)]">
         <span aria-hidden className={`h-2 w-2 shrink-0 rounded-full ${dot}`} />
         {label}

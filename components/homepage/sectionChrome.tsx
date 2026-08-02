@@ -29,6 +29,18 @@ export function SectionHeading({
 }) {
   return (
     <div className="mb-6 md:mb-8">
+      {/*
+        Section opener. A short heavy rule above the heading — the device a broadsheet uses to mark
+        where one piece ends and the next begins. It replaces nothing and carries no meaning on its
+        own, which is exactly why it works: it is a pause, and a page with no pauses reads as a
+        dashboard no matter how good its type is.
+
+        `aria-hidden` because it is punctuation, not content.
+      */}
+      <span
+        aria-hidden
+        className="mb-5 block h-[3px] w-10 bg-[var(--ink-primary)] md:mb-6"
+      />
       {eyebrow ? (
         <p className="mb-1 text-metadata font-medium uppercase tracking-label text-muted-foreground">
           {eyebrow}
