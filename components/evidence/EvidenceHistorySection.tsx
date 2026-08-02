@@ -71,7 +71,7 @@ export async function EvidenceHistorySection({
 
       <h2
         id={`${EVIDENCE_HISTORY_ANCHOR}-heading`}
-        className="font-display text-lg font-semibold text-foreground"
+        className="font-display text-h3 font-semibold text-foreground"
       >
         Evidence history
       </h2>
@@ -106,7 +106,7 @@ export async function EvidenceHistorySection({
             </div>
             <div className={evidenceArchiveTokens.cardMuted}>
               <dt className={evidenceArchiveTokens.label}>Model versions</dt>
-              <dd className="mt-1 font-mono text-xs text-foreground">
+              <dd className="mt-1 font-mono text-caption text-foreground">
                 {view.modelVersions.join(", ")}
               </dd>
             </div>
@@ -115,7 +115,7 @@ export async function EvidenceHistorySection({
           {view.integrityVerified ? null : (
             <p
               role="status"
-              className="mt-3 rounded-md border border-[var(--red-primary)]/25 bg-[var(--red-surface)] px-3 py-2 text-xs text-[var(--red-primary)]"
+              className="mt-3 rounded-md border border-[var(--red-primary)]/25 bg-[var(--red-surface)] px-3 py-2 text-caption text-[var(--red-primary)]"
             >
               One or more archived snapshots failed their content-hash check. The rows
               below are shown as stored, unmodified, and should be treated as unverified.
@@ -149,7 +149,7 @@ export async function EvidenceHistorySection({
         </>
       ) : (
         <div className={`mt-4 ${evidenceArchiveTokens.cardMuted}`} role="status">
-          <p className="text-sm font-medium text-foreground">
+          <p className="text-body-sm font-medium text-foreground">
             {EMPTY_COPY[view.emptyReason ?? "no_snapshots"].title}
           </p>
           <p className={`mt-1 ${evidenceArchiveTokens.note}`}>

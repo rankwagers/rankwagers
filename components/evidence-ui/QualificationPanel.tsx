@@ -56,7 +56,7 @@ export function QualificationPanel({
           {qualification.threshold != null ? (
             <div className={evidenceUiTokens.cardMuted}>
               <dt className={evidenceUiTokens.label}>Threshold</dt>
-              <dd className="mt-1.5 font-mono text-lg font-semibold tabular-nums text-foreground">
+              <dd className="mt-1.5 font-mono text-h3 font-semibold tabular-nums text-foreground">
                 {qualification.threshold}%
               </dd>
             </div>
@@ -64,7 +64,7 @@ export function QualificationPanel({
           {qualification.difference != null ? (
             <div className={evidenceUiTokens.cardMuted}>
               <dt className={evidenceUiTokens.label}>Difference</dt>
-              <dd className="mt-1.5 font-mono text-lg font-semibold tabular-nums text-foreground">
+              <dd className="mt-1.5 font-mono text-h3 font-semibold tabular-nums text-foreground">
                 {qualification.difference >= 0 ? "+" : ""}
                 {Math.round(qualification.difference)} pp
               </dd>

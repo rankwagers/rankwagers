@@ -29,8 +29,8 @@ export const evidenceArchiveTokens = {
   card: "card card-compact",
   cardMuted: "card card-compact bg-background",
   label: "text-metadata font-medium uppercase tracking-label text-muted-foreground",
-  value: "font-mono text-lg font-semibold text-foreground",
-  note: "text-xs leading-snug text-muted-foreground",
+  value: "font-mono text-h3 font-semibold text-foreground",
+  note: "text-caption leading-snug text-muted-foreground",
   mono: "font-mono text-metadata text-muted-foreground",
   badge: "badge",
   focusRing:

@@ -5,7 +5,7 @@ export function EvidenceTimeline({ events }: { events: TimelineEvent[] }) {
   if (!events.length) return null;
   return (
     <section className={evidenceUiTokens.card} aria-labelledby="evidence-timeline">
-      <h2 id="evidence-timeline" className="font-display text-lg font-semibold text-foreground">
+      <h2 id="evidence-timeline" className="font-display text-h3 font-semibold text-foreground">
         Evidence timeline
       </h2>
       <p className={`mt-1 ${evidenceUiTokens.note}`}>
@@ -14,7 +14,7 @@ export function EvidenceTimeline({ events }: { events: TimelineEvent[] }) {
       <ol className="mt-4 space-y-3">
         {events.map((event) => (
           <li key={event.id} className="border-l-2 border-border pl-3">
-            <p className="text-sm font-medium text-foreground">{event.title}</p>
+            <p className="text-body-sm font-medium text-foreground">{event.title}</p>
             {event.detail ? <p className={evidenceUiTokens.note}>{event.detail}</p> : null}
             <p className="mt-1 text-metadata text-muted-foreground">{event.atLabel}</p>
           </li>

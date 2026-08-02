@@ -50,7 +50,7 @@ export function SplitCard({
             type="button"
             role="tab"
             aria-selected={mode === key}
-            className={`${evidenceUiTokens.touchTarget} rounded-md border px-3 py-2 text-sm capitalize ${
+            className={`${evidenceUiTokens.touchTarget} rounded-md border px-3 py-2 text-body-sm capitalize ${
               mode === key
                 ? "border-brand bg-accent font-medium text-brand"
                 : "border-border text-muted-foreground hover:bg-muted"
@@ -68,18 +68,18 @@ export function SplitCard({
         </div>
         <div>
           <dt className={evidenceUiTokens.label}>Sample</dt>
-          <dd className="font-mono text-base font-semibold">{active.sampleSize}</dd>
+          <dd className="font-mono text-body font-semibold">{active.sampleSize}</dd>
         </div>
         <div>
           <dt className={evidenceUiTokens.label}>Difference</dt>
-          <dd className="font-mono text-base font-semibold">{split.differenceDisplay}</dd>
+          <dd className="font-mono text-body font-semibold">{split.differenceDisplay}</dd>
         </div>
       </dl>
       {split.coveragePercent != null ? (
         <p className={`mt-2 ${evidenceUiTokens.note}`}>Coverage {split.coveragePercent}%</p>
       ) : null}
       {split.cautionNote ? (
-        <p className="mt-2 text-xs text-[var(--amber-primary)]" role="note">
+        <p className="mt-2 text-caption text-[var(--amber-primary)]" role="note">
           {split.cautionNote}
         </p>
       ) : null}

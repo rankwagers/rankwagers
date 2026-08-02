@@ -89,7 +89,7 @@ export function EvidenceSnapshotCard({
       data-snapshot-id={snapshot.id}
       data-sequence={snapshot.sequence}
     >
-      <h3 id={headingId} className="text-sm font-semibold text-foreground">
+      <h3 id={headingId} className="text-body-sm font-semibold text-foreground">
         <span className="sr-only">Evidence snapshot {snapshot.sequence}, captured </span>
         {snapshot.capturedAtLabel}
       </h3>
@@ -102,7 +102,7 @@ export function EvidenceSnapshotCard({
           onClick={toggle}
           aria-expanded={expanded}
           aria-controls={bodyId}
-          className={`mt-3 inline-flex items-center gap-1 rounded-md border border-border px-2 py-1 text-xs font-medium text-foreground ${evidenceArchiveTokens.focusRing}`}
+          className={`mt-3 inline-flex items-center gap-1 rounded-md border border-border px-2 py-1 text-caption font-medium text-foreground ${evidenceArchiveTokens.focusRing}`}
         >
           {expanded ? "Hide detail" : "Show detail"}
           <span className="sr-only"> for snapshot {snapshot.sequence}</span>
@@ -113,28 +113,28 @@ export function EvidenceSnapshotCard({
         <dl className="grid grid-cols-1 gap-2 sm:grid-cols-2">
           <div>
             <dt className={evidenceArchiveTokens.label}>Status</dt>
-            <dd className="text-sm text-foreground">{snapshot.status}</dd>
+            <dd className="text-body-sm text-foreground">{snapshot.status}</dd>
           </div>
           <div>
             <dt className={evidenceArchiveTokens.label}>Supported markets</dt>
-            <dd className="text-sm text-foreground">{snapshot.supportedMarketCount}</dd>
+            <dd className="text-body-sm text-foreground">{snapshot.supportedMarketCount}</dd>
           </div>
           <div>
             <dt className={evidenceArchiveTokens.label}>Signals</dt>
-            <dd className="text-sm text-foreground">
+            <dd className="text-body-sm text-foreground">
               {snapshot.signalCount} total · {snapshot.supportingSignalCount} supporting ·{" "}
               {snapshot.opposingSignalCount} opposing
             </dd>
           </div>
           <div>
             <dt className={evidenceArchiveTokens.label}>Operator coverage</dt>
-            <dd className="text-sm text-foreground">
+            <dd className="text-body-sm text-foreground">
               {snapshot.operatorAvailabilityLabel}
             </dd>
           </div>
           <div>
             <dt className={evidenceArchiveTokens.label}>Best price captured</dt>
-            <dd className="text-sm text-foreground">{snapshot.bestOddsLabel}</dd>
+            <dd className="text-body-sm text-foreground">{snapshot.bestOddsLabel}</dd>
           </div>
           <div>
             <dt className={evidenceArchiveTokens.label}>Provenance</dt>
@@ -201,7 +201,7 @@ function SnapshotValidations({
             data-validation-id={subject.id}
           >
             <div className="flex flex-wrap items-center gap-2">
-              <span className="text-sm font-medium text-foreground">
+              <span className="text-body-sm font-medium text-foreground">
                 {subject.marketKey} · {subject.selectionKey}
               </span>
               <ValidationBadge
@@ -223,7 +223,7 @@ function SnapshotValidations({
                 }}
               >
                 <summary
-                  className={`cursor-pointer text-xs font-medium text-foreground ${evidenceArchiveTokens.focusRing}`}
+                  className={`cursor-pointer text-caption font-medium text-foreground ${evidenceArchiveTokens.focusRing}`}
                 >
                   {subject.revisions.length} revisions — this record was corrected
                 </summary>

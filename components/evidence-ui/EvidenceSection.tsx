@@ -55,7 +55,7 @@ export function EvidenceSection({
     <section className={evidenceUiTokens.section} aria-labelledby={`${baseId}-title`}>
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 id={`${baseId}-title`} className="font-display text-xl font-semibold text-foreground">
+          <h2 id={`${baseId}-title`} className="font-display text-h2 font-semibold text-foreground">
             {bundle.title}
           </h2>
           <p className={`mt-1 ${evidenceUiTokens.note}`}>
@@ -66,7 +66,7 @@ export function EvidenceSection({
           <EvidenceStrengthBadge strength={bundle.summaryStrength} />
           <button
             type="button"
-            className={`${evidenceUiTokens.touchTarget} rounded-md border border-border px-3 py-2 text-sm text-foreground hover:bg-muted`}
+            className={`${evidenceUiTokens.touchTarget} rounded-md border border-border px-3 py-2 text-body-sm text-foreground hover:bg-muted`}
             aria-expanded={open}
             aria-controls={`${baseId}-body`}
             onClick={toggle}
@@ -90,7 +90,7 @@ export function EvidenceSection({
               <a
                 key={id}
                 href={`#${baseId}-${id}`}
-                className={`${evidenceUiTokens.touchTarget} inline-flex items-center rounded-md border border-border px-3 py-2 text-xs font-medium text-muted-foreground hover:text-foreground`}
+                className={`${evidenceUiTokens.touchTarget} inline-flex items-center rounded-md border border-border px-3 py-2 text-caption font-medium text-muted-foreground hover:text-foreground`}
               >
                 {label}
               </a>
@@ -116,7 +116,7 @@ export function EvidenceSection({
 
           {splitMetric?.split ? (
             <div id={`${baseId}-split`}>
-              <h3 className="font-display text-lg font-semibold text-foreground">Home / Away</h3>
+              <h3 className="font-display text-h3 font-semibold text-foreground">Home / Away</h3>
               <div className="mt-3">
                 <SplitCard
                   split={splitMetric.split}
@@ -130,7 +130,7 @@ export function EvidenceSection({
 
           {baselineMetric?.baseline ? (
             <div id={`${baseId}-baseline`}>
-              <h3 className="font-display text-lg font-semibold text-foreground">Baseline</h3>
+              <h3 className="font-display text-h3 font-semibold text-foreground">Baseline</h3>
               <div className="mt-3">
                 <BaselineComparison baseline={baselineMetric.baseline} />
               </div>

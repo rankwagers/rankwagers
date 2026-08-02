@@ -42,7 +42,7 @@ export function ProvenanceBlock({
       {compact ? (
         <button
           type="button"
-          className={`${evidenceUiTokens.touchTarget} text-sm font-medium text-brand underline-offset-2 hover:underline`}
+          className={`${evidenceUiTokens.touchTarget} text-body-sm font-medium text-brand underline-offset-2 hover:underline`}
           onClick={toggle}
           aria-expanded={open}
         >
@@ -52,7 +52,7 @@ export function ProvenanceBlock({
         <h3 className={evidenceUiTokens.label}>Source</h3>
       )}
       {open ? (
-        <dl className="mt-2 grid gap-2 text-sm sm:grid-cols-2">
+        <dl className="mt-2 grid gap-2 text-body-sm sm:grid-cols-2">
           <div>
             <dt className="text-muted-foreground">Provider</dt>
             <dd className="font-medium text-foreground">{provenance.provider}</dd>

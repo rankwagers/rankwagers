@@ -158,7 +158,7 @@ export function EvidenceHistoryTable({
                     onKeyDown={(event) => onKeyDown(event, index)}
                     aria-expanded={isOpen}
                     aria-controls={detailId}
-                    className={`inline-flex items-center gap-1 rounded-md px-1 py-1 text-sm font-medium text-foreground ${evidenceArchiveTokens.focusRing}`}
+                    className={`inline-flex items-center gap-1 rounded-md px-1 py-1 text-body-sm font-medium text-foreground ${evidenceArchiveTokens.focusRing}`}
                   >
                     <span aria-hidden="true">{isOpen ? "−" : "+"}</span>
                     <span>#{snapshot.sequence}</span>
@@ -167,10 +167,10 @@ export function EvidenceHistoryTable({
                     </span>
                   </button>
                 </th>
-                <td className="py-2 pr-3 text-sm text-foreground">
+                <td className="py-2 pr-3 text-body-sm text-foreground">
                   <time dateTime={snapshot.capturedAt}>{snapshot.capturedAtLabel}</time>
                 </td>
-                <td className="py-2 pr-3 text-sm text-foreground">
+                <td className="py-2 pr-3 text-body-sm text-foreground">
                   <span className="font-mono">
                     {formatEvidenceScore(snapshot.evidenceScore)}
                   </span>
