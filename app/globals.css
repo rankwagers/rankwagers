@@ -236,6 +236,17 @@ textarea,
   }
 }
 
+@keyframes list-enter {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
 @keyframes metric-progress-enter {
   from { transform: scaleX(0); }
   to { transform: scaleX(1); }
@@ -255,8 +266,16 @@ textarea,
   .sheet-enter,
   .panel-enter,
   .metric-progress,
+  .list-enter > *,
   .animate-pulse {
     animation: none !important;
+  }
+
+  /* The press is a transform, so the global kill-switch below neutralises its
+     duration but not the displacement. State must still be legible without it. */
+  .card-interactive:active,
+  .press:active {
+    transform: none;
   }
 }
 
@@ -384,6 +403,60 @@ textarea,
     @apply text-right font-mono tabular-nums;
   }
 
+  /* ---------------------------------------------------------------- *
+   * Interaction (spec 6) — motion is feedback, never decoration.
+   *
+   * Two durations, one easing, five states, nothing that loops. Colour
+   * carries affordance; the only transform in the system is the 1px press
+   * the buttons already use, so a card, a chip and a button answer a
+   * pointer the same way. No lift, no scale, no shadow bloom — those read
+   * as a game rather than a record.
+   * ---------------------------------------------------------------- */
+
+  /* A card that is itself the target. Not for container cards: a surface
+     that offers a press it cannot honour is a lie told in motion. */
+  .card-interactive {
+    @apply cursor-pointer transition-[color,background-color,border-color,transform] duration-fast ease-[var(--ease-out)] hover:border-[var(--border-strong)] hover:bg-muted active:translate-y-px;
+  }
+
+  /* Press for controls that already own their colour states. */
+  .press {
+    @apply transition-[color,background-color,border-color,transform] duration-fast ease-[var(--ease-out)] active:translate-y-px;
+  }
+
+  /* Skeleton block (spec 18). Shape is the caller-s job; this is the surface,
+     so loading states stop being hand-rolled one div at a time. */
+  .skeleton {
+    @apply rounded-md bg-[var(--border-subtle)];
+  }
+
+  /* List entry. Says "this content is new", once, on arrival.
+     Stagger is capped at 200ms: a cascade down a long list is choreography,
+     and choreography is decoration. */
+  .list-enter > * {
+    animation: list-enter var(--motion-base) var(--ease-out) both;
+  }
+
+  .list-enter > *:nth-child(2) {
+    animation-delay: 40ms;
+  }
+
+  .list-enter > *:nth-child(3) {
+    animation-delay: 80ms;
+  }
+
+  .list-enter > *:nth-child(4) {
+    animation-delay: 120ms;
+  }
+
+  .list-enter > *:nth-child(5) {
+    animation-delay: 160ms;
+  }
+
+  .list-enter > *:nth-child(n + 6) {
+    animation-delay: 200ms;
+  }
+
 
 
 
@@ -410,12 +483,6 @@ textarea,
 
 
 
-
-
-
-  .btn-play-now:hover .btn-play-now-shine {
-    animation-duration: 1.6s;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

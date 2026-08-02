@@ -94,14 +94,9 @@ const config: Config = {
           "0%": { opacity: "0", transform: "translateY(12px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
         },
-        shine: {
-          "0%": { backgroundPosition: "-200% center" },
-          "100%": { backgroundPosition: "200% center" },
-        },
       },
       animation: {
         "fade-up": "fade-up 0.5s ease-out both",
-        shine: "shine 3s linear infinite",
       },
       transitionDuration: {
         fast: "150ms",
