@@ -156,11 +156,37 @@ async function activeSnapshotCheck(): Promise<HealthCheck> {
   try {
     const { getSnapshotStore } = await import("@/lib/snapshots/store");
     const active = await getSnapshotStore().getActive("combo_prepared");
-    if (!active || active.status !== "valid") {
+
+    /*
+     * Absent and invalid are different operational states and must not report the same severity.
+     *
+     * ABSENT means the snapshot has never been produced. The only producer is
+     * `refreshComboPreparedSnapshot`, reachable solely through the evidence-prepare /
+     * fixtures-refresh / odds-refresh cron routes, and no scheduler invokes them on this
+     * deployment — no systemd timer, no crontab entry, no platform cron. The combo snapshot is a
+     * durable last-known-good cache that no product surface currently reads (the sole consumer,
+     * `resolveComboClientSnapshot`, has no production callers), so the site serves correctly
+     * without it. That is a dormant capability, not a broken dependency, and reporting it as a
+     * hard failure held readiness at 503 while every user-facing surface was healthy.
+     *
+     * INVALID means a snapshot exists but did not survive validation — something that was working
+     * has broken. That stays a hard failure, as does expiry below.
+     *
+     * This narrows what `fail` means; it does not stop reporting anything. An operator still sees
+     * the state, and the moment a producer is scheduled the check begins policing freshness.
+     */
+    if (!active) {
+      return {
+        name: "active_snapshot",
+        status: isDeployedEnv() ? "degraded" : "ok",
+        detail: "not produced (no combo snapshot refresh is scheduled)",
+      };
+    }
+    if (active.status !== "valid") {
       return {
         name: "active_snapshot",
         status: isDeployedEnv() ? "fail" : "degraded",
-        detail: "no valid active combo_prepared snapshot",
+        detail: `active combo_prepared snapshot is not valid (status=${active.status})`,
       };
     }
     const freshness = classifySnapshotAge(active.createdAt);
