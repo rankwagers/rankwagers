@@ -1,0 +1,4128 @@
+RANKWAGERS DESIGN SYSTEM v1.0
+HOMEPAGE SPECIFICATION
+1. Product Goal
+
+The homepage is not a landing page.
+
+It is today's football research dashboard.
+
+Within the first 15 seconds, users should understand:
+
+We analysed today's football.
+Only the strongest fixtures are shown.
+Every recommendation is explainable.
+This platform is different from betting sites.
+
+The homepage does not sell.
+
+The homepage builds trust.
+
+2. First Impression
+
+When users open RankWagers they should instantly think:
+
+"These people already analysed today's football for me."
+
+Not
+
+"Another betting affiliate."
+
+Not
+
+"Another football statistics website."
+
+Not
+
+"Another dashboard."
+
+3. Homepage Flow
+HEADER
+
+↓
+
+HERO
+
+↓
+
+INTELLIGENCE FUNNEL
+
+↓
+
+FEATURED MATCHES
+
+↓
+
+RESEARCH FEED
+
+↓
+
+LEAGUE INTELLIGENCE
+
+↓
+
+WHY THESE MATCHES?
+
+↓
+
+KNOWLEDGE
+
+↓
+
+METHODOLOGY
+
+↓
+
+OPERATORS
+
+↓
+
+FOOTER
+
+Nothing else.
+
+4. Header
+
+Height
+
+88px
+
+Always visible.
+
+Contains only
+
+Logo
+
+Navigation
+
+Search
+
+Language
+
+Theme
+
+No CTA button.
+
+No "Join Now".
+
+No "Best Odds".
+
+No advertising.
+
+Header should disappear visually.
+
+5. HERO
+
+This is the heart of the homepage.
+
+Never
+
+❌ One giant Arsenal vs Newcastle
+
+❌ Huge team names
+
+❌ Marketing slogans
+
+❌ Empty gradients
+
+❌ Generic football player
+
+❌ Casino feeling
+
+Always
+
+Today's research.
+
+Example
+
+TODAY'S FOOTBALL INTELLIGENCE
+
+241 fixtures analysed
+
+61 shortlisted
+
+18 qualified
+
+5 featured
+
+Below
+
+Five featured fixtures.
+
+Each fixture
+
+Logo
+
+Logo
+
+League
+
+Kickoff
+
+Market
+
+Research reason
+
+Evidence count
+
+Arrow
+
+Background
+
+Dynamic league atmosphere.
+
+Very subtle.
+
+Premier League
+
+↓
+
+Very soft dark blue stadium.
+
+Serie A
+
+↓
+
+Very soft Italian atmosphere.
+
+La Liga
+
+↓
+
+Warm evening stadium.
+
+Champions League
+
+↓
+
+Deep navy.
+
+No wallpapers.
+
+No giant players.
+
+No huge logos.
+
+Hero height
+
+720px
+
+Hero animation
+
+Crossfade
+
+320ms
+
+No CLS.
+
+Never.
+
+6. Intelligence Funnel
+
+Immediately after Hero.
+
+Purpose
+
+Explain why users only see 18 matches.
+
+Example
+
+Today's Research
+
+238 Fixtures
+
+↓
+
+214 Validated
+
+↓
+
+61 Shortlisted
+
+↓
+
+18 Qualified
+
+↓
+
+5 Featured
+
+Animated once.
+
+Never loops.
+
+7. Featured Matches
+
+Exactly five.
+
+Desktop
+
+5
+
+Tablet
+
+4
+
+Mobile
+
+3
+
+Each card
+
+392x188
+
+Radius
+
+16
+
+Padding
+
+20
+
+Card contains
+
+League logo
+
+Club logos
+
+Club names
+
+Kickoff
+
+Market
+
+Why qualified
+
+Evidence Available
+
+Chevron
+
+Never
+
+Show 14 statistics.
+
+Keep scanning easy.
+
+8. Research Feed
+
+This is where the remaining qualified matches live.
+
+Grid
+
+Desktop
+
+3 columns
+
+Tablet
+
+2
+
+Mobile
+
+1
+
+Every card identical.
+
+Never masonry.
+
+Never Pinterest.
+
+9. League Intelligence
+
+Instead of
+
+Premier League
+
+↓
+
+Explore
+
+Show
+
+Premier League
+
+8 qualified
+
+Most active today
+
+
+Same for every league.
+
+Each league owns its visual identity.
+
+Logo
+
+Subtle background
+
+Competition colour
+
+10. Why These Matches?
+
+Small section.
+
+Purpose
+
+Explain qualification.
+
+Three cards.
+
+Provider Statistics
+
+↓
+
+Qualification Rules
+
+↓
+
+Historical Validation
+
+Nothing more.
+
+11. Knowledge
+
+Three educational cards.
+
+Example
+
+What is BTTS?
+
+↓
+
+Understanding Over 2.5
+
+↓
+
+How Research Works
+
+12. Methodology
+
+Small timeline.
+
+Collect
+
+↓
+
+Validate
+
+↓
+
+Qualify
+
+↓
+
+Publish
+
+↓
+
+Archive
+13. Operators
+
+Always last.
+
+Never above methodology.
+
+Cards answer
+
+Available
+
+Odds
+
+Updated
+
+Visit
+
+Nothing else.
+
+14. Footer
+
+Methodology
+
+Knowledge
+
+Archive
+
+Competitions
+
+Providers
+
+Transparency
+
+Contact
+
+Nothing promotional.
+
+15. Motion
+
+Hover
+
+150ms
+
+Lift
+
+2px
+
+Border
+
++1
+
+Shadow
+
++8%
+
+Hero
+
+320ms
+
+Crossfade
+
+Accordion
+
+220ms
+
+Modal
+
+240ms
+
+No bounce.
+
+No pulse.
+
+No flashy animations.
+
+16. Responsive
+
+Desktop
+
+Maximum
+
+1440px
+
+Tablet
+
+960px
+
+Mobile
+
+390px
+
+No hidden functionality.
+
+Only reordered hierarchy.
+
+17. Accessibility
+
+Contrast AA minimum.
+
+Keyboard navigation.
+
+Reduced motion.
+
+Screen reader labels.
+
+Touch target
+
+44px minimum.
+
+18. SEO
+
+Homepage should answer
+
+"What is RankWagers?"
+
+Every section links naturally deeper.
+
+No keyword stuffing.
+
+No unnecessary text.
+
+19. Analytics
+
+Track
+
+Hero viewed
+
+Hero interaction
+
+Match impression
+
+Match click
+
+League click
+
+Knowledge click
+
+Methodology click
+
+Operator click
+
+Scroll depth
+
+Research completion
+
+20. WOW Moment
+
+This is the part we've been missing.
+
+The homepage must contain one unforgettable interaction.
+
+The Research Reveal™
+
+When the page loads:
+
+Instead of instantly showing the featured matches, users see a calm sequence lasting about 1.5–2 seconds:
+
+238 Fixtures Found
+
+↓
+
+214 Validated
+
+↓
+
+61 Shortlisted
+
+↓
+
+18 Qualified
+
+↓
+
+Today's Featured Research
+
+The animation should feel like a research engine completing its work.
+
+Then the five featured matches fade into place.
+
+This is not a loading animation.
+
+It is the product introducing itself.
+
+The user immediately understands:
+
+"They didn't pick these randomly. They filtered hundreds of matches."
+
+21. Non-Negotiable Homepage Rules
+Never show a single giant match as the homepage hero.
+Never prioritise affiliate elements over research.
+Never invent football metrics.
+Never use casino aesthetics.
+Never create layout shifts.
+Every visible number must be explainable.
+Every section must answer one user question.
+Football first. Research second. Affiliate last.
+
+HERO V3 — "TODAY'S FOOTBALL INTELLIGENCE"
+İlk ekran (Above the Fold)
+┌──────────────────────────────────────────────────────────────────────────────┐
+│ LOGO              Competitions  Archive  Knowledge      Search        Profile │
+├──────────────────────────────────────────────────────────────────────────────┤
+│                                                                              │
+│   TODAY'S FOOTBALL INTELLIGENCE                                              │
+│                                                                              │
+│   We analysed 238 fixtures.                                                  │
+│   Only 18 qualified.                                                         │
+│                                                                              │
+│   ┌──────────────────────────────────────────────────────────────────────┐   │
+│   │  Research Pipeline                                                   │   │
+│   │                                                                      │   │
+│   │  ● 238 Analysed                                                      │   │
+│   │        ↓                                                             │   │
+│   │  ● 214 Validated                                                     │   │
+│   │        ↓                                                             │   │
+│   │  ● 61 Shortlisted                                                    │   │
+│   │        ↓                                                             │   │
+│   │  ● 18 Qualified                                                      │   │
+│   └──────────────────────────────────────────────────────────────────────┘   │
+│                                                                              │
+│──────────────────────────────────────────────────────────────────────────────│
+│                                                                              │
+│   ★ FEATURED TODAY                                                          │
+│                                                                              │
+│ ┌────────────┐ ┌────────────┐ ┌────────────┐ ┌────────────┐ ┌────────────┐    │
+│ │⚽ ⚽        │ │⚽ ⚽        │ │⚽ ⚽        │ │⚽ ⚽        │ │⚽ ⚽        │    │
+│ │PL          │ │Serie A     │ │LaLiga     │ │UCL         │ │MLS         │    │
+│ │Over 2.5    │ │BTTS        │ │Over1.5    │ │Corners     │ │BTTS        │    │
+│ │Evidence →  │ │Evidence →  │ │Evidence→  │ │Evidence→   │ │Evidence→   │    │
+│ └────────────┘ └────────────┘ └────────────┘ └────────────┘ └────────────┘    │
+│                                                                              │
+└──────────────────────────────────────────────────────────────────────────────┘
+Ama asıl fark burada başlıyor.
+Sayfa açılıyor.
+
+Hiçbir şey yok.
+
+Sadece
+
+Analysing today's football...
+
+0.2 sn.
+
+↓
+
+238 Fixtures
+
+↓
+
+214 Validated
+
+↓
+
+61 Qualified
+
+↓
+
+18 Research Candidates
+
+↓
+
+Featured Research
+
+Ve kartlar yukarı doğru fade oluyor.
+
+
+Toplam
+
+**1.7 saniye.**
+
+Bir daha asla çalışmıyor.
+
+Sadece ilk girişte.
+
+Bu hareket,
+
+**RankWagers'ın imzası olur.**
+
+---
+
+# Featured Card
+
+Ben bunu tamamen değiştiriyorum.
+
+Artık şu yok.
+
+
+ARSENAL
+
+NEWCASTLE
+
+
+Çünkü bu hiçbir şey anlatmıyor.
+
+Onun yerine.
+
+
+⚽ Arsenal vs Newcastle
+
+Premier League
+
+Over 2.5 Goals
+
+83% Historical Match Profile
+
+Research Updated
+
+12 minutes ago
+
+Why this qualified →
+
+
+Alt tarafta
+
+küçük
+
+
+Provider
+
+FootyStats
+
+
+yazıyor.
+
+Ama
+
+Evidence
+
+bizim.
+
+---
+
+# Kartın Hover'ı
+
+Hover olunca
+
+takımlar büyümüyor.
+
+Kart zıplamıyor.
+
+Sadece
+
+
+Evidence Summary
+
+Home Attack Trend
+
+✓
+
+Away Concedes Frequently
+
+✓
+
+League Average
+
+✓
+
+Historical Similarity
+
+✓
+
+
+slide up oluyor.
+
+Bütün kart aynı kalıyor.
+
+---
+
+# Hero Background
+
+İşte burada Figma'nın yaptığı hatayı düzeltiyoruz.
+
+Artık
+
+sabit siyah gradient yok.
+
+Hero'nun arkası
+
+günün en güçlü ligine göre değişiyor.
+
+Örneğin.
+
+Premier League günü
+
+çok hafif
+
+lacivert
+
+stad ışıkları.
+
+Serie A
+
+çok hafif
+
+soğuk gri.
+
+Champions League
+
+gece mavisi.
+
+MLS
+
+çok hafif mor.
+
+Ama
+
+%90 opacity.
+
+Asla dikkat çekmiyor.
+
+Sadece hissediliyor.
+
+---
+
+# Sağ tarafta
+
+Dev Arsenal yazmıyoruz.
+
+Onun yerine.
+
+Bugünkü en güçlü lig.
+
+
+PREMIER LEAGUE
+
+8 Qualified
+
+Highest Activity Today
+
+Explore →
+
+
+Altında
+
+çok küçük
+
+fixture dağılımı.
+
+
+■■■■■■■■
+
+Premier League
+
+■■■■
+
+Serie A
+
+■■
+
+MLS
+
+■
+
+Brazil
+
+
+Kullanıcı
+
+bugün futbolun
+
+nerede olduğunu
+
+görüyor.
+
+---
+
+# Hero'nun sonunda
+
+tek CTA.
+
+
+Explore Today's Research
+
+
+Başka hiçbir CTA yok.
+
+---
+
+# İşte şimdi WOW geliyor.
+
+Sayfada aşağı inince
+
+Featured Matches bitiyor.
+
+Sonra
+
+League Intelligence geliyor.
+
+Ama
+
+artık liste değil.
+
+Dünya haritası değil.
+
+Logo gridi de değil.
+
+Şöyle.
+
+
+Premier League
+
+██████████
+
+8 Qualified
+
+↓
+
+Serie A
+
+██████
+
+5 Qualified
+
+↓
+
+LaLiga
+
+████
+
+3 Qualified
+
+↓
+
+MLS
+
+██
+
+2 Qualified
+
+
+Her satır
+
+tıklanabilir.
+
+---
+
+# Son olarak...
+
+Bence şu anki tasarımımızın en büyük problemi hâlâ şu:
+
+**Biz "maç" gösteriyoruz.**
+
+Gösterdiğimiz şey aslında maç olmamalı.
+
+**Gösterdiğimiz şey araştırma olmalı.**
+
+İşte bütün tasarımın zihinsel dönüşümü bu.
+
+- Flashscore maç gösterir.
+- Sofascore maç gösterir.
+- FotMob maç gösterir.
+- FootyStats istatistik gösterir.
+
+**RankWagers araştırma gösterir.**
+
+---
+
+## Ben olsam bundan sonra Figma'da tek bir ekran üzerinde ısrar ederim:
+
+**Sadece Hero.**
+
+Diğer hiçbir bölümü tasarlamam.
+
+Çünkü kullanıcı ilk 10 saniyede "Bu site farklı." demezse, alttaki mükemmel sayfaları büyük ihtimalle hiç görmeyecek.
+
+**Bence 10/10 ürünü belirleyecek ekran, Hero ekranı olacak.** Bu yüzden önce onu kusursuzlaştırır, sonra geri kalan sayfaları aynı tasarım diliyle inş
+
+PART XX
+HERO COMPONENT SPECIFICATION
+20.0 Purpose
+
+The Hero is the single most important component in RankWagers.
+
+It is responsible for creating trust before users scroll.
+
+The Hero does not advertise.
+
+The Hero does not persuade.
+
+The Hero demonstrates that meaningful football research has already been completed.
+
+Within five seconds, users should understand:
+
+Today's football has already been analysed.
+Only the strongest research is visible.
+Every recommendation is explainable.
+This is not a betting homepage.
+20.1 Success Criteria
+
+A successful Hero should achieve the following:
+
+Within 3 seconds:
+
+Users recognise that research has already been completed.
+
+Within 10 seconds:
+
+Users understand why only selected fixtures are shown.
+
+Within 15 seconds:
+
+Users feel confident enough to begin exploring research.
+
+The Hero succeeds when curiosity replaces scepticism.
+
+20.2 Desktop Layout
+
+Canvas Width
+
+1440 px
+
+Maximum Content Width
+
+1320 px
+
+Hero Height
+
+720 px
+
+Top Safe Area
+
+72 px
+
+Bottom Margin
+
+80 px
+
+Horizontal Padding
+
+64 px
+
+Internal Grid
+
+12 Columns
+
+Maximum Text Width
+
+680 px
+
+Featured Cards
+
+5
+
+Gap Between Cards
+
+20 px
+
+20.3 Mobile Layout
+
+Width
+
+390 px
+
+Hero Height
+
+Auto
+
+Minimum Visible Area
+
+640 px
+
+Featured Cards
+
+3
+
+Horizontal Scroll
+
+Disabled
+
+Cards stack vertically.
+
+Research Funnel remains visible.
+
+No information disappears.
+
+Hierarchy changes.
+
+20.4 Layout Structure
+Header
+
+↓
+
+Headline
+
+↓
+
+Supporting Statement
+
+↓
+
+Research Funnel
+
+↓
+
+Featured Research
+
+↓
+
+League Activity
+
+↓
+
+Primary CTA
+
+Nothing else belongs inside the Hero.
+
+20.5 Headline
+
+Maximum
+
+2 lines.
+
+Maximum
+
+70 characters.
+
+Should explain today's research.
+
+Examples:
+
+Today's Football Intelligence
+
+Football Research Worth Your Attention
+
+Today's Qualified Research
+
+Avoid:
+
+Winning Predictions
+
+Today's Best Bets
+
+Guaranteed Picks
+
+Hot Matches
+
+Safe Bets
+
+20.6 Supporting Statement
+
+Maximum
+
+3 lines.
+
+Purpose:
+
+Explain why users only see a small number of fixtures.
+
+Example:
+
+We analysed today's football across multiple competitions.
+
+Only fixtures satisfying our qualification methodology appear below.
+
+20.7 Research Funnel
+
+Purpose:
+
+Visualise filtering.
+
+Desktop Width
+
+520 px
+
+Desktop Height
+
+220 px
+
+Rows
+
+5
+
+Each Row
+
+44 px
+
+Spacing
+
+20 px
+
+Icons
+
+20 px
+
+Typography
+
+16 px
+
+Animation
+
+Sequential Fade
+
+Duration
+
+1200 ms
+
+Only once.
+
+Never replay.
+
+20.8 Featured Research
+
+Exactly five fixtures.
+
+Never more.
+
+Never fewer.
+
+Each card represents research,
+
+not promotion.
+
+Cards must always remain aligned.
+
+No masonry.
+
+No carousel.
+
+No automatic sliding.
+
+20.9 League Activity Panel
+
+Purpose:
+
+Show where today's research is concentrated.
+
+Maximum
+
+5 competitions.
+
+Each row contains:
+
+League Logo
+
+League Name
+
+Qualified Fixtures
+
+Small Activity Indicator
+
+Explore Arrow
+
+Never use pie charts.
+
+Never use 3D graphics.
+
+Never animate continuously.
+
+20.10 CTA
+
+Only one CTA.
+
+Preferred:
+
+Explore Today's Research
+
+Continue Research
+
+View Today's Intelligence
+
+Avoid:
+
+Bet Now
+
+Claim Bonus
+
+Start Winning
+
+Discover Profit
+
+Primary Button
+
+48 px Height
+
+Maximum Width
+
+220 px
+
+20.11 Hero Background
+
+The background supports football identity.
+
+It never dominates attention.
+
+Allowed:
+
+Subtle stadium lighting.
+
+Very soft league colour.
+
+Abstract pitch geometry.
+
+Gentle atmospheric gradients.
+
+Forbidden:
+
+Explosions.
+
+Fire.
+
+Gold textures.
+
+Casino effects.
+
+Player cut-outs.
+
+Stock football photos.
+
+Artificial AI artwork.
+
+The Hero background should almost disappear.
+
+20.12 Hero Animation
+
+The Hero should feel assembled,
+
+not loaded.
+
+Sequence:
+
+Research Reveal
+
+↓
+
+Headline Fade
+
+↓
+
+Research Funnel
+
+↓
+
+Featured Cards
+
+↓
+
+League Activity
+
+↓
+
+CTA
+
+Maximum Total Duration
+
+1800 ms
+
+Only on first visit.
+
+Subsequent visits appear instantly.
+
+20.13 Typography
+
+Headline
+
+Display XL
+
+56 px
+
+Weight
+
+700
+
+Supporting Copy
+
+18 px
+
+Research Funnel
+
+16 px
+
+League Activity
+
+14 px
+
+Metadata
+
+13 px
+
+Buttons
+
+15 px
+
+Never exceed four typography levels.
+
+20.14 Colour Behaviour
+
+Headline
+
+Primary Text
+
+Supporting Copy
+
+Secondary Text
+
+Research Numbers
+
+Accent
+
+Qualified
+
+Success Green
+
+Updated
+
+Neutral Blue
+
+Errors
+
+Danger Red
+
+Colours communicate meaning.
+
+Never decoration.
+
+20.15 Responsive Behaviour
+
+Desktop
+
+Research Funnel left.
+
+Featured Cards below.
+
+League Panel right.
+
+Tablet
+
+League Panel moves below cards.
+
+Mobile
+
+League Panel becomes stacked list.
+
+Featured Cards become vertical.
+
+Research Funnel remains visible.
+
+Nothing essential disappears.
+
+20.16 Accessibility
+
+Keyboard Accessible
+
+Yes
+
+Screen Reader
+
+Supported
+
+Reduced Motion
+
+Supported
+
+Minimum Contrast
+
+WCAG AA
+
+Touch Targets
+
+44 px minimum
+
+Animations disabled automatically when reduced motion is enabled.
+
+20.17 Analytics
+
+Track:
+
+Hero Impression
+
+Hero Scroll
+
+Research Reveal Completed
+
+Featured Card Viewed
+
+Featured Card Clicked
+
+League Panel Clicked
+
+CTA Clicked
+
+Average Hero Dwell Time
+
+No personal tracking.
+
+Only behavioural understanding.
+
+20.18 Performance Budget
+
+Largest Contentful Paint
+
+Under 2.5 seconds
+
+Hero Animation
+
+GPU Accelerated
+
+No Layout Shift
+
+CLS = 0
+
+No blocking JavaScript
+
+Images lazy-loaded except visible assets.
+
+20.19 Error Behaviour
+
+If provider data is unavailable:
+
+Do not remove the Hero.
+
+Display:
+
+Today's research is temporarily unavailable.
+
+Historical research remains accessible.
+
+Offer Archive.
+
+Offer Knowledge.
+
+Offer Methodology.
+
+Never leave the Hero empty.
+
+20.20 Empty Behaviour
+
+If zero fixtures qualify:
+
+Celebrate discipline.
+
+Headline:
+
+No fixtures satisfied today's qualification criteria.
+
+Supporting Copy:
+
+Research continues automatically as new provider data arrives.
+
+Knowledge and historical research remain available.
+
+Never fabricate recommendations.
+
+20.21 Visual Rhythm
+
+The Hero should follow a visual rhythm:
+
+Large
+
+↓
+
+Medium
+
+↓
+
+Small
+
+↓
+
+Large
+
+↓
+
+Medium
+
+↓
+
+Action
+
+Alternating hierarchy creates comfortable scanning.
+
+Avoid equally sized elements.
+
+20.22 Psychological Goal
+
+The Hero should create exactly this progression:
+
+Second 1
+
+"They analysed today's football."
+
+Second 5
+
+"They filtered hundreds of matches."
+
+Second 10
+
+"I want to see why these qualified."
+
+Second 15
+
+"I trust this process."
+
+Anything else is failure.
+
+20.23 Hero Anti-Patterns
+
+Never:
+
+One enormous match.
+Huge player renders.
+Betting odds dominating.
+Animated backgrounds.
+Auto-playing videos.
+Rotating carousels.
+Countdowns.
+Flashing badges.
+Fake urgency.
+Affiliate banners.
+Generic SaaS charts.
+20.24 Hero North Star
+
+The Hero should become synonymous with RankWagers.
+
+If users remember only one thing after leaving the homepage,
+
+it should be this feeling:
+
+"Someone already did the difficult football research for me."
+
+PART XXI
+MATCH CARD SPECIFICATION
+21.0 Purpose
+
+The Match Card is the fundamental research unit of RankWagers.
+
+It does not promote football.
+
+It prioritises football research.
+
+Users should be able to answer one question within three seconds:
+
+"Is this research worth exploring?"
+
+If the answer is yes,
+
+the Match Card has succeeded.
+
+21.1 Design Philosophy
+
+The Match Card should feel:
+
+Calm
+Dense
+Informative
+Fast to scan
+Premium
+
+Never:
+
+Busy
+Statistical overload
+Gambling focused
+Marketing driven
+Colourful for decoration
+
+Research should always remain the primary visual element.
+
+21.2 Desktop Dimensions
+
+Width
+
+392 px
+
+Height
+
+188 px
+
+Border Radius
+
+16 px
+
+Padding
+
+20 px
+
+Internal Gap
+
+16 px
+
+Maximum Elevation
+
+Level 1
+
+Cards should sit naturally on the page.
+
+They should never appear floating.
+
+21.3 Mobile Dimensions
+
+Width
+
+100%
+
+Height
+
+Auto
+
+Padding
+
+16 px
+
+Radius
+
+14 px
+
+Cards should preserve hierarchy.
+
+Only layout changes.
+
+Content does not disappear.
+
+21.4 Internal Structure
+Competition Badge
+
+↓
+
+Fixture
+
+↓
+
+Primary Research
+
+↓
+
+Evidence Preview
+
+↓
+
+Metadata
+
+↓
+
+Interaction
+
+Users should naturally scan from top to bottom.
+
+21.5 Competition Badge
+
+Purpose
+
+Immediately identify context.
+
+Height
+
+28 px
+
+Horizontal Padding
+
+12 px
+
+Radius
+
+999 px
+
+Contents
+
+Competition Logo
+
+Competition Name
+
+Colour Accent
+
+Never show flags.
+
+Never use oversized league branding.
+
+Competition identity should remain subtle.
+
+21.6 Fixture Area
+
+Contains
+
+Home Logo
+
+↓
+
+Home Name
+
+↓
+
+VS
+
+↓
+
+Away Logo
+
+↓
+
+Away Name
+
+Logo Size
+
+36 px
+
+Gap
+
+12 px
+
+Club Names
+
+18 px
+
+Weight
+
+600
+
+Maximum
+
+One line
+
+Ellipsis only when absolutely necessary.
+
+21.7 Primary Research
+
+Purpose
+
+Explain why this fixture appears.
+
+Maximum
+
+One line.
+
+Examples
+
+Over 2.5 Goals
+
+BTTS
+
+Home Win
+
+Corners
+
+Cards
+
+Never display multiple markets.
+
+The card represents one research topic only.
+
+21.8 Research Summary
+
+One concise sentence.
+
+Examples
+
+High attacking consistency across both teams.
+
+Historical BTTS profile exceeds league average.
+
+Home scoring trend meets qualification threshold.
+
+Maximum
+
+70 characters.
+
+Never use AI-generated filler.
+
+Never exaggerate.
+
+21.9 Evidence Preview
+
+Maximum
+
+Three supporting bullets.
+
+Examples
+
+✓ Home attack trend
+
+✓ League scoring profile
+
+✓ Historical similarity
+
+No percentages unless sourced directly from provider data.
+
+Evidence should always be understandable without opening the fixture.
+
+21.10 Metadata
+
+Always display
+
+Research Updated
+
+Provider
+
+Competition
+
+Kickoff
+
+Optional
+
+Historical archive available
+
+Never display:
+
+Internal IDs
+
+Provider codes
+
+Raw timestamps
+
+Developer terminology
+
+21.11 Footer
+
+Left
+
+Updated
+
+↓
+
+12 min ago
+
+Right
+
+Chevron
+
+No CTA button.
+
+The card invites exploration naturally.
+
+21.12 Hover State
+
+Duration
+
+150 ms
+
+Border
+
++1 opacity
+
+Shadow
+
++8%
+
+Translate Y
+
+-2 px
+
+No scaling.
+
+No glow.
+
+No rotation.
+
+No bounce.
+
+Hover should increase confidence,
+
+not excitement.
+
+21.13 Press State
+
+Duration
+
+120 ms
+
+Scale
+
+0.98
+
+Shadow removed
+
+Immediate release.
+
+Buttons respond instantly.
+
+21.14 Focus State
+
+Keyboard navigation must remain visible.
+
+Use:
+
+2 px outline
+
+Accessible contrast
+
+Never remove browser focus without replacement.
+
+21.15 Expanded State
+
+When opened,
+
+the card reveals:
+
+Evidence Summary
+
+↓
+
+Provider Statistics
+
+↓
+
+Historical Context
+
+↓
+
+Why Qualified
+
+Expansion
+
+Vertical only.
+
+Never overlay neighbouring cards.
+
+21.16 Loading State
+
+Skeleton only.
+
+Never spinner.
+
+Skeleton mirrors final layout.
+
+Competition Badge
+
+↓
+
+Fixture
+
+↓
+
+Research
+
+↓
+
+Evidence
+
+↓
+
+Footer
+
+Users should already recognise the structure.
+
+21.17 Empty State
+
+Never display empty Match Cards.
+
+If research is unavailable,
+
+do not render the component.
+
+Instead,
+
+communicate this at page level.
+
+21.18 Archived State
+
+Archived cards receive:
+
+Archive badge
+
+Muted border
+
+Settlement status
+
+Historical date
+
+Research remains readable.
+
+Historical information is never visually downgraded.
+
+21.19 Live State
+
+Live fixtures receive:
+
+Small LIVE indicator
+
+Current minute
+
+Score
+
+Research remains primary.
+
+Live information is secondary.
+
+RankWagers is a research platform,
+
+not a live score platform.
+
+21.20 Settled State
+
+Settled cards display:
+
+Final Result
+
+Research Outcome
+
+Archive Link
+
+Never colour outcomes as "success" or "failure."
+
+History should remain neutral.
+
+21.21 Accessibility
+
+Minimum touch target
+
+44 px
+
+Readable at 200% zoom
+
+Screen reader labels
+
+Logical reading order
+
+Reduced motion support
+
+Keyboard accessible
+
+Accessibility is part of quality.
+
+21.22 Analytics
+
+Track:
+
+Card Impression
+
+Card Hover
+
+Card Click
+
+Expand Evidence
+
+Expand Archive
+
+Expand Methodology
+
+Time Visible
+
+Scroll Position
+
+No behavioural manipulation.
+
+Only product understanding.
+
+21.23 Performance Budget
+
+Render
+
+<16 ms
+
+Animation
+
+GPU accelerated
+
+Images
+
+Lazy loaded
+
+Logos
+
+Cached
+
+No layout shift
+
+Maximum DOM depth kept minimal.
+
+21.24 Anti-Patterns
+
+Never:
+
+Display five different markets
+Show bookmaker logos
+Use promotional badges
+Show "HOT"
+Show "100% Safe"
+Show confidence percentages
+Use flashing indicators
+Animate continuously
+Display unnecessary statistics
+
+The Match Card should remain disciplined.
+
+21.25 The Three-Second Rule
+
+Within three seconds,
+
+users must understand:
+
+Who is playing.
+
+Why this fixture qualified.
+
+What should happen next.
+
+If additional reading is required,
+
+the Match Card has failed.
+
+21.26 Psychological Goal
+
+The Match Card should create one emotional response:
+
+"This looks researched."
+
+Not:
+
+"This looks predicted."
+
+That distinction defines RankWagers.
+
+21.27 Match Card North Star
+
+The Match Card should become the visual identity of RankWagers.
+
+If screenshots of individual cards appear on social media,
+
+users should recognise them immediately,
+
+even without the logo.
+
+PART XXII
+EVIDENCE PANEL SPECIFICATION
+22.0 Purpose
+
+The Evidence Panel is the defining component of RankWagers.
+
+It transforms football data into understandable research.
+
+It never predicts.
+
+It never persuades.
+
+It explains.
+
+Users should leave the panel understanding:
+
+Why this fixture qualified.
+
+The purpose is not confidence.
+
+The purpose is transparency.
+
+22.1 Philosophy
+
+Most football platforms expose statistics.
+
+RankWagers exposes reasoning.
+
+The Evidence Panel exists to bridge the gap between raw provider data and human understanding.
+
+Users should feel they are reading an analyst's notebook,
+
+not an algorithm's output.
+
+22.2 Trigger
+
+The panel opens when users choose to explore a fixture.
+
+It should never appear automatically.
+
+Transparency should remain available,
+
+never forced.
+
+22.3 Opening Behaviour
+
+Desktop
+
+Right-side slide panel
+
+Width
+
+480 px
+
+Tablet
+
+Full-height drawer
+
+Mobile
+
+Bottom sheet
+
+Maximum Height
+
+90% viewport
+
+Background scroll locks while open.
+
+22.4 Animation
+
+Open
+
+240 ms
+
+Ease-out
+
+Close
+
+180 ms
+
+Fade
+
+100 ms
+
+No bounce.
+
+No elastic motion.
+
+The panel should feel deliberate.
+
+22.5 Layout
+Header
+
+↓
+
+Qualification Summary
+
+↓
+
+Evidence Blocks
+
+↓
+
+Provider Statistics
+
+↓
+
+Historical Context
+
+↓
+
+Methodology
+
+↓
+
+Related Research
+
+↓
+
+Archive
+
+↓
+
+Close
+
+Users should never lose orientation.
+
+22.6 Header
+
+Contains
+
+Competition
+
+Fixture
+
+Kickoff
+
+Research Topic
+
+Updated Time
+
+Close Button
+
+No unnecessary metadata.
+
+22.7 Qualification Summary
+
+The first section answers only one question.
+
+Why is this fixture here?
+
+Maximum
+
+Three concise statements.
+
+Example
+
+Qualified because:
+
+• Strong home attacking trend
+
+• Away defence consistently concedes
+
+• League scoring profile exceeds today's threshold
+
+No percentages.
+
+No formulas.
+
+No jargon.
+
+22.8 Evidence Blocks
+
+Each Evidence Block represents one research signal.
+
+Structure
+
+Evidence Title
+
+↓
+
+Short Explanation
+
+↓
+
+Supporting Provider Data
+
+↓
+
+Learn More
+
+Maximum
+
+Five blocks.
+
+Users should never scroll through endless evidence.
+
+Quality beats quantity.
+
+22.9 Evidence Types
+
+Allowed evidence categories:
+
+Attacking Trend
+
+Defensive Trend
+
+League Profile
+
+Historical Pattern
+
+Recent Form
+
+Home Advantage
+
+Away Performance
+
+Goal Distribution
+
+Scoring Frequency
+
+Clean Sheet Trend
+
+Failed To Score Trend
+
+No internal-only categories.
+
+No implementation terminology.
+
+22.10 Provider Statistics
+
+This section clearly separates external facts from internal reasoning.
+
+Display:
+
+Provider
+
+Statistic
+
+Last Updated
+
+Source
+
+Never mix provider data with RankWagers interpretation.
+
+Visual separation should remain obvious.
+
+22.11 Research Interpretation
+
+Immediately below provider statistics,
+
+RankWagers explains why those statistics matter.
+
+This section should answer:
+
+Why is this relevant?
+
+How does it contribute to qualification?
+
+What should users understand?
+
+Interpretation belongs to RankWagers.
+
+Facts belong to providers.
+
+22.12 Historical Context
+
+Show only information that helps understanding.
+
+Examples
+
+Similar historical fixtures
+
+Previous qualification frequency
+
+Historical scoring profile
+
+Archive references
+
+Avoid overwhelming historical tables.
+
+Context,
+
+not volume.
+
+22.13 Methodology Preview
+
+Do not expose proprietary algorithms.
+
+Instead explain:
+
+Research process
+
+↓
+
+Validation
+
+↓
+
+Qualification
+
+↓
+
+Publication
+
+Users should understand the process,
+
+not the implementation.
+
+22.14 Related Research
+
+Users naturally continue exploration.
+
+Display
+
+Maximum
+
+Three related fixtures.
+
+Never recommend randomly.
+
+Related research should feel connected.
+
+22.15 Archive Connection
+
+Every Evidence Panel links naturally into history.
+
+Examples
+
+Previous similar fixture
+
+Previous league research
+
+Historical archive
+
+History strengthens trust.
+
+22.16 Visual Hierarchy
+
+Largest
+
+Qualification Summary
+
+↓
+
+Evidence
+
+↓
+
+Interpretation
+
+↓
+
+Provider Statistics
+
+↓
+
+Historical Context
+
+↓
+
+Methodology
+
+↓
+
+Archive
+
+Importance decreases gradually.
+
+22.17 Typography
+
+Section Titles
+
+22 px
+
+Evidence Titles
+
+18 px
+
+Body
+
+16 px
+
+Metadata
+
+13 px
+
+Supporting Labels
+
+12 px
+
+Never exceed five hierarchy levels.
+
+22.18 Colour Behaviour
+
+Evidence
+
+Neutral
+
+Provider
+
+Blue Accent
+
+Historical
+
+Muted Grey
+
+Qualification
+
+Success Green
+
+Methodology
+
+Secondary
+
+No decorative gradients.
+
+Meaning only.
+
+22.19 Expand Behaviour
+
+Each Evidence Block expands independently.
+
+Never expand everything simultaneously.
+
+Users control depth.
+
+The interface remains manageable.
+
+22.20 Accessibility
+
+Keyboard navigation
+
+Supported
+
+Screen readers
+
+Supported
+
+Reduced motion
+
+Supported
+
+Logical reading order
+
+Maintained
+
+Every expandable block receives appropriate ARIA labels.
+
+22.21 Performance
+
+Panel opens instantly.
+
+Provider data already cached.
+
+No blocking requests after opening.
+
+Animations remain GPU accelerated.
+
+Maximum interaction latency
+
+100 ms.
+
+22.22 Analytics
+
+Track
+
+Panel Open
+
+Evidence Expanded
+
+Provider Statistics Viewed
+
+Historical Context Viewed
+
+Methodology Viewed
+
+Archive Clicked
+
+Related Fixture Clicked
+
+Panel Closed
+
+No personal profiling.
+
+Only research interaction.
+
+22.23 Error Behaviour
+
+If provider data is unavailable,
+
+display:
+
+Provider statistics temporarily unavailable.
+
+Research explanation remains accessible.
+
+If research cannot be explained,
+
+do not display the fixture as qualified.
+
+Transparency overrides completeness.
+
+22.24 Anti-Patterns
+
+Never:
+
+Display raw JSON
+Display unexplained percentages
+Use AI-generated paragraphs
+Show confidence scores
+Mix providers together
+Reveal internal scoring formulas
+Overwhelm with statistics
+Hide methodology
+
+The Evidence Panel should remain understandable.
+
+22.25 The Reading Rule
+
+The panel should be readable in less than two minutes.
+
+Users should never feel they are reading documentation.
+
+Each section must answer one clear question.
+
+22.26 Emotional Goal
+
+Users should close the panel thinking:
+
+"I understand why this match appeared."
+
+Not:
+
+"The algorithm thinks this is good."
+
+Understanding creates trust.
+
+Mystery creates doubt.
+
+22.27 The RankWagers Difference
+
+Most products stop at statistics.
+
+RankWagers continues to explanation.
+
+The Evidence Panel exists because numbers alone rarely improve decisions.
+
+Understanding does.
+
+22.28 Evidence Panel North Star
+
+The Evidence Panel should become the most recognisable interaction in the product.
+
+If competitors copy the layout,
+
+they should still struggle to reproduce the underlying experience.
+
+The experience is not the panel itself.
+
+The experience is making football research understandable.
+
+PART XXIII
+RESEARCH WORKSPACE SPECIFICATION
+23.0 Purpose
+
+The Fixture Page is not a statistics page.
+
+It is not a prediction page.
+
+It is not a bookmaker page.
+
+It is a research workspace.
+
+Users should feel like they are sitting beside a professional football analyst reviewing one fixture.
+
+Every section contributes to understanding.
+
+Nothing exists to increase excitement.
+
+23.1 Product Philosophy
+
+Traditional football websites answer:
+
+What happened?
+
+RankWagers answers:
+
+Why does this fixture deserve attention?
+
+Understanding is always more valuable than information volume.
+
+23.2 Primary User Question
+
+Every fixture page should answer one question:
+
+Why is this match here?
+
+If users leave without understanding this,
+
+the page has failed.
+
+23.3 Workspace Layout
+
+Desktop
+
+┌─────────────────────────────────────────────────────────────┐
+│ Header                                                      │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│ Research Summary                                            │
+│                                                             │
+├─────────────────┬──────────────────────┬────────────────────┤
+│                 │                      │                    │
+│ Research        │ Evidence             │ Provider Facts     │
+│ Workspace       │                      │                    │
+│                 │                      │                    │
+├─────────────────┴──────────────────────┴────────────────────┤
+│ Historical Timeline                                        │
+├─────────────────────────────────────────────────────────────┤
+│ Related Research                                            │
+├─────────────────────────────────────────────────────────────┤
+│ Archive                                                     │
+└─────────────────────────────────────────────────────────────┘
+
+The layout should feel like three analysts working together.
+
+Not three unrelated widgets.
+
+23.4 Left Column — Research
+
+Purpose:
+
+Explain today's research.
+
+Contains:
+
+Research Summary
+
+Qualification
+
+Research Notes
+
+Market
+
+Update Time
+
+Methodology Link
+
+No provider statistics.
+
+No odds.
+
+Only RankWagers research.
+
+23.5 Centre Column — Evidence
+
+Purpose:
+
+Support every research conclusion.
+
+Contains:
+
+Evidence Blocks
+
+Expandable Explanation
+
+Supporting Context
+
+Related Knowledge
+
+Users should spend the most time here.
+
+This is the intellectual centre of the page.
+
+23.6 Right Column — Provider Facts
+
+Purpose:
+
+Present external facts.
+
+Contains:
+
+FootyStats
+
+API-Football
+
+Provider Timestamp
+
+Provider Metrics
+
+Last Refresh
+
+Nothing interpreted.
+
+Facts remain separate from conclusions.
+
+23.7 Research Summary
+
+The page begins with one concise summary.
+
+Maximum
+
+120 words.
+
+It answers:
+
+What qualified?
+
+Why?
+
+What should users understand?
+
+Not:
+
+What should users do?
+
+The summary informs.
+
+It never persuades.
+
+23.8 Qualification Panel
+
+Displays:
+
+Qualified
+
+↓
+
+Qualification Reason
+
+↓
+
+Research Version
+
+↓
+
+Published
+
+↓
+
+Updated
+
+Everything is timestamped.
+
+Nothing appears mysterious.
+
+23.9 Evidence Workspace
+
+Evidence becomes interactive.
+
+Each block contains:
+
+Headline
+
+↓
+
+Explanation
+
+↓
+
+Provider Support
+
+↓
+
+Historical Reference
+
+↓
+
+Knowledge Link
+
+Every section can expand independently.
+
+23.10 Provider Workspace
+
+Provider data is visually separated.
+
+Different background.
+
+Different heading.
+
+Different colour accent.
+
+Users should immediately understand:
+
+This information comes from external providers.
+
+Transparency is visual.
+
+Not only textual.
+
+23.11 Historical Timeline
+
+Timeline shows:
+
+Fixture Discovered
+
+↓
+
+Provider Updated
+
+↓
+
+Qualified
+
+↓
+
+Published
+
+↓
+
+Live
+
+↓
+
+Settled
+
+↓
+
+Archived
+
+Users should understand research evolution.
+
+Not merely chronology.
+
+23.12 Research Timeline Animation
+
+Timeline appears progressively.
+
+Never instantly.
+
+Maximum duration:
+
+600 ms.
+
+No decorative motion.
+
+The animation reinforces reading order.
+
+23.13 Related Research
+
+Purpose:
+
+Encourage deeper exploration.
+
+Maximum
+
+Three fixtures.
+
+Relationship must be obvious.
+
+Examples:
+
+Same competition
+
+Similar market
+
+Similar research pattern
+
+Never random recommendations.
+
+23.14 Knowledge Connection
+
+Whenever terminology appears,
+
+users can immediately learn more.
+
+Examples:
+
+BTTS
+
+↓
+
+Knowledge
+
+Qualification
+
+↓
+
+Methodology
+
+Historical Trend
+
+↓
+
+Archive
+
+Research remains interconnected.
+
+23.15 Archive Section
+
+Archive is not an appendix.
+
+Archive validates research.
+
+Display:
+
+Previous similar fixtures
+
+Historical outcomes
+
+Methodology version
+
+Settlement
+
+Publication date
+
+History reinforces credibility.
+
+23.16 Navigation
+
+Sticky Workspace Navigation
+
+Research
+
+Evidence
+
+Provider Facts
+
+History
+
+Knowledge
+
+Archive
+
+Users always know where they are.
+
+23.17 Reading Rhythm
+
+The page should naturally follow this rhythm:
+
+Understand
+
+↓
+
+Verify
+
+↓
+
+Explore
+
+↓
+
+Learn
+
+↓
+
+Compare
+
+↓
+
+Continue
+
+Users should never feel lost.
+
+23.18 Mobile Behaviour
+
+Columns become sections.
+
+Order remains identical.
+
+Research
+
+↓
+
+Evidence
+
+↓
+
+Provider
+
+↓
+
+Timeline
+
+↓
+
+Knowledge
+
+↓
+
+Archive
+
+Hierarchy survives.
+
+Layout adapts.
+
+23.19 Accessibility
+
+Workspace fully keyboard accessible.
+
+Expandable evidence supports ARIA.
+
+Logical reading order maintained.
+
+Charts receive textual alternatives.
+
+Reduced motion respected.
+
+23.20 Analytics
+
+Track:
+
+Workspace Open
+
+Evidence Expansion
+
+Timeline Viewed
+
+Provider Viewed
+
+Knowledge Click
+
+Archive Click
+
+Related Fixture Click
+
+Reading Completion
+
+No manipulation.
+
+Only product understanding.
+
+23.21 Performance Budget
+
+Workspace interactive within:
+
+2.5 seconds.
+
+Evidence expansion:
+
+<100 ms.
+
+Timeline animation:
+
+GPU accelerated.
+
+No layout shifts.
+
+Images lazy-loaded below fold.
+
+23.22 Error Behaviour
+
+If provider data is unavailable:
+
+Research remains visible.
+
+Provider section displays status.
+
+Historical archive remains accessible.
+
+Users always understand current data availability.
+
+23.23 Empty Behaviour
+
+If historical data is unavailable:
+
+Explain why.
+
+Suggest related knowledge.
+
+Never leave empty containers.
+
+Every absence should teach.
+
+23.24 Anti-Patterns
+
+Never:
+
+Mix provider data with interpretation.
+Show bookmaker banners inside research.
+Place affiliate buttons between evidence.
+Display unexplained percentages.
+Overload users with tables.
+Use flashing live indicators.
+Hide methodology.
+
+The workspace should remain calm.
+
+23.25 Psychological Goal
+
+Users should feel like they have completed meaningful research.
+
+Not consumed content.
+
+The page should create confidence through understanding.
+
+23.26 Workspace North Star
+
+The Fixture Page should become the most respected football research page on the internet.
+
+If users bookmark only one page type,
+
+it should be this one.
+
+23.27 The Analyst Test
+
+Imagine removing every logo from the page.
+
+Would users still recognise that this is a structured football research workspace?
+
+If the answer is yes,
+
+the design has achieved its goal.
+
+23.28 The Final Principle
+
+Every section should answer a different question.
+
+Section	User Question
+Research Summary	What is this fixture about?
+Qualification	Why did it qualify?
+Evidence	What supports this conclusion?
+Provider Facts	What do the underlying data sources show?
+Historical Timeline	How did this research evolve?
+Archive	Has this happened before?
+Knowledge	What can I learn from this?
+Operators	Where can I act if I choose to?
+
+No section should duplicate another.
+
+Research should feel layered,
+
+not repetitive.
+
+
+PART XXIV
+HEADER SPECIFICATION
+24.0 Purpose
+
+The Header is not a marketing banner.
+
+The Header is the user's orientation system.
+
+Its only responsibilities are:
+
+Identity
+Navigation
+Search
+Context
+
+Nothing else.
+
+24.1 Height
+
+Desktop
+
+88 px
+
+Tablet
+
+80 px
+
+Mobile
+
+72 px
+
+The Header height never changes during scrolling.
+
+24.2 Layout
+Logo
+
+↓
+
+Primary Navigation
+
+↓
+
+Global Search
+
+↓
+
+Language
+
+↓
+
+Theme
+
+↓
+
+User
+
+Never include promotional banners.
+
+Never include affiliate CTAs.
+
+24.3 Behaviour
+
+Default
+
+Transparent over Hero.
+
+↓
+
+After scrolling 32 px
+
+↓
+
+Solid background.
+
+↓
+
+Small blur (8 px).
+
+↓
+
+Border appears.
+
+The transition should take 180 ms.
+
+24.4 Logo
+
+Maximum Height
+
+36 px
+
+Clickable
+
+Always returns Home.
+
+Never animate continuously.
+
+24.5 Navigation Items
+
+Desktop
+
+Today's Research
+
+Competitions
+
+Archive
+
+Knowledge
+
+Methodology
+
+No dropdown unless necessary.
+
+24.6 Search
+
+Always visible.
+
+Minimum Width
+
+280 px
+
+Maximum Width
+
+360 px
+
+Expandable on smaller screens.
+
+24.7 Mobile
+
+Logo
+
+↓
+
+Search
+
+↓
+
+Menu
+
+Three elements only.
+
+24.8 Sticky Behaviour
+
+Header always remains accessible.
+
+Never hide completely.
+
+Maximum translate
+
+-40 px
+
+24.9 Header Rules
+
+Never contain:
+
+Ads
+Odds
+Bonuses
+Countdown timers
+Affiliate banners
+PART XXV
+NAVIGATION SPECIFICATION
+25.0 Purpose
+
+Navigation exposes knowledge.
+
+Not pages.
+
+Users navigate ideas.
+
+25.1 Information Order
+
+Today's Research
+
+↓
+
+Competitions
+
+↓
+
+Archive
+
+↓
+
+Knowledge
+
+↓
+
+Methodology
+
+Search exists independently.
+
+25.2 Active State
+
+Border Bottom
+
+2 px
+
+Primary colour
+
+No background pills.
+
+No glowing.
+
+25.3 Hover
+
+150 ms
+
+Underline fade
+
+Text colour slightly brighter.
+
+Nothing else.
+
+25.4 Breadcrumbs
+
+Every internal page contains breadcrumbs.
+
+Example
+
+Home
+
+↓
+
+Premier League
+
+↓
+
+Arsenal vs Newcastle
+PART XXVI
+SEARCH SPECIFICATION
+26.0 Purpose
+
+Search discovers football knowledge.
+
+Not only fixtures.
+
+26.1 Search Scope
+
+Fixtures
+
+Competitions
+
+Teams
+
+Knowledge
+
+Archive
+
+Methodology
+
+Operators
+
+26.2 Result Groups
+
+Each category separated.
+
+Maximum
+
+5 results per group.
+
+26.3 Empty Search
+
+Instead of
+
+"No results"
+
+Display
+
+Suggested Competitions
+
+Trending Knowledge
+
+Today's Research
+
+26.4 Keyboard
+
+Arrow navigation
+
+Enter
+
+Escape
+
+Tab
+
+Supported.
+
+PART XXVII
+LEAGUE CARD SPECIFICATION
+27.0 Purpose
+
+League Cards represent today's football activity.
+
+27.1 Contents
+
+League Logo
+
+League Name
+
+Qualified Fixtures
+
+Research Activity
+
+Explore
+
+27.2 Height
+
+84 px
+
+Radius
+
+14 px
+
+Padding
+
+16 px
+
+27.3 Hover
+
+Border
+
++1
+
+Shadow
+
++6%
+
+Arrow slides
+
+4 px
+
+27.4 Never
+
+Never show standings.
+
+Never show betting odds.
+
+Never overload statistics.
+
+PART XXVIII
+OPERATOR CARD SPECIFICATION
+28.0 Purpose
+
+Provide execution.
+
+Not persuasion.
+
+28.1 Layout
+
+Logo
+
+↓
+
+Availability
+
+↓
+
+Markets
+
+↓
+
+Updated
+
+↓
+
+Visit Operator
+
+28.2 Rules
+
+Research always appears first.
+
+Operator cards never interrupt reading.
+
+28.3 CTA
+
+Neutral.
+
+Never
+
+"Bet Now"
+
+Preferred
+
+View Operator
+
+Compare Markets
+
+PART XXIX
+KNOWLEDGE CARD SPECIFICATION
+29.0 Purpose
+
+Convert curiosity into understanding.
+
+29.1 Contents
+
+Title
+
+↓
+
+Summary
+
+↓
+
+Reading Time
+
+↓
+
+Continue Reading
+
+29.2 Topics
+
+BTTS
+
+Over Goals
+
+Corners
+
+Cards
+
+Methodology
+
+Statistics
+
+League Guides
+
+29.3 Maximum
+
+Three cards per homepage.
+
+PART XXX
+TIMELINE SPECIFICATION
+30.0 Purpose
+
+Visualise research progression.
+
+30.1 Events
+
+Fixture Found
+
+↓
+
+Validated
+
+↓
+
+Qualified
+
+↓
+
+Published
+
+↓
+
+Live
+
+↓
+
+Settled
+
+↓
+
+Archived
+
+30.2 Motion
+
+Sequential
+
+600 ms
+
+Never autoplay repeatedly.
+
+PART XXXI
+FOOTER SPECIFICATION
+31.0 Purpose
+
+Reinforce trust.
+
+31.1 Sections
+
+Research
+
+Knowledge
+
+Archive
+
+Methodology
+
+Competitions
+
+Transparency
+
+Providers
+
+Contact
+
+Legal
+
+31.2 Never
+
+Newsletter popups.
+
+Promotions.
+
+Affiliate banners.
+
+PART XXXII
+MOTION LIBRARY
+
+Hover
+
+150 ms
+
+Card
+
+180 ms
+
+Button
+
+120 ms
+
+Accordion
+
+220 ms
+
+Modal
+
+240 ms
+
+Hero
+
+320 ms
+
+Timeline
+
+600 ms
+
+Page Transition
+
+350 ms
+
+Research Reveal
+
+1800 ms
+
+No bounce.
+
+No elastic.
+
+No infinite animation.
+
+PART XXXIII
+DESIGN TOKENS
+
+Spacing
+
+8
+
+16
+
+24
+
+32
+
+48
+
+64
+
+96
+
+Radius
+
+8
+
+12
+
+16
+
+20
+
+999
+
+Elevation
+
+0
+
+1
+
+2
+
+3
+
+4
+
+Typography
+
+Display XL
+
+Display L
+
+Heading XL
+
+Heading L
+
+Heading M
+
+Body
+
+Caption
+
+Mono
+
+Breakpoints
+
+Mobile
+
+390
+
+Tablet
+
+768
+
+Desktop
+
+1440
+
+Wide
+
+1600+
+
+PART XXXIV
+RESPONSIVE RULES
+
+Desktop
+
+12 Columns
+
+Tablet
+
+8 Columns
+
+Mobile
+
+4 Columns
+
+Never hide important information.
+
+Only reorder.
+
+Cards stack vertically.
+
+Navigation collapses.
+
+Search remains accessible.
+
+Research Funnel remains visible.
+
+PART XXXV
+ACCESSIBILITY
+
+WCAG AA minimum.
+
+Keyboard support.
+
+Reduced motion.
+
+ARIA labels.
+
+Logical focus order.
+
+44 px touch targets.
+
+No colour-only communication.
+
+PART XXXVI
+PERFORMANCE
+
+LCP
+
+<2.5 s
+
+CLS
+
+0
+
+INP
+
+<200 ms
+
+Images
+
+Optimised
+
+Skeleton
+
+Instead of Spinner
+
+GPU animations only.
+
+PART XXXVII
+FIGMA COMPONENT NAMING
+
+Hero
+
+Hero / Featured
+
+Hero / Funnel
+
+Hero / League Panel
+
+Match Card / Default
+
+Match Card / Hover
+
+Match Card / Expanded
+
+Evidence / Default
+
+Evidence / Expanded
+
+Evidence / Historical
+
+Timeline / Compact
+
+Timeline / Full
+
+Knowledge Card
+
+League Card
+
+Operator Card
+
+Header
+
+Footer
+
+Navigation
+
+Search
+
+Button / Primary
+
+Button / Secondary
+
+Button / Ghost
+
+Badge
+
+Chip
+
+Tooltip
+
+Accordion
+
+Modal
+
+Skeleton
+
+PART XXXVIII
+RELEASE CHECKLIST
+
+Before every release:
+
+□ Feels like football, not gambling.
+□ Research is clearly separated from provider data.
+□ Affiliate remains the final step.
+□ Every statistic is explainable.
+□ No layout shift.
+□ Motion communicates state.
+□ Mobile experience is complete.
+□ Accessibility passes.
+□ Performance budget passes.
+□ SEO structure remains intact.
+□ Internal links work.
+□ Structured data validates.
+□ Analytics events fire correctly.
+□ Every page answers a real user question.
+□ Every component follows the design system.
+□ Every screen can be understood within five seconds.

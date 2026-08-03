@@ -1,0 +1,289 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --font-sans: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --color-ink: #0b0c0e;
+  --color-ink-2: #4a4d55;
+  --color-ink-3: #82868f;
+  --color-canvas: #f7f7f6;
+  --color-surface: #ffffff;
+  --color-line: #e7e6e3;
+  --color-line-2: #efeeec;
+  --color-accent: #2a55e0;
+  --color-live: #e0342a;
+  --color-pos: #16794a;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  background: var(--color-canvas);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  font-feature-settings: "ss01", "cv01";
+}
+
+::selection {
+  background: #2a55e0;
+  color: #fff;
+}
+
+/* Scrollbars stay out of the way until scrolling */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 999px;
+}
+html:hover *::-webkit-scrollbar-thumb,
+*:hover::-webkit-scrollbar-thumb {
+  background: rgba(11, 12, 14, 0.16);
+}
+
+.tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+.display {
+  letter-spacing: -0.042em;
+  line-height: 0.96;
+  font-weight: 600;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ==========================================================================
+   MOTION LANGUAGE
+   --------------------------------------------------------------------------
+   Five rules, applied without exception:
+
+   1. Nothing is fast. The shortest state change is 240ms; the shortest
+      entrance is 1100ms. Speed reads as cheap.
+   2. One curve family. Everything decelerates; nothing overshoots, bounces,
+      springs or eases in-out. Motion arrives and stops.
+   3. Entrances resolve focus: opacity and a small blur lift together with a
+      12px rise. The element sharpens into place rather than sliding in.
+   4. Nothing travels further than 12px, and nothing scales more than 2%.
+      Restraint reads as confidence.
+   5. Values never jump. A number that changes is animated to its new value
+      on the same curve as everything else.
+   ========================================================================== */
+
+:root {
+  /* --- easings: one family, all decelerating ---------------------------- */
+  --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);    /* entrances, reveals, draws */
+  --ease-respond: cubic-bezier(0.28, 0.11, 0.32, 1); /* hover and state */
+  --ease-glide: cubic-bezier(0.33, 0, 0.15, 1);    /* live values, continuous data */
+  --ease-exit: cubic-bezier(0.5, 0, 0.75, 0);      /* things leaving, slightly quicker */
+
+  /* --- durations: a deliberate scale ------------------------------------ */
+  --dur-tap: 180ms;      /* press acknowledgement */
+  --dur-respond: 520ms;  /* hover, colour, small transforms */
+  --dur-expand: 900ms;   /* expansion, elevation, scaling crests */
+  --dur-reveal: 1300ms;  /* scroll entrances */
+  --dur-resolve: 2400ms; /* counters, arcs, beams — the slowest thing we do */
+  --dur-live: 1100ms;    /* a live value moving to its new reading */
+
+  /* --- rhythm ----------------------------------------------------------- */
+  --stagger: 140ms;      /* between siblings in a group */
+  --lead: 220ms;         /* before the first thing on the page moves */
+  --travel: 12px;
+  --focus: 6px;          /* the blur an entrance resolves from */
+}
+
+/* -- 0. page load ---------------------------------------------------------
+   The document does not appear. It resolves: the canvas settles first, then
+   the composition rises on top of it. */
+
+@keyframes rw-wake {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+body {
+  animation: rw-wake 1400ms var(--ease-settle) both;
+}
+
+/* -- 1. entrances -------------------------------------------------------- */
+
+@keyframes rw-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, var(--travel), 0);
+    filter: blur(var(--focus));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
+.rise {
+  animation: rw-rise var(--dur-reveal) var(--ease-settle) both;
+}
+
+/* Scroll reveal: the same resolve, held until the element is observed. */
+.reveal {
+  opacity: 0;
+  transform: translate3d(0, var(--travel), 0);
+  filter: blur(var(--focus));
+  transition:
+    opacity var(--dur-reveal) var(--ease-settle),
+    transform var(--dur-reveal) var(--ease-settle),
+    filter var(--dur-reveal) var(--ease-settle);
+  transition-delay: calc(var(--i, 0) * var(--stagger));
+  will-change: opacity, transform, filter;
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+  filter: blur(0);
+  will-change: auto; /* release the layer once it has arrived */
+}
+
+/* -- 2. state response --------------------------------------------------- */
+
+/* Actions carry weight: they answer slowly and give under the press. */
+.m-press {
+  transition:
+    transform var(--dur-respond) var(--ease-respond),
+    box-shadow var(--dur-respond) var(--ease-respond),
+    background-color var(--dur-respond) var(--ease-respond),
+    border-color var(--dur-respond) var(--ease-respond);
+}
+.m-press:hover {
+  transform: translateY(-1px);
+}
+.m-press:active {
+  transform: translateY(0) scale(0.992);
+  transition-duration: var(--dur-tap);
+}
+
+/* Surfaces rise rather than pop. */
+.m-lift {
+  transition:
+    transform var(--dur-expand) var(--ease-respond),
+    box-shadow var(--dur-expand) var(--ease-respond),
+    border-color var(--dur-expand) var(--ease-respond),
+    background-color var(--dur-expand) var(--ease-respond);
+}
+.m-lift:hover {
+  transform: translateY(-3px);
+}
+
+/* -- 3. living detail -----------------------------------------------------
+   Ambient motion is slower than anything a user causes, so the page never
+   competes with the cursor. */
+
+@keyframes rw-breathe {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-1.5px) scale(1.012); }
+}
+.m-breathe {
+  animation: rw-breathe 11s var(--ease-respond) infinite;
+}
+.m-breathe-slow {
+  animation: rw-breathe 17s var(--ease-respond) infinite;
+}
+
+@keyframes rw-pulse {
+  0% { transform: scale(1); opacity: 0.5; }
+  75% { transform: scale(2.8); opacity: 0; }
+  100% { transform: scale(2.8); opacity: 0; }
+}
+.pulse-ring::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: currentColor;
+  animation: rw-pulse 3.6s var(--ease-settle) infinite;
+}
+
+/* A live reading that has just changed: it brightens back rather than blinks. */
+@keyframes rw-tick {
+  from { opacity: 0.4; }
+  to { opacity: 1; }
+}
+/* The engine passing over today's fixtures, again and again. */
+@keyframes rw-sweep {
+  0% { transform: translateX(-14%); }
+  100% { transform: translateX(114%); }
+}
+.m-sweep { animation: rw-sweep 13s linear infinite; }
+
+/* A slow plane of light crossing the stage. */
+@keyframes rw-scan {
+  0%, 100% { transform: translateX(-30%); opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { transform: translateX(130%); }
+}
+.m-scan { animation: rw-scan 21s var(--ease-glide) infinite; }
+
+@keyframes rw-fade { from { opacity: 0 } to { opacity: 1 } }
+/* A crest or reading exchanged for another — never cut, never moved. */
+.m-fade { animation: rw-fade var(--dur-expand) var(--ease-settle) both; }
+
+.m-tick {
+  animation: rw-tick var(--dur-live) var(--ease-glide) both;
+}
+
+/* Live geometry — bars, arcs, fans — glides to its new value. */
+.m-live {
+  transition:
+    width var(--dur-live) var(--ease-glide),
+    height var(--dur-live) var(--ease-glide),
+    transform var(--dur-live) var(--ease-glide),
+    background-color var(--dur-respond) var(--ease-respond),
+    color var(--dur-respond) var(--ease-respond);
+}
+
+@keyframes rw-draw {
+  from { stroke-dashoffset: 100; }
+  to { stroke-dashoffset: 0; }
+}
+
+@keyframes rw-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes rw-rail {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+/* -- 4. honour the opt-out ----------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  body { animation: none; }
+  .pulse-ring::after, .rise, .m-breathe, .m-breathe-slow, .m-tick, .m-fade, .m-sweep, .m-scan,
+  [style*="rw-draw"], [style*="rw-rail"], [style*="rw-fade"] { animation: none; }
+  .reveal { opacity: 1; transform: none; filter: none; transition: none; }
+  .m-live { transition: none; }
+  .m-press:hover, .m-lift:hover { transform: none; }
+  [style*="rw-draw"] { stroke-dasharray: none; }
+  [style*="rw-rail"] { width: 100%; }
+  html { scroll-behavior: auto; }
+}
