@@ -21,6 +21,7 @@ import { HomepageSearchEntry } from "@/components/homepage/HomepageSearchEntry";
 import { HomepageAccaEntry } from "@/components/homepage/HomepageAccaEntry";
 import { AddToAccaButton } from "@/components/acca/AddToAccaButton";
 import { HomepageViewedTracker } from "@/components/homepage/HomepageViewedTracker";
+import { HomepageHero } from "@/components/homepage/hero/HomepageHero";
 import {
   EmptySection,
   SectionHeading,
@@ -37,56 +38,11 @@ const marketNames = {
 } as const;
 
 /*
- * Editorial masthead copy. A journal announces itself before it reports — the nameplate is the one
- * element that frames every section below as edited copy rather than a dashboard readout. This is a
- * masthead (the publication's subject), NOT the section eyebrow that S1 deliberately dropped: that
- * eyebrow paraphrased the headline; this names the publication. Hardcoded like the other in-component
- * English strings (`Live matches`, `Recently qualified`, `Saved`) so it moves with this layout.
+ * The masthead nameplate and the hairline pitch diagram lived here to support the previous S1
+ * hero. Both were composition owned by that hero, and the approved composition that replaces it
+ * states its subject in the headline and carries its own ground plane. Removed rather than left
+ * unreferenced.
  */
-const MASTHEAD_KICKER = "Football Intelligence";
-
-/**
- * The hero's single supporting visual: one half of a pitch, drawn to regulation proportion in
- * hairlines.
- *
- * A diagram rather than an image, and that is the whole point. Photography of crowds or stadiums is
- * the visual language of the category this product is trying not to belong to, and it would say
- * nothing true about what the page contains. A measured plan says the subject is football and the
- * method is measurement — which is the actual proposition — and it cannot be mistaken for a casino.
- *
- * Set at the border step so it reads as drafting on paper, never as an illustration competing with
- * the headline. Bleeds off the top-right so the composition stays asymmetric.
- *
- * `aria-hidden`: decoration. It carries no information the text does not.
- */
-function PitchMark() {
-  return (
-    <svg
-      aria-hidden
-      viewBox="0 0 340 480"
-      fill="none"
-      stroke="var(--border-default)"
-      strokeWidth="1"
-      vectorEffect="non-scaling-stroke"
-      className="pointer-events-none absolute -right-24 -top-16 h-[26rem] w-auto opacity-50 sm:-right-16 sm:h-[32rem] md:right-0 md:h-[38rem] md:opacity-70 lg:h-[42rem]"
-    >
-      {/* Touchlines + goal line. The halfway line is the open top edge. */}
-      <path d="M20 0 V460 H320 V0" />
-      {/* Centre circle, bisected by the halfway line, and the centre spot. */}
-      <path d="M110 0 A60 60 0 0 0 230 0" />
-      <circle cx="170" cy="0" r="2" fill="var(--border-default)" stroke="none" />
-      {/* Penalty area, goal area, penalty spot. */}
-      <path d="M70 460 V340 H270 V460" />
-      <path d="M125 460 V410 H215 V460" />
-      <circle cx="170" cy="382" r="2" fill="var(--border-default)" stroke="none" />
-      {/* Penalty arc — only the segment outside the area, as it is marked on a real pitch. */}
-      <path d="M129 340 A50 50 0 0 0 211 340" />
-      {/* Corner arcs. */}
-      <path d="M20 452 A8 8 0 0 0 28 460" />
-      <path d="M312 460 A8 8 0 0 0 320 452" />
-    </svg>
-  );
-}
 
 /**
  * Render the hero dateline from the settled record's own timestamp.
@@ -239,91 +195,40 @@ export function RankWagersHome({
       />
 
       {/*
-        S1 — Hero.
+        S1 — Hero. Sprint 1: replaced by the approved hero composition.
 
-        Four elements and no fifth: nameplate, headline, one sentence, one action. Everything else
-        that has ever lived here — two CTAs, the search field, the live count, the date control, the
-        model-version rail, the remit paragraph — is either downstream where it is used or gone.
+        `HomepageHero` derives its model from the same `lists` this page already fetched and
+        renders inside a `.rw-hero` scope that carries its own palette, typefaces and motion
+        language. Nothing it defines escapes that scope, so S2–S7 below and every other route are
+        byte-identical to their previous output.
 
-        Composition. The headline is the only dominant element and it is set as large as the measure
-        allows; the pitch diagram is a counterweight, not an illustration, and it is the single
-        supporting visual on the page. Reading order runs down the left column while the mark holds
-        the right — the asymmetry is what stops it reading as a marketing banner, which is always
-        centred.
-
-        Background. Flat canvas. The tinted radial wash that used to sit here implied a light source,
-        and paper does not have one. The elegance has to come from the type and the space around it,
-        because that is the only kind a reader cannot dismiss as decoration.
-
-        The dateline and the commission disclosure survive as a metadata rule at the foot — not
-        composition, and not removable: a publication states when it was compiled and who pays for it.
+        The dateline and the commission disclosure do NOT move into it. They are not composition:
+        a publication states when it was compiled and who pays for it, and the approved hero has
+        no place for either. They stay here, immediately beneath the hero, in the site's own
+        styling — the same rule that has always carried them.
       */}
-      <section
-        id="today"
-        data-analytics-section="hero"
-        aria-labelledby="homepage-hero-heading"
-        className="relative -mx-4 overflow-hidden px-4 pb-16 pt-10 sm:-mx-6 sm:px-6 md:pb-24 md:pt-16 lg:-mx-10 lg:px-10"
-      >
-        <PitchMark />
+      <HomepageHero
+        lists={lists}
+        dict={dict}
+        locale={locale}
+        headingId="homepage-hero-heading"
+      />
 
-        <div className="relative">
-          {/*
-            Nameplate. One line, stating the subject of the publication. Not a heading — the H1
-            below is the page's only H1 — so a screen reader meets the headline first.
-          */}
-          <p className="font-display text-metadata font-semibold uppercase tracking-label text-foreground">
-            {MASTHEAD_KICKER}
+      <div className="mt-10 max-w-[46rem] border-t border-[var(--border-subtle)] pt-5 md:mt-12">
+        {assessedLabel ? (
+          <p className="text-caption text-muted-foreground">
+            <time dateTime={trust.verified.lastUpdatedAt ?? undefined}>{assessedLabel}</time>
           </p>
-          <span
-            aria-hidden
-            className="mt-5 block h-[3px] w-10 bg-[var(--ink-primary)] md:mt-6"
-          />
-
-          <h1
-            id="homepage-hero-heading"
-            className="mt-7 max-w-[15ch] font-display text-5xl font-semibold leading-[0.95] tracking-display text-foreground sm:text-6xl md:mt-9 md:max-w-[13ch] md:text-7xl lg:text-8xl"
-          >
-            {p.heroTitle}
-          </h1>
-
-          <p className="mt-8 max-w-[42ch] font-display text-xl leading-[1.45] text-[var(--ink-secondary)] md:mt-10 md:text-2xl">
-            {p.heroSubtitle}
-          </p>
-
-          {/*
-            One action. It points at the record rather than at the picks: the argument this page
-            makes is that the evidence comes first, and the hero should hand the reader the proof
-            before it hands them the output.
-          */}
-          <div className="mt-10 md:mt-12">
-            <SectionTrackLink
-              href={`/${locale}#verified-performance`}
-              section="hero"
-              locale={locale}
-              className="btn-primary min-h-11"
-            >
-              {p.heroCtaSecondary}
-              <ArrowUpRight className="h-4 w-4" aria-hidden />
-            </SectionTrackLink>
-          </div>
-
-          <div className="mt-14 max-w-[46rem] border-t border-[var(--border-subtle)] pt-5 md:mt-20">
-            {assessedLabel ? (
-              <p className="text-caption text-muted-foreground">
-                <time dateTime={trust.verified.lastUpdatedAt ?? undefined}>{assessedLabel}</time>
-              </p>
-            ) : null}
-            {/*
-              Trust hierarchy, tier 1. The commercial interest is disclosed before any figure it
-              could bias, and it makes no promise about its own effect — it points at the published
-              criteria so the reader can check rather than believe.
-            */}
-            <p className="mt-2 max-w-[62ch] text-caption leading-relaxed text-muted-foreground">
-              {p.heroDisclosure}
-            </p>
-          </div>
-        </div>
-      </section>
+        ) : null}
+        {/*
+          Trust hierarchy, tier 1. The commercial interest is disclosed before any figure it
+          could bias, and it makes no promise about its own effect — it points at the published
+          criteria so the reader can check rather than believe.
+        */}
+        <p className="mt-2 max-w-[62ch] text-caption leading-relaxed text-muted-foreground">
+          {p.heroDisclosure}
+        </p>
+      </div>
 
       {/*
         S2 — The Proof Band. The second half of the first viewport.

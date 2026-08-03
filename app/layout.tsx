@@ -4,7 +4,7 @@ import { siteUrl } from "@/lib/seo";
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { defaultLocale, dirForLocale, isLocale, type Locale } from "@/lib/i18n";
-import { inter, playfair } from "@/lib/fonts";
+import { instrumentSans, inter, jetbrainsMono, playfair } from "@/lib/fonts";
 import { LocaleDocumentSync } from "@/components/LocaleDocumentSync";
 import { StagingBanner } from "@/components/StagingBanner";
 import {
@@ -57,7 +57,11 @@ export default function RootLayout({
   const dir = dirForLocale(locale);
 
   return (
-    <html lang={locale} dir={dir} className={`${inter.variable} ${playfair.variable}`}>
+    <html
+      lang={locale}
+      dir={dir}
+      className={`${inter.variable} ${playfair.variable} ${instrumentSans.variable} ${jetbrainsMono.variable}`}
+    >
       {/* Consent Mode v2 default MUST precede GTM so tags initialise consent-aware. */}
       <ConsentMode />
       <GoogleTagManagerHead />

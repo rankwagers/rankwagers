@@ -496,5 +496,227 @@ textarea,
   }
 }
 
+/* ==========================================================================
+   HOMEPAGE HERO — Sprint 1
+   --------------------------------------------------------------------------
+   The approved hero composition carries its own palette, typefaces and motion
+   language. Every token below is SCOPED to `.rw-hero` and nothing here leaks:
+   the site keeps its cream/green brand, Inter and Playfair until a later
+   sprint converts the remaining surfaces. That is what makes this sprint
+   reversible — deleting this block and the `.rw-hero` wrapper restores the
+   previous homepage exactly.
+   ========================================================================== */
+
+.rw-hero {
+  /* --- palette ---------------------------------------------------------- */
+  --hero-ink: #0b0c0e;
+  --hero-ink-2: #4a4d55;
+  --hero-ink-3: #6b6f78; /* 4.70:1 on --hero-canvas (was #82868f at 3.40:1, below AA) */
+  --hero-canvas: #f7f7f6;
+  --hero-surface: #ffffff;
+  --hero-line: #e7e6e3;
+  --hero-line-2: #efeeec;
+  --hero-accent: #2a55e0;
+  --hero-pos: #16794a;
+
+  /* --- easings: one family, all decelerating ---------------------------- */
+  --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-respond: cubic-bezier(0.28, 0.11, 0.32, 1);
+  --ease-glide: cubic-bezier(0.33, 0, 0.15, 1);
+
+  /* --- durations -------------------------------------------------------- */
+  --dur-tap: 180ms;
+  --dur-respond: 520ms;
+  --dur-expand: 900ms;
+  --dur-reveal: 1300ms;
+  --dur-resolve: 2400ms;
+  --dur-live: 1100ms;
+
+  /* --- rhythm ----------------------------------------------------------- */
+  --stagger: 140ms;
+  --lead: 220ms;
+  --travel: 12px;
+  --focus: 6px;
+
+  background: var(--hero-canvas);
+  color: var(--hero-ink);
+  font-family: var(--font-hero-sans), ui-sans-serif, system-ui, sans-serif;
+  font-feature-settings: "ss01", "cv01";
+  -webkit-font-smoothing: antialiased;
+}
+
+.rw-hero ::selection {
+  background: var(--hero-accent);
+  color: #fff;
+}
+
+/*
+ * Focus indication. The approved composition sets `outline-none` on every control and supplies no
+ * replacement, which is a WCAG 2.4.7 failure rather than a design decision. This restores a visible
+ * indicator WITHOUT altering the static composition — it is inert until a keyboard reaches it.
+ */
+.rw-hero :focus-visible {
+  outline: 2px solid var(--hero-accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* --- type primitives ---------------------------------------------------- */
+
+.rw-hero .rw-tnum {
+  font-variant-numeric: tabular-nums;
+}
+
+.rw-hero .rw-display {
+  letter-spacing: -0.042em;
+  line-height: 0.96;
+  font-weight: 600;
+}
+
+.rw-hero .rw-label {
+  font-family: var(--font-hero-mono), ui-monospace, monospace;
+  /* 11px floor: uppercase mono at 0.14em tracking is the least legible combination on the page. */
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.rw-hero .rw-mono {
+  font-family: var(--font-hero-mono), ui-monospace, monospace;
+}
+
+/* --- entrances ---------------------------------------------------------- */
+
+@keyframes rw-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, var(--travel), 0);
+    filter: blur(var(--focus));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: blur(0);
+  }
+}
+
+.rw-hero .rw-enter {
+  animation: rw-rise var(--dur-reveal) var(--ease-settle) both;
+}
+
+/* Scroll reveal: the same resolve, held until the element is observed. */
+.rw-hero .rw-reveal {
+  opacity: 0;
+  transform: translate3d(0, var(--travel), 0);
+  filter: blur(var(--focus));
+  transition:
+    opacity var(--dur-reveal) var(--ease-settle),
+    transform var(--dur-reveal) var(--ease-settle),
+    filter var(--dur-reveal) var(--ease-settle);
+  transition-delay: calc(var(--i, 0) * var(--stagger));
+  will-change: opacity, transform, filter;
+}
+
+.rw-hero .rw-reveal.is-in {
+  opacity: 1;
+  transform: none;
+  filter: blur(0);
+  will-change: auto;
+}
+
+/* --- state response ----------------------------------------------------- */
+
+.rw-hero .rw-press {
+  transition:
+    transform var(--dur-respond) var(--ease-respond),
+    background-color var(--dur-respond) var(--ease-respond),
+    border-color var(--dur-respond) var(--ease-respond);
+}
+.rw-hero .rw-press:hover {
+  transform: translateY(-1px);
+}
+.rw-hero .rw-press:active {
+  transform: translateY(0) scale(0.992);
+  transition-duration: var(--dur-tap);
+}
+
+/* --- living detail ------------------------------------------------------ */
+
+@keyframes rw-breathe {
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-1.5px) scale(1.012);
+  }
+}
+.rw-hero .rw-breathe {
+  animation: rw-breathe 11s var(--ease-respond) infinite;
+}
+.rw-hero .rw-breathe-slow {
+  animation: rw-breathe 17s var(--ease-respond) infinite;
+}
+
+@keyframes rw-pulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  75%,
+  100% {
+    transform: scale(2.8);
+    opacity: 0;
+  }
+}
+.rw-hero .rw-pulse-ring::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: currentColor;
+  animation: rw-pulse 3.6s var(--ease-settle) infinite;
+}
+
+@keyframes rw-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.rw-hero .rw-fade {
+  animation: rw-fade var(--dur-expand) var(--ease-settle) both;
+}
+
+/* Live geometry — bars, arcs — glides to its new value. */
+.rw-hero .rw-live {
+  transition:
+    width var(--dur-live) var(--ease-glide),
+    height var(--dur-live) var(--ease-glide),
+    transform var(--dur-live) var(--ease-glide),
+    background-color var(--dur-respond) var(--ease-respond),
+    color var(--dur-respond) var(--ease-respond);
+}
+
+/*
+ * The global reduce block above already neutralises duration and iteration count. These two rules
+ * cover what it cannot: a `.rw-reveal` whose observer never fires must still be readable, and the
+ * parallax planes must sit at their neutral offset.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .rw-hero .rw-reveal {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+  .rw-hero {
+    --travel: 0px;
+    --focus: 0px;
+  }
+}
+
 
 
