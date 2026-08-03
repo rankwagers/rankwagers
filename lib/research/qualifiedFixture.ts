@@ -1,5 +1,6 @@
 import { z } from "zod";
 import type { DailyMatchLists, FootyMatchRow, MatchListKind } from "@/lib/footystats/types";
+import { footyRowCoreSchema } from "./footyRowContract";
 import {
   confidenceForListKind,
   formatFixtureKickoff,
@@ -7,20 +8,17 @@ import {
   marketForListKind,
 } from "./fixturePresentation";
 
-const footyRowSchema = z.object({
-  matchId: z.number().int().positive(),
-  homeTeam: z.string().trim().min(1),
-  awayTeam: z.string().trim().min(1),
+/*
+ * The core field constraints come from `footyRowContract` — the same definition the pipeline
+ * applies to count the `validated` stage. Only the presentation-only fields are added here, so
+ * the two readers can never disagree about what makes a row usable.
+ */
+const footyRowSchema = footyRowCoreSchema.extend({
   competition: z.string().trim().min(1).catch("Competition unavailable"),
   country: z.string().trim().min(1).optional(),
   countryCode: z.string().optional(),
   homeImage: z.string().url().optional(),
   awayImage: z.string().url().optional(),
-  kickoffTime: z.number().finite().positive(),
-  over15Pct: z.number().finite().min(0).max(100),
-  fhOver05Pct: z.number().finite().min(0).max(100),
-  over25Pct: z.number().finite().min(0).max(100),
-  shOver05Pct: z.number().finite().min(0).max(100),
 });
 
 export type QualifiedFixture = {

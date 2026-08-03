@@ -96,6 +96,41 @@ export const predictionsEn = {
   heroSearchSubmit: "Search",
   heroLiveCountLabel: "{count} live matches in today's lists",
   heroLiveCountEmpty: "No live matches in today's qualified lists right now",
+
+  /*
+   * Sprint 1 hero. Added to the English source only: `mergePredictions` spreads this object under
+   * every locale override, so all thirty locales resolve these keys to the English wording until
+   * they are translated. That is the established pattern in this file — a missing key would be a
+   * type error, a missing translation is a fallback.
+   *
+   * The copy states only what the page can evidence. There is no claim about a count the model
+   * does not expose and no freshness claim beyond the provider's own retrieval stamp.
+   */
+  heroStageEyebrow: "Football, read as evidence",
+  heroStageUpdated: "Lists retrieved {time} UTC",
+  heroStageUpdatedPending: "Retrieval time pending",
+  heroStageTitle: "Today's football has already been researched.",
+  heroStageLede: "Every fixture kicking off today was scored against the model.",
+  heroStageLedeRest:
+    "Only those that clear the qualification threshold reach this page — today, {count} of them.",
+  heroStageLedeRestEmpty:
+    "Only those that clear the qualification threshold reach this page. None have today.",
+  heroFunnelTitle: "Today's research funnel",
+  heroFunnelNote: "{count} qualified",
+  heroFunnelAnalysed: "Fixtures",
+  heroFunnelValidated: "Validated",
+  heroFunnelInScope: "In scope",
+  heroFunnelQualified: "Qualified",
+  heroFunnelFeatured: "Featured",
+  heroLeadTitle: "Today's strongest research",
+  heroLeadNote: "1 of {count} shown",
+  heroSupportingTitle: "Supporting research",
+  heroSupportingNote: "{count} of {total} shown",
+  heroStageCta: "Explore today's research",
+  heroStageEmpty:
+    "No fixture cleared the qualification threshold for this date. The lists are published as they are — an empty day is a result, not an outage.",
+  heroOpenResearch: "Open {home} v {away} research",
+  heroProbabilityLabel: "Model probability",
   topPicksEyebrow: "Today",
   topPicksTitle: "Highest model probabilities today",
   topPicksDescription:

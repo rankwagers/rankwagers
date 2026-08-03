@@ -9,6 +9,8 @@ import {
   SH_OVER_05_THRESHOLD,
 } from "./config";
 import { enrichAllLists } from "@/lib/api-football/enrich";
+import { observedResearchRun, unobservedResearchRun } from "@/lib/research/researchRun";
+import { footyRowCoreSchema, type FootyRowCore } from "@/lib/research/footyRowContract";
 import { countryToIso2, flagEmojiForCountry } from "./flags";
 import { leagueImageUrl, teamImageUrl } from "./images";
 import {
@@ -44,6 +46,30 @@ function todayDateStr(): string {
 
 export function todayMatchDateStr(): string {
   return todayDateStr();
+}
+
+/**
+ * The raw provider match, projected onto the fields the usability contract constrains.
+ *
+ * Extracted so `buildRow` and the `validated` stage count read the SAME coercion. If the two
+ * diverged — one treating an absent potential as 0 and the other as missing, say — the count
+ * would describe a population the pipeline does not actually accept, and a measured number that
+ * describes nothing is worse than no number at all.
+ *
+ * The coercions mirror what the provider sends: numerics arrive as strings on some endpoints, and
+ * an absent potential is a real zero rather than a defect.
+ */
+function coreFieldsFromRaw(m: RawMatch): FootyRowCore {
+  return {
+    matchId: Number(m.id),
+    homeTeam: String(m.home_name ?? ""),
+    awayTeam: String(m.away_name ?? ""),
+    kickoffTime: Number(m.date_unix ?? 0),
+    over15Pct: Number(m.o15_potential ?? 0),
+    fhOver05Pct: Number(m.o05HT_potential ?? 0),
+    over25Pct: Number(m.o25_potential ?? 0),
+    shOver05Pct: Number(m.o05_2H_potential ?? 0),
+  };
 }
 
 function isCup(leagueName: string): boolean {
@@ -217,9 +243,7 @@ function buildRow(m: RawMatch, info: LeagueInfo, highlightPct: number): FootyMat
   const awayImg = awayRaw ? teamImageUrl(String(awayRaw)) : undefined;
 
   return {
-    matchId: Number(m.id),
-    homeTeam: String(m.home_name ?? ""),
-    awayTeam: String(m.away_name ?? ""),
+    ...coreFieldsFromRaw(m),
     homeImage: homeImg,
     awayImage: awayImg,
     leagueImage: info.image,
@@ -227,12 +251,7 @@ function buildRow(m: RawMatch, info: LeagueInfo, highlightPct: number): FootyMat
     country,
     countryCode,
     flag: flagEmojiForCountry(country),
-    kickoffTime: kickoff,
     kickoff: toIstanbulTime(kickoff),
-    over15Pct: Number(m.o15_potential ?? 0),
-    fhOver05Pct: Number(m.o05HT_potential ?? 0),
-    over25Pct: Number(m.o25_potential ?? 0),
-    shOver05Pct: Number(m.o05_2H_potential ?? 0),
     status,
     isLive,
     isFinished,
@@ -261,6 +280,12 @@ async function fetchDailyListsUncached(date: string): Promise<DailyMatchLists> {
         requestedDate: date,
         providerFailureReasonCode: fetched.code,
       },
+      /*
+       * A failed fetch observed no population at all. Every stage is `null` — not zero: zero
+       * would assert the provider returned nothing, which is a different and unevidenced claim
+       * about the day (§3.2, §3.8).
+       */
+      researchRun: unobservedResearchRun(),
     };
   }
 
@@ -272,10 +297,34 @@ async function fetchDailyListsUncached(date: string): Promise<DailyMatchLists> {
   const over25: FootyMatchRow[] = [];
   const sh: FootyMatchRow[] = [];
 
+  /*
+   * Funnel instrumentation (rwdesign §6).
+   *
+   * This loop is the ONLY place in the product where the rejected population is visible: after it
+   * returns, the lists carry qualified fixtures and nothing else. The counts below are taken here
+   * because here they are observations; anywhere downstream they would be reconstructions.
+   *
+   * `analysed` is the provider population. `validated` counts rows whose fields satisfy the
+   * usability contract — a row with no id, no team name or a non-finite potential cannot be used
+   * downstream whatever its thresholds say, so it is rejected here rather than carried and dropped
+   * later. `inScope` counts the validated rows whose competition survives the cup filter.
+   * `qualified` counts DISTINCT fixtures — a match clearing three thresholds is one qualified
+   * fixture in three lists, so a sum of list lengths would overcount it. Nothing is derived by
+   * subtraction: each is incremented where it is observed (§3.2).
+   */
+  const analysed = matches.length;
+  let validated = 0;
+  let inScope = 0;
+  const qualifiedIds = new Set<number>();
+
   for (const m of matches) {
+    if (!footyRowCoreSchema.safeParse(coreFieldsFromRaw(m)).success) continue;
+    validated += 1;
+
     const compId = Number(m.competition_id);
     const info = leagueInfo(compId, String(m.match_url ?? ""), cache);
     if (isCup(info.league)) continue;
+    inScope += 1;
 
     const o15 = Number(m.o15_potential ?? 0);
     const fh05 = Number(m.o05HT_potential ?? 0);
@@ -294,6 +343,16 @@ async function fetchDailyListsUncached(date: string): Promise<DailyMatchLists> {
     if (sh05 >= SH_OVER_05_THRESHOLD) {
       sh.push(buildRow(m, info, sh05));
     }
+
+    if (
+      o15 >= OVER_15_THRESHOLD ||
+      fh05 >= FH_OVER_05_THRESHOLD ||
+      o25 >= OVER_25_THRESHOLD ||
+      sh05 >= SH_OVER_05_THRESHOLD
+    ) {
+      const matchId = Number(m.id);
+      if (Number.isFinite(matchId) && matchId > 0) qualifiedIds.add(matchId);
+    }
   }
 
   const sortKick = (a: FootyMatchRow, b: FootyMatchRow) => a.kickoffTime - b.kickoffTime;
@@ -304,15 +363,27 @@ async function fetchDailyListsUncached(date: string): Promise<DailyMatchLists> {
 
   await enrichAllLists({ over15, fh, over25, sh }, date);
 
+  const fetchedAt = new Date().toISOString();
   const lists: DailyMatchLists = {
     date,
     over15,
     fh,
     over25,
     sh,
-    fetchedAt: new Date().toISOString(),
+    fetchedAt,
     // A successful empty day is still fresh. Only a provider FAILURE may be substituted.
     provenance: { source: "fresh_provider", requestedDate: date },
+    /*
+     * `featured` is absent here by contract: how many fixtures are FEATURED is a presentation
+     * decision made downstream — the pipeline does not observe it and must not guess.
+     */
+    researchRun: observedResearchRun({
+      analysed,
+      validated,
+      inScope,
+      qualified: qualifiedIds.size,
+      fetchedAt,
+    }),
   };
   try {
     await mergeArchiveFromLists(lists);

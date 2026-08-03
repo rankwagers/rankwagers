@@ -1,3 +1,5 @@
+import type { ResearchRun } from "@/lib/research/researchRun";
+
 export type MatchListKind = "fh" | "over15" | "over25" | "sh";
 
 export type FootyMatchRow = {
@@ -70,4 +72,12 @@ export type DailyMatchLists = {
    * means "not recorded" and is treated as fresh by consumers that care.
    */
   provenance?: DailyListsProvenance;
+  /**
+   * Stage counts observed while these lists were built (rwdesign §6).
+   *
+   * Optional for the same reason as `provenance`: every stored archive predates it and stays
+   * valid. Absent means the run was not instrumented — which is NOT the same as a run whose
+   * stages were all null, and consumers must treat both as "no observation" rather than as zero.
+   */
+  researchRun?: ResearchRun;
 };

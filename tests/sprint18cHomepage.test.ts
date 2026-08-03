@@ -61,7 +61,13 @@ test("homepage composition includes narrative sections and Acca add controls", (
     "utf8"
   );
   for (const token of [
-    'id="homepage-hero-heading"',
+    /*
+     * Sprint 1 moved the hero into `components/homepage/hero`. The page still owns the anchor —
+     * it passes the id down — and the assertion that the id is actually APPLIED to the H1 now
+     * sits against the hero component below, where the element lives.
+     */
+    "HomepageHero",
+    'headingId="homepage-hero-heading"',
     'id="top-picks"',
     'id="verified-performance"',
     'id="recent-results"',
@@ -77,6 +83,58 @@ test("homepage composition includes narrative sections and Acca add controls", (
   }
   assert.doesNotMatch(home, /ComboHomepageLauncher/);
   assert.doesNotMatch(home, /guaranteed wins/i);
+});
+
+test("hero applies the page's heading anchor to its H1", () => {
+  const stage = readFileSync(
+    path.join(root, "components/homepage/hero/HeroStage.tsx"),
+    "utf8"
+  );
+  // The H1 must carry the id the page passes down, or `aria-labelledby` points at nothing.
+  assert.match(stage, /<h1\s+id=\{headingId\}/);
+  assert.match(stage, /aria-labelledby=\{headingId\}/);
+});
+
+test("hero never ships a synthetic reading", () => {
+  const model = readFileSync(path.join(root, "lib/homepage/heroModel.ts"), "utf8");
+  // Sprint 1 contract: a field is either sourced from the provider lists or null. Any default
+  // for these would put an unevidenced figure on the page.
+  for (const field of [
+    "evidence",
+    "confidence",
+    "confidenceLabel",
+    "reasons",
+    "summary",
+    "signals",
+    "history",
+  ]) {
+    assert.match(model, new RegExp(`${field}: null,`));
+  }
+  assert.match(model, /published: null,/);
+
+  /*
+   * `analysed` is no longer a hardcoded null: the qualification pipeline now observes the
+   * population at the one point where the rejected rows still exist, and hands it over on
+   * `ResearchRun`. The guard therefore moves from "this field is always null" to the rule that
+   * actually matters — a stage is the run's observation or null, and never a substitute.
+   */
+  assert.match(model, /analysed: run\?\.analysed \?\? null,/);
+  assert.match(model, /validated: run\?\.validated \?\? null,/);
+  assert.match(model, /inScope: run\?\.inScope \?\? null,/);
+
+  // No stage may fall back to a number, and none may be reconstructed by arithmetic.
+  for (const stage of ["analysed", "validated", "inScope", "qualified", "featured"]) {
+    assert.doesNotMatch(
+      model,
+      new RegExp(`${stage}:[^,\\n]*\\?\\?\\s*\\d`),
+      `${stage} must never default to a number`
+    );
+  }
+  assert.doesNotMatch(
+    model,
+    /(analysed|validated|inScope|qualified)\s*-\s*(analysed|validated|inScope|qualified|run)/,
+    "no funnel stage may be derived by subtracting another"
+  );
 });
 
 test("homepage page loads trust model server-side", () => {
