@@ -9,6 +9,9 @@ import { OperatorEvidenceCardList } from "@/components/operators/OperatorEvidenc
 import { buildOperatorEvidenceCards, recommendableCards } from "@/lib/operators/evidenceCard";
 import type { MatchPageBundle } from "@/lib/fixtures/loadMatchPage.server";
 import { matchBreadcrumbLd, matchSportsEventLd } from "@/lib/fixtures/schema";
+import { buildFixtureEvidenceView } from "@/lib/fixtures/evidenceView";
+import { FixtureResearchSection } from "./FixtureResearchSection";
+import { FixtureRecordSection } from "./FixtureRecordSection";
 import { MatchDetailTracker } from "./MatchDetailTracker";
 import { MatchLiveRefresh } from "./MatchLiveRefresh";
 import { MatchPredictionsPanel } from "./MatchPredictionsPanel";
@@ -49,8 +52,21 @@ export function MatchDetailView({
   const description = `${header.homeTeam} vs ${header.awayTeam} — evidence, live context, and transparent prediction settlement on RankWagers.`;
   const sportsEvent = matchSportsEventLd({ locale, header, description });
 
+  // A blank or placeholder value must not produce a labelled-but-empty eyebrow.
+  const hasCompetition = Boolean(header.competition?.trim()) && header.competition !== "—";
+  const hasCountry = Boolean(header.country?.trim()) && header.country !== "—";
+  const competitionEyebrow = hasCompetition
+    ? hasCountry
+      ? `${header.competition} · ${header.country}`
+      : header.competition
+    : hasCountry
+      ? header.country
+      : null;
+
+  const evidence = buildFixtureEvidenceView(detail);
+
   return (
-    <div className="container-wide pb-16">
+    <div className="rw-hero container-wide bg-[var(--hero-canvas)] pb-24">
       <MatchDetailTracker
         matchId={header.matchId}
         locale={locale}
@@ -97,11 +113,15 @@ export function MatchDetailView({
         </ol>
       </nav>
 
-      <header className="border-b border-[var(--border-subtle)] pb-8">
-        <p className="text-metadata font-medium uppercase tracking-label text-brand">
-          {header.competition}
-          {header.country && header.country !== "—" ? ` · ${header.country}` : ""}
-        </p>
+      <header className="border-b border-[var(--hero-line)] pb-10">
+        {/*
+          The eyebrow renders only when there is something to put in it. It previously printed an
+          empty line whenever `competition` was blank or the provider's "—" placeholder, which is
+          a label with no value — worse than no label at all.
+        */}
+        {competitionEyebrow ? (
+          <p className="rw-label text-[var(--hero-ink-3)]">{competitionEyebrow}</p>
+        ) : null}
         <div className="mt-4 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
           <div className="flex min-w-0 flex-1 items-center justify-between gap-3 sm:justify-start sm:gap-6">
             <TeamBlock
@@ -113,28 +133,43 @@ export function MatchDetailView({
               align="left"
             />
             <div className="text-center">
+              {/*
+                Live state is load-bearing, not decoration. The framing above claims a market
+                prices differently in play while the score is still goalless — a page that cannot
+                show the minute and the score cannot support that claim.
+              */}
               <p
-                className="font-mono text-3xl font-semibold tabular-nums text-foreground sm:text-4xl"
+                className="rw-mono rw-tnum text-4xl font-semibold text-[var(--hero-ink)] sm:text-5xl"
                 aria-label={`Score ${scoreText(header.score.home, header.score.away)}`}
               >
                 {scoreText(header.score.home, header.score.away)}
               </p>
-              <p className="mt-1 text-xs font-semibold uppercase tracking-label text-muted-foreground">
+              <p className="rw-label mt-2 text-[var(--hero-ink-3)]">
                 <span
                   className={
                     header.isLive
-                      ? "text-[var(--red-primary)]"
+                      ? "rw-live text-[var(--hero-accent)]"
                       : header.lifecycle === "finished"
-                        ? "text-brand"
+                        ? "text-[var(--hero-pos)]"
                         : ""
                   }
                 >
                   {header.statusLabel}
                 </span>
-                {header.minute != null ? ` · ${header.minute}'` : ""}
+                {header.isLive && header.minute != null ? (
+                  <span className="rw-tnum text-[var(--hero-accent)]">
+                    {" · "}
+                    {header.minute}&apos;
+                  </span>
+                ) : header.minute != null ? (
+                  <span className="rw-tnum">
+                    {" · "}
+                    {header.minute}&apos;
+                  </span>
+                ) : null}
               </p>
               {(header.htScore.home != null || header.ftScore.home != null) && (
-                <p className="mt-1 font-mono text-metadata text-muted-foreground">
+                <p className="rw-mono rw-tnum mt-1.5 text-[13px] text-[var(--hero-ink-3)]">
                   {header.htScore.home != null
                     ? `HT ${scoreText(header.htScore.home, header.htScore.away)}`
                     : ""}
@@ -153,11 +188,11 @@ export function MatchDetailView({
               align="right"
             />
           </div>
-          <div className="text-sm text-[var(--ink-secondary)] lg:max-w-xs lg:text-right">
+          <div className="text-[14px] text-[var(--hero-ink-2)] lg:max-w-xs lg:text-right">
             <p>{formatKickoff(header.kickoffAt, locale)}</p>
             {header.venue ? <p className="mt-1">Venue: {header.venue}</p> : null}
             {header.lastUpdatedAt ? (
-              <p className="mt-2 font-mono text-metadata text-muted-foreground">
+              <p className="rw-mono mt-2 text-[12px] text-[var(--hero-ink-3)]">
                 Updated {new Date(header.lastUpdatedAt).toLocaleString()} ·{" "}
                 {header.dataFreshness === "live_ok"
                   ? "live refresh enabled"
@@ -170,8 +205,8 @@ export function MatchDetailView({
         </div>
       </header>
 
-      <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_320px]">
-        <div className="space-y-10">
+      <div className="mt-14 grid gap-14 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <div className="space-y-16">
           {/*
             Sprint 22 — Live Match Intelligence. Renders itself only for in-play fixtures and
             returns null otherwise, so no live markup or JavaScript reaches a scheduled or
@@ -179,32 +214,16 @@ export function MatchDetailView({
           */}
           <LiveMatchSection snapshot={bundle.liveMatch} locale={locale} />
 
-          <section aria-labelledby="predictions-heading">
-            <h2
-              id="predictions-heading"
-              className="font-display text-xl font-semibold text-foreground"
-            >
-              Predictions & settlement
-            </h2>
-            <p className="mt-1 max-w-2xl text-sm text-[var(--ink-secondary)]">
-              Publication snapshots are separate from post-match events. Settlement is
-              computed server-side from final (or period) scores.
-            </p>
-            <div className="mt-4">
-              <MatchPredictionsPanel
-                matchId={header.matchId}
-                locale={locale}
-                predictions={model.predictions}
-                focusMarket={focusMarket}
-                homeTeam={header.homeTeam}
-                awayTeam={header.awayTeam}
-                competition={header.competition}
-                competitionSlug={header.competitionSlug}
-                country={header.country}
-                kickoffAt={header.kickoffAt}
-              />
-            </div>
-          </section>
+          {/*
+            Research leads. §3.5 reads result → why → supporting data, and the brief's hierarchy
+            puts Research above everything commercial, so the evidence sits directly under the
+            header and the archived record follows it further down the page.
+          */}
+          <FixtureResearchSection
+            view={evidence}
+            homeTeam={header.homeTeam}
+            awayTeam={header.awayTeam}
+          />
 
           <section aria-labelledby="events-heading">
             <h2 id="events-heading" className="font-display text-xl font-semibold">
@@ -268,30 +287,46 @@ export function MatchDetailView({
             </SectionState>
           </section>
 
-          {detail ? (
-            <section aria-labelledby="context-heading">
-              <h2 id="context-heading" className="font-display text-xl font-semibold">
-                Research context
-              </h2>
-              <p className="mt-2 text-sm text-[var(--ink-secondary)]">
-                Venue splits: home side {detail.homeAtHome.played} home matches · away side{" "}
-                {detail.awayAtAway.played} away matches
-                {detail.prematchXg
-                  ? ` · Prematch xG ${detail.prematchXg.total.toFixed(2)}`
-                  : ""}
-                .
-              </p>
-            </section>
-          ) : null}
+          {/*
+            The old "Research context" paragraph restated the venue sample counts that now sit
+            beside every rate in the research section. One idea, one place (§18.4).
+          */}
+
+          {/* §3.11 — published history stays on the page; it just stops pretending to be research. */}
+          <FixtureRecordSection predictions={model.predictions} />
 
           <section aria-labelledby="deferred-heading">
-            <h2 id="deferred-heading" className="text-sm font-semibold text-foreground">
-              Deferred markets
+            <h2 id="deferred-heading" className="rw-label text-[var(--hero-ink-3)]">
+              Not covered on this page
             </h2>
-            <p className="mt-1 text-xs text-muted-foreground">
-              Not published on this page until durable selection snapshots exist or provider
-              contracts are safe: {model.deferredMarkets.join("; ")}.
+            <p className="mt-3 max-w-[62ch] text-[13px] leading-relaxed text-[var(--hero-ink-3)]">
+              We do not publish research for these markets yet:{" "}
+              {model.deferredMarkets.join(", ")}.
             </p>
+          </section>
+
+          {/*
+            The interactive publication timeline. Kept for §3.12 auditability, placed after the
+            record it annotates rather than above the research it is not.
+          */}
+          <section aria-labelledby="timeline-heading">
+            <h2 id="timeline-heading" className="rw-label text-[var(--hero-ink-3)]">
+              Publication timeline
+            </h2>
+            <div className="mt-4">
+              <MatchPredictionsPanel
+                matchId={header.matchId}
+                locale={locale}
+                predictions={model.predictions}
+                focusMarket={focusMarket}
+                homeTeam={header.homeTeam}
+                awayTeam={header.awayTeam}
+                competition={header.competition}
+                competitionSlug={header.competitionSlug}
+                country={header.country}
+                kickoffAt={header.kickoffAt}
+              />
+            </div>
           </section>
         </div>
 

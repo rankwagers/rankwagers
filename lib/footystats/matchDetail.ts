@@ -525,6 +525,20 @@ function optionalNum(v: unknown): number | null {
   return Number.isFinite(n) ? n : null;
 }
 
+/**
+ * A live counting/percentage stat, or null.
+ *
+ * FootyStats returns `-1` as its "not recorded" sentinel, and `optionalNum` accepts it because
+ * -1 is a finite number — which is how `Cards -1 / -1` reached the page. Every quantity this
+ * guards (possession %, shots, xG, corners, cards, dangerous attacks) is non-negative by
+ * definition, so a negative value is not a low reading, it is an absent one. Treated as absent,
+ * the stat row is filtered out upstream rather than published as a negative count.
+ */
+export function nonNegativeNum(v: unknown): number | null {
+  const n = optionalNum(v);
+  return n != null && n >= 0 ? n : null;
+}
+
 function parseMatchEvents(raw: Record<string, unknown>, homeId: number, awayId: number): MatchLiveContext["events"] {
   const candidates = [raw.goals, raw.goalscorers, raw.events, raw.timeline];
   const out: MatchLiveContext["events"] = [];
@@ -587,20 +601,20 @@ async function fetchMatchLiveUncached(matchId: number): Promise<MatchLiveContext
     htHome: htHomeRaw != null && htHomeRaw !== "" ? Number(htHomeRaw) : null,
     htAway: htAwayRaw != null && htAwayRaw !== "" ? Number(htAwayRaw) : null,
     minute: num(m.minute),
-    possessionHome: optionalNum(m.team_a_possession ?? m.home_possession),
-    possessionAway: optionalNum(m.team_b_possession ?? m.away_possession),
-    shotsHome: optionalNum(m.team_a_shots ?? m.home_shots),
-    shotsAway: optionalNum(m.team_b_shots ?? m.away_shots),
-    shotsOnTargetHome: optionalNum(m.team_a_shotsOnTarget ?? m.home_shots_on_target),
-    shotsOnTargetAway: optionalNum(m.team_b_shotsOnTarget ?? m.away_shots_on_target),
-    xgHome: optionalNum(m.team_a_xg ?? m.home_xg),
-    xgAway: optionalNum(m.team_b_xg ?? m.away_xg),
-    cornersHome: optionalNum(m.team_a_corners ?? m.home_corners),
-    cornersAway: optionalNum(m.team_b_corners ?? m.away_corners),
-    cardsHome: optionalNum(m.team_a_cards_num ?? m.home_cards),
-    cardsAway: optionalNum(m.team_b_cards_num ?? m.away_cards),
-    dangerousAttacksHome: optionalNum(m.team_a_dangerous_attacks),
-    dangerousAttacksAway: optionalNum(m.team_b_dangerous_attacks),
+    possessionHome: nonNegativeNum(m.team_a_possession ?? m.home_possession),
+    possessionAway: nonNegativeNum(m.team_b_possession ?? m.away_possession),
+    shotsHome: nonNegativeNum(m.team_a_shots ?? m.home_shots),
+    shotsAway: nonNegativeNum(m.team_b_shots ?? m.away_shots),
+    shotsOnTargetHome: nonNegativeNum(m.team_a_shotsOnTarget ?? m.home_shots_on_target),
+    shotsOnTargetAway: nonNegativeNum(m.team_b_shotsOnTarget ?? m.away_shots_on_target),
+    xgHome: nonNegativeNum(m.team_a_xg ?? m.home_xg),
+    xgAway: nonNegativeNum(m.team_b_xg ?? m.away_xg),
+    cornersHome: nonNegativeNum(m.team_a_corners ?? m.home_corners),
+    cornersAway: nonNegativeNum(m.team_b_corners ?? m.away_corners),
+    cardsHome: nonNegativeNum(m.team_a_cards_num ?? m.home_cards),
+    cardsAway: nonNegativeNum(m.team_b_cards_num ?? m.away_cards),
+    dangerousAttacksHome: nonNegativeNum(m.team_a_dangerous_attacks),
+    dangerousAttacksAway: nonNegativeNum(m.team_b_dangerous_attacks),
     events: parseMatchEvents(m, homeId, awayId),
     potentials: {
       over15: pct(m.o15_potential),

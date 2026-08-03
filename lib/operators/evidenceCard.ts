@@ -79,8 +79,13 @@ export const PRICE_FRESHNESS_WINDOW_MS = 15 * 60 * 1000;
 
 export type OperatorQualification = "QUALIFIED" | "PROVISIONAL" | "NOT_QUALIFIED";
 
+/*
+ * §18.4 — one idea, one word. "Qualified" is the evidence model's verdict on a FIXTURE; reusing
+ * it for an operator made one word carry two unrelated meanings on the same page. An operator
+ * that passed our checks is "Verified".
+ */
 export const QUALIFICATION_LABEL: Readonly<Record<OperatorQualification, string>> = {
-  QUALIFIED: "Qualified",
+  QUALIFIED: "Verified",
   PROVISIONAL: "Provisional",
   NOT_QUALIFIED: "Not qualified",
 };

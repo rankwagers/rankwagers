@@ -40,7 +40,7 @@ function ScoreMeter({ score, max }: { score: number; max: number }) {
       <div
         className="h-1.5 w-24 overflow-hidden rounded-full bg-muted"
         role="img"
-        aria-label={`Evidence score ${score} out of ${max}`}
+        aria-label={`Ranking score ${score} out of ${max}`}
       >
         <div className="h-full rounded-full bg-brand" style={{ width: `${pct}%` }} />
       </div>
@@ -131,7 +131,8 @@ export function OperatorEvidenceCard({
 
         <dl className="mt-3 grid grid-cols-2 gap-3 text-sm sm:grid-cols-3">
           <div>
-            <dt className="text-xs text-muted-foreground">Evidence score</dt>
+            {/* An operator ranking, not football evidence — §18.4 keeps the two words apart. */}
+            <dt className="text-xs text-muted-foreground">Ranking score</dt>
             <dd className="mt-1">
               <ScoreMeter score={card.evidenceScore} max={card.maxEvidenceScore} />
             </dd>

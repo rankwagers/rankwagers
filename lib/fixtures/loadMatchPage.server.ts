@@ -232,12 +232,14 @@ function buildPredictions(
         });
       }
 
+      /*
+       * The `matchPotential` entry that used to lead this list said only that the potential is
+       * "reflected in the published confidence" — a sentence that restates its own subject and
+       * tells a reader nothing. Removed rather than reworded: the potential figure carries no
+       * sample, so it cannot be published as a rate here (§3.2 and the sample-with-every-rate
+       * rule). The venue rates that DO carry samples are rendered in the research section.
+       */
       const evidenceSummary: string[] = [];
-      if (detail?.matchPotential) {
-        evidenceSummary.push(
-          `Model potential for this market family is reflected in the published confidence.`
-        );
-      }
       if (detail?.prematchXg) {
         evidenceSummary.push(
           `Prematch xG total ${detail.prematchXg.total.toFixed(2)} (${detail.prematchXg.home.toFixed(2)}–${detail.prematchXg.away.toFixed(2)}).`
@@ -390,11 +392,17 @@ export async function loadMatchPageBundle(input: {
       statistics: buildStatistics(live),
     },
     predictions,
+    /*
+     * Reader-facing labels only. This list previously carried implementation status
+     * ("settlement helpers ready; publication deferred — no durable selection snapshot"),
+     * which is a sentence about our codebase, not about football. §18.4: one idea, one word —
+     * and a reader has no idea what a durable selection snapshot is.
+     */
     deferredMarkets: [
       ...DEFERRED_SETTLEMENT_MARKETS,
-      "match_winner (settlement helpers ready; publication deferred — no durable selection snapshot)",
-      "double_chance (settlement helpers ready; publication deferred)",
-      "draw_no_bet (settlement helpers ready; publication deferred)",
+      "Match winner",
+      "Double chance",
+      "Draw no bet",
     ],
     related: {
       competitionHref: competition

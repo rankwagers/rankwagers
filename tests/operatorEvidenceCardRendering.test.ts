@@ -190,9 +190,12 @@ test("every card exposes an accessible name and rank", () => {
   assert.match(html, /Rank 1: /);
 });
 
-test("the evidence score is announced, not conveyed by the bar alone", () => {
+test("the ranking score is announced, not conveyed by the bar alone", () => {
   const html = withFlag("true", () => renderList());
-  assert.match(html, /aria-label="Evidence score \d+ out of \d+"/);
+  // §18.4 — an OPERATOR carries a ranking score; "Evidence" is reserved for the fixture verdict.
+  // The accessibility guarantee is unchanged: the figure is in text, not only in the bar.
+  assert.match(html, /aria-label="Ranking score \d+ out of \d+"/);
+  assert.equal(/aria-label="Evidence score/.test(html), false);
 });
 
 test("met and unmet reasons are distinguished for screen readers, not only by colour", () => {
