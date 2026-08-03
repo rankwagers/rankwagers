@@ -1,0 +1,510 @@
+RANKWAGERS AI DESIGN BRIEF v1.0
+Project
+
+RankWagers
+
+The World's First Explainable Football Research Platform.
+
+This document defines how AI should execute the visual design.
+
+The attached Design System is the source of truth.
+
+This document only explains visual execution.
+
+PRIMARY OBJECTIVE
+
+Design the most premium football research experience on the internet.
+
+Do not design a betting website.
+
+Do not design a statistics dashboard.
+
+Do not design a sportsbook.
+
+Do not design a casino landing page.
+
+Users should immediately understand:
+
+These people already analysed today's football for me.
+
+Everything exists to increase trust.
+
+Nothing exists to create hype.
+
+PRODUCT POSITIONING
+
+RankWagers sits between:
+
+Football Intelligence
+
+Editorial Journalism
+
+Premium Software
+
+The experience should feel closer to Bloomberg, Linear and Apple than to Flashscore or Bet365.
+
+The product should feel expensive without looking luxurious.
+
+Professional without looking corporate.
+
+Football-focused without becoming entertainment.
+
+VISUAL PERSONALITY
+
+The interface should communicate:
+
+Precision
+
+Calmness
+
+Trust
+
+Research
+
+Editorial quality
+
+Transparency
+
+Professionalism
+
+Confidence
+
+Never communicate:
+
+Excitement
+
+Urgency
+
+Gambling
+
+Entertainment
+
+Aggression
+
+Flashiness
+
+Luxury for the sake of luxury
+
+VISUAL STYLE
+
+Imagine a combination of:
+
+The Athletic
+
+↓
+
+Linear
+
+↓
+
+Stripe Documentation
+
+↓
+
+Apple
+
+↓
+
+Bloomberg
+
+↓
+
+Framer
+
+Not a copy.
+
+Only inspiration.
+
+INFORMATION HIERARCHY
+
+The user should naturally read:
+
+Research
+
+↓
+
+Evidence
+
+↓
+
+Explanation
+
+↓
+
+Knowledge
+
+↓
+
+History
+
+↓
+
+Operator
+
+Affiliate content always comes last.
+
+FOOTBALL IDENTITY
+
+Football identity should be subtle.
+
+Allowed:
+
+Competition colours
+
+Club logos
+
+Minimal stadium atmosphere
+
+Competition identity
+
+Kickoff information
+
+Forbidden:
+
+Huge football players
+
+Action shots
+
+Crowds
+
+Explosions
+
+Fire
+
+Smoke
+
+Celebration photography
+
+Stock football imagery
+
+COLOUR SYSTEM
+
+Dark interface.
+
+Low saturation.
+
+Soft gradients.
+
+Minimal accent colours.
+
+Meaningful colours only.
+
+Green = Qualified
+
+Blue = Provider
+
+Grey = Historical
+
+Red = Error
+
+Never colour for decoration.
+
+LAYOUT PRINCIPLES
+
+Everything aligns to a grid.
+
+Generous spacing.
+
+Strong visual rhythm.
+
+Breathing room.
+
+No visual clutter.
+
+Every section should feel intentional.
+
+TYPOGRAPHY
+
+Typography carries hierarchy.
+
+Not colour.
+
+Not shadows.
+
+Not animations.
+
+Maximum four hierarchy levels.
+
+Avoid oversized headlines.
+
+The product should feel editorial.
+
+COMPONENT PHILOSOPHY
+
+Every component answers one question.
+
+No component exists for decoration.
+
+Every card must have purpose.
+
+Every animation must communicate state.
+
+Every icon must improve scanning.
+
+MOTION
+
+Motion is functional.
+
+Never decorative.
+
+Animations should feel invisible.
+
+Users should remember the information.
+
+Not the animation.
+
+IMAGERY
+
+Use almost no photography.
+
+Use football identity sparingly.
+
+Logos are enough.
+
+Subtle league atmosphere is enough.
+
+Avoid hero artwork.
+
+Avoid AI fantasy illustrations.
+
+Avoid mascots.
+
+Avoid cartoon styles.
+
+Avoid glossy marketing graphics.
+
+VISUAL DENSITY
+
+Target:
+
+Medium density.
+
+The interface should feel information rich.
+
+Never overwhelming.
+
+Never empty.
+
+RESEARCH FIRST
+
+The homepage should immediately communicate:
+
+Today's football has already been researched.
+
+Not:
+
+Today's football matches.
+
+Research is the product.
+
+Football is the subject.
+
+AFFILIATE STRATEGY
+
+Affiliate is never the hero.
+
+Affiliate is never the first CTA.
+
+Affiliate never interrupts research.
+
+Affiliate becomes available only after users understand the research.
+
+Trust creates conversion.
+
+Not the opposite.
+
+EMOTIONAL GOAL
+
+The user should experience:
+
+Curiosity
+
+↓
+
+Understanding
+
+↓
+
+Trust
+
+↓
+
+Exploration
+
+↓
+
+Confidence
+
+↓
+
+Conversion
+
+Never reverse this order.
+
+DESIGN LANGUAGE
+
+The interface should feel:
+
+Timeless
+
+Minimal
+
+Editorial
+
+Calm
+
+Dense
+
+Readable
+
+Premium
+
+Sophisticated
+
+Never:
+
+Trendy
+
+Glassmorphism heavy
+
+Neumorphism
+
+Crypto dashboard
+
+Betting site
+
+Casino
+
+Startup landing page
+
+WOW MOMENTS
+
+The product should contain very few memorable moments.
+
+Maximum three.
+
+Examples:
+
+Research Reveal
+
+Evidence expansion
+
+Historical timeline
+
+Everything else should remain quiet.
+
+Silence makes important interactions memorable.
+
+SCROLL EXPERIENCE
+
+Users should feel like they are reading a premium publication.
+
+Each section naturally leads to the next.
+
+Never create abrupt transitions.
+
+Never surprise users with completely different layouts.
+
+COMPONENT CONSISTENCY
+
+Every card belongs to the same family.
+
+Every badge follows the same logic.
+
+Every button behaves identically.
+
+Every animation follows the Motion Library.
+
+Nothing should feel handcrafted separately.
+
+VISUAL QUALITY
+
+Prefer:
+
+Consistency over originality.
+
+Hierarchy over decoration.
+
+Whitespace over clutter.
+
+Readability over effects.
+
+Purpose over aesthetics.
+
+NEVER DO THESE
+
+Never redesign the homepage architecture.
+
+Never remove existing sections.
+
+Never invent new sections.
+
+Never invent statistics.
+
+Never invent football metrics.
+
+Never create fake Evidence Scores.
+
+Never replace provider data.
+
+Never introduce sportsbook layouts.
+
+Never copy Flashscore.
+
+Never copy Sofascore.
+
+Never copy OddsPortal.
+
+Never design casino interfaces.
+
+Never prioritise affiliate components.
+
+Never use flashy hero graphics.
+
+Never add unnecessary charts.
+
+Never create AI-looking interfaces.
+
+ALWAYS DO THESE
+
+Preserve the architecture.
+
+Improve spacing.
+
+Improve hierarchy.
+
+Improve typography.
+
+Improve rhythm.
+
+Improve visual polish.
+
+Improve consistency.
+
+Improve interaction quality.
+
+Improve accessibility.
+
+Improve perceived performance.
+
+Improve trust.
+
+Nothing else.
+
+FINAL INSTRUCTION
+
+The attached RankWagers Design System defines the product.
+
+Treat it as immutable.
+
+You are not designing a new product.
+
+You are executing an already defined product vision.
+
+Improve only the visual execution.
+
+The final interface should feel like the world's most trusted football research platform.
+
+If any design decision conflicts with the Design System,
+
+the Design System always wins.
