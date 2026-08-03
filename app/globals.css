@@ -497,14 +497,19 @@ textarea,
 }
 
 /* ==========================================================================
-   HOMEPAGE HERO — Sprint 1
+   HERO VISUAL LANGUAGE — Sprint 1, extended to the fixture page
    --------------------------------------------------------------------------
    The approved hero composition carries its own palette, typefaces and motion
    language. Every token below is SCOPED to `.rw-hero` and nothing here leaks:
-   the site keeps its cream/green brand, Inter and Playfair until a later
-   sprint converts the remaining surfaces. That is what makes this sprint
-   reversible — deleting this block and the `.rw-hero` wrapper restores the
-   previous homepage exactly.
+   the site keeps its cream/green brand, Inter and Playfair on surfaces that
+   have not adopted the scope.
+
+   SECOND SURFACE. The fixture page (`MatchDetailView`) now wraps in `.rw-hero`
+   too — it had no Figma composition to convert, so it was built in this
+   language rather than the legacy one. The reversibility note this block used
+   to carry ("deleting this restores the previous homepage exactly") no longer
+   holds on its own: removing the block now also strips the fixture page.
+   Current consumers are HeroStage, RankWagersHome and MatchDetailView.
    ========================================================================== */
 
 .rw-hero {
