@@ -5,10 +5,10 @@
 # `active_snapshot` readiness check reads, and which has never been produced because nothing
 # scheduled it.
 #
-# Evidence capture and prediction settlement are deliberately NOT scheduled here. Capture's
-# candidate seam is now closed and its route derives real input, but it stays unscheduled and
-# flag-off until a first run is verified to write real rows. Settlement's seam is still open —
-# its candidate set is empty, so a timer would report success while writing nothing.
+# Capture now has its own unit (rankwagers-evidence-capture.*) — its seam is closed and a run
+# was verified to write real rows. Prediction settlement is still deliberately NOT scheduled:
+# its candidate seam is open, so its candidate set is empty and a timer would report success
+# while writing nothing.
 #
 # Install (as root):
 #   cp deploy/systemd/rankwagers-evidence-prepare.* /etc/systemd/system/
@@ -22,8 +22,12 @@ After=network-online.target
 Wants=network-online.target
 
 [Service]
+# Runs as root deliberately. systemd reads EnvironmentFile as PID 1 before dropping
+# privileges, so `User=rankdev` would still work — but CRON_SECRET would then sit in a
+# rankdev-owned process environment, readable by rankdev via /proc/<pid>/environ. That
+# would hand over the shared-env secret that was deliberately withheld from this account.
+# The unit only curls localhost, so root costs nothing and keeps the secret root-only.
 Type=oneshot
-User=rankdev
 WorkingDirectory=/var/www/rankwagers
 EnvironmentFile=-/opt/rankwagers/shared/.env
 Environment=BASE_URL=http://127.0.0.1:3000

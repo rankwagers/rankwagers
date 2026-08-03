@@ -1,0 +1,35 @@
+# Evidence capture. Oneshot; scheduled by the paired .timer.
+#
+# Mints the immutable content-hashed EvidenceSnapshot for every fixture inside the pre-kickoff
+# window, plus its mandatory odds record. Writes are append-only NDJSON under
+# /opt/rankwagers/shared/evidence-archive and are identity-deduped by content hash, so a repeated
+# fire over the same fixture records `duplicate` rather than a second row.
+#
+# GATED TWICE. This unit only issues the request; EVIDENCE_CAPTURE_ENABLED inside the job decides
+# whether any work happens. Unsetting that flag stops capture without touching the timer.
+#
+# Install (as root):
+#   cp deploy/systemd/rankwagers-evidence-capture.* /etc/systemd/system/
+#   systemctl daemon-reload && systemctl enable --now rankwagers-evidence-capture.timer
+#
+# CRON_SECRET is read from the shared env file; the route rejects an unauthenticated POST.
+[Unit]
+Description=RankWagers evidence capture (pre-kickoff snapshot mint)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+# Root for the same reason as the prepare unit: keeps CRON_SECRET out of a rankdev-readable
+# process environment. The unit only curls localhost.
+Type=oneshot
+WorkingDirectory=/var/www/rankwagers
+EnvironmentFile=-/opt/rankwagers/shared/.env
+Environment=BASE_URL=http://127.0.0.1:3000
+# --max-time 90 sits above the route's own 60s maxDuration so curl never severs a request the
+# route would still have completed; -f turns a non-2xx into a unit failure rather than a silent
+# success, which is the whole point of scheduling this at all.
+ExecStart=/usr/bin/curl -fsS --max-time 90 -X POST \
+  -H "x-cron-secret: ${CRON_SECRET}" \
+  ${BASE_URL}/api/internal/cron/evidence-capture
+Nice=10
+IOSchedulingClass=idle

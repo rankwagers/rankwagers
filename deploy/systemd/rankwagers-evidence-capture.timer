@@ -1,0 +1,42 @@
+# Evidence capture — every 30 minutes, all day.
+#
+# INTERVAL, AND WHY 30 MINUTES
+# ----------------------------
+# Capture selects fixtures inside a 60-minute pre-kickoff window
+# (DEFAULT_CAPTURE_LEAD_MINUTES = 60): a fixture becomes eligible at T-60 and stops being
+# eligible at kickoff. There is no retrospective capture — a fixture missed while eligible is
+# missed permanently, and nothing downstream will ever report the gap, because an empty result
+# and a skipped fixture look identical after the fact.
+#
+# So the binding constraint is the WORST-CASE gap between two fires, which must stay safely
+# under 60 minutes:
+#
+#   60 min  exactly one opportunity per fixture, zero margin. A single slow, failed, locked-out
+#           or overlapping run drops fixtures silently and permanently. Rejected.
+#   30 min  worst-case gap 30 min + jitter = 32 min. Every fixture gets two opportunities in the
+#           normal case and still at least one if an entire fire is lost. Chosen.
+#   15 min  no additional guarantee over 30 (one whole lost fire is already tolerated) and it
+#           doubles provider fetch cost: writes dedupe by content hash, but the M4 source fetch
+#           happens on every fire before dedup can apply. Rejected as cost without coverage.
+#
+# RandomizedDelaySec is deliberately small (120s, not the prepare unit's 300s) so it stays
+# negligible against the 30-minute budget while still de-synchronising from the other timers.
+#
+# Persistent=false, unlike the prepare timer. A missed capture fire must NOT be caught up: the
+# window it would have served has already closed, so a catch-up run does no useful work and only
+# adds a burst during boot. The next fire is at most ~32 minutes away.
+#
+# All day rather than a kickoff-shaped schedule: boards carry fixtures across the full 24h
+# (earliest kickoff observed 01:30 UTC), and a fire with nothing in window is cheap — archive
+# reads and a daily-list read, all cached, and zero provider fetches.
+[Unit]
+Description=RankWagers evidence capture every 30 minutes
+
+[Timer]
+OnCalendar=*:00,30
+RandomizedDelaySec=120
+Persistent=false
+Unit=rankwagers-evidence-capture.service
+
+[Install]
+WantedBy=timers.target
