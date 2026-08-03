@@ -538,7 +538,12 @@ textarea,
   --travel: 12px;
   --focus: 6px;
 
-  background: var(--hero-canvas);
+  /*
+   * Deliberately NO `background` here. The scope carries tokens and typography; each section
+   * states its own ground, because the composition uses two — S1 sits on the canvas, S2 on the
+   * surface. Declaring a background on the shared class would also outrank any Tailwind `bg-*`
+   * utility, since this block is appended after the utilities layer.
+   */
   color: var(--hero-ink);
   font-family: var(--font-hero-sans), ui-sans-serif, system-ui, sans-serif;
   font-feature-settings: "ss01", "cv01";

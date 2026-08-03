@@ -573,7 +573,7 @@ export function HeroStage({
       onPointerLeave={stage.onPointerLeave}
       data-analytics-section="hero"
       aria-labelledby={headingId}
-      className="rw-hero relative -mx-4 overflow-hidden border-b border-[var(--hero-line)] sm:-mx-6 lg:-mx-10"
+      className="rw-hero relative -mx-4 overflow-hidden border-b border-[var(--hero-line)] bg-[var(--hero-canvas)] sm:-mx-6 lg:-mx-10"
     >
       {/* ------------------------------------------------ plane 1 · ground */}
       <div

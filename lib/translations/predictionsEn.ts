@@ -159,6 +159,15 @@ export const predictionsEn = {
   verifiedVoid: "Void / postponed",
   verifiedHitRate: "Hit rate (settled)",
   verifiedWonLost: "{won} won · {lost} lost",
+  /*
+   * S2 proof-band figures. Four labels and two audit sentences, each backed by a field on
+   * `HomepageVerifiedPerformance`. Nothing here states a window, a rate basis or a price the
+   * product does not compute — rwbible §3.2, and the reason ROI and average odds are absent.
+   */
+  verifiedPublished: "Published",
+  verifiedOpen: "Open",
+  verifiedHitRateShort: "Hit rate",
+  verifiedStillOpen: "{count} still open",
   verifiedMethodology: "Settlement methodology",
   verifiedArchive: "Prediction archive entry",
   recentEyebrow: "Archive",

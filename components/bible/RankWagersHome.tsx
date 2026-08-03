@@ -28,6 +28,7 @@ import {
   StatusBadge,
 } from "@/components/homepage/sectionChrome";
 import type { HomepageTrustModel } from "@/lib/homepage/types";
+import { buildProofBandFigures } from "@/lib/homepage/proofBand";
 import { formatDict } from "@/lib/dictionaryExtras";
 
 const marketNames = {
@@ -96,7 +97,12 @@ function formatArchiveCaptureTime(capturedAt?: string): string {
  * framing per `docs/design/homepage-narrative.md`.
  *
  *   S1 Hero → S2 Proof Band → S3 Today's Picks → S4 Live Signals → S5 Research
- *   → S6 Bookmakers → S7 How This Works
+ *   → S6 How This Works → S7 Bookmakers
+ *
+ * (This line read `S6 Bookmakers → S7 How This Works` and contradicted the implementation: the
+ * method section is S6 at its marker below, the operator strip is S7. The rhythm note and the
+ * merge list further down were already numbered against the implementation; only this line was
+ * wrong. Order itself is unchanged — commerce still sits after every research surface.)
  *
  * Proof precedes product: the settled record is read before any model probability, so a
  * percentage in S3 is interpreted through the loss counter above it. Commerce sits after
@@ -108,13 +114,13 @@ function formatArchiveCaptureTime(capturedAt?: string): string {
  *   S2 ← `#verified-performance` + `#recent-results`
  *   S3 ← `#top-picks` + `#trending-markets` + the returning-reader controls
  *   S5 ← `#featured-leagues` + `#fixtures` + `#saved`
- *   S7 ← `#why-trust` + `#research-notes`/`#methodology` + `#prediction-archive`
+ *   S6 ← `#why-trust` + `#research-notes`/`#methodology` + `#prediction-archive`
  *
  * Rhythm (spec §1.4). Separation is not uniform, and neither is tempo — a page whose sections all
  * breathe at `py-16` behind an identical hairline reads as one section repeated, however different
  * its contents. Four separator devices, each carrying a different weight of break:
  *
- *   full-bleed tonal band  S2 — the only one, and the loudest movement on the page
+ *   full-bleed change of ground  S2 — the only one, and the loudest movement on the page
  *   full-width hairline    S5 — the only one, opening the widest and densest section
  *   short editorial rule   S4, S7 — the two quiet movements
  *   whitespace + a pause   S3, S6 — the two structural joints, ~248px of air at md
@@ -124,7 +130,7 @@ function formatArchiveCaptureTime(capturedAt?: string): string {
  * loud, rest, medium, quiet. Bracketed values are `SectionPause`.
  *
  * Composition alternates too, so no two adjacent sections are laid out alike: full-bleed statement
- * (S1) → tonal figure band (S2) → three-column card grid (S3) → two-column split, the only one on
+ * (S1) → figures hung off a rule, on the surface (S2) → three-column card grid (S3) → two-column split, the only one on
  * the page (S4) → full-width explorer (S5) → narrow numbered list at 46rem (S6) → strip (S7).
  *
  * Measures (spec §1.1): editorial `46rem` · reading `38rem` · data `72rem` · panel `2xl`.
@@ -175,6 +181,20 @@ export function RankWagersHome({
   // an ISO timestamp and never "last updated". Omitted entirely when the record carries no stamp:
   // a dateline that cannot state a date is worse than no dateline.
   const assessedLabel = formatAssessedLabel(p.heroAssessed, trust.verified.lastUpdatedAt);
+
+  /*
+   * S2's figures. Which ones exist is a property of the record, not of this layout, so the decision
+   * lives in `buildProofBandFigures` where it is unit-tested — notably that a null `hitRatePct`
+   * produces no figure rather than a zero or a dash.
+   */
+  const proofFigures = buildProofBandFigures(trust.verified, {
+    published: p.verifiedPublished,
+    settled: p.verifiedSettled,
+    hitRate: p.verifiedHitRateShort,
+    open: p.verifiedOpen,
+    wonLost: p.verifiedWonLost,
+    stillOpen: p.verifiedStillOpen,
+  });
 
   // Present only while a same-day archive is standing in for a failed provider. `fresh_provider`
   // — including a fresh empty day — and an absent provenance both render nothing.
@@ -233,77 +253,77 @@ export function RankWagersHome({
       {/*
         S2 — The Proof Band. The second half of the first viewport.
 
-        The denominator arrives before any claim built on it: sample, then won, then lost, then the
-        rate. `Won` and `Lost` are rendered identically — same size, same weight, same colour, same
-        row. The asymmetry a reader expects to find here is the thing the rest of the page is worth,
-        and diminishing the loss count would forfeit it.
+        Sprint 2: converted to the hero's visual language. Four figures, each hung off a rule
+        rather than boxed — a full-width hairline it hangs from, an ink rule that draws in from the
+        left on approach, and a tick that grows from 9px to 16px.
 
-        Two tiers, not four equal cards. `Won` and `Lost` are the argument and are sized as such;
-        `Settled`, `Hit rate`, `Pending` and `Void` are the context that makes them readable and sit
-        a full step down. Four cards of identical weight made this a dashboard — and a dashboard has
-        no message, because nothing in it is more important than anything else.
+        The composition is the Make prototype's. The figures are not. Every number below comes from
+        `HomepageVerifiedPerformance`; the prototype's ROI, average odds, "since 2020" and "rolling
+        12 months" are absent because no field produces them. That is rwbible §3.2, and it is the
+        same sentence `sampleNote` has always carried — ROI and average odds are omitted when
+        publication odds are not durably archived. They were also the two most sportsbook-coded
+        figures in the prototype, which is the product the brief opens by ruling out.
 
-        Won and Lost keep IDENTICAL numerals — same size, same weight, same ink. Colour appears only
-        in the state dot, the proportional bar and the form strip, never in the figures themselves.
-        The invariant is that the loss is never diminished; it is not that the two may never be
-        distinguished.
+        Monochrome, and that is a decision rather than a shortage: rwbrief assigns grey to
+        Historical, and this section is the record. Colour here would be decoration, which the brief
+        forbids outright — "Typography carries hierarchy. Not colour."
 
-        The bar is the visual proof. It carries no arithmetic — the two segments are flex children
-        given `flexGrow` of the won and lost counts themselves, so the ratio is laid out by the
-        browser rather than computed here. It exists because a reader who will not do division still
-        understands a length, and because it makes the loss unmissable rather than merely disclosed.
-
-        The form strip is the historical confidence: the actual settled sequence, newest first, in
-        the order `recentResults` already supplies. A summary asserts a record; a sequence shows one.
-
-        The sample note moves from the lead to a footnote beneath the figures. It is the most honest
-        sentence on the page and it was also 199 characters of internal vocabulary standing between
-        the reader and the numbers. `verifiedDescription` — written for this section and never wired
-        — leads instead, and the precise version sits directly under the figures where a sceptic
-        looks. Nothing is softened; the order is changed.
+        The loss is still never diminished. It is stated in the same ink at the same size in the
+        always-visible note under `Settled`, and drawn to length in the proportional rule beneath.
+        What it no longer carries is a red dot, because in this system red means Error.
 
         `#recent-results` is merged in below the totals it reconciles with — the individual outcomes
         and their summary are one argument, and splitting them across a rule made the reader assemble
         it themselves.
 
-        Tonal band, bled to the shell edge, so the section that carries the argument is the one
-        section that looks different — earned through scale and space rather than colour.
+        Surface rather than the tonal band: the section is set on white against the canvas above it,
+        so what marks it is a change of ground rather than a change of hue.
       */}
       <section
         id="verified-performance"
         data-analytics-section="verified_performance"
         aria-labelledby="verified-performance-heading"
-        className="-mx-4 scroll-mt-28 border-y border-[var(--border-subtle)] bg-[var(--canvas-secondary)] px-4 py-16 sm:-mx-6 sm:px-6 md:py-24 lg:-mx-10 lg:px-10"
+        className="rw-hero -mx-4 scroll-mt-28 border-y border-[var(--hero-line)] bg-[var(--hero-surface)] px-4 py-16 sm:-mx-6 sm:px-6 md:py-24 lg:-mx-10 lg:px-10"
       >
-        <SectionHeading
-          id="verified-performance-heading"
-          title={p.verifiedTitle}
-          description={p.verifiedDescription}
-          lead
-        />
+        {/*
+          Set locally rather than through `SectionHeading`. That component is shared with the
+          archive surfaces, so restyling it would change pages this sprint does not touch.
+        */}
+        <div className="mb-6 md:mb-8">
+          <span aria-hidden className="mb-5 block h-[3px] w-10 bg-[var(--hero-ink)] md:mb-6" />
+          <h2
+            id="verified-performance-heading"
+            className="rw-display text-[clamp(2.2rem,4.4vw,3.4rem)]"
+          >
+            {p.verifiedTitle}
+          </h2>
+          <p className="mt-4 max-w-[38ch] text-[14px] leading-6 text-[var(--hero-ink-2)]">
+            {p.verifiedDescription}
+          </p>
+        </div>
+
         {trust.verified.availability === "available" ? (
           <div>
-            <p className="mt-1 text-sm text-[var(--ink-secondary)]">{trust.verified.windowLabel}</p>
-
             {/* Targeted by AccaChrome's launcher yield — the figures themselves, not the whole
                 section, which also contains recent-results and runs most of the page height. */}
-            <div id="verified-performance-figures" className="mt-10 max-w-[52rem]">
+            <div id="verified-performance-figures" className="mt-14">
               {/*
-                Never `grid-cols-1`. WON and LOST must sit side by side on every viewport — the
-                comparison is the message, and stacking them destroys it.
+                `hitRatePct` is null on an empty settled sample, and the figure is then OMITTED —
+                never a zero, never a dash. Zero asserts a rate of nought; a dash renders the
+                absence as though it were a reading. An omitted figure is the honest shape of a
+                record that has settled nothing yet, and it is the rule the hero funnel already
+                follows. The window label travels with it, because it qualifies that rate.
               */}
-              <dl className="grid grid-cols-2 items-stretch border-t border-[var(--border-subtle)]">
-                <VerdictFigure
-                  label={p.verifiedWon}
-                  value={String(trust.verified.won)}
-                  tone="won"
-                />
-                <VerdictFigure
-                  label={p.verifiedLost}
-                  value={String(trust.verified.lost)}
-                  tone="lost"
-                  inset
-                />
+              <dl className="flex flex-col gap-10 sm:flex-row sm:flex-wrap sm:gap-x-8 lg:flex-nowrap">
+                {proofFigures.map((figure) => (
+                  <ProofFigure
+                    key={figure.key}
+                    label={figure.label}
+                    value={figure.value}
+                    note={figure.note}
+                    audit={figure.audit}
+                  />
+                ))}
               </dl>
 
               <ProofBar
@@ -313,42 +333,14 @@ export function RankWagersHome({
                 lostLabel={p.verifiedLost}
               />
 
-              {/*
-                Context, one step down. The denominator leads it: "over how many?" is the first
-                question a sceptic asks of a rate, and answering it before the rate is stated costs
-                nothing and pre-empts the objection.
-              */}
-              <dl className="mt-6 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-4">
-                <ContextFigure
-                  label={p.verifiedSettled}
-                  value={String(trust.verified.settledPredictions)}
-                />
-                <ContextFigure
-                  label={p.verifiedHitRate}
-                  value={
-                    trust.verified.hitRatePct != null
-                      ? `${trust.verified.hitRatePct}%`
-                      : "—"
-                  }
-                  emphasis
-                />
-                <ContextFigure
-                  label={p.verifiedPending}
-                  value={String(trust.verified.pendingPredictions)}
-                />
-                <ContextFigure
-                  label={p.verifiedVoid}
-                  value={String(trust.verified.voidPredictions)}
-                />
-              </dl>
-
               <FormStrip results={trust.recentResults} label={p.recentTitle} />
 
               {/*
-                The sample note, in its proper place: under the figures it qualifies, at caption
-                size, where a reader who doubts the numbers will look for exactly this.
+                The sample note, in its proper place: under the figures it qualifies, where a reader
+                who doubts the numbers looks for exactly this. It is also where the band states, in
+                its own words, why ROI and average odds are not among them.
               */}
-              <p className="mt-6 max-w-[46rem] text-caption leading-relaxed text-[var(--ink-secondary)]">
+              <p className="mt-10 max-w-[62ch] text-[13px] leading-6 text-[var(--hero-ink-2)]">
                 {trust.verified.sampleNote}
               </p>
             </div>
@@ -922,94 +914,76 @@ export function RankWagersHome({
 }
 
 /**
- * A verdict figure — `Won` or `Lost`. The two largest numerals on the homepage.
+ * A record figure, hung off a rule rather than boxed.
  *
- * Renders as a `dt`/`dd` pair inside the row's `dl`, so a screen reader announces "Lost, 43" as one
- * term and its definition. As sibling paragraphs the label and the numeral were two unrelated
- * announcements, and a reader who cannot see the card had no way to bind them.
+ * Three marks make the structure and none of them encloses anything: a full-width hairline the
+ * figure hangs from, an ink rule that draws in from the left as the figure is approached, and a
+ * tick that grows from 9px to 16px. Label, numeral and note all indent past that tick, so the
+ * column reads as measured off the rule rather than sitting inside a box.
  *
- * The numeral is identical in size, weight and ink for both tones — only the state dot carries
- * colour. Diminishing the loss by size, weight, a paler ink or position would forfeit the one claim
- * this section exists to make.
+ * `note` is a sourced sentence, always visible. `audit` is a second sourced sentence that
+ * cross-fades into the same space on approach. The audit is `aria-hidden` and never carries a
+ * figure that is not also stated elsewhere on the band, so nothing here is reachable only by
+ * hovering — a pointer-only disclosure of the record would be the one thing this section cannot do.
  *
- * `text-[var(--ink-secondary)]` on the label rather than `text-muted-foreground`: at 11px the muted
- * token measures 4.4:1 against this canvas, under the 4.5:1 AA floor for text this size.
+ * `dt`/`dd` inside the band's `dl`, so a screen reader announces "Settled, 3964" as one term and
+ * its definition rather than as two unrelated strings.
  */
-function VerdictFigure({
+function ProofFigure({
   label,
   value,
-  tone,
-  inset = false,
+  note,
+  audit,
 }: {
   label: string;
   value: string;
-  tone: "won" | "lost";
-  /** Left padding on the trailing figure, so the dividing rule sits between two columns. */
-  inset?: boolean;
+  note?: string;
+  audit?: string;
 }) {
-  const dot =
-    tone === "won" ? "bg-[var(--status-won-fg)]" : "bg-[var(--status-lost-fg)]";
   return (
-    <div className={`flex h-full flex-col py-7 pr-6 first:border-r first:border-[var(--border-subtle)] md:py-9 md:pr-10 ${inset ? "pl-6 md:pl-10" : ""}`}>
-      <dt className="flex items-center gap-2 text-metadata font-medium uppercase tracking-label text-[var(--ink-secondary)]">
-        <span aria-hidden className={`h-2 w-2 shrink-0 rounded-full ${dot}`} />
-        {label}
-      </dt>
-      <dd className="mt-4 font-mono text-5xl font-semibold leading-none tracking-tight tabular-nums text-foreground md:text-6xl">
+    <div className="group relative min-w-[168px] flex-1 pt-6">
+      <span aria-hidden className="absolute left-0 top-0 h-px w-full bg-[var(--hero-line)]" />
+      <span
+        aria-hidden
+        className="absolute left-0 top-0 h-px w-full origin-left scale-x-0 bg-[var(--hero-ink)] transition-transform duration-[var(--dur-reveal)] ease-[var(--ease-settle)] group-hover:scale-x-100"
+      />
+      <span
+        aria-hidden
+        className="absolute left-0 top-0 h-[9px] w-px bg-[var(--hero-ink)] transition-all duration-[var(--dur-respond)] group-hover:h-4"
+      />
+
+      <dt className="rw-label pl-4 text-[var(--hero-ink-3)]">{label}</dt>
+      <dd className="rw-tnum rw-display mt-6 pl-4 text-[clamp(2.4rem,4.4vw,3.6rem)] transition-transform duration-[var(--dur-expand)] ease-[var(--ease-respond)] group-hover:-translate-y-0.5">
         {value}
       </dd>
+
+      {note ? (
+        <div className="relative mt-3 pl-4">
+          <p
+            className={`max-w-[22ch] text-[13px] leading-5 text-[var(--hero-ink-2)] ${
+              audit
+                ? "transition-opacity duration-[var(--dur-respond)] group-hover:opacity-0"
+                : ""
+            }`}
+          >
+            {note}
+          </p>
+          {audit ? (
+            <p
+              aria-hidden
+              className="pointer-events-none absolute inset-0 max-w-[26ch] text-[13px] leading-5 text-[var(--hero-ink)] opacity-0 transition-opacity duration-[var(--dur-expand)] ease-[var(--ease-settle)] group-hover:opacity-100"
+            >
+              {audit}
+            </p>
+          ) : null}
+        </div>
+      ) : null}
     </div>
   );
 }
 
 /**
- * A context figure — the denominator, the rate, and the two states that are neither won nor lost.
- *
- * A full step below a verdict figure in every dimension: no card, no fill, no rule, a numeral at a
- * third of the size. These exist to make the pair above readable, not to compete with it. Four
- * figures of equal weight is a dashboard, and a dashboard has no message.
- */
-function ContextFigure({
-  label,
-  value,
-  emphasis = false,
-}: {
-  label: string;
-  value: string;
-  /**
-   * The accuracy rate only.
-   *
-   * Settled, pending and void are bookkeeping — they say how much of the record has resolved. The
-   * hit rate is the one derived claim in this row, and at equal weight it read as the second of
-   * four equivalent counters, indistinguishable from "void / postponed". A third tier between the
-   * verdict pair and the counters gives the section three levels instead of two: the outcome, the
-   * rate it produces, and the arithmetic behind both. The denominator still leads it, so the
-   * sceptic's "over how many?" is still answered before the rate is stated.
-   */
-  emphasis?: boolean;
-}) {
-  return (
-    <div>
-      <dt
-        className={`text-metadata font-medium uppercase tracking-label ${
-          emphasis ? "text-foreground" : "text-[var(--ink-secondary)]"
-        }`}
-      >
-        {label}
-      </dt>
-      <dd
-        className={`mt-1 font-mono font-semibold tabular-nums tracking-tight text-foreground ${
-          emphasis ? "text-3xl leading-none md:text-4xl" : "text-xl"
-        }`}
-      >
-        {value}
-      </dd>
-    </div>
-  );
-}
-
-/**
- * The proportional bar — won against lost, at a glance.
+ * The proportional rule — won against lost, at a glance.
  *
  * Carries NO arithmetic. The two segments are flex children whose `flexGrow` is the won and lost
  * count itself, so the ratio is resolved by the layout engine rather than computed here; nothing in
@@ -1017,9 +991,14 @@ function ContextFigure({
  * division still understands a length, and because it makes the loss unmissable rather than merely
  * disclosed.
  *
- * Renders nothing when nothing has settled: a bar of zero width states a ratio that does not exist.
+ * Monochrome, per the brief's Historical grey. Two adjacent segments still have to be told apart,
+ * so they differ in tone and are named at each end — but tone is not weight here: the lengths carry
+ * the ratio, and the counts themselves are stated at identical size in the figure above. The rule
+ * shows the shape of the record; it does not rank the two outcomes.
  *
- * `aria-hidden` — every figure it depicts is announced by the `dl` above it, and a bar that
+ * Renders nothing when nothing has settled: a rule of zero width states a ratio that does not exist.
+ *
+ * `aria-hidden` — every figure it depicts is announced by the `dl` above it, and a rule that
  * re-announces them adds noise to a screen reader without adding information.
  */
 function ProofBar({
@@ -1035,14 +1014,14 @@ function ProofBar({
 }) {
   if (won + lost <= 0) return null;
   return (
-    <div className="mt-5" aria-hidden>
-      <div className="flex h-2.5 w-full overflow-hidden rounded-full border border-border bg-[var(--canvas-primary)]">
-        <span style={{ flexGrow: won }} className="block bg-[var(--status-won-fg)]" />
-        <span style={{ flexGrow: lost }} className="block bg-[var(--status-lost-fg)]" />
+    <div className="mt-10" aria-hidden>
+      <div className="flex h-[3px] w-full overflow-hidden bg-[var(--hero-line)]">
+        <span style={{ flexGrow: won }} className="block bg-[var(--hero-ink)]" />
+        <span style={{ flexGrow: lost }} className="block bg-[var(--hero-ink-3)]" />
       </div>
-      <div className="mt-2 flex justify-between text-metadata font-medium uppercase tracking-label text-[var(--ink-secondary)]">
-        <span>{wonLabel}</span>
-        <span>{lostLabel}</span>
+      <div className="mt-2 flex justify-between">
+        <span className="rw-label text-[var(--hero-ink-3)]">{wonLabel}</span>
+        <span className="rw-label text-[var(--hero-ink-3)]">{lostLabel}</span>
       </div>
     </div>
   );
@@ -1055,7 +1034,10 @@ function ProofBar({
  * grind identically, and a reader has no way to tell which they are looking at. This is the rows
  * already rendered below it, reduced to their outcome and placed in order.
  *
- * Pending rows are excluded rather than drawn in a third colour: this is the settled record, and an
+ * Monochrome, like the rule above it. Each mark still names its own outcome in `sr-only` text, so
+ * the sequence is fully readable without relying on tone at all.
+ *
+ * Pending rows are excluded rather than drawn in a third tone: this is the settled record, and an
  * unsettled fixture has no outcome to show. Renders nothing when nothing has settled.
  */
 function FormStrip({
@@ -1068,21 +1050,17 @@ function FormStrip({
   const settled = results.filter((row) => row.status !== "pending");
   if (!settled.length) return null;
   const tone: Record<string, string> = {
-    won: "bg-[var(--status-won-fg)]",
-    lost: "bg-[var(--status-lost-fg)]",
-    void: "bg-[var(--border-strong)]",
+    won: "bg-[var(--hero-ink)]",
+    lost: "bg-[var(--hero-ink-3)]",
+    void: "bg-[var(--hero-line)]",
   };
   return (
-    <div className="mt-6">
-      <p className="text-metadata font-medium uppercase tracking-label text-[var(--ink-secondary)]">
-        {label}
-      </p>
+    <div className="mt-8">
+      <p className="rw-label text-[var(--hero-ink-3)]">{label}</p>
       <ol className="mt-2 flex flex-wrap gap-1.5">
         {settled.map((row) => (
           <li key={row.id}>
-            <span
-              className={`block h-6 w-2.5 rounded-sm ${tone[row.status] ?? tone.void}`}
-            >
+            <span className={`block h-6 w-2.5 ${tone[row.status] ?? tone.void}`}>
               <span className="sr-only">{`${row.home} vs ${row.away}: ${row.status}`}</span>
             </span>
           </li>
