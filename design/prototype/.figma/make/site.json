@@ -1,0 +1,10 @@
+{
+  "description": "Provides premium football intelligence with in-depth analytics and insights to help professionals make data-driven decisions in the sport.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
