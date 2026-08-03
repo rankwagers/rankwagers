@@ -45,21 +45,21 @@ export function Header({
     <header
       className={
         embedded
-          ? "bg-[var(--canvas-secondary)]"
-          : "sticky top-0 z-30 border-b border-border bg-[var(--canvas-secondary)]/95 backdrop-blur-md"
+          ? ""
+          : "sticky top-0 z-30 border-b border-[var(--hero-line)]/80 bg-[var(--hero-canvas)]/80 backdrop-blur-xl"
       }
     >
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded-md focus:bg-brand focus:px-3 focus:py-2 focus:text-white"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:z-50 focus:rounded-md focus:bg-[var(--hero-accent)] focus:px-3 focus:py-2 focus:text-white"
       >
         {dict.a11y.skipToContent}
       </a>
-      <div className="mx-auto flex h-14 max-w-[1440px] items-center justify-between gap-3 px-6 lg:px-10">
+      <div className="mx-auto flex h-16 w-full max-w-[1240px] items-center justify-between gap-3 px-5 lg:px-8">
         <div className="flex min-w-0 items-center gap-4 lg:gap-6">
           <Link
             href={`/${locale}`}
-            className="font-display text-lg font-semibold tracking-display text-brand"
+            className="text-[15px] font-semibold tracking-[-0.03em] text-[var(--hero-ink)]"
           >
             RankWagers
           </Link>
@@ -101,10 +101,10 @@ export function Header({
                       });
                     }
                   }}
-                  className={`whitespace-nowrap rounded-md px-2.5 py-1.5 text-sm transition-colors ${
+                  className={`whitespace-nowrap rounded-md px-2.5 py-1.5 text-[13px] transition-colors duration-[var(--dur-respond)] ease-[var(--ease-respond)] ${
                     active
-                      ? "bg-accent font-medium text-brand"
-                      : "text-[var(--ink-secondary)] hover:bg-muted hover:text-foreground"
+                      ? "font-medium text-[var(--hero-ink)]"
+                      : "text-[var(--hero-ink-2)] hover:text-[var(--hero-ink)]"
                   }`}
                 >
                   {item.label}
@@ -115,7 +115,7 @@ export function Header({
         </div>
         <div className="flex shrink-0 items-center gap-2 sm:gap-3">
           <GlobalSearch locale={locale} variant="header" />
-          <span className="hidden rounded-full border border-brand/25 px-2 py-0.5 text-xs font-semibold text-brand sm:inline">
+          <span className="hidden rounded-full border border-[var(--hero-line)] px-2 py-0.5 text-xs font-semibold text-[var(--hero-ink-2)] sm:inline">
             18+
           </span>
           <div className="hidden md:block">

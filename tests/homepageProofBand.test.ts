@@ -259,7 +259,23 @@ test("S2 renders inside the hero scope rather than duplicating its tokens", () =
   const home = readFileSync(path.join(root, "components/bible/RankWagersHome.tsx"), "utf8");
   const css = readFileSync(path.join(root, "app/globals.css"), "utf8");
 
-  assert.match(home, /id="verified-performance"[\s\S]{0,400}rw-hero/);
+  /*
+   * The scope is now established ONCE on the page wrapper rather than repeated on each section —
+   * which is what "rather than duplicating its tokens" asked for in the first place. Assert the
+   * ancestor carries it and that S2 sits inside, instead of asserting the two strings are near
+   * each other in the source.
+   */
+  const wrapper = home.indexOf('className="rw-hero bg-[var(--hero-canvas)]"');
+  assert.ok(wrapper > 0, "the page wrapper establishes the hero scope");
+  assert.ok(
+    home.indexOf('id="verified-performance"') > wrapper,
+    "S2 renders inside that scope"
+  );
+  assert.equal(
+    (home.match(/className="rw-hero/g) ?? []).length,
+    1,
+    "the scope is declared once on the page, not per section"
+  );
   // One declaration of the ramp, in one place.
   assert.equal((css.match(/--hero-ink-3:/g) ?? []).length, 1);
   assert.match(css, /--hero-ink-3: #6b6f78/);

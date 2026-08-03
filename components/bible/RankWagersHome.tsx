@@ -22,6 +22,7 @@ import { HomepageAccaEntry } from "@/components/homepage/HomepageAccaEntry";
 import { AddToAccaButton } from "@/components/acca/AddToAccaButton";
 import { HomepageViewedTracker } from "@/components/homepage/HomepageViewedTracker";
 import { HomepageHero } from "@/components/homepage/hero/HomepageHero";
+import { Section } from "@/components/layout/Section";
 import {
   EmptySection,
   SectionHeading,
@@ -206,7 +207,13 @@ export function RankWagersHome({
       : null;
 
   return (
-    <div className="container-wide">
+    /*
+     * THE SHELL. Sections no longer decide their own measure, rhythm or ground — `Section` does,
+     * so the spacing BETWEEN them is a property of the page rather than an accident of the order
+     * they were converted in. The page wrapper drops `container-wide` because a full-bleed ground
+     * cannot live inside a constrained column; the measure moved into each section instead.
+     */
+    <div className="rw-hero bg-[var(--hero-canvas)]">
       <HomepageEngagementTracker />
       <HomepageViewedTracker
         locale={locale}
@@ -227,14 +234,20 @@ export function RankWagersHome({
         no place for either. They stay here, immediately beneath the hero, in the site's own
         styling — the same rule that has always carried them.
       */}
-      <HomepageHero
-        lists={lists}
-        dict={dict}
-        locale={locale}
-        headingId="homepage-hero-heading"
-      />
+      {/*
+        S1 keeps its interior exactly. What changes is that it now sits in the page's rhythm
+        instead of setting its own: `reveal={false}` because the hero plays its entrance on mount
+        rather than on scroll, so wrapping it in an observer would hold the first viewport blank.
+      */}
+      <Section id="top" ground="canvas" rhythm="heavy" reveal={false}>
+        <HomepageHero
+          lists={lists}
+          dict={dict}
+          locale={locale}
+          headingId="homepage-hero-heading"
+        />
 
-      <div className="mt-10 max-w-[46rem] border-t border-[var(--border-subtle)] pt-5 md:mt-12">
+        <div className="mt-10 max-w-[46rem] border-t border-[var(--hero-line)] pt-5 md:mt-12">
         {assessedLabel ? (
           <p className="text-caption text-muted-foreground">
             <time dateTime={trust.verified.lastUpdatedAt ?? undefined}>{assessedLabel}</time>
@@ -248,7 +261,8 @@ export function RankWagersHome({
         <p className="mt-2 max-w-[62ch] text-caption leading-relaxed text-muted-foreground">
           {p.heroDisclosure}
         </p>
-      </div>
+        </div>
+      </Section>
 
       {/*
         S2 — The Proof Band. The second half of the first viewport.
@@ -286,11 +300,12 @@ export function RankWagersHome({
         Surface rather than the tonal band: the section is set on white against the canvas above it,
         so what marks it is a change of ground rather than a change of hue.
       */}
-      <section
+      <Section
         id="verified-performance"
-        data-analytics-section="verified_performance"
-        aria-labelledby="verified-performance-heading"
-        className="rw-hero -mx-4 scroll-mt-28 border-y border-[var(--hero-line)] bg-[var(--hero-surface)] px-4 py-16 sm:-mx-6 sm:px-6 md:py-24 lg:-mx-10 lg:px-10"
+        ground="surface"
+        rhythm="heavy"
+        labelledBy="verified-performance-heading"
+        analyticsSection="verified_performance"
       >
         {/*
           Set locally rather than through `SectionHeading`. That component is shared with the
@@ -453,7 +468,7 @@ export function RankWagersHome({
         ) : (
           <EmptySection text={p.verifiedUnavailable} />
         )}
-      </section>
+      </Section>
 
       {/*
         S3 — Today's Picks. Separation from S2 is whitespace only; the band's lower edge is the rule.
@@ -462,13 +477,14 @@ export function RankWagersHome({
         standing as its own destination — same links, same data, a fraction of the height, and now
         functioning as context for the grid it sits above.
       */}
-      <SectionPause />
 
-      <section
+      <Section
         id="top-picks"
-        data-analytics-section="top_picks"
-        aria-labelledby="top-picks-heading"
-        className="scroll-mt-28 pb-12 pt-4 md:pb-16 md:pt-6"
+        analyticsSection="top_picks"
+        labelledBy="top-picks-heading"
+        ground="canvas"
+        rhythm="heavy"
+        index={1}
       >
         <SectionHeading
           id="top-picks-heading"
@@ -650,7 +666,7 @@ export function RankWagersHome({
             Open Acca Builder
           </SectionTrackLink>
         </p>
-      </section>
+      </Section>
 
       {/*
         S4 — Live Signals. Supporting, not structural: no eyebrow, hairline rule above.
@@ -659,11 +675,20 @@ export function RankWagersHome({
         unlock prompt, and adjacency to the Proof Band is what would make a lock read as a paywall
         on evidence.
       */}
-      <section
-        data-analytics-section="live_matches"
+      {/*
+        #live stays on `surface` this pass, not the prototype's inverted ground. Its interior
+        inherits light-ground colours, and flipping the ground without converting them would
+        publish dark text on dark — a regression dressed as a conversion. The ink band is carried
+        by the footer, so the page still uses the punctuation, rarely; #live takes it in step 2
+        when its contents are rebuilt.
+      */}
+      <Section
         id="live-signals"
-        aria-labelledby="live-matches-heading"
-        className="scroll-mt-28 py-10 md:py-12"
+        analyticsSection="live_matches"
+        labelledBy="live-matches-heading"
+        ground="surface"
+        rhythm="quiet"
+        index={2}
       >
         <EditorialRule />
         {/*
@@ -682,7 +707,7 @@ export function RankWagersHome({
             <LiveFeedPanel dict={dict} />
           </div>
         </div>
-      </section>
+      </Section>
 
       {/*
         S5 — Research. Deliberately the quietest section: the H2 sits at the `text-xl` step with no
@@ -692,11 +717,13 @@ export function RankWagersHome({
         leagues becomes a single meta row rather than an eight-cell grid, and Saved a sub-block
         rather than a full section that exists to tell most visitors it is empty.
       */}
-      <section
-        data-analytics-section="recently_qualified"
+      <Section
         id="fixtures"
-        aria-labelledby="recently-qualified"
-        className="scroll-mt-28 border-t border-[var(--border-default)] pb-16 pt-14 md:pb-24 md:pt-16"
+        analyticsSection="recently_qualified"
+        labelledBy="recently-qualified"
+        ground="canvas"
+        rhythm="heavy"
+        index={3}
       >
         <p className="mb-1 text-metadata font-medium uppercase tracking-label text-muted-foreground">
           Research desk
@@ -772,7 +799,7 @@ export function RankWagersHome({
             <SavedFixturesPanel locale={locale} />
           </div>
         </div>
-      </section>
+      </Section>
 
       {/*
         S6 — Method. Separated by whitespace, not a rule: the page opens and closes at the
@@ -786,13 +813,14 @@ export function RankWagersHome({
         while the record is still in mind, and the commercial block is the last thing on the page
         rather than an interruption between two research surfaces.
       */}
-      <SectionPause />
 
-      <section
+      <Section
         id="why-trust"
-        data-analytics-section="why_trust"
-        aria-labelledby="why-trust-heading"
-        className="scroll-mt-28 pb-20 pt-4 md:pb-28 md:pt-6"
+        analyticsSection="why_trust"
+        labelledBy="why-trust-heading"
+        ground="surface"
+        rhythm="quiet"
+        index={4}
       >
         <SectionHeading
           id="why-trust-heading"
@@ -897,7 +925,7 @@ export function RankWagersHome({
             </SectionTrackLink>
           </div>
         </div>
-      </section>
+      </Section>
       {/*
         S7 — Bookmakers. After every research surface, without exception.
 
@@ -906,9 +934,12 @@ export function RankWagersHome({
         literally true of the layout, which is what a reader actually believes rather than the
         sentence. The accumulator entry travels with it: it is a commercial funnel, not research.
       */}
-      <section
-        data-analytics-section="top_operators"
-        className="pb-16 pt-10 md:pb-20 md:pt-12"
+      {/* Operator content last, per the brief's hierarchy. Quiet ground, quiet rhythm. */}
+      <Section
+        analyticsSection="top_operators"
+        ground="canvas"
+        rhythm="quiet"
+        index={5}
       >
         <EditorialRule />
         <div className="mt-8 max-w-[72rem]">
@@ -928,7 +959,7 @@ export function RankWagersHome({
             />
           </div>
         </div>
-      </section>
+      </Section>
 
     </div>
   );
@@ -1108,13 +1139,12 @@ function FormStrip({
  * that closes. A third use would make it a divider, and a divider used everywhere is the monotony it
  * exists to break.
  */
-function SectionPause() {
-  return (
-    <div className="flex justify-center py-12 md:py-16" aria-hidden>
-      <span className="h-px w-10 bg-[var(--border-strong)]" />
-    </div>
-  );
-}
+/*
+ * `SectionPause` is gone. It added py-12/md:py-16 BETWEEN sections back when each section set its
+ * own padding and the gaps had to be made up by hand. `Section` now owns the rhythm, so the pause
+ * was adding a second helping of space and flattening the quiet/heavy distinction that paces the
+ * page — the very signal this pass exists to establish.
+ */
 
 /**
  * A short editorial rule — the quiet separator.

@@ -37,14 +37,23 @@ export function Footer({
   ];
 
   return (
-    <footer className="mt-12 border-t border-[var(--border-subtle)] bg-[var(--canvas-secondary)]">
-      <div className="container-wide py-12 text-sm text-muted-foreground">
+    /*
+     * The inverted ground. `bg-ink` is the prototype's rarest punctuation — one band at the foot
+     * of the page reads as a close; used more often it would read as a theme. `.rw-hero` scopes
+     * the palette and type, and the contrast pairs here are chosen against #0b0c0e rather than
+     * inherited from the light surface (white/55 and white/70 clear AA on this ground; the
+     * shipped --ink-secondary would not).
+     *
+     * Structure is unchanged — same notices, same two navs, same legal row.
+     */
+    <footer className="rw-hero mt-16 bg-[var(--hero-ink)] text-white lg:mt-24">
+      <div className="mx-auto w-full max-w-[1240px] px-5 py-16 text-sm text-white/60 lg:px-8 lg:py-20">
         <GambleAwareNotice />
-        <div className="mb-8 max-w-2xl rounded-lg border border-[var(--border-subtle)] bg-background p-4">
-          <div className="text-metadata font-medium uppercase tracking-label text-brand">
+        <div className="mb-8 max-w-2xl border-l-2 border-white/20 py-1 pl-5">
+          <div className="rw-label text-white/45">
             {dict.footer.affiliateNotice}
           </div>
-          <p className="mt-2 text-sm leading-relaxed text-[var(--ink-secondary)]">
+          <p className="mt-2.5 text-sm leading-relaxed text-white/70">
             {dict.footer.disclaimer}
           </p>
         </div>
@@ -54,13 +63,14 @@ export function Footer({
 
         <div className="mb-10 grid gap-8 sm:grid-cols-2">
           <nav aria-label="Research">
-            <p className="mb-3 text-metadata font-medium uppercase tracking-label text-foreground">
-              Research
-            </p>
+            <p className="rw-label mb-4 text-white/45">Research</p>
             <ul className="flex flex-col gap-2">
               {explore.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="text-sm text-[var(--ink-secondary)] hover:text-brand">
+                  <Link
+                    href={item.href}
+                    className="text-sm text-white/70 transition-colors duration-[var(--dur-respond)] ease-[var(--ease-respond)] hover:text-white"
+                  >
                     {item.label}
                   </Link>
                 </li>
@@ -68,13 +78,14 @@ export function Footer({
             </ul>
           </nav>
           <nav aria-label="Method and legal">
-            <p className="mb-3 text-metadata font-medium uppercase tracking-label text-foreground">
-              Method and legal
-            </p>
+            <p className="rw-label mb-4 text-white/45">Method and legal</p>
             <ul className="flex flex-col gap-2">
               {trust.map((item) => (
                 <li key={item.href}>
-                  <Link href={item.href} className="text-sm text-[var(--ink-secondary)] hover:text-brand">
+                  <Link
+                    href={item.href}
+                    className="text-sm text-white/70 transition-colors duration-[var(--dur-respond)] ease-[var(--ease-respond)] hover:text-white"
+                  >
                     {item.label}
                   </Link>
                 </li>
@@ -83,15 +94,15 @@ export function Footer({
           </nav>
         </div>
 
-        <div className="flex flex-col items-start justify-between gap-3 border-t border-[var(--border-subtle)] pt-6 sm:flex-row sm:items-center">
-          <span className="inline-flex items-center gap-2 font-medium text-brand">
-            <span className="rounded-full border border-brand/25 px-2 py-0.5 text-xs font-semibold">
+        <div className="flex flex-col items-start justify-between gap-3 border-t border-white/12 pt-7 sm:flex-row sm:items-center">
+          <span className="inline-flex items-center gap-2 font-medium text-white/70">
+            <span className="rounded-full border border-white/25 px-2 py-0.5 text-xs font-semibold">
               18+
             </span>
             {dict.footer.ageWarning}
           </span>
-          <span className="font-display text-sm text-foreground">RankWagers</span>
-          <span className="text-xs">{formatDict(dict.footer.copyright, { year })}</span>
+          <span className="text-sm font-semibold tracking-[-0.03em] text-white">RankWagers</span>
+          <span className="text-xs text-white/45">{formatDict(dict.footer.copyright, { year })}</span>
         </div>
       </div>
     </footer>
