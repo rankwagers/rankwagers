@@ -205,8 +205,23 @@ export function MatchDetailView({
         </div>
       </header>
 
-      <div className="mt-14 grid gap-14 lg:grid-cols-[minmax(0,1fr)_320px]">
-        <div className="space-y-16">
+      {/*
+        THE GRID. Research used to sit inside the narrow left column beside a sticky operator rail
+        that runs out of content halfway down, so the page's centre was squeezed against a wide
+        blank while "Why" — the thing the page exists for — wrapped at ~62ch inside it. The
+        research section now spans the full measure, and the two-column grid starts below it where
+        a supporting rail has something to sit alongside.
+      */}
+      <div className="mt-16 lg:mt-24">
+        <FixtureResearchSection
+          view={evidence}
+          homeTeam={header.homeTeam}
+          awayTeam={header.awayTeam}
+        />
+      </div>
+
+      <div className="mt-20 grid gap-x-12 gap-y-16 lg:mt-28 lg:grid-cols-[minmax(0,1fr)_320px]">
+        <div className="space-y-20">
           {/*
             Sprint 22 — Live Match Intelligence. Renders itself only for in-play fixtures and
             returns null otherwise, so no live markup or JavaScript reaches a scheduled or
@@ -214,16 +229,7 @@ export function MatchDetailView({
           */}
           <LiveMatchSection snapshot={bundle.liveMatch} locale={locale} />
 
-          {/*
-            Research leads. §3.5 reads result → why → supporting data, and the brief's hierarchy
-            puts Research above everything commercial, so the evidence sits directly under the
-            header and the archived record follows it further down the page.
-          */}
-          <FixtureResearchSection
-            view={evidence}
-            homeTeam={header.homeTeam}
-            awayTeam={header.awayTeam}
-          />
+
 
           <section aria-labelledby="events-heading">
             <h2
@@ -360,7 +366,7 @@ export function MatchDetailView({
                     <a
                       href={offer.outboundPath}
                       rel="noopener sponsored"
-                      className="flex items-center justify-between gap-2 rounded-md border border-transparent px-2 py-2 text-sm hover:border-brand/30 hover:bg-card"
+                      className="m-press flex items-center justify-between gap-2 rounded-md border border-transparent px-2 py-2 text-sm hover:border-brand/30 hover:bg-card"
                     >
                       <span className="font-medium">{offer.displayName}</span>
                       <span className="text-xs text-brand">Continue</span>

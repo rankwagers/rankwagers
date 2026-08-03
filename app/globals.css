@@ -528,6 +528,7 @@ textarea,
   --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-respond: cubic-bezier(0.28, 0.11, 0.32, 1);
   --ease-glide: cubic-bezier(0.33, 0, 0.15, 1);
+  --ease-exit: cubic-bezier(0.5, 0, 0.75, 0); /* things leaving, slightly quicker */
 
   /* --- durations -------------------------------------------------------- */
   --dur-tap: 180ms;
@@ -615,7 +616,15 @@ textarea,
   animation: rw-rise var(--dur-reveal) var(--ease-settle) both;
 }
 
-/* Scroll reveal: the same resolve, held until the element is observed. */
+/*
+ * Scroll reveal: the same resolve, held until the element is observed.
+ *
+ * `.reveal` is the prototype's name and is canonical for surfaces built from here on; `.rw-reveal`
+ * is the name the hero already ships. They are the SAME rule rather than two implementations, so
+ * there is nothing to keep in sync. Both stay scoped to `.rw-hero` — an unprefixed `.reveal` is
+ * only safe because it can never match outside the scope.
+ */
+.rw-hero .reveal,
 .rw-hero .rw-reveal {
   opacity: 0;
   transform: translate3d(0, var(--travel), 0);
@@ -628,6 +637,7 @@ textarea,
   will-change: opacity, transform, filter;
 }
 
+.rw-hero .reveal.is-in,
 .rw-hero .rw-reveal.is-in {
   opacity: 1;
   transform: none;
@@ -676,15 +686,18 @@ textarea,
 
 /* --- state response ----------------------------------------------------- */
 
+.rw-hero .m-press,
 .rw-hero .rw-press {
   transition:
     transform var(--dur-respond) var(--ease-respond),
     background-color var(--dur-respond) var(--ease-respond),
     border-color var(--dur-respond) var(--ease-respond);
 }
+.rw-hero .m-press:hover,
 .rw-hero .rw-press:hover {
   transform: translateY(-1px);
 }
+.rw-hero .m-press:active,
 .rw-hero .rw-press:active {
   transform: translateY(0) scale(0.992);
   transition-duration: var(--dur-tap);
@@ -736,11 +749,13 @@ textarea,
     opacity: 1;
   }
 }
+.rw-hero .m-fade,
 .rw-hero .rw-fade {
   animation: rw-fade var(--dur-expand) var(--ease-settle) both;
 }
 
 /* Live geometry — bars, arcs — glides to its new value. */
+.rw-hero .m-live,
 .rw-hero .rw-live {
   transition:
     width var(--dur-live) var(--ease-glide),
@@ -762,10 +777,35 @@ textarea,
     stroke-dashoffset: 0;
   }
 
+  .rw-hero .reveal,
   .rw-hero .rw-reveal {
     opacity: 1;
     transform: none;
     filter: none;
+    transition: none;
+  }
+  /*
+   * The global kill-switch neutralises duration but not displacement, so every transform this
+   * scope applies is removed by name — matching the prototype's opt-out, which is exhaustive
+   * rather than reliant on timing alone.
+   */
+  .rw-hero .m-press:hover,
+  .rw-hero .rw-press:hover,
+  .rw-hero .m-press:active,
+  .rw-hero .rw-press:active {
+    transform: none;
+  }
+  .rw-hero .m-live,
+  .rw-hero .rw-live {
+    transition: none;
+  }
+  .rw-hero .rw-breathe,
+  .rw-hero .rw-breathe-slow,
+  .rw-hero .rw-pulse-ring::after,
+  .rw-hero .m-fade,
+  .rw-hero .rw-fade,
+  .rw-hero .rw-enter {
+    animation: none;
   }
   .rw-hero {
     --travel: 0px;

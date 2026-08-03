@@ -431,7 +431,28 @@ export async function runEvidenceCaptureJob(options?: {
       logWarn("evidence_capture_failures", { count: failures.length, sample: JSON.stringify(failures.slice(0, 5)) }, "jobs");
     }
     const hardFailed = counts.writeFailed > 0 || counts.immutableViolation > 0;
-    const runDegraded = counts.notAdmitted > 0 || counts.invalid > 0;
+    /*
+     * A fire that had work and produced no evidence is degraded, even when no single candidate
+     * reported a failure.
+     *
+     * `notAdmitted` and `invalid` catch per-candidate rejections. They do not catch the shape that
+     * cost a full board: eligible candidates existed, none reached the archive, and every one was
+     * accounted for by a deferral or by the producer selecting nothing — so the run recorded a
+     * clean success over an empty archive and the alert never fired.
+     *
+     * `duplicate` deliberately counts as produced. An already-present snapshot means the evidence
+     * exists; re-ensuring it idempotently is the job working, not failing.
+     *
+     * Requires the producer's diagnostics, so this only engages on the `provideCandidateBatch`
+     * path. The array-only seam returns no `candidatesEligible`, and inferring one from
+     * `considered` would assert an eligibility count nobody measured.
+     */
+    const producedNothing = counts.captured === 0 && counts.duplicate === 0;
+    const hadEligibleWork = (producerDiag?.candidatesEligible ?? 0) > 0;
+    const runDegraded =
+      counts.notAdmitted > 0 ||
+      counts.invalid > 0 ||
+      (hadEligibleWork && producedNothing);
     const resultCounts = mergeProducerResultCounts(
       "capture",
       { ...counts },

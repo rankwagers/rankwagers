@@ -22,6 +22,8 @@ import type { PublishedDailyPrediction } from "../lib/evidence-capture/source";
 import type { CaptureRequest } from "../lib/evidence-capture/capture/capture";
 import type { EvidenceSnapshot } from "../types/evidence";
 import type { OddsArchiveRecord } from "../lib/evidence-capture/odds-archive/record";
+import { emptyCaptureDiagnostics } from "../lib/evidence-capture/candidates/diagnostics";
+import type { CandidateDiagnostics } from "../lib/evidence-capture/candidates";
 
 /* ------------------------------ fixtures ------------------------------ */
 
@@ -242,4 +244,99 @@ test("runner: disabled capture flag short-circuits before discovery", async () =
   assert.equal(calls, 0); // never discovered — flag skip precedes the lock/producer
   assert.equal(res.status, "skipped");
   assert.equal(res.errorCode, "capture_disabled");
+});
+
+/* ------------------- run_degraded: work in, nothing out ------------------- */
+
+/**
+ * A fire that had eligible candidates and produced no evidence is degraded, even when no single
+ * candidate reported a failure.
+ *
+ * This is the shape that cost a full board: eligible candidates existed, none reached the archive,
+ * and the run still recorded a clean success. `notAdmitted`/`invalid` never fired because nothing
+ * was attempted, so the alert never fired either.
+ */
+function diagnosticsWith(eligible: number): CandidateDiagnostics {
+  const diag = emptyCaptureDiagnostics();
+  diag.sourceRowsDiscovered = eligible;
+  diag.candidatesEligible = eligible;
+  return diag;
+}
+
+test("run_degraded: eligible candidates, nothing selected, nothing written", async () => {
+  resetJobLog();
+  const res = await runEvidenceCaptureJob({
+    env: enabledCapture,
+    deps: {
+      evidenceStore: createMemoryEvidenceArchive(),
+      oddsStore: createMemoryOddsArchive(),
+    },
+    // Thirteen fixtures were in the window; the producer selected none of them.
+    provideCandidateBatch: async () => ({
+      candidates: [],
+      diagnostics: diagnosticsWith(13),
+    }),
+  });
+
+  assert.equal(res.status, "succeeded", "an empty run is not a hard failure");
+  assert.equal(res.resultCounts?.considered, 0);
+  assert.equal(res.resultCounts?.captured, 0);
+  // The whole point: a clean success over an empty archive must not look clean.
+  assert.equal(res.resultCounts?.run_degraded, 1);
+});
+
+test("run_degraded stays 0 when there was genuinely nothing in the window", async () => {
+  resetJobLog();
+  const res = await runEvidenceCaptureJob({
+    env: enabledCapture,
+    deps: {
+      evidenceStore: createMemoryEvidenceArchive(),
+      oddsStore: createMemoryOddsArchive(),
+    },
+    provideCandidateBatch: async () => ({
+      candidates: [],
+      diagnostics: diagnosticsWith(0),
+    }),
+  });
+
+  // The distinction that was impossible to read from the job record before.
+  assert.equal(res.status, "succeeded");
+  assert.equal(res.resultCounts?.eligible, 0);
+  assert.equal(res.resultCounts?.run_degraded, 0);
+});
+
+test("run_degraded: every eligible candidate rejected still degrades", async () => {
+  resetJobLog();
+  const res = await runEvidenceCaptureJob({
+    env: enabledCapture,
+    deps: {
+      evidenceStore: createMemoryEvidenceArchive(),
+      oddsStore: createMemoryOddsArchive(),
+    },
+    provideCandidateBatch: async () => ({
+      candidates: [stubRequest], // admitted: false → notAdmitted, no write
+      diagnostics: diagnosticsWith(1),
+    }),
+  });
+
+  assert.equal(res.resultCounts?.notAdmitted, 1);
+  assert.equal(res.resultCounts?.captured, 0);
+  assert.equal(res.resultCounts?.run_degraded, 1);
+});
+
+test("the array-only seam cannot report eligibility, so it does not infer one", async () => {
+  resetJobLog();
+  const res = await runEvidenceCaptureJob({
+    env: enabledCapture,
+    deps: {
+      evidenceStore: createMemoryEvidenceArchive(),
+      oddsStore: createMemoryOddsArchive(),
+    },
+    // No diagnostics on this path. `considered` is not an eligibility count, and treating it as
+    // one would assert a number nobody measured.
+    provideCandidates: async () => [],
+  });
+
+  assert.equal(res.status, "succeeded");
+  assert.equal(res.resultCounts?.run_degraded, 0);
 });

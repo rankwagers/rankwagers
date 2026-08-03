@@ -1,3 +1,4 @@
+import { Reveal } from "@/components/motion/Reveal";
 import type { MatchPredictionView } from "@/lib/fixtures/types";
 
 /* ============================================================================
@@ -31,7 +32,7 @@ function Field({ label, value }: { label: string; value: string }) {
   );
 }
 
-function RecordRow({ prediction }: { prediction: MatchPredictionView }) {
+function RecordRow({ prediction, index }: { prediction: MatchPredictionView; index: number }) {
   const profit =
     prediction.unitProfit == null
       ? "—"
@@ -40,7 +41,11 @@ function RecordRow({ prediction }: { prediction: MatchPredictionView }) {
         : `${prediction.unitProfit.toFixed(2)}u`;
 
   return (
-    <li className="border-t border-[var(--hero-line-2)] py-6 first:border-t-0 first:pt-0">
+    <Reveal
+      as="li"
+      index={index}
+      className="border-t border-[var(--hero-line-2)] py-6 first:border-t-0 first:pt-0"
+    >
       <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
         <h3 className="text-[16px] font-semibold text-[var(--hero-ink)]">
           {prediction.marketLabel}
@@ -61,7 +66,7 @@ function RecordRow({ prediction }: { prediction: MatchPredictionView }) {
           {prediction.settlementReason}
         </p>
       ) : null}
-    </li>
+    </Reveal>
   );
 }
 
@@ -74,18 +79,18 @@ export function FixtureRecordSection({
     <section aria-labelledby="record-heading" className="scroll-mt-24">
       <h2
         id="record-heading"
-        className="rw-display text-[28px] text-[var(--hero-ink)] sm:text-[34px]"
+        className="rw-display text-[clamp(1.5rem,2.4vw,1.9rem)] text-[var(--hero-ink-2)]"
       >
         The record
       </h2>
-      <p className="mt-4 max-w-[62ch] text-[15px] leading-[1.7] text-[var(--hero-ink-2)]">
+      <p className="mt-4 max-w-[62ch] text-[15px] leading-[1.7] text-[var(--hero-ink-3)]">
         What was published for this fixture, when, and what happened afterwards. Nothing here is
         removed once written, and corrections are added rather than substituted.
       </p>
       {predictions.length ? (
         <ul className="mt-8">
-          {predictions.map((p) => (
-            <RecordRow key={p.id} prediction={p} />
+          {predictions.map((p, i) => (
+            <RecordRow key={p.id} prediction={p} index={i} />
           ))}
         </ul>
       ) : (
