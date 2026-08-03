@@ -124,12 +124,122 @@ const FUNNEL_STEPS = [
   label: keyof Copy;
 }>;
 
-/** A measure in the funnel: a numeral hung under a hairline, never a stat card. */
-function Measure({ value, label }: { value: number; label: string }) {
+/** Vertical drop between consecutive measures, and the left indent that replaces it when stacked. */
+export const FUNNEL_STEP_PX = 16;
+
+/**
+ * The descent, resolved from the funnel.
+ *
+ * The offset is derived from the RENDERED index, never from the stage's position in
+ * `FUNNEL_STEPS`. A day served from an archive omits `analysed`, `validated` and `inScope`, and if
+ * the offset were keyed to the declared order the staircase would open a hole where the missing
+ * stage used to be — a gap that reads as a stage the page declined to name. Four rendered stages
+ * step 0/16/32/48, whichever four they are.
+ *
+ * `emphasised` marks the two stages that survived. Colour means one thing here (brief, COLOUR
+ * SYSTEM): green is Qualified, so only `qualified` and `featured` carry it. Marking the population
+ * the model REJECTED in the colour reserved for what it accepted is colour without meaning.
+ */
+export function funnelDescent(funnel: HeroFunnel): Array<{
+  stage: ResearchStage;
+  label: keyof Copy;
+  value: number;
+  offset: number;
+  emphasised: boolean;
+}> {
+  const rendered: Array<{
+    stage: ResearchStage;
+    label: keyof Copy;
+    value: number;
+    offset: number;
+    emphasised: boolean;
+  }> = [];
+
+  for (const { stage, label } of FUNNEL_STEPS) {
+    const value = funnel[stage];
+    if (value === null) continue;
+    rendered.push({
+      stage,
+      label,
+      value,
+      offset: rendered.length * FUNNEL_STEP_PX,
+      emphasised: stage === "qualified" || stage === "featured",
+    });
+  }
+
+  return rendered;
+}
+
+/**
+ * The stepped hairline behind the measures.
+ *
+ * One path, not one rule per measure: the claim is that hundreds became five, and a claim is a
+ * movement rather than a list. Percentage geometry so it tracks the grid at any column count, with
+ * `non-scaling-stroke` so the hairline stays a hairline under the non-uniform scale that
+ * `preserveAspectRatio="none"` applies.
+ *
+ * Hidden below `sm`, where the descent is carried by indent instead and a horizontal staircase
+ * would describe a layout that is not on screen.
+ */
+function FunnelDescentLine({ count }: { count: number }) {
+  if (count < 2) return null;
+
+  const columnWidth = 100 / count;
+  const height = (count - 1) * FUNNEL_STEP_PX;
+  let path = "M 0 0.5";
+  for (let i = 1; i < count; i += 1) {
+    path += ` H ${(columnWidth * i).toFixed(3)} V ${(i * FUNNEL_STEP_PX + 0.5).toFixed(1)}`;
+  }
+
   return (
-    <div className="relative min-w-[96px] pt-5">
-      {/* the measure hangs from the rule above it, marked in its own stage colour */}
-      <span className="absolute left-0 top-0 h-3 w-px bg-[var(--hero-pos)]" />
+    <svg
+      aria-hidden
+      viewBox={`0 0 100 ${height + 1}`}
+      preserveAspectRatio="none"
+      fill="none"
+      stroke="var(--hero-line)"
+      strokeWidth="1"
+      vectorEffect="non-scaling-stroke"
+      className="pointer-events-none absolute inset-x-0 top-0 hidden sm:block"
+      style={{ height: height + 1 }}
+    >
+      <path d={path} vectorEffect="non-scaling-stroke" />
+    </svg>
+  );
+}
+
+/** A measure in the funnel: a numeral hung under a hairline, never a stat card. */
+function Measure({
+  value,
+  label,
+  offset,
+  emphasised,
+}: {
+  value: number;
+  label: string;
+  offset: number;
+  emphasised: boolean;
+}) {
+  return (
+    <div
+      /*
+       * One offset, two readings. Stacked below `sm` it is a left indent; at `sm` and up it is the
+       * vertical drop. The value is passed as a local custom property because an inline style
+       * cannot carry a breakpoint, and the alternative — two absolutely positioned variants — would
+       * render the same measure twice.
+       */
+      className="relative min-w-0 pl-[var(--rw-descent)] pt-4 sm:pl-0 sm:mt-[var(--rw-descent)]"
+      style={{ "--rw-descent": `${offset}px` } as CSSProperties}
+    >
+      {/*
+        The mark hangs above the numeral. Green is reserved for what survived; every earlier stage
+        is drawn in ink, and the surviving stages carry a heavier rule so the eye lands on them.
+      */}
+      <span
+        className={`absolute left-0 top-0 h-3 ${
+          emphasised ? "w-[1.5px] bg-[var(--hero-pos)]" : "w-px bg-[var(--hero-ink-3)]"
+        }`}
+      />
       <p className="rw-tnum rw-display text-[32px] leading-none text-[var(--hero-ink)]">{value}</p>
       <p className="rw-label mt-2 text-[var(--hero-ink-3)]">{label}</p>
     </div>
@@ -455,29 +565,51 @@ export function HeroStage({
                     <GroupRule title={copy.funnelTitle} note={copy.funnelNote} />
                   </div>
 
-                  <div
-                    className="rw-enter mt-6 flex flex-wrap items-start gap-x-12 gap-y-6"
-                    style={{ animationDelay: "560ms" }}
-                  >
-                    {/*
-                      The descent (rwdesign §6), drawn from observations only.
+                  {/*
+                    THE DESCENT (rwdesign §6), drawn from observations only.
 
-                      A stage whose count is `null` is OMITTED — no zero, no skeleton, no dash.
-                      A rendered `0` would claim nothing survived that stage, and a skeleton would
-                      promise a number that is not coming; both are assertions this product cannot
-                      evidence (§3.2, §3.8). The row simply contains fewer steps, and the steps it
-                      does contain are all real.
+                    Five equal numerals at equal spacing read as five statistics, which is a
+                    dashboard. The product's single claim is that hundreds became five, so the
+                    composition states it: a staircase that steps down and narrows, connected by
+                    one hairline, ending on the two stages drawn in the colour reserved for what
+                    survived.
 
-                      `published` therefore never renders today: there is no publication state
-                      distinct from qualification. `analysed`, `validated` and `inScope` render on
-                      a live run and drop out when the day is served from an archive.
-                    */}
-                    {FUNNEL_STEPS.map(({ stage, label }) => {
-                      const value = funnel[stage];
-                      if (value === null) return null;
-                      return <Measure key={stage} value={value} label={copy[label]} />;
-                    })}
-                  </div>
+                    A stage whose count is `null` is OMITTED — no zero, no skeleton, no dash. A
+                    rendered `0` would claim nothing survived that stage, and a skeleton would
+                    promise a number that is not coming; both are assertions this product cannot
+                    evidence (§3.2, §3.8). The staircase closes up around the omission rather than
+                    leaving a hole, because the offset is keyed to the rendered index.
+
+                    `published` therefore never renders today: there is no publication state
+                    distinct from qualification. `analysed`, `validated` and `inScope` render on
+                    a live run and drop out when the day is served from an archive.
+                  */}
+                  {(() => {
+                    const descent = funnelDescent(funnel);
+                    if (!descent.length) return null;
+                    return (
+                      <div
+                        className="rw-enter relative mt-6 grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-[repeat(var(--rw-columns),minmax(0,1fr))] sm:gap-y-0"
+                        style={
+                          {
+                            animationDelay: "560ms",
+                            "--rw-columns": String(descent.length),
+                          } as CSSProperties
+                        }
+                      >
+                        <FunnelDescentLine count={descent.length} />
+                        {descent.map(({ stage, label, value, offset, emphasised }) => (
+                          <Measure
+                            key={stage}
+                            value={value}
+                            label={copy[label]}
+                            offset={offset}
+                            emphasised={emphasised}
+                          />
+                        ))}
+                      </div>
+                    );
+                  })()}
 
                   {/*
                     The ledger and its descent belong here, between the funnel and the list. Both
