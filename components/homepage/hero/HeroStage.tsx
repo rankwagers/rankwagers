@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
 import type { CSSProperties } from "react";
 import type { Locale } from "@/lib/i18n";
 import type { HeroFunnel, HeroPick, HomepageHeroModel } from "@/lib/homepage/types";
@@ -9,7 +9,7 @@ import { SectionTrackLink } from "@/components/analytics/SectionTrackLink";
 import { Crest } from "./Crest";
 import { EvidenceDial } from "./EvidenceDial";
 import { tinted } from "./leagueTint";
-import { useIntent, usePointerDrift } from "./motion";
+import { prefersReducedMotion, useIntent, usePointerDrift } from "./motion";
 
 /* ============================================================================
    TODAY'S SELECTION
@@ -170,6 +170,109 @@ export function funnelDescent(funnel: HeroFunnel): Array<{
   return rendered;
 }
 
+/* ============================================================================
+   THE RESEARCH REVEAL (rwdesign §20)
+   ----------------------------------------------------------------------------
+   Disclosure, not counting.
+
+   A numeral travelling 0 → 241 paints figures the pipeline never observed:
+   `partitionDailyMatches` partitions in ONE pass and never holds an
+   intermediate total, so every frame reading "137" describes nothing. §3.2
+   governs motion exactly as it governs a static value, so the sequence reveals
+   each stage ALREADY CARRYING its true count. `useResolve` in `./motion` is the
+   ramp this deliberately does not use.
+   ========================================================================== */
+
+type RevealPhase = "settled" | "armed" | "playing";
+
+const REVEAL_STORAGE_PREFIX = "rankwagers:research-reveal:";
+
+/** The run's own day, taken from its retrieval stamp. Null when the stamp is unusable. */
+export function researchRunDay(fetchedAt: string | null): string | null {
+  if (!fetchedAt) return null;
+  const parsed = Date.parse(fetchedAt);
+  if (Number.isNaN(parsed)) return null;
+  return new Date(parsed).toISOString().slice(0, 10);
+}
+
+/**
+ * Whether the sequence runs, decided from facts rather than from a page load.
+ *
+ * Four reasons it does not, each returned by name so the decision is testable and so a future
+ * reader can see that "it did not animate" is never an accident:
+ *
+ *   incomplete_chain  an archive day omits analysed/validated/inScope. A two-step descent is not
+ *                     a descent, and animating one would dramatise an absence.
+ *   reduced_motion    final state immediately. No exception, no reduced variant.
+ *   seen_today        keyed to the RUN's day, not to a session. Reload, new tab, or a return visit
+ *                     four hours later: the funnel is simply there.
+ *   no_run_day        without a usable stamp there is no key, so the sequence cannot be bounded to
+ *                     a day — and an unbounded reveal would replay on every load.
+ */
+export function researchRevealDecision(input: {
+  stageCount: number;
+  totalStages: number;
+  reducedMotion: boolean;
+  seenToday: boolean;
+  day: string | null;
+}): { plays: boolean; reason: "plays" | "incomplete_chain" | "reduced_motion" | "seen_today" | "no_run_day" } {
+  if (input.stageCount < input.totalStages) return { plays: false, reason: "incomplete_chain" };
+  if (input.reducedMotion) return { plays: false, reason: "reduced_motion" };
+  if (!input.day) return { plays: false, reason: "no_run_day" };
+  if (input.seenToday) return { plays: false, reason: "seen_today" };
+  return { plays: true, reason: "plays" };
+}
+
+/** `useLayoutEffect` on the client, `useEffect` on the server, so SSR emits no warning. */
+const useIsomorphicLayoutEffect =
+  typeof window !== "undefined" ? useLayoutEffect : useEffect;
+
+/**
+ * The phase the descent renders in.
+ *
+ * `settled` is the SSR and no-JS answer, so the funnel is readable before a single line of script
+ * runs and stays readable if none ever does (§3.8 — never silently display blanks). The client
+ * arms the sequence only when it has decided it should play.
+ */
+function useResearchReveal(day: string | null, stageCount: number): RevealPhase {
+  const [phase, setPhase] = useState<RevealPhase>("settled");
+
+  useIsomorphicLayoutEffect(() => {
+    let seenToday = false;
+    try {
+      seenToday = day
+        ? window.localStorage.getItem(`${REVEAL_STORAGE_PREFIX}${day}`) === "1"
+        : false;
+    } catch {
+      // A blocked or full store is not a reason to replay the sequence on every load.
+      seenToday = true;
+    }
+
+    const decision = researchRevealDecision({
+      stageCount,
+      totalStages: FUNNEL_STEPS.length,
+      reducedMotion: prefersReducedMotion(),
+      seenToday,
+      day,
+    });
+    if (!decision.plays) return;
+
+    setPhase("armed");
+    // Two frames: the first commits the armed state, the second releases the transition.
+    const outer = window.requestAnimationFrame(() => {
+      window.requestAnimationFrame(() => setPhase("playing"));
+    });
+    try {
+      if (day) window.localStorage.setItem(`${REVEAL_STORAGE_PREFIX}${day}`, "1");
+    } catch {
+      /* the sequence still runs this once; it simply cannot record that it did */
+    }
+    return () => window.cancelAnimationFrame(outer);
+  }, [day, stageCount]);
+
+  return phase;
+}
+
 /**
  * The stepped hairline behind the measures.
  *
@@ -203,7 +306,7 @@ function FunnelDescentLine({ count }: { count: number }) {
       className="pointer-events-none absolute inset-x-0 top-0 hidden sm:block"
       style={{ height: height + 1 }}
     >
-      <path d={path} vectorEffect="non-scaling-stroke" />
+      <path d={path} pathLength={1} vectorEffect="non-scaling-stroke" className="rw-descent-line" />
     </svg>
   );
 }
@@ -214,11 +317,16 @@ function Measure({
   label,
   offset,
   emphasised,
+  revealIndex = null,
+  revealed = false,
 }: {
   value: number;
   label: string;
   offset: number;
   emphasised: boolean;
+  /** Stagger index for the shared `.rw-reveal` rule, or null when the sequence is not running. */
+  revealIndex?: number | null;
+  revealed?: boolean;
 }) {
   return (
     <div
@@ -227,9 +335,19 @@ function Measure({
        * vertical drop. The value is passed as a local custom property because an inline style
        * cannot carry a breakpoint, and the alternative — two absolutely positioned variants — would
        * render the same measure twice.
+       *
+       * The reveal only ever touches opacity, transform and blur — never a box property — so the
+       * block occupies its final height from the first frame and the sequence costs no layout.
        */
-      className="relative min-w-0 pl-[var(--rw-descent)] pt-4 sm:pl-0 sm:mt-[var(--rw-descent)]"
-      style={{ "--rw-descent": `${offset}px` } as CSSProperties}
+      className={`relative min-w-0 pl-[var(--rw-descent)] pt-4 sm:pl-0 sm:mt-[var(--rw-descent)]${
+        revealIndex === null ? "" : ` rw-reveal${revealed ? " is-in" : ""}`
+      }`}
+      style={
+        {
+          "--rw-descent": `${offset}px`,
+          ...(revealIndex === null ? {} : { "--i": revealIndex }),
+        } as CSSProperties
+      }
     >
       {/*
         The mark hangs above the numeral. Green is reserved for what survived; every earlier stage
@@ -417,6 +535,8 @@ export function HeroStage({
   const stage = usePointerDrift<HTMLElement>();
 
   const { picks, funnel } = model;
+  const descent = funnelDescent(funnel);
+  const revealPhase = useResearchReveal(researchRunDay(model.fetchedAt), descent.length);
   const pick = picks[held] ?? picks[0] ?? null;
   const [leadPick, ...supporting] = picks;
 
@@ -584,32 +704,36 @@ export function HeroStage({
                     distinct from qualification. `analysed`, `validated` and `inScope` render on
                     a live run and drop out when the day is served from an archive.
                   */}
-                  {(() => {
-                    const descent = funnelDescent(funnel);
-                    if (!descent.length) return null;
-                    return (
-                      <div
-                        className="rw-enter relative mt-6 grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-[repeat(var(--rw-columns),minmax(0,1fr))] sm:gap-y-0"
-                        style={
-                          {
-                            animationDelay: "560ms",
-                            "--rw-columns": String(descent.length),
-                          } as CSSProperties
-                        }
-                      >
-                        <FunnelDescentLine count={descent.length} />
-                        {descent.map(({ stage, label, value, offset, emphasised }) => (
-                          <Measure
-                            key={stage}
-                            value={value}
-                            label={copy[label]}
-                            offset={offset}
-                            emphasised={emphasised}
-                          />
-                        ))}
-                      </div>
-                    );
-                  })()}
+                  {descent.length ? (
+                    <div
+                      className="rw-descent rw-enter relative mt-6 grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-[repeat(var(--rw-columns),minmax(0,1fr))] sm:gap-y-0"
+                      {...(revealPhase === "settled" ? {} : { "data-reveal": revealPhase })}
+                      style={
+                        {
+                          animationDelay: "560ms",
+                          "--rw-columns": String(descent.length),
+                        } as CSSProperties
+                      }
+                    >
+                      <FunnelDescentLine count={descent.length} />
+                      {descent.map(({ stage, label, value, offset, emphasised }, index) => (
+                        <Measure
+                          key={stage}
+                          value={value}
+                          label={copy[label]}
+                          offset={offset}
+                          emphasised={emphasised}
+                          /*
+                            `--i` is the stagger index the shared `.rw-reveal` rule already reads.
+                            The class is applied only while the sequence is running: settled renders
+                            carry no transition at all, so a return visit cannot flicker.
+                          */
+                          revealIndex={revealPhase === "settled" ? null : index}
+                          revealed={revealPhase === "playing"}
+                        />
+                      ))}
+                    </div>
+                  ) : null}
 
                   {/*
                     The ledger and its descent belong here, between the funnel and the list. Both
