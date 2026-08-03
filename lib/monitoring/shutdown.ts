@@ -19,14 +19,28 @@
 
 import { logError, logInfo, logWarn } from "@/lib/monitoring/logger";
 
-/** PM2 `kill_timeout` in `deploy/ecosystem.config.cjs` (aff-site). Keep these two in sync. */
-export const PM2_KILL_TIMEOUT_MS = 10_000;
+/**
+ * PM2 `kill_timeout` in `deploy/ecosystem.config.cjs` (aff-site). Keep these two in sync.
+ *
+ * 60s, above the 45s capture deadline (`EFFECTIVE_DEADLINE_HARD_MAX_MS`). The evidence archive
+ * is append-only and permanent: a SIGKILL landing mid-`appendFile` can leave a torn line in it
+ * forever. The window must therefore outlast the longest run that writes, not the shortest that
+ * serves — a restart during capture now waits for the append instead of severing it.
+ */
+export const PM2_KILL_TIMEOUT_MS = 60_000;
 /** Safe margin so the graceful drain always finishes before PM2 escalates to SIGKILL. */
 export const SIGNAL_GRACE_SAFETY_MARGIN_MS = 1_000;
 /** Hard ceiling for the drain window: strictly below `kill_timeout` by the safety margin. */
 export const MAX_SIGNAL_GRACE_MS = PM2_KILL_TIMEOUT_MS - SIGNAL_GRACE_SAFETY_MARGIN_MS;
-/** Default drain window when `SHUTDOWN_GRACE_MS` is unset/invalid. */
-export const DEFAULT_SIGNAL_GRACE_MS = 8_000;
+/**
+ * Default drain window when `SHUTDOWN_GRACE_MS` is unset/invalid.
+ *
+ * 50s — deliberately above the 45s capture deadline and below the 59s clamp. Raising PM2's
+ * `kill_timeout` alone would NOT protect an in-flight append: the process exits itself once this
+ * window elapses, so an 8s drain would still cut a 45s capture short well before PM2 escalated.
+ * Both numbers have to clear the deadline for the guarantee to hold.
+ */
+export const DEFAULT_SIGNAL_GRACE_MS = 50_000;
 
 /**
  * Resolve the graceful-shutdown drain window (AD-1).
@@ -48,7 +62,7 @@ export function resolveSignalGraceMs(
 
 /**
  * Full drain window for a controlled signal. Kept strictly below the PM2 `kill_timeout`
- * (10 000 ms) so we always exit before PM2 escalates to SIGKILL — enforced by a hard clamp.
+ * (60 000 ms) so we always exit before PM2 escalates to SIGKILL — enforced by a hard clamp.
  */
 const SIGNAL_GRACE_MS = resolveSignalGraceMs();
 /** After an uncaught exception the state is corrupt — flush logs briefly, then exit fast. */

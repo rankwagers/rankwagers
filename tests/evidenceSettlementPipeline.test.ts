@@ -150,7 +150,9 @@ test("port: missing snapshot + validation files → [] each (ENOENT-only empty)"
 test("port: malformed snapshot archive → throw", async () => {
   const { env, dir } = tmpArchive();
   try {
-    writeFileSync(path.join(dir, "snapshots.ndjson"), "not json{\n");
+    // Two unparseable lines: one alone is a tolerated torn append (§3.11), so the fail-closed
+    // assertion needs corruption that a single interrupted write could not have produced.
+    writeFileSync(path.join(dir, "snapshots.ndjson"), "not json{\nstill not json{\n");
     await assert.rejects(createFileSettlementReadPort(env).readAllSnapshots(), /malformed NDJSON/);
   } finally {
     rmSync(dir, { recursive: true, force: true });
@@ -160,7 +162,7 @@ test("port: malformed snapshot archive → throw", async () => {
 test("port: malformed validation archive → throw", async () => {
   const { env, dir } = tmpArchive();
   try {
-    writeFileSync(path.join(dir, "validations.ndjson"), "{oops\n");
+    writeFileSync(path.join(dir, "validations.ndjson"), "{oops\n{oops again\n");
     await assert.rejects(createFileSettlementReadPort(env).readAllValidations(), /malformed NDJSON/);
   } finally {
     rmSync(dir, { recursive: true, force: true });

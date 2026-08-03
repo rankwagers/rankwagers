@@ -8,7 +8,8 @@
  *
  * FAIL-CLOSED READS (mirrors the corrected M2 adapter):
  *   - ONLY `ENOENT` is an empty archive; every other read errno surfaces.
- *   - malformed/torn lines and integrity-failed records throw (no silent recovery).
+ *   - ONE torn line (§3.11 interrupted append) is skipped and reported; a SECOND unparseable
+ *     line, and any integrity-failed record, still throws (no silent recovery).
  *   - same id + same contentHash duplicate lines collapse; same id + different
  *     contentHash lines fail closed as `immutable_violation`-on-disk — never silently
  *     shadowed by the first match.
@@ -26,6 +27,7 @@ import "server-only";
 import { promises as fs } from "fs";
 import path from "path";
 import { resolveEvidenceArchiveDir } from "@/lib/archive/evidence/file";
+import { logWarn } from "@/lib/monitoring/logger";
 import {
   cloneOddsRecord,
   compareOddsRecords,
@@ -67,9 +69,10 @@ export function oddsArchivePaths(baseDir?: string) {
 /**
  * Strict whole-archive read of ALL odds records from one NDJSON file (Sprint 23B, M10
  * Stage 2B — extracted from the store closure so archive-state discovery can perform a
- * SINGLE bounded read, PB-1). Fail-closed exactly as before: ENOENT ⇒ empty; malformed
- * line, integrity-failed record, or a same-id/different-hash conflict THROWS; byte-identical
- * duplicates collapse. Never masked as empty.
+ * SINGLE bounded read, PB-1). Fail-closed: ENOENT ⇒ empty; a second malformed
+ * line, an integrity-failed record, or a same-id/different-hash conflict THROWS; byte-identical
+ * duplicates collapse. Never masked as empty. A single torn line is skipped and reported so one
+ * interrupted append cannot brick the archive.
  */
 export async function readAllOddsRecordsStrict(
   recordsFile: string
@@ -88,6 +91,15 @@ export async function readAllOddsRecordsStrict(
   const byId = new Map<string, OddsArchiveRecord>();
   const order: string[] = [];
   const lines = raw.split("\n");
+  /*
+   * Exactly ONE unparseable line is tolerated (§3.11 torn-append), mirroring the evidence
+   * reader. A SIGKILL mid-`appendFile` can leave one partial line in this permanent append-only
+   * file; throwing on it made a single interrupted write brick the archive for every later run.
+   * Two or more is corruption of a different kind and still fails closed. An INTEGRITY failure
+   * (`verifyOddsRecord`) is never tolerated — a line that parses but does not verify is a
+   * tampered or mis-hashed record, not a truncated one.
+   */
+  let tornLine: number | null = null;
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
     if (!line) continue;
@@ -95,8 +107,13 @@ export async function readAllOddsRecordsStrict(
     try {
       parsed = JSON.parse(line);
     } catch {
+      if (tornLine === null) {
+        tornLine = i + 1;
+        continue;
+      }
       throw new Error(
-        `odds archive: malformed NDJSON at line ${i + 1} in ${recordsFile}`
+        `odds archive: malformed NDJSON at lines ${tornLine} and ${i + 1} in ${recordsFile} — ` +
+          `more than one unparseable line is corruption, not a torn append`
       );
     }
     if (!verifyOddsRecord(parsed)) {
@@ -117,6 +134,13 @@ export async function readAllOddsRecordsStrict(
     }
     byId.set(parsed.id, parsed);
     order.push(parsed.id);
+  }
+  if (tornLine !== null) {
+    logWarn(
+      "odds_archive_torn_line",
+      { file: recordsFile, line: tornLine, recovered: order.length },
+      "archive"
+    );
   }
   return order.map((id) => byId.get(id) as OddsArchiveRecord);
 }

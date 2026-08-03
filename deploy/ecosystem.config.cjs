@@ -40,8 +40,10 @@ module.exports = {
       // graceful-shutdown window < SIGKILL escalation; bounded listen wait; crash-loop backoff;
       // auto-recycle a leaking Next server. Runs `next` directly so PM2 signals reach the server
       // (never `npm start`, which does not forward SIGTERM reliably).
-      // NOTE: kill_timeout (10000) must stay >= lib/monitoring/shutdown.ts MAX_SIGNAL_GRACE_MS + margin.
-      kill_timeout: 10000,
+      // NOTE: kill_timeout (60000) must stay >= lib/monitoring/shutdown.ts MAX_SIGNAL_GRACE_MS + margin.
+      // 60s clears the 45s capture deadline so a restart never SIGKILLs a mid-append writer,
+      // which would leave a torn line in the permanent append-only evidence archive.
+      kill_timeout: 60000,
       listen_timeout: 10000,
       exp_backoff_restart_delay: 200,
       max_memory_restart: "700M",

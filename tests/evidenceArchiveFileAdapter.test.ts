@@ -15,6 +15,7 @@ import test from "node:test";
 import {
   createFileEvidenceArchive,
   evidenceArchivePaths,
+  readAllSnapshotsStrict,
   resolveEvidenceArchiveDir,
 } from "../lib/archive/evidence/file";
 import { createEvidenceSnapshot } from "../lib/evidence/snapshot";
@@ -211,18 +212,75 @@ test("Blocker 2: missing archive (ENOENT) reads as empty, not a failure", async 
   }
 });
 
-test("Blocker 2: malformed archive line surfaces, never reads as empty", async () => {
+test("Blocker 2: a SECOND malformed archive line surfaces, never reads as empty", async () => {
   const tmp = mkdtempSync(path.join(os.tmpdir(), "evidence-malformed-"));
   try {
     const env = { EVIDENCE_ARCHIVE_DIR: tmp } as NodeJS.ProcessEnv;
     const paths = evidenceArchivePaths(env);
-    writeFileSync(paths.snapshots, "{ this is not valid json\n", "utf8");
+    // Two unparseable lines cannot both be torn appends — that is corruption, and it must
+    // still fail closed rather than read as a shorter archive.
+    writeFileSync(paths.snapshots, "{ this is not valid json\n{ nor is this\n", "utf8");
     const archive = createFileEvidenceArchive(env);
     await assert.rejects(
       () => archive.latestSnapshot(FIXTURE_ID),
       /malformed NDJSON/,
-      "malformed content must throw, not read as empty"
+      "two malformed lines must throw, not read as empty"
     );
+  } finally {
+    rmSync(tmp, { recursive: true, force: true });
+  }
+});
+
+test("§3.11 torn append: a truncated final line is skipped, the archive stays readable", async () => {
+  const tmp = mkdtempSync(path.join(os.tmpdir(), "evidence-torn-"));
+  try {
+    const env = { EVIDENCE_ARCHIVE_DIR: tmp } as NodeJS.ProcessEnv;
+    const archive = createFileEvidenceArchive(env);
+    const good = await archive.appendSnapshot(buildSnapshot(1));
+    assert.equal(good.ok, true);
+
+    // Simulate SIGKILL landing mid-`appendFile`: a partial line, no trailing newline.
+    const paths = evidenceArchivePaths(env);
+    const whole = readFileSync(paths.snapshots, "utf8");
+    const torn = `${whole}{"id":"evs_partial","fixtureId":${FIXTURE_ID},"evidenceSc`;
+    writeFileSync(paths.snapshots, torn, "utf8");
+
+    const latest = await archive.latestSnapshot(FIXTURE_ID);
+    assert.ok(latest, "a torn trailing line must not make the archive unreadable");
+    assert.equal(latest?.fixtureId, FIXTURE_ID);
+    const all = await readAllSnapshotsStrict(env);
+    assert.equal(all.length, 1, "the intact record survives; the torn fragment is dropped");
+    assert.equal(
+      all.some((r) => r.id === "evs_partial"),
+      false,
+      "a partial record is never half-parsed into the result"
+    );
+  } finally {
+    rmSync(tmp, { recursive: true, force: true });
+  }
+});
+
+test("§3.11 torn append then a further append: damage lands mid-file and is still survivable", async () => {
+  const tmp = mkdtempSync(path.join(os.tmpdir(), "evidence-torn-mid-"));
+  try {
+    const env = { EVIDENCE_ARCHIVE_DIR: tmp } as NodeJS.ProcessEnv;
+    const paths = evidenceArchivePaths(env);
+    const archive = createFileEvidenceArchive(env);
+    await archive.appendSnapshot(buildSnapshot(1));
+
+    // A tear, then a later successful append concatenated onto it — the merged line is no
+    // longer trailing. A trailing-only tolerance rule would brick the archive here, which is
+    // exactly the case the tolerance exists to survive.
+    const whole = readFileSync(paths.snapshots, "utf8");
+    writeFileSync(
+      paths.snapshots,
+      `${whole}{"id":"evs_partial","fixtu${JSON.stringify(buildSnapshot(1))}\n`,
+      "utf8"
+    );
+
+    const all = await readAllSnapshotsStrict(env);
+    assert.equal(all.length, 1, "the pre-tear record still reads");
+    assert.equal(all[0]?.id !== "evs_partial", true);
   } finally {
     rmSync(tmp, { recursive: true, force: true });
   }

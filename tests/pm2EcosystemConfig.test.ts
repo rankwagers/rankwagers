@@ -19,7 +19,7 @@ test("aff-site is the authoritative app, runs next directly on :3000, with harde
   assert.equal(aff.env.PORT, "3000");
   assert.equal(aff.exec_mode, "fork");
   assert.equal(aff.instances, 1);
-  assert.equal(aff.kill_timeout, 10000);
+  assert.equal(aff.kill_timeout, 60000);
   assert.ok(aff.listen_timeout > 0, "listen_timeout present");
   assert.ok(aff.exp_backoff_restart_delay > 0, "exp_backoff_restart_delay present");
   assert.equal(aff.max_memory_restart, "700M");

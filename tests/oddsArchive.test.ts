@@ -325,8 +325,13 @@ test("file: round-trip + malformed/corrupt/duplicate handling", async () => {
     appendFileSync(records, `${JSON.stringify(realQuote())}\n`, "utf8");
     assert.equal((await store.listByCapture(CID)).length, 2);
 
-    // malformed/torn line fails closed
+    // ONE torn line (§3.11 interrupted append) is tolerated so a single hard kill cannot
+    // brick a permanent archive; the intact records still read.
     appendFileSync(records, "not-json\n", "utf8");
+    assert.equal((await store.listByCapture(CID)).length, 2);
+
+    // A SECOND unparseable line is corruption, not a torn append, and still fails closed.
+    appendFileSync(records, "also-not-json\n", "utf8");
     await assert.rejects(() => store.listByCapture(CID), /malformed NDJSON/);
   } finally {
     rmSync(tmp, { recursive: true, force: true });
