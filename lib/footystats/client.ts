@@ -72,10 +72,48 @@ function coreFieldsFromRaw(m: RawMatch): FootyRowCore {
   };
 }
 
-function isCup(leagueName: string): boolean {
+/**
+ * A competition name reduced to its words.
+ *
+ * Split on anything that is not a letter or a digit, so spaces and hyphens both separate — which is
+ * what lets `DFB-Pokal` match `Pokal` while `Faroe` does not match `FA`. Unicode-aware because the
+ * feed carries `Kolmonen Etelä`, `Ykkönen`, `Úrvalsdeild` and `Primera División`, and splitting on
+ * ASCII alone would tear those names apart.
+ */
+export function competitionWords(name: string): string[] {
+  return name.toLowerCase().split(/[^\p{L}\p{N}]+/u).filter(Boolean);
+}
+
+/** True when `keyword` appears in `words` as a contiguous run, so `Play-offs` needs both words. */
+function hasWordRun(words: readonly string[], keyword: readonly string[]): boolean {
+  if (!keyword.length || keyword.length > words.length) return false;
+  for (let start = 0; start <= words.length - keyword.length; start += 1) {
+    let matched = true;
+    for (let offset = 0; offset < keyword.length; offset += 1) {
+      if (words[start + offset] !== keyword[offset]) {
+        matched = false;
+        break;
+      }
+    }
+    if (matched) return true;
+  }
+  return false;
+}
+
+/** Precomputed once: the keyword list is a module constant, so the split never repeats per row. */
+const EXCLUDED_COMPETITION_WORDS = EXCLUDED_COMPETITIONS.map(competitionWords);
+
+/**
+ * Cup football, matched on word boundaries.
+ *
+ * This DOES change what flows: fixtures the substring rule wrongly removed now reach the lists,
+ * search and the daily archive. That is the correction — the previous behaviour was a defect, not
+ * a contract.
+ */
+export function isCup(leagueName: string): boolean {
   if (!leagueName) return false;
-  const lower = leagueName.toLowerCase();
-  return EXCLUDED_COMPETITIONS.some((kw) => lower.includes(kw.toLowerCase()));
+  const words = competitionWords(leagueName);
+  return EXCLUDED_COMPETITION_WORDS.some((keyword) => hasWordRun(words, keyword));
 }
 
 /**
