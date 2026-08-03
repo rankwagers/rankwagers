@@ -1,0 +1,21 @@
+# Combo-prepared snapshot refresh, four times daily with jitter.
+#
+# TIMES. The snapshot is a projection of the day's qualified lists, so it must run after the
+# daily lists exist and stay fresh through the board. 00:40 UTC sits after the list refresh and
+# ahead of the earliest kickoffs observed on these boards (01:30); 06:40, 12:40 and 18:40 keep it
+# inside the freshness window through the day, since `classifySnapshotAge` treats a snapshot as
+# stale_but_usable from roughly 90 minutes and expired by 24 hours.
+#
+# Persistent=true so a run missed while the host was down is caught up rather than skipped —
+# a stale snapshot is what the readiness check exists to report.
+[Unit]
+Description=RankWagers combo-prepared snapshot refresh (4x daily)
+
+[Timer]
+OnCalendar=*-*-* 00,06,12,18:40:00
+RandomizedDelaySec=300
+Persistent=true
+Unit=rankwagers-evidence-prepare.service
+
+[Install]
+WantedBy=timers.target

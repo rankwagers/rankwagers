@@ -1,0 +1,36 @@
+# Combo-prepared snapshot refresh. Oneshot; scheduled by the paired .timer.
+#
+# This is `refreshComboPreparedSnapshot` behind /api/internal/cron/evidence-prepare. It is
+# UNRELATED to EvidenceSnapshots: it builds the durable `combo_prepared` snapshot that the
+# `active_snapshot` readiness check reads, and which has never been produced because nothing
+# scheduled it.
+#
+# Evidence capture and prediction settlement are deliberately NOT scheduled here. Capture's
+# candidate seam is now closed and its route derives real input, but it stays unscheduled and
+# flag-off until a first run is verified to write real rows. Settlement's seam is still open —
+# its candidate set is empty, so a timer would report success while writing nothing.
+#
+# Install (as root):
+#   cp deploy/systemd/rankwagers-evidence-prepare.* /etc/systemd/system/
+#   systemctl daemon-reload && systemctl enable --now rankwagers-evidence-prepare.timer
+#   systemctl start rankwagers-evidence-prepare.service   # run once to verify
+#
+# CRON_SECRET is read from the shared env file; the route rejects an unauthenticated POST.
+[Unit]
+Description=RankWagers combo-prepared snapshot refresh
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=rankdev
+WorkingDirectory=/var/www/rankwagers
+EnvironmentFile=-/opt/rankwagers/shared/.env
+Environment=BASE_URL=http://127.0.0.1:3000
+# Fail on a non-2xx so a rejected or erroring run surfaces as a unit failure rather than
+# silently succeeding. --max-time bounds it below the route's own 60s maxDuration.
+ExecStart=/usr/bin/curl -fsS --max-time 90 -X POST \
+  -H "x-cron-secret: ${CRON_SECRET}" \
+  ${BASE_URL}/api/internal/cron/evidence-prepare
+Nice=10
+IOSchedulingClass=idle

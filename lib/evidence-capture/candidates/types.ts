@@ -50,6 +50,18 @@ export const CAPTURE_REJECTION_REASONS = [
   "incomplete_prior_pair",
   "duplicate_candidate",
   "source_correspondence_failure",
+  /*
+   * Absence of history, separated from failure. "We have no venue record for this side" is a
+   * statement the fixture page can make honestly; an error is not, and collapsing the two taught
+   * the diagnostics to report a working system as broken.
+   *
+   * `no_venue_data`  — the source carries no venue split for one or both sides.
+   * `insufficient_sample` — a side is below SAMPLE_MIN, so the model declines to score it.
+   * `derivation_error` — the source could not be read, or derivation threw. A genuine fault.
+   */
+  "no_venue_data",
+  "insufficient_sample",
+  "derivation_error",
 ] as const;
 export type CaptureRejectionReason = (typeof CAPTURE_REJECTION_REASONS)[number];
 
@@ -283,9 +295,27 @@ export type CaptureProvenance = Partial<
   >
 >;
 
+/**
+ * What derivation concluded about a fixture. Three states, deliberately not collapsed:
+ *
+ *   no_data   — no venue history, or a side below SAMPLE_MIN. Not an error; a fact about coverage.
+ *   derived   — signals exist. Sample and score travel alongside; the model may still be
+ *               `unqualified` or `provisional`, which is a reading, not a failure.
+ *   qualified — the evidence model returned `qualified`. Reachable and currently unreached on
+ *               live boards, because SAMPLE_TARGET is 19 and venue samples run 0–13 mid-season.
+ *               Nothing special-cases its absence: it is the same path with a fuller sample.
+ *
+ * `error` is separate on purpose and is never one of the three.
+ */
+export type CaptureDeriveOutcome =
+  | "no_data"
+  | "derived"
+  | "qualified"
+  | "error";
+
 export type CaptureDeriveResult =
-  | ({ ok: true; modelInput: FixtureModelInput } & CaptureProvenance)
-  | { ok: false; reason: CaptureRejectionReason };
+  | ({ ok: true; modelInput: FixtureModelInput; outcome: "derived" | "qualified" } & CaptureProvenance)
+  | { ok: false; reason: CaptureRejectionReason; outcome: "no_data" | "error" };
 
 /**
  * The only injected dependency of the capture provider. In Stage 1 tests it is a stub;

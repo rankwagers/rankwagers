@@ -536,18 +536,44 @@ test("integration: bare settlement runner remains empty-safe (no producer, no de
 
 /* ===================== M — Dormancy scope guards ===================== */
 
-test("dormancy: cron routes remain bare M9 delegates; no producer/loader wired", () => {
+test("dormancy: prediction-settlement remains a bare M9 delegate; no producer/loader wired", () => {
+  /*
+   * Narrowed from both routes to settlement alone.
+   *
+   * evidence-capture now wires a live producer deliberately: its derivation seam is implemented,
+   * and without a producer `candidates` defaulted to `[]`, so the job reported success having
+   * written nothing. A schedule over that would have looked healthy while the archive stayed
+   * empty — the exact failure this suite exists to prevent.
+   *
+   * Settlement's seam is NOT closed, so it stays bare and this guard still holds it there.
+   */
   const fs = require("node:fs") as typeof import("node:fs");
   const path = require("node:path") as typeof import("node:path");
-  for (const route of ["evidence-capture", "prediction-settlement"]) {
-    const src = fs.readFileSync(
-      path.join(process.cwd(), `app/api/internal/cron/${route}/route.ts`),
-      "utf8"
-    );
-    assert.equal(src.includes("provideCandidate"), false, `${route} wires no producer`);
-    assert.equal(src.includes("produceCaptureRequests") || src.includes("produceSettlementRequests"), false);
-    assert.equal(src.includes("createCompletedRowLoader"), false, `${route} wires no live loader`);
-  }
+  const src = fs.readFileSync(
+    path.join(process.cwd(), "app/api/internal/cron/prediction-settlement/route.ts"),
+    "utf8"
+  );
+  assert.equal(src.includes("provideCandidate"), false, "settlement wires no producer");
+  assert.equal(src.includes("produceSettlementRequests"), false);
+  assert.equal(src.includes("createCompletedRowLoader"), false, "settlement wires no live loader");
+});
+
+test("dormancy: a wired capture route is still gated by the capture flag", () => {
+  /*
+   * The protection that replaces the bare-route assertion. Wiring a producer does not activate
+   * capture — `runEvidenceCaptureJob` returns `capture_disabled` before taking its lock unless
+   * EVIDENCE_CAPTURE_ENABLED is set, and that flag remains off. This asserts the gate is still
+   * the first thing the job does, so the route cannot write by being called.
+   */
+  const fs = require("node:fs") as typeof import("node:fs");
+  const path = require("node:path") as typeof import("node:path");
+  const runner = fs.readFileSync(path.join(process.cwd(), "lib/jobs/runner.ts"), "utf8");
+  const fn = runner.slice(runner.indexOf("export async function runEvidenceCaptureJob"));
+  const gate = fn.indexOf("isCaptureEnabled");
+  const lock = fn.indexOf("runWithLock");
+  assert.ok(gate > 0, "capture job checks the flag");
+  assert.ok(lock > gate, "the flag gate precedes the lock — no work happens when disabled");
+  assert.match(fn.slice(gate, gate + 200), /capture_disabled/);
 });
 
 test("dormancy: operational + completed-rows modules use no Date.now/Math.random", () => {

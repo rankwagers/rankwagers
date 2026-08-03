@@ -25,6 +25,19 @@
  */
 
 /** The five stages of the descent, in pipeline order (rwdesign §6). */
+/*
+ * NOTE ON THE `qualified` KEY.
+ *
+ * The stage's rule is `market_potential_threshold` — a provider percentage clearing a cut-off.
+ * That is NOT a qualification: "qualified" belongs to the evidence model, which reaches it only
+ * through sample size and signal weight (SAMPLE_TARGET = 19).
+ *
+ * The user-facing label is therefore "Cleared threshold". The internal key stays `qualified`
+ * because renaming it reaches ~50 call sites across the run model, the trust model, the hero
+ * funnel and their tests — churn with no behavioural gain, and every one of those sites is a
+ * property access no reader ever sees. The rule string below is the authoritative description of
+ * what actually runs here; the key is an identifier, not a claim.
+ */
 export type ResearchStage =
   | "analysed"
   | "validated"

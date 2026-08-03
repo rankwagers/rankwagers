@@ -116,11 +116,11 @@ export const predictionsEn = {
   heroStageLedeRestEmpty:
     "Only those that clear the qualification threshold reach this page. None have today.",
   heroFunnelTitle: "Today's research funnel",
-  heroFunnelNote: "{count} qualified",
+  heroFunnelNote: "{count} cleared the threshold",
   heroFunnelAnalysed: "Fixtures",
   heroFunnelValidated: "Validated",
   heroFunnelInScope: "In scope",
-  heroFunnelQualified: "Qualified",
+  heroFunnelQualified: "Cleared threshold",
   heroFunnelFeatured: "Featured",
   heroLeadTitle: "Today's strongest research",
   heroLeadNote: "1 of {count} shown",
