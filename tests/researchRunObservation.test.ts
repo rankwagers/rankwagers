@@ -43,12 +43,12 @@ test("a malformed row that clears a threshold still reaches the lists", () => {
   assert.equal(result.fh.length, 1);
   assert.equal(result.over25.length, 1);
   assert.equal(result.sh.length, 1);
-  assert.equal(result.qualifiedIds.has(101), true);
 
-  // It was not counted.
+  // It was not counted — at any stage it fails, qualified included.
   assert.equal(result.analysed, 1);
   assert.equal(result.validated, 0);
   assert.equal(result.inScope, 0);
+  assert.equal(result.qualifiedIds.has(101), false);
 });
 
 test("every malformed shape flows while counting out of validated", () => {
@@ -113,8 +113,10 @@ test("inScope stays a subset of validated", () => {
   assert.equal(result.validated, 2);
   assert.ok(result.inScope <= result.validated);
   assert.equal(result.inScope, 2);
-  // All three flowed regardless of what was counted.
-  assert.equal(result.qualifiedIds.size, 3);
+  // The malformed row is counted out of qualified too — the chain nests.
+  assert.equal(result.qualifiedIds.size, 2);
+  // But all three still flowed: the lists carry every row that cleared a threshold.
+  assert.equal(result.over15.length, 3);
 });
 
 test("qualified counts distinct fixtures, not list memberships", () => {
@@ -154,4 +156,100 @@ test("an empty population observes zeros, which are real counts", () => {
   assert.equal(result.validated, 0);
   assert.equal(result.inScope, 0);
   assert.equal(result.qualifiedIds.size, 0);
+});
+
+/* ------------------------------------------------------------------ *
+ * The nesting chain
+ * ------------------------------------------------------------------ */
+
+/**
+ * Deterministic pseudo-random generator.
+ *
+ * Seeded rather than `Math.random` so a failure is reproducible from its seed alone — a property
+ * test that cannot be replayed is a flake report, not evidence.
+ */
+function rng(seed: number): () => number {
+  let state = seed >>> 0;
+  return () => {
+    state = (state * 1_664_525 + 1_013_904_223) >>> 0;
+    return state / 0x1_0000_0000;
+  };
+}
+
+/** A population mixing well-formed rows, every defect class, cup fixtures and sub-threshold rows. */
+function population(seed: number): Record<string, unknown>[] {
+  const next = rng(seed);
+  const size = Math.floor(next() * 40);
+  const defects: Array<Record<string, unknown>> = [
+    {},
+    { id: 0 },
+    { id: -1 },
+    { id: 2.5 },
+    { home_name: "" },
+    { away_name: "   " },
+    { date_unix: 0 },
+    { o15_potential: "x" },
+    { o25_potential: 101 },
+    { o05HT_potential: -1 },
+  ];
+
+  return Array.from({ length: size }, (_, i) => {
+    const defect = defects[Math.floor(next() * defects.length)] ?? {};
+    const cup = next() < 0.25;
+    const belowThreshold = next() < 0.3;
+    return {
+      ...raw({ id: i + 1 }),
+      ...(belowThreshold
+        ? {
+            o15_potential: 10,
+            o05HT_potential: 10,
+            o25_potential: 10,
+            o05_2H_potential: 10,
+          }
+        : {}),
+      ...(cup ? { competition_id: 99 } : {}),
+      ...defect,
+    };
+  });
+}
+
+test("PROPERTY: analysed >= validated >= inScope >= qualified across generated populations", () => {
+  const cache = { 99: { league: "FA Cup", country: "England" } };
+
+  for (let seed = 1; seed <= 300; seed += 1) {
+    const matches = population(seed);
+    const r = partitionDailyMatches(matches, cache);
+
+    assert.ok(
+      r.analysed >= r.validated,
+      `seed ${seed}: analysed ${r.analysed} < validated ${r.validated}`
+    );
+    assert.ok(
+      r.validated >= r.inScope,
+      `seed ${seed}: validated ${r.validated} < inScope ${r.inScope}`
+    );
+    assert.ok(
+      r.inScope >= r.qualifiedIds.size,
+      `seed ${seed}: inScope ${r.inScope} < qualified ${r.qualifiedIds.size}`
+    );
+    assert.equal(r.analysed, matches.length, `seed ${seed}: analysed must be the population`);
+  }
+});
+
+test("a malformed row counts 0 toward qualified as well as validated", () => {
+  const result = partitionDailyMatches([raw({ away_name: "" })], NO_CACHE);
+
+  // Still flows: all four lists, and therefore search and the archive.
+  assert.equal(result.over15.length, 1);
+  assert.equal(result.fh.length, 1);
+  assert.equal(result.over25.length, 1);
+  assert.equal(result.sh.length, 1);
+
+  // Counted out of every stage it fails.
+  assert.equal(result.validated, 0);
+  assert.equal(result.inScope, 0);
+  assert.equal(result.qualifiedIds.size, 0);
+
+  // And the population still saw it.
+  assert.equal(result.analysed, 1);
 });

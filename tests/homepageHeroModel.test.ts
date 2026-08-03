@@ -12,6 +12,7 @@ import {
   unobservedResearchRun,
 } from "../lib/research/researchRun";
 import { footyRowCoreSchema } from "../lib/research/footyRowContract";
+import { mapDailyListsToQualifiedFixtures } from "../lib/research/qualifiedFixture";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import type { DailyMatchLists, FootyMatchRow } from "../lib/footystats/types";
@@ -399,4 +400,85 @@ test("the fixture parse extends the same core contract rather than restating it"
       `${field} must be constrained once, in footyRowContract`
     );
   }
+});
+
+/* ------------------------------------------------------------------ *
+ * The funnel's last research number is what the homepage shows
+ * ------------------------------------------------------------------ */
+
+/**
+ * `RankWagersHome` renders from `mapDailyListsToQualifiedFixtures`, which parses every row through
+ * `footyRowSchema` — an extension of the same core contract — and drops what fails. If the funnel
+ * counted rows that parse drops, it would claim more qualified fixtures than the page displays,
+ * and rwdesign §21 requires every visible number to be explainable.
+ *
+ * This equality is the contract, not an implementation detail.
+ */
+function distinctRenderedFixtures(l: DailyMatchLists): number {
+  return new Set(mapDailyListsToQualifiedFixtures(l).map((f) => f.matchId)).size;
+}
+
+test("qualified equals the distinct fixtures the homepage actually renders", () => {
+  const l = lists({
+    over25: [
+      row({ matchId: 1, over25Pct: 88 }),
+      row({ matchId: 2, over25Pct: 91 }),
+      row({ matchId: 3, over25Pct: 77 }),
+    ],
+  });
+
+  const model = buildHomepageHeroModel({ locale: "en", lists: l });
+  assert.equal(model.funnel.qualified, distinctRenderedFixtures(l));
+  assert.equal(model.funnel.qualified, 3);
+});
+
+test("a row the render drops is counted out of qualified", () => {
+  // Blank away name: present in the lists, dropped by the fixture parse, so invisible on the page.
+  const l = lists({
+    over25: [
+      row({ matchId: 1, over25Pct: 88 }),
+      row({ matchId: 2, over25Pct: 91, awayTeam: "" }),
+    ],
+  });
+
+  const model = buildHomepageHeroModel({ locale: "en", lists: l });
+  assert.equal(distinctRenderedFixtures(l), 1);
+  assert.equal(model.funnel.qualified, 1, "funnel must not claim a fixture the page cannot show");
+});
+
+test("the equality holds across every defect the contract rejects", () => {
+  const defects: Array<Partial<FootyMatchRow>> = [
+    { homeTeam: "" },
+    { awayTeam: "   " },
+    { kickoffTime: 0 },
+    { over25Pct: 101 },
+    { over15Pct: Number.NaN },
+  ];
+
+  for (const defect of defects) {
+    const l = lists({
+      over25: [
+        row({ matchId: 1, over25Pct: 88 }),
+        row({ matchId: 2, over25Pct: 91, ...defect }),
+      ],
+    });
+    const model = buildHomepageHeroModel({ locale: "en", lists: l });
+    assert.equal(
+      model.funnel.qualified,
+      distinctRenderedFixtures(l),
+      `qualified must match the rendered count for ${JSON.stringify(defect)}`
+    );
+  }
+});
+
+test("a fixture in several lists counts once in both the funnel and the render", () => {
+  const l = lists({
+    over15: [row({ matchId: 1, over15Pct: 95 })],
+    over25: [row({ matchId: 1, over25Pct: 88 })],
+    fh: [row({ matchId: 1, fhOver05Pct: 90 })],
+  });
+
+  const model = buildHomepageHeroModel({ locale: "en", lists: l });
+  assert.equal(model.funnel.qualified, 1);
+  assert.equal(model.funnel.qualified, distinctRenderedFixtures(l));
 });

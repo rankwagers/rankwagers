@@ -24,6 +24,7 @@ import {
   formatFixtureKickoff,
   marketForListKind,
 } from "@/lib/research/fixturePresentation";
+import { footyRowCoreSchema } from "@/lib/research/footyRowContract";
 import { RESEARCH_STAGE_RULES } from "@/lib/research/researchRun";
 import type { HeroPick, HomepageHeroModel } from "./types";
 
@@ -144,8 +145,20 @@ export function buildHomepageHeroModel(input: {
     .filter((pick): pick is HeroPick => pick !== null)
     .slice(0, HERO_PICK_COUNT);
 
-  /* Distinct fixtures that cleared a threshold — the same denominator the trust model uses. */
-  const qualified = strongest.size;
+  /*
+   * Distinct fixtures that cleared a threshold AND satisfy the field contract.
+   *
+   * The schema gate is what ties this figure to the page. `mapDailyListsToQualifiedFixtures` —
+   * which `RankWagersHome` renders from — parses every row through `footyRowSchema`, an extension
+   * of the same core contract, and drops what fails. Counting ungated rows here would print a
+   * funnel claiming more qualified fixtures than the page displays, and a visible number that
+   * cannot be reconciled with the list beneath it is exactly what rwdesign §21 forbids.
+   *
+   * Count only: `picks` below are unchanged, so nothing that rendered before stops rendering.
+   */
+  const qualified = candidates.filter(
+    (candidate) => footyRowCoreSchema.safeParse(candidate.row).success
+  ).length;
 
   const fetchedAt = Number.isNaN(new Date(lists.fetchedAt).getTime())
     ? null

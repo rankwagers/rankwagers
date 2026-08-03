@@ -359,11 +359,20 @@ export function partitionDailyMatches(
       sh.push(buildRow(m, info, sh05));
     }
 
+    /*
+     * `qualified` is gated exactly as `inScope` is: the row must have passed the field contract
+     * and the cup filter (the latter implied — a cup row has already `continue`d). The stages are
+     * a nesting chain (rwdesign §6), so counting a row here that was counted out of `validated`
+     * would make `qualified` a superset of its own parent.
+     *
+     * Count only. The row above still reached `buildRow` and still entered the lists.
+     */
     if (
-      o15 >= OVER_15_THRESHOLD ||
-      fh05 >= FH_OVER_05_THRESHOLD ||
-      o25 >= OVER_25_THRESHOLD ||
-      sh05 >= SH_OVER_05_THRESHOLD
+      rowValidated &&
+      (o15 >= OVER_15_THRESHOLD ||
+        fh05 >= FH_OVER_05_THRESHOLD ||
+        o25 >= OVER_25_THRESHOLD ||
+        sh05 >= SH_OVER_05_THRESHOLD)
     ) {
       const matchId = Number(m.id);
       if (Number.isFinite(matchId) && matchId > 0) qualifiedIds.add(matchId);
