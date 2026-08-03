@@ -265,33 +265,30 @@ function buildRow(m: RawMatch, info: LeagueInfo, highlightPct: number): FootyMat
   };
 }
 
-async function fetchDailyListsUncached(date: string): Promise<DailyMatchLists> {
-  type TodayResponse = { data?: RawMatch[] };
-  const fetched = await fetchJsonResult<TodayResponse>("todays-matches", { date });
-
-  // Provider failure is reported, not swallowed. The caller decides whether a same-day archive may
-  // stand in; this function never substitutes data of its own accord, and it does NOT touch the
-  // archive on a failed fetch — a failure must not overwrite the last good capture.
-  if (!fetched.ok) {
-    return {
-      ...emptyLists(date),
-      provenance: {
-        source: "unavailable",
-        requestedDate: date,
-        providerFailureReasonCode: fetched.code,
-      },
-      /*
-       * A failed fetch observed no population at all. Every stage is `null` — not zero: zero
-       * would assert the provider returned nothing, which is a different and unevidenced claim
-       * about the day (§3.2, §3.8).
-       */
-      researchRun: unobservedResearchRun(),
-    };
-  }
-
-  const matches = fetched.data?.data ?? [];
-  const cache = await loadLeagueCache();
-
+/**
+ * Split the provider population into the four market lists, and observe the funnel while doing it.
+ *
+ * Extracted from `fetchDailyListsUncached` for one reason: this is where the funnel is measured,
+ * and a measurement nothing can execute is a measurement nothing can check. Pure — the league
+ * cache is passed in, there is no I/O and no clock — so the invariant that observation does not
+ * alter flow is directly testable.
+ *
+ * Behaviour is byte-for-byte what it was before the instrumentation landed: the cup filter is the
+ * only `continue`, every other row reaches `buildRow`, and the thresholds decide the lists.
+ */
+export function partitionDailyMatches(
+  matches: RawMatch[],
+  cache: Record<number, LeagueInfo>
+): {
+  over15: FootyMatchRow[];
+  fh: FootyMatchRow[];
+  over25: FootyMatchRow[];
+  sh: FootyMatchRow[];
+  analysed: number;
+  validated: number;
+  inScope: number;
+  qualifiedIds: Set<number>;
+} {
   const over15: FootyMatchRow[] = [];
   const fh: FootyMatchRow[] = [];
   const over25: FootyMatchRow[] = [];
@@ -318,13 +315,31 @@ async function fetchDailyListsUncached(date: string): Promise<DailyMatchLists> {
   const qualifiedIds = new Set<number>();
 
   for (const m of matches) {
-    if (!footyRowCoreSchema.safeParse(coreFieldsFromRaw(m)).success) continue;
-    validated += 1;
+    /*
+     * OBSERVATION ONLY. A row failing the contract is still built, still pushed if it clears a
+     * threshold, and still reaches the archive — it is counted out of `validated`, not filtered
+     * out of the run.
+     *
+     * Skipping here looked equivalent because the fixture parse rejects the same rows downstream.
+     * It is not: `mapApiFixtureToQualifiedFixture` is reached only from `qualifiedFixture.ts`,
+     * while `app/api/home-search/route.ts` reads `FootyMatchRow` fields straight off these lists,
+     * and `mergeArchiveFromLists` persists them verbatim. An early skip therefore removed rows
+     * from search and, worse, from the permanent daily archive — a destructive change to stored
+     * history (§3.11).
+     *
+     * Instrumentation observes; it does not alter what flows.
+     */
+    const rowValidated = footyRowCoreSchema.safeParse(coreFieldsFromRaw(m)).success;
+    if (rowValidated) validated += 1;
 
     const compId = Number(m.competition_id);
     const info = leagueInfo(compId, String(m.match_url ?? ""), cache);
+    // The ONLY `continue` in this loop, and it predates the instrumentation: the cup filter is
+    // existing flow control and stays exactly as it was.
     if (isCup(info.league)) continue;
-    inScope += 1;
+    // `inScope` is defined as validated rows in scope, so it stays a subset of `validated`. The
+    // condition governs the COUNT only — an unvalidated row still flows on to the thresholds.
+    if (rowValidated) inScope += 1;
 
     const o15 = Number(m.o15_potential ?? 0);
     const fh05 = Number(m.o05HT_potential ?? 0);
@@ -354,6 +369,40 @@ async function fetchDailyListsUncached(date: string): Promise<DailyMatchLists> {
       if (Number.isFinite(matchId) && matchId > 0) qualifiedIds.add(matchId);
     }
   }
+
+
+  return { over15, fh, over25, sh, analysed, validated, inScope, qualifiedIds };
+}
+
+async function fetchDailyListsUncached(date: string): Promise<DailyMatchLists> {
+  type TodayResponse = { data?: RawMatch[] };
+  const fetched = await fetchJsonResult<TodayResponse>("todays-matches", { date });
+
+  // Provider failure is reported, not swallowed. The caller decides whether a same-day archive may
+  // stand in; this function never substitutes data of its own accord, and it does NOT touch the
+  // archive on a failed fetch — a failure must not overwrite the last good capture.
+  if (!fetched.ok) {
+    return {
+      ...emptyLists(date),
+      provenance: {
+        source: "unavailable",
+        requestedDate: date,
+        providerFailureReasonCode: fetched.code,
+      },
+      /*
+       * A failed fetch observed no population at all. Every stage is `null` — not zero: zero
+       * would assert the provider returned nothing, which is a different and unevidenced claim
+       * about the day (§3.2, §3.8).
+       */
+      researchRun: unobservedResearchRun(),
+    };
+  }
+
+  const matches = fetched.data?.data ?? [];
+  const cache = await loadLeagueCache();
+
+  const { over15, fh, over25, sh, analysed, validated, inScope, qualifiedIds } =
+    partitionDailyMatches(matches, cache);
 
   const sortKick = (a: FootyMatchRow, b: FootyMatchRow) => a.kickoffTime - b.kickoffTime;
   over15.sort(sortKick);
