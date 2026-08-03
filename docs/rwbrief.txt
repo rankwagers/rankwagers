@@ -179,7 +179,11 @@ Stock football imagery
 
 COLOUR SYSTEM
 
-Dark interface.
+Light interface.
+
+A warm near-white canvas.
+
+Never pure white.
 
 Low saturation.
 
@@ -196,6 +200,8 @@ Blue = Provider
 Grey = Historical
 
 Red = Error
+
+Any colour carrying text meets WCAG AA.
 
 Never colour for decoration.
 
