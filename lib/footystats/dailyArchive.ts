@@ -3,6 +3,7 @@ import path from "path";
 import { isMatchPostponed } from "./matchStatus";
 import { isPredictionWin } from "./predictionWin";
 import type { DailyMatchLists, FootyMatchRow, MatchListKind } from "./types";
+import type { ResearchRun } from "@/lib/research/researchRun";
 
 const ARCHIVE_DIR = path.join(process.cwd(), "data", "daily-archives");
 
@@ -26,6 +27,18 @@ export type DailyArchive = {
   over15: ArchivedRow[];
   over25: ArchivedRow[];
   sh: ArchivedRow[];
+  /**
+   * The stage counts observed while this day's lists were built.
+   *
+   * FOR AUDIT, NOT FOR RENDERING. `archiveToDailyLists` deliberately does not carry it back onto
+   * the lists, so a day served from the archive still shows a funnel with no analysed population —
+   * these counts describe the run that ORIGINALLY built the day, and presenting a previous run's
+   * population as today's would be the fabricated observation §3.2 forbids.
+   *
+   * Optional because every archive written before this existed has no counts. Absent means "not
+   * recorded", which is not zero and is never reconstructed.
+   */
+  researchRun?: ResearchRun;
 };
 
 function rowResult(row: FootyMatchRow, tab: MatchListKind): ArchivedRow["listResult"] {
@@ -68,6 +81,15 @@ export async function saveDailyArchive(lists: DailyMatchLists): Promise<void> {
     over15: archiveRows(lists.over15, "over15"),
     over25: archiveRows(lists.over25, "over25"),
     sh: archiveRows(lists.sh, "sh"),
+    /*
+     * Persisted so the funnel's own history can be audited (§3.12). Twice the size of a filter
+     * correction has been unmeasurable because the archive stored only what survived the filter;
+     * the counts are what make the removed population visible after the fact.
+     *
+     * Written only when the run recorded one, so an archive from an uninstrumented path keeps its
+     * previous shape exactly rather than gaining a key full of nulls.
+     */
+    ...(lists.researchRun ? { researchRun: lists.researchRun } : {}),
   };
   await fs.mkdir(ARCHIVE_DIR, { recursive: true });
   const file = path.join(ARCHIVE_DIR, `${lists.date}.json`);
@@ -137,6 +159,14 @@ export async function readDailyArchiveStrict(
   return parsed as DailyArchive;
 }
 
+/**
+ * An archived day, back in the shape the product reads.
+ *
+ * `researchRun` is deliberately NOT carried across. The archive stores it for audit; the funnel
+ * must still show no analysed population on an archive day, because those counts belong to the run
+ * that originally built the day and not to this request. Wiring them through here would render a
+ * previous run's population as today's.
+ */
 export function archiveToDailyLists(archive: DailyArchive): DailyMatchLists {
   return {
     date: archive.date,

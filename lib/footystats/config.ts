@@ -22,6 +22,12 @@ export const SH_OVER_05_THRESHOLD = 90;
  * `League Cup` and `Super Cup` were removed as strictly redundant: any name containing either
  * phrase also contains the word `Cup`, which is already listed. They excluded nothing on their own,
  * and a keyword that can never fire is a rule nobody can check.
+ *
+ * `Play-offs` was removed for the same reason the substring matching was: a playoff is league
+ * football — promotion and relegation phases across the Nordic leagues, Fase Final in South
+ * America — so excluding it under `exclude_cup_competitions` was a rule whose name misdescribed
+ * what it removed. If playoffs should be treated differently for modelling reasons, that is its own
+ * rule with its own identifier and, if material, its own funnel stage. It does not hide here.
  */
 export const EXCLUDED_COMPETITIONS = [
   "Cup",
@@ -33,7 +39,6 @@ export const EXCLUDED_COMPETITIONS = [
   "Coupe",
   "Trophy",
   "Shield",
-  "Play-offs",
 ];
 
 export function getFootyStatsApiKey(): string {

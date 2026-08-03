@@ -41,8 +41,6 @@ const MUST_EXCLUDE = [
   "EFL Trophy",
   "Papa John's Trophy",
   "Scottish FA Cup",
-  "Championship Play-offs",
-  "Serie B Play-offs",
 ];
 
 test("every genuine cup competition is excluded", () => {
@@ -54,6 +52,32 @@ test("every genuine cup competition is excluded", () => {
 /* ------------------------------------------------------------------ *
  * MUST NOT be excluded — league football the substring rule removed
  * ------------------------------------------------------------------ */
+
+const MUST_KEEP_PLAYOFFS = [
+  // A playoff is league football: promotion and relegation phases across the Nordic leagues,
+  // Fase Final in South America. Excluding it under `exclude_cup_competitions` was a rule whose
+  // name misdescribed what it removed — the same defect as the substring matching.
+  "Championship Play-offs",
+  "Serie B Play-offs",
+  "Play-offs",
+  "Allsvenskan Play-offs",
+  "Promotion Play-offs",
+  "Relegation Play-offs",
+];
+
+test("playoffs are league football and are kept", () => {
+  for (const name of MUST_KEEP_PLAYOFFS) {
+    assert.equal(isCup(name), false, `${name} is league football and must be kept`);
+  }
+});
+
+test("no keyword remains that would remove a playoff by another name", () => {
+  // The space-separated spelling the word-boundary matcher would also have caught disappears with
+  // the keyword, rather than becoming a second behaviour to reason about.
+  for (const name of ["Play offs", "Playoffs", "Play Off Final"]) {
+    assert.equal(isCup(name), false, `${name} must be kept`);
+  }
+});
 
 const MUST_KEEP_FALSE_POSITIVES = [
   // Every one of these was excluded by the substring `FA`.
@@ -154,12 +178,27 @@ test("spaces and hyphens both separate words", () => {
   ]);
 });
 
-test("a multi-word keyword needs every word, contiguously", () => {
-  assert.equal(isCup("Championship Play-offs"), true);
-  assert.equal(isCup("Play-offs"), true);
-  // `play` alone is not the keyword.
-  assert.equal(isCup("Fair Play League"), false);
-  assert.equal(isCup("Offshore League"), false);
+test("a keyword matches a whole word, never a fragment of one", () => {
+  // The property the substring rule lacked, checked against the keyword most prone to it.
+  assert.equal(isCup("Cup"), true);
+  assert.equal(isCup("Cupcake League"), false);
+  assert.equal(isCup("Cupra Liga"), false);
+  assert.equal(isCup("Copa del Rey"), true);
+  assert.equal(isCup("Copacabana League"), false);
+  assert.equal(isCup("Shield"), true);
+  assert.equal(isCup("Shielding Division"), false);
+});
+
+test("every remaining keyword is a single word", () => {
+  // With Play-offs gone the list carries no multi-word entry. Stated so that adding one is a
+  // deliberate act rather than an accident of the matcher happening to support it.
+  for (const keyword of EXCLUDED_COMPETITIONS) {
+    assert.equal(
+      competitionWords(keyword).length,
+      1,
+      `${keyword} is multi-word — confirm the run semantics are intended`
+    );
+  }
 });
 
 test("the removed keywords were strictly redundant", () => {
