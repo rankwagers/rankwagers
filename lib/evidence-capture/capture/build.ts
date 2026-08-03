@@ -31,8 +31,22 @@ import {
   sortSupportedMarkets,
 } from "./canonical";
 
-/** Frozen contract values (§2.A). Never substitute EVIDENCE_MODEL_VERSION / git / etc. */
-export const SNAPSHOT_MODEL_VERSION = "23B.daily-evidence.v1";
+/**
+ * Frozen contract values (§2.A). Never substitute EVIDENCE_MODEL_VERSION / git / etc.
+ *
+ * v2 — the neutral band became a function of sample size (`neutralBandPp`) instead of a flat 2pp.
+ * That changes `direction`, `weight`, `evidenceScore` and `qualification`, which ARE the hashed
+ * snapshot body: the same fixture and the same provider rows now mint a different content hash.
+ * Two functions must never share one version string, or an archived snapshot stops identifying
+ * what produced it — the one defect in this area that cannot be repaired after the fact.
+ *
+ * v1 minted nothing. The production archive was empty when this changed
+ * (`/opt/rankwagers/shared/evidence-archive` existed with no `snapshots.ndjson`), so no durable
+ * record encodes the flat-band function and no migration is owed. The bump is not bookkeeping for
+ * its own sake: had capture written a single row between that check and this deploy, an unbumped
+ * v1 would have become permanently ambiguous.
+ */
+export const SNAPSHOT_MODEL_VERSION = "23B.daily-evidence.v2";
 export const CAPTURE_ENGINE = "evidence_capture";
 
 export type BuildCaptureInput = {

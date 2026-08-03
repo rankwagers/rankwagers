@@ -46,7 +46,7 @@ export function LiveMatchSection({
       className={`space-y-4 ${className}`.trim()}
     >
       <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h2 id={headingId} className="font-display text-xl font-semibold text-foreground">
+        <h2 id={headingId} className="rw-display text-[22px] text-[var(--hero-ink)] sm:text-[26px]">
           Live match
         </h2>
         <p className="text-xs text-muted-foreground">

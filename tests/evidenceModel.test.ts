@@ -90,7 +90,13 @@ test("opposing Second-half evidence → unqualified, clamped to 0", () => {
   assert.equal(r.model.qualification, "unqualified");
   assert.equal(r.model.confidenceBand, "insufficient");
   assert.equal(r.model.evidenceStrength, "limited");
-  assert.deepEqual(r.model.signals.map((s) => s.direction), ["opposing", "opposing"]);
+  /*
+   * The away side reads NEUTRAL under the sample-scaled band, and that is the point of the band.
+   * 46% from 14 matches against a 55% league rate is a 9pp gap, while one standard error at
+   * p=0.55, n=14 is 13.3pp — the difference is smaller than the noise in its own sample. The home
+   * side's 15pp gap on 16 matches clears its 12.4pp band and still opposes.
+   */
+  assert.deepEqual(r.model.signals.map((s) => s.direction), ["opposing", "neutral"]);
 });
 
 test("multi-market fixture uses the conservative binding (weak not hidden by strong)", () => {

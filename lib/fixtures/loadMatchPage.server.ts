@@ -82,7 +82,7 @@ function buildStatistics(live: MatchLiveContext): MatchPageModel["sections"]["st
       availability: "unavailable",
       items: [],
       message:
-        "Betting-relevant live statistics are not available from the provider for this fixture.",
+        "Live match statistics are not available from the provider for this fixture.",
     };
   }
   return {
@@ -204,7 +204,9 @@ function buildPredictions(
           id: "published",
           at: publishedAt,
           label: "Prediction observed",
-          detail: "Confidence captured from provider market potentials at page build.",
+          detail:
+            "FootyStats market potential captured at page build. A provider figure, not a " +
+            "confidence, and archived without a sample.",
         },
         {
           id: "odds",

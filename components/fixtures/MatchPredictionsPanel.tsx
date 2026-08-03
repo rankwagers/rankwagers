@@ -97,12 +97,25 @@ export function MatchPredictionsPanel({
                 <p className="text-sm font-semibold text-foreground">
                   {prediction.marketLabel}
                 </p>
-                <p className="mt-0.5 text-xs text-muted-foreground">
+                <p className="mt-0.5 text-xs text-[var(--hero-ink-3)]">
                   Selection: {prediction.selection}
-                  {prediction.confidence != null
-                    ? ` · Confidence ${prediction.confidence}%`
-                    : ""}
                 </p>
+                {/*
+                  This figure is FootyStats' market potential, archived as published (§3.11 — it
+                  is not removed). It was labelled "Confidence", which it is not: it is a provider
+                  potential, it is not our model's output, and the archived record holds no
+                  denominator for it. Saying so in one line is honest; implying a sample it never
+                  had is not.
+                */}
+                {prediction.confidence != null ? (
+                  <p className="mt-1.5 text-xs text-[var(--hero-ink-3)]">
+                    <span className="rw-mono rw-tnum">
+                      Provider potential {prediction.confidence}%
+                    </span>{" "}
+                    — FootyStats&apos; figure as published. Not a confidence, and the archived
+                    record carries no sample for it.
+                  </p>
+                ) : null}
               </div>
               <span
                 className={`shrink-0 rounded-md px-2 py-1 text-metadata font-semibold uppercase tracking-label ${statusTone(prediction.status)}`}

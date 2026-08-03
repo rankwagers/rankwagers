@@ -96,7 +96,7 @@ export default async function FixtureMatchPage({
         it out of MatchDetailView means neither has to know about the other. Container
         class matches the view's own wrapper so the section lines up with the page grid.
       */}
-      <div className="container-wide pb-16">
+      <div className="rw-hero container-wide bg-[var(--hero-canvas)] pb-16">
         <EvidenceHistorySection
           fixtureId={matchId}
           locale={params.locale}

@@ -71,7 +71,7 @@ export async function EvidenceHistorySection({
 
       <h2
         id={`${EVIDENCE_HISTORY_ANCHOR}-heading`}
-        className="font-display text-h3 font-semibold text-foreground"
+        className="rw-display text-[28px] text-[var(--hero-ink)] sm:text-[34px]"
       >
         Evidence history
       </h2>

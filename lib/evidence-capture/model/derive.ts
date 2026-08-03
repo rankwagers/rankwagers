@@ -37,7 +37,7 @@ import {
   BASELINE_SCALE,
   COUNTER_MIN_PCT,
   LEAGUE_MIN_SAMPLE,
-  NEUTRAL_EPS_PP,
+  neutralBandPp,
   SAMPLE_MIN,
   W_COUNTER_MAX,
   W_PRIMARY_MAX,
@@ -140,7 +140,9 @@ function venueSignal(
   const residualPp = stat.pct - baselinePct;
   const norm = clamp(residualPp / BASELINE_SCALE, -1, 1);
   const conf = sampleConfidence(stat.played);
-  const neutral = Math.abs(residualPp) < NEUTRAL_EPS_PP;
+  // The band scales with what this sample can actually support (see `neutralBandPp`): a rate from
+  // eight matches must clear a wider gap than one from thirty before it counts as evidence.
+  const neutral = Math.abs(residualPp) < neutralBandPp(baselinePct, stat.played);
   const direction: EvidenceSignalDirection = neutral
     ? "neutral"
     : norm > 0

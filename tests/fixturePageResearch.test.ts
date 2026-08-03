@@ -373,3 +373,116 @@ test("defect: every reader-visible deferred entry is a market name", async () =>
     assert.equal(/[_:]/.test(entry), false, `"${entry}" is an identifier, not a market name`);
   }
 });
+
+/* -- the neutral band scales with the sample ------------------------------- */
+
+test("neutral band: one match in eight against a 90% league rate is not evidence", async () => {
+  const { neutralBandPp, NEUTRAL_EPS_PP } = await import(
+    "../lib/evidence-capture/model/constants"
+  );
+  // The reported defect: 88% (7/8) vs league 90% rendered "Opposes" on a 2pp gap.
+  const band8 = neutralBandPp(90, 8);
+  assert.ok(band8 > 2, `an 8-match sample must demand more than 2pp, got ${band8}`);
+  assert.ok(Math.abs(88 - 90) < band8, "a one-match difference sits inside the band");
+
+  // A larger sample earns a narrower band — the whole point of deriving it from n.
+  const band30 = neutralBandPp(90, 30);
+  assert.ok(band30 < band8, "30 matches must demand less than 8 matches");
+  assert.ok(band30 > 0);
+
+  // Monotonic in n, and floored where variance collapses.
+  assert.ok(neutralBandPp(90, 50) < neutralBandPp(90, 20));
+  assert.equal(neutralBandPp(100, 8), NEUTRAL_EPS_PP, "a zero-variance rate falls back to the floor");
+  assert.equal(neutralBandPp(90, 0), NEUTRAL_EPS_PP);
+  // Widest where a proportion is genuinely most variable.
+  assert.ok(neutralBandPp(50, 20) > neutralBandPp(95, 20));
+});
+
+test("neutral band: a small-sample near-baseline rate derives as neutral end to end", () => {
+  const view = buildFixtureEvidenceView(
+    detailWith({ homePlayed: 8, awayPlayed: 8, homePct: 88, awayPct: 88, leaguePct: 90 })
+  );
+  assert.notEqual(view.state, "no_data");
+  if (view.state === "no_data") return;
+  const venue = view.signals.filter((s) => s.key.startsWith("season_"));
+  assert.ok(venue.length > 0);
+  for (const s of venue) {
+    assert.equal(
+      s.direction,
+      "neutral",
+      `${s.key} reads ${s.direction} on a one-match difference: ${s.display}`
+    );
+  }
+});
+
+test("the model version moved with the scoring function", async () => {
+  const { SNAPSHOT_MODEL_VERSION } = await import("../lib/evidence-capture/capture/build");
+  // Two functions must never share one version string.
+  assert.notEqual(SNAPSHOT_MODEL_VERSION, "23B.daily-evidence.v1");
+  assert.match(SNAPSHOT_MODEL_VERSION, /^23B\.daily-evidence\.v\d+$/);
+});
+
+/* -- no bare rate ANYWHERE on the page, record and timeline included ------- */
+
+test("no bare rate renders anywhere on the fixture page", () => {
+  const files = [
+    "components/fixtures/FixtureResearchSection.tsx",
+    "components/fixtures/FixtureRecordSection.tsx",
+    "components/fixtures/MatchPredictionsPanel.tsx",
+    "components/fixtures/MatchDetailView.tsx",
+  ];
+  for (const file of files) {
+    const src = SRC(file).replace(/\s+/g, " ");
+    // Any percentage rendered from data must be accompanied, in the same rendered line, by the
+    // observations behind it or by an explicit statement that none was archived.
+    const pctRenders = [...src.matchAll(/\{[^{}]*\}\s*%/g)].map((m) => m[0]);
+    for (const render of pctRenders) {
+      const idx = src.indexOf(render);
+      const window = src.slice(Math.max(0, idx - 400), idx + 400);
+      const accompanied =
+        /\(\$\{|\(\d|sample|denominator|no sample|carries no sample|matches behind/i.test(window);
+      assert.ok(
+        accompanied,
+        `${file} renders a bare percentage with no sample beside it: ${render}`
+      );
+    }
+  }
+});
+
+test("the archived provider potential is not called a confidence", () => {
+  const panel = SRC("components/fixtures/MatchPredictionsPanel.tsx").replace(/\s+/g, " ");
+  assert.equal(/Confidence \{/.test(panel), false, "the provider potential is labelled Confidence");
+  assert.match(panel, /Provider potential/, "it is named as what it is");
+  assert.match(panel, /carries no sample/, "the absent denominator is stated, not implied");
+  // §3.11 — the archived figure itself is still published.
+  assert.match(panel, /\{prediction\.confidence\}/);
+});
+
+test("the page is one typeface: no serif override survives on fixture surfaces", () => {
+  for (const file of [
+    "components/fixtures/MatchDetailView.tsx",
+    "components/fixtures/FixtureResearchSection.tsx",
+    "components/fixtures/FixtureRecordSection.tsx",
+    "components/live/LiveMatchSection.tsx",
+    "components/evidence/EvidenceHistorySection.tsx",
+  ]) {
+    assert.equal(
+      SRC(file).includes("font-display"),
+      false,
+      `${file} still forces the old serif inside the hero language`
+    );
+  }
+});
+
+test("no section is labelled by its usefulness for betting", () => {
+  for (const file of [
+    "components/fixtures/MatchDetailView.tsx",
+    "lib/fixtures/loadMatchPage.server.ts",
+  ]) {
+    assert.equal(
+      /Betting-relevant/.test(SRC(file)),
+      false,
+      `${file} labels a section as betting-relevant`
+    );
+  }
+});

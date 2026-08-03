@@ -226,7 +226,10 @@ export function MatchDetailView({
           />
 
           <section aria-labelledby="events-heading">
-            <h2 id="events-heading" className="font-display text-xl font-semibold">
+            <h2
+              id="events-heading"
+              className="rw-display text-[22px] text-[var(--hero-ink)] sm:text-[26px]"
+            >
               Key match events
             </h2>
             <SectionState
@@ -255,8 +258,16 @@ export function MatchDetailView({
           </section>
 
           <section aria-labelledby="stats-heading">
-            <h2 id="stats-heading" className="font-display text-xl font-semibold">
-              Betting-relevant statistics
+            {/*
+              Renamed from "Betting-relevant statistics". The page states that the product does
+              not price or recommend, then labelled a section by its usefulness for betting —
+              the one framing the rest of the page spends its length refusing.
+            */}
+            <h2
+              id="stats-heading"
+              className="rw-display text-[22px] text-[var(--hero-ink)] sm:text-[26px]"
+            >
+              Match statistics
             </h2>
             <SectionState
               availability={model.sections.statistics.availability}

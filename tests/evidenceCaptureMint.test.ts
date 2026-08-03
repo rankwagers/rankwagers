@@ -54,7 +54,9 @@ test("canonical construction: frozen fields, modelVersion, capturedBy, ephemeral
   assert.ok(r.ok);
   if (!r.ok) throw new Error("unreachable");
   const s = r.snapshot;
-  assert.equal(s.modelVersion, "23B.daily-evidence.v1");
+  // Pinned to the constant, not to a literal: the version moves whenever the scoring function
+  // does, and a hardcoded literal here would have to be edited every time rather than checked.
+  assert.equal(s.modelVersion, "23B.daily-evidence.v2");
   assert.equal(s.modelVersion, SNAPSHOT_MODEL_VERSION);
   assert.notEqual(s.modelVersion, "23.0.0"); // not the EVIDENCE_MODEL_VERSION default
   assert.equal(s.capturedBy, "evidence_capture");
