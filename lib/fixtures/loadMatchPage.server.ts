@@ -18,7 +18,7 @@ import { resolveTeam } from "@/lib/teams/resolver";
 import { listTeams } from "@/lib/teams/registry";
 import { teamPath } from "@/lib/teams/links";
 import {
-  DEFERRED_SETTLEMENT_MARKETS,
+  deferredMarketLabels,
   settlePrediction,
   type SettlementInput,
 } from "./settlement";
@@ -399,7 +399,7 @@ export async function loadMatchPageBundle(input: {
      * and a reader has no idea what a durable selection snapshot is.
      */
     deferredMarkets: [
-      ...DEFERRED_SETTLEMENT_MARKETS,
+      ...deferredMarketLabels(),
       "Match winner",
       "Double chance",
       "Draw no bet",

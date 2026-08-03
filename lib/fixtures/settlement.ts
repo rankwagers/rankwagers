@@ -32,7 +32,13 @@ export type SettlementResult = {
   unitProfit: number | null;
 };
 
-/** Markets deferred until provider contracts are safe. */
+/**
+ * Markets deferred until provider contracts are safe.
+ *
+ * These are MACHINE KEYS. Settlement logic and its tests match on them, so they stay in
+ * identifier form — but that means they must never reach a reader unmapped. See
+ * {@link deferredMarketLabel}.
+ */
 export const DEFERRED_SETTLEMENT_MARKETS = [
   "corners",
   "cards",
@@ -40,6 +46,42 @@ export const DEFERRED_SETTLEMENT_MARKETS = [
   "correct_score",
   "player_props",
 ] as const;
+
+export type DeferredSettlementMarket = (typeof DEFERRED_SETTLEMENT_MARKETS)[number];
+
+/**
+ * Reader-facing names for the deferred markets.
+ *
+ * The keys above rendered verbatim on the fixture page as "asian_handicap, correct_score,
+ * player_props" — our identifiers shown to someone reading about football. A key is a name the
+ * code uses; a label is a name a person uses, and the two are not interchangeable just because
+ * one of them happens to be a readable word.
+ */
+const DEFERRED_MARKET_LABELS: Readonly<Record<DeferredSettlementMarket, string>> = {
+  corners: "Corners",
+  cards: "Cards",
+  asian_handicap: "Asian handicap",
+  correct_score: "Correct score",
+  player_props: "Player markets",
+};
+
+/**
+ * Render one deferred-market key for a reader.
+ *
+ * Falls back to a de-identified form rather than the raw key, so a key added to the list without
+ * a label still cannot leak underscores into user copy.
+ */
+export function deferredMarketLabel(key: string): string {
+  const known = DEFERRED_MARKET_LABELS[key as DeferredSettlementMarket];
+  if (known) return known;
+  const words = key.replace(/[_:]+/g, " ").trim();
+  return words ? words.charAt(0).toUpperCase() + words.slice(1) : words;
+}
+
+/** Every deferred market, reader-facing. The only form that may reach the page. */
+export function deferredMarketLabels(): string[] {
+  return DEFERRED_SETTLEMENT_MARKETS.map(deferredMarketLabel);
+}
 
 export function settlePrediction(
   input: SettlementInput,

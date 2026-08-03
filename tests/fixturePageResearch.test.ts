@@ -30,7 +30,10 @@ const SRC = (rel: string) => {
     .replace(/\/\*[\s\S]*?\*\//g, "")
     .replace(/\{\s*\/\*[\s\S]*?\*\/\s*\}/g, "")
     .replace(/^\s*\/\/.*$/gm, "")
-    .replace(/\[[^\]]*\]/g, "");
+    // Tailwind arbitrary values ONLY — they always attach to a utility token (`text-[13px]`,
+    // `bg-[var(--x)]`). A bare `[` after whitespace or `=` is an array literal, and stripping
+    // those blinded these scans to anything written inside one.
+    .replace(/(?<=[\w-])\[[^\]]*\]/g, "");
 };
 
 const RESEARCH_TSX = "components/fixtures/FixtureResearchSection.tsx";
@@ -320,4 +323,53 @@ test("defect: the competition eyebrow never renders without a value", () => {
   const view = SRC("components/fixtures/MatchDetailView.tsx");
   assert.match(view, /competitionEyebrow \? \(/, "the eyebrow is conditional");
   assert.match(view, /header\.competition !== "—"/, "the placeholder value is excluded");
+});
+
+/* -- deferred markets never reach a reader as identifiers ------------------ */
+
+test("defect: no deferred-market value renders in identifier form", async () => {
+  const { DEFERRED_SETTLEMENT_MARKETS, deferredMarketLabels, deferredMarketLabel } = await import(
+    "../lib/fixtures/settlement"
+  );
+
+  // The raw keys ARE identifiers — that is legitimate, settlement logic matches on them.
+  assert.ok(DEFERRED_SETTLEMENT_MARKETS.includes("asian_handicap"));
+
+  // What must never reach a reader is that form. Every published label is checked, not sampled.
+  const labels = deferredMarketLabels();
+  assert.equal(labels.length, DEFERRED_SETTLEMENT_MARKETS.length, "every key gets a label");
+  for (const label of labels) {
+    assert.equal(label.includes("_"), false, `"${label}" renders an underscore`);
+    assert.equal(label.includes(":"), false, `"${label}" renders a colon`);
+    assert.equal(
+      /^[a-z0-9]+(_[a-z0-9]+)+$/.test(label),
+      false,
+      `"${label}" is lowercase-snake`
+    );
+    assert.match(label, /^[A-Z]/, `"${label}" does not start as a name`);
+    assert.equal(label.trim(), label, `"${label}" has stray whitespace`);
+  }
+
+  // A key added later without a label must still not leak its identifier form.
+  assert.equal(deferredMarketLabel("both_teams_to_score"), "Both teams to score");
+  assert.equal(deferredMarketLabel("odds:asian_line"), "Odds asian line");
+});
+
+test("defect: the page's deferred list is built from labels, never from raw keys", () => {
+  const loader = SRC("lib/fixtures/loadMatchPage.server.ts");
+  assert.match(loader, /\.\.\.deferredMarketLabels\(\)/, "the view list maps through labels");
+  assert.equal(
+    /\.\.\.DEFERRED_SETTLEMENT_MARKETS/.test(loader),
+    false,
+    "raw keys are spread into reader-visible copy"
+  );
+});
+
+test("defect: every reader-visible deferred entry is a market name", async () => {
+  const { deferredMarketLabels } = await import("../lib/fixtures/settlement");
+  // The exact array the fixture page renders: mapped keys plus the hand-written entries.
+  const rendered = [...deferredMarketLabels(), "Match winner", "Double chance", "Draw no bet"];
+  for (const entry of rendered) {
+    assert.equal(/[_:]/.test(entry), false, `"${entry}" is an identifier, not a market name`);
+  }
 });
