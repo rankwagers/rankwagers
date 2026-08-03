@@ -7,9 +7,13 @@ import type { HeroFunnel } from "../lib/homepage/types";
 /**
  * Sprint 2 — the descent.
  *
- * The staircase is keyed to the RENDERED index. Keying it to the declared stage order would open a
- * hole wherever a null stage sat, and a gap in a staircase reads as a stage the page declined to
- * name — the opposite of what omission is for (rwbible §3.8).
+ * The staircase is keyed to the VALUE. A stage drops only when its count is strictly lower than the
+ * previous rendered stage, so a flat run states "nothing was removed here" and a drop states an
+ * actual rejection.
+ *
+ * Omission still governs WHICH stages appear: a null stage is left out entirely, and the run
+ * compares each stage against the previous one that rendered — never against one the page declined
+ * to name (rwbible §3.8).
  */
 
 function funnel(over: Partial<HeroFunnel> = {}): HeroFunnel {
@@ -72,7 +76,7 @@ test("the omission can fall anywhere and the steps stay contiguous", () => {
   }
 });
 
-test("offsets are always the rendered index times the step, for any subset", () => {
+test("a strictly decreasing subset still steps once per stage", () => {
   const subsets: Array<Partial<HeroFunnel>> = [
     { analysed: null, validated: null, inScope: null },
     { validated: null, inScope: null },
@@ -134,4 +138,112 @@ test("a zero count is a rendered stage, not an omission", () => {
   assert.equal(descent.length, 5);
   assert.equal(descent[4]?.value, 0);
   assert.equal(descent[4]?.offset, 64);
+});
+
+/* ------------------------------------------------------------------ *
+ * The offset describes the data, not the position
+ * ------------------------------------------------------------------ */
+
+test("today's real shape 32/32/32/8/5 reads 0/0/0/16/32", () => {
+  // The day that settled the rule. An index-keyed staircase put three identical numbers at three
+  // different heights, promising narrowing where nothing narrowed.
+  const descent = funnelDescent(
+    funnel({ analysed: 32, validated: 32, inScope: 32, qualified: 8, featured: 5 })
+  );
+
+  assert.deepEqual(
+    descent.map((step) => step.offset),
+    [0, 0, 0, 16, 32]
+  );
+});
+
+test("all-equal counts sit on a single level with no descent at all", () => {
+  const descent = funnelDescent(
+    funnel({ analysed: 12, validated: 12, inScope: 12, qualified: 12, featured: 12 })
+  );
+
+  assert.deepEqual(
+    descent.map((step) => step.offset),
+    [0, 0, 0, 0, 0],
+    "a day that rejected nothing must not draw a staircase"
+  );
+});
+
+test("strictly decreasing counts step once per stage", () => {
+  const descent = funnelDescent(
+    funnel({ analysed: 238, validated: 231, inScope: 214, qualified: 18, featured: 5 })
+  );
+
+  assert.deepEqual(
+    descent.map((step) => step.offset),
+    [0, 16, 32, 48, 64]
+  );
+});
+
+test("a two-stage archive day steps once", () => {
+  // The pipeline observed nothing, so only qualified and featured render.
+  const descent = funnelDescent(
+    funnel({ analysed: null, validated: null, inScope: null, qualified: 18, featured: 5 })
+  );
+
+  assert.equal(descent.length, 2);
+  assert.deepEqual(
+    descent.map((step) => step.offset),
+    [0, 16]
+  );
+});
+
+test("a two-stage archive day whose counts are equal stays level", () => {
+  const descent = funnelDescent(
+    funnel({ analysed: null, validated: null, inScope: null, qualified: 5, featured: 5 })
+  );
+
+  assert.deepEqual(
+    descent.map((step) => step.offset),
+    [0, 0]
+  );
+});
+
+test("the first rendered stage is always step 0, whichever stage it is", () => {
+  for (const missing of [
+    {},
+    { analysed: null },
+    { analysed: null, validated: null },
+    { analysed: null, validated: null, inScope: null },
+  ] as Array<Partial<HeroFunnel>>) {
+    const descent = funnelDescent(funnel(missing));
+    assert.equal(descent[0]?.offset, 0, `${JSON.stringify(missing)}: first stage must be level`);
+  }
+});
+
+test("a rise never steps up, and never steps down either", () => {
+  // Counts cannot rise in a real run, but the rule must not invent a step if one ever appears.
+  const descent = funnelDescent(
+    funnel({ analysed: 5, validated: 40, inScope: 40, qualified: 8, featured: 2 })
+  );
+
+  assert.deepEqual(
+    descent.map((step) => step.offset),
+    [0, 0, 0, 16, 32]
+  );
+});
+
+test("the offset only ever increases, and only by one step at a time", () => {
+  const shapes: Array<Partial<HeroFunnel>> = [
+    { analysed: 32, validated: 32, inScope: 32, qualified: 8, featured: 5 },
+    { analysed: 500, validated: 10, inScope: 9, qualified: 9, featured: 1 },
+    { analysed: 7, validated: 7, inScope: 6, qualified: 6, featured: 6 },
+  ];
+
+  for (const shape of shapes) {
+    const offsets = funnelDescent(funnel(shape)).map((step) => step.offset);
+    offsets.forEach((offset, index) => {
+      if (index === 0) return;
+      const delta = offset - (offsets[index - 1] ?? 0);
+      assert.ok(
+        delta === 0 || delta === FUNNEL_STEP_PX,
+        `${JSON.stringify(shape)}: step ${index} moved by ${delta}px`
+      );
+    });
+  }
 });

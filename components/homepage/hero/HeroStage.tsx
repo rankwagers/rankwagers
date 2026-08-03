@@ -130,11 +130,20 @@ export const FUNNEL_STEP_PX = 16;
 /**
  * The descent, resolved from the funnel.
  *
- * The offset is derived from the RENDERED index, never from the stage's position in
- * `FUNNEL_STEPS`. A day served from an archive omits `analysed`, `validated` and `inScope`, and if
- * the offset were keyed to the declared order the staircase would open a hole where the missing
- * stage used to be — a gap that reads as a stage the page declined to name. Four rendered stages
- * step 0/16/32/48, whichever four they are.
+ * The offset is keyed to the VALUE, not to the position. A stage drops one step only when its
+ * count is strictly lower than the previous rendered stage; an equal count stays level with it.
+ *
+ *   step = previous.step + (value < previous.value ? FUNNEL_STEP_PX : 0)
+ *
+ * Live data is what settled this. Today reads 32 / 32 / 32 / 8 / 5: an index-keyed staircase put
+ * three identical numbers at three different heights, promising narrowing on a day where the first
+ * three stages narrowed by nothing. It looked broken precisely because it was accurate. Under the
+ * value rule that day reads 0/0/0/16/32 — a flat run stating "nothing was removed here", which is
+ * the observation, and a drop stating an actual rejection.
+ *
+ * The rendered sequence still governs which stages appear: a `null` stage is omitted entirely, so
+ * the run compares each stage against the previous one that RENDERED, never against a stage the
+ * page declined to name.
  *
  * `emphasised` marks the two stages that survived. Colour means one thing here (brief, COLOUR
  * SYSTEM): green is Qualified, so only `qualified` and `featured` carry it. Marking the population
@@ -158,11 +167,17 @@ export function funnelDescent(funnel: HeroFunnel): Array<{
   for (const { stage, label } of FUNNEL_STEPS) {
     const value = funnel[stage];
     if (value === null) continue;
+
+    const previous = rendered[rendered.length - 1];
+    const offset = previous
+      ? previous.offset + (value < previous.value ? FUNNEL_STEP_PX : 0)
+      : 0;
+
     rendered.push({
       stage,
       label,
       value,
-      offset: rendered.length * FUNNEL_STEP_PX,
+      offset,
       emphasised: stage === "qualified" || stage === "featured",
     });
   }
@@ -284,14 +299,24 @@ function useResearchReveal(day: string | null, stageCount: number): RevealPhase 
  * Hidden below `sm`, where the descent is carried by indent instead and a horizontal staircase
  * would describe a layout that is not on screen.
  */
-function FunnelDescentLine({ count }: { count: number }) {
+function FunnelDescentLine({ offsets }: { offsets: readonly number[] }) {
+  const count = offsets.length;
   if (count < 2) return null;
 
+  /*
+    Built from the offsets themselves, so the line describes the same claim the measures do: a run
+    of equal counts is one straight segment, and a vertical only appears where a stage actually
+    rejected something. Deriving it from the index again would draw a staircase under numbers that
+    do not descend.
+  */
   const columnWidth = 100 / count;
-  const height = (count - 1) * FUNNEL_STEP_PX;
-  let path = "M 0 0.5";
+  const height = Math.max(...offsets);
+  let path = `M 0 ${(offsets[0] ?? 0) + 0.5}`;
   for (let i = 1; i < count; i += 1) {
-    path += ` H ${(columnWidth * i).toFixed(3)} V ${(i * FUNNEL_STEP_PX + 0.5).toFixed(1)}`;
+    const previous = offsets[i - 1] ?? 0;
+    const current = offsets[i] ?? 0;
+    path += ` H ${(columnWidth * i).toFixed(3)}`;
+    if (current !== previous) path += ` V ${(current + 0.5).toFixed(1)}`;
   }
 
   return (
@@ -715,7 +740,7 @@ export function HeroStage({
                         } as CSSProperties
                       }
                     >
-                      <FunnelDescentLine count={descent.length} />
+                      <FunnelDescentLine offsets={descent.map((step) => step.offset)} />
                       {descent.map(({ stage, label, value, offset, emphasised }, index) => (
                         <Measure
                           key={stage}
