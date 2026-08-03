@@ -206,7 +206,7 @@ export async function CandidateDetailView({ candidateId }: { candidateId: string
  ["Legs", combo.legCount],
  ["Markets", combo.marketSummary],
  ["Combined odds", combo.combinedOdds],
- ["Average confidence", combo.averageConfidence],
+ ["Average provider potential (no sample)", combo.averageConfidence],
  ]}
  />
  ) : (

@@ -148,7 +148,14 @@ export function AccaPanelBody({
                   <p className="mt-0.5 text-xs text-muted-foreground">
                     {s.marketLabel} · {s.selectionLabel}
                     {s.odds != null ? ` · @ ${s.odds.toFixed(2)}` : " · odds unavailable"}
-                    {s.confidence != null ? ` · ${s.confidence}%` : ""}
+                    {/*
+                      FootyStats' market potential, carried through from the fixture that
+                      produced this leg. It rendered as a bare percentage with no label at all,
+                      which read as a confidence the figure has no claim to and no sample for.
+                    */}
+                    {s.confidence != null
+                      ? ` · provider potential ${s.confidence}% (no sample)`
+                      : ""}
                   </p>
                   <p className="mt-0.5 text-metadata text-muted-foreground">
                     {s.competition}

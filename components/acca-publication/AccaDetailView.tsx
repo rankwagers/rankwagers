@@ -193,7 +193,7 @@ export async function AccaDetailView({ accaId }: { accaId: string }) {
  ["Selections carrying confidence",
  `${evidence.legsWithConfidence} of ${evidence.legCount}`,
  ],
- ["Average confidence", numberOrAbsent(acca.qualificationSnapshot.averageConfidence)],
+ ["Average provider potential (no sample)", numberOrAbsent(acca.qualificationSnapshot.averageConfidence)],
  ["Risk mode", textOrAbsent(acca.qualificationSnapshot.riskMode)],
  ]}
  />

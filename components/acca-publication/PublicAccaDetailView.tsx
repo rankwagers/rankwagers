@@ -153,7 +153,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  <th scope="col" className="px-3 py-2 text-left">Market</th>
  <th scope="col" className="px-3 py-2 text-left">Kick-off (UTC)</th>
  <th scope="col" className="px-3 py-2 text-left">Evidence</th>
- <th scope="col" className="px-3 py-2 text-right">Model confidence</th>
+ <th scope="col" className="px-3 py-2 text-right">Provider potential</th>
  <th scope="col" className="px-3 py-2 text-right">Odds at publication</th>
  </tr>
  </thead>
@@ -252,7 +252,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  </dd>
  </div>
  <div>
- <dt className="uppercase tracking-label text-muted-foreground">Model confidence</dt>
+ <dt className="uppercase tracking-label text-muted-foreground">Provider potential</dt>
  <dd className="tabular-nums">{leg.confidence}</dd>
  </div>
  <div>
@@ -294,14 +294,14 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  <dl className="mt-4 grid gap-x-6 gap-y-3 text-sm sm:grid-cols-3">
  <div>
  <dt className="text-xs uppercase tracking-label text-muted-foreground">
- Selections with a model confidence
+ Selections with a provider potential
  </dt>
  <dd className="tabular-nums">
  {withConfidence} of {view.legCount}
  </dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-muted-foreground">Average confidence</dt>
+ <dt className="text-xs uppercase tracking-label text-muted-foreground">Average provider potential</dt>
  <dd className="tabular-nums">
  {view.evidence.averageConfidence ?? ABSENT.notProvided}
  </dd>
@@ -426,8 +426,10 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  moved or be unavailable.
  </li>
  <li>
- Model confidence describes how the fixture qualified for our lists. It is not a
- probability of the combination succeeding.
+ Provider potential is FootyStats&apos; figure for the fixture, archived as published.
+                            It is not our model&apos;s output, it is not a confidence, and the
+                            archived record carries no sample for it. It is not a probability of
+                            the combination succeeding.
  </li>
  </ul>
  </section>

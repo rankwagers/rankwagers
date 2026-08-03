@@ -424,13 +424,25 @@ test("the model version moved with the scoring function", async () => {
 
 /* -- no bare rate ANYWHERE on the page, record and timeline included ------- */
 
-test("no bare rate renders anywhere on the fixture page", () => {
-  const files = [
-    "components/fixtures/FixtureResearchSection.tsx",
-    "components/fixtures/FixtureRecordSection.tsx",
-    "components/fixtures/MatchPredictionsPanel.tsx",
-    "components/fixtures/MatchDetailView.tsx",
-  ];
+/**
+ * Every reader-visible surface that renders the provider potential or a rate.
+ *
+ * The first version of this guard listed the fixture page alone, so the identical bare figure
+ * survived on the acca surfaces through two rounds of the same fix. A guard that covers one
+ * surface does not protect a rule that applies to all of them.
+ */
+const READER_SURFACES = [
+  "components/fixtures/FixtureResearchSection.tsx",
+  "components/fixtures/FixtureRecordSection.tsx",
+  "components/fixtures/MatchPredictionsPanel.tsx",
+  "components/fixtures/MatchDetailView.tsx",
+  "components/acca/AccaPanelBody.tsx",
+  "components/acca-publication/PublicAccaDetailView.tsx",
+  "components/acca-publication/AccaDetailView.tsx",
+];
+
+test("no bare rate renders on any reader-visible surface", () => {
+  const files = READER_SURFACES;
   for (const file of files) {
     const src = SRC(file).replace(/\s+/g, " ");
     // Any percentage rendered from data must be accompanied, in the same rendered line, by the
@@ -483,6 +495,35 @@ test("no section is labelled by its usefulness for betting", () => {
       /Betting-relevant/.test(SRC(file)),
       false,
       `${file} labels a section as betting-relevant`
+    );
+  }
+});
+
+test("the provider potential is never called a confidence on any reader surface", () => {
+  for (const file of READER_SURFACES) {
+    const src = SRC(file).replace(/\s+/g, " ");
+    for (const wrong of ["Model confidence", "Average confidence", "Confidence {"]) {
+      assert.equal(
+        src.includes(wrong),
+        false,
+        `${file} labels the provider potential "${wrong}"`
+      );
+    }
+  }
+});
+
+test("every surface that renders the potential names it and states the missing sample", () => {
+  for (const file of [
+    "components/fixtures/MatchPredictionsPanel.tsx",
+    "components/acca/AccaPanelBody.tsx",
+    "components/acca-publication/PublicAccaDetailView.tsx",
+  ]) {
+    const src = SRC(file).replace(/\s+/g, " ");
+    assert.match(src, /[Pp]rovider potential/, `${file} does not name the figure`);
+    assert.match(
+      src,
+      /no sample|carries no sample/,
+      `${file} implies a denominator it does not have`
     );
   }
 });

@@ -245,7 +245,10 @@ test("the detail page explains rather than dumps", async () => {
   assert.match(markup, /Check the record/);
   // Every selection is explained with its own market and captured price.
   assert.match(markup, /Odds at publication/);
-  assert.match(markup, /Model confidence/);
+  // Named as the provider figure it is — "Model confidence" claimed both our authorship and a
+  // confidence, and the archived record carries no sample for it.
+  assert.match(markup, /Provider potential/);
+  assert.equal(/Model confidence/.test(markup), false);
   // Derivation of the headline number is stated.
   assert.match(markup, /product of the individual prices/);
   assert.match(markup, /not a probability and not a return estimate/);
