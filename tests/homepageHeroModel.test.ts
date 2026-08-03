@@ -482,3 +482,75 @@ test("a fixture in several lists counts once in both the funnel and the render",
   assert.equal(model.funnel.qualified, 1);
   assert.equal(model.funnel.qualified, distinctRenderedFixtures(l));
 });
+
+/* ------------------------------------------------------------------ *
+ * The last link: featured is what renders, drawn from qualified
+ * ------------------------------------------------------------------ */
+
+test("featured equals the rendered pick count", () => {
+  const l = lists({
+    over25: [70, 90, 50, 30].map((pct, i) => row({ matchId: i + 1, over25Pct: pct })),
+  });
+  const model = buildHomepageHeroModel({ locale: "en", lists: l });
+
+  assert.equal(model.funnel.featured, model.picks.length);
+  assert.equal(model.funnel.featured, 4);
+});
+
+test("every rendered pick is among the fixtures the page can show", () => {
+  const l = lists({
+    over25: [
+      row({ matchId: 1, over25Pct: 88 }),
+      // Nonsense kickoff: dropped by the research feed, so it must not reach the hero either.
+      row({ matchId: 2, over25Pct: 99, kickoffTime: 0 }),
+      row({ matchId: 3, over25Pct: 77 }),
+    ],
+  });
+  const model = buildHomepageHeroModel({ locale: "en", lists: l });
+  const renderable = new Set(mapDailyListsToQualifiedFixtures(l).map((f) => f.matchId));
+
+  // The highest-probability row is the malformed one; it must not lead the hero.
+  assert.equal(model.picks.some((pick) => pick.matchId === 2), false);
+  for (const pick of model.picks) {
+    assert.ok(renderable.has(pick.matchId), `pick ${pick.matchId} is not renderable by the feed`);
+  }
+  assert.equal(model.funnel.featured, 2);
+  assert.equal(model.funnel.qualified, 2);
+});
+
+test("featured never exceeds qualified", () => {
+  const defects: Array<Partial<FootyMatchRow>> = [
+    { kickoffTime: 0 },
+    { over25Pct: 101 },
+    { over15Pct: Number.NaN },
+    { homeTeam: "" },
+    { matchId: 2.5 },
+  ];
+
+  for (const defect of defects) {
+    const l = lists({
+      over25: [
+        row({ matchId: 1, over25Pct: 88 }),
+        row({ matchId: 2, over25Pct: 99, ...defect }),
+      ],
+    });
+    const model = buildHomepageHeroModel({ locale: "en", lists: l });
+
+    assert.ok(
+      (model.funnel.qualified ?? 0) >= (model.funnel.featured ?? 0),
+      `featured exceeded qualified for ${JSON.stringify(defect)}`
+    );
+    assert.equal(model.funnel.featured, model.picks.length);
+  }
+});
+
+test("the cap holds: featured is at most the composition's five", () => {
+  const l = lists({
+    over25: Array.from({ length: 12 }, (_, i) => row({ matchId: i + 1, over25Pct: 70 + i })),
+  });
+  const model = buildHomepageHeroModel({ locale: "en", lists: l });
+
+  assert.equal(model.funnel.qualified, 12);
+  assert.equal(model.funnel.featured, HERO_PICK_COUNT);
+  assert.ok((model.funnel.qualified ?? 0) >= (model.funnel.featured ?? 0));
+});

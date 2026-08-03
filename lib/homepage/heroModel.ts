@@ -133,7 +133,27 @@ export function buildHomepageHeroModel(input: {
   const { lists, locale } = input;
 
   const strongest = strongestMarketPerFixture(lists);
-  const candidates = [...strongest.values()];
+
+  /*
+   * The candidates that satisfy the field contract. One gate, applied once, feeding both the
+   * ranked picks and the `qualified` count — so `featured <= qualified` holds by construction
+   * rather than by assertion.
+   *
+   * This is presentation, not the shared pipeline. `partitionDailyMatches` stays ungated because
+   * it feeds `app/api/home-search` and `mergeArchiveFromLists`, where dropping a row would remove
+   * it from search and from stored history (§3.11). Nothing here reaches either: the archive was
+   * written from the lists long before this function is called, and this model is read only by the
+   * hero.
+   *
+   * Nor is it a new standard. `mapDailyListsToQualifiedFixtures` already parses these rows through
+   * `footyRowSchema` — an extension of this same contract — and drops what fails, so the research
+   * feed has never rendered them. Without this gate the hero renders fixtures the feed refuses to,
+   * which is one page holding two standards (§2.8, §18.4); a row carrying `kickoffTime: 0` reached
+   * `toPick` and printed a nonsense kickoff in the most prominent element on the site.
+   */
+  const candidates = [...strongest.values()].filter(
+    (candidate) => footyRowCoreSchema.safeParse(candidate.row).success
+  );
 
   const picks = candidates
     .sort((left, right) =>
@@ -146,19 +166,14 @@ export function buildHomepageHeroModel(input: {
     .slice(0, HERO_PICK_COUNT);
 
   /*
-   * Distinct fixtures that cleared a threshold AND satisfy the field contract.
+   * Distinct fixtures that cleared a threshold and satisfy the field contract — the gated set
+   * above, which is also what `picks` is drawn from.
    *
-   * The schema gate is what ties this figure to the page. `mapDailyListsToQualifiedFixtures` —
-   * which `RankWagersHome` renders from — parses every row through `footyRowSchema`, an extension
-   * of the same core contract, and drops what fails. Counting ungated rows here would print a
-   * funnel claiming more qualified fixtures than the page displays, and a visible number that
-   * cannot be reconciled with the list beneath it is exactly what rwdesign §21 forbids.
-   *
-   * Count only: `picks` below are unchanged, so nothing that rendered before stops rendering.
+   * That shared origin is what ties the figure to the page: `mapDailyListsToQualifiedFixtures`,
+   * which `RankWagersHome` renders from, applies the same contract, so the funnel's last research
+   * number is the number of fixtures the page can actually show (rwdesign §21).
    */
-  const qualified = candidates.filter(
-    (candidate) => footyRowCoreSchema.safeParse(candidate.row).success
-  ).length;
+  const qualified = candidates.length;
 
   const fetchedAt = Number.isNaN(new Date(lists.fetchedAt).getTime())
     ? null

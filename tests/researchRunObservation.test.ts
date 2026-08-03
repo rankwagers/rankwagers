@@ -1,6 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { partitionDailyMatches } from "../lib/footystats/client";
+import { buildHomepageHeroModel } from "../lib/homepage/heroModel";
+import { observedResearchRun } from "../lib/research/researchRun";
 
 /**
  * THE INVARIANT: observation and flow are independent.
@@ -213,26 +215,56 @@ function population(seed: number): Record<string, unknown>[] {
   });
 }
 
-test("PROPERTY: analysed >= validated >= inScope >= qualified across generated populations", () => {
+test("PROPERTY: the full chain nests across generated populations", () => {
   const cache = { 99: { league: "FA Cup", country: "England" } };
 
   for (let seed = 1; seed <= 300; seed += 1) {
     const matches = population(seed);
     const r = partitionDailyMatches(matches, cache);
 
+    /*
+     * The last stage is observed by the hero, not the pipeline, so the chain is closed by feeding
+     * the partition's own lists through the model exactly as the page does.
+     */
+    const model = buildHomepageHeroModel({
+      locale: "en",
+      lists: {
+        date: "2026-08-03",
+        over15: r.over15,
+        fh: r.fh,
+        over25: r.over25,
+        sh: r.sh,
+        fetchedAt: "2026-08-03T09:15:00.000Z",
+        researchRun: observedResearchRun({
+          analysed: r.analysed,
+          validated: r.validated,
+          inScope: r.inScope,
+          qualified: r.qualifiedIds.size,
+        }),
+      },
+    });
+    const f = model.funnel;
+    const at = `seed ${seed}`;
+
+    assert.equal(r.analysed, matches.length, `${at}: analysed must be the population`);
+    assert.ok(f.analysed !== null && f.validated !== null, `${at}: stages must be observed`);
+    assert.ok(f.analysed >= f.validated, `${at}: analysed ${f.analysed} < validated ${f.validated}`);
     assert.ok(
-      r.analysed >= r.validated,
-      `seed ${seed}: analysed ${r.analysed} < validated ${r.validated}`
+      f.validated >= (f.inScope ?? 0),
+      `${at}: validated ${f.validated} < inScope ${f.inScope}`
     );
     assert.ok(
-      r.validated >= r.inScope,
-      `seed ${seed}: validated ${r.validated} < inScope ${r.inScope}`
+      (f.inScope ?? 0) >= (f.qualified ?? 0),
+      `${at}: inScope ${f.inScope} < qualified ${f.qualified}`
     );
     assert.ok(
-      r.inScope >= r.qualifiedIds.size,
-      `seed ${seed}: inScope ${r.inScope} < qualified ${r.qualifiedIds.size}`
+      (f.qualified ?? 0) >= (f.featured ?? 0),
+      `${at}: qualified ${f.qualified} < featured ${f.featured}`
     );
-    assert.equal(r.analysed, matches.length, `seed ${seed}: analysed must be the population`);
+
+    // The hero's own count of what it renders, and the cap it renders under.
+    assert.equal(f.featured, model.picks.length, `${at}: featured must be the rendered count`);
+    assert.ok(model.picks.length <= 5, `${at}: the composition caps at five`);
   }
 });
 
