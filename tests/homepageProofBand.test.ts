@@ -89,18 +89,42 @@ test("a hit rate of zero is a real reading and IS rendered", () => {
   assert.equal(hitRate.value, "0%");
 });
 
-test("the window label travels with the hit rate it qualifies", () => {
+test("the window label is never attached to a single figure", () => {
   const model = verified();
-  const withRate = buildProofBandFigures(model, COPY);
-  assert.equal(
-    withRate.find((figure) => figure.key === "hitRate")?.note,
-    model.windowLabel
+
+  // The record has ONE window and every figure is computed over it. Hanging it off the hit rate
+  // would imply the other three are all-time, and would strip it from three still-windowed
+  // figures whenever the rate is null.
+  for (const state of [model, verified({ hitRatePct: null })]) {
+    const emitted = buildProofBandFigures(state, COPY).flatMap((figure) => [
+      figure.value,
+      figure.note,
+      figure.audit,
+    ]);
+    assert.ok(
+      !emitted.includes(state.windowLabel),
+      "windowLabel qualifies the band, not one figure"
+    );
+  }
+});
+
+test("the band states the window itself, and keeps stating it when the rate is null", () => {
+  const home = readFileSync(path.join(root, "components/bible/RankWagersHome.tsx"), "utf8");
+
+  // Rendered by the band, inside the availability branch — not inside the hit-rate figure, which
+  // only exists when hitRatePct resolves.
+  assert.match(home, /trust\.verified\.windowLabel/);
+  assert.doesNotMatch(home, /note=\{trust\.verified\.windowLabel\}/);
+});
+
+test("the hit rate carries no note, having nothing to say beyond the window", () => {
+  const hitRate = buildProofBandFigures(verified(), COPY).find(
+    (figure) => figure.key === "hitRate"
   );
 
-  // Absent rate, absent qualifier — the label describes nothing on its own.
-  const withoutRate = buildProofBandFigures(verified({ hitRatePct: null }), COPY);
-  const emitted = withoutRate.flatMap((figure) => [figure.value, figure.note, figure.audit]);
-  assert.ok(!emitted.includes(model.windowLabel));
+  assert.ok(hitRate);
+  assert.equal(hitRate.note, undefined);
+  assert.equal(hitRate.audit, undefined);
 });
 
 /* ------------------------------------------------------------------ *
@@ -210,6 +234,25 @@ test("S2 carries no state colour", () => {
   for (const token of ["--status-won-fg", "--status-lost-fg"]) {
     assert.ok(!home.includes(token), `${token} must not appear in the proof band`);
   }
+});
+
+test("the loss is never the faintest mark in the band", () => {
+  const home = withoutComments(
+    readFileSync(path.join(root, "components/bible/RankWagersHome.tsx"), "utf8")
+  );
+
+  /*
+   * Lengths carry the ratio, but tone speaks too. `--hero-ink-3` is 4.70:1 against the win's
+   * 18.25:1, which renders the loss as the quietest thing in the one section that exists to not
+   * hide it. Both the proportional rule and the form strip put lost on `--hero-ink-2` (7.89:1) —
+   * one step from the win, and audibly not a whisper.
+   */
+  assert.match(home, /flexGrow: lost \}\} className="block bg-\[var\(--hero-ink-2\)\]"/);
+  assert.match(home, /lost: "bg-\[var\(--hero-ink-2\)\]"/);
+  assert.ok(
+    !/lost: "bg-\[var\(--hero-ink-3\)\]"/.test(home),
+    "the lost mark must not sit on the faintest step of the ramp"
+  );
 });
 
 test("S2 renders inside the hero scope rather than duplicating its tokens", () => {

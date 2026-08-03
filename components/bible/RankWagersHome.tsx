@@ -276,6 +276,13 @@ export function RankWagersHome({
         and their summary are one argument, and splitting them across a rule made the reader assemble
         it themselves.
 
+        CARRIED FORWARD: `StatusBadge` in `#recent-results` still renders won/lost/void in state
+        colour, so it is the one coloured element left in this band. It is deliberately unchanged.
+        The component is shared with `ArchiveTable` and `TransparencyDashboard`; all three are
+        record surfaces, so "Grey = Historical" applies to all three, and it changes once — in the
+        component — when those surfaces are converted. Forking a local copy to settle one section
+        is how two components drift.
+
         Surface rather than the tonal band: the section is set on white against the canvas above it,
         so what marks it is a change of ground rather than a change of hue.
       */}
@@ -304,9 +311,23 @@ export function RankWagersHome({
 
         {trust.verified.availability === "available" ? (
           <div>
+            {/*
+              The window every figure below is computed over, stated once against the whole band.
+
+              It is deliberately not a note on the hit rate. `HomepageVerifiedPerformance` carries a
+              single `windowLabel`, and `totalPredictions`, `settledPredictions` and
+              `pendingPredictions` are all scoped by it. Attaching it to one figure would say two
+              false things: that the other three are all-time, and — whenever `hitRatePct` is null
+              and its figure is omitted — that three figures which are still windowed have no window
+              at all. Stated here it survives a null rate, because the window does.
+            */}
+            <p className="text-[13px] leading-6 text-[var(--hero-ink-3)]">
+              {trust.verified.windowLabel}
+            </p>
+
             {/* Targeted by AccaChrome's launcher yield — the figures themselves, not the whole
                 section, which also contains recent-results and runs most of the page height. */}
-            <div id="verified-performance-figures" className="mt-14">
+            <div id="verified-performance-figures" className="mt-12">
               {/*
                 `hitRatePct` is null on an empty settled sample, and the figure is then OMITTED —
                 never a zero, never a dash. Zero asserts a rate of nought; a dash renders the
@@ -992,9 +1013,12 @@ function ProofFigure({
  * disclosed.
  *
  * Monochrome, per the brief's Historical grey. Two adjacent segments still have to be told apart,
- * so they differ in tone and are named at each end — but tone is not weight here: the lengths carry
- * the ratio, and the counts themselves are stated at identical size in the figure above. The rule
- * shows the shape of the record; it does not rank the two outcomes.
+ * so they differ in tone and are named at each end.
+ *
+ * The lost segment is `--hero-ink-2`, not `--hero-ink-3`. Lengths carry the ratio, but tone speaks
+ * too, and ink-3 put the loss at 4.70:1 against the win's 18.25:1 — the faintest mark in the one
+ * section that exists to not hide losses. ink-2 measures 7.89:1: adjacent to the win, plainly
+ * distinguishable from it, and not whispered.
  *
  * Renders nothing when nothing has settled: a rule of zero width states a ratio that does not exist.
  *
@@ -1017,7 +1041,7 @@ function ProofBar({
     <div className="mt-10" aria-hidden>
       <div className="flex h-[3px] w-full overflow-hidden bg-[var(--hero-line)]">
         <span style={{ flexGrow: won }} className="block bg-[var(--hero-ink)]" />
-        <span style={{ flexGrow: lost }} className="block bg-[var(--hero-ink-3)]" />
+        <span style={{ flexGrow: lost }} className="block bg-[var(--hero-ink-2)]" />
       </div>
       <div className="mt-2 flex justify-between">
         <span className="rw-label text-[var(--hero-ink-3)]">{wonLabel}</span>
@@ -1034,8 +1058,11 @@ function ProofBar({
  * grind identically, and a reader has no way to tell which they are looking at. This is the rows
  * already rendered below it, reduced to their outcome and placed in order.
  *
- * Monochrome, like the rule above it. Each mark still names its own outcome in `sr-only` text, so
- * the sequence is fully readable without relying on tone at all.
+ * Monochrome, like the rule above it, and on the same ramp for the same reason: a lost mark at
+ * ink-3 would be the faintest thing in the section that exists to not hide losses. Won and lost sit
+ * one step apart at 18.25:1 and 7.89:1; void takes ink-3, because a fixture with no outcome is the
+ * one thing here that genuinely is secondary. Each mark also names its own outcome in `sr-only`
+ * text, so the sequence is fully readable without relying on tone at all.
  *
  * Pending rows are excluded rather than drawn in a third tone: this is the settled record, and an
  * unsettled fixture has no outcome to show. Renders nothing when nothing has settled.
@@ -1051,8 +1078,8 @@ function FormStrip({
   if (!settled.length) return null;
   const tone: Record<string, string> = {
     won: "bg-[var(--hero-ink)]",
-    lost: "bg-[var(--hero-ink-3)]",
-    void: "bg-[var(--hero-line)]",
+    lost: "bg-[var(--hero-ink-2)]",
+    void: "bg-[var(--hero-ink-3)]",
   };
   return (
     <div className="mt-8">

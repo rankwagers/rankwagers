@@ -83,14 +83,17 @@ export function buildProofBandFigures(
    * though it were a reading. An omitted figure is the honest shape of a record that has settled
    * nothing yet, and it is the same rule the hero funnel follows for an unobserved stage.
    *
-   * `windowLabel` travels with it, because it exists to qualify this rate.
+   * It carries no note. `windowLabel` is NOT attached here: the record has one window, and
+   * `totalPredictions`, `settledPredictions` and `pendingPredictions` are all computed over it.
+   * Hanging it off this figure would imply the other three were all-time, and would strip the
+   * window from three figures that are still scoped by it whenever the rate is null. It is stated
+   * once, against the whole band, beside the heading.
    */
   if (verified.hitRatePct !== null) {
     figures.push({
       key: "hitRate",
       label: copy.hitRate,
       value: `${verified.hitRatePct}%`,
-      note: verified.windowLabel,
     });
   }
 
