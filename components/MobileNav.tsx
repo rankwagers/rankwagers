@@ -137,9 +137,14 @@ export function MobileNav({
  : null;
 
  return (
- // Visible at every width, not just below xl. The compact desktop row holds five entries because
- // that is all the capped header container can seat without overrunning the search box, so this
- // grouped menu is the only route to the other four on desktop — it is no longer mobile-only.
+ /*
+  Visible at every width. This sheet is no longer an overflow for a crowded bar — the v2 masthead
+  does not carry search or the language select at all, so the sheet is the ONLY route to both on
+  every viewport, as well as to the navigation groups the compact row cannot seat.
+
+  That raises what the button owes the reader: it is the single affordance for three different
+  things, so it stays visible at every width and keeps its focus trap and its Escape handler.
+ */
  <div className="relative z-10">
  <button
  ref={menuButtonRef}

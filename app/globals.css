@@ -642,6 +642,21 @@ textarea,
   font-variant-numeric: tabular-nums;
 }
 
+/*
+ * The masthead's navigation face.
+ *
+ * Mono, uppercase, 0.1em — the map sets destinations in the same face as the data they lead to,
+ * which is what makes the masthead read as a contents page rather than as an app bar. Its own
+ * primitive rather than `.rw-m` because the tracking differs (0.1em against 0.04em) and because a
+ * nav item is a target: 10.5px is the floor that stays legible uppercased at this tracking.
+ */
+.rw-hero .rw-nav {
+  font-family: var(--font-hero-mono), ui-monospace, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
 /** Mono labels: 9.5–11px, the only place tracking opens up. */
 .rw-hero .rw-m {
   font-family: ui-monospace, "SF Mono", Menlo, monospace;

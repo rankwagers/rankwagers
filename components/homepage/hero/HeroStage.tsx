@@ -61,27 +61,17 @@ export function HeroStage({
     >
       <div className="relative mx-auto w-full max-w-[1240px] px-5 pb-16 lg:px-8 lg:pb-24">
         {/*
-          THE EDITION LINE, BESIDE THE HEADLINE.
+          THE EDITION LINE IS NOT HERE ANY MORE.
 
-          What was retrieved and when, set in mono against the left axis and closed by the heavy
-          rule that opens the page. It sits ABOVE the headline rather than in a header strip
-          because this is the page's masthead: a publication states its edition before it states
-          its claim.
+          This block printed an eyebrow and the retrieval stamp, above the same 2px/1px rule the
+          masthead draws. Both are masthead facts, and the masthead now states them — so the page
+          was saying "lists retrieved 08:31 UTC" twice, forty pixels apart, under two identical
+          rules. A repeated fact reads as two different facts that happen to agree.
 
-          The stamp is the provider's own retrieval time. The map runs a ticking "refreshed Ns ago"
-          counter here; that counter is bound to nothing, and this page holds exactly one freshness
-          fact, so it states that one.
+          `copy.eyebrow` and `copy.updated` stay on the copy contract: `SiteTopChrome` builds the
+          masthead line from the same dictionary entry (`heroStageUpdated`), so there is still one
+          wording for one fact.
         */}
-        <div
-          className="rw-enter flex flex-wrap items-baseline gap-x-6 gap-y-1.5"
-          style={{ animationDelay: "var(--lead)" }}
-        >
-          <span className="rw-label text-[var(--hero-ink-2)]">{copy.eyebrow}</span>
-          <p className="rw-tnum rw-label ml-auto text-[var(--hero-ink-2)]">{copy.updated}</p>
-        </div>
-        {/* The masthead rule: 2px over a hairline, the map's heaviest opening. */}
-        <div aria-hidden className="mt-2.5 h-[2px] w-full bg-[var(--hero-ink)]" />
-        <div aria-hidden className="mt-[2px] h-px w-full bg-[var(--hero-line)]" />
 
         {/* ------------------------------------------------ the left axis */}
         <div className="lg:grid lg:grid-cols-[minmax(0,78%)_1fr] lg:gap-x-10">
@@ -148,7 +138,10 @@ export function HeroStage({
                           venueHome: copy.venueHome,
                           venueAway: copy.venueAway,
                           venueLeague: copy.venueLeague,
+                          venuePotential: copy.venuePotential,
                           openResearch: copy.openResearch,
+                          openResearchCta: copy.openResearchCta,
+                          meta: copy.leadMeta,
                         }}
                       />
                     </div>

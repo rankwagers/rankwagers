@@ -168,6 +168,21 @@ export const predictionsEn = {
    * the page's copy. It was three hardcoded English strings passed to `SectionHeading` — the only
    * untranslated section heading on the page.
    */
+  /*
+   * The masthead's edition segment. `n` is the COUNT of archived days — the Nth issue is the Nth
+   * one published — and the whole segment is omitted when the archive holds nothing rather than
+   * printing "Edition 0". See `lib/homepage/edition.ts` for why the count beats the span.
+   */
+  mastheadEdition: "Edition {n}",
+  /*
+   * The lead's middle track. It labels the provider potential — the figure the numeral states —
+   * standing between the two venue records it is read against. Deliberately the short form: the
+   * qualifier under the numeral carries the full sentence, and repeating it on the track would
+   * put two statements of the same bound in one picture.
+   */
+  heroVenuePotential: "potential",
+  /** The bordered mono button at the foot of the lead. Uppercased by the type primitive. */
+  heroOpenResearchCta: "Open match research",
   liveDeskEyebrow: "Live desk",
   liveDeskTitle: "Live signals",
   liveDeskDescription:

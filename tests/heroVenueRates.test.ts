@@ -234,9 +234,16 @@ test("an unresolved venue rate is omitted whole, and costs no layout when it is"
    * resolved. There is no later fill that could push the page around, which is the only thing the
    * reserved height ever protected against.
    */
-  assert.match(LEAD_SRC, /\.filter\(\(l\): l is \{ label: string; rate: RateWithSample \} => l\.rate !== null\)/,
-    "unresolved lines are filtered out rather than drawn empty");
-  assert.match(LEAD_SRC, /const hasLines = lines\.length > 0/, "and the block is dropped when none resolve");
+  assert.match(
+    LEAD_SRC,
+    /\.filter\(\(t\): t is Track => t !== null\)/,
+    "unresolved venue tracks are filtered out rather than drawn empty"
+  );
+  assert.match(
+    LEAD_SRC,
+    /const hasLines = venueTracks\.length > 0/,
+    "and the block is dropped when neither venue record resolves"
+  );
   assert.match(LEAD_SRC, /\{hasLines \? \(/, "the omission is a render-time branch, not a later fill");
 
   // The rate is never invented in the gap it leaves behind.

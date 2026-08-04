@@ -76,6 +76,35 @@ export async function HomepageHero({
     venueRates[pick.matchId] = venueRatesForMarket(details.get(pick.matchId), pick.marketKind);
   }
 
+  /*
+   * THE LEAD'S META LINE — `league · Tue 04 Aug · 19:00 UTC`.
+   *
+   * Resolved here rather than in the client component for the reason every other date on this page
+   * is: `en-GB` + UTC fixed, so the server render and any later client render of the same markup
+   * agree. A kickoff is a property of the fixture, not of the reader's clock.
+   *
+   * Each part is omitted independently — an unparseable kickoff stamp drops the date and keeps the
+   * league and the time, rather than printing "Invalid Date".
+   */
+  const lead = model.picks[0];
+  const leadMeta = (() => {
+    if (!lead) return "";
+    const parts = [lead.league];
+    const kickoff = new Date(lead.kickoffDateTime);
+    if (!Number.isNaN(kickoff.getTime())) {
+      parts.push(
+        new Intl.DateTimeFormat("en-GB", {
+          weekday: "short",
+          day: "2-digit",
+          month: "short",
+          timeZone: "UTC",
+        }).format(kickoff)
+      );
+    }
+    if (lead.kickoff) parts.push(`${lead.kickoff} UTC`);
+    return parts.join(" · ");
+  })();
+
   return (
     <HeroStage
       model={model}
@@ -118,6 +147,9 @@ export async function HomepageHero({
         venueHome: p.heroVenueHome,
         venueAway: p.heroVenueAway,
         venueLeague: p.heroVenueLeague,
+        venuePotential: p.heroVenuePotential,
+        openResearchCta: p.heroOpenResearchCta,
+        leadMeta,
         tableNo: p.heroTableNo,
         tableFixture: p.heroTableFixture,
         tableLeague: p.heroTableLeague,

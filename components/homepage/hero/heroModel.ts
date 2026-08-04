@@ -60,10 +60,22 @@ export type HeroCopy = {
    * reading cannot be encountered without the sentence that bounds it.
    */
   probabilityNote: string;
-  /** Venue-split labels for the three rates the lead sets beneath its numeral. */
+  /**
+   * Venue-split labels.
+   *
+   * `venueHome` and `venueAway` label both the lead's outer tracks and the supporting table's rate
+   * columns. `venuePotential` labels the lead's middle track only. `venueLeague` is still resolved
+   * and still passed, but the v2 lead draws home / potential / away — the league baseline has no
+   * track in that composition.
+   */
   venueHome: string;
   venueAway: string;
   venueLeague: string;
+  venuePotential: string;
+  /** The bordered mono button at the foot of the lead. */
+  openResearchCta: string;
+  /** The lead's mono meta line — `league · date · KO UTC` — resolved by the server boundary. */
+  leadMeta: string;
   /** The supporting table's column heads. */
   tableNo: string;
   tableFixture: string;

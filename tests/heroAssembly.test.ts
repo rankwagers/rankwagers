@@ -49,8 +49,9 @@ const COPY_KEYS = [
   "funnelQualified", "funnelFeatured",
   "leadTitle", "leadNote", "supportingTitle", "supportingNote",
   "cta", "empty", "openResearch", "probabilityNote",
-  "venueHome", "venueAway", "venueLeague",
+  "venueHome", "venueAway", "venueLeague", "venuePotential",
   "tableNo", "tableFixture", "tableLeague", "tableKickoff", "tablePotential", "tableMarket",
+  "openResearchCta", "leadMeta",
 ] as const;
 
 /** Each label is its own key, so an assertion can name exactly which slot rendered. */
@@ -174,7 +175,12 @@ test("the hero renders the lead — the held fixture and its venue rates", () =>
    */
   assert.ok(html.includes("(8/8)"), "the home venue rate reached the page, with its sample");
   assert.ok(html.includes("(9/11)"), "the away venue rate reached the page, with its sample");
-  assert.ok(html.includes("(240)"), "the league baseline reached the page, with its sample");
+  /*
+   * The league baseline is NOT asserted, because the v2 lead does not draw it: the map's three
+   * tracks are home · potential · away. It is still resolved and still passed in — the data did
+   * not change — but this composition states the two venue records and the claim between them.
+   */
+  assert.equal(html.includes("(240)"), false, "the league baseline has no track in the v2 lead");
 });
 
 test("the composition the rebrand replaced is not reachable", () => {
@@ -201,8 +207,12 @@ test("an empty day keeps the funnel and the edition line, and states the absence
    */
   const html = renderHero([]);
   assert.ok(html.includes("empty"), "the empty-state copy renders");
-  assert.ok(html.includes("updated"), "the edition line survives an empty day");
-  assert.ok(html.includes("238"), "and so does the funnel — what was looked at is still stated");
+  /*
+   * The edition line is asserted in the masthead now, not here — `HeroStage` stopped printing a
+   * second copy of it. What this surface still owes an empty day is the funnel: the page says
+   * what was looked at even when nothing cleared.
+   */
+  assert.ok(html.includes("238"), "the funnel survives — what was looked at is still stated");
   assert.ok(html.includes("†"), "including the marker on the stage that carries a qualifier");
   assert.equal(html.includes("(8/8)"), false, "no venue figure is drawn without a fixture");
   assert.equal(
@@ -557,4 +567,63 @@ test("reduced motion strips the entrances by name, not only by duration", () => 
   const reduce = css.slice(css.lastIndexOf("@media (prefers-reduced-motion: reduce)"));
   assert.match(reduce, /\.rw-hero \.rw-reveal/, "the scroll reveal lands on its final state");
   assert.match(reduce, /transform: none/, "and displacement is removed by name");
+});
+
+
+/* ------------------------------------------------------------------ *
+ * THE SURGICAL PASS — four geometries, asserted where they assemble
+ * ------------------------------------------------------------------ */
+
+test("the masthead is mono, carries its line, and holds no search box", () => {
+  const header = readFileSync(path.join(process.cwd(), "components/Header.tsx"), "utf8");
+  const chrome = readFileSync(path.join(process.cwd(), "components/SiteTopChrome.tsx"), "utf8");
+
+  assert.match(header, /rw-nav/, "the destinations are set in the mono nav face");
+  assert.match(header, /h-\[2px\] origin-left bg-\[var\(--hero-ink\)\]/, "active carries a 2px rule");
+  assert.match(header, /\{meta\}/, "the masthead prints its one mono line");
+  assert.equal(/GlobalSearch|LanguageSwitcher/.test(header), false, "and holds neither control");
+
+  // The line is built server-side from the two facts it states.
+  assert.match(chrome, /heroStageUpdated/, "the retrieval stamp");
+  assert.match(chrome, /resolveEdition/, "and the edition");
+});
+
+test("the hero no longer duplicates the masthead's retrieval stamp", () => {
+  const stage = readFileSync(
+    path.join(process.cwd(), "components/homepage/hero/HeroStage.tsx"),
+    "utf8"
+  ).replace(/\/\*[\s\S]*?\*\//g, "");
+  assert.equal(
+    /\{copy\.updated\}|\{copy\.eyebrow\}/.test(stage),
+    false,
+    "the eyebrow row is gone — the stamp is a masthead fact and is stated once"
+  );
+});
+
+test("the funnel renders a descent, with offsets from the emitted levels", () => {
+  const html = renderHero();
+  /*
+   * The descent is only a descent if the stages sit at DIFFERENT levels. The fixture's funnel
+   * steps down twice (238/231/214 equal-ish, then 18, then 2), so the rendered markup must carry
+   * more than one `top:` value.
+   */
+  const tops = [...html.matchAll(/top:\s*(\d+)px/g)].map((m) => Number(m[1]));
+  assert.ok(tops.length >= 4, `every stage is positioned — found ${tops.length}`);
+  assert.ok(new Set(tops).size > 1, `the stages sit at different levels — found ${[...new Set(tops)]}`);
+  // Value before label, per the map.
+  const value = html.indexOf(">238<");
+  const label = html.indexOf("funnelAnalysed");
+  assert.ok(value > 0 && label > value, "the count is printed before its caption");
+});
+
+test("the lead draws three vertical tracks and its bordered call to action", () => {
+  const html = renderHero();
+  // Vertical: a fixed-height rail with a bottom-origin transform.
+  assert.ok(html.includes("scaleY(0)") || html.includes("scaleY(1)"), "the tracks scale on Y");
+  assert.ok(html.includes("origin-bottom"), "and grow from the baseline");
+  // Home · potential · away — the middle track is the numeral's own figure.
+  assert.ok(html.includes("venueHome"), "the home track is labelled");
+  assert.ok(html.includes("venuePotential"), "the potential track sits between them");
+  assert.ok(html.includes("venueAway"), "the away track is labelled");
+  assert.ok(html.includes("openResearchCta"), "the lead carries its call to action");
 });

@@ -5,25 +5,50 @@ import type { HeroFunnel } from "@/lib/homepage/types";
 import { funnelDescent, type HeroCopy } from "./heroModel";
 
 /* ============================================================================
-   THE FUNNEL — one hairline, read as a sentence
+   THE FUNNEL DESCENT — replicated from the map
    ----------------------------------------------------------------------------
-   The map sets the funnel as a ruled TEXT line, not a chart. Stages sit on a
-   single hairline with their values in mono; the reader scans it the way they
-   scan a scoreline.
+   Not a row of equal stages: a DESCENT. Equal counts share the top rule;
+   a stage that actually rejected something drops to its own level, and the rule
+   drops with it. The shape IS the claim — "hundreds became five" is a movement
+   down the page, and a flat row states it as a list of statistics.
 
-   THE LEVELS ARE NOT RECOMPUTED. `funnelDescent` already decides which stages
-   render, in what order, and which are emphasised — including the rule that a
-   `null` stage is omitted entirely rather than drawn as zero. This composition
-   consumes that verbatim. A second implementation of the descent would be a
-   second definition of what the funnel means.
+   Each stage is one column of an N-track grid, absolutely positioned at its own
+   level inside a fixed-height box. So:
 
-   "Cleared threshold" is the fourth stage's name. Nothing here calls a threshold
-   pass a qualification; the internal `qualified` key is an identifier, not a
-   claim, and the accent tick plus the † footnote are what carry the meaning.
+     · nothing wraps, because the track count IS the stage count;
+     · nothing reflows, because the box holds its height from the first frame
+       whatever the levels turn out to be.
+
+   THE LEVELS ARE NOT RECOMPUTED HERE. `funnelDescent` already emits `offset`,
+   keyed to the VALUE rather than to the index: equal counts stay level, and a
+   drop marks a real rejection. This renders that number. A second implementation
+   of the descent would be a second definition of what the funnel means, and the
+   two would disagree on exactly the days that matter.
+
+   VALUE THEN LABEL — "11  fixtures". The count is the observation and the word
+   is its caption; putting the word first makes the reader parse a label before
+   they are given anything to attach it to.
+
+   THE ACCENT IS ON THE RULE, NOT ON THE MARKER. `cleared†` carries its dagger in
+   plain ink as part of its name, and the accent is spent on the OVERLINE above
+   it — the one stage whose rule is not ink. That keeps the page's two-accent
+   budget intact: this overline, and the † on the footnote that defines it.
    ========================================================================== */
 
 /** One of the page's two permitted accent uses. */
 export const FUNNEL_FOOTNOTE_ID = "funnel-cleared-threshold";
+
+/**
+ * The top level, before any descent is applied.
+ *
+ * The stages hang BELOW their rules, so the first rule needs room above it inside the box for
+ * nothing at all — this is the map's 18px, which keeps the top rule clear of the section label
+ * above without a margin that would move when the descent deepens.
+ */
+const TOP_PX = 18;
+
+/** Room under the deepest label, so the box never clips its own last line. */
+const LABEL_PX = 26;
 
 export function FunnelLine({
   funnel,
@@ -35,57 +60,60 @@ export function FunnelLine({
   const descent = funnelDescent(funnel);
   if (descent.length === 0) return null;
 
+  /*
+   * The box is sized from the deepest level the data actually produced — not from a constant, so
+   * a day whose stages never drop draws a short box rather than reserving space for a descent
+   * that did not happen. It is still fixed for the whole render: zero CLS.
+   */
+  const deepest = Math.max(...descent.map((step) => step.offset));
+
   return (
     <div className="rw-funnel">
-      {/* The hairline every stage sits on. */}
-      <div className="h-px w-full bg-[var(--hero-ink)] opacity-40" aria-hidden />
-      {/*
-        ONE RULE, ONE LINE.
-
-        This was `flex flex-wrap` with a fixed 40px gap, and at desktop width the fifth stage —
-        FEATURED — dropped to a second row. A funnel printed on two lines is not a funnel: the
-        claim is a single descent read left to right, and a wrapped stage reads as a separate
-        statement about a different population.
-
-        A grid of N equal tracks cannot wrap, because the track count IS the stage count. The
-        stages shrink together instead, which is the correct failure — five narrow columns still
-        read as one line, where four-plus-one does not. Below `sm` the row would be 60px per
-        stage, so it becomes two columns there and the line is abandoned deliberately rather
-        than broken accidentally.
-      */}
-      <dl
-        className="mt-4 grid grid-cols-2 items-baseline gap-x-6 gap-y-4 sm:grid-cols-[repeat(var(--rw-funnel-cols),minmax(0,1fr))] sm:gap-x-4"
-        style={{ "--rw-funnel-cols": String(descent.length) } as CSSProperties}
+      <div
+        className="relative grid grid-cols-2 gap-x-6 sm:grid-cols-[repeat(var(--rw-funnel-cols),minmax(0,1fr))] sm:gap-x-4"
+        style={
+          {
+            "--rw-funnel-cols": String(descent.length),
+            height: TOP_PX + deepest + LABEL_PX,
+          } as CSSProperties
+        }
       >
         {descent.map((step) => {
           const cleared = step.stage === "qualified";
           return (
-            <div key={step.stage} className="flex items-baseline gap-2.5">
-              <dt className="rw-m text-[var(--hero-ink-2)]">
-                {copy[step.label] ?? step.stage}
-                {cleared ? (
-                  <>
-                    {/* The accent tick — one of two accent uses on the page. */}
-                    <span
-                      aria-hidden
-                      className="ml-1 text-[var(--hero-accent)]"
-                    >
-                      †
-                    </span>
-                    <a
-                      href={`#${FUNNEL_FOOTNOTE_ID}`}
-                      className="sr-only"
-                    >
-                      See footnote
-                    </a>
-                  </>
-                ) : null}
-              </dt>
-              <dd className="rw-h rw-tnum text-[20px] text-[var(--hero-ink)]">{step.value}</dd>
+            <div key={step.stage} className="relative min-w-0">
+              {/*
+                The stage sits at its own level. `top` is the descent's own offset plus the shared
+                top inset — the only arithmetic here, and it adds a constant rather than deriving
+                a level.
+              */}
+              <div className="absolute inset-x-0" style={{ top: TOP_PX + step.offset }}>
+                <div
+                  aria-hidden
+                  className={`h-[2px] w-full ${
+                    cleared ? "bg-[var(--hero-accent)]" : "bg-[var(--hero-ink)]"
+                  }`}
+                />
+                <p className="rw-m mt-[5px] whitespace-nowrap tracking-[0.08em] text-[var(--hero-ink)]">
+                  <span className="rw-tnum">{step.value}</span>
+                  {"\u00a0\u00a0"}
+                  <span className="text-[var(--hero-ink-2)]">
+                    {copy[step.label] ?? step.stage}
+                    {cleared ? (
+                      <>
+                        †
+                        <a href={`#${FUNNEL_FOOTNOTE_ID}`} className="sr-only">
+                          See footnote
+                        </a>
+                      </>
+                    ) : null}
+                  </span>
+                </p>
+              </div>
             </div>
           );
         })}
-      </dl>
+      </div>
     </div>
   );
 }

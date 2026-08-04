@@ -59,7 +59,7 @@ test("every hero numeral is printed from its observed value, with nothing betwee
   // The funnel's stage count: rendered from the step, not from a piece of animated state.
   assert.match(
     funnel,
-    /<dd className="[^"]*">\{step\.value\}<\/dd>/,
+    /<span className="rw-tnum">\{step\.value\}<\/span>/,
     "the funnel stage must print `step.value` itself"
   );
   // The lead's numeral: rendered from the pick.
@@ -78,6 +78,7 @@ test("every hero numeral is printed from its observed value, with nothing betwee
     );
   }
   assert.match(lead, /useState\(false\)/, "the lead's only state is the draw latch");
+  // The tracks scale on Y now; the guarantee is unchanged — no figure passes through state.
   assert.equal(
     /useState<(number|string)/.test(lead) || /useState\(\d/.test(lead),
     false,
@@ -112,14 +113,14 @@ test("a reveal whose observer never fires is still readable", () => {
   assert.match(reduceBlock, /opacity:\s*1/);
 });
 
-test("the lead's venue rules draw with transform, never with width", () => {
+test("the lead's venue tracks draw with transform, never with their box", () => {
   /*
    * The rules animate `scaleX` on a track that holds its full box from the first frame. Animating
    * `width` instead would reflow the block on every frame — the CLS that the reserved-height slots
    * in the replaced composition existed to prevent, reintroduced through the animation.
    */
-  assert.match(lead, /transition: `transform \$\{LINE_MS\}ms/, "the rule animates transform");
-  assert.doesNotMatch(lead, /transition: `width/, "and never animates its width");
+  assert.match(lead, /transition: `transform \$\{LINE_MS\}ms/, "the track animates transform");
+  assert.doesNotMatch(lead, /transition: `(width|height)/, "and never animates its box");
 });
 
 /* ------------------------------------------------------------------ *

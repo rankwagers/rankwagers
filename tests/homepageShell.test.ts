@@ -64,19 +64,48 @@ test("the hero scope is declared once, on the page", () => {
 
 /* -- the converted chrome --------------------------------------------------- */
 
-test("the shared header carries the prototype shell", () => {
+test("the shared header is a masthead, not a sticky app bar", () => {
   const chrome = src("components/SiteTopChrome.tsx");
-  assert.match(chrome, /rw-hero sticky top-0/);
-  assert.match(chrome, /border-\[var\(--hero-line\)\]\/80/);
-  assert.match(chrome, /bg-\[var\(--hero-canvas\)\]\/80/);
-  assert.match(chrome, /backdrop-blur-xl/);
+  /*
+   * v2 turns the header into a MASTHEAD: it carries the edition line and closes on the thick rule,
+   * and it scrolls away. A masthead that follows the reader down the page is a toolbar wearing
+   * one, so the sticky positioning and its backdrop blur are gone rather than restyled.
+   */
+  assert.match(chrome, /rw-hero w-full bg-\[var\(--hero-canvas\)\]/);
+  assert.equal(/sticky|backdrop-blur/.test(chrome), false, "the masthead does not follow the reader");
   // The cream ground it replaced must be gone, not merely overridden.
   assert.equal(chrome.includes("canvas-secondary"), false);
 
   const header = src("components/Header.tsx");
-  assert.match(header, /h-16 w-full max-w-\[1240px\] .*px-5 lg:px-8/);
+  assert.match(header, /max-w-\[1240px\] px-5 pt-6 lg:px-8/, "the shared measure is unchanged");
   assert.equal(header.includes("text-brand"), false, "the green brand colour is gone");
   assert.equal(header.includes("canvas-secondary"), false);
+});
+
+test("the masthead states the edition line and closes on the thick rule", () => {
+  const header = src("components/Header.tsx");
+  // One mono line, right-aligned: retrieved · edition · 18+.
+  assert.match(header, /\{meta\}/, "the masthead prints the line it is given");
+  assert.match(header, /ml-auto/, "held to the right edge");
+  assert.match(header, /font-hero-mono/, "in the mono face");
+  // 2px ink over a half-ink hairline, 2px apart — the map's heaviest opening.
+  assert.match(header, /h-\[2px\] w-full bg-\[var\(--hero-ink\)\]/);
+  assert.match(header, /mt-\[2px\] h-px w-full bg-\[var\(--hero-ink\)\] opacity-50/);
+});
+
+test("search and the language select are not in the masthead", () => {
+  /*
+   * A product decision, and this is what makes it checkable. Neither is REMOVED — both live in
+   * the menu sheet, which is why the sheet's button is visible at every width. What must not
+   * happen is one of them creeping back into the bar and quietly re-widening it.
+   */
+  const header = src("components/Header.tsx");
+  assert.equal(/GlobalSearch/.test(header), false, "search is not in the masthead");
+  assert.equal(/LanguageSwitcher/.test(header), false, "nor is the language select");
+
+  const sheet = src("components/MobileNav.tsx");
+  assert.match(sheet, /GlobalSearch/, "search is in the sheet");
+  assert.match(sheet, /LanguageSwitcher/, "and so is the language select");
 });
 
 test("the footer is the page's one inverted ground", () => {
@@ -192,12 +221,23 @@ test("v2 type primitives exist at the map's ladder", () => {
   assert.match(css, /\.rw-hero \.rw-h \{[\s\S]*?font-weight: 800/);
 });
 
-test("the header marks the active destination with a rule, not a chip", () => {
+test("the nav is mono, and the active destination carries a 2px rule", () => {
   const header = src("components/Header.tsx");
-  assert.match(header, /border-b-\[1\.5px\]/);
-  assert.match(header, /border-\[var\(--hero-ink\)\] font-medium/);
-  // Both states carry the border so nothing reflows when it changes — zero CLS.
-  assert.match(header, /border-transparent/);
+  const css = src("app/globals.css");
+
+  // Mono, uppercase, letterspaced — the map's nav face.
+  assert.match(header, /rw-nav/, "the nav items take the mono nav primitive");
+  assert.match(css, /\.rw-hero \.rw-nav \{[^}]*font-hero-mono/s, "which is the mono face");
+  assert.match(css, /\.rw-hero \.rw-nav \{[^}]*text-transform: uppercase/s);
+  assert.match(css, /\.rw-hero \.rw-nav \{[^}]*letter-spacing: 0\.1em/s);
+
+  /*
+   * The rule is an absolutely positioned 2px bar scaled from the left. It costs no layout in
+   * either state, so the row cannot reflow when the active destination changes — the same zero-CLS
+   * guarantee the previous always-present border gave, by a different mechanism.
+   */
+  assert.match(header, /h-\[2px\] origin-left bg-\[var\(--hero-ink\)\]/);
+  assert.match(header, /active \? "scale-x-100" : "scale-x-0/);
   assert.equal(/bg-accent/.test(header), false, "no filled chip survives");
 });
 
