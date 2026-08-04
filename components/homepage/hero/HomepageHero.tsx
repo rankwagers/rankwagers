@@ -1,6 +1,8 @@
 import type { FullDictionary } from "@/lib/dictionaries";
 import type { DailyMatchLists } from "@/lib/footystats/types";
 import type { Locale } from "@/lib/i18n";
+import { venueRatesForMarket, type VenueRates } from "@/lib/fixtures/evidenceView";
+import { getMatchDetails } from "@/lib/footystats/matchDetail";
 import { buildHomepageHeroModel } from "@/lib/homepage/heroModel";
 import { formatDict } from "@/lib/dictionaryExtras";
 import { HeroStage } from "./HeroStage";
@@ -9,14 +11,26 @@ import { HeroStage } from "./HeroStage";
  * S1 — Hero.
  *
  * Server boundary for the approved hero composition: it derives the model from the day's lists
- * that the page has already fetched — no extra request, no new failure mode — resolves copy from
- * the dictionary, and hands both to the interactive stage.
+ * that the page has already fetched, resolves copy from the dictionary, and hands both to the
+ * interactive stage.
  *
  * The stage below is a client component because the selection drives the instrument, but it is
  * still server-rendered into the initial HTML, so the H1 is present for crawlers and paints
  * without waiting for hydration.
+ *
+ * THE ONE REQUEST THIS BOUNDARY MAKES.
+ * The venue rates beside the dial — the home side at home, the away side away, the league — do
+ * not exist in the daily lists. Those lists carry a market-potential percentage per fixture and
+ * no sample, and a rate published without its sample is exactly what §3.2 forbids. So the rates
+ * come from the same provider detail the fixture page reads, through the same cached,
+ * concurrency-bounded, failure-isolated helper: a fixture whose detail does not resolve is simply
+ * absent from the map, and the stage omits its slot rather than drawing a dash or a zero.
+ *
+ * The enrichment is bounded by the pick count (five), so it is a fixed cost rather than one that
+ * grows with the day's fixture list, and it resolves on the server — the slots are filled in the
+ * first paint, so no figure arrives late and nothing reflows.
  */
-export function HomepageHero({
+export async function HomepageHero({
   lists,
   dict,
   locale,
@@ -48,11 +62,26 @@ export function HomepageHero({
 
   const count = model.picks.length;
 
+  /*
+   * Venue rates for the ranked picks, keyed by fixture. A pick with no entry, or an entry whose
+   * sides hold nothing, renders with its slots empty — never filled in from a neighbour, from the
+   * league figure, or from a previous day.
+   */
+  const details = await getMatchDetails(
+    model.picks.map((pick) => pick.matchId),
+    locale
+  );
+  const venueRates: Record<number, VenueRates> = {};
+  for (const pick of model.picks) {
+    venueRates[pick.matchId] = venueRatesForMarket(details.get(pick.matchId), pick.marketKind);
+  }
+
   return (
     <HeroStage
       model={model}
       locale={locale}
       headingId={headingId}
+      venueRates={venueRates}
       copy={{
         eyebrow: p.heroStageEyebrow,
         updated,
@@ -82,6 +111,9 @@ export function HomepageHero({
         openResearch: p.heroOpenResearch,
         // Existing approved terminology for exactly this figure — not new copy.
         probabilityNote: p.colPctTooltip,
+        venueHome: p.heroVenueHome,
+        venueAway: p.heroVenueAway,
+        venueLeague: p.heroVenueLeague,
       }}
     />
   );
