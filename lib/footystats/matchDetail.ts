@@ -171,20 +171,25 @@ function venueStatsFromTeam(stats: RawStats, venue: "home" | "away"): VenueSideS
 
 const GPT_LOCALE_MAP: Record<string, string> = { ...footyStatsGptKey };
 
-function gptTextForLocale(match: Record<string, unknown>, locale: string): string | null {
+/**
+ * The reader's analysis text, selected from the provider's multilingual block.
+ *
+ * Selection, not derivation — the resolution order is unchanged from when this read the raw match
+ * object: the reader's language, then English as the fallback the provider itself supplies. It
+ * runs AFTER the cache, which is what lets one cached fixture serve all thirty-two locales.
+ */
+function gptTextFromSource(
+  source: { en?: string; int?: Record<string, string> },
+  locale: string
+): string | null {
   const loc =
     footyStatsGptKey[locale as Locale] ?? GPT_LOCALE_MAP[locale] ?? "en";
   if (loc === "en") {
-    const en = match.gpt_en;
-    if (typeof en === "string" && en.trim()) return en.trim();
+    if (source.en && source.en.trim()) return source.en.trim();
   }
-  const gptInt = match.gpt_int;
-  if (gptInt && typeof gptInt === "object") {
-    const block = (gptInt as Record<string, unknown>)[loc];
-    if (typeof block === "string" && block.trim()) return block.trim();
-  }
-  const en = match.gpt_en;
-  if (typeof en === "string" && en.trim()) return en.trim();
+  const block = source.int?.[loc];
+  if (typeof block === "string" && block.trim()) return block.trim();
+  if (source.en && source.en.trim()) return source.en.trim();
   return null;
 }
 
@@ -348,7 +353,27 @@ export function computeLeagueSeasonContext(matches: RawStats[]): LeagueSeasonCon
 
 type FixtureMatchContext = { competition?: string; country?: string };
 
-async function fetchMatchDetailUncached(matchId: number, locale: string, context: FixtureMatchContext = {}): Promise<MatchDetailPublic | null> {
+/**
+ * THE LOCALE-INDEPENDENT CORE OF A FIXTURE.
+ *
+ * Everything below is the same football regardless of who is reading it: the same provider
+ * payload, the same team stats, the same league season, the same history. Only two things in the
+ * public shape are NOT locale-independent — the AI text and the odds — and both are composed
+ * after the cache in `getMatchDetail`.
+ *
+ * `gptSource` carries the provider's own multilingual block rather than one rendered string, so a
+ * second locale reads from the cached payload instead of re-fetching it. It is the minimal
+ * projection of that block, not the whole match object: the cached entry has to stay small enough
+ * to persist, and everything else here is already derived.
+ */
+type MatchDetailCore = Omit<MatchDetailPublic, "ai" | "odds"> & {
+  /** Provider kickoff, needed by the odds lookup that composes after the cache. */
+  kickoffAt: string;
+  /** The provider's per-locale analysis block. Selected, never re-fetched, per reader. */
+  gptSource: { en?: string; int?: Record<string, string> };
+};
+
+async function fetchMatchDetailCore(matchId: number): Promise<MatchDetailCore | null> {
   const raw = await fetchJson("match", { match_id: String(matchId) });
   if (!raw || typeof raw !== "object") return null;
   const wrap = raw as { data?: Record<string, unknown> };
@@ -371,9 +396,6 @@ async function fetchMatchDetailUncached(matchId: number, locale: string, context
 
   if (!homeStats || !awayStats) return null;
 
-  const gptRaw = gptTextForLocale(m, locale);
-  const aiParsed = gptRaw ? simplifyGptAnalysis(gptRaw) : null;
-  const ai = aiParsed?.expectation ? aiParsed : null;
   const completed = leagueMatches.filter((row) => completedBefore(row, kickoff));
   const leagueSeason = computeLeagueSeasonContext(completed);
   const homeAtHome = completed
@@ -421,8 +443,10 @@ async function fetchMatchDetailUncached(matchId: number, locale: string, context
     })
     .filter((row): row is HistoricalMatch => row !== null);
 
-  const detail: MatchDetailPublic = {
+  const detail: Omit<MatchDetailCore, "leagueSeason"> = {
     matchId,
+    kickoffAt: new Date(kickoff * 1000).toISOString(),
+    gptSource: gptSourceFrom(m),
     homeTeam: String(m.home_name ?? ""),
     awayTeam: String(m.away_name ?? ""),
     homeAtHome: {
@@ -451,24 +475,69 @@ async function fetchMatchDetailUncached(matchId: number, locale: string, context
           }
         : undefined,
     history: { homeAtHome, awayAtAway, headToHead },
-    ai: ai && ai.expectation ? ai : null,
   };
+  return { ...detail, leagueSeason };
+}
+
+/**
+ * The provider's multilingual analysis block, projected to what `gptTextForLocale` reads.
+ *
+ * Only string members are kept, so a malformed provider block cannot smuggle an object into the
+ * cached entry and inflate it past the size at which it stops being persisted.
+ */
+function gptSourceFrom(m: Record<string, unknown>): { en?: string; int?: Record<string, string> } {
+  const out: { en?: string; int?: Record<string, string> } = {};
+  if (typeof m.gpt_en === "string" && m.gpt_en.trim()) out.en = m.gpt_en;
+  if (m.gpt_int && typeof m.gpt_int === "object") {
+    const int: Record<string, string> = {};
+    for (const [key, value] of Object.entries(m.gpt_int as Record<string, unknown>)) {
+      if (typeof value === "string" && value.trim()) int[key] = value;
+    }
+    if (Object.keys(int).length > 0) out.int = int;
+  }
+  return out;
+}
+
+/**
+ * ONE CACHE ENTRY PER FIXTURE — NOT ONE PER FIXTURE PER LOCALE.
+ *
+ * The key was `[matchId, locale, competition, country]`. `locale` selected nothing but the AI
+ * blurb, and every locale's blurb already arrives in the same provider payload; `competition` and
+ * `country` were only ever forwarded to the odds lookup. So the key fragmented one fixture's
+ * football into up to 32 identical upstream fetches, and the homepage (which passes no context)
+ * could not share an entry with the fixture page (which does).
+ *
+ * The key is now the fixture. Locale selection and the odds lookup both compose AFTER the cache:
+ * the first reads the cached provider block, the second has had its own 120s cache all along, on a
+ * key that never carried locale.
+ *
+ * One `getMatchDetail` on a cold key costs four FootyStats calls (`match`, `team` ×2,
+ * `league-matches`). Under the old key, 32 locales of the same fixture cost 128. Under this one
+ * they cost 4.
+ */
+export async function getMatchDetail(matchId: number, locale = "en", context: FixtureMatchContext = {}): Promise<MatchDetailPublic | null> {
+  const core = await unstable_cache(
+    () => fetchMatchDetailCore(matchId),
+    ["footystats-match-detail-core", String(matchId)],
+    { revalidate: 300 }
+  )();
+  if (!core) return null;
+
+  const { gptSource, kickoffAt, ...publicCore } = core;
+
+  const gptRaw = gptTextFromSource(gptSource, locale);
+  const aiParsed = gptRaw ? simplifyGptAnalysis(gptRaw) : null;
+  const ai = aiParsed?.expectation ? aiParsed : null;
+
   const odds = await getFixtureOdds({
-    home: detail.homeTeam,
-    away: detail.awayTeam,
-    kickoffAt: new Date(kickoff * 1000).toISOString(),
+    home: publicCore.homeTeam,
+    away: publicCore.awayTeam,
+    kickoffAt,
     competition: context.competition,
     country: context.country,
   });
-  return { ...detail, leagueSeason, ...(odds ? { odds } : {}) };
-}
 
-export async function getMatchDetail(matchId: number, locale = "en", context: FixtureMatchContext = {}): Promise<MatchDetailPublic | null> {
-  return unstable_cache(
-    () => fetchMatchDetailUncached(matchId, locale, context),
-    ["footystats-match-detail", String(matchId), locale, context.competition ?? "", context.country ?? ""],
-    { revalidate: 300 }
-  )();
+  return { ...publicCore, ai, ...(odds ? { odds } : {}) };
 }
 
 /** Live/header fields from the same FootyStats match endpoint (betting-relevant only). */

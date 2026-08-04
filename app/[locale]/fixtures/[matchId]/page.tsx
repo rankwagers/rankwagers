@@ -10,8 +10,38 @@ import { listOperators } from "@/lib/operators/registry";
 import { resolveOperatorAvailability } from "@/lib/operators/availability";
 import { pageMetadata } from "@/lib/seo";
 
+/*
+ * WHY THIS PAGE IS DYNAMIC, AND WHY THERE IS NO `revalidate` BESIDE IT.
+ *
+ * `export const revalidate = 60` used to sit on the next line. It never did anything:
+ * `force-dynamic` overrides it, and so does the layout's. Worse, it read as though this route
+ * were cached for a minute, which is the opposite of what happens — so it is removed rather than
+ * left as a comment on behaviour that does not exist.
+ *
+ * This route cannot be ISR'd as written, and the reason is NOT the live minute and score:
+ *
+ *   · `getRequestCountryContext` calls `headers()` and `cookies()` — in the App Router that opts
+ *     a route into dynamic rendering unconditionally. So does reading `searchParams`, which this
+ *     page does for `market` and `source`. Deleting `force-dynamic` would change the label and
+ *     not the behaviour.
+ *
+ *   · The visitor's country selects the operator rows and their availability below. Operator
+ *     availability is a regulatory statement about where a brand may be offered. Serving one
+ *     visitor's jurisdiction from another's cache entry would not be staleness; it would be a
+ *     false claim about what is available to the person reading it.
+ *
+ *   · The live header (status, score, minute) is genuinely per-request for an in-play fixture.
+ *
+ * So the directive stays and the cost is absorbed one layer down instead: `getMatchDetail` now
+ * caches the provider payload on `matchId` alone (`lib/footystats/matchDetail.ts`), so a crawler
+ * walking this surface across thirty-two locales pays for the football once rather than once per
+ * locale. Rendering per request is cheap; FETCHING per request was not.
+ *
+ * If this page is ever to be cached, the fix is to split the per-visitor surface out — operators
+ * and the live header into client components or a route handler, leaving a cacheable shell. That
+ * is a larger change than a directive and is not made here.
+ */
 export const dynamic = "force-dynamic";
-export const revalidate = 60;
 
 export function generateStaticParams() {
   // Match pages are demand-loaded by stable matchId — avoid thin static shells.

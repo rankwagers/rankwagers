@@ -243,7 +243,22 @@ async function fetchFixtureOdds(target: { home: string; away: string; kickoffAt:
 export async function getFixtureOdds(target: { home: string; away: string; kickoffAt: string; competition?: string; country?: string }): Promise<FixtureOdds | null> {
   return unstable_cache(
     () => fetchFixtureOdds(target),
-    ["api-football-fixture-odds", target.home, target.away, target.kickoffAt],
+    /*
+     * The disambiguation context belongs in the key because `fetchFixtureOdds` USES it to choose
+     * which api-football fixture matches (`nameScore` on league name and country, and a hard
+     * reject at line 93 when the country cannot be matched). A caller that supplies no context
+     * gets a looser match, and without these components its looser result would be served to a
+     * caller that supplied one. Both are attributes of the fixture, not of the visitor, so this
+     * adds at most one extra entry per fixture — it does not reintroduce per-locale fragmentation.
+     */
+    [
+      "api-football-fixture-odds",
+      target.home,
+      target.away,
+      target.kickoffAt,
+      target.competition ?? "",
+      target.country ?? "",
+    ],
     { revalidate: 120 }
   )();
 }
