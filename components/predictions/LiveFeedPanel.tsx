@@ -214,7 +214,15 @@ export function LiveFeedPanel({ dict }: { dict: FullDictionary }) {
  const locked = feed?.locked ?? [];
  const upcomingLocked = feed?.upcomingLocked ?? [];
  const history = feed?.history ?? [];
- const hasLiveContent = Boolean(feed?.featured) || locked.length > 0;
+ /*
+  * WHAT IS RENDERED, not what was fetched.
+  *
+  * This counted locked teasers too, which was correct while they drew rows. They no longer do, so
+  * a day whose feed held only locked signals would have reported "has content", suppressed the
+  * empty state, and rendered an empty panel — the silent blank §3.8 exists to prevent. The
+  * featured card is the only thing this desk draws now, so it is the only thing that counts.
+  */
+ const hasLiveContent = Boolean(feed?.featured);
  const hasUpcoming = feed?.upcomingFeatured != null || upcomingLocked.length > 0;
 
  const mobileAlertBadge = (() => {
@@ -233,27 +241,12 @@ export function LiveFeedPanel({ dict }: { dict: FullDictionary }) {
  bg: "bg-[var(--amber-surface)] text-[var(--amber-primary)]",
  };
  }
- if (locked.some((l) => l.isNew)) {
- return {
- label: p.liveNewBadge,
  /*
-  * `ring-1` supplies the width these ring colours never had: Tailwind's `ring-<colour>` sets
-  * only --tw-ring-color, so `ring-brand/50` alone computed to `box-shadow: none` and the two
-  * brand badge states were separated by fill alpha alone. With the fill now shared (below),
-  * the ring is what carries the new-vs-featured distinction, so it has to actually render.
+  * The "new signal" badge is gone with the locked rows it announced. It fired on
+  * `locked.some(l => l.isNew)` and pointed at a teaser that no longer renders, so it would have
+  * announced an arrival the reader could not then find. Only the featured card's own states —
+  * won, win-pending, live — raise a badge now.
   */
- ring: "ring-1 ring-brand/50",
- /*
-  * Was `bg-brand/25 text-brand-light` — 3.47:1, the last axe-core node on /en at 390. The
-  * alpha-tinted brand fill resolved to #c0d6cb under the card, and --green-positive on that
-  * is short of the 4.5:1 floor. This is the pairing the `won` variant above already ships
-  * (#0e6b4f on solid --green-surface, 5.73:1), so the badge set converges on one measured
-  * green rather than three tints of it. Note this variant only renders when the feed has a
-  * new locked item, which is why the scan reached it on one run and not the next.
-  */
- bg: "bg-[var(--green-surface)] text-brand",
- };
- }
  if (featured?.resultState === "live") {
  return {
  label: p.statusLive,
@@ -281,43 +274,33 @@ export function LiveFeedPanel({ dict }: { dict: FullDictionary }) {
 
  return (
  <>
- <div ref={panelRef} id="live-feed" className="rounded-lg border border-border bg-card p-5 shadow-card">
- <div className="mb-3 rounded-lg border border-brand/20 bg-accent/50 p-3 lg:hidden">
+ <div ref={panelRef} id="live-feed">
+ {/*
+  ONE HEADER, NOT TWO.
+
+  The panel rendered `LiveSignalsHeader` twice — once in a tinted `lg:hidden` card and once in a
+  `max-lg:hidden` block — so the same title, dot and framing sentence existed in two places that
+  had to be kept in step by hand. They had already drifted: the mobile copy carried a badge and a
+  fixture line the desktop one did not, and the desktop carried two paragraphs the mobile
+  dropped. One header renders at every width now, and what was genuinely mobile-only — the alert
+  badge — travels with it.
+ */}
  <LiveSignalsHeader
  dict={dict}
  historyCount={history.length}
  onHistory={() => setHistoryModalOpen(true)}
  />
  {mobileAlertBadge && (
- <div className="mt-2 flex justify-end">
- <span
- className={`shrink-0 rounded-full px-2.5 py-0.5 text-metadata font-semibold uppercase tracking-label ${mobileAlertBadge.bg} ${mobileAlertBadge.ring}`}
- >
+ <div className="mt-2">
+ <span className="rw-m inline-flex border border-current px-2 py-0.5 opacity-80">
  {mobileAlertBadge.label}
  </span>
  </div>
  )}
- {feed?.featured && (
- <p className="mt-1.5 truncate text-xs font-semibold text-foreground">
- {feed.featured.home} vs {feed.featured.away}
- <span className="text-muted-foreground"> · {feed.featured.marketLabel}</span>
- </p>
- )}
- </div>
-
- <div className="max-lg:hidden">
- <LiveSignalsHeader
- dict={dict}
- historyCount={history.length}
- onHistory={() => setHistoryModalOpen(true)}
- />
- </div>
- <p className="text-xs leading-relaxed text-muted-foreground max-lg:hidden">
+ <p className="mt-2 text-[13px] leading-[1.6] opacity-70">
  {feed?.source === "footystats-fallback" ? p.liveSoonBodyStats : p.liveSoonBody}
  </p>
- <p className="mt-2 text-metadata font-medium uppercase tracking-label text-brand max-lg:hidden">
- {p.liveFeedHourlyNote}
- </p>
+ <p className="rw-m mt-2 opacity-60">{p.liveFeedHourlyNote}</p>
 
  {fetchError && (
  <p
@@ -351,47 +334,25 @@ export function LiveFeedPanel({ dict }: { dict: FullDictionary }) {
  {p.liveFeaturedLabel}
  </p>
  <div data-live-signal-id={feed.featured.id} data-market={feed.featured.marketLabel} data-source="featured"><LiveFeaturedCard signal={feed.featured} dict={dict} /></div>
- <button
- type="button"
- onClick={() => openTelegram("featured_cta", feed.featured?.id, feed.featured?.marketLabel)}
- className="mt-2 w-full card py-2.5 text-center text-xs font-semibold text-foreground transition-colors hover:border-brand/35 hover:bg-brand/10 hover:text-brand"
- >
- {p.liveFeaturedMoreCta}
- </button>
+{/*
+  "Open Telegram for full signal" is deleted. The card above it is the whole signal — the button
+  implied a fuller version existed elsewhere, which is the same promise the blurred rows made.
+  The desk's own footer line still offers Telegram as a destination, stated plainly.
+ */}
  </div>
  )}
 
- {locked.map((item) => (
- <button
- key={item.id}
- data-live-signal-id={item.id}
- data-market={item.strategy}
- data-source="locked"
- type="button"
- onClick={() => openTelegram("locked_card", item.id, item.strategy)}
- className="relative w-full overflow-hidden rounded-xl border border-border bg-muted/80 p-3 text-left transition-colors hover:border-brand/30"
- >
- <div className="pointer-events-none select-none blur-[5px]">
- <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
- <span className="h-8 w-8 rounded-full bg-card" />
- <span>Home Team</span>
- <span className="font-mono text-brand-light">?–?</span>
- <span>Away Team</span>
- <span className="h-8 w-8 rounded-full bg-card" />
- </div>
- <p className="mt-1 text-xs text-muted-foreground">████████ League</p>
- </div>
- <div className="absolute inset-0 flex flex-col items-center justify-center bg-background/55 px-2">
- {item.isNew && (
- <span className="mb-1 rounded-full bg-brand/20 px-2 py-0.5 text-metadata font-semibold uppercase text-brand">
- {p.liveNewBadge}
- </span>
- )}
- <span className="text-center text-xs font-semibold text-foreground">{item.teaser}</span>
- <span className="mt-0.5 text-metadata text-[var(--ink-secondary)]">{p.liveTapTelegram}</span>
- </div>
- </button>
- ))}
+ {/*
+  THE BLURRED PLACEHOLDER ROWS ARE DELETED.
+
+  They rendered fake fixtures — "Home Team", "?–?", "████████ League" — behind a 5px blur, with a
+  "Tap for more predictions" prompt over them. Obscured content states that information exists and
+  is being withheld, and here the withheld thing did not exist at all: the blur covered invented
+  rows, not real ones.
+
+  We publish or we omit. With no locked teasers the desk shows the signals it has and its stated
+  empty state when it has none, which is the same rule every other figure on this page follows.
+ */}
  </div>
 
  {hasUpcoming && (

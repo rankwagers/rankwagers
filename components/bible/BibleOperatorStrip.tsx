@@ -3,7 +3,6 @@ import type { FullDictionary } from "@/lib/dictionaries";
 import type { Locale } from "@/lib/i18n";
 import type { CountryContext } from "@/lib/personalization/types";
 import { getHomepageOperators } from "@/lib/personalization/homepage";
-import type { HomepageFeaturedLeague } from "@/lib/homepage/types";
 
 /** Editorial operator discovery — contextual cards, not banner spam. */
 export function BibleOperatorStrip({
@@ -11,13 +10,11 @@ export function BibleOperatorStrip({
   locale,
   subidBase,
   countryContext,
-  featuredLeagues = [],
 }: {
   dict: FullDictionary;
   locale: Locale;
   subidBase: string;
   countryContext: CountryContext;
-  featuredLeagues?: HomepageFeaturedLeague[];
 }) {
   const p = dict.predictions;
   const operators = getHomepageOperators(countryContext, 3, subidBase);
@@ -81,24 +78,6 @@ export function BibleOperatorStrip({
           </li>
         ))}
       </ul>
-
-      {featuredLeagues.length > 0 && (
-        <p className="rw-m mt-3.5 text-[var(--hero-ink-2)]">
-          Related competitions
-          {featuredLeagues.slice(0, 6).map((league) => (
-            <span key={`${league.name}-${league.href ?? "x"}`}>
-              {" · "}
-              {league.href ? (
-                <Link href={league.href} className="text-[var(--hero-ink)]">
-                  {league.name}
-                </Link>
-              ) : (
-                <span>{league.name}</span>
-              )}
-            </span>
-          ))}
-        </p>
-      )}
 
     </section>
   );

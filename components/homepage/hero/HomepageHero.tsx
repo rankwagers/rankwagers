@@ -131,9 +131,16 @@ export async function HomepageHero({
         leadTitle: p.heroLeadTitle,
         leadNote: formatDict(p.heroLeadNote, { count: String(count) }),
         supportingTitle: p.heroSupportingTitle,
-        supportingNote: formatDict(p.heroSupportingNote, {
-          count: String(Math.max(0, count - 1)),
-          total: String(count),
+        /*
+         * "N of M cleared†" — the map's right-hand label. The dagger points at the same footnote
+         * the funnel's cleared stage does, so the qualifier is defined once for every surface
+         * that uses the word. `total` is the day's cleared population when the funnel observed
+         * one; with no observation it falls back to the shown count rather than inventing a
+         * denominator, and the label then reads "N of N cleared†" — true, if uninformative.
+         */
+        supportingNote: formatDict(p.clearedOfTotal, {
+          shown: String(Math.max(0, count - 1)),
+          total: String(model.funnel.qualified ?? count),
         }),
         cta: p.heroStageCta,
         empty: p.heroStageEmpty,

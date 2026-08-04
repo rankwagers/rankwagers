@@ -71,12 +71,23 @@ test("homepage composition includes narrative sections and Acca add controls", (
     'id="top-picks"',
     'id="verified-performance"',
     'id="recent-results"',
-    'id="featured-leagues"',
+    /*
+     * `id="featured-leagues"` is deliberately absent. The row it anchored rendered
+     * `trust.featuredLeagues`, which falls back to a hardcoded top-five European list — none of
+     * it on the board the page actually researched. Deleted in the Pass 2 conversion; see the
+     * note at its former site in RankWagersHome.
+     */
     'id="why-trust"',
     'id="prediction-archive"',
     "HomepageSearchEntry",
     "HomepageAccaEntry",
-    "topPicksAddAcca",
+    /*
+     * `rankedAddAcca`, not `topPicksAddAcca`. The ranked section took the map's vocabulary in
+     * Pass 2 — "Highest provider potential today" — on new keys rather than by re-pointing
+     * translated ones. What this token guards is unchanged: the add-to-acca control is fed a
+     * label from the dictionary rather than a string written at the call site.
+     */
+    "rankedAddAcca",
     "AddToAccaButton",
   ]) {
     assert.match(home, new RegExp(token));

@@ -100,6 +100,8 @@ function toPick(candidate: Candidate, locale: Locale): HeroPick | null {
     ...(row.awayImage ? { awayImage: row.awayImage } : {}),
     league,
     ...(row.leagueImage ? { leagueImage: row.leagueImage } : {}),
+    // Omitted rather than defaulted — see `HeroPick.country`.
+    ...(row.countryCode ? { country: row.countryCode } : {}),
     leagueKey: leagueKeyFor(league),
     kickoff: formatFixtureKickoff(row.kickoffTime),
     kickoffDateTime: new Date(row.kickoffTime * 1000).toISOString(),

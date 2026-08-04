@@ -29,6 +29,14 @@ export type HomepageRecentResult = {
   home: string;
   away: string;
   competition: string;
+  /**
+   * The competition's country, when the provider row carried one.
+   *
+   * Optional and never defaulted: the map's league cell sets a flag above the competition name,
+   * and a fixture whose row holds no country renders the competition alone rather than under a
+   * white flag standing in for an observation nobody made.
+   */
+  country?: string;
   marketKey: string;
   marketLabel: string;
   status: HomepageResultStatus;
@@ -112,6 +120,14 @@ export type HeroPick = {
   awayImage?: string;
   league: string;
   leagueImage?: string;
+  /**
+   * The competition's country, when the provider row carried one.
+   *
+   * Optional and never defaulted: the table's league cell sets a flag above the competition name,
+   * and a fixture whose row holds no country renders the competition alone rather than under a
+   * white flag standing in for an observation nobody made.
+   */
+  country?: string;
   /** Normalized competition key, used only to look up presentation tint. */
   leagueKey: string;
   kickoff: string;

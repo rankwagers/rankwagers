@@ -5,7 +5,22 @@ import type { HeroPick } from "@/lib/homepage/types";
 import type { Locale } from "@/lib/i18n";
 import { SectionTrackLink } from "@/components/analytics/SectionTrackLink";
 import { Crest } from "./Crest";
+import { V2LeagueCell } from "@/components/homepage/v2Chrome";
 import { splitRate } from "./heroModel";
+
+/**
+ * The short market form: `Over 2.5 goals` → `Over 2.5`, `1st half goal` → `1H 0.5+`.
+ *
+ * Presentation only — the market's identity is `marketKind`, which is untouched. Trailing nouns
+ * are dropped rather than the string being rebuilt from a code, so a market this does not
+ * recognise passes through whole instead of arriving as an empty cell.
+ */
+function shortMarket(market: string): string {
+  return market
+    .replace(/\s*goals?$/i, "")
+    .replace(/^1st half$/i, "1H 0.5+")
+    .replace(/^2nd half$/i, "2H 0.5+");
+}
 
 /* ============================================================================
    THE SUPPORTING TABLE — rebrand v2, per docs/design/motion-language-v2.md §4
@@ -110,9 +125,9 @@ function Row({
         </span>
       </span>
 
-      <span className="mt-1.5 flex min-w-0 items-center gap-1.5 sm:mt-0">
-        <Crest src={pick.leagueImage} name={pick.league} size={14} />
-        <span className="rw-label truncate text-[var(--hero-ink-2)]">{pick.league}</span>
+      {/* The map's league cell: the country's flag above its competition. */}
+      <span className="mt-1.5 block min-w-0 sm:mt-0">
+        <V2LeagueCell country={pick.country} league={pick.league} />
       </span>
 
       <span className="rw-tnum rw-label mt-1.5 block text-[var(--hero-ink-2)] sm:mt-0">
@@ -132,8 +147,13 @@ function Row({
         <span className="rw-tnum font-bold text-[var(--hero-ink)]">{pick.probability}%</span>
       </span>
 
+      {/*
+        THE SHORT MARKET FORM. "Over 2.5 goals" becomes "Over 2.5" — the column is headed Market
+        and every row in it is a goals line, so the noun is carried by the head rather than
+        repeated eight times down the table.
+      */}
       <span className="rw-label mt-1.5 block truncate text-[var(--hero-ink-2)] sm:mt-0 sm:text-right">
-        {pick.market}
+        {shortMarket(pick.market)}
       </span>
     </SectionTrackLink>
   );

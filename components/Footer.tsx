@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { formatDict } from "@/lib/dictionaryExtras";
 import { GambleAwareNotice } from "@/components/GambleAwareNotice";
-import { EligibilityNotice } from "@/components/EligibilityNotice";
 import type { FullDictionary } from "@/lib/dictionaries";
 import type { Locale } from "@/lib/i18n";
+
+const FOOTER_STRAPLINE = "Football, read as evidence";
 
 export function Footer({
   dict,
@@ -49,27 +50,36 @@ export function Footer({
     <footer className="rw-hero mt-16 bg-[var(--hero-ink)] text-white lg:mt-24">
       <div className="mx-auto w-full max-w-[1240px] px-5 py-16 text-sm text-white/60 lg:px-8 lg:py-20">
         <GambleAwareNotice />
-        <div className="mb-8 max-w-2xl border-l-2 border-white/20 py-1 pl-5">
-          <div className="rw-label text-white/45">
-            {dict.footer.affiliateNotice}
+        {/*
+          THE TWO DISCLOSURES, side by side on left rules — the map's geometry.
+
+          The eligibility notice lost its GREY PANEL. On an inverted ground a light card is the
+          brightest object in the footer, which ranked a legal notice above the wordmark beside it;
+          and the panel was the last rounded box below the live desk. Both disclosures now carry
+          the same 2px left rule, which is what states them as a pair.
+        */}
+        <div className="mb-8 grid gap-8 border-b border-white/20 pb-7 sm:grid-cols-2">
+          <div className="border-l-2 border-white/60 pl-4">
+            <p className="rw-m text-white/55">{dict.footer.affiliateNotice}</p>
+            <p className="mt-2 text-[13px] leading-[1.6] text-white/80">{dict.footer.disclaimer}</p>
           </div>
-          <p className="mt-2.5 text-sm leading-relaxed text-white/70">
-            {dict.footer.disclaimer}
-          </p>
-        </div>
-        <div className="mb-6">
-          <EligibilityNotice dict={dict} />
+          <div className="border-l-2 border-white/60 pl-4">
+            <p className="rw-m text-white/55">{dict.footer.eligibilityTitle}</p>
+            <p className="mt-2 text-[13px] leading-[1.6] text-white/80">
+              {dict.footer.eligibilityBody}
+            </p>
+          </div>
         </div>
 
-        <div className="mb-10 grid gap-8 sm:grid-cols-2">
+        <div className="mb-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-[1fr_1fr_minmax(0,1.2fr)]">
           <nav aria-label="Research">
-            <p className="rw-m mb-4 text-white/45">Research</p>
+            <p className="rw-m mb-3.5 text-white/55">Research</p>
             <ul className="flex flex-col gap-2">
               {explore.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-sm text-white/70 transition-colors duration-[var(--dur-respond)] ease-[var(--ease-respond)] hover:text-white"
+                    className="text-[13px] text-white/75 transition-colors duration-[var(--dur-respond)] ease-[var(--ease-respond)] hover:text-white"
                   >
                     {item.label}
                   </Link>
@@ -78,13 +88,13 @@ export function Footer({
             </ul>
           </nav>
           <nav aria-label="Method and legal">
-            <p className="rw-m mb-4 text-white/45">Method and legal</p>
+            <p className="rw-m mb-3.5 text-white/55">Method and legal</p>
             <ul className="flex flex-col gap-2">
               {trust.map((item) => (
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-sm text-white/70 transition-colors duration-[var(--dur-respond)] ease-[var(--ease-respond)] hover:text-white"
+                    className="text-[13px] text-white/75 transition-colors duration-[var(--dur-respond)] ease-[var(--ease-respond)] hover:text-white"
                   >
                     {item.label}
                   </Link>
@@ -92,17 +102,23 @@ export function Footer({
               ))}
             </ul>
           </nav>
+          {/*
+            THE MASTHEAD WORDMARK, at the map's 34px in full white — the footer's counterweight to
+            the one that opens the page. It was set at 17px in the legal row, where it read as a
+            byline rather than as the publication signing off.
+          */}
+          <div className="sm:col-span-2 lg:col-span-1 lg:text-right">
+            <p className="rw-h text-[34px] text-white">RankWagers</p>
+            <p className="rw-m mt-2 text-white/55">{FOOTER_STRAPLINE}</p>
+          </div>
         </div>
 
-        <div className="flex flex-col items-start justify-between gap-3 border-t border-white/12 pt-7 sm:flex-row sm:items-center">
-          <span className="inline-flex items-center gap-2 font-medium text-white/70">
-            <span className="rounded-full border border-white/25 px-2 py-0.5 text-xs font-semibold">
-              18+
-            </span>
+        <div className="flex flex-col items-start justify-between gap-3 border-t border-white/20 pt-5 sm:flex-row sm:items-center">
+          <span className="rw-m inline-flex items-center gap-2.5 text-white/55">
+            <span className="border border-white/50 px-1.5 py-0.5 text-white/80">18+</span>
             {dict.footer.ageWarning}
           </span>
-          <span className="rw-h text-[17px] text-white">RankWagers</span>
-          <span className="text-xs text-white/45">{formatDict(dict.footer.copyright, { year })}</span>
+          <span className="rw-m text-white/55">{formatDict(dict.footer.copyright, { year })}</span>
         </div>
       </div>
     </footer>

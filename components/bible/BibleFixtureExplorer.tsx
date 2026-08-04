@@ -27,6 +27,7 @@ import {
  type QualifiedFixture,
 } from "@/lib/research/qualifiedFixture";
 import { AddToAccaButton } from "@/components/acca/AddToAccaButton";
+import { V2LeagueCell } from "@/components/homepage/v2Chrome";
 import { TeamLogo } from "@/components/predictions/TeamLogo";
 import { mapFootyStatsEvidence, type FootyStatsFixtureResearch } from "@/lib/research/footyStatsEvidence";
 import { fromFixtureResearch } from "@/lib/evidence-ui";
@@ -67,7 +68,7 @@ const OddsIntelligencePanel = dynamic(
  {
  loading: () => (
  <div
- className="mb-6 h-40 animate-pulse rounded-md border border-[var(--border-subtle)] bg-[var(--canvas-secondary)]"
+ className="mb-6 h-40 animate-pulse border border-[var(--border-subtle)] bg-[var(--canvas-secondary)]"
  aria-hidden
  />
  ),
@@ -82,6 +83,19 @@ const FILTER_GROUPS = {
 const trackedOperatorImpressions = new Set<string>();
 const trackedFixtureImpressions = new Set<string>();
 const FIXTURE_PAGE_SIZE = 12;
+
+/**
+ * The desk's column track, stated once so the head cannot drift from its rows.
+ *
+ * Stacked below `sm` — a seven-column table at 360px is a table nobody can read.
+ */
+const DESK_COLUMNS =
+  "sm:grid sm:grid-cols-[44px_minmax(0,1.5fr)_minmax(0,1.1fr)_minmax(0,0.7fr)_78px_92px_32px] sm:gap-x-3.5";
+
+/** Row labels for the two filter axes, and the head for the figure the desk ranks by. */
+const FILTER_LABEL_LEAGUE = "League";
+const FILTER_LABEL_MARKET = "Market";
+const DESK_POTENTIAL_LABEL = "Potential";
 
 function FilterButton({
  active,
@@ -112,10 +126,20 @@ function FilterButton({
   * Making the button a containing block keeps the span inside the toolbar, where the toolbar's
   * own clip applies.
   */
- className={`relative min-h-9 shrink-0 snap-start rounded-md border px-3 py-1.5 text-xs font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-[var(--opacity-disabled)] ${
+ /*
+  * The map's mono filter chip: bordered, uppercase, inverting when selected. Green fills are
+  * gone with the rest of them — selection is stated by ground and ink, not by hue.
+  *
+  * `relative` is not cosmetic — it is what stops the homepage scrolling sideways. The active
+  * button contains an `sr-only` span, and Tailwind's `sr-only` is `position: absolute`. With no
+  * positioned ancestor that span was laid out against the document, escaped the toolbar's
+  * `overflow-x` clip, and contributed ~1744px to the ROOT scrollable overflow. Making the button
+  * a containing block keeps it inside the toolbar, where the clip applies.
+  */
+ className={`rw-m relative min-h-9 shrink-0 snap-start border px-2.5 py-1.5 tracking-[0.1em] transition-colors duration-[var(--dur-respond)] ease-[var(--ease-settle)] disabled:cursor-not-allowed disabled:opacity-[var(--opacity-disabled)] ${
  active
- ? "border-[var(--green-deep)] bg-[var(--green-deep)] text-[var(--canvas-secondary)]"
- : "border-border bg-transparent text-[var(--ink-secondary)] hover:border-[var(--border-strong)] hover:text-foreground"
+ ? "border-[var(--hero-ink)] bg-[var(--hero-ink)] text-[var(--hero-canvas)]"
+ : "border-[var(--hero-line)] bg-transparent text-[var(--hero-ink-2)] hover:border-[var(--hero-ink)] hover:text-[var(--hero-ink)]"
  }`}
  >
  {active ? (
@@ -151,14 +175,14 @@ function ComparisonRow({
  return (
  <div className="border-b border-[var(--border-subtle)] py-2.5 last:border-0">
  <div className="grid grid-cols-[3.25rem_minmax(0,1fr)_3.25rem] items-center gap-2">
- <span className="text-right font-mono text-xs font-semibold tabular-nums text-brand">{formatValue(home)}</span>
+ <span className="text-right font-mono text-xs font-semibold tabular-nums text-[var(--hero-ink)]">{formatValue(home)}</span>
  <div className="flex min-w-0 items-center gap-2">
- <div className="flex h-1 min-w-0 flex-1 justify-end overflow-hidden rounded-full bg-[var(--border-subtle)]">
- <span className="h-full rounded-full bg-brand" style={{ width: `${Math.min(100, (home / scale) * 100)}%` }} />
+ <div className="flex h-1 min-w-0 flex-1 justify-end overflow-hidden bg-[var(--border-subtle)]">
+ <span className="h-full bg-[var(--hero-ink)]" style={{ width: `${Math.min(100, (home / scale) * 100)}%` }} />
  </div>
  <span className="w-24 shrink-0 text-center text-metadata leading-tight text-[var(--ink-secondary)]">{label}</span>
- <div className="flex h-1 min-w-0 flex-1 overflow-hidden rounded-full bg-[var(--border-subtle)]">
- <span className="h-full rounded-full bg-[var(--comparison-away)]" style={{ width: `${Math.min(100, (away / scale) * 100)}%` }} />
+ <div className="flex h-1 min-w-0 flex-1 overflow-hidden bg-[var(--border-subtle)]">
+ <span className="h-full bg-[var(--comparison-away)]" style={{ width: `${Math.min(100, (away / scale) * 100)}%` }} />
  </div>
  </div>
  <span className="font-mono text-xs font-semibold tabular-nums text-[var(--comparison-away)]">{formatValue(away)}</span>
@@ -169,7 +193,7 @@ function ComparisonRow({
 }
 
 function resultTone(scored: number, conceded: number) {
- return scored > conceded ? "bg-[var(--green-surface)] text-brand" : scored === conceded ? "bg-[var(--amber-surface)] text-[var(--amber-primary)]" : "bg-[var(--red-surface)] text-[var(--red-primary)]";
+ return scored > conceded ? "bg-[rgb(32_30_29_/_0.05)] text-[var(--hero-ink)]" : scored === conceded ? "bg-[var(--amber-surface)] text-[var(--amber-primary)]" : "bg-[var(--red-surface)] text-[var(--red-primary)]";
 }
 
 function resultCode(scored: number, conceded: number) {
@@ -213,13 +237,13 @@ function FixtureHistory({
  <div className="flex items-center justify-between gap-3 px-1 py-2">
  <p className="text-xs font-medium text-foreground">{fixture.home} · home</p>
  <div className="flex items-center gap-1" aria-label={`${fixture.home} recent home form`}>
- {history.homeAtHome.map((match) => <span key={match.id} className={`inline-flex h-4 w-4 items-center justify-center rounded-full text-metadata font-semibold ${resultTone(match.home.score, match.away.score)}`} title={resultCode(match.home.score, match.away.score)}>{resultCode(match.home.score, match.away.score)}</span>)}
+ {history.homeAtHome.map((match) => <span key={match.id} className={`inline-flex h-4 w-4 items-center justify-center text-metadata font-semibold ${resultTone(match.home.score, match.away.score)}`} title={resultCode(match.home.score, match.away.score)}>{resultCode(match.home.score, match.away.score)}</span>)}
  </div>
  </div>
  <div className="space-y-1">
  {history.homeAtHome.map((match) => (
- <div key={match.id} className="grid grid-cols-[1.25rem_minmax(0,1fr)_2.75rem_4.5rem] items-center gap-2 rounded-md px-2 py-1.5 transition-colors duration-150 ease-out hover:bg-background">
- <span className={`inline-flex h-6 min-w-7 items-center justify-center rounded-full px-1 text-metadata font-semibold shadow-card ${resultTone(match.home.score, match.away.score)}`}>{resultCode(match.home.score, match.away.score)}</span>
+ <div key={match.id} className="grid grid-cols-[1.25rem_minmax(0,1fr)_2.75rem_4.5rem] items-center gap-2 px-2 py-1.5 transition-colors duration-150 ease-out hover:bg-background">
+ <span className={`inline-flex h-6 min-w-7 items-center justify-center px-1 text-metadata font-semibold ${resultTone(match.home.score, match.away.score)}`}>{resultCode(match.home.score, match.away.score)}</span>
  <div className="flex min-w-0 items-center gap-1.5"><TeamLogo src={match.away.logo} name={match.away.name} size="xs" /><span className="truncate text-xs text-[var(--ink-secondary)]">{match.away.name}</span></div>
  <span className="justify-self-end font-mono text-base font-semibold leading-none tabular-nums text-foreground">{match.home.score}–{match.away.score}</span>
  <time dateTime={match.kickoffAt} className="justify-self-end whitespace-nowrap text-metadata tabular-nums text-muted-foreground">{historyDate(match.kickoffAt)}</time>
@@ -231,13 +255,13 @@ function FixtureHistory({
  <div className="flex items-center justify-between gap-3 px-1 py-2">
  <p className="text-xs font-medium text-foreground">{fixture.away} · away</p>
  <div className="flex items-center gap-1" aria-label={`${fixture.away} recent away form`}>
- {history.awayAtAway.map((match) => <span key={match.id} className={`inline-flex h-4 w-4 items-center justify-center rounded-full text-metadata font-semibold ${resultTone(match.away.score, match.home.score)}`} title={resultCode(match.away.score, match.home.score)}>{resultCode(match.away.score, match.home.score)}</span>)}
+ {history.awayAtAway.map((match) => <span key={match.id} className={`inline-flex h-4 w-4 items-center justify-center text-metadata font-semibold ${resultTone(match.away.score, match.home.score)}`} title={resultCode(match.away.score, match.home.score)}>{resultCode(match.away.score, match.home.score)}</span>)}
  </div>
  </div>
  <div className="space-y-1">
  {history.awayAtAway.map((match) => (
- <div key={match.id} className="grid grid-cols-[1.25rem_minmax(0,1fr)_2.75rem_4.5rem] items-center gap-2 rounded-md px-2 py-1.5 transition-colors duration-150 ease-out hover:bg-background">
- <span className={`inline-flex h-6 min-w-7 items-center justify-center rounded-full px-1 text-metadata font-semibold shadow-card ${resultTone(match.away.score, match.home.score)}`}>{resultCode(match.away.score, match.home.score)}</span>
+ <div key={match.id} className="grid grid-cols-[1.25rem_minmax(0,1fr)_2.75rem_4.5rem] items-center gap-2 px-2 py-1.5 transition-colors duration-150 ease-out hover:bg-background">
+ <span className={`inline-flex h-6 min-w-7 items-center justify-center px-1 text-metadata font-semibold ${resultTone(match.away.score, match.home.score)}`}>{resultCode(match.away.score, match.home.score)}</span>
  <div className="flex min-w-0 items-center gap-1.5"><TeamLogo src={match.home.logo} name={match.home.name} size="xs" /><span className="truncate text-xs text-[var(--ink-secondary)]">{match.home.name}</span></div>
  <span className="justify-self-end font-mono text-base font-semibold leading-none tabular-nums text-foreground">{match.home.score}–{match.away.score}</span>
  <time dateTime={match.kickoffAt} className="justify-self-end whitespace-nowrap text-metadata tabular-nums text-muted-foreground">{historyDate(match.kickoffAt)}</time>
@@ -255,9 +279,9 @@ function FixtureHistory({
  </div>
  <div className="relative space-y-1 before:absolute before:bottom-4 before:left-1/2 before:top-7 before:w-px before:-translate-x-1/2 before:bg-[var(--border-subtle)]">
  {history.headToHead.map((match) => (
- <div key={match.id} className="relative grid grid-cols-[minmax(0,1fr)_4.5rem_minmax(0,1fr)] items-center gap-2 rounded-md px-2 py-2 transition-colors duration-150 ease-out hover:bg-background">
+ <div key={match.id} className="relative grid grid-cols-[minmax(0,1fr)_4.5rem_minmax(0,1fr)] items-center gap-2 px-2 py-2 transition-colors duration-150 ease-out hover:bg-background">
  <div className="flex min-w-0 items-center justify-end gap-1.5 text-right"><span className="truncate text-xs text-[var(--ink-secondary)]">{match.home.name}</span><TeamLogo src={match.home.logo} name={match.home.name} size="xs" /></div>
- <div className="z-10 flex flex-col items-center gap-1"><time dateTime={match.kickoffAt} className="whitespace-nowrap text-metadata tabular-nums text-muted-foreground">{historyDate(match.kickoffAt)}</time><span className="rounded-md bg-background px-2 py-1 font-mono text-base font-semibold leading-none tabular-nums text-foreground shadow-card">{match.home.score}–{match.away.score}</span></div>
+ <div className="z-10 flex flex-col items-center gap-1"><time dateTime={match.kickoffAt} className="whitespace-nowrap text-metadata tabular-nums text-muted-foreground">{historyDate(match.kickoffAt)}</time><span className="bg-background px-2 py-1 font-mono text-base font-semibold leading-none tabular-nums text-foreground ">{match.home.score}–{match.away.score}</span></div>
  <div className="flex min-w-0 items-center gap-1.5"><TeamLogo src={match.away.logo} name={match.away.name} size="xs" /><span className="truncate text-xs text-[var(--ink-secondary)]">{match.away.name}</span></div>
  </div>
  ))}
@@ -395,20 +419,20 @@ function FixtureDetail({
  return (
  <div id={detailId} className="fixture-detail-enter border-t border-[var(--border-subtle)] px-5 py-5 lg:px-8 lg:py-6">
  {detailLoading && !detail ? (
- <p className="mb-4 rounded-md border border-border bg-background px-3 py-2 text-sm text-muted-foreground" role="status">
+ <p className="mb-4 border border-border bg-background px-3 py-2 text-sm text-muted-foreground" role="status">
  Loading match evidence…
  </p>
  ) : null}
  {detailError ? (
  <div
- className="mb-4 rounded-md border border-[var(--amber-border)] bg-[var(--amber-surface)] px-3 py-3 text-sm text-[var(--amber-primary)]"
+ className="mb-4 border border-[var(--amber-border)] bg-[var(--amber-surface)] px-3 py-3 text-sm text-[var(--amber-primary)]"
  role="alert"
  >
  <p>{detailError}</p>
  <button
  type="button"
  onClick={onRetryDetail}
- className="mt-2 rounded-md border border-[var(--amber-border)] bg-card px-3 py-1.5 text-xs font-semibold text-[var(--amber-primary)] hover:bg-white"
+ className="mt-2 border border-[var(--amber-border)] bg-card px-3 py-1.5 text-xs font-semibold text-[var(--amber-primary)] hover:bg-white"
  >
  Retry
  </button>
@@ -441,7 +465,7 @@ function FixtureDetail({
  </time>
  <Link
  href={fixturePath(locale, fixture.matchId, fixture.marketKind, "explorer")}
- className="inline-flex items-center gap-1.5 rounded-md border border-brand/30 bg-[var(--green-surface)] px-3 py-1 text-sm font-semibold text-brand hover:bg-[var(--green-surface)]/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+ className="inline-flex items-center gap-1.5 border border-[var(--hero-line)] bg-[rgb(32_30_29_/_0.05)] px-3 py-1 text-sm font-semibold text-[var(--hero-ink)] hover:bg-[rgb(32_30_29_/_0.05)]/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
  >
  Open match page
  <ExternalLink className="h-3.5 w-3.5" aria-hidden />
@@ -478,40 +502,40 @@ function FixtureDetail({
  {snapshot.length > 0 && (
  <div className="mt-5">
  {qualificationDrivers.length > 0 && (
- <div className="mb-5 rounded-lg bg-[var(--green-surface)] px-4 py-4 shadow-card">
+ <div className="mb-5 bg-[rgb(32_30_29_/_0.05)] px-4 py-4 ">
  <div className="flex items-baseline justify-between gap-3">
- <p className="text-metadata font-semibold uppercase tracking-label text-[var(--green-deep)]">Qualification drivers</p>
- <span className="text-metadata text-[var(--green-deep)]">verified pre-match inputs</span>
+ <p className="text-metadata font-semibold uppercase tracking-label text-[var(--hero-ink)]">Qualification drivers</p>
+ <span className="text-metadata text-[var(--hero-ink)]">verified pre-match inputs</span>
  </div>
  <div className="mt-3 grid gap-2 sm:grid-cols-2">
  {qualificationDrivers.map((driver) => (
- <div key={driver.label} className="rounded-md bg-card px-3 py-2.5">
- <p className="text-metadata uppercase tracking-label text-[var(--green-deep)]/75">{driver.label}</p>
- <p className="mt-1 font-mono text-xl font-semibold leading-none tabular-nums text-[var(--green-deep)]">{driver.value}</p>
- <p className="mt-1 text-metadata text-[var(--green-deep)]/75">{driver.detail}</p>
+ <div key={driver.label} className="bg-card px-3 py-2.5">
+ <p className="text-metadata uppercase tracking-label text-[var(--hero-ink)]/75">{driver.label}</p>
+ <p className="mt-1 font-mono text-xl font-semibold leading-none tabular-nums text-[var(--hero-ink)]">{driver.value}</p>
+ <p className="mt-1 text-metadata text-[var(--hero-ink)]/75">{driver.detail}</p>
  </div>
  ))}
  </div>
- {qualificationReasons.length > 0 && <p className="mt-3 text-xs leading-snug text-[var(--green-deep)]">{qualificationReasons[0]}</p>}
+ {qualificationReasons.length > 0 && <p className="mt-3 text-xs leading-snug text-[var(--hero-ink)]">{qualificationReasons[0]}</p>}
  </div>
  )}
  <p className="mb-2 text-metadata font-medium uppercase tracking-label text-muted-foreground">Match snapshot</p>
  <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
  {snapshot.map((item) => (
- <div key={item.label} className={`min-w-0 rounded-lg px-3 py-3 transition-transform duration-200 ease-out hover:-translate-y-0.5 ${
- item.label === "xG" ? "bg-[var(--green-surface)] sm:col-span-2 sm:px-4" : "bg-[var(--green-surface)]"
+ <div key={item.label} className={`min-w-0 px-3 py-3 transition-transform duration-200 ease-out hover:-translate-y-0.5 ${
+ item.label === "xG" ? "bg-[rgb(32_30_29_/_0.05)] sm:col-span-2 sm:px-4" : "bg-[rgb(32_30_29_/_0.05)]"
  }`}>
  <p className="flex items-center gap-2 text-metadata text-muted-foreground">
- {item.label === "Goals" ? <CircleDot className="h-4 w-4 text-brand/75" aria-hidden /> :
- item.label === "xG" ? <Activity className="h-4 w-4 text-brand/75" aria-hidden /> :
- item.label === "Venue" ? <MapPin className="h-4 w-4 text-brand/75" aria-hidden /> :
- item.label === "Clean sheet" ? <ShieldCheck className="h-4 w-4 text-brand/75" aria-hidden /> :
- <Target className="h-4 w-4 text-brand/75" aria-hidden />}
+ {item.label === "Goals" ? <CircleDot className="h-4 w-4 text-[var(--hero-ink)]/75" aria-hidden /> :
+ item.label === "xG" ? <Activity className="h-4 w-4 text-[var(--hero-ink)]/75" aria-hidden /> :
+ item.label === "Venue" ? <MapPin className="h-4 w-4 text-[var(--hero-ink)]/75" aria-hidden /> :
+ item.label === "Clean sheet" ? <ShieldCheck className="h-4 w-4 text-[var(--hero-ink)]/75" aria-hidden /> :
+ <Target className="h-4 w-4 text-[var(--hero-ink)]/75" aria-hidden />}
  {item.label}
  </p>
  <p className={`mt-1 truncate font-mono font-semibold leading-none tabular-nums text-foreground ${item.label === "xG" ? "text-xl" : "text-lg"}`}>{item.value}</p>
  {item.baseline && <p className="mt-2 text-metadata text-muted-foreground">{item.baseline}</p>}
- {item.delta && <p className="mt-0.5 font-mono text-metadata font-semibold tabular-nums text-brand">{item.delta}</p>}
+ {item.delta && <p className="mt-0.5 font-mono text-metadata font-semibold tabular-nums text-[var(--hero-ink)]">{item.delta}</p>}
  </div>
  ))}
  </div>
@@ -519,29 +543,29 @@ function FixtureDetail({
  )}
  </div>
 
- <aside className="w-full shrink-0 rounded-lg border border-[var(--border-subtle)] bg-background p-4 lg:w-72" aria-label="Qualification metrics">
+ <aside className="w-full shrink-0 border border-[var(--border-subtle)] bg-background p-4 lg:w-72" aria-label="Qualification metrics">
  <div className="flex items-center justify-between gap-3">
  <p className="text-metadata font-medium uppercase tracking-label text-muted-foreground">Model probability</p>
- <span className="rounded-full bg-[var(--green-surface)] px-2 py-0.5 text-metadata font-semibold text-brand">Qualified</span>
+ <span className="bg-[rgb(32_30_29_/_0.05)] px-2 py-0.5 text-metadata font-semibold text-[var(--hero-ink)]">Qualified</span>
  </div>
  <div className="mt-2 flex items-end gap-2">
- <span className="font-mono text-h1 font-semibold leading-none tabular-nums text-brand">
+ <span className="font-mono text-h1 font-semibold leading-none tabular-nums text-[var(--hero-ink)]">
  {fixture.modelProbability}%
  </span>
  <span className="mb-1 text-xs text-[var(--ink-secondary)]">probability</span>
  </div>
- <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-[var(--border-subtle)]" aria-label={`Model probability ${fixture.modelProbability}%`}>
- <span className="metric-progress block h-full rounded-full bg-brand" style={{ width: `${fixture.modelProbability}%` }} />
+ <div className="mt-3 h-1.5 overflow-hidden bg-[var(--border-subtle)]" aria-label={`Model probability ${fixture.modelProbability}%`}>
+ <span className="metric-progress block h-full bg-[var(--hero-ink)]" style={{ width: `${fixture.modelProbability}%` }} />
  </div>
  {research.qualification && (
  <dl className="mt-4 text-xs text-[var(--ink-secondary)]">
  <div className="grid grid-cols-2 gap-2">
- <div className="rounded-md bg-[var(--canvas-primary)] px-3 py-2"><dt className="text-metadata uppercase tracking-label text-muted-foreground">Threshold</dt><dd className="mt-1 font-mono font-semibold text-foreground">{research.qualification.threshold}%</dd></div>
- <div className="rounded-md bg-[var(--canvas-primary)] px-3 py-2"><dt className="text-metadata uppercase tracking-label text-muted-foreground">Difference</dt><dd className="mt-1 font-mono font-semibold text-brand">{research.qualification.difference >= 0 ? "+" : ""}{Math.round(research.qualification.difference)} pp</dd></div>
+ <div className="bg-[var(--canvas-primary)] px-3 py-2"><dt className="text-metadata uppercase tracking-label text-muted-foreground">Threshold</dt><dd className="mt-1 font-mono font-semibold text-foreground">{research.qualification.threshold}%</dd></div>
+ <div className="bg-[var(--canvas-primary)] px-3 py-2"><dt className="text-metadata uppercase tracking-label text-muted-foreground">Difference</dt><dd className="mt-1 font-mono font-semibold text-[var(--hero-ink)]">{research.qualification.difference >= 0 ? "+" : ""}{Math.round(research.qualification.difference)} pp</dd></div>
  </div>
- {research.qualification.strongestFactor && <div className="mt-2 rounded-md bg-[var(--green-surface)] px-3 py-2.5"><dt className="text-metadata font-medium uppercase tracking-label text-[var(--green-deep)]">Strongest supporting signal</dt><dd className="mt-1 font-medium text-[var(--green-deep)]">{research.qualification.strongestFactor}</dd></div>}
+ {research.qualification.strongestFactor && <div className="mt-2 bg-[rgb(32_30_29_/_0.05)] px-3 py-2.5"><dt className="text-metadata font-medium uppercase tracking-label text-[var(--hero-ink)]">Strongest supporting signal</dt><dd className="mt-1 font-medium text-[var(--hero-ink)]">{research.qualification.strongestFactor}</dd></div>}
  <div className="mt-2 flex items-center justify-between gap-3 px-1"><dt className="text-muted-foreground">Evidence strength</dt><dd className="font-medium text-foreground"><EvidenceSummaryChip strength={evidenceBundle.summaryStrength} /></dd></div>
- {research.marketMetrics.length > 0 && <div className="mt-2 px-1"><div className="h-1 overflow-hidden rounded-full bg-[var(--border-subtle)]"><span className="metric-progress block h-full rounded-full bg-brand/80" style={{ width: `${evidenceCoverage}%` }} /></div><p className="mt-1 text-metadata text-muted-foreground">{evidenceCoverage}% of displayed evidence has an adequate sample</p></div>}
+ {research.marketMetrics.length > 0 && <div className="mt-2 px-1"><div className="h-1 overflow-hidden bg-[var(--border-subtle)]"><span className="metric-progress block h-full bg-[var(--hero-ink)]" style={{ width: `${evidenceCoverage}%` }} /></div><p className="mt-1 text-metadata text-muted-foreground">{evidenceCoverage}% of displayed evidence has an adequate sample</p></div>}
  {research.qualification.weakestFactor && <div className="mt-1.5 px-1 text-metadata text-muted-foreground">Smallest sample: {research.qualification.weakestFactor}</div>}
  </dl>
  )}
@@ -570,7 +594,7 @@ function FixtureDetail({
  ))}
  </div>
  ) : (
- <div className="mt-3 rounded-lg border border-border bg-[var(--canvas-primary)] p-4 text-sm text-[var(--ink-secondary)]">
+ <div className="mt-3 border border-border bg-[var(--canvas-primary)] p-4 text-sm text-[var(--ink-secondary)]">
  No market-specific team split is available for this fixture.
  </div>
  )}
@@ -598,7 +622,7 @@ function FixtureDetail({
  {detail.homeAtHome.played} home matches · {detail.awayAtAway.played} away matches
  </p>
  </div>
- <div className="mt-3 rounded-lg bg-[var(--canvas-primary)] px-4 py-2">
+ <div className="mt-3 bg-[var(--canvas-primary)] px-4 py-2">
  <div className="grid grid-cols-[1fr_auto_1fr] items-center pb-2 text-xs font-medium text-foreground">
  <span>{fixture.home}</span><span className="text-muted-foreground">vs</span><span className="text-right">{fixture.away}</span>
  </div>
@@ -632,17 +656,17 @@ function FixtureDetail({
  )}
 
  {rankedMarkets.length > 1 && (
- <section className="mb-8 rounded-lg bg-[var(--green-surface)] px-4 py-4" aria-labelledby={`markets-${fixture.id}`}>
+ <section className="mb-8 bg-[rgb(32_30_29_/_0.05)] px-4 py-4" aria-labelledby={`markets-${fixture.id}`}>
  <div className="flex items-baseline justify-between gap-4">
- <h2 id={`markets-${fixture.id}`} className="text-metadata font-semibold uppercase tracking-label text-[var(--green-deep)]">Qualified markets</h2>
- <span className="text-metadata text-[var(--green-deep)]">same fixture</span>
+ <h2 id={`markets-${fixture.id}`} className="text-metadata font-semibold uppercase tracking-label text-[var(--hero-ink)]">Qualified markets</h2>
+ <span className="text-metadata text-[var(--hero-ink)]">same fixture</span>
  </div>
  <div className="mt-3 grid gap-2 sm:grid-cols-2">
  {rankedMarkets.map((market, index) => (
- <div key={market.id} className={`flex items-center justify-between gap-3 rounded-md px-3 py-2.5 ${index === 0 ? "bg-[var(--green-deep)] text-white" : "bg-card text-[var(--green-deep)]"}`}>
+ <div key={market.id} className={`flex items-center justify-between gap-3 px-3 py-2.5 ${index === 0 ? "bg-[var(--hero-ink)] text-white" : "bg-card text-[var(--hero-ink)]"}`}>
  <div>
  <p className="text-sm font-semibold">{market.market}</p>
- <p className={`mt-0.5 text-metadata ${index === 0 ? "text-background/80" : "text-[var(--green-deep)]/70"}`}>{index === 0 ? "Highest model probability" : "Also qualified"}</p>
+ <p className={`mt-0.5 text-metadata ${index === 0 ? "text-background/80" : "text-[var(--hero-ink)]/70"}`}>{index === 0 ? "Highest model probability" : "Also qualified"}</p>
  </div>
  <strong className="font-mono text-lg tabular-nums">{market.modelProbability}%</strong>
  </div>
@@ -652,7 +676,7 @@ function FixtureDetail({
  )}
 
  {selectedMarketOdds && (
- <section className="mb-8 rounded-lg border border-[var(--border-subtle)] bg-[var(--green-surface)] px-4 py-4" aria-labelledby={`odds-${fixture.id}`}>
+ <section className="mb-8 border border-[var(--border-subtle)] bg-[rgb(32_30_29_/_0.05)] px-4 py-4" aria-labelledby={`odds-${fixture.id}`}>
  <div className="flex items-baseline justify-between gap-4">
  <div>
  <h2 id={`odds-${fixture.id}`} className="text-metadata font-semibold uppercase tracking-label text-foreground">Market odds snapshot</h2>
@@ -662,10 +686,10 @@ function FixtureDetail({
  </div>
  <div className="mt-3 grid gap-2 sm:grid-cols-2">
  {selectedMarketOdds.bookmakers.map((bookmaker, index) => (
- <div key={bookmaker.id} className="flex items-center justify-between gap-3 rounded-md bg-background px-3 py-2.5">
- <span className="min-w-0 truncate text-sm font-medium text-foreground">{bookmaker.name}{index === 0 && <span className="ml-2 rounded-full bg-brand px-2 py-0.5 text-metadata font-semibold text-background">Best price</span>}</span>
+ <div key={bookmaker.id} className="flex items-center justify-between gap-3 bg-background px-3 py-2.5">
+ <span className="min-w-0 truncate text-sm font-medium text-foreground">{bookmaker.name}{index === 0 && <span className="ml-2 bg-[var(--hero-ink)] px-2 py-0.5 text-metadata font-semibold text-background">Best price</span>}</span>
  <div className="flex shrink-0 items-center gap-3">
- <strong className="font-mono text-base font-semibold tabular-nums text-brand">{bookmaker.decimal.toFixed(2)}</strong>
+ <strong className="font-mono text-base font-semibold tabular-nums text-[var(--hero-ink)]">{bookmaker.decimal.toFixed(2)}</strong>
  </div>
  </div>
  ))}
@@ -681,11 +705,11 @@ function FixtureDetail({
  />
 
  {partnerOffers.length > 0 && (
- <section className="mb-8 rounded-lg bg-[var(--green-surface)] px-4 py-4" aria-labelledby={`partners-${fixture.id}`}>
+ <section className="mb-8 bg-[rgb(32_30_29_/_0.05)] px-4 py-4" aria-labelledby={`partners-${fixture.id}`}>
  <div className="flex items-baseline justify-between gap-4">
  <div>
- <h2 id={`partners-${fixture.id}`} className="flex items-center gap-1.5 text-metadata font-semibold uppercase tracking-label text-[var(--green-deep)]"><ShieldCheck className="h-3.5 w-3.5" aria-hidden />Recommended operators</h2>
- <p className="mt-1 max-w-xl text-xs leading-relaxed text-[var(--green-deep)]/75">Continue with one of our verified sportsbook partners. Market prices above may also be available on non-partner sportsbooks.</p>
+ <h2 id={`partners-${fixture.id}`} className="flex items-center gap-1.5 text-metadata font-semibold uppercase tracking-label text-[var(--hero-ink)]"><ShieldCheck className="h-3.5 w-3.5" aria-hidden />Recommended operators</h2>
+ <p className="mt-1 max-w-xl text-xs leading-relaxed text-[var(--hero-ink)]/75">Continue with one of our verified sportsbook partners. Market prices above may also be available on non-partner sportsbooks.</p>
  </div>
  </div>
  <div className="mt-3 grid gap-2 sm:grid-cols-2">
@@ -719,35 +743,35 @@ function FixtureDetail({
  const whyChoose = reasonCandidates.find((reason) => !assignedReasons.has(reason)) ?? reasonCandidates[0];
  assignedReasons.add(whyChoose);
  return (
- <div key={offer.partnerId} ref={(node) => { if (node) partnerCardRefs.current.set(offer.slug, node); else partnerCardRefs.current.delete(offer.slug); }} data-operator-slug={offer.slug} className={`group flex min-w-0 items-center justify-between gap-3 rounded-md border border-transparent px-3 py-2.5 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-brand/25 hover:shadow-card ${index === 0 ? "bg-[var(--green-deep)] text-background shadow-card" : "bg-card text-[var(--green-deep)]"}`}>
+ <div key={offer.partnerId} ref={(node) => { if (node) partnerCardRefs.current.set(offer.slug, node); else partnerCardRefs.current.delete(offer.slug); }} data-operator-slug={offer.slug} className={`group flex min-w-0 items-center justify-between gap-3 border border-transparent px-3 py-2.5 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-[var(--hero-line)] hover:${index === 0 ? "bg-[var(--hero-ink)] text-background " : "bg-card text-[var(--hero-ink)]"}`}>
  <div className="flex min-w-0 items-center gap-3">
- {offer.logo ? <span className="flex h-14 w-16 shrink-0 items-center justify-center rounded-md border border-border bg-white p-1 shadow-card"><Image src={offer.logo} alt={`${offer.displayName} logo`} width={64} height={48} className="h-full w-full object-contain" /></span> : <span className={`flex h-14 w-16 shrink-0 items-center justify-center rounded-md text-sm font-semibold ${index === 0 ? "bg-[var(--green-primary)] text-background" : "bg-[var(--green-surface)] text-brand"}`}>{offer.displayName.slice(0, 1)}</span>}
+ {offer.logo ? <span className="flex h-14 w-16 shrink-0 items-center justify-center border border-border bg-white p-1 "><Image src={offer.logo} alt={`${offer.displayName} logo`} width={64} height={48} className="h-full w-full object-contain" /></span> : <span className={`flex h-14 w-16 shrink-0 items-center justify-center text-sm font-semibold ${index === 0 ? "bg-[var(--hero-ink)] text-background" : "bg-[rgb(32_30_29_/_0.05)] text-[var(--hero-ink)]"}`}>{offer.displayName.slice(0, 1)}</span>}
  <div className="min-w-0">
  <div className="flex items-center gap-1.5">
- <p className={`truncate text-sm font-semibold ${index === 0 ? "text-background" : "text-[var(--green-deep)]"}`}>{offer.displayName}</p>
- {index === 0 && <span title="Selected using market verification, regional eligibility and configured partner priority." className="inline-flex cursor-help rounded-full bg-[var(--green-primary)] px-1.5 py-0.5 text-metadata font-medium uppercase tracking-label text-background">Top pick</span>}
+ <p className={`truncate text-sm font-semibold ${index === 0 ? "text-background" : "text-[var(--hero-ink)]"}`}>{offer.displayName}</p>
+ {index === 0 && <span title="Selected using market verification, regional eligibility and configured partner priority." className="inline-flex cursor-help bg-[var(--hero-ink)] px-1.5 py-0.5 text-metadata font-medium uppercase tracking-label text-background">Top pick</span>}
  </div>
  {offer.oddsVerified ? (
- <div className={`mt-0.5 flex items-baseline gap-1.5 ${index === 0 ? "text-background/85" : "text-[var(--green-deep)]/75"}`}>
+ <div className={`mt-0.5 flex items-baseline gap-1.5 ${index === 0 ? "text-background/85" : "text-[var(--hero-ink)]/75"}`}>
  <span className="text-metadata">Verified odds</span><strong className="font-mono text-sm tabular-nums">{offer.odds?.toFixed(2)}</strong>
  </div>
- ) : <p className={`mt-0.5 text-metadata ${index === 0 ? "text-background/80" : "text-[var(--green-deep)]/75"}`}>Live markets available</p>}
- <p className={`mt-0.5 text-metadata ${index === 0 ? "text-background/75" : "text-[var(--green-deep)]/60"}`}>Why choose: {whyChoose}</p>
+ ) : <p className={`mt-0.5 text-metadata ${index === 0 ? "text-background/80" : "text-[var(--hero-ink)]/75"}`}>Live markets available</p>}
+ <p className={`mt-0.5 text-metadata ${index === 0 ? "text-background/75" : "text-[var(--hero-ink)]/60"}`}>Why choose: {whyChoose}</p>
  <div className="mt-1.5 flex flex-wrap gap-1">
- {(index === 0 ? quickCompare : reasons).map((reason) => <span key={reason} className={`rounded-full px-1.5 py-0.5 text-metadata ${index === 0 ? "bg-[var(--green-primary)] text-background" : "bg-[var(--green-surface)] text-[var(--green-deep)]"}`}>{reason}</span>)}
+ {(index === 0 ? quickCompare : reasons).map((reason) => <span key={reason} className={`px-1.5 py-0.5 text-metadata ${index === 0 ? "bg-[var(--hero-ink)] text-background" : "bg-[rgb(32_30_29_/_0.05)] text-[var(--hero-ink)]"}`}>{reason}</span>)}
  </div>
  </div>
  </div>
  <div className="shrink-0 text-right">
- <a href={offer.outboundPath} className={`inline-flex items-center gap-1 text-xs font-medium hover:underline ${index === 0 ? "text-background" : "text-brand"}`}>{cta}<span className="transition-transform duration-200 ease-out group-hover:translate-x-0.5">→</span></a>
+ <a href={offer.outboundPath} className={`inline-flex items-center gap-1 text-xs font-medium hover:underline ${index === 0 ? "text-background" : "text-[var(--hero-ink)]"}`}>{cta}<span className="transition-transform duration-200 ease-out group-hover:translate-x-0.5">→</span></a>
  </div>
  </div>
  );
  });
  })()}
  </div>
- {detail?.visitorCountry && <p className="mt-3 flex items-center gap-1 text-metadata text-[var(--green-deep)]/65"><MapPin className="h-3 w-3" aria-hidden />Available in your region</p>}
- {partnerOffers.length > 4 && <button type="button" onClick={() => { setPartnersOpen((open) => !open); trackAnalyticsEvent({ event_name: "partner_list_expand", fixture_id: fixture.matchId, market: fixture.marketKind, operator_slug: null, locale: "en", user_id: null }); }} className="mt-3 inline-flex rounded-md border border-brand/25 bg-card px-3 py-1.5 text-xs font-medium text-brand transition-colors hover:bg-card">{partnersOpen ? "Show fewer operators" : "View all partners →"}</button>}
+ {detail?.visitorCountry && <p className="mt-3 flex items-center gap-1 text-metadata text-[var(--hero-ink)]/65"><MapPin className="h-3 w-3" aria-hidden />Available in your region</p>}
+ {partnerOffers.length > 4 && <button type="button" onClick={() => { setPartnersOpen((open) => !open); trackAnalyticsEvent({ event_name: "partner_list_expand", fixture_id: fixture.matchId, market: fixture.marketKind, operator_slug: null, locale: "en", user_id: null }); }} className="mt-3 inline-flex border border-[var(--hero-line)] bg-card px-3 py-1.5 text-xs font-medium text-[var(--hero-ink)] transition-colors hover:bg-card">{partnersOpen ? "Show fewer operators" : "View all partners →"}</button>}
  </section>
  )}
 
@@ -757,7 +781,7 @@ function FixtureDetail({
  <h2 id={`limitations-${fixture.id}`} className="flex items-center gap-2 text-metadata font-medium uppercase tracking-label text-[var(--amber-primary)]">
  <AlertTriangle className="h-3.5 w-3.5" aria-hidden />Model limitations
  </h2>
- <ul className="mt-3 space-y-2 rounded-lg border border-[var(--amber-border)] bg-[var(--amber-surface)] p-4 text-sm leading-relaxed text-[var(--ink-secondary)]">
+ <ul className="mt-3 space-y-2 border border-[var(--amber-border)] bg-[var(--amber-surface)] p-4 text-sm leading-relaxed text-[var(--ink-secondary)]">
  {research.limitations.map((limitation) => <li key={limitation}>{limitation}</li>)}
  </ul>
  </section>}
@@ -766,7 +790,7 @@ function FixtureDetail({
  <h2 id={`counter-${fixture.id}`} className="flex items-center gap-2 text-metadata font-medium uppercase tracking-label text-[var(--amber-primary)]">
  <AlertTriangle className="h-3.5 w-3.5" aria-hidden />Counter-evidence
  </h2>
- <div className="mt-3 divide-y divide-[var(--amber-border)] rounded-lg border border-[var(--amber-border)] bg-[var(--amber-surface)]">
+ <div className="mt-3 divide-y divide-[var(--amber-border)] border border-[var(--amber-border)] bg-[var(--amber-surface)]">
  {research.counterEvidence.map((metric) => (
  <div key={metric.id} className="grid gap-2 px-4 py-3 sm:grid-cols-[1fr_auto]">
  <div>
@@ -792,7 +816,7 @@ function FixtureDetail({
  {methodologyOpen ? <ChevronUp className="h-3.5 w-3.5" /> : <ChevronDown className="h-3.5 w-3.5" />}
  </button>
  {methodologyOpen && (
- <div id={`methodology-${fixture.id}`} className="mt-3 rounded-lg border border-[var(--border-subtle)] bg-background p-4 text-sm leading-relaxed text-[var(--ink-secondary)]">
+ <div id={`methodology-${fixture.id}`} className="mt-3 border border-[var(--border-subtle)] bg-background p-4 text-sm leading-relaxed text-[var(--ink-secondary)]">
  This screen shows provider-supplied market probabilities. It does not infer an
  evidence agreement score, counter-evidence count, sample size, or operator edge
  where those inputs are unavailable.
@@ -802,10 +826,10 @@ function FixtureDetail({
 
  <div className="mt-6 flex items-center justify-between border-t border-[var(--border-subtle)] pt-4">
  <button type="button" onClick={onSave} aria-pressed={saved} className="flex items-center gap-1.5 text-sm text-[var(--ink-secondary)] hover:text-foreground">
- {saved ? <BookmarkCheck className="h-4 w-4 text-brand" aria-hidden /> : <Bookmark className="h-4 w-4" aria-hidden />}
+ {saved ? <BookmarkCheck className="h-4 w-4 text-[var(--hero-ink)]" aria-hidden /> : <Bookmark className="h-4 w-4" aria-hidden />}
  {saved ? "Saved to research notes" : "Save to research notes"}
  </button>
- <a href={`/${locale}/methodology`} className="flex items-center gap-1.5 text-sm text-brand hover:underline">
+ <a href={`/${locale}/methodology`} className="flex items-center gap-1.5 text-sm text-[var(--hero-ink)] hover:underline">
  Methodology <ExternalLink className="h-3.5 w-3.5" aria-hidden />
  </a>
  </div>
@@ -1116,19 +1140,18 @@ export function BibleFixtureExplorer({
 
  return (
  <div>
- <div
- ref={fixtureListHeadingRef}
- id="fixture-list-heading"
- className="mb-6 border-b border-[var(--border-subtle)] pb-5"
- >
- <div className="mb-2 flex items-center gap-1.5 text-metadata font-medium uppercase tracking-label text-muted-foreground">
- <Filter className="h-3 w-3" aria-hidden />
- Filter
- </div>
+ <div ref={fixtureListHeadingRef} id="fixture-list-heading" className="mb-6">
+ {/*
+  THE MAP'S TWO FILTER ROWS. League and market were one undifferentiated scroller separated by a
+  hairline, so the reader had to infer where one axis ended and the other began. Each row now
+  states what it filters.
+ */}
+ <div className="mb-2 flex flex-wrap items-center gap-2.5">
+ <span className="rw-m mr-1 shrink-0 text-[var(--hero-ink-2)]">{FILTER_LABEL_LEAGUE}</span>
  <div
  className="flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] snap-x snap-mandatory [&::-webkit-scrollbar]:hidden"
  role="toolbar"
- aria-label="Fixture filters"
+ aria-label="League filters"
  >
  {leagues.map((label) => (
  <FilterButton
@@ -1142,7 +1165,16 @@ export function BibleFixtureExplorer({
  }}
  />
  ))}
- <span className="mx-0.5 h-8 w-px shrink-0 self-center bg-border" aria-hidden />
+ </div>
+ </div>
+
+ <div className="flex flex-wrap items-center gap-2.5">
+ <span className="rw-m mr-1 shrink-0 text-[var(--hero-ink-2)]">{FILTER_LABEL_MARKET}</span>
+ <div
+ className="flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] snap-x snap-mandatory [&::-webkit-scrollbar]:hidden"
+ role="toolbar"
+ aria-label="Market filters"
+ >
  {FILTER_GROUPS.market.map((label) => (
  <FilterButton
  key={label}
@@ -1163,40 +1195,61 @@ export function BibleFixtureExplorer({
  setSearchFixtureId(null);
  setPage(1);
  }}
- className="min-h-9 shrink-0 snap-start rounded-md border border-border px-3 py-1.5 text-xs text-muted-foreground hover:text-foreground"
+ className="rw-m min-h-9 shrink-0 snap-start border border-[var(--hero-line)] px-2.5 py-1.5 tracking-[0.1em] text-[var(--hero-ink-2)] hover:text-[var(--hero-ink)]"
  >
  Clear search
  </button>
  )}
  </div>
  </div>
+ </div>
 
- <div className="space-y-3">
- {pagedFixtures.map((fixture) => {
+ {/* The column head. Hidden below sm, where the rows collapse to stacked blocks. */}
+ <div className={`rw-label hidden border-y-[0.5px] border-[var(--hero-ink-2)] py-1.5 text-[var(--hero-ink-2)] ${DESK_COLUMNS}`}>
+ <span>No.</span>
+ <span>Fixture</span>
+ <span>League</span>
+ <span>KO UTC</span>
+ <span className="text-center">Market</span>
+ <span className="text-right">{DESK_POTENTIAL_LABEL}</span>
+ <span />
+ </div>
+
+ <div className="border-t-[0.5px] border-[var(--hero-ink-2)]">
+ {pagedFixtures.map((fixture, index) => {
  const open = expandedId === fixture.id;
  const isSaved = savedIds.has(fixture.id);
  const detailId = `fixture-detail-${fixture.id}`;
  return (
- <article key={fixture.id} ref={(node) => { if (node) fixtureCardRefs.current.set(fixture.id, node); else fixtureCardRefs.current.delete(fixture.id); }} data-fixture-id={fixture.id} className="overflow-hidden rounded-lg border border-border bg-card shadow-card transition-colors duration-fast ease-out hover:border-[var(--border-strong)]">
+ <article key={fixture.id} ref={(node) => { if (node) fixtureCardRefs.current.set(fixture.id, node); else fixtureCardRefs.current.delete(fixture.id); }} data-fixture-id={fixture.id} className="border-b border-[var(--hero-line)]">
  <button
  type="button"
- className="flex w-full items-center gap-3 px-4 py-3.5 text-left transition-colors duration-fast ease-out hover:bg-[var(--canvas-primary)] sm:gap-4 sm:px-5 sm:py-4"
+ className={`rw-row w-full py-2.5 text-left sm:items-center ${DESK_COLUMNS}`}
  onClick={() => void toggleFixture(fixture, open)}
  aria-expanded={open}
  aria-controls={detailId}
  >
- <span className="w-10 shrink-0 text-metadata font-medium uppercase tracking-label text-muted-foreground">{fixture.leagueCode}</span>
- <div className="flex min-w-0 flex-1 items-center gap-3">
- <div className="flex min-w-0 items-center gap-2"><TeamLogo src={fixture.homeImage} name={fixture.home} size="sm" /><span className="truncate text-sm font-medium">{fixture.home}</span></div>
- <span className="font-mono text-xs text-muted-foreground">vs</span>
- <div className="flex min-w-0 items-center gap-2"><TeamLogo src={fixture.awayImage} name={fixture.away} size="sm" /><span className="truncate text-sm font-medium">{fixture.away}</span></div>
- </div>
- <time dateTime={fixture.kickoffDateTime} className="hidden w-40 shrink-0 font-mono text-metadata text-muted-foreground xl:block">{fixture.kickoff}</time>
- <span className="hidden shrink-0 rounded border border-border bg-background px-2 py-0.5 font-mono text-metadata text-[var(--ink-secondary)] md:inline">{fixture.marketCode}</span>
- <div className="flex shrink-0 items-center gap-3">
- <div className="text-right"><strong className="font-mono text-lg leading-none text-brand">{fixture.modelProbability}%</strong><p className="mt-0.5 whitespace-nowrap text-metadata text-muted-foreground">Market probability</p></div>
- {open ? <ChevronUp className="ml-1 h-4 w-4 text-muted-foreground" aria-hidden /> : <ChevronDown className="ml-1 h-4 w-4 text-muted-foreground" aria-hidden />}
- </div>
+ <span className="rw-tnum rw-m hidden text-[var(--hero-ink-2)] sm:block">{String(index + 1).padStart(2, "0")}</span>
+ <span className="flex min-w-0 items-center gap-2">
+ <TeamLogo src={fixture.homeImage} name={fixture.home} size="sm" />
+ <TeamLogo src={fixture.awayImage} name={fixture.away} size="sm" />
+ <span className="truncate text-[14px] font-semibold tracking-[-0.01em] text-[var(--hero-ink)]">{fixture.home} v {fixture.away}</span>
+ </span>
+ <span className="mt-1.5 block sm:mt-0"><V2LeagueCell country={fixture.country} league={fixture.league} /></span>
+ <time dateTime={fixture.kickoffDateTime} className="rw-tnum rw-m mt-1.5 block text-[var(--hero-ink-2)] sm:mt-0">{fixture.kickoff}</time>
+ <span className="rw-m mt-1.5 inline-block border border-[var(--hero-line)] px-2 py-0.5 text-[var(--hero-ink-2)] sm:mt-0 sm:justify-self-center">{fixture.marketCode}</span>
+ {/*
+  THE POTENTIAL COLUMN. It read "Market probability" in brand green, which named the figure
+  with a word the vocabulary reserves and coloured it like a result. It is the provider's
+  potential, in ink, at the heading face — the same figure the ranked section leads with.
+ */}
+ <span className="rw-h rw-tnum mt-1.5 block text-[20px] tracking-[-0.03em] text-[var(--hero-ink)] sm:mt-0 sm:text-right">
+ {fixture.modelProbability}
+ <span className="rw-mono align-baseline text-[11px] font-normal tracking-normal">%</span>
+ </span>
+ <span aria-hidden className="hidden text-[13px] text-[var(--hero-ink-2)] sm:block sm:justify-self-end">
+ {open ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
+ </span>
  </button>
  {open && (
  <FixtureDetail
@@ -1235,12 +1288,12 @@ export function BibleFixtureExplorer({
  </article>
  );
  })}
- {!visible.length && <div className="rounded-lg border border-border bg-card py-12 text-center text-sm text-[var(--ink-secondary)]">{searchQuery ? "No fixtures match this search." : dict.predictions.empty}</div>}
+ {!visible.length && <div className="border border-border bg-card py-12 text-center text-sm text-[var(--ink-secondary)]">{searchQuery ? "No fixtures match this search." : dict.predictions.empty}</div>}
  </div>
  {totalPages > 1 && <nav className="mt-6 flex items-center justify-between gap-3 border-t border-border pt-4" aria-label="Fixture list pagination">
- <button type="button" disabled={currentPage === 1} onClick={() => changePage(currentPage - 1)} className="rounded-md border border-border px-3 py-1.5 text-sm text-foreground disabled:cursor-not-allowed disabled:opacity-[var(--opacity-disabled)]">Previous</button>
+ <button type="button" disabled={currentPage === 1} onClick={() => changePage(currentPage - 1)} className="border border-border px-3 py-1.5 text-sm text-foreground disabled:cursor-not-allowed disabled:opacity-[var(--opacity-disabled)]">Previous</button>
  <span className="font-mono text-xs text-muted-foreground">Page {currentPage} of {totalPages}</span>
- <button type="button" disabled={currentPage === totalPages} onClick={() => changePage(currentPage + 1)} className="rounded-md border border-border px-3 py-1.5 text-sm text-foreground disabled:cursor-not-allowed disabled:opacity-[var(--opacity-disabled)]">Next</button>
+ <button type="button" disabled={currentPage === totalPages} onClick={() => changePage(currentPage + 1)} className="border border-border px-3 py-1.5 text-sm text-foreground disabled:cursor-not-allowed disabled:opacity-[var(--opacity-disabled)]">Next</button>
  </nav>}
  </div>
  );

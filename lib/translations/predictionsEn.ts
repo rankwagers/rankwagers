@@ -174,6 +174,67 @@ export const predictionsEn = {
    * printing "Edition 0". See `lib/homepage/edition.ts` for why the count beats the span.
    */
   mastheadEdition: "Edition {n}",
+  /* ======================================================================
+     PASS 2 — NEW KEYS FOR THE SIX CONVERTED ISLANDS
+     ----------------------------------------------------------------------
+     ENGLISH ONLY. Every key below is new, and none of them splits or reuses
+     an existing key whose other locales carry a different sentence — that
+     was the instruction and it is also the only safe move: re-pointing a
+     translated key at new English leaves 20-odd locales asserting something
+     the English no longer says.
+
+     TRANSLATION DEBT, LOGGED HERE RATHER THAN IN A TICKET NOBODY READS.
+     These keys have no locale entries. `mergePredictions` falls back to the
+     English string, so a non-English reader sees English here until the
+     locale files catch up. That is a visible, bounded gap on six section
+     headings and a dozen labels — not a broken page, and not a silent one.
+     ====================================================================== */
+  rankedEyebrow: "Today",
+  rankedTitle: "Highest provider potential today",
+  rankedDescription:
+    "Ranked by provider potential among today's qualified markets. A statistical estimate, not a forecast of the outcome.",
+  rankedPotentialLabel: "provider potential",
+  rankedOpenMatch: "Open match",
+  rankedAddAcca: "Accumulator",
+  deskEyebrow: "Research desk",
+  deskTitle: "Recently qualified",
+  deskDescription:
+    "Fixtures that cleared the model's qualification threshold. Open a fixture for its full research sheet — drivers, venue evidence and recent history.",
+  deskFilterLeague: "League",
+  deskFilterMarket: "Market",
+  deskColumnPotential: "Potential",
+  deskColumnScore: "Score",
+  deskColumnResult: "Result",
+  resultsTitle: "Recent results — archived qualified-list outcomes",
+  resultsNote: "Wins and losses both shown",
+  resultsWon: "Won",
+  resultsLost: "Lost",
+  resultsVoid: "Void",
+  resultsPending: "Pending",
+  howRecordEyebrow: "Why RankWagers",
+  howRecordTitle: "How the record is produced",
+  howRecordDescription:
+    "How this publication is produced — and how every figure above can be checked against the record rather than taken on trust.",
+  archiveReadMethodology: "Read methodology",
+  archiveUseDateControl: "Use date control",
+  /*
+   * The right-hand label on the supporting table and the ranked section. `N of M cleared†` — the
+   * dagger points at the same footnote the funnel's cleared stage does, so the qualifier is
+   * defined once for every surface that uses the word.
+   */
+  clearedOfTotal: "{shown} of {total} cleared†",
+  /*
+   * The live desk's derivation: how many more goals settle the market. Never a prediction that
+   * they will arrive — it is arithmetic on the market line and the score already on the page.
+   */
+  liveGoalsToSettle: "{n} more goal settles it",
+  liveGoalsToSettlePlural: "{n} more goals settle it",
+  liveCleared: "cleared",
+  livePending: "pending",
+  liveLatestScore: "Latest provider score",
+  liveUpcomingTitle: "Upcoming — next picks",
+  liveUpcomingNote: "Scores print once the provider reports",
+  liveToKickoff: "to kick-off",
   /*
    * The lead's middle track. It labels the provider potential — the figure the numeral states —
    * standing between the two venue records it is read against. Deliberately the short form: the

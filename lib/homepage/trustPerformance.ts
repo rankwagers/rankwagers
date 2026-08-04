@@ -132,6 +132,8 @@ function collectRecentResults(
           home: row.homeTeam,
           away: row.awayTeam,
           competition: row.competition || "Competition",
+          // Omitted rather than defaulted — see `HomepageRecentResult.country`.
+          ...(row.countryCode ? { country: row.countryCode } : {}),
           marketKey: tab,
           marketLabel: market.label,
           status,

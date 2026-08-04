@@ -141,7 +141,13 @@ test("RankWagersHome sets heading ids and date control props", () => {
     path.join(root, "components/bible/RankWagersHome.tsx"),
     "utf8"
   );
-  assert.match(src, /id="top-picks-heading"/);
+  /*
+   * `headingId=` rather than `id=`: the section opening is a component now (`V2SectionOpen`), and
+   * it applies the id to the `h2` it renders. The anchor is unchanged — what moved is which file
+   * writes the attribute. `heroAssembly.test.ts` asserts the RENDERED anchors on the page tree,
+   * which is the check a source scan cannot make.
+   */
+  assert.match(src, /headingId="top-picks-heading"/);
   assert.match(src, /id="trending-markets"/);
   assert.match(src, /id="saved-heading"/);
   assert.match(src, /id="verified-performance-heading"/);

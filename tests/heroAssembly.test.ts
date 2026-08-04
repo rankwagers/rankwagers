@@ -627,3 +627,202 @@ test("the lead draws three vertical tracks and its bordered call to action", () 
   assert.ok(html.includes("venueAway"), "the away track is labelled");
   assert.ok(html.includes("openResearchCta"), "the lead carries its call to action");
 });
+
+/* ------------------------------------------------------------------ *
+ * PASS 2 — the six converted islands, asserted on the assembly
+ * ------------------------------------------------------------------ */
+
+/** Every homepage surface converted across the rebrand, for the kill-list sweeps below. */
+const CONVERTED_SURFACES = [
+  "components/bible/RankWagersHome.tsx",
+  "components/bible/BibleOperatorStrip.tsx",
+  "components/bible/BibleFixtureExplorer.tsx",
+  "components/homepage/HomepageAccaEntry.tsx",
+  "components/homepage/HomepageSearchEntry.tsx",
+  "components/homepage/v2Chrome.tsx",
+  "components/homepage/hero/HeroStage.tsx",
+  "components/homepage/hero/HeroLead.tsx",
+  "components/homepage/hero/FunnelLine.tsx",
+  "components/homepage/hero/SupportingTable.tsx",
+  "components/Footer.tsx",
+  "components/Header.tsx",
+] as const;
+
+const stripComments = (src: string) =>
+  src.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/[^\n]*/g, "");
+
+const readSurface = (rel: string) =>
+  stripComments(readFileSync(path.join(process.cwd(), rel), "utf8"));
+
+test("every converted island is mounted by the page", () => {
+  const { mounted } = homepageTree();
+  const names = [...mounted.keys()].join(", ");
+  for (const [component, island] of [
+    ["V2SectionOpen", "the shared section opening (ranked, desk, how-record)"],
+    ["BibleFixtureExplorer", "the research desk"],
+    ["SavedFixturesPanel", "saved"],
+    ["BibleHomeNotes", "how qualification works"],
+    ["V2Button", "the bordered mono buttons"],
+    ["LiveFeedPanel", "the live desk"],
+    ["BibleOperatorStrip", "the operators strip"],
+  ] as const) {
+    assert.ok(mounted.has(component), `${island} is not mounted (${component}) — mounted: ${names}`);
+  }
+});
+
+test("no serif heading, green fill, or rounded chip survives on the page", () => {
+  /*
+   * The kill list, swept across every converted surface at once rather than asserted per section.
+   * A sweep is what catches the island nobody thought to add a test for — which is how each of
+   * these survived the previous pass.
+   */
+  for (const rel of CONVERTED_SURFACES) {
+    const src = readSurface(rel);
+    assert.doesNotMatch(src, /font-display|font-serif/, `serif heading survives in ${rel}`);
+    assert.doesNotMatch(src, /\brounded-/, `radius survives in ${rel}`);
+    assert.doesNotMatch(
+      src,
+      /bg-brand|text-brand\b|border-brand|--green-surface|--green-deep|--green-primary/,
+      `a green fill survives in ${rel}`
+    );
+    /*
+     * Matched inside `className` only. A bare `\bcard\b` also hit a local variable named `card`
+     * and the `partnerCardRefs` map — a guard that fails on an identifier teaches people to
+     * rename identifiers, not to remove chrome.
+     */
+    for (const cls of src.match(/className=(?:"[^"]*"|\{`[^`]*`\})/g) ?? []) {
+      assert.doesNotMatch(cls, /btn-primary|btn-secondary|shadow-card|(?<![\w-])card(?![\w-])/, `legacy chrome in ${rel}: ${cls.slice(0, 90)}`);
+    }
+  }
+});
+
+test("the ranked section states the provider potential and claims no freshness it did not observe", () => {
+  const home = readSurface("components/bible/RankWagersHome.tsx");
+  const { predictionsEn } =
+    require("../lib/translations/predictionsEn") as typeof import("../lib/translations/predictionsEn");
+
+  assert.match(home, /rankedPotentialLabel/, "the figure is labelled provider potential");
+  assert.equal(
+    /Observed\s*<time|model estimate/.test(home),
+    false,
+    "the unobserved freshness line is gone"
+  );
+  // The heading names what the section ranks by, in the approved vocabulary.
+  assert.match(predictionsEn.rankedTitle, /provider potential/i);
+  assert.doesNotMatch(predictionsEn.rankedDescription, /\btip\b/i);
+});
+
+test("recent results put settled rows first and never lead with a pending one", () => {
+  /*
+   * Tested as BEHAVIOUR, not as source text. The first version of this asserted that the sort
+   * comparator appeared in the page source, and a probe that broke the ordering — replacing the
+   * comparator's body while leaving its shape intact — sailed straight past it. Ordering is pure
+   * logic, so it belongs in a module that can be run.
+   */
+  const { settledFirst } =
+    require("../lib/homepage/recentResults") as typeof import("../lib/homepage/recentResults");
+
+  const row = (id: string, status: string) => ({ id, status }) as never;
+  const ordered = settledFirst([
+    row("p1", "pending"),
+    row("w1", "won"),
+    row("p2", "pending"),
+    row("l1", "lost"),
+    row("v1", "void"),
+  ]);
+
+  assert.equal(ordered[0].id, "w1", "a settled row leads, never a pending one");
+  assert.deepEqual(
+    ordered.map((r) => r.id),
+    ["w1", "l1", "v1", "p1", "p2"],
+    "settled first, pending after, original order preserved within each group"
+  );
+  // Nothing is dropped: hiding pending rows would be a filter on the record.
+  assert.equal(ordered.length, 5, "pending rows follow, they are not removed");
+
+  const home = readSurface("components/bible/RankWagersHome.tsx");
+  assert.match(home, /const orderedResults = settledFirst\(trust\.recentResults\)/);
+  assert.match(home, /orderedResults\.map/, "and the table renders the ordered list");
+  // The rows carry a score column and a boxed outcome.
+  assert.match(home, /row\.scoreLabel/);
+  assert.match(home, /<V2Outcome/);
+});
+
+test("the lost outcome carries the accent — the record does not hide its losses", () => {
+  const chrome = readSurface("components/homepage/v2Chrome.tsx");
+  assert.match(
+    chrome,
+    /status === "lost"\s*\?\s*"border-\[var\(--hero-accent\)\] text-\[var\(--hero-accent\)\]"/,
+    "lost is the accented state"
+  );
+  assert.match(chrome, /status === "won" \? "✓"/, "and both outcomes carry a glyph");
+});
+
+test("the live desk publishes or omits — no blurred rows, no teaser buttons", () => {
+  const panel = readSurface("components/predictions/LiveFeedPanel.tsx");
+  assert.equal(/blur-\[/.test(panel), false, "no blurred placeholder rows");
+  assert.equal(/liveFeaturedMoreCta|liveTapTelegram/.test(panel), false, "no teaser buttons");
+  assert.equal(/Home Team|████/.test(panel), false, "no invented fixtures behind a blur");
+  // One header, not two.
+  assert.equal(
+    (panel.match(/<LiveSignalsHeader/g) ?? []).length,
+    1,
+    "the desk renders exactly one header"
+  );
+  /*
+   * And the empty state still reaches the reader: `hasLiveContent` must not count rows that no
+   * longer render, or a locked-only feed would suppress the empty state and show nothing.
+   */
+  assert.match(panel, /const hasLiveContent = Boolean\(feed\?\.featured\);/);
+});
+
+test("the footer is fully ink, with the masthead wordmark and no grey panel", () => {
+  const footer = readSurface("components/Footer.tsx");
+  assert.match(footer, /bg-\[var\(--hero-ink\)\] text-white/);
+  assert.match(footer, /rw-h text-\[34px\] text-white/, "the wordmark is the map's 34px");
+  assert.match(footer, /border-l-2 border-white\/60/, "the disclosures sit on left rules");
+  assert.equal(/EligibilityNotice/.test(footer), false, "the grey eligibility panel is gone");
+  assert.equal(/bg-muted|bg-card|canvas-secondary/.test(footer), false, "nothing light below");
+});
+
+test("the archive buttons carry exactly one arrow each", () => {
+  const home = readSurface("components/bible/RankWagersHome.tsx");
+  const { predictionsEn } =
+    require("../lib/translations/predictionsEn") as typeof import("../lib/translations/predictionsEn");
+  /*
+   * The `→ →` came from a label that already ended in an arrow meeting a component that appended
+   * one. `V2Button` owns the arrow, so the guard is on the LABELS: none of them may carry one.
+   */
+  for (const key of ["archiveReadMethodology", "archiveUseDateControl", "rankedOpenMatch"] as const) {
+    assert.doesNotMatch(predictionsEn[key], /→/, `${key} must not carry its own arrow`);
+  }
+  assert.match(home, /<V2Button href={`\/\$\{locale\}\/archive`} arrow={false}>/, "and one opts out");
+});
+
+test("reader copy carries no internal routing note", () => {
+  const entry = readSurface("components/homepage/HomepageAccaEntry.tsx");
+  assert.equal(/\/combo/.test(entry), false, "the legacy-route note is not reader copy");
+});
+
+test("the page links to no competition it did not research", () => {
+  const home = readSurface("components/bible/RankWagersHome.tsx");
+  const strip = readSurface("components/bible/BibleOperatorStrip.tsx");
+  /*
+   * `trust.featuredLeagues` falls back to a hardcoded top-five European list. Rendering it put
+   * links to competitions this page never scored beside the ones it did.
+   */
+  for (const [rel, src] of [["RankWagersHome", home], ["BibleOperatorStrip", strip]] as const) {
+    assert.equal(/featuredLeagues/.test(src), false, `${rel} still renders the fallback leagues`);
+  }
+});
+
+test("the supporting table states country, the cleared label and the short market form", () => {
+  const table = readSurface("components/homepage/hero/SupportingTable.tsx");
+  const { predictionsEn } =
+    require("../lib/translations/predictionsEn") as typeof import("../lib/translations/predictionsEn");
+
+  assert.match(table, /<V2LeagueCell country={pick\.country}/, "the league cell carries a flag");
+  assert.match(table, /shortMarket\(pick\.market\)/, "the market column uses the short form");
+  // The right-hand label points at the same footnote the funnel's cleared stage does.
+  assert.match(predictionsEn.clearedOfTotal, /cleared†/);
+});

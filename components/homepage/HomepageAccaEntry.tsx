@@ -53,9 +53,18 @@ export function HomepageAccaEntry({
           className="border-b-2 border-[var(--hero-ink)] font-bold text-[var(--hero-ink)]"
         >
           Auto Acca Builder →
-        </Link>{" "}
-        {/* The legacy route still resolves, and saying so is the only place a reader finds out. */}
-        <span className="whitespace-nowrap">Legacy /combo redirects to the same builder.</span>
+        </Link>
+        {/*
+          THE "/combo" NOTE IS GONE FROM READER COPY.
+
+          It read "Legacy /combo redirects to the same builder." — a routing fact, addressed to
+          whoever maintains the redirect rather than to anyone reading a football page. A reader
+          who lands on /combo arrives at the builder without being told, which is what a redirect
+          is for; a reader who never types it learns a URL that does not exist any more.
+
+          The redirect itself is untouched. `comboUi.test.ts` still pins it, against the route
+          rather than against a sentence in the page — where it belonged.
+        */}
       </div>
     </section>
   );

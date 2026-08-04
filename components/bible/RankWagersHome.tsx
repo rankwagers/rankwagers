@@ -21,6 +21,13 @@ import { HomepageSearchEntry } from "@/components/homepage/HomepageSearchEntry";
 import { HomepageAccaEntry } from "@/components/homepage/HomepageAccaEntry";
 import { AddToAccaButton } from "@/components/acca/AddToAccaButton";
 import { HomepageViewedTracker } from "@/components/homepage/HomepageViewedTracker";
+import {
+  V2Button,
+  V2Chip,
+  V2LeagueCell,
+  V2Outcome,
+  V2SectionOpen,
+} from "@/components/homepage/v2Chrome";
 import { FunnelFootnote } from "@/components/homepage/hero/FunnelLine";
 import { HomepageHero } from "@/components/homepage/hero/HomepageHero";
 import { Section } from "@/components/layout/Section";
@@ -31,7 +38,16 @@ import {
 } from "@/components/homepage/sectionChrome";
 import type { HomepageTrustModel } from "@/lib/homepage/types";
 import { buildProofBandFigures } from "@/lib/homepage/proofBand";
+import { settledFirst } from "@/lib/homepage/recentResults";
 import { formatDict } from "@/lib/dictionaryExtras";
+
+/**
+ * The recent-results column track, stated once so the head cannot drift from its rows.
+ *
+ * Stacked below `sm` — a six-column table at 360px is a table nobody can read.
+ */
+const RESULT_COLUMNS =
+  "sm:grid sm:grid-cols-[44px_minmax(0,1.5fr)_minmax(0,0.9fr)_minmax(0,1fr)_70px_92px] sm:gap-x-3.5";
 
 const marketNames = {
   fh: "1st half goal",
@@ -161,6 +177,10 @@ export function RankWagersHome({
 }) {
   const p = dict.predictions;
   const fixtures = mapDailyListsToQualifiedFixtures(lists);
+
+  /* Settled outcomes lead; pending follows. The rule and its reasoning live in the module. */
+  const orderedResults = settledFirst(trust.recentResults);
+
   const topFixtures = [...fixtures]
     .sort((left, right) => right.modelProbability - left.modelProbability)
     .slice(0, 6);
@@ -412,60 +432,70 @@ export function RankWagersHome({
               </p>
             </div>
 
-            {/* #recent-results — merged into the band, directly beneath the totals. */}
+            {/* #recent-results — the map's table, merged into the band beneath the totals. */}
             <div
               id="recent-results"
               data-analytics-section="recent_results"
               className="mt-14 max-w-[72rem] scroll-mt-28"
             >
-              <h3
-                id="recent-results-heading"
-                className="font-display text-h3 tracking-display text-foreground"
-              >
-                {p.recentTitle}
-              </h3>
-              <p className="mt-2 max-w-[38rem] text-base leading-relaxed text-[var(--ink-secondary)]">
-                {p.recentDescription}
-              </p>
-              {trust.recentResults.length ? (
-                <ul className="list-enter mt-6 divide-y divide-[var(--border-subtle)] border-y border-[var(--border-subtle)]">
-                  {trust.recentResults.map((row) => (
-                    <li key={row.id}>
-                      <SectionTrackLink
-                        href={row.matchHref}
-                        section="recent_results"
-                        locale={locale}
-                        className="press flex flex-col gap-2 px-4 py-3 hover:bg-[var(--canvas-secondary)] sm:flex-row sm:items-center sm:justify-between"
-                      >
-                        <div className="min-w-0">
-                          <p className="text-lg font-semibold text-foreground">
-                            {row.home} vs {row.away}
-                          </p>
-                          <p className="mt-0.5 text-sm text-[var(--ink-secondary)]">
-                            {row.competition} · {row.marketLabel} · {row.date}
-                          </p>
-                        </div>
-                        <div className="flex items-center gap-3 text-sm">
-                          <span className="font-mono tabular-nums text-[var(--ink-secondary)]">
-                            {row.scoreLabel}
-                          </span>
-                          <StatusBadge
-                            status={row.status}
-                            label={
-                              row.status === "won"
-                                ? p.listResultWon
-                                : row.status === "lost"
-                                  ? p.listResultLost
-                                  : row.status === "void"
-                                    ? p.listResultPostponed
-                                    : "PENDING"
-                            }
-                          />
-                        </div>
-                      </SectionTrackLink>
-                    </li>
+              <div className="rw-m flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 pb-2 text-[var(--hero-ink-2)]">
+                <h3 id="recent-results-heading">{p.resultsTitle}</h3>
+                <span>{p.resultsNote}</span>
+              </div>
+
+              {orderedResults.length ? (
+                <div className="border-t-[0.5px] border-[var(--hero-ink-2)]">
+                  {/* Column head, hidden below sm where the grid collapses to stacked rows. */}
+                  <div className={`rw-label hidden border-b border-[var(--hero-line)] py-1.5 text-[var(--hero-ink-2)] ${RESULT_COLUMNS}`}>
+                    <span>{p.heroTableNo}</span>
+                    <span>{p.heroTableFixture}</span>
+                    <span>{p.heroTableLeague}</span>
+                    <span className="text-center">{p.heroTableMarket}</span>
+                    <span className="text-right">{p.deskColumnScore}</span>
+                    <span className="text-right">{p.deskColumnResult}</span>
+                  </div>
+
+                  {orderedResults.map((row, index) => (
+                    <SectionTrackLink
+                      key={row.id}
+                      href={row.matchHref}
+                      section="recent_results"
+                      locale={locale}
+                      className={`rw-row block border-b border-[var(--hero-line)] py-2.5 sm:items-center ${RESULT_COLUMNS}`}
+                    >
+                      <span className="rw-tnum rw-m hidden text-[var(--hero-ink-2)] sm:block">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <span className="min-w-0 truncate text-[14px] font-semibold tracking-[-0.01em] text-[var(--hero-ink)]">
+                        {row.home} <span className="rw-m text-[var(--hero-ink-2)]">vs</span>{" "}
+                        {row.away}
+                      </span>
+                      <span className="mt-1.5 block sm:mt-0">
+                        <V2LeagueCell country={row.country} league={row.competition} />
+                      </span>
+                      <span className="rw-m mt-1.5 block text-[var(--hero-ink-2)] sm:mt-0 sm:text-center">
+                        {row.marketLabel}
+                      </span>
+                      <span className="rw-h rw-tnum mt-1.5 block text-[16px] tracking-[-0.02em] text-[var(--hero-ink)] sm:mt-0 sm:text-right">
+                        {row.scoreLabel}
+                      </span>
+                      <span className="mt-2 block sm:mt-0 sm:justify-self-end">
+                        <V2Outcome
+                          status={row.status}
+                          label={
+                            row.status === "won"
+                              ? p.resultsWon
+                              : row.status === "lost"
+                                ? p.resultsLost
+                                : row.status === "void"
+                                  ? p.resultsVoid
+                                  : p.resultsPending
+                          }
+                        />
+                      </span>
+                    </SectionTrackLink>
                   ))}
-                </ul>
+                </div>
               ) : (
                 <div className="mt-4">
                   <EmptySection text={p.recentEmpty} />
@@ -517,12 +547,17 @@ export function RankWagersHome({
         rhythm="heavy"
         index={1}
       >
-        <SectionHeading
-          id="top-picks-heading"
-          eyebrow={p.topPicksEyebrow}
-          title={p.topPicksTitle}
-          description={p.topPicksDescription}
-          lead
+        {/*
+          THE MAP'S "HIGHEST PROVIDER POTENTIAL TODAY".
+
+          The heading names the figure the section ranks by, in the approved vocabulary — it read
+          "Today's picks", which named the output of a tipster rather than the ordering of a table.
+        */}
+        <V2SectionOpen
+          headingId="top-picks-heading"
+          eyebrow={p.rankedEyebrow}
+          title={p.rankedTitle}
+          description={p.rankedDescription}
         />
         {/*
           Stale-archive notice. Rendered ONLY when a same-day archive is standing in for a failed
@@ -561,98 +596,83 @@ export function RankWagersHome({
           </div>
         </div>
 
-        {/* #trending-markets — one meta row of counts, not a four-cell figure grid. */}
+        {/* #trending-markets — the map's mono chip row: label, count, top rate. */}
         {marketRows.length ? (
           <ul
             id="trending-markets"
             data-analytics-section="trending_markets"
-            className="-mx-1 mt-6 flex max-w-[72rem] scroll-mt-28 flex-nowrap gap-2 overflow-x-auto px-1 pb-1 lg:flex-wrap lg:overflow-visible"
+            className="mt-8 flex max-w-[72rem] scroll-mt-28 flex-wrap gap-2.5"
           >
             {marketRows.map((market) => (
-              <li key={market.market} className="shrink-0">
-                <SectionTrackLink
-                  href={homepageFixtureExplorerHref(locale, {
-                    market: market.filterCode,
-                  })}
-                  section="trending_markets"
-                  locale={locale}
-                  className="press inline-flex min-h-11 items-center gap-2 rounded-md border border-border bg-[var(--canvas-secondary)] px-3 text-sm text-foreground hover:border-[var(--border-strong)]"
-                >
-                  <span>{market.label}</span>
-                  <span className="font-mono tabular-nums text-[var(--ink-secondary)]">
-                    {market.count}
-                  </span>
-                  {market.highest ? (
-                    <span className="text-xs text-muted-foreground">
-                      top {market.highest}%
-                    </span>
-                  ) : null}
-                </SectionTrackLink>
+              <li key={market.market}>
+                <V2Chip
+                  href={homepageFixtureExplorerHref(locale, { market: market.filterCode })}
+                  label={market.label}
+                  count={String(market.count)}
+                  {...(market.highest ? { note: `top ${market.highest}%` } : {})}
+                />
               </li>
             ))}
           </ul>
         ) : (
-          <p id="trending-markets" className="mt-6 scroll-mt-28 text-sm text-muted-foreground">
+          <p id="trending-markets" className="rw-m mt-8 scroll-mt-28 text-[var(--hero-ink-2)]">
             Not enough settled results to report a trend.
           </p>
         )}
 
         {topFixtures.length ? (
-          <div className="list-enter mt-10 grid max-w-[72rem] gap-5 sm:grid-cols-2 md:gap-6 lg:grid-cols-3">
+          <div className="list-enter mt-10 grid max-w-[72rem] gap-x-7 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
             {topFixtures.map((fixture) => (
               <article
                 key={fixture.id}
-                className="flex flex-col border-t border-[var(--border-subtle)] pt-6"
+                className="group relative border-t-[0.5px] border-[var(--hero-ink-2)] pt-3.5"
               >
-                {/*
-                  The fixture leads. Previously the largest, most saturated element in this card was
-                  the model percentage — 24px, brand green, above a 16px team name — which is the
-                  house style of the genre this publication exists to separate from. The estimate is
-                  now a qualifier set in the same measure as the market it qualifies, and the match
-                  is the thing the eye lands on.
+                {/* The ink rule draws in from the left on approach — the map's hover for a figure. */}
+                <span
+                  aria-hidden
+                  className="absolute left-0 top-[-0.5px] h-[2px] w-full origin-left scale-x-0 bg-[var(--hero-ink)] transition-transform duration-[var(--dur-expand)] ease-[var(--ease-settle)] group-hover:scale-x-100"
+                />
 
-                  Three deletions, no additions: the `#1 · #2 · #3` leaderboard ordinal (position in
-                  a list is not evidence), the restated evidence line (it printed the same number a
-                  second time in the same card), and the accent colour on the figure.
-                */}
-                <p className="text-metadata font-medium uppercase tracking-label text-muted-foreground">
-                  {fixture.league}
-                </p>
-                <p className="mt-3 font-display text-xl font-semibold leading-snug text-foreground">
+                <V2LeagueCell country={fixture.country} league={fixture.league} />
+
+                <p className="rw-h mt-2.5 text-[20px] leading-[1.15] tracking-[-0.025em] text-[var(--hero-ink)]">
                   {fixture.home}{" "}
-                  <span className="font-normal text-[var(--ink-secondary)]">vs</span>{" "}
+                  <span className="rw-m align-middle text-[var(--hero-ink-2)]">vs</span>{" "}
                   {fixture.away}
                 </p>
-                <p className="mt-3 text-sm text-[var(--ink-secondary)]">
-                  {fixture.market} ·{" "}
+
+                <p className="rw-m mt-1.5 tracking-[0.06em] text-[var(--hero-ink-2)]">
                   <time dateTime={fixture.kickoffDateTime}>{fixture.kickoff}</time>
                 </p>
-                <p className="mt-1 text-sm text-[var(--ink-secondary)]">
-                  <span className="font-mono tabular-nums">{fixture.modelProbability}%</span>{" "}
-                  model estimate
+
+                {/*
+                  THE FIGURE, AND WHAT IT IS.
+
+                  "Observed Updated N min ago" is deleted. It stated a freshness this page never
+                  observed: `updatedAt` is the provider's list stamp for the DAY, not a per-fixture
+                  observation, so "updated 4 minutes ago" described something that did not happen
+                  to this fixture. An unobserved freshness claim is the one thing a research
+                  publication cannot afford to print beside its central figure.
+                */}
+                <p className="rw-h mt-3.5 text-[44px] leading-[0.9] tracking-[-0.045em] text-[var(--hero-ink)]">
+                  <span className="rw-tnum">{fixture.modelProbability}</span>
+                  <span className="rw-mono align-baseline text-[20px] font-normal tracking-normal">
+                    %
+                  </span>
                 </p>
-                {/* Provenance. Raised off the 10px step: this is the sentence that makes the card
-                    research rather than a tip, and it was the smallest thing on it. */}
-                <p className="mt-3 text-xs text-muted-foreground">
-                  Observed <time dateTime={fixture.updatedDateTime}>{fixture.updatedAt}</time>
+                <p className="rw-h mt-1 text-[15px] tracking-[-0.01em] text-[var(--hero-ink)]">
+                  {fixture.market}
                 </p>
+                <p className="rw-m mt-1 text-[var(--hero-ink-2)]">{p.rankedPotentialLabel}</p>
+
                 <div className="mt-4 flex flex-wrap items-center gap-2">
-                  <SectionTrackLink
-                    href={fixturePath(
-                      locale,
-                      fixture.matchId,
-                      fixture.marketKind,
-                      "top_picks"
-                    )}
-                    section="top_picks"
-                    locale={locale}
-                    className="btn-primary min-h-10"
+                  <V2Button
+                    href={fixturePath(locale, fixture.matchId, fixture.marketKind, "top_picks")}
                   >
-                    {p.topPicksOpenMatch}
-                    <ArrowUpRight className="h-3.5 w-3.5 shrink-0" aria-hidden />
-                  </SectionTrackLink>
+                    {p.rankedOpenMatch}
+                  </V2Button>
                   <AddToAccaButton
-                    labelAdd={p.topPicksAddAcca}
+                    labelAdd={p.rankedAddAcca}
                     draft={{
                       matchId: fixture.matchId,
                       homeTeam: fixture.home,
@@ -664,7 +684,7 @@ export function RankWagersHome({
                       confidence: fixture.modelProbability,
                       odds: null,
                       evidenceSummary: [
-                        `Model probability ${fixture.modelProbability}% on ${fixture.market}`,
+                        `Provider potential ${fixture.modelProbability}% on ${fixture.market}`,
                       ],
                       publishedAt: fixture.updatedDateTime,
                       matchHref: fixturePath(
@@ -681,20 +701,20 @@ export function RankWagersHome({
             ))}
           </div>
         ) : (
-          <div className="mt-6">
+          <div className="mt-8">
             <EmptySection text={p.topPicksEmpty} />
           </div>
         )}
 
-        <p className="mt-6 text-sm text-muted-foreground">
-          Prefer an automatic multi-leg Acca?{" "}
+        <p className="rw-m mt-8 text-[var(--hero-ink-2)]">
+          Prefer an automatic multi-leg acca?{" "}
           <SectionTrackLink
             href={`/${locale}/acca/builder`}
             section="top_picks"
             locale={locale}
-            className="font-medium text-foreground underline decoration-[var(--border-subtle)] underline-offset-4 hover:decoration-current"
+            className="border-b-2 border-[var(--hero-ink)] font-bold text-[var(--hero-ink)]"
           >
-            Open Acca Builder
+            Open Acca Builder →
           </SectionTrackLink>
         </p>
       </Section>
@@ -765,74 +785,38 @@ export function RankWagersHome({
         rhythm="heavy"
         index={3}
       >
-        <p className="mb-1 text-metadata font-medium uppercase tracking-label text-muted-foreground">
-          Research desk
-        </p>
-        <h2
-          id="recently-qualified"
-          className="font-display text-xl font-semibold tracking-display text-foreground"
-        >
-          Recently qualified
-        </h2>
-        <p className="mt-3 max-w-[38rem] text-sm leading-relaxed text-[var(--ink-secondary)]">
-          Fixtures that cleared the model&rsquo;s qualification threshold, with the full explorer and
-          the competitions driving today&rsquo;s list.
-        </p>
+        <V2SectionOpen
+          headingId="recently-qualified"
+          eyebrow={p.deskEyebrow}
+          title={p.deskTitle}
+          description={p.deskDescription}
+        />
 
-        {/* #featured-leagues */}
-        <div id="featured-leagues" className="mt-4 scroll-mt-28">
-          <h3 id="featured-leagues-heading" className="sr-only">
-            {p.leaguesTitle}
-          </h3>
-          <ul className="-mx-1 flex max-w-[72rem] flex-nowrap items-center gap-x-4 gap-y-2 overflow-x-auto px-1 text-sm lg:flex-wrap lg:overflow-visible">
-            {trust.featuredLeagues.map((league) => (
-              <li key={`${league.name}-${league.href ?? "label"}`} className="shrink-0">
-                {league.href ? (
-                  <SectionTrackLink
-                    href={league.href}
-                    section="featured_leagues"
-                    locale={locale}
-                    className="inline-flex min-h-11 items-center text-foreground underline decoration-[var(--border-subtle)] underline-offset-4 hover:decoration-current"
-                  >
-                    {league.name}
-                  </SectionTrackLink>
-                ) : (
-                  <span className="inline-flex min-h-11 items-center text-muted-foreground">
-                    {league.name}
-                  </span>
-                )}
-              </li>
-            ))}
-            <li className="shrink-0">
-              <SectionTrackLink
-                href={`/${locale}/competitions`}
-                section="featured_leagues"
-                locale={locale}
-                className="inline-flex min-h-11 items-center gap-1 font-medium text-foreground underline decoration-[var(--border-subtle)] underline-offset-4 hover:decoration-current"
-              >
-                {p.leaguesAll}
-                <ArrowUpRight className="h-3.5 w-3.5 shrink-0" aria-hidden />
-              </SectionTrackLink>
-            </li>
-          </ul>
-          <p className="mt-3 max-w-[38rem] text-base leading-relaxed text-[var(--ink-secondary)]">
-            {p.leaguesDescription}
-          </p>
-        </div>
+        {/*
+          THE RELATED-COMPETITIONS ROW IS DELETED.
+
+          It rendered `trust.featuredLeagues`, which falls back to a hardcoded top-five European
+          list — Premier League, La Liga, Serie A, Bundesliga, Ligue 1, Champions League. None of
+          them is on today's board: the qualified fixtures are lower divisions the model actually
+          scored. A row of links to competitions this page did not research reads as a claim that
+          it did, and it was the only place on the page pointing somewhere the research does not
+          go.
+
+          The `#featured-leagues` anchor and its heading go with it. `trust.featuredLeagues` is now
+          resolved and unrendered — worth removing from the trust model in its own pass, since
+          that contract is shared and tested.
+        */}
 
         <div className="mt-6">
           <BibleFixtureExplorer lists={lists} dict={dict} />
         </div>
 
         {/* #saved */}
-        <div data-analytics-section="saved" id="saved" className="mt-10 scroll-mt-28">
-          <h3
-            id="saved-heading"
-            className="font-display text-h3 tracking-display text-foreground"
-          >
+        <div data-analytics-section="saved" id="saved" className="mt-12 scroll-mt-28">
+          <h3 id="saved-heading" className="rw-h text-[20px] text-[var(--hero-ink)]">
             Saved
           </h3>
-          <p className="mt-2 max-w-[38rem] text-base leading-relaxed text-[var(--ink-secondary)]">
+          <p className="mt-1.5 max-w-[52ch] text-[15px] leading-[1.55] text-[var(--hero-ink-2)]">
             Fixtures you save stay in this browser so you can reopen match evidence quickly.
           </p>
           <div className="mt-4">
@@ -862,12 +846,11 @@ export function RankWagersHome({
         rhythm="quiet"
         index={4}
       >
-        <SectionHeading
-          id="why-trust-heading"
-          eyebrow={p.whyEyebrow}
-          title={p.whyTitle}
-          description="How this publication is produced — and how every figure above can be checked against the record rather than taken on trust."
-          lead
+        <V2SectionOpen
+          headingId="why-trust-heading"
+          eyebrow={p.howRecordEyebrow}
+          title={p.howRecordTitle}
+          description={p.howRecordDescription}
         />
         {/*
           The method, as a ruled procedure rather than a bulleted list.
@@ -882,87 +865,72 @@ export function RankWagersHome({
           The numeral column is fixed-width and tabular so the rules align down the page; the
           steps are the only place on this surface where a rule sits between every row.
         */}
-        <ol className="mt-8 max-w-[46rem] border-t border-[var(--border-subtle)]">
+        <ol className="mt-8 max-w-[52rem] border-t-[0.5px] border-[var(--hero-ink-2)]">
           {[p.whyPublished, p.whyEvidence, p.whyLive, p.whySettlement, p.whyArchive].map(
             (item, index) => (
               <li
                 key={item}
-                className="grid grid-cols-[2.25rem_1fr] gap-x-4 border-b border-[var(--border-subtle)] py-4 md:grid-cols-[3rem_1fr] md:gap-x-6 md:py-5"
+                className="grid grid-cols-[44px_minmax(0,1fr)] items-baseline gap-x-3.5 border-b border-[var(--hero-line)] py-3"
               >
-                <span
-                  aria-hidden
-                  className="font-mono text-body-sm font-semibold tabular-nums text-[var(--ink-muted)] md:text-body"
-                >
+                <span aria-hidden className="rw-tnum rw-m text-[var(--hero-ink-2)]">
                   {String(index + 1).padStart(2, "0")}
                 </span>
-                <p className="text-base leading-relaxed text-[var(--ink-secondary)]">{item}</p>
+                <p className="text-[15px] leading-[1.5] text-[var(--hero-ink)]">{item}</p>
               </li>
             )
           )}
         </ol>
 
-        {/* #research-notes / #methodology */}
         {/*
-          Evidence and archive are the section's other two arguments, and they were previously
-          stacked as bare `mt-10` divs behind headings a half-step above body text. A trust
-          argument presented at body weight reads as a footnote to the one above it. Each is now
-          a ruled block with a `text-h3` heading, so the section reads as three stated claims of
-          equal standing — method, evidence, record — rather than one list and two afterthoughts.
+          THE TWO CLOSING BLOCKS, side by side per the map: how qualification works, and the
+          archive. Each opens on a mono rule at 2px rather than a heading a half-step above body
+          text, so the section reads as three stated claims of equal standing.
         */}
-        <div
-          data-analytics-section="latest_insights"
-          id="research-notes"
-          className="mt-12 border-t border-[var(--border-subtle)] pt-8 scroll-mt-28"
-        >
-          <h3
-            id="methodology-heading"
-            className="font-display text-h3 tracking-display text-foreground"
+        <div className="mt-10 grid max-w-[72rem] gap-x-10 gap-y-10 lg:grid-cols-2">
+          <div
+            data-analytics-section="latest_insights"
+            id="research-notes"
+            className="scroll-mt-28"
           >
-            How qualification works
-          </h3>
-          <div id="methodology" className="mt-4 scroll-mt-28">
-            <BibleHomeNotes dict={dict} locale={locale} />
+            <h3
+              id="methodology-heading"
+              className="rw-m border-b-2 border-[var(--hero-line)] pb-2 text-[var(--hero-ink-2)]"
+            >
+              How qualification works
+            </h3>
+            <div id="methodology" className="mt-3 scroll-mt-28">
+              <BibleHomeNotes dict={dict} locale={locale} />
+            </div>
+            <p className="rw-m mt-4 max-w-[62ch] normal-case tracking-[0.04em] text-[var(--hero-ink-2)]">
+              {p.trustFooterNote}
+            </p>
           </div>
-          <p className="mt-4 max-w-[46rem] text-base leading-relaxed text-muted-foreground">
-            {p.trustFooterNote}
-          </p>
-        </div>
 
-        {/* #prediction-archive */}
-        <div
-          id="prediction-archive"
-          data-analytics-section="prediction_archive"
-          className="mt-12 max-w-[46rem] border-t border-[var(--border-subtle)] pt-8 scroll-mt-28"
-        >
-          <p className="text-metadata font-medium uppercase tracking-label text-muted-foreground">
-            {p.archiveEyebrow}
-          </p>
-          <h3
-            id="prediction-archive-heading"
-            className="mt-1 font-display text-h3 tracking-display text-foreground"
+          {/* #prediction-archive */}
+          <div
+            id="prediction-archive"
+            data-analytics-section="prediction_archive"
+            className="scroll-mt-28"
           >
-            {p.archiveTitle}
-          </h3>
-          <p className="mt-2 text-base leading-relaxed text-[var(--ink-secondary)]">
-            {p.archiveBody}
-          </p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <SectionTrackLink
-              href={`/${locale}/methodology`}
-              section="prediction_archive"
-              locale={locale}
-              className="btn-primary min-h-11"
+            <h3
+              id="prediction-archive-heading"
+              className="rw-m border-b-2 border-[var(--hero-line)] pb-2 text-[var(--hero-ink-2)]"
             >
-              {p.archiveCtaMethod}
-            </SectionTrackLink>
-            <SectionTrackLink
-              href={`/${locale}/archive`}
-              section="prediction_archive"
-              locale={locale}
-              className="btn-secondary min-h-11"
-            >
-              {p.archiveCtaDate}
-            </SectionTrackLink>
+              {p.archiveEyebrow} — {p.archiveTitle}
+            </h3>
+            <p className="mt-3 max-w-[52ch] text-[14px] leading-[1.6] text-[var(--hero-ink-2)]">
+              {p.archiveBody}
+            </p>
+            {/*
+              Bordered mono buttons. `V2Button` owns the arrow, so a label can never double it —
+              these two rendered "Read methodology → →" because the copy already ended in one.
+            */}
+            <div className="mt-4 flex flex-wrap gap-2">
+              <V2Button href={`/${locale}/methodology`}>{p.archiveReadMethodology}</V2Button>
+              <V2Button href={`/${locale}/archive`} arrow={false}>
+                {p.archiveUseDateControl}
+              </V2Button>
+            </div>
           </div>
         </div>
       </Section>
@@ -988,7 +956,6 @@ export function RankWagersHome({
             locale={locale}
             subidBase="homepage-top-operators"
             countryContext={countryContext}
-            featuredLeagues={trust.featuredLeagues}
           />
           <div className="mt-6">
             <HomepageAccaEntry
