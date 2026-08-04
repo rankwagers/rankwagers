@@ -1,32 +1,32 @@
 /* ============================================================================
    COMPETITION IDENTITY — hero scope
    ----------------------------------------------------------------------------
-   Every competition carries its own colour, taken from the competition's own
-   identity rather than invented. It is used at very low alpha — a rail, a
-   wash, an atmosphere — so that a reader feels which football they are looking
-   at before they read the name of it. It never carries meaning on its own, and
-   it never replaces the accent on a figure that must be read.
+   THE PRIMARY SOURCE IS THE COUNTRY'S OWN FLAG. Each rail draws a vertical
+   gradient of the flag's two most dominant readable colours, derived at BUILD
+   TIME from the same SVG the league cell renders (`lib/generated/flagTints.ts`
+   — measured pixel area, luminance-capped, deterministic; see the generator).
+   The same row field that keys the flag keys the rail, so the two can never
+   disagree about which country a row belongs to.
 
-   The approved design keys this table on api-sports league IDs. This product's
-   provider is FootyStats and competition arrives as a display string, so the
-   table is keyed on the normalized name instead (see `leagueKeyFor`). The
-   colour values are unchanged from the approved design.
+   TINT below is now ONLY an explicit per-league override for the handful of
+   branded competitions already listed — a league whose identity is its own
+   colour rather than its country's. New entries are a decision, not upkeep.
 
-   An unlisted competition falls back to the hero accent, exactly as the
-   approved design does — so a new league is quiet, never wrong.
+   THE ACCENT FALLBACK IS DEAD. Unlisted-and-uncountried rows fall to INK at
+   the CSS site (`var(--rw-tint-*, var(--hero-ink-rgb))`), never to the
+   retired v1 blue — the debt the previous header logged is paid: a rail that
+   cannot state an identity states presence in the page's own ink.
 
-   THE ONE OUTPUT CONVENTION — BARE `r g b` TRIPLETS. `tint()` returns `"55 0 60"`, never a CSS
-   color. Every consumer composes it: inline `--rw-tint` setters pass the triplet through and the
-   ONE CSS site that reads the variable wraps it — `rgb(var(--rw-tint, var(--hero-ink-rgb)))`.
-   This is stated because it shipped broken the other way: the rail CSS consumed the triplet raw,
-   `background: 42 85 224;` is invalid and silently dropped, and the hover drew an unpainted box.
-   A consumer that needs alpha uses `tinted(key, alpha)`, which does the wrapping itself.
-
-   KNOWN DEBT, deliberately not paid here: the leagues on today's boards (Kakkonen, Kolmonen
-   Länsi, LFPB, Pro League A…) are not in TINT, so every one of them falls to ACCENT and every
-   rail currently draws the same blue. The table needs to learn the minor leagues before the tint
-   carries identity rather than merely presence.
+   THE ONE OUTPUT CONVENTION — BARE `r g b` TRIPLETS. Everything here emits
+   `"55 0 60"`, never a CSS color; the ONE CSS site that reads the variables
+   composes them inside `rgb()`/`linear-gradient()`. It shipped broken the
+   other way once: `background: 42 85 224;` is invalid, silently dropped, and
+   the hover drew an unpainted box. Alpha goes through `tinted()`.
    ========================================================================== */
+
+import { FLAG_TINTS } from "@/lib/generated/flagTints";
+import { countryDisplay } from "@/lib/countryDisplay";
+import type { CSSProperties } from "react";
 
 /** `r g b` triplets, matching the approved design's competition palette. */
 const TINT: Record<string, string> = {
@@ -52,15 +52,46 @@ const TINT: Record<string, string> = {
   "serie a brazil": "0 108 62",
 };
 
-/** The hero accent, as a raw triplet. Fallback for any unlisted competition. */
-const ACCENT = "42 85 224";
+/** The page's ink, as a raw triplet. The only fallback — the retired accent blue is gone. */
+const INK = "32 30 29";
 
 /** The raw `r g b` triplet for a competition key. */
 export function tint(leagueKey: string): string {
-  return TINT[leagueKey] ?? ACCENT;
+  return TINT[leagueKey] ?? INK;
 }
 
 /** The competition's colour at a given alpha. */
 export function tinted(leagueKey: string, alpha: number): string {
   return `rgb(${tint(leagueKey)} / ${alpha})`;
+}
+
+/**
+ * The rail's gradient pair for a row, by the stated resolution order:
+ *
+ *   1. branded-league override — TINT, solid (both stops the league's colour);
+ *   2. the row's country — the flag-derived pair, from the SAME field the flag renders from;
+ *   3. neither — `null`: the row sets no variables and the CSS falls to ink.
+ */
+export function railTints(
+  leagueKey: string,
+  country: string | undefined
+): readonly [string, string] | null {
+  const override = TINT[leagueKey];
+  if (override) return [override, override];
+  const iso = countryDisplay(country)?.iso;
+  const pair = iso ? FLAG_TINTS[iso] : undefined;
+  return pair ?? null;
+}
+
+/**
+ * The style a row spreads to feed the rail — `undefined` when there is nothing to state, so the
+ * CSS fallback (ink) applies through genuinely UNSET variables rather than through a sentinel.
+ */
+export function railTintStyle(
+  leagueKey: string,
+  country: string | undefined
+): CSSProperties | undefined {
+  const pair = railTints(leagueKey, country);
+  if (!pair) return undefined;
+  return { "--rw-tint-a": pair[0], "--rw-tint-b": pair[1] } as CSSProperties;
 }

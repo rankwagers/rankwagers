@@ -25,7 +25,7 @@ import {
 } from "@/lib/research/qualifiedFixture";
 import { V2LeagueCell } from "@/components/homepage/v2Chrome";
 import { leagueKeyFor } from "@/lib/homepage/heroModel";
-import { tint } from "@/components/homepage/hero/leagueTint";
+import { railTintStyle } from "@/components/homepage/hero/leagueTint";
 import { TeamLogo } from "@/components/predictions/TeamLogo";
 import { fromFixtureResearch } from "@/lib/evidence-ui";
 import { EvidenceCard } from "@/components/evidence-ui/EvidenceCard";
@@ -417,7 +417,7 @@ export function BibleFixtureExplorer({
  <Link
  href={fixturePath(locale, fixture.matchId, fixture.marketKind, "recently_qualified")}
  className={`rw-row block w-full py-2.5 text-left sm:items-center ${DESK_COLUMNS}`}
- style={{ "--rw-tint": tint(leagueKeyFor(fixture.league)) } as React.CSSProperties}
+ style={railTintStyle(leagueKeyFor(fixture.league), fixture.country)}
  onClick={() => {
  trackAnalyticsEvent({
  event_name: "fixture_view",

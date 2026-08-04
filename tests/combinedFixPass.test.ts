@@ -38,55 +38,50 @@ const stripComments = (src: string) =>
 /** CSS Color 4 space-separated rgb() — what the composed declaration must resolve to. */
 const VALID_RGB = /^rgb\(\d{1,3} \d{1,3} \d{1,3}\)$/;
 
-test("PROBE: the rail's computed background is a valid colour for known, unknown, and unset", () => {
+test("PROBE: the rail's computed gradient stops are valid colours in every path", () => {
   const sheet = css();
   const rail = /\.rw-hero \.rw-row::before \{([\s\S]*?)\}/.exec(sheet);
   assert.ok(rail, "the rail rule exists");
-  const declaration = /background: ([^;]+);/.exec(rail[1]);
-  assert.ok(declaration, "the rail declares a background");
-
-  assert.equal(
-    declaration[1],
-    "rgb(var(--rw-tint, var(--hero-ink-rgb)))",
-    "the CSS site composes the triplet inside rgb() — the raw form shipped invalid and unpainted"
+  assert.match(
+    rail[1],
+    /background: linear-gradient\(\s*to bottom,\s*rgb\(var\(--rw-tint-a, var\(--hero-ink-rgb\)\)\),\s*rgb\(var\(--rw-tint-b, var\(--hero-ink-rgb\)\)\)\s*\)/,
+    "both stops compose triplets inside rgb() — the raw form shipped invalid and unpainted"
   );
 
   /*
-   * The browser's substitution, emulated. A DEFINED variable replaces the whole var() including
-   * the fallback — which is why the fallback never rescued the invalid raw form — so the defined
-   * path must be valid for a league the table knows AND one it does not (today's minor leagues
-   * are the shipped case). The unset path composes the scope's own ink triplet.
+   * The browser's substitution, emulated, for the three resolution paths: a branded league
+   * (TINT override), a flag-derived pair, and the unset fallback. Every one must compute to a
+   * well-formed colour — the shipped failure class was a defined-but-invalid value the fallback
+   * could not rescue.
    */
-  const knownLeague = `rgb(${tint("premier league")})`;
-  const unknownLeague = `rgb(${tint("kakkonen")})`;
-  assert.match(knownLeague, VALID_RGB, `known league computes ${knownLeague}`);
-  assert.match(unknownLeague, VALID_RGB, `unknown league computes ${unknownLeague}`);
+  const { railTints } = require("../components/homepage/hero/leagueTint") as typeof import("../components/homepage/hero/leagueTint");
+  const branded = railTints("premier league", undefined);
+  const flag = railTints("kolmonen lansi", "fi");
+  assert.ok(branded && flag, "both resolution paths yield pairs");
+  for (const stop of [...branded, ...flag]) {
+    assert.match(`rgb(${stop})`, VALID_RGB, `stop computes rgb(${stop})`);
+  }
 
   const inkTriplet = /--hero-ink-rgb: (\d{1,3} \d{1,3} \d{1,3});/.exec(sheet);
   assert.ok(inkTriplet, "--hero-ink-rgb is declared in scope");
   assert.match(`rgb(${inkTriplet[1]})`, VALID_RGB, "the unset-variable fallback computes validly");
-  // And the ink band declares its own inversion of the triplet.
   assert.match(sheet, /\.rw-ink \{[\s\S]{0,600}?--hero-ink-rgb: 247 247 246;/);
 });
 
-test("one convention: every --rw-tint setter passes the bare triplet through tint()", () => {
+test("one convention: every rail site feeds the variables through railTintStyle", () => {
   for (const rel of [
     "components/homepage/hero/SupportingTable.tsx",
     "components/bible/RankWagersHome.tsx",
     "components/bible/BibleFixtureExplorer.tsx",
   ]) {
     const src = stripComments(readFileSync(path.join(root, rel), "utf8"));
-    const setters = src.match(/"--rw-tint": [^,}]+/g) ?? [];
-    assert.ok(setters.length > 0, `${rel} sets the tint`);
-    for (const setter of setters) {
-      assert.match(setter, /"--rw-tint": tint\(/, `${rel} must pass tint()'s bare triplet: ${setter}`);
-      assert.doesNotMatch(setter, /rgb\(/, `${rel} must not pre-wrap — the CSS site owns rgb(): ${setter}`);
-    }
+    assert.match(src, /style=\{railTintStyle\(/, `${rel} resolves its rail through the one helper`);
+    assert.doesNotMatch(src, /"--rw-tint/, `${rel} must not hand-build the variables`);
+    assert.doesNotMatch(src, /rgb\(/, `${rel} must not pre-wrap — the CSS site owns rgb()`);
   }
-  // The convention and the debt are stated where the triplets come from.
   const header = readFileSync(path.join(root, "components/homepage/hero/leagueTint.ts"), "utf8");
-  assert.match(header, /BARE `r g b` TRIPLETS/);
-  assert.match(header, /KNOWN DEBT/, "the all-rails-blue fallback debt is on the record");
+  assert.match(header, /ONLY an explicit per-league override/, "TINT's demoted role is stated");
+  assert.match(header, /ACCENT FALLBACK IS DEAD/, "and the paid debt is on the record");
 });
 
 /* ------------------------------------------------------------------ *

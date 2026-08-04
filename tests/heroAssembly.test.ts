@@ -68,6 +68,7 @@ function pick(id: number): HeroPick {
     away: `Away ${id}`,
     league: "Premier Division",
     leagueKey: "premier division",
+    country: "fi",
     kickoff: "20:00",
     kickoffDateTime: "2026-08-04T20:00:00.000Z",
     market: "Over 2.5",
@@ -848,29 +849,34 @@ test("the masthead meta drops a step and keeps clear of the nav cluster", () => 
   assert.match(metaLine[1], /pl-10/, "with clear air where the groups meet");
 });
 
-test("row hover draws the tinted left rule and never darkens the ground", () => {
+test("row hover draws the rail and the whisper wash together", () => {
   const css = readFileSync(path.join(process.cwd(), "app/globals.css"), "utf8");
 
-  assert.match(css, /\.rw-hero \.rw-row::before[\s\S]{0,900}?rgb\(var\(--rw-tint, var\(--hero-ink-rgb\)\)\)/,
-    "the rule composes the tint triplet inside rgb() — combinedFixPass probes the computed value");
-  // The rail DRAWS now (scaleY from the top); masterFixPass carries the full geometry probe.
+  assert.match(css, /\.rw-hero \.rw-row::before[\s\S]{0,900}?linear-gradient/,
+    "the rail is the flag-derived gradient — combinedFixPass probes the computed stops");
   assert.match(css, /\.rw-hero \.rw-row:hover::before[\s\S]{0,120}?scaleY\(1\)/, "and draws on hover");
-  assert.doesNotMatch(
+  /*
+   * THE WASH IS DELIBERATE. An earlier guard here forbade any hover background, reading the
+   * map's rule too widely — the rule was "no darken INSTEAD of the rail". Rail-plus-whisper is
+   * the product decision now, and the alpha is PINNED at 3%: at that strength the ground moves
+   * ~5 RGB points on #f7f7f6, so no text pairing loses a measurable contrast step. A stronger
+   * wash must change this assertion knowingly.
+   */
+  assert.match(
     css,
-    /\.rw-hero \.rw-row:hover \{[^}]*background/,
-    "the darkened ground is gone"
+    /\.rw-hero \.rw-row:hover,\s*\.rw-hero \.rw-row:focus-visible \{\s*background-color: rgb\(var\(--hero-ink-rgb\) \/ 0\.03\);/,
+    "the whisper wash, at its pinned alpha"
   );
-  // Reduced motion keeps the rule and drops only the fade.
+  // Reduced motion keeps rail AND wash; only their transitions go.
   const reduce = css.slice(css.lastIndexOf("@media (prefers-reduced-motion: reduce)"));
-  assert.match(reduce, /\.rw-hero \.rw-row::before[\s\S]{0,60}?transition: none/);
+  assert.match(reduce, /\.rw-hero \.rw-row,\s*\.rw-hero \.rw-row::before \{\s*transition: none/);
 
-  // Each table passes its competition tint; the rule is data, not decoration.
   for (const rel of [
     "components/homepage/hero/SupportingTable.tsx",
     "components/bible/RankWagersHome.tsx",
     "components/bible/BibleFixtureExplorer.tsx",
   ]) {
-    assert.match(readSurface(rel), /--rw-tint/, `${rel} sets the row tint`);
+    assert.match(readSurface(rel), /railTintStyle/, `${rel} feeds the rail`);
   }
 });
 
@@ -1062,4 +1068,30 @@ test("MOUNTED: the ranked card mounts the explainer with this fixture's own fact
   );
   assert.match(why.bound, /can still lose/, "the bound is the panel's reason to exist");
   assert.match(String(explainers[0].href ?? ""), /\/fixtures\/9001/, "the link goes to the fixture");
+});
+
+
+/* ------------------------------------------------------------------ *
+ * HOVER v2 — the flag-derived rail, mounted per site
+ * ------------------------------------------------------------------ */
+
+test("MOUNTED: supporting-table rows carry their flag pair in rendered markup", () => {
+  const html = renderHero();
+  // Finland: white capped out, blue survives, dark ramp second — from the generated map.
+  assert.ok(html.includes("--rw-tint-a:0 47 108") || html.includes("--rw-tint-a: 0 47 108"),
+    "the first stop is the flag's dominant readable colour");
+  assert.ok(html.includes("--rw-tint-b"), "and the second stop rides with it");
+});
+
+test("MOUNTED: recent-results rows are fed their flag pair through the tree", () => {
+  const tree = homepageTreeWithData();
+  const rows = collectAll(tree, "SectionTrackLink").filter((p) => {
+    const style = p.style as Record<string, string> | undefined;
+    return style && "--rw-tint-a" in style;
+  });
+  assert.ok(rows.length >= 1, "a results row mounts with rail variables");
+  const style = rows[0].style as Record<string, string>;
+  // Bolivia (bo): red and green both survive the cap.
+  assert.equal(style["--rw-tint-a"], "213 43 30");
+  assert.equal(style["--rw-tint-b"], "0 121 52");
 });

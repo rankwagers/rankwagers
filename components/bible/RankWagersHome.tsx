@@ -43,7 +43,7 @@ import { RankedExplainer } from "@/components/homepage/RankedExplainer";
 import { buildProofBandFigures } from "@/lib/homepage/proofBand";
 import { settledFirst } from "@/lib/homepage/recentResults";
 import { leagueKeyFor } from "@/lib/homepage/heroModel";
-import { tint } from "@/components/homepage/hero/leagueTint";
+import { railTintStyle } from "@/components/homepage/hero/leagueTint";
 import { Crest } from "@/components/homepage/hero/Crest";
 import type { CSSProperties } from "react";
 import { formatDict } from "@/lib/dictionaryExtras";
@@ -473,7 +473,7 @@ export function RankWagersHome({
                       section="recent_results"
                       locale={locale}
                       className={`rw-row block border-b border-[var(--hero-line)] py-2.5 sm:items-center ${RESULT_COLUMNS}`}
-                      style={{ "--rw-tint": tint(leagueKeyFor(row.competition)) } as CSSProperties}
+                      style={railTintStyle(leagueKeyFor(row.competition), row.country)}
                     >
                       <span className="rw-tnum rw-m hidden text-[var(--hero-ink-2)] sm:block">
                         {String(index + 1).padStart(2, "0")}

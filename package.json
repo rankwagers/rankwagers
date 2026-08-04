@@ -38,7 +38,8 @@
     "ops:sprint20-preflight": "node scripts/sprint20-preflight.mjs",
     "ops:sprint20-preflight:fast": "node scripts/sprint20-preflight.mjs --skip-build",
     "ops:verify-origin": "node scripts/sprint20-verify-origin.mjs",
-    "ops:rollback-rehearse": "node scripts/sprint20-rollback-rehearse.mjs"
+    "ops:rollback-rehearse": "node scripts/sprint20-rollback-rehearse.mjs",
+    "generate:flag-tints": "node scripts/generate-flag-tints.mjs"
   },
   "dependencies": {
     "@types/pg": "^8.20.0",

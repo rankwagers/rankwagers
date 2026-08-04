@@ -681,18 +681,23 @@ textarea,
 /* --- the supporting table's rows ---------------------------------------- */
 
 /*
- * Hover states the row without moving it — and without darkening it. The map's response is a 2px
- * LEFT RULE in the row's competition tint, drawn in the gutter beside the numbered margin; the
- * background never changes, because a wash behind a ruled row breaks the printed-table ground
- * the hairlines establish.
+ * Hover states the row without moving it. The map's rule — which an earlier note here read as
+ * "the background never changes" — was narrower: no darken INSTEAD OF the rail. Rail-plus-whisper
+ * is the product decision now: the tinted rail carries the identity, and an ink wash at 3% alpha
+ * (`rgb(var(--hero-ink-rgb) / 0.03)`, final) settles the whole row under the pointer. At 3% over
+ * #f7f7f6 the ground moves ~5 RGB points, so no text pairing on the row loses a measurable step
+ * of contrast — the whisper is felt as focus, not read as a colour.
  *
- * The colour comes through `--rw-tint`, set inline per row from `leagueTint` by competition —
- * as a BARE `r g b` TRIPLET, which is `leagueTint`'s one output convention. The triplet is not a
- * CSS color: consumed raw it produced `background: 42 85 224;`, which is invalid, silently
- * dropped, and left the scaleY draw animating an unpainted box. (The var() fallback never saved
- * it: fallbacks apply when a variable is UNSET, not when its value is invalid downstream.) So
- * this site — the only CSS consumer — wraps the variable in `rgb()`, and the fallback is the
- * matching `--hero-ink-rgb` triplet, declared per scope.
+ * THE RAIL IS A FLAG. Rows set `--rw-tint-a`/`--rw-tint-b` — bare `r g b` triplets from
+ * `railTintStyle`: a branded league's own colour (solid), else the two most dominant readable
+ * colours of the row's country flag, derived at build time from the same SVG the league cell
+ * renders. The rail draws them as a vertical gradient, top to bottom. A row with neither sets
+ * NO variables, and both stops fall to `--hero-ink-rgb` — ink, never the retired accent blue.
+ *
+ * The triplets compose inside rgb() at THIS site only. That is the convention, learned the hard
+ * way: consumed raw, `background: 42 85 224;` is invalid, silently dropped, and the scaleY draw
+ * animated an unpainted box — the var() fallback cannot rescue a value that is DEFINED but
+ * invalid downstream.
  * A surface with no tint to state (the operator rows) falls back to ink, so the mechanism is one
  * rule everywhere rather than tinted-here, darkened-there.
  *
@@ -714,6 +719,11 @@ textarea,
  */
 .rw-hero .rw-row {
   position: relative;
+  transition: background-color var(--dur-respond) var(--ease-settle);
+}
+.rw-hero .rw-row:hover,
+.rw-hero .rw-row:focus-visible {
+  background-color: rgb(var(--hero-ink-rgb) / 0.03);
 }
 .rw-hero .rw-row::before {
   content: "";
@@ -722,7 +732,11 @@ textarea,
   top: 4px;
   bottom: 4px;
   width: 2px;
-  background: rgb(var(--rw-tint, var(--hero-ink-rgb)));
+  background: linear-gradient(
+    to bottom,
+    rgb(var(--rw-tint-a, var(--hero-ink-rgb))),
+    rgb(var(--rw-tint-b, var(--hero-ink-rgb)))
+  );
   transform: scaleY(0);
   transform-origin: top;
   transition: transform var(--dur-respond) var(--ease-settle);
@@ -1058,7 +1072,8 @@ textarea,
  * parallax planes must sit at their neutral offset.
  */
 @media (prefers-reduced-motion: reduce) {
-  /* The hover rail stays — it states which row is under the pointer — only its drawing goes. */
+  /* Rail and wash both stay — they state which row is under the pointer — only motion goes. */
+  .rw-hero .rw-row,
   .rw-hero .rw-row::before {
     transition: none;
   }
