@@ -26,6 +26,7 @@ import {
 } from "@/lib/research/fixturePresentation";
 import { footyRowCoreSchema } from "@/lib/research/footyRowContract";
 import { RESEARCH_STAGE_RULES } from "@/lib/research/researchRun";
+import { countryDisplay } from "@/lib/countryDisplay";
 import type { HeroPick, HomepageHeroModel } from "./types";
 
 /** How many fixtures the hero ranks. The approved composition sets one lead and four supporting. */
@@ -220,4 +221,47 @@ export function buildHomepageHeroModel(input: {
     picks,
     fetchedAt,
   };
+}
+
+/**
+ * The lead's mono meta line — `LFPB (Bolivia) · Tue 04 Aug · 19:00 UTC`.
+ *
+ * ONE DATE, ONE KICKOFF, both derived from `kickoffDateTime` alone. The first version appended
+ * `pick.kickoff` after its own date — but `formatFixtureKickoff` already includes the weekday and
+ * day, so the line printed the date twice ("TUE 04 AUG · TUE 04 AUG, 19:00"). Deriving every part
+ * from the one ISO stamp makes a second date structurally impossible rather than merely absent.
+ *
+ * The country rides with the league, as the map sets it — `LFPB (Bolivia)` — resolved through the
+ * same `countryDisplay` the league cells use, and omitted whole when the row carries none.
+ *
+ * Fixed `en-GB` + UTC like every other date here: a kickoff is a property of the fixture, not of
+ * the reader's clock, and the server render and any later client render must agree byte-for-byte.
+ */
+export function buildLeadMeta(
+  pick: Pick<HeroPick, "league" | "country" | "kickoffDateTime">
+): string {
+  const country = countryDisplay(pick.country);
+  const parts = [country ? `${pick.league} (${country.name})` : pick.league];
+
+  const kickoff = new Date(pick.kickoffDateTime);
+  if (!Number.isNaN(kickoff.getTime())) {
+    parts.push(
+      new Intl.DateTimeFormat("en-GB", {
+        weekday: "short",
+        day: "2-digit",
+        month: "short",
+        timeZone: "UTC",
+      }).format(kickoff)
+    );
+    parts.push(
+      `${new Intl.DateTimeFormat("en-GB", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: false,
+        timeZone: "UTC",
+      }).format(kickoff)} UTC`
+    );
+  }
+
+  return parts.join(" · ");
 }

@@ -3,7 +3,7 @@ import type { DailyMatchLists } from "@/lib/footystats/types";
 import type { Locale } from "@/lib/i18n";
 import { venueRatesForMarket, type VenueRates } from "@/lib/fixtures/evidenceView";
 import { getMatchDetails } from "@/lib/footystats/matchDetail";
-import { buildHomepageHeroModel } from "@/lib/homepage/heroModel";
+import { buildHomepageHeroModel, buildLeadMeta } from "@/lib/homepage/heroModel";
 import { formatDict } from "@/lib/dictionaryExtras";
 import { HeroStage } from "./HeroStage";
 
@@ -76,34 +76,9 @@ export async function HomepageHero({
     venueRates[pick.matchId] = venueRatesForMarket(details.get(pick.matchId), pick.marketKind);
   }
 
-  /*
-   * THE LEAD'S META LINE — `league · Tue 04 Aug · 19:00 UTC`.
-   *
-   * Resolved here rather than in the client component for the reason every other date on this page
-   * is: `en-GB` + UTC fixed, so the server render and any later client render of the same markup
-   * agree. A kickoff is a property of the fixture, not of the reader's clock.
-   *
-   * Each part is omitted independently — an unparseable kickoff stamp drops the date and keeps the
-   * league and the time, rather than printing "Invalid Date".
-   */
+  /* One date, one kickoff, country with the league — see `buildLeadMeta` for the rules. */
   const lead = model.picks[0];
-  const leadMeta = (() => {
-    if (!lead) return "";
-    const parts = [lead.league];
-    const kickoff = new Date(lead.kickoffDateTime);
-    if (!Number.isNaN(kickoff.getTime())) {
-      parts.push(
-        new Intl.DateTimeFormat("en-GB", {
-          weekday: "short",
-          day: "2-digit",
-          month: "short",
-          timeZone: "UTC",
-        }).format(kickoff)
-      );
-    }
-    if (lead.kickoff) parts.push(`${lead.kickoff} UTC`);
-    return parts.join(" · ");
-  })();
+  const leadMeta = lead ? buildLeadMeta(lead) : "";
 
   return (
     <HeroStage

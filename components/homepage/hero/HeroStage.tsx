@@ -124,7 +124,14 @@ export function HeroStage({
                   a badge. `HeroLead` is fed the SAME pick and rates it has always been fed.
                 */}
                 {leadPick ? (
-                  <div className="mt-14 border-t-[5px] border-[var(--hero-ink)] pt-9">
+                  /*
+                    THE LEAD SITS ON LIFTED PAPER. The map sets it on #ffffff against the canvas,
+                    bleeding 20px past the text column, opened by the heavy 5px rule and closed by
+                    a hairline — no shadow, because a surface change IS the lift and a shadow
+                    would state it twice. One note against the brief's wording: the map's TOP edge
+                    is the 5px rule, not a hairline, and the map wins where recollection differs.
+                  */
+                  <div className="-mx-5 mt-14 border-b-[0.5px] border-t-[5px] border-b-[var(--hero-line)] border-t-[var(--hero-ink)] bg-[var(--hero-surface)] px-5 pb-8 pt-9">
                     <div className="sm:grid sm:grid-cols-[64px_minmax(0,1fr)] sm:gap-x-5">
                       <p className="rw-tnum rw-label pt-2 text-[var(--hero-ink-2)]">
                         {copy.leadTitle}

@@ -282,8 +282,15 @@ test("S2 renders inside the hero scope rather than duplicating its tokens", () =
     1,
     "the scope is declared once on the page, not per section"
   );
-  // One declaration of the ramp, in one place.
-  assert.equal((css.match(/--hero-ink-3:/g) ?? []).length, 1);
+  /*
+   * Two declaration sites for the ramp, each named: the `.rw-hero` scope (the light ramp) and
+   * the `.rw-ink` INVERSION, which re-points the same tokens for the two ink bands so shared
+   * primitives read correctly on either ground — the fix for dark-on-dark inside the live desk.
+   * A third declaration anywhere would be a second definition of the palette, which is what this
+   * count exists to forbid.
+   */
+  assert.equal((css.match(/--hero-ink-3:/g) ?? []).length, 2);
+  assert.match(css, /\.rw-ink \{[\s\S]{0,900}?--hero-ink-3: rgb\(247 247 246/);
   /*
    * Rebrand v2 retires the third ink weight: `--hero-ink-3` is now an ALIAS of ink-2 (#55524e),
    * kept only so an unconverted call site inside the scope degrades to the darker value rather

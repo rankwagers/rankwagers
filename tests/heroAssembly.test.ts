@@ -758,21 +758,13 @@ test("the lost outcome carries the accent — the record does not hide its losse
   assert.match(chrome, /status === "won" \? "✓"/, "and both outcomes carry a glyph");
 });
 
-test("the live desk publishes or omits — no blurred rows, no teaser buttons", () => {
-  const panel = readSurface("components/predictions/LiveFeedPanel.tsx");
-  assert.equal(/blur-\[/.test(panel), false, "no blurred placeholder rows");
-  assert.equal(/liveFeaturedMoreCta|liveTapTelegram/.test(panel), false, "no teaser buttons");
-  assert.equal(/Home Team|████/.test(panel), false, "no invented fixtures behind a blur");
-  // One header, not two.
-  assert.equal(
-    (panel.match(/<LiveSignalsHeader/g) ?? []).length,
-    1,
-    "the desk renders exactly one header"
-  );
+test("the live desk's empty state cannot be suppressed by rows that no longer render", () => {
   /*
-   * And the empty state still reaches the reader: `hasLiveContent` must not count rows that no
-   * longer render, or a locked-only feed would suppress the empty state and show nothing.
+   * The full publishes-or-omits proof lives in tests/liveDesk.test.ts, which RENDERS the desk —
+   * source scans are how the old interior survived two passes. What stays here is the one
+   * invariant about the panel's own logic: `hasLiveContent` counts only what is drawn.
    */
+  const panel = readSurface("components/predictions/LiveFeedPanel.tsx");
   assert.match(panel, /const hasLiveContent = Boolean\(feed\?\.featured\);/);
 });
 
@@ -825,4 +817,52 @@ test("the supporting table states country, the cleared label and the short marke
   assert.match(table, /shortMarket\(pick\.market\)/, "the market column uses the short form");
   // The right-hand label points at the same footnote the funnel's cleared stage does.
   assert.match(predictionsEn.clearedOfTotal, /cleared†/);
+});
+
+/* ------------------------------------------------------------------ *
+ * FIX PASS — lead surface, masthead meta, hover rule
+ * ------------------------------------------------------------------ */
+
+test("the lead sits on lifted paper: surface ground, heavy open, hairline close, no shadow", () => {
+  const stage = readSurface("components/homepage/hero/HeroStage.tsx");
+  assert.match(stage, /bg-\[var\(--hero-surface\)\]/, "the lead's ground is the surface");
+  assert.match(stage, /border-t-\[5px\][^"]*border-t-\[var\(--hero-ink\)\]/, "opened by the heavy rule");
+  assert.match(stage, /border-b-\[0\.5px\][^"]*border-b-\[var\(--hero-line\)\]/, "closed by a hairline");
+  assert.match(stage, /-mx-5[^"]*px-5/, "bleeding past the text column as the map does");
+  assert.doesNotMatch(stage, /shadow/, "and no shadow states the lift a second time");
+});
+
+test("the masthead meta drops a step and keeps clear of the nav cluster", () => {
+  const header = readSurface("components/Header.tsx");
+  assert.match(header, /text-\[9\.5px\][^"]*\{meta\}|\{meta\}/, "the meta line exists");
+  const metaLine = /className="([^"]*)"\s*>\s*\{meta\}/.exec(header);
+  assert.ok(metaLine, "the meta line's classes are identifiable");
+  assert.match(metaLine[1], /text-\[9\.5px\]/, "one step below the 10.5px nav");
+  assert.match(metaLine[1], /ml-auto/, "held to the right edge");
+  assert.match(metaLine[1], /pl-10/, "with clear air where the groups meet");
+});
+
+test("row hover draws the tinted left rule and never darkens the ground", () => {
+  const css = readFileSync(path.join(process.cwd(), "app/globals.css"), "utf8");
+
+  assert.match(css, /\.rw-hero \.rw-row::before[\s\S]{0,400}?var\(--rw-tint, var\(--hero-ink\)\)/,
+    "the rule takes the row's tint, falling back to ink");
+  assert.match(css, /\.rw-hero \.rw-row:hover::before[\s\S]{0,80}?opacity: 1/, "and appears on hover");
+  assert.doesNotMatch(
+    css,
+    /\.rw-hero \.rw-row:hover \{[^}]*background/,
+    "the darkened ground is gone"
+  );
+  // Reduced motion keeps the rule and drops only the fade.
+  const reduce = css.slice(css.lastIndexOf("@media (prefers-reduced-motion: reduce)"));
+  assert.match(reduce, /\.rw-hero \.rw-row::before[\s\S]{0,60}?transition: none/);
+
+  // Each table passes its competition tint; the rule is data, not decoration.
+  for (const rel of [
+    "components/homepage/hero/SupportingTable.tsx",
+    "components/bible/RankWagersHome.tsx",
+    "components/bible/BibleFixtureExplorer.tsx",
+  ]) {
+    assert.match(readSurface(rel), /--rw-tint/, `${rel} sets the row tint`);
+  }
 });

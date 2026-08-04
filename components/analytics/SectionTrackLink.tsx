@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import {
   trackHomepageSectionClick,
   type HomepageSectionId,
@@ -12,12 +12,15 @@ export function SectionTrackLink({
   section,
   locale,
   className,
+  style,
   children,
 }: {
   href: string;
   section: HomepageSectionId;
   locale: string;
   className?: string;
+  /** Table rows pass their competition tint through here (`--rw-tint`) for the hover rule. */
+  style?: CSSProperties;
   children: ReactNode;
 }) {
   return (
@@ -25,6 +28,7 @@ export function SectionTrackLink({
       href={href}
       onClick={() => trackHomepageSectionClick(section, locale)}
       className={className}
+      style={style}
     >
       {children}
     </Link>

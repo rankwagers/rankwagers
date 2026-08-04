@@ -679,14 +679,35 @@ textarea,
 /* --- the supporting table's rows ---------------------------------------- */
 
 /*
- * Hover states the row without moving it. No lift, no shadow, no radius — a printed table
- * responds by weight, and a row that rises off the page breaks the ruled grid it belongs to.
+ * Hover states the row without moving it — and without darkening it. The map's response is a 2px
+ * LEFT RULE in the row's competition tint, drawn in the gutter beside the numbered margin; the
+ * background never changes, because a wash behind a ruled row breaks the printed-table ground
+ * the hairlines establish.
+ *
+ * The colour comes through `--rw-tint`, set inline per row from `leagueTint` by competition.
+ * A surface with no tint to state (the operator rows) falls back to ink, so the mechanism is one
+ * rule everywhere rather than tinted-here, darkened-there.
+ *
+ * Only opacity transitions — the rule occupies its box from the first frame, so hover costs no
+ * layout and `prefers-reduced-motion` (below) keeps the rule and drops only the fade.
  */
 .rw-hero .rw-row {
-  transition: background-color var(--dur-respond) var(--ease-respond);
+  position: relative;
 }
-.rw-hero .rw-row:hover {
-  background: rgb(32 30 29 / 0.035);
+.rw-hero .rw-row::before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 4px;
+  bottom: 4px;
+  width: 2px;
+  background: var(--rw-tint, var(--hero-ink));
+  opacity: 0;
+  transition: opacity var(--dur-respond) var(--ease-settle);
+}
+.rw-hero .rw-row:hover::before,
+.rw-hero .rw-row:focus-visible::before {
+  opacity: 1;
 }
 
 /* ========================================================================= *
@@ -712,6 +733,22 @@ textarea,
  * ========================================================================= */
 
 .rw-ink {
+  /*
+   * THE HERO TOKENS INVERT TOO. The first version of this scope re-pointed only the site's
+   * Tailwind tokens, so a shared v2 primitive dropped into the band — a league cell, an `rw-m`
+   * label coloured `--hero-ink` — painted DARK ON DARK: #201e1d text on the #201e1d ground.
+   * That is why the desk's interior could not be built from the shared chrome until now.
+   * With the hero ramp inverted, the same components read correctly on either ground and the
+   * interior is composed from the same parts as the rest of the page.
+   */
+  --hero-ink: #f7f7f6;
+  --hero-ink-2: rgb(247 247 246 / 0.62);
+  --hero-ink-3: rgb(247 247 246 / 0.62);
+  --hero-canvas: #201e1d;
+  --hero-surface: #2d2b29;
+  --hero-line: rgb(247 247 246 / 0.28);
+  --hero-line-2: rgb(247 247 246 / 0.16);
+
   /* Grounds: the band itself, and a raised plane on it. */
   --canvas-primary-rgb: 32 30 29;
   --canvas-secondary-rgb: 45 43 41;
@@ -945,6 +982,11 @@ textarea,
  * parallax planes must sit at their neutral offset.
  */
 @media (prefers-reduced-motion: reduce) {
+  /* The hover rule stays — it states which row is under the pointer — only its fade goes. */
+  .rw-hero .rw-row::before {
+    transition: none;
+  }
+
   .rw-hero .reveal,
   .rw-hero .rw-reveal {
     opacity: 1;

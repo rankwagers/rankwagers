@@ -6,13 +6,8 @@ import type { FullDictionary } from "@/lib/dictionaries";
 import type { LiveFeedResponse, LiveSignalPublic } from "@/lib/live-feed/types";
 import { LIVE_SIGNALS_FRAMING } from "@/lib/trust/claims";
 import { resolveTelegramBotUrl } from "@/lib/telegram";
-import {
- LiveFeaturedCard,
- LiveHistoryModal,
- LiveUnlockModal,
- UpcomingFeaturedCard,
- UpcomingLockedRow,
-} from "./LiveFeedParts";
+import { LiveHistoryModal } from "./LiveFeedParts";
+import { LiveDeskCard, LiveUpcomingRow } from "./LiveDeskCard";
 import { trackAnalyticsEvent } from "@/lib/analytics/client";
 import {
  IMPRESSION_INTERSECTION_THRESHOLD,
@@ -21,7 +16,6 @@ import {
 
 const POLL_MS = 30_000;
 
-type UnlockMode = "live" | "upcoming" | null;
 
 type ResultState = LiveSignalPublic["resultState"];
 
@@ -136,15 +130,28 @@ function LiveSignalsHeader({
  );
 }
 
-export function LiveFeedPanel({ dict }: { dict: FullDictionary }) {
+export function LiveFeedPanel({
+ dict,
+ initialFeed = null,
+}: {
+ dict: FullDictionary;
+ /**
+  * A feed to render from the first paint, before any fetch.
+  *
+  * This exists because the interior was invisible to every test: it lived behind a client fetch,
+  * so nothing could render it without a network, and two passes shipped "conversions" no
+  * assertion had ever painted. With the feed injectable, the mount test renders this panel with
+  * a fixture and fails when the composition is absent — the same proof the hero carries.
+  */
+ initialFeed?: LiveFeedResponse | null;
+}) {
  const p = dict.predictions;
  const params = useParams();
  const locale = typeof params?.locale === "string" ? params.locale : "en";
 
- const [feed, setFeed] = useState<LiveFeedResponse | null>(null);
- const [loading, setLoading] = useState(true);
+ const [feed, setFeed] = useState<LiveFeedResponse | null>(initialFeed);
+ const [loading, setLoading] = useState(initialFeed === null);
  const [fetchError, setFetchError] = useState(false);
- const [unlockMode, setUnlockMode] = useState<UnlockMode>(null);
  const [historyModalOpen, setHistoryModalOpen] = useState(false);
  const panelRef = useRef<HTMLDivElement>(null);
 
@@ -212,7 +219,6 @@ export function LiveFeedPanel({ dict }: { dict: FullDictionary }) {
  }, [feed, locale]);
 
  const locked = feed?.locked ?? [];
- const upcomingLocked = feed?.upcomingLocked ?? [];
  const history = feed?.history ?? [];
  /*
   * WHAT IS RENDERED, not what was fetched.
@@ -223,7 +229,6 @@ export function LiveFeedPanel({ dict }: { dict: FullDictionary }) {
   * featured card is the only thing this desk draws now, so it is the only thing that counts.
   */
  const hasLiveContent = Boolean(feed?.featured);
- const hasUpcoming = feed?.upcomingFeatured != null || upcomingLocked.length > 0;
 
  const mobileAlertBadge = (() => {
  const featured = feed?.featured;
@@ -304,90 +309,63 @@ export function LiveFeedPanel({ dict }: { dict: FullDictionary }) {
 
  {fetchError && (
  <p
- className="mt-3 rounded-lg border border-[var(--amber-border)] bg-[var(--amber-surface)] px-3 py-2 text-xs text-[var(--amber-primary)]"
+ className="mt-3 border-l-2 border-[var(--amber-border)] pl-3 text-xs text-[var(--amber-primary)]"
  role="alert"
  >
  {p.apiError}
  </p>
  )}
 
- <div className="mt-4 space-y-3">
- {loading && !feed && (
- <div
- className="h-28 animate-pulse rounded-xl bg-[var(--border-subtle)]"
- aria-hidden
- />
- )}
-
+ {/*
+  THE CONTENT REGION. `min-h` holds the band's height while the feed loads, so the card's
+  arrival costs no layout — the space is held, and NOTHING is drawn in it: no skeleton, no
+  pulse, because a placeholder states that content is coming and this page only states what
+  it has (§3.8).
+ */}
+ <div className="mt-5 min-h-[120px]">
  {!loading && !fetchError && !hasLiveContent && (
- <p
- className="rounded-lg border border-border bg-[var(--canvas-secondary)] px-3 py-4 text-center text-xs text-muted-foreground"
- role="status"
- >
+ <p className="rw-m py-4 text-[var(--hero-ink-2)]" role="status">
  {feed?.source === "footystats-fallback" ? p.liveEmptySoft : p.liveEmpty}
  </p>
  )}
 
  {feed?.featured && (
- <div>
- <p className="mb-1.5 text-metadata font-semibold uppercase tracking-label text-brand">
- {p.liveFeaturedLabel}
- </p>
- <div data-live-signal-id={feed.featured.id} data-market={feed.featured.marketLabel} data-source="featured"><LiveFeaturedCard signal={feed.featured} dict={dict} /></div>
-{/*
-  "Open Telegram for full signal" is deleted. The card above it is the whole signal — the button
-  implied a fuller version existed elsewhere, which is the same promise the blurred rows made.
-  The desk's own footer line still offers Telegram as a destination, stated plainly.
- */}
+ <div data-live-signal-id={feed.featured.id} data-market={feed.featured.marketLabel} data-source="featured">
+ <LiveDeskCard signal={feed.featured} dict={dict} />
  </div>
  )}
+ </div>
 
  {/*
-  THE BLURRED PLACEHOLDER ROWS ARE DELETED.
-
-  They rendered fake fixtures — "Home Team", "?–?", "████████ League" — behind a 5px blur, with a
-  "Tap for more predictions" prompt over them. Obscured content states that information exists and
-  is being withheld, and here the withheld thing did not exist at all: the blur covered invented
-  rows, not real ones.
-
-  We publish or we omit. With no locked teasers the desk shows the signals it has and its stated
-  empty state when it has none, which is the same rule every other figure on this page follows.
+  UPCOMING — the countdown row, published whole. The locked list that followed it is gone:
+  each row was a "tap to see pick" teaser, which is the blur pattern in a different coat.
+  We publish or we omit.
  */}
+ {feed?.upcomingFeatured ? (
+ <div className="mt-6">
+ <div className="rw-m flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 pb-1 text-[var(--hero-ink-2)]">
+ <span>{p.liveUpcomingTitle}</span>
+ <span>{p.liveUpcomingNote}</span>
  </div>
-
- {hasUpcoming && (
- <div className="mt-6 border-t border-border pt-4">
- <p className="mb-3 text-metadata font-semibold uppercase tracking-label text-[var(--info-primary)]">
- {p.upcomingSectionLabel}
- </p>
- <div className="space-y-3">
- {feed?.upcomingFeatured && (
- <div>
- <p className="mb-1.5 text-metadata font-medium text-muted-foreground">
- {p.upcomingFeaturedLabel}
- </p>
- <div data-live-signal-id={feed.upcomingFeatured.id} data-market={feed.upcomingFeatured.marketLabel} data-source="upcoming"><UpcomingFeaturedCard match={feed.upcomingFeatured} /></div>
+ <div data-live-signal-id={feed.upcomingFeatured.id} data-market={feed.upcomingFeatured.marketLabel} data-source="upcoming">
+ <LiveUpcomingRow match={feed.upcomingFeatured} dict={dict} />
  </div>
- )}
+ </div>
+ ) : null}
 
- {upcomingLocked.map((item) => (
- <div
- key={item.id}
- data-live-signal-id={item.id}
- data-market={item.predictionLabel}
- data-source="upcoming_locked"
+ {/* The desk's close: a stated destination, in plain words. */}
+ <p className="rw-m mt-5 text-[var(--hero-ink-2)]">
+ {p.liveMoreVia}{" "}
+ <a
+ href={telegramUrl}
+ target="_blank"
+ rel="noopener noreferrer"
+ onClick={() => openTelegram("footer_link")}
+ className="border-b-2 border-[var(--hero-ink)] font-bold text-[var(--hero-ink)]"
  >
- <UpcomingLockedRow
- item={item}
- seePickLabel={p.upcomingTapSeePick}
- startsInLabel={p.upcomingStartsIn.replace("{mins}", String(item.startsInMinutes))}
- onClick={() => openTelegram("upcoming_locked", item.id, item.predictionLabel)}
- />
- </div>
- ))}
- </div>
- </div>
- )}
+ Telegram →
+ </a>
+ </p>
  </div>
 
  <LiveHistoryModal
@@ -397,14 +375,6 @@ export function LiveFeedPanel({ dict }: { dict: FullDictionary }) {
  dict={dict}
  />
 
- <LiveUnlockModal
- open={unlockMode !== null}
- onClose={() => setUnlockMode(null)}
- dict={dict}
- locale={locale}
- telegramBotUrl={feed?.telegramBotUrl ?? null}
- variant={unlockMode === "upcoming" ? "upcoming" : "live"}
- />
  </>
  );
 }

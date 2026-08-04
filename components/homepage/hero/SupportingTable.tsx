@@ -5,6 +5,7 @@ import type { HeroPick } from "@/lib/homepage/types";
 import type { Locale } from "@/lib/i18n";
 import { SectionTrackLink } from "@/components/analytics/SectionTrackLink";
 import { Crest } from "./Crest";
+import { tint } from "./leagueTint";
 import { V2LeagueCell } from "@/components/homepage/v2Chrome";
 import { splitRate } from "./heroModel";
 
@@ -111,6 +112,8 @@ function Row({
       section="hero"
       locale={locale}
       className={`rw-row group block border-b border-[var(--hero-line)] py-3 sm:items-center ${COLUMNS}`}
+      /* The hover rule's colour: this row's competition tint, read by `.rw-row::before`. */
+      style={{ "--rw-tint": tint(pick.leagueKey) } as React.CSSProperties}
     >
       <span className="rw-tnum rw-label hidden text-[var(--hero-ink-2)] sm:block">
         {String(rank).padStart(2, "0")}

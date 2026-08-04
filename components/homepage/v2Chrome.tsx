@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { flagForCountry } from "@/lib/footystats/flags";
+import { countryDisplay } from "@/lib/countryDisplay";
 
 /* ============================================================================
    SHARED V2 CHROME — the devices every converted island uses
@@ -137,10 +137,14 @@ export function V2Chip({
 }
 
 /**
- * A league cell: the country's flag above its competition.
+ * A league cell: the country's real flag and FULL NAME over its competition —
+ * "🇫🇮 Finland / Kolmonen Länsi", the map's cell.
  *
- * THE FLAG IS OMITTED WHEN THE COUNTRY IS. A provider row that carried no country renders the
- * competition alone — never a white flag, which would stand in for an observation nobody made.
+ * The first version printed the raw field, so a provider row carrying `fi` rendered "FI" under a
+ * white placeholder glyph — an ISO code wearing a country's clothes. `countryDisplay` resolves
+ * code or name to the real pair, and a row whose country cannot be resolved renders the league
+ * ALONE: no glyph, no code, nothing standing in for an observation nobody made.
+ *
  * The flag is an emoji rather than an asset, so a cell costs no request and cannot half-load.
  */
 export function V2LeagueCell({
@@ -150,16 +154,20 @@ export function V2LeagueCell({
   country?: string;
   league: string;
 }) {
+  const resolved = countryDisplay(country);
+
   return (
     <span className="inline-flex min-w-0 items-baseline gap-2">
-      {country ? (
+      {resolved?.flag ? (
         <span aria-hidden className="shrink-0 text-[13px] leading-none">
-          {flagForCountry(country)}
+          {resolved.flag}
         </span>
       ) : null}
       <span className="min-w-0">
-        {country ? (
-          <span className="rw-m block truncate font-bold text-[var(--hero-ink)]">{country}</span>
+        {resolved ? (
+          <span className="rw-m block truncate font-bold text-[var(--hero-ink)]">
+            {resolved.name}
+          </span>
         ) : null}
         <span className="rw-m block truncate text-[var(--hero-ink-2)]">{league}</span>
       </span>

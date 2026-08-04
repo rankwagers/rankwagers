@@ -231,6 +231,9 @@ export const predictionsEn = {
   liveGoalsToSettlePlural: "{n} more goals settle it",
   liveCleared: "cleared",
   livePending: "pending",
+  liveNeedsN: "needs {n}",
+  /** The desk's plain closing line — a stated destination, not a teaser about withheld content. */
+  liveMoreVia: "More signals via Telegram",
   liveLatestScore: "Latest provider score",
   liveUpcomingTitle: "Upcoming — next picks",
   liveUpcomingNote: "Scores print once the provider reports",

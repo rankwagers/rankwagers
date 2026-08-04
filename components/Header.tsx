@@ -136,11 +136,14 @@ export function Header({
           </nav>
 
           {/*
-            THE MASTHEAD LINE. `ml-auto` so it holds the right edge at every width, and it wraps
-            to its own line rather than compressing the nav beside it.
+            THE MASTHEAD LINE. One step below the nav (9.5 against 10.5 — both on the mono
+            ladder), because it is a fact ABOUT the page, not a destination on it, and the two
+            must read as distinct groups sharing a line. `ml-auto` holds it to the right edge and
+            the `pl-10` keeps clear air between the groups even at the width where they meet;
+            it wraps to its own line rather than compressing the nav beside it.
           */}
           {meta ? (
-            <p className="rw-tnum ml-auto text-[10.5px] uppercase tracking-[0.08em] text-[var(--hero-ink-2)] [font-family:var(--font-hero-mono),ui-monospace,monospace]">
+            <p className="rw-tnum ml-auto pl-10 text-[9.5px] uppercase tracking-[0.08em] text-[var(--hero-ink-2)] [font-family:var(--font-hero-mono),ui-monospace,monospace]">
               {meta}
             </p>
           ) : null}

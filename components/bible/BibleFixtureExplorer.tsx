@@ -28,6 +28,8 @@ import {
 } from "@/lib/research/qualifiedFixture";
 import { AddToAccaButton } from "@/components/acca/AddToAccaButton";
 import { V2LeagueCell } from "@/components/homepage/v2Chrome";
+import { leagueKeyFor } from "@/lib/homepage/heroModel";
+import { tint } from "@/components/homepage/hero/leagueTint";
 import { TeamLogo } from "@/components/predictions/TeamLogo";
 import { mapFootyStatsEvidence, type FootyStatsFixtureResearch } from "@/lib/research/footyStatsEvidence";
 import { fromFixtureResearch } from "@/lib/evidence-ui";
@@ -1225,6 +1227,7 @@ export function BibleFixtureExplorer({
  <button
  type="button"
  className={`rw-row w-full py-2.5 text-left sm:items-center ${DESK_COLUMNS}`}
+ style={{ "--rw-tint": tint(leagueKeyFor(fixture.league)) } as React.CSSProperties}
  onClick={() => void toggleFixture(fixture, open)}
  aria-expanded={open}
  aria-controls={detailId}

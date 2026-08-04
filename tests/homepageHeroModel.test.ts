@@ -554,3 +554,51 @@ test("the cap holds: featured is at most the composition's five", () => {
   assert.equal(model.funnel.featured, HERO_PICK_COUNT);
   assert.ok((model.funnel.qualified ?? 0) >= (model.funnel.featured ?? 0));
 });
+
+/* ------------------------------------------------------------------ *
+ * FIX PASS — the lead meta line, and the country resolver behind it
+ * ------------------------------------------------------------------ */
+
+test("the lead meta prints one date, one kickoff, and the country with the league", () => {
+  const { buildLeadMeta } = require("../lib/homepage/heroModel") as typeof import("../lib/homepage/heroModel");
+  /*
+   * The defect this pins: the old builder appended `pick.kickoff` — which already contained the
+   * formatted date — after a date of its own, so the line read "TUE 04 AUG · TUE 04 AUG, 19:00".
+   * Every part now derives from the one ISO stamp, so a second date cannot be assembled.
+   */
+  const meta = buildLeadMeta({
+    league: "LFPB",
+    country: "bo",
+    kickoffDateTime: "2026-08-04T19:00:00.000Z",
+  });
+  assert.equal(meta, "LFPB (Bolivia) · Tue 04 Aug · 19:00 UTC");
+  assert.equal((meta.match(/04 Aug/g) ?? []).length, 1, "the date prints exactly once");
+
+  // No country → the league stands alone; no parenthesis, no placeholder.
+  assert.equal(
+    buildLeadMeta({ league: "Kakkonen", kickoffDateTime: "2026-08-04T16:00:00.000Z" }),
+    "Kakkonen · Tue 04 Aug · 16:00 UTC"
+  );
+  // An unparseable stamp drops the date and time, never prints "Invalid Date".
+  assert.equal(
+    buildLeadMeta({ league: "LFPB", country: "bo", kickoffDateTime: "not-a-date" }),
+    "LFPB (Bolivia)"
+  );
+});
+
+test("countryDisplay resolves codes and names, and refuses to invent", () => {
+  const { countryDisplay } = require("../lib/countryDisplay") as typeof import("../lib/countryDisplay");
+
+  assert.deepEqual(countryDisplay("fi"), { name: "Finland", flag: "🇫🇮" });
+  assert.deepEqual(countryDisplay("UZ"), { name: "Uzbekistan", flag: "🇺🇿" });
+  assert.equal(countryDisplay("Bolivia")?.name, "Bolivia", "a full name passes through as given");
+  assert.equal(countryDisplay("Bolivia")?.flag, "🇧🇴", "and gains its flag when the name is known");
+  assert.equal(countryDisplay(undefined), null, "absent stays absent");
+  assert.equal(countryDisplay("  "), null);
+  /*
+   * An unknown code is a country this module cannot name. Printing the raw code beside a
+   * placeholder glyph is the rendering this resolver exists to end, so it returns null and the
+   * cell prints the league alone.
+   */
+  assert.equal(countryDisplay("zz"), null, "an unknown code yields nothing, not a placeholder");
+});
