@@ -2,7 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import type { FullDictionary } from "@/lib/dictionaries";
 import type { Locale } from "@/lib/i18n";
 import type { DailyMatchLists } from "@/lib/footystats/types";
-import { mapDailyListsToQualifiedFixtures } from "@/lib/research/qualifiedFixture";
+import { mapDailyListsToQualifiedFixtures, topRankedFixtures } from "@/lib/research/qualifiedFixture";
 import { BibleFixtureExplorer } from "./BibleFixtureExplorer";
 import { BibleHomeNotes } from "./BibleHomeNotes";
 import { BibleOperatorStrip } from "./BibleOperatorStrip";
@@ -37,6 +37,9 @@ import {
   StatusBadge,
 } from "@/components/homepage/sectionChrome";
 import type { HomepageTrustModel } from "@/lib/homepage/types";
+import type { VenueRates } from "@/lib/fixtures/evidenceView";
+import { buildRankedWhy } from "@/lib/homepage/rankedWhy";
+import { RankedExplainer } from "@/components/homepage/RankedExplainer";
 import { buildProofBandFigures } from "@/lib/homepage/proofBand";
 import { settledFirst } from "@/lib/homepage/recentResults";
 import { leagueKeyFor } from "@/lib/homepage/heroModel";
@@ -168,6 +171,7 @@ export function RankWagersHome({
   selectedDate,
   today,
   trust,
+  rankedVenueRates,
 }: {
   lists: DailyMatchLists;
   dict: FullDictionary;
@@ -178,6 +182,11 @@ export function RankWagersHome({
   selectedDate: string;
   today: string;
   trust: HomepageTrustModel;
+  /**
+   * Venue rates for the ranked six, resolved by the page. A fixture with no entry renders its
+   * explainer without the venue sentence — the bound still prints, the facts are not invented.
+   */
+  rankedVenueRates?: Record<number, VenueRates>;
 }) {
   const p = dict.predictions;
   const fixtures = mapDailyListsToQualifiedFixtures(lists);
@@ -185,9 +194,7 @@ export function RankWagersHome({
   /* Settled outcomes lead; pending follows. The rule and its reasoning live in the module. */
   const orderedResults = settledFirst(trust.recentResults);
 
-  const topFixtures = [...fixtures]
-    .sort((left, right) => right.modelProbability - left.modelProbability)
-    .slice(0, 6);
+  const topFixtures = topRankedFixtures(fixtures);
   const marketRows = (Object.keys(marketNames) as Array<keyof typeof marketNames>)
     .map((market) => {
       const rows = fixtures.filter((fixture) => fixture.marketKind === market);
@@ -675,12 +682,32 @@ export function RankWagersHome({
                   to this fixture. An unobserved freshness claim is the one thing a research
                   publication cannot afford to print beside its central figure.
                 */}
-                <p className="rw-h mt-3.5 text-[44px] leading-[0.9] tracking-[-0.045em] text-[var(--hero-ink)]">
-                  <span className="rw-tnum">{fixture.modelProbability}</span>
-                  <span className="rw-mono align-baseline text-[20px] font-normal tracking-normal">
-                    %
-                  </span>
-                </p>
+                {/* The numeral with the map's ⓘ beside it — the explainer built from THIS card's facts. */}
+                <div className="mt-3.5 flex items-start gap-2.5">
+                  <p className="rw-h text-[44px] leading-[0.9] tracking-[-0.045em] text-[var(--hero-ink)]">
+                    <span className="rw-tnum">{fixture.modelProbability}</span>
+                    <span className="rw-mono align-baseline text-[20px] font-normal tracking-normal">
+                      %
+                    </span>
+                  </p>
+                  <RankedExplainer
+                    why={buildRankedWhy(
+                      fixture.modelProbability,
+                      rankedVenueRates?.[fixture.matchId] ?? null,
+                      {
+                        title: p.rankedWhyTitle,
+                        homeAll: p.rankedWhyHomeAll,
+                        homeRate: p.rankedWhyHomeRate,
+                        awayAll: p.rankedWhyAwayAll,
+                        awayRate: p.rankedWhyAwayRate,
+                        bound: p.rankedWhyBound,
+                        more: p.rankedWhyMore,
+                      }
+                    )}
+                    href={fixturePath(locale, fixture.matchId, fixture.marketKind, "top_picks")}
+                    linkLabel={p.rankedOpenMatch}
+                  />
+                </div>
                 <p className="rw-h mt-1 text-[15px] tracking-[-0.01em] text-[var(--hero-ink)]">
                   {fixture.market}
                 </p>

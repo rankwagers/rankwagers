@@ -196,6 +196,20 @@ export const predictionsEn = {
   rankedPotentialLabel: "provider potential",
   rankedOpenMatch: "Open match",
   rankedAddAcca: "Accumulator",
+  /*
+   * THE RANKED CARD'S WHY PANEL. Clause templates, filled from the card's own venue rates by
+   * `rankedWhy.ts` — the "every rated match" wording only ever prints over a genuine 100% with
+   * its sample attached; anything less states the real rate, and a missing rate omits its
+   * clause. "can still lose" lives HERE and nowhere else: a kill test holds that the bound
+   * reaches the page through this template only.
+   */
+  rankedWhyTitle: "Why {pct}%?",
+  rankedWhyHomeAll: "home side cleared this market in every rated home match {sample}",
+  rankedWhyHomeRate: "home side cleared this market in {rate} of rated home matches",
+  rankedWhyAwayAll: "away side cleared this market in every rated away match {sample}",
+  rankedWhyAwayRate: "away side cleared this market in {rate} of rated away matches",
+  rankedWhyBound: "A past rate, not a certainty — a {pct}% line can still lose.",
+  rankedWhyMore: "Full samples & reasoning:",
   deskEyebrow: "Research desk",
   deskTitle: "Recently qualified",
   deskDescription:

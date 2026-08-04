@@ -851,8 +851,8 @@ test("the masthead meta drops a step and keeps clear of the nav cluster", () => 
 test("row hover draws the tinted left rule and never darkens the ground", () => {
   const css = readFileSync(path.join(process.cwd(), "app/globals.css"), "utf8");
 
-  assert.match(css, /\.rw-hero \.rw-row::before[\s\S]{0,700}?var\(--rw-tint, var\(--hero-ink\)\)/,
-    "the rule takes the row's tint, falling back to ink");
+  assert.match(css, /\.rw-hero \.rw-row::before[\s\S]{0,900}?rgb\(var\(--rw-tint, var\(--hero-ink-rgb\)\)\)/,
+    "the rule composes the tint triplet inside rgb() — combinedFixPass probes the computed value");
   // The rail DRAWS now (scaleY from the top); masterFixPass carries the full geometry probe.
   assert.match(css, /\.rw-hero \.rw-row:hover::before[\s\S]{0,120}?scaleY\(1\)/, "and draws on hover");
   assert.doesNotMatch(
@@ -941,6 +941,14 @@ function homepageTreeWithData() {
       over25: [],
       sh: [],
     },
+    // The ranked card's explainer facts — a mixed pair, so the walk can assert the honest clauses.
+    rankedVenueRates: {
+      9001: {
+        home: { display: "100% (5/5)", sampleSize: 5 },
+        away: { display: "86% (6/7)", sampleSize: 7 },
+        league: null,
+      },
+    },
     dict: getDictionary("en"),
     locale: "en",
     displayDate: "Tuesday 4 August",
@@ -1022,4 +1030,36 @@ test("MOUNTED: the ranked card mounts crests, the league cell, and the acca twin
   assert.match(cls, /rw-m/, "in the mono face");
   assert.match(String(acca[0].labelAdd ?? ""), /^\+ /, "labelled + ACCUMULATOR-style");
   assert.doesNotMatch(cls, /rounded|green|brand/, "no soft variant survives");
+});
+
+
+/* ------------------------------------------------------------------ *
+ * COMBINED FIX PASS — the ⓘ explainer, mounted through the tree
+ * ------------------------------------------------------------------ */
+
+test("MOUNTED: the ranked card mounts the explainer with this fixture's own facts", () => {
+  const tree = homepageTreeWithData();
+  const explainers = collectAll(tree, "RankedExplainer");
+  assert.ok(explainers.length >= 1, "the explainer trigger is mounted on the ranked card");
+
+  const why = explainers[0].why as {
+    title: string;
+    venueSentence: string | null;
+    bound: string;
+  };
+  /*
+   * The revealed text travels as the mounted element's props — built server-side from the venue
+   * rates the page resolved, so the walk proves the whole chain: enrichment → template → mount.
+   */
+  assert.match(why.title, /^Why \d+%\?$/);
+  assert.ok(
+    why.venueSentence?.includes("every rated home match (5/5)"),
+    "the 100% clause carries its denominator"
+  );
+  assert.ok(
+    why.venueSentence?.includes("86% (6/7) of rated away matches"),
+    "the 6/7 states its real rate, never 'every'"
+  );
+  assert.match(why.bound, /can still lose/, "the bound is the panel's reason to exist");
+  assert.match(String(explainers[0].href ?? ""), /\/fixtures\/9001/, "the link goes to the fixture");
 });

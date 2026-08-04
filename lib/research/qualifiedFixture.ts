@@ -112,3 +112,19 @@ export function mapDailyListsToQualifiedFixtures(
   }
   return result;
 }
+
+/** How many fixtures the ranked section shows. */
+export const RANKED_FIXTURE_COUNT = 6;
+
+/**
+ * The ranked section's six, strongest provider potential first.
+ *
+ * One derivation, used by the page (to know which fixtures to enrich with venue rates) and by
+ * the component (to render them). Two copies of a sort-and-slice is how a page fetches venue
+ * evidence for six fixtures and renders six different ones.
+ */
+export function topRankedFixtures(fixtures: readonly QualifiedFixture[]): QualifiedFixture[] {
+  return [...fixtures]
+    .sort((left, right) => right.modelProbability - left.modelProbability)
+    .slice(0, RANKED_FIXTURE_COUNT);
+}

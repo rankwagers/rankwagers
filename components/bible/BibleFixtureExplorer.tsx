@@ -443,7 +443,7 @@ export function BibleFixtureExplorer({
  {fixture.modelProbability}
  <span className="rw-mono align-baseline text-[11px] font-normal tracking-normal">%</span>
  </span>
- <span aria-hidden className="hidden text-[13px] text-[var(--hero-ink-2)] sm:block sm:justify-self-end">→</span>
+ <span aria-hidden className="rw-cell-arrow hidden sm:grid sm:justify-self-end">→</span>
  </Link>
  </article>
  ))}

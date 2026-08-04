@@ -4,6 +4,9 @@ import { type Locale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
 import { getDailyMatchListsSafe, emptyLists, todayMatchDateStr } from "@/lib/footystats/client";
 import { backfillCountryCodes } from "@/lib/footystats/countryBackfill";
+import { mapDailyListsToQualifiedFixtures, topRankedFixtures } from "@/lib/research/qualifiedFixture";
+import { getMatchDetails } from "@/lib/footystats/matchDetail";
+import { venueRatesForMarket, type VenueRates } from "@/lib/fixtures/evidenceView";
 import { formatKickoff } from "@/lib/dates";
 import { PredictionsPageJsonLd } from "@/components/predictions/PredictionsPageJsonLd";
 import { RankWagersHome } from "@/components/bible/RankWagersHome";
@@ -52,6 +55,25 @@ export default async function LocaleHomePage({
    */
   const lists = backfillCountryCodes("error" in result ? emptyLists() : result);
   const apiError = "error" in result ? result.error : null;
+  /*
+   * Venue rates for the ranked six — the ⓘ explainer's facts. Same derivation the component
+   * renders (`topRankedFixtures`, shared), same cached provider-detail helper the hero uses, so
+   * this is one cache-warm pass over at most six fixtures. A fixture whose detail does not
+   * resolve simply has no rates, and its explainer omits the venue sentence.
+   */
+  const ranked = topRankedFixtures(mapDailyListsToQualifiedFixtures(lists));
+  const rankedDetails = await getMatchDetails(
+    ranked.map((fixture) => fixture.matchId),
+    params.locale
+  );
+  const rankedVenueRates: Record<number, VenueRates> = {};
+  for (const fixture of ranked) {
+    rankedVenueRates[fixture.matchId] = venueRatesForMarket(
+      rankedDetails.get(fixture.matchId),
+      fixture.marketKind
+    );
+  }
+
   const allRows = [...lists.fh, ...lists.over15, ...lists.over25, ...lists.sh];
   const matchCount = new Set(allRows.map((row) => row.matchId)).size;
   const fetchedAt = new Date(lists.fetchedAt);
@@ -103,6 +125,7 @@ export default async function LocaleHomePage({
         </div>
       )}
       <RankWagersHome
+        rankedVenueRates={rankedVenueRates}
         lists={lists}
         dict={dict}
         locale={params.locale}

@@ -523,6 +523,8 @@ textarea,
    * It is not part of the v2 palette and takes no new consumers.
    */
   --hero-ink-3: #55524e;
+  /* The ink as a bare triplet, for consumers that compose it inside rgb() — see `.rw-row::before`. */
+  --hero-ink-rgb: 32 30 29;
   --hero-canvas: #f7f7f6;
   --hero-surface: #ffffff;
   --hero-line: #d7d3d3;
@@ -684,7 +686,13 @@ textarea,
  * background never changes, because a wash behind a ruled row breaks the printed-table ground
  * the hairlines establish.
  *
- * The colour comes through `--rw-tint`, set inline per row from `leagueTint` by competition.
+ * The colour comes through `--rw-tint`, set inline per row from `leagueTint` by competition —
+ * as a BARE `r g b` TRIPLET, which is `leagueTint`'s one output convention. The triplet is not a
+ * CSS color: consumed raw it produced `background: 42 85 224;`, which is invalid, silently
+ * dropped, and left the scaleY draw animating an unpainted box. (The var() fallback never saved
+ * it: fallbacks apply when a variable is UNSET, not when its value is invalid downstream.) So
+ * this site — the only CSS consumer — wraps the variable in `rgb()`, and the fallback is the
+ * matching `--hero-ink-rgb` triplet, declared per scope.
  * A surface with no tint to state (the operator rows) falls back to ink, so the mechanism is one
  * rule everywhere rather than tinted-here, darkened-there.
  *
@@ -714,7 +722,7 @@ textarea,
   top: 4px;
   bottom: 4px;
   width: 2px;
-  background: var(--rw-tint, var(--hero-ink));
+  background: rgb(var(--rw-tint, var(--hero-ink-rgb)));
   transform: scaleY(0);
   transform-origin: top;
   transition: transform var(--dur-respond) var(--ease-settle);
@@ -722,6 +730,37 @@ textarea,
 .rw-hero .rw-row:hover::before,
 .rw-hero .rw-row:focus-visible::before {
   transform: scaleY(1);
+}
+
+/* The explainer panel enters on the shared rise; reduced motion shows it instantly (below). */
+.rw-hero .rw-explain {
+  animation: rw-rise var(--dur-respond) var(--ease-settle) both;
+}
+
+/*
+ * THE ROW'S ARROW CELL — the OPEN MATCH grammar at cell size. A bordered square holding the ink
+ * glyph; when the ROW is hovered or keyboard-focused the cell fills ink and the glyph turns
+ * paper, exactly as the bordered buttons respond, so one grammar means "this opens" at every
+ * scale. Same clock as everything else. Reduced motion keeps the filled state — it is a state,
+ * not a movement — and drops only the transition.
+ */
+.rw-hero .rw-row .rw-cell-arrow {
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  border: 0.5px solid var(--hero-line);
+  color: var(--hero-ink);
+  font-size: 13px;
+  transition:
+    background-color var(--dur-respond) var(--ease-settle),
+    color var(--dur-respond) var(--ease-settle),
+    border-color var(--dur-respond) var(--ease-settle);
+}
+.rw-hero .rw-row:hover .rw-cell-arrow,
+.rw-hero .rw-row:focus-visible .rw-cell-arrow {
+  background: var(--hero-ink);
+  border-color: var(--hero-ink);
+  color: var(--hero-canvas);
 }
 
 /*
@@ -778,6 +817,7 @@ textarea,
    * interior is composed from the same parts as the rest of the page.
    */
   --hero-ink: #f7f7f6;
+  --hero-ink-rgb: 247 247 246;
   --hero-ink-2: rgb(247 247 246 / 0.62);
   --hero-ink-3: rgb(247 247 246 / 0.62);
   --hero-canvas: #201e1d;
@@ -1020,6 +1060,16 @@ textarea,
 @media (prefers-reduced-motion: reduce) {
   /* The hover rail stays — it states which row is under the pointer — only its drawing goes. */
   .rw-hero .rw-row::before {
+    transition: none;
+  }
+
+  /* The explainer still reveals — instantly. The reveal is content, not motion. */
+  .rw-hero .rw-explain {
+    animation: none;
+  }
+
+  /* The arrow cell keeps its filled hover state; only the transition goes. */
+  .rw-hero .rw-row .rw-cell-arrow {
     transition: none;
   }
 

@@ -14,6 +14,18 @@
 
    An unlisted competition falls back to the hero accent, exactly as the
    approved design does — so a new league is quiet, never wrong.
+
+   THE ONE OUTPUT CONVENTION — BARE `r g b` TRIPLETS. `tint()` returns `"55 0 60"`, never a CSS
+   color. Every consumer composes it: inline `--rw-tint` setters pass the triplet through and the
+   ONE CSS site that reads the variable wraps it — `rgb(var(--rw-tint, var(--hero-ink-rgb)))`.
+   This is stated because it shipped broken the other way: the rail CSS consumed the triplet raw,
+   `background: 42 85 224;` is invalid and silently dropped, and the hover drew an unpainted box.
+   A consumer that needs alpha uses `tinted(key, alpha)`, which does the wrapping itself.
+
+   KNOWN DEBT, deliberately not paid here: the leagues on today's boards (Kakkonen, Kolmonen
+   Länsi, LFPB, Pro League A…) are not in TINT, so every one of them falls to ACCENT and every
+   rail currently draws the same blue. The table needs to learn the minor leagues before the tint
+   carries identity rather than merely presence.
    ========================================================================== */
 
 /** `r g b` triplets, matching the approved design's competition palette. */
