@@ -130,10 +130,48 @@ export const predictionsEn = {
    */
   heroFunnelFootnote:
     "Cleared threshold counts fixtures whose provider potential met the published market threshold for the day. It is a filter, not a verdict on the fixture.",
-  heroLeadTitle: "Today's strongest research",
+  heroLeadTitle: "No. 01",
   heroLeadNote: "1 of {count} shown",
   heroSupportingTitle: "Supporting research",
   heroSupportingNote: "{count} of {total} shown",
+  /*
+   * THE SUPPORTING TABLE'S COLUMN HEADS.
+   *
+   * Mono, uppercase, and each naming exactly what its column holds. "Potential" rather than
+   * "Probability" or "Confidence": the figure is FootyStats' market potential, and the vocabulary
+   * rule (§ "Provider potential") reserves the other two words for things this column is not.
+   */
+  heroTableNo: "No.",
+  heroTableFixture: "Fixture",
+  heroTableLeague: "League",
+  heroTableKickoff: "KO",
+  heroTablePotential: "Potential",
+  heroTableMarket: "Market",
+  /*
+   * THE APPROVED QUALIFIER FOR THE PROVIDER FIGURE.
+   *
+   * This replaces `colPctTooltip` on the hero, which read "Model probability for this market. A
+   * statistical estimate, not a forecast of the outcome." Two things were wrong with it here. It
+   * called the figure a MODEL PROBABILITY, which is the name the vocabulary reserves for our own
+   * output and not for a provider's; and it said nothing about the sample, which this figure does
+   * not have. The wording below is the one already used on the fixture panel and the acca detail
+   * view, so the product states this figure the same way wherever it appears.
+   *
+   * `colPctTooltip` itself is left alone: it is shared with the prediction tables on unconverted
+   * routes and carries translations in every locale, so re-pointing the whole site at this
+   * vocabulary is a migration of its own rather than a line in a homepage pass.
+   */
+  heroProviderPotentialNote:
+    "Provider potential — FootyStats' figure for this market as published. Not a confidence, and it carries no sample.",
+  /*
+   * The live desk's own heading, moved out of the component into the dictionary with the rest of
+   * the page's copy. It was three hardcoded English strings passed to `SectionHeading` — the only
+   * untranslated section heading on the page.
+   */
+  liveDeskEyebrow: "Live desk",
+  liveDeskTitle: "Live signals",
+  liveDeskDescription:
+    "Automated observations of market and match activity. Live scores and events appear only when the data provider supplies them.",
   heroStageCta: "Explore today's research",
   heroStageEmpty:
     "No fixture cleared the qualification threshold for this date. The lists are published as they are — an empty day is a result, not an outage.",

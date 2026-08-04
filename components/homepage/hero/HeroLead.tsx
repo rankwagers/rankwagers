@@ -7,7 +7,7 @@ import type { HeroPick } from "@/lib/homepage/types";
 import { SectionTrackLink } from "@/components/analytics/SectionTrackLink";
 import { Crest } from "./Crest";
 import { prefersReducedMotion } from "./motion";
-import { splitRate } from "./HeroStage";
+import { splitRate } from "./heroModel";
 
 /* ============================================================================
    THE LEAD — rebrand v2, per docs/design/motion-language-v2.md

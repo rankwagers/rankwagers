@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import test from "node:test";
 
-import { funnelDescent, splitRate } from "../components/homepage/hero/HeroStage";
+import { funnelDescent, splitRate } from "../components/homepage/hero/heroModel";
 import type { HeroFunnel } from "../lib/homepage/types";
 
 /**

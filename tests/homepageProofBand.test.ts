@@ -265,7 +265,13 @@ test("S2 renders inside the hero scope rather than duplicating its tokens", () =
    * ancestor carries it and that S2 sits inside, instead of asserting the two strings are near
    * each other in the source.
    */
-  const wrapper = home.indexOf('className="rw-hero bg-[var(--hero-canvas)]"');
+  /*
+   * Matched on the class rather than the whole attribute: the wrapper also cancels `main`'s cream
+   * padding now (`-mt-6 lg:-mt-8`), and pinning the exact string made this test fail for a change
+   * that has nothing to do with what it protects — which is that the scope is established ONCE,
+   * on an ancestor of S2.
+   */
+  const wrapper = home.indexOf('className="rw-hero -mt-6 bg-[var(--hero-canvas)]');
   assert.ok(wrapper > 0, "the page wrapper establishes the hero scope");
   assert.ok(
     home.indexOf('id="verified-performance"') > wrapper,

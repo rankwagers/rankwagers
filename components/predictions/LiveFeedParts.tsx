@@ -135,10 +135,10 @@ export function LiveFeaturedCard({
  {signal.marketLabel}
  </span>
  {signal.minute && !isWon && (
- <span className="font-mono text-xs font-semibold text-[var(--amber-primary)]">{signal.minute}</span>
+ <span className="rw-live-minute font-mono text-xs font-semibold text-[var(--amber-primary)]">{signal.minute}</span>
  )}
  {isWon && signal.minute && (
- <span className="rounded-md bg-[var(--green-surface)] px-2 py-0.5 font-mono text-metadata font-semibold text-brand">
+ <span className="rw-live-minute bg-[var(--green-surface)] px-2 py-0.5 font-mono text-metadata font-semibold text-brand">
  {signal.minute}
  </span>
  )}
@@ -221,7 +221,7 @@ export function LiveHistoryList({
  <span className="flex items-center gap-1 text-metadata font-semibold uppercase tracking-label text-brand">
  {p.liveFeaturedWonBadge}
  {h.minute && (
- <span className="font-mono font-semibold text-brand">{h.minute}</span>
+ <span className="rw-live-minute font-mono font-semibold text-brand">{h.minute}</span>
  )}
  </span>
  ) : isLost ? (
@@ -386,7 +386,7 @@ export function LiveHistorySlider({
  <span className="flex items-center gap-1 text-metadata font-semibold uppercase tracking-label text-brand">
  {p.liveFeaturedWonBadge}
  {h.minute && (
- <span className="font-mono font-semibold text-brand">{h.minute}</span>
+ <span className="rw-live-minute font-mono font-semibold text-brand">{h.minute}</span>
  )}
  </span>
  ) : (

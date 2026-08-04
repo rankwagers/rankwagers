@@ -94,9 +94,16 @@ function LiveSignalsHeader({
  <div className="mb-2">
  <div className="flex items-center justify-between gap-2">
  <div className="flex min-w-0 items-center gap-2">
+ {/*
+ THE LIVE DOT — one of the two elements `--color-live` is confined to (the other is the
+ minute). Square, because radius is 0 in the converted scope, and it takes the live colour
+ through `.rw-live-mark` rather than through `bg-brand`: the ink band maps brand to plain
+ inverted ink so the panel's ordinary labels stay legible, which means the dot has to name
+ the live colour itself.
+ */}
  <span className="relative flex h-2 w-2 shrink-0 max-lg:h-2.5 max-lg:w-2.5">
- <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand opacity-40" />
- <span className="relative inline-flex h-2 w-2 rounded-full bg-brand max-lg:h-2.5 max-lg:w-2.5" />
+ <span className="rw-live-mark absolute inline-flex h-full w-full animate-ping bg-brand opacity-40" />
+ <span className="rw-live-mark relative inline-flex h-2 w-2 bg-brand max-lg:h-2.5 max-lg:w-2.5" />
  </span>
  <span className="text-xs font-semibold uppercase tracking-label text-muted-foreground max-lg:text-metadata max-lg:tracking-label">
  {p.liveSoonTitle}

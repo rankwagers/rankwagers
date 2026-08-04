@@ -224,7 +224,18 @@ export function RankWagersHome({
      * they were converted in. The page wrapper drops `container-wide` because a full-bleed ground
      * cannot live inside a constrained column; the measure moved into each section instead.
      */
-    <div className="rw-hero bg-[var(--hero-canvas)]">
+    /*
+     * THE CREAM BAND IS GONE.
+     *
+     * `main` sets `py-6 lg:py-8` on the site's cream ground (`--canvas-primary`, #f6f3ec), so a
+     * 24–32px strip of the OLD palette sat between the header and the hero — the first thing on
+     * the page, in the colour the rebrand replaces. The negative margin cancels exactly that
+     * padding so the hero's ground starts flush under the header.
+     *
+     * Done here rather than in the layout because `main`'s padding is correct for every
+     * unconverted route; PASS 2 can remove it globally once no route needs it.
+     */
+    <div className="rw-hero -mt-6 bg-[var(--hero-canvas)] lg:-mt-8">
       <HomepageEngagementTracker />
       <HomepageViewedTracker
         locale={locale}
@@ -250,7 +261,7 @@ export function RankWagersHome({
         instead of setting its own: `reveal={false}` because the hero plays its entrance on mount
         rather than on scroll, so wrapping it in an observer would hold the first viewport blank.
       */}
-      <Section id="top" ground="canvas" rhythm="heavy" reveal={false}>
+      <Section id="top" ground="canvas" rhythm="masthead" reveal={false}>
         <HomepageHero
           lists={lists}
           dict={dict}
@@ -322,15 +333,20 @@ export function RankWagersHome({
           Set locally rather than through `SectionHeading`. That component is shared with the
           archive surfaces, so restyling it would change pages this sprint does not touch.
         */}
+        {/*
+          The map's section opening, in v2: a 40×2px rule, the heading on the ladder's middle step
+          (46 — headings are 34 / 46 / 58 and nothing between), then the standfirst at reading
+          size. The rule is `--rule-3`, the ladder's 2px step, not an off-ladder 3px.
+        */}
         <div className="mb-6 md:mb-8">
-          <span aria-hidden className="mb-5 block h-[3px] w-10 bg-[var(--hero-ink)] md:mb-6" />
+          <span aria-hidden className="mb-3.5 block h-[2px] w-10 bg-[var(--hero-ink)]" />
           <h2
             id="verified-performance-heading"
-            className="rw-display text-[clamp(2.2rem,4.4vw,3.4rem)]"
+            className="rw-h text-[clamp(2.125rem,4.4vw,2.875rem)]"
           >
             {p.verifiedTitle}
           </h2>
-          <p className="mt-4 max-w-[38ch] text-[14px] leading-6 text-[var(--hero-ink-2)]">
+          <p className="mt-2.5 max-w-[52ch] text-[15px] leading-[1.55] text-[var(--hero-ink-2)]">
             {p.verifiedDescription}
           </p>
         </div>
@@ -347,9 +363,7 @@ export function RankWagersHome({
               and its figure is omitted — that three figures which are still windowed have no window
               at all. Stated here it survives a null rate, because the window does.
             */}
-            <p className="text-[13px] leading-6 text-[var(--hero-ink-3)]">
-              {trust.verified.windowLabel}
-            </p>
+            <p className="rw-m text-[var(--hero-ink-2)]">{trust.verified.windowLabel}</p>
 
             {/* Targeted by AccaChrome's launcher yield — the figures themselves, not the whole
                 section, which also contains recent-results and runs most of the page height. */}
@@ -361,7 +375,13 @@ export function RankWagersHome({
                 record that has settled nothing yet, and it is the rule the hero funnel already
                 follows. The window label travels with it, because it qualifies that rate.
               */}
-              <dl className="flex flex-col gap-10 sm:flex-row sm:flex-wrap sm:gap-x-8 lg:flex-nowrap">
+              {/*
+                Four equal tracks, per the map — a grid rather than a wrapping flex row. The
+                figures are peers and read across as one statement; a flex row re-flowed them into
+                3 + 1 at some widths, which ranks the fourth figure below the others for no
+                reason the data supports. Two columns below `sm`, never four.
+              */}
+              <dl className="grid grid-cols-2 gap-x-7 gap-y-10 lg:grid-cols-4">
                 {proofFigures.map((figure) => (
                   <ProofFigure
                     key={figure.key}
@@ -687,34 +707,43 @@ export function RankWagersHome({
         on evidence.
       */}
       {/*
-        #live stays on `surface` this pass, not the prototype's inverted ground. Its interior
-        inherits light-ground colours, and flipping the ground without converting them would
-        publish dark text on dark — a regression dressed as a conversion. The ink band is carried
-        by the footer, so the page still uses the punctuation, rarely; #live takes it in step 2
-        when its contents are rebuilt.
+        THE LIVE DESK, ON THE PAGE'S ONE INVERTED GROUND.
+
+        The previous pass left this on `surface` with a note explaining why: the interior inherited
+        light-ground colours, and flipping the ground without converting them would have published
+        dark text on dark. That was the right call then and it is resolved now — `.rw-ink`
+        re-points the tokens the interior already reads, so the ground and its contents invert
+        together rather than one ahead of the other.
+
+        The heading stays OUTSIDE the band, on the page ground. The map introduces the desk in the
+        page's own voice and then hands over to the instrument; putting the h2 inside the ink would
+        make the band a section rather than what it is — one object, set on the page.
+
+        There are exactly two inverted grounds: this and the footer. That is what keeps the device
+        legible as punctuation.
       */}
       <Section
         id="live-signals"
         analyticsSection="live_matches"
         labelledBy="live-matches-heading"
-        ground="surface"
+        ground="canvas"
         rhythm="quiet"
         index={2}
       >
-        <EditorialRule />
-        {/*
-          The only two-column composition on the page. Every other section stacks heading over
-          content; this one sets the heading beside it, which is what makes S4 read as an aside
-          rather than another instalment. Collapses to the stacked default below lg.
-        */}
-        <div className="mt-8 gap-10 lg:grid lg:grid-cols-[minmax(0,17rem)_minmax(0,1fr)] lg:gap-16">
-          <SectionHeading
+        <span aria-hidden className="block h-[2px] w-10 bg-[var(--hero-ink)]" />
+        <div className="mt-3.5 max-w-[72rem]">
+          <p className="rw-m text-[var(--hero-ink-2)]">{p.liveDeskEyebrow}</p>
+          <h2
             id="live-matches-heading"
-            eyebrow="Live desk"
-            title="Live matches"
-            description="No live data for these matches yet. Scores appear once the provider reports them."
-          />
-          <div className="mt-6 max-w-2xl lg:mt-0">
+            className="rw-h mt-1.5 text-[clamp(2.125rem,4.4vw,2.875rem)]"
+          >
+            {p.liveDeskTitle}
+          </h2>
+          <p className="mt-2.5 max-w-[52ch] text-[15px] leading-[1.55] text-[var(--hero-ink-2)]">
+            {p.liveDeskDescription}
+          </p>
+
+          <div className="rw-ink mt-6 p-6 sm:p-7">
             <LiveFeedPanel dict={dict} />
           </div>
         </div>
@@ -1031,26 +1060,27 @@ function ProofFigure({
   audit?: string;
 }) {
   return (
-    <div className="group relative min-w-[168px] flex-1 pt-6">
-      <span aria-hidden className="absolute left-0 top-0 h-px w-full bg-[var(--hero-line)]" />
+    /*
+       The map hangs each figure off a hairline that an ink rule draws in over, left to right, on
+       approach. v2 keeps the mechanism and re-sets the type: the label is mono, the figure sits on
+       the heading ladder's 46 step, and the indent is gone — everything hangs off the same left
+       axis the rest of the page uses.
+    */
+    <div className="group relative min-w-0 border-t-[0.5px] border-[var(--hero-ink-2)] pt-3">
       <span
         aria-hidden
-        className="absolute left-0 top-0 h-px w-full origin-left scale-x-0 bg-[var(--hero-ink)] transition-transform duration-[var(--dur-reveal)] ease-[var(--ease-settle)] group-hover:scale-x-100"
-      />
-      <span
-        aria-hidden
-        className="absolute left-0 top-0 h-[9px] w-px bg-[var(--hero-ink)] transition-all duration-[var(--dur-respond)] group-hover:h-4"
+        className="absolute left-0 top-[-0.5px] h-[2px] w-full origin-left scale-x-0 bg-[var(--hero-ink)] transition-transform duration-[var(--dur-reveal)] ease-[var(--ease-settle)] group-hover:scale-x-100"
       />
 
-      <dt className="rw-m pl-4 text-[var(--hero-ink-3)]">{label}</dt>
-      <dd className="rw-tnum rw-display mt-6 pl-4 text-[clamp(2.4rem,4.4vw,3.6rem)] transition-transform duration-[var(--dur-expand)] ease-[var(--ease-respond)] group-hover:-translate-y-0.5">
+      <dt className="rw-m text-[var(--hero-ink-2)]">{label}</dt>
+      <dd className="rw-tnum rw-h mt-2 text-[clamp(2rem,4.4vw,2.875rem)] transition-transform duration-[var(--dur-expand)] ease-[var(--ease-respond)] group-hover:-translate-y-0.5">
         {value}
       </dd>
 
       {note ? (
-        <div className="relative mt-3 pl-4">
+        <div className="relative mt-1.5">
           <p
-            className={`max-w-[22ch] text-[13px] leading-5 text-[var(--hero-ink-2)] ${
+            className={`rw-m max-w-[24ch] normal-case tracking-[0.04em] text-[var(--hero-ink-2)] ${
               audit
                 ? "transition-opacity duration-[var(--dur-respond)] group-hover:opacity-0"
                 : ""
@@ -1061,7 +1091,7 @@ function ProofFigure({
           {audit ? (
             <p
               aria-hidden
-              className="pointer-events-none absolute inset-0 max-w-[26ch] text-[13px] leading-5 text-[var(--hero-ink)] opacity-0 transition-opacity duration-[var(--dur-expand)] ease-[var(--ease-settle)] group-hover:opacity-100"
+              className="rw-m pointer-events-none absolute inset-0 max-w-[28ch] normal-case tracking-[0.04em] text-[var(--hero-ink)] opacity-0 transition-opacity duration-[var(--dur-expand)] ease-[var(--ease-settle)] group-hover:opacity-100"
             >
               {audit}
             </p>
@@ -1107,14 +1137,15 @@ function ProofBar({
 }) {
   if (won + lost <= 0) return null;
   return (
-    <div className="mt-10" aria-hidden>
-      <div className="flex h-[3px] w-full overflow-hidden bg-[var(--hero-line)]">
+    <div className="mt-8" aria-hidden>
+      {/* 2px — the ladder's step. The two segments still differ in tone, not only in length. */}
+      <div className="flex h-[2px] w-full overflow-hidden bg-[var(--hero-line)]">
         <span style={{ flexGrow: won }} className="block bg-[var(--hero-ink)]" />
         <span style={{ flexGrow: lost }} className="block bg-[var(--hero-ink-2)]" />
       </div>
-      <div className="mt-2 flex justify-between">
-        <span className="rw-m text-[var(--hero-ink-3)]">{wonLabel}</span>
-        <span className="rw-m text-[var(--hero-ink-3)]">{lostLabel}</span>
+      <div className="mt-1.5 flex justify-between">
+        <span className="rw-m text-[var(--hero-ink-2)]">{wonLabel}</span>
+        <span className="rw-m text-[var(--hero-ink-2)]">{lostLabel}</span>
       </div>
     </div>
   );
@@ -1145,18 +1176,24 @@ function FormStrip({
 }) {
   const settled = results.filter((row) => row.status !== "pending");
   if (!settled.length) return null;
+  /*
+   * v2 carries two ink weights, so `void` can no longer take a third. It becomes the rule tone —
+   * a fixture with no outcome is the one mark here that genuinely is absent rather than
+   * secondary, and drawing it as a faint rule says exactly that.
+   */
   const tone: Record<string, string> = {
     won: "bg-[var(--hero-ink)]",
     lost: "bg-[var(--hero-ink-2)]",
-    void: "bg-[var(--hero-ink-3)]",
+    void: "bg-[var(--hero-line)]",
   };
   return (
-    <div className="mt-8">
-      <p className="rw-m text-[var(--hero-ink-3)]">{label}</p>
-      <ol className="mt-2 flex flex-wrap gap-1.5">
+    <div className="mt-7">
+      <p className="rw-m text-[var(--hero-ink-2)]">{label}</p>
+      {/* The map's tick: 8px wide, 18px tall, 4px apart. */}
+      <ol className="mt-2 flex flex-wrap gap-1">
         {settled.map((row) => (
           <li key={row.id}>
-            <span className={`block h-6 w-2.5 ${tone[row.status] ?? tone.void}`}>
+            <span className={`block h-[18px] w-2 ${tone[row.status] ?? tone.void}`}>
               <span className="sr-only">{`${row.home} vs ${row.away}: ${row.status}`}</span>
             </span>
           </li>

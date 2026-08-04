@@ -44,7 +44,12 @@ export function Crest({
   if (!src || failed) {
     return (
       <span
-        className={`inline-flex shrink-0 items-center justify-center rounded-full bg-[rgb(11_12_14_/_0.06)] font-medium text-[var(--hero-ink-2)] ${className}`}
+        /*
+         * Square, because radius is 0 everywhere in this scope — the monogram was the last
+         * `rounded-full` left in the hero, and "just the badge" is the exception the v2 rules
+         * name explicitly. A hairline states the mark's extent now that no fill rounds it.
+         */
+        className={`inline-flex shrink-0 items-center justify-center border border-[var(--hero-line)] bg-[rgb(32_30_29_/_0.05)] font-medium text-[var(--hero-ink-2)] ${className}`}
         style={{
           width: size,
           height: size,

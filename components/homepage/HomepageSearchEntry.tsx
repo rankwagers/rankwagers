@@ -52,11 +52,11 @@ export function HomepageSearchEntry({
         value={query}
         onChange={(event) => setQuery(event.target.value)}
         placeholder={placeholder}
-        className="min-h-11 flex-1 rounded-md border border-border bg-[var(--canvas-primary)] px-3 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+        className="min-h-11 flex-1 border-b-[1.5px] border-[var(--hero-ink)] bg-transparent px-0 text-[14px] text-[var(--hero-ink)] placeholder:text-[var(--hero-ink-2)]"
       />
       <button
         type="submit"
-        className="min-h-11 shrink-0 rounded-md border border-brand/30 bg-[var(--green-surface)] px-4 text-sm font-semibold text-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+        className="rw-m min-h-11 shrink-0 border-b-[1.5px] border-[var(--hero-ink)] px-0 font-bold text-[var(--hero-ink)]"
       >
         {submitLabel}
       </button>

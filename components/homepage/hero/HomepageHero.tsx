@@ -109,11 +109,21 @@ export async function HomepageHero({
         cta: p.heroStageCta,
         empty: p.heroStageEmpty,
         openResearch: p.heroOpenResearch,
-        // Existing approved terminology for exactly this figure — not new copy.
-        probabilityNote: p.colPctTooltip,
+        /*
+         * The approved provider-potential qualifier. This read `p.colPctTooltip` — "Model
+         * probability for this market…" — which named the figure with the vocabulary reserved for
+         * our own model's output and left its missing sample implied. One string, one vocabulary.
+         */
+        probabilityNote: p.heroProviderPotentialNote,
         venueHome: p.heroVenueHome,
         venueAway: p.heroVenueAway,
         venueLeague: p.heroVenueLeague,
+        tableNo: p.heroTableNo,
+        tableFixture: p.heroTableFixture,
+        tableLeague: p.heroTableLeague,
+        tableKickoff: p.heroTableKickoff,
+        tablePotential: p.heroTablePotential,
+        tableMarket: p.heroTableMarket,
       }}
     />
   );

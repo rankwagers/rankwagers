@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { FullDictionary } from "@/lib/dictionaries";
 import type { Locale } from "@/lib/i18n";
@@ -24,89 +23,83 @@ export function BibleOperatorStrip({
   const operators = getHomepageOperators(countryContext, 3, subidBase);
 
   return (
+    /*
+       REBRAND V2 — THE QUIETEST REGISTER.
+
+       Three cards became three ruled rows. The map gives operators a mono list under a hairline:
+       a number, a name, a line of description, and a link out. No card ground, no logo plate, no
+       coloured "Continue" — every one of those was emphasis spent on the commercial block, and
+       the brief puts affiliate last precisely so it does not compete with the research above it.
+
+       The logo goes with them. A 40px mark on a tinted square is brand furniture, and it is the
+       one thing in this list that could out-weigh the research table two sections up.
+    */
     <section
       id="operators"
       aria-labelledby="bible-operators-heading"
-      className="border-t border-[var(--border-subtle)] py-8"
+      className="mt-16"
     >
-      <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <p className="text-metadata font-medium uppercase tracking-label text-muted-foreground">
-            {p.bibleOperatorsEyebrow}
-          </p>
-          <h2
-            id="bible-operators-heading"
-            className="font-display text-xl font-semibold text-foreground sm:text-2xl"
-          >
-            {p.bibleOperatorsTitle}
-          </h2>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Editorial options for {countryContext.country}. Research above is separate from
-            commercial offers.
-          </p>
-        </div>
+      <div className="rw-m flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b-[0.5px] border-[var(--hero-ink-2)] pb-2 text-[var(--hero-ink-2)]">
+        <h2 id="bible-operators-heading" className="uppercase tracking-[0.14em]">
+          {p.bibleOperatorsTitle}
+        </h2>
         <Link
           href={`/${locale}/operators`}
-          className="text-sm font-medium text-brand hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          className="font-bold text-[var(--hero-ink)]"
         >
-          {p.bibleOperatorsCompareLink}
+          {p.bibleOperatorsCompareLink} →
         </Link>
       </div>
+      <p className="rw-m mt-2 normal-case tracking-[0.04em] text-[var(--hero-ink-2)]">
+        Editorial options for {countryContext.country}. Research above is separate from commercial
+        offers.
+      </p>
 
-      {featuredLeagues.length > 0 && (
-        <div className="mb-5">
-          <p className="text-metadata font-medium uppercase tracking-label text-muted-foreground">
-            Related competitions
-          </p>
-          <ul className="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm">
-            {featuredLeagues.slice(0, 6).map((league) => (
-              <li key={`${league.name}-${league.href ?? "x"}`}>
-                {league.href ? (
-                  <Link href={league.href} className="text-[var(--ink-secondary)] hover:text-brand">
-                    {league.name}
-                  </Link>
-                ) : (
-                  <span className="text-muted-foreground">{league.name}</span>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-
-      <ul className="grid gap-3 md:grid-cols-3">
-        {operators.map((operator) => (
+      {/* The rows: number, name, description, link. Mono throughout, hairline between peers. */}
+      <ul className="mt-3">
+        {operators.map((operator, index) => (
           <li key={operator.slug}>
             <a
               href={operator.outboundPath}
-              className="flex min-h-[5.5rem] items-center gap-3 rounded-lg border border-border bg-[var(--canvas-secondary)] px-4 py-3 transition-colors hover:border-brand/35 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              className="rw-row grid grid-cols-[36px_minmax(0,1fr)_auto] items-baseline gap-x-3.5 border-b-[0.5px] border-[var(--hero-line)] py-2.5"
               aria-label={`${operator.name} — continue to sportsbook`}
               rel="noopener sponsored"
             >
-              {operator.logo ? (
-                <Image
-                  src={operator.logo}
-                  alt=""
-                  width={40}
-                  height={40}
-                  className="h-10 w-10 rounded object-contain"
-                />
-              ) : (
-                <span className="flex h-10 w-10 items-center justify-center rounded bg-background text-xs font-semibold">
-                  {operator.name.slice(0, 2).toUpperCase()}
+              <span className="rw-tnum rw-m text-[var(--hero-ink-2)]">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span className="min-w-0">
+                <span className="text-[13px] font-semibold text-[var(--hero-ink)]">
+                  {operator.name}
                 </span>
-              )}
-              <div className="min-w-0">
-                <p className="font-semibold text-foreground">{operator.name}</p>
-                <p className="mt-0.5 truncate text-xs text-muted-foreground">
+                <span className="rw-m ml-3 text-[var(--hero-ink-2)]">
                   {operator.highlights[0] ?? "Licensed sportsbook partner"}
-                </p>
-              </div>
-              <span className="ml-auto shrink-0 text-xs font-semibold text-brand">Continue</span>
+                </span>
+              </span>
+              <span className="rw-m text-[var(--hero-ink)]">Continue →</span>
             </a>
           </li>
         ))}
       </ul>
+
+      {featuredLeagues.length > 0 && (
+        <p className="rw-m mt-3.5 text-[var(--hero-ink-2)]">
+          Related competitions
+          {featuredLeagues.slice(0, 6).map((league) => (
+            <span key={`${league.name}-${league.href ?? "x"}`}>
+              {" · "}
+              {league.href ? (
+                <Link href={league.href} className="text-[var(--hero-ink)]">
+                  {league.name}
+                </Link>
+              ) : (
+                <span>{league.name}</span>
+              )}
+            </span>
+          ))}
+        </p>
+      )}
+
     </section>
   );
 }

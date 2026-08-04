@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { FUNNEL_STEP_PX, funnelDescent } from "../components/homepage/hero/HeroStage";
+import { FUNNEL_STEP_PX, funnelDescent } from "../components/homepage/hero/heroModel";
 import { RESEARCH_STAGE_RULES } from "../lib/research/researchRun";
 import type { HeroFunnel } from "../lib/homepage/types";
 

@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 
 import { buildFixtureEvidenceView, venueRatesForMarket } from "../lib/fixtures/evidenceView";
-import { splitRate } from "../components/homepage/hero/HeroStage";
+import { splitRate } from "../components/homepage/hero/heroModel";
 import type { MatchDetailPublic } from "../lib/footystats/matchDetail";
 
 /**
@@ -203,6 +203,12 @@ const LEAD_SRC = readFileSync(
   "utf8"
 );
 
+/** The supporting table is the other surface that sets a rate, a crest and a fixture. */
+const TABLE_SRC = readFileSync(
+  path.join(process.cwd(), "components/homepage/hero/SupportingTable.tsx"),
+  "utf8"
+);
+
 test("the hero builds no rate string of its own", () => {
   // A `%` glued to an interpolated value is the shape of a rebuilt rate. The only percent sign in
   // this file belongs to the probability reading, which is a separate figure with its own source.
@@ -245,30 +251,59 @@ test("an unresolved venue rate is omitted whole, and costs no layout when it is"
  * ------------------------------------------------------------------ */
 
 test("no crest is drawn at watermark scale", () => {
-  const sizes = [...HERO_SRC.matchAll(/<Crest[\s\S]*?size=\{(\d+)\}/g)].map((m) => Number(m[1]));
-  assert.ok(sizes.length > 0, "precondition: crests are still drawn");
+  /*
+   * The crests moved with the composition: `HeroStage` no longer draws any, and the two surfaces
+   * that identify a club now are the lead and the supporting table. The rule is unchanged and it
+   * follows them — a crest identifies a club at a readable size, and past ~64px it stops
+   * identifying and starts decorating, which is what the watermark was.
+   */
+  const sources = [LEAD_SRC, TABLE_SRC];
+  const sizes = sources.flatMap((src) =>
+    [...src.matchAll(/<Crest[\s\S]{0,160}?size=\{(\d+)\}/g)].map((m) => Number(m[1]))
+  );
+  assert.ok(sizes.length > 0, "precondition: crests are still drawn somewhere");
   for (const size of sizes) {
-    // A crest identifies a club at a readable size. Past ~64px it stops identifying and starts
-    // decorating, which is what the watermark was.
     assert.ok(size <= 64, `crest rendered at ${size}px — that is wallpaper, not a mark`);
   }
+  // The map sets the table's crests at 26px. A different size here is a different composition.
+  assert.match(TABLE_SRC, /size=\{26\}/, "the table's crests are the map's 26px");
 });
 
 test("the hero contributes no top padding of its own", () => {
-  // One owner for the rhythm above the first line: `Section rhythm="heavy"`. A `pt-*` here is a
-  // second owner, and two of them is what produced the dead space.
+  /*
+   * One owner for the space above the first line. That owner is now `Section rhythm="masthead"`,
+   * which sets `pt-0` because a publication's edition line sits directly under its header — but
+   * the invariant this test protects is unchanged: the hero must not ALSO set one, because two
+   * owners is what produced the dead air.
+   */
   const stripped = HERO_SRC.replace(/\/\*[\s\S]*?\*\//g, "");
-  const container = /className="(relative mx-auto flex min-h-[^"]*)"/.exec(stripped);
+  const container = /className="(relative mx-auto w-full max-w-\[1240px\][^"]*)"/.exec(stripped);
   assert.ok(container, "the stage container is still identifiable — otherwise this test is blind");
   assert.equal(
     /\bpt-\d|\bpy-\d/.test(container[1]),
     false,
     `the stage container sets no top padding: ${container[1]}`
   );
+
+  const section = readFileSync(path.join(process.cwd(), "components/layout/Section.tsx"), "utf8");
+  assert.match(section, /masthead: "pt-0/, "and the one owner opens the page flush");
 });
 
-test("selection is stated by ground and edge, not by shadow or scale", () => {
-  const stripped = HERO_SRC.replace(/\/\*[\s\S]*?\*\//g, "");
-  assert.equal(/boxShadow/.test(stripped), false, "no shadow anywhere in the hero");
-  assert.match(stripped, /m-lift/, "hover is the shared surface lift");
+test("emphasis is stated by weight, never by shadow or radius", () => {
+  /*
+   * v1 stated the held selection with a card that lifted on hover. v2 has no cards: radius is 0
+   * in scope, and a printed table responds by weight rather than by rising off the page. Both
+   * halves are asserted, because dropping the lift without dropping the shadow would leave the
+   * one device the rebrand most wants gone.
+   */
+  for (const [name, src] of [
+    ["HeroStage", HERO_SRC],
+    ["HeroLead", LEAD_SRC],
+    ["SupportingTable", TABLE_SRC],
+  ] as const) {
+    const stripped = src.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/[^\n]*/g, "");
+    assert.equal(/boxShadow|shadow-/.test(stripped), false, `no shadow in ${name}`);
+    assert.equal(/\brounded-/.test(stripped), false, `no radius in ${name}`);
+    assert.equal(/m-lift/.test(stripped), false, `no surface lift in ${name}`);
+  }
 });

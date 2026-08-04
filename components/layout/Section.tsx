@@ -28,7 +28,7 @@ import { Reveal } from "@/components/motion/Reveal";
    ========================================================================== */
 
 export type SectionGround = "canvas" | "surface" | "ink";
-export type SectionRhythm = "quiet" | "heavy";
+export type SectionRhythm = "quiet" | "heavy" | "masthead";
 
 export const GROUND: Record<SectionGround, string> = {
   canvas: "bg-[var(--hero-canvas)] text-[var(--hero-ink)]",
@@ -41,6 +41,18 @@ export const GROUND: Record<SectionGround, string> = {
 export const RHYTHM: Record<SectionRhythm, string> = {
   quiet: "py-16 lg:py-24",
   heavy: "py-24 lg:py-36",
+  /*
+   * THE MASTHEAD — no top rhythm at all.
+   *
+   * The hero opens with the edition line, and a publication's edition line sits directly under its
+   * header. `heavy` put 96–144px of ground above it, which reads as the page starting late rather
+   * than as a chapter opening.
+   *
+   * It is still Section that owns the value, which is the point of this table: the hero states no
+   * `pt-*` of its own, so there is exactly one owner of the space above the first line. Two owners
+   * is what produced the dead air this rhythm scale was introduced to end.
+   */
+  masthead: "pt-0 pb-16 lg:pb-24",
 };
 
 /** The shared measure. Exported so a full-bleed section can still align its inner column. */

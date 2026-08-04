@@ -661,6 +661,112 @@ textarea,
   transform-origin: left center;
 }
 
+/* --- the supporting table's rows ---------------------------------------- */
+
+/*
+ * Hover states the row without moving it. No lift, no shadow, no radius — a printed table
+ * responds by weight, and a row that rises off the page breaks the ruled grid it belongs to.
+ */
+.rw-hero .rw-row {
+  transition: background-color var(--dur-respond) var(--ease-respond);
+}
+.rw-hero .rw-row:hover {
+  background: rgb(32 30 29 / 0.035);
+}
+
+/* ========================================================================= *
+ * THE INVERTED GROUND
+ *
+ * The page has exactly TWO inverted bands — the live desk and the footer — and this is what makes
+ * them read as punctuation rather than as a theme.
+ *
+ * WHY A TOKEN SCOPE RATHER THAN A REWRITE. The live desk's interior is ~800 lines across
+ * `LiveFeedPanel` and `LiveFeedParts`, and every colour in it is already expressed as a token:
+ * `border-border`, `bg-card`, `text-muted-foreground`, `bg-muted`. Those tokens are the seam.
+ * Re-pointing them here converts the interior in one declaration and, more importantly, converts
+ * it COMPLETELY — hand-editing 800 lines is how a dark band ends up with three light-ground
+ * leftovers nobody sees until it ships.
+ *
+ * Tailwind reads these as `rgb(var(--x-rgb) / <alpha-value>)`, so the triples are what must move;
+ * overriding the hex aliases alone would leave every `/40` and `/80` utility on the old value.
+ *
+ * BRAND GOES NEUTRAL, NOT LIVE. The interior uses `text-brand` for ordinary labels. Mapping brand
+ * to `--color-live` would spray the live colour across the whole panel, and the rule is that it
+ * marks the dot and the minute and nothing else. So brand resolves to the inverted ink here, and
+ * the two elements that ARE live say so explicitly in the markup.
+ * ========================================================================= */
+
+.rw-ink {
+  /* Grounds: the band itself, and a raised plane on it. */
+  --canvas-primary-rgb: 32 30 29;
+  --canvas-secondary-rgb: 45 43 41;
+  --canvas-primary: #201e1d;
+  --canvas-secondary: #2d2b29;
+  --card: #2d2b29;
+  --background: #201e1d;
+
+  /* Ink, inverted. */
+  --ink-primary-rgb: 247 247 246;
+  --ink-primary: #f7f7f6;
+  --foreground: #f7f7f6;
+  --ink-secondary: rgb(247 247 246 / 0.62);
+  --ink-muted: rgb(247 247 246 / 0.62);
+  --muted-foreground: rgb(247 247 246 / 0.62);
+
+  /* Rules, at the weights the light ground uses, re-tinted for ink. */
+  --border-default-rgb: 92 88 85;
+  --border-default: rgb(247 247 246 / 0.28);
+  --border: rgb(247 247 246 / 0.28);
+  --border-subtle: rgb(247 247 246 / 0.16);
+  --border-strong: rgb(247 247 246 / 0.42);
+
+  /*
+   * Brand → inverted ink. Green at 3.4:1 on #201e1d fails AA for the label text it is used on,
+   * and colour is not what carries hierarchy in this language anyway.
+   */
+  --green-primary-rgb: 247 247 246;
+  --green-positive-rgb: 247 247 246;
+  --green-deep-rgb: 247 247 246;
+  --green-surface-rgb: 45 43 41;
+
+  /* Status tints, re-grounded so a warning is still legible on ink. */
+  --amber-primary: #ffc48a;
+  --amber-surface: rgb(255 196 138 / 0.12);
+  --amber-border: rgb(255 196 138 / 0.35);
+  --info-primary: rgb(247 247 246 / 0.75);
+
+  background: #201e1d;
+  color: #f7f7f6;
+}
+
+/* ========================================================================= *
+ * RADIUS IS 0 EVERYWHERE IN SCOPE
+ *
+ * "No exception, no 'just the badge'." A rule that admits no exception should not be enforced by
+ * remembering it at every call site — the converted surface spans dozens of components and several
+ * hundred `rounded-*` utilities, and the ones that get missed are precisely the small ones (a
+ * status pill, a crest fallback, a progress track) that nobody re-reads.
+ *
+ * So it is structural: one declaration, scoped to `.rw-hero`, that no later edit inside the scope
+ * can forget. `!important` is doing exactly what it is for here — Tailwind's `rounded-*` utilities
+ * set literal values rather than reading the `--radius-*` tokens the scope already zeroes, so a
+ * token override alone would silently do nothing.
+ *
+ * Unconverted routes are untouched: they are not inside `.rw-hero`.
+ * ========================================================================= */
+.rw-hero,
+.rw-hero * {
+  border-radius: 0 !important;
+}
+
+/* The live colour, on the two elements entitled to it. */
+.rw-ink .rw-live-mark {
+  background: var(--hero-live);
+}
+.rw-ink .rw-live-minute {
+  color: var(--hero-live);
+}
+
 /* --- entrances ---------------------------------------------------------- */
 
 @keyframes rw-rise {
