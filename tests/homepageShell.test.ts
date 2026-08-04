@@ -117,6 +117,35 @@ test("the footer is the page's one inverted ground", () => {
   assert.equal(footer.includes("--ink-secondary"), false);
 });
 
+test("section grounds alternate strictly down the page", () => {
+  /*
+   * The shipped failure this pins: Live Signals sat on canvas directly after the ranked section
+   * (also canvas) — two grey neighbours, alternation dead. The walk reads every <Section> in
+   * source order (the page is one linear JSX run, so source order IS page order), resolves each
+   * ground including the primitive's `canvas` default, and rejects any adjacent pair sharing a
+   * ground. The footer's ink is the terminal band and exempt from the alternation pattern; it is
+   * still appended as the final neighbour, which the adjacency rule covers for free.
+   */
+  const home = src("components/bible/RankWagersHome.tsx");
+  const sections = [...home.matchAll(/<Section\b([\s\S]*?)>/g)];
+  assert.ok(sections.length >= 6, "the walk must actually find the section run");
+  const grounds = sections.map(
+    ([, props]) => props.match(/ground="(\w+)"/)?.[1] ?? "canvas"
+  );
+  for (const g of grounds) {
+    assert.ok(["canvas", "surface", "ink"].includes(g), `unknown ground "${g}"`);
+  }
+  grounds.push("ink"); // the footer, the page's terminal band
+  grounds.forEach((g, i) => {
+    if (i === 0) return;
+    assert.notEqual(
+      g,
+      grounds[i - 1],
+      `sections ${i - 1} and ${i} share the ground "${g}" — the alternation is broken`
+    );
+  });
+});
+
 test("ink stays rare: exactly one inverted ground ships in this pass", () => {
   const home = src("components/bible/RankWagersHome.tsx");
   assert.equal(

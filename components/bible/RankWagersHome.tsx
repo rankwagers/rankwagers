@@ -797,12 +797,16 @@ export function RankWagersHome({
 
         There are exactly two inverted grounds: this and the footer. That is what keeps the device
         legible as punctuation.
+
+        The SECTION ground is surface, not canvas: the run alternates canvas → surface down the
+        page, and the ranked section above is canvas. On white, the ink band also reads harder —
+        dark punctuation against the lighter of the two grounds.
       */}
       <Section
         id="live-signals"
         analyticsSection="live_matches"
         labelledBy="live-matches-heading"
-        ground="canvas"
+        ground="surface"
         rhythm="quiet"
         index={2}
       >
