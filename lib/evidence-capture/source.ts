@@ -28,6 +28,8 @@ import {
   type DailyArchive,
 } from "@/lib/footystats/dailyArchive";
 import { mapDailyListsToQualifiedFixtures } from "@/lib/research/qualifiedFixture";
+import { getDailyMatchListsSafe } from "@/lib/footystats/client";
+import type { DailyMatchLists } from "@/lib/footystats/types";
 import type { MatchListKind } from "@/lib/footystats/types";
 import { numericFixtureId } from "./identity";
 import { marketSelectionForKind } from "./markets";
@@ -67,7 +69,19 @@ export function normalizeDailyArchive(
   options: LoadDailyPredictionsOptions = {}
 ): PublishedDailyPrediction[] {
   if (!archive) return [];
-  const lists = archiveToDailyLists(archive);
+  return normalizeDailyLists(archiveToDailyLists(archive), options);
+}
+
+/**
+ * Pure daily-lists → normalized predictions.
+ *
+ * The single projection both sources use, so a fixture derived from the live lists and the same
+ * fixture read back from the archive normalize identically.
+ */
+export function normalizeDailyLists(
+  lists: DailyMatchLists,
+  options: LoadDailyPredictionsOptions = {}
+): PublishedDailyPrediction[] {
   const fixtures = mapDailyListsToQualifiedFixtures(
     lists,
     options.locale,
@@ -91,7 +105,57 @@ export function normalizeDailyArchive(
 }
 
 /**
- * Load and normalize the published daily-list predictions for a date.
+ * Load today's predictions from the LIVE daily lists. Capture's source.
+ *
+ * WHY NOT THE ARCHIVE. `mergeArchiveFromLists` writes a day's archive only once at least one
+ * fixture `isFinished` (dailyArchive.ts). Capture's window is the 60 minutes BEFORE kickoff, so
+ * the archive-backed loader handed it an empty source every morning until the day's first match
+ * ended: every morning fire discovered 0, the first kickoffs of any day were structurally
+ * uncapturable, and later kickoffs only worked because earlier matches had finished. An evening
+ * verification cannot see this — by then the archive exists.
+ *
+ * FAIL-CLOSED, exactly as the archive read is. A provider failure THROWS and the pass is reported
+ * failed. There is deliberately no archive fallback: a stale source presented as today would
+ * capture against kickoff times that have already passed, and a wrong snapshot is permanent.
+ * A successful EMPTY day is not a failure — an empty board is a fact, and it returns [].
+ */
+export async function loadLiveDailyPredictions(
+  date: string,
+  options: LoadDailyPredictionsOptions = {}
+): Promise<PublishedDailyPrediction[]> {
+  return normalizeDailyLists(assertLiveSource(await getDailyMatchListsSafe(date), date), options);
+}
+
+/**
+ * The fail-closed gate on capture's source. Pure, so it is testable without a provider.
+ *
+ * Returns the lists when they are safe to capture from, and THROWS otherwise. An absent
+ * provenance is treated as live: every stored archive predates the field, and the fallback path
+ * always sets it, so absence means "not recorded" rather than "stale".
+ */
+export function assertLiveSource(
+  lists: DailyMatchLists | { error: string },
+  date: string
+): DailyMatchLists {
+  if ("error" in lists) {
+    throw new Error(`capture source: live daily lists unavailable for ${date}: ${lists.error}`);
+  }
+  const source = lists.provenance?.source;
+  if (source && source !== "fresh_provider") {
+    // `stale_daily_archive` is legitimate for READING a day; it is not legitimate for deciding
+    // what to capture NOW. Labelled or not, it is the archive wearing today's date, and a
+    // snapshot minted against kickoff times that have already passed is permanent.
+    throw new Error(
+      `capture source: refusing a non-live source for ${date} (${source}); capture requires fresh provider lists`
+    );
+  }
+  return lists;
+}
+
+/**
+ * Load and normalize the published daily-list predictions for a date FROM THE ARCHIVE.
+ *
+ * History readers only. Capture must not use this — see `loadLiveDailyPredictions`.
  * Thin IO wrapper over `normalizeDailyArchive`.
  */
 export async function loadPublishedDailyPredictions(

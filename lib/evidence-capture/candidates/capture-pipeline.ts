@@ -35,7 +35,7 @@ import {
   readAllOddsRecordsStrict,
 } from "@/lib/evidence-capture/odds-archive/file";
 import {
-  loadPublishedDailyPredictions,
+  loadLiveDailyPredictions,
   type LoadDailyPredictionsOptions,
   type PublishedDailyPrediction,
 } from "../source";
@@ -77,7 +77,13 @@ export type CapturePipelineDeps = {
    * live async M4→M5 wiring is a later stage.
    */
   deriveCaptureInput: CaptureProviderDeps["deriveCaptureInput"];
-  /** Source loader; defaults to `loadPublishedDailyPredictions`. Injectable for tests. */
+  /**
+   * Source loader; defaults to `loadLiveDailyPredictions`. Injectable for tests.
+   *
+   * NOT the archive loader. The archive for a date is written only once one of its fixtures has
+   * FINISHED, so it does not exist during the pre-kickoff window capture runs in — see
+   * `loadLiveDailyPredictions`.
+   */
   loadSource?: (
     date: string,
     options?: LoadDailyPredictionsOptions
@@ -115,7 +121,7 @@ export async function produceCaptureRequests(
   deps: CapturePipelineDeps,
   config: CapturePipelineConfig
 ): Promise<CaptureProviderResult> {
-  const loadSource = deps.loadSource ?? loadPublishedDailyPredictions;
+  const loadSource = deps.loadSource ?? loadLiveDailyPredictions;
   const readPort = deps.readPort ?? createFileCaptureReadPort();
   const leadMinutes = config.leadMinutes ?? DEFAULT_CAPTURE_LEAD_MINUTES;
 
