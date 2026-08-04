@@ -63,7 +63,7 @@ export function Footer({
 
         <div className="mb-10 grid gap-8 sm:grid-cols-2">
           <nav aria-label="Research">
-            <p className="rw-label mb-4 text-white/45">Research</p>
+            <p className="rw-m mb-4 text-white/45">Research</p>
             <ul className="flex flex-col gap-2">
               {explore.map((item) => (
                 <li key={item.href}>
@@ -78,7 +78,7 @@ export function Footer({
             </ul>
           </nav>
           <nav aria-label="Method and legal">
-            <p className="rw-label mb-4 text-white/45">Method and legal</p>
+            <p className="rw-m mb-4 text-white/45">Method and legal</p>
             <ul className="flex flex-col gap-2">
               {trust.map((item) => (
                 <li key={item.href}>
@@ -101,7 +101,7 @@ export function Footer({
             </span>
             {dict.footer.ageWarning}
           </span>
-          <span className="text-sm font-semibold tracking-[-0.03em] text-white">RankWagers</span>
+          <span className="rw-h text-[17px] text-white">RankWagers</span>
           <span className="text-xs text-white/45">{formatDict(dict.footer.copyright, { year })}</span>
         </div>
       </div>

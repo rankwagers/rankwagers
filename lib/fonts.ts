@@ -1,4 +1,4 @@
-import { Inter, Instrument_Sans, JetBrains_Mono, Playfair_Display } from "next/font/google";
+import { Archivo, Inter, Instrument_Sans, JetBrains_Mono, Playfair_Display } from "next/font/google";
 
 export const inter = Inter({
   subsets: ["latin", "latin-ext"],
@@ -35,4 +35,22 @@ export const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-hero-mono",
+});
+
+/**
+ * Rebrand v2 — the form-guide heading face.
+ *
+ * Archivo 800, wired through `next/font` for the same reason the hero faces are: the @font-face is
+ * inlined and preloaded at the document root, so the scope pays no render-blocking fetch. The v2
+ * map declares this face through a runtime Google Fonts `@import`; that is refused here, as it was
+ * in v1, because a blocking third-party request reintroduces exactly the layout shift `next/font`
+ * exists to prevent.
+ *
+ * 800 only. The map uses one weight, and shipping the rest would be dead bytes on every route.
+ */
+export const archivo = Archivo({
+  subsets: ["latin", "latin-ext"],
+  display: "swap",
+  variable: "--font-rw-heading",
+  weight: ["800"],
 });

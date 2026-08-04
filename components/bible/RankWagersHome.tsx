@@ -1014,7 +1014,7 @@ function ProofFigure({
         className="absolute left-0 top-0 h-[9px] w-px bg-[var(--hero-ink)] transition-all duration-[var(--dur-respond)] group-hover:h-4"
       />
 
-      <dt className="rw-label pl-4 text-[var(--hero-ink-3)]">{label}</dt>
+      <dt className="rw-m pl-4 text-[var(--hero-ink-3)]">{label}</dt>
       <dd className="rw-tnum rw-display mt-6 pl-4 text-[clamp(2.4rem,4.4vw,3.6rem)] transition-transform duration-[var(--dur-expand)] ease-[var(--ease-respond)] group-hover:-translate-y-0.5">
         {value}
       </dd>
@@ -1085,8 +1085,8 @@ function ProofBar({
         <span style={{ flexGrow: lost }} className="block bg-[var(--hero-ink-2)]" />
       </div>
       <div className="mt-2 flex justify-between">
-        <span className="rw-label text-[var(--hero-ink-3)]">{wonLabel}</span>
-        <span className="rw-label text-[var(--hero-ink-3)]">{lostLabel}</span>
+        <span className="rw-m text-[var(--hero-ink-3)]">{wonLabel}</span>
+        <span className="rw-m text-[var(--hero-ink-3)]">{lostLabel}</span>
       </div>
     </div>
   );
@@ -1124,7 +1124,7 @@ function FormStrip({
   };
   return (
     <div className="mt-8">
-      <p className="rw-label text-[var(--hero-ink-3)]">{label}</p>
+      <p className="rw-m text-[var(--hero-ink-3)]">{label}</p>
       <ol className="mt-2 flex flex-wrap gap-1.5">
         {settled.map((row) => (
           <li key={row.id}>

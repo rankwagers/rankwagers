@@ -104,7 +104,14 @@ test("the prototype's theme block, font import and failing ink stay out", () => 
   const css = src("app/globals.css");
   assert.equal(/@theme\b/.test(css), false, "no @theme block");
   assert.equal(/fonts\.googleapis\.com/.test(css), false, "no runtime Google Fonts import");
-  assert.match(css, /--hero-ink-3: #6b6f78/);
+  /*
+   * Rebrand v2 retires the third ink weight: `--hero-ink-3` is now an ALIAS of ink-2 (#55524e),
+   * kept only so an unconverted call site inside the scope degrades to the darker value rather
+   * than to an undefined variable. Contrast moved the right way — 7.0:1 on the ground, against
+   * v1's 4.70:1 — so the AA guarantee this test protects is stronger, not weaker.
+   */
+  assert.match(css, /--hero-ink-3: #55524e/);
+  assert.match(css, /--hero-ink-2: #55524e/);
 });
 
 /* -- zero CLS, and the opt-out ---------------------------------------------- */
@@ -131,4 +138,82 @@ test("reduced motion removes the shell's motion entirely", () => {
   assert.match(reduce, /--travel: 0px/);
   assert.match(reduce, /--focus: 0px/);
   assert.match(reduce, /transform: none/);
+});
+
+/* -- rebrand v2: the token layer --------------------------------------------- */
+
+test("v2 palette replaces v1 inside the scope, and the scope mechanism is kept", () => {
+  const css = src("app/globals.css");
+  assert.match(css, /--hero-ink: #201e1d/);
+  assert.match(css, /--hero-ink-2: #55524e/);
+  assert.match(css, /--hero-canvas: #f7f7f6/);
+  assert.match(css, /--hero-surface: #ffffff/);
+  assert.match(css, /--hero-accent: #ec3013/);
+  assert.match(css, /--hero-live: #ff6a4d/);
+  // v1's blue accent and near-black must not survive.
+  assert.equal(/--hero-accent: #2a55e0/.test(css), false);
+  assert.equal(/--hero-ink: #0b0c0e/.test(css), false);
+  // Still scoped — an unconverted surface is untouched, which is what makes this reversible.
+  assert.match(css, /\.rw-hero \{/);
+});
+
+test("radius is 0 everywhere in scope", () => {
+  const css = src("app/globals.css");
+  const scope = css.slice(css.indexOf(".rw-hero {"), css.indexOf("color: var(--hero-ink);"));
+  assert.match(scope, /--radius-sm: 0px/);
+  assert.match(scope, /--radius-md: 0px/);
+  assert.match(scope, /--radius-lg: 0px/);
+});
+
+test("the rules ladder is 0.5 / 1 / 1.5 / 2 / 5, with nothing between", () => {
+  const css = src("app/globals.css");
+  assert.match(css, /--rule-hair: 0\.5px/);
+  assert.match(css, /--rule-1: 1px/);
+  assert.match(css, /--rule-2: 1\.5px/);
+  assert.match(css, /--rule-3: 2px/);
+  assert.match(css, /--rule-heavy: 5px/);
+});
+
+test("the heading face is wired through next/font, never a runtime import", () => {
+  const fonts = src("lib/fonts.ts");
+  assert.match(fonts, /Archivo/);
+  assert.match(fonts, /weight: \["800"\]/, "one weight — the rest would be dead bytes");
+  assert.match(fonts, /variable: "--font-rw-heading"/);
+  // Declared at the document root so next/font can inline and preload it.
+  assert.match(src("app/layout.tsx"), /archivo\.variable/);
+  // And never fetched at runtime.
+  assert.equal(/fonts\.googleapis\.com/.test(src("app/globals.css")), false);
+});
+
+test("v2 type primitives exist at the map's ladder", () => {
+  const css = src("app/globals.css");
+  assert.match(css, /\.rw-hero \.rw-lead-numeral \{[\s\S]*?font-size: 148px/);
+  assert.match(css, /\.rw-hero \.rw-m \{[\s\S]*?font-size: 10\.5px/);
+  assert.match(css, /\.rw-hero \.rw-h \{[\s\S]*?font-weight: 800/);
+});
+
+test("the header marks the active destination with a rule, not a chip", () => {
+  const header = src("components/Header.tsx");
+  assert.match(header, /border-b-\[1\.5px\]/);
+  assert.match(header, /border-\[var\(--hero-ink\)\] font-medium/);
+  // Both states carry the border so nothing reflows when it changes — zero CLS.
+  assert.match(header, /border-transparent/);
+  assert.equal(/bg-accent/.test(header), false, "no filled chip survives");
+});
+
+test("the accent budget is stated and the live colour is reserved", () => {
+  const css = src("app/globals.css");
+  const doc = src("docs/design/motion-language-v2.md");
+  assert.match(doc, /at most two uses per page/i);
+  assert.match(doc, /live dot and the minute/i);
+  // The live colour is declared but takes no consumers outside the live surface yet.
+  assert.match(css, /--hero-live/);
+});
+
+test("the v2 rules doc records what was refused", () => {
+  const doc = src("docs/design/motion-language-v2.md");
+  assert.match(doc, /figures are mock/i);
+  assert.match(doc, /No runtime `@import`/i);
+  assert.match(doc, /does not license a count-up/i);
+  assert.match(doc, /Never two columns/i);
 });

@@ -278,7 +278,14 @@ test("S2 renders inside the hero scope rather than duplicating its tokens", () =
   );
   // One declaration of the ramp, in one place.
   assert.equal((css.match(/--hero-ink-3:/g) ?? []).length, 1);
-  assert.match(css, /--hero-ink-3: #6b6f78/);
+  /*
+   * Rebrand v2 retires the third ink weight: `--hero-ink-3` is now an ALIAS of ink-2 (#55524e),
+   * kept only so an unconverted call site inside the scope degrades to the darker value rather
+   * than to an undefined variable. Contrast moved the right way — 7.0:1 on the ground, against
+   * v1's 4.70:1 — so the AA guarantee this test protects is stronger, not weaker.
+   */
+  assert.match(css, /--hero-ink-3: #55524e/);
+  assert.match(css, /--hero-ink-2: #55524e/);
 
   // The prototype's ink may be named in the note that records why it was replaced; it may never
   // be the value of a token.

@@ -513,16 +513,32 @@ textarea,
    ========================================================================== */
 
 .rw-hero {
-  /* --- palette ---------------------------------------------------------- */
-  --hero-ink: #0b0c0e;
-  --hero-ink-2: #4a4d55;
-  --hero-ink-3: #6b6f78; /* 4.70:1 on --hero-canvas (was #82868f at 3.40:1, below AA) */
+  /* --- palette (rebrand v2 — form-guide) --------------------------------- */
+  --hero-ink: #201e1d;
+  --hero-ink-2: #55524e;
+  /*
+   * v1 carried three ink weights; v2 carries two. `--hero-ink-3` is kept as an ALIAS of ink-2 so
+   * unconverted call sites inside the scope degrade to the darker, higher-contrast value rather
+   * than to an undefined variable — the failure mode of removing it outright is invisible text.
+   * It is not part of the v2 palette and takes no new consumers.
+   */
+  --hero-ink-3: #55524e;
   --hero-canvas: #f7f7f6;
   --hero-surface: #ffffff;
-  --hero-line: #e7e6e3;
-  --hero-line-2: #efeeec;
-  --hero-accent: #2a55e0;
+  --hero-line: #d7d3d3;
+  --hero-line-2: #eae7e7;
+  /* Two uses per page. Colour that appears everywhere means nothing. */
+  --hero-accent: #ec3013;
+  /* The live dot and the minute. Nothing else carries it. */
+  --hero-live: #ff6a4d;
   --hero-pos: #16794a;
+
+  /* --- rules ladder: 0.5 / 1 / 1.5 / 2 / 5. Nothing between the steps. ---- */
+  --rule-hair: 0.5px;
+  --rule-1: 1px;
+  --rule-2: 1.5px;
+  --rule-3: 2px;
+  --rule-heavy: 5px;
 
   /* --- easings: one family, all decelerating ---------------------------- */
   --ease-settle: cubic-bezier(0.16, 1, 0.3, 1);
@@ -550,6 +566,11 @@ textarea,
    * surface. Declaring a background on the shared class would also outrank any Tailwind `bg-*`
    * utility, since this block is appended after the utilities layer.
    */
+  /* Radius is 0 everywhere in scope — no exception, no "just the badge". */
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+
   color: var(--hero-ink);
   font-family: var(--font-hero-sans), ui-sans-serif, system-ui, sans-serif;
   font-feature-settings: "ss01", "cv01";
@@ -595,6 +616,49 @@ textarea,
 
 .rw-hero .rw-mono {
   font-family: var(--font-hero-mono), ui-monospace, monospace;
+}
+
+/* --- v2 type primitives -------------------------------------------------- */
+
+/*
+ * The heading face. Archivo 800, loaded at the document root by `next/font` and consumed only
+ * here. The larger the type, the tighter it sets — the map runs from -.055em at the lead numeral
+ * to .04em on a mono label, so tracking is a property of the step, not a global.
+ */
+.rw-hero .rw-h {
+  font-family: var(--font-rw-heading), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 800;
+  line-height: 0.94;
+  letter-spacing: -0.035em;
+}
+
+/** The lead numeral. One per page. */
+.rw-hero .rw-lead-numeral {
+  font-family: var(--font-rw-heading), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 800;
+  font-size: 148px;
+  line-height: 0.82;
+  letter-spacing: -0.055em;
+  font-variant-numeric: tabular-nums;
+}
+
+/** Mono labels: 9.5–11px, the only place tracking opens up. */
+.rw-hero .rw-m {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 10.5px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/*
+ * A venue line drawn proportionally FROM ZERO. Width is the only thing that varies, and it is set
+ * inline from real data; the element occupies its final box from the first frame, so a line that
+ * has not yet drawn costs no layout shift.
+ */
+.rw-hero .rw-venue-line {
+  height: var(--rule-3);
+  background: var(--hero-ink);
+  transform-origin: left center;
 }
 
 /* --- entrances ---------------------------------------------------------- */

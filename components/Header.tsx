@@ -59,7 +59,7 @@ export function Header({
         <div className="flex min-w-0 items-center gap-4 lg:gap-6">
           <Link
             href={`/${locale}`}
-            className="text-[15px] font-semibold tracking-[-0.03em] text-[var(--hero-ink)]"
+            className="rw-h text-[17px] text-[var(--hero-ink)]"
           >
             RankWagers
           </Link>
@@ -101,10 +101,16 @@ export function Header({
                       });
                     }
                   }}
-                  className={`whitespace-nowrap rounded-md px-2.5 py-1.5 text-[13px] transition-colors duration-[var(--dur-respond)] ease-[var(--ease-respond)] ${
+                  /*
+                    v2: the active destination carries an UNDERLINE, not a filled chip. Radius is 0
+                    in this scope, so a chip would read as a rectangle of colour; a rule under the
+                    word says the same thing in the page's own vocabulary. `border-b` on both
+                    states — transparent when inactive — so nothing reflows when it changes.
+                  */
+                  className={`whitespace-nowrap border-b-[1.5px] px-1 py-1.5 text-[13px] transition-colors duration-[var(--dur-respond)] ease-[var(--ease-respond)] ${
                     active
-                      ? "font-medium text-[var(--hero-ink)]"
-                      : "text-[var(--hero-ink-2)] hover:text-[var(--hero-ink)]"
+                      ? "border-[var(--hero-ink)] font-medium text-[var(--hero-ink)]"
+                      : "border-transparent text-[var(--hero-ink-2)] hover:text-[var(--hero-ink)]"
                   }`}
                 >
                   {item.label}
