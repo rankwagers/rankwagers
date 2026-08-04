@@ -21,6 +21,7 @@ import {
 import type { DailyMatchLists, FootyMatchRow } from "./types";
 import { isMatchPostponed } from "./matchStatus";
 import { loadSameDayArchiveFallback } from "./archiveFallback";
+import { loadLastGoodLists, saveLastGoodLists } from "./lastGoodLists";
 import { noteDailyListsServing } from "./servingState";
 
 type LeagueInfo = { league: string; country: string; image?: string };
@@ -508,16 +509,35 @@ export async function getDailyMatchListsForDate(date: string): Promise<DailyMatc
     // EMPTY one — is returned untouched, so an genuinely quiet day never shows yesterday's rows.
     if (fresh.provenance?.source !== "unavailable") {
       noteDailyListsServing(fresh.provenance?.source ?? "fresh_provider");
+      // Persist every genuinely fresh board, so an outage later today has something real to
+      // serve. Fire-and-forget and never throwing: a failed snapshot write must not turn a
+      // successful response into a failure. Only `fresh_provider` is worth storing — storing a
+      // fallback would let a copy of a copy accumulate.
+      if ((fresh.provenance?.source ?? "fresh_provider") === "fresh_provider") {
+        void saveLastGoodLists(fresh);
+      }
       return fresh;
     }
 
     // The fallback read sits OUTSIDE the cache on purpose: the failure marker stays cached for the
     // normal 300s window, so the provider is not re-hit any harder than before, while the archive
     // is re-read each request and picks up a recovery capture the moment one lands.
-    const fallback = await loadSameDayArchiveFallback(
-      d,
-      fresh.provenance?.providerFailureReasonCode ?? "unknown"
-    );
+    const failureCode = fresh.provenance?.providerFailureReasonCode ?? "unknown";
+
+    /*
+     * LAST-GOOD FIRST. This is the most recent SUCCESSFUL fetch of today's lists; the archive
+     * fallback below is a merged view that only exists once one of the day's fixtures has
+     * finished. Before the first match ends — the window where a morning outage empties the page
+     * — the archive has nothing and this is the only thing standing between a reader and a blank
+     * board. It is also strictly the fresher of the two whenever both exist.
+     */
+    const lastGood = await loadLastGoodLists(d, failureCode);
+    if (lastGood.used) {
+      noteDailyListsServing("last_good");
+      return lastGood.lists;
+    }
+
+    const fallback = await loadSameDayArchiveFallback(d, failureCode);
     if (fallback.used) {
       noteDailyListsServing("stale_daily_archive");
       return fallback.lists;

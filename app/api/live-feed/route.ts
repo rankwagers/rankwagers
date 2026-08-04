@@ -20,7 +20,14 @@ export async function GET() {
      * The archived fixtures still power the lists, research and top picks; only the live-event
      * surface withholds, because only it makes a claim about the present.
      */
-    const servingStale = lists.provenance?.source === "stale_daily_archive";
+    /*
+     * `last_good` withholds for the same reason `stale_daily_archive` does, and it matters more:
+     * a replayed snapshot has minutes and scores frozen at the moment it was captured, so feeding
+     * it to a present-tense surface would state a live scoreline that is no longer true.
+     */
+    const servingStale =
+      lists.provenance?.source === "stale_daily_archive" ||
+      lists.provenance?.source === "last_good";
     const liveRows = servingStale
       ? []
       : [...lists.fh, ...lists.over25, ...lists.over15, ...lists.sh].filter(

@@ -197,14 +197,24 @@ export function RankWagersHome({
     stillOpen: p.verifiedStillOpen,
   });
 
-  // Present only while a same-day archive is standing in for a failed provider. `fresh_provider`
-  // — including a fresh empty day — and an absent provenance both render nothing.
+  /*
+   * Present while ANY non-live source is standing in for a failed provider. `fresh_provider` —
+   * including a fresh empty day — and an absent provenance both render nothing.
+   *
+   * `last_good` reports `fetchedAt`, which is the moment those rows were actually retrieved;
+   * `stale_daily_archive` reports its capture time. Both answer the same question — when was this
+   * true? — and serving either without saying so would be worse than the blank page it replaces.
+   */
   const staleNotice =
-    lists.provenance?.source === "stale_daily_archive"
+    lists.provenance?.source === "last_good"
       ? formatDict(p.staleArchiveNotice, {
-          time: formatArchiveCaptureTime(lists.provenance.archiveCapturedAt),
+          time: formatArchiveCaptureTime(lists.fetchedAt),
         })
-      : null;
+      : lists.provenance?.source === "stale_daily_archive"
+        ? formatDict(p.staleArchiveNotice, {
+            time: formatArchiveCaptureTime(lists.provenance.archiveCapturedAt),
+          })
+        : null;
 
   return (
     /*

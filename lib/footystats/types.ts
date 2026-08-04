@@ -42,6 +42,12 @@ export type FootyMatchRow = {
  */
 export type DailyListsSource =
   | "fresh_provider"
+  /**
+   * The last successful fetch of THIS date's lists, replayed from disk because the provider is
+   * failing now. Carries its original `fetchedAt`, so the page states when it was true. A display
+   * fallback only — capture refuses it (`assertLiveSource`).
+   */
+  | "last_good"
   | "stale_daily_archive"
   | "unavailable";
 

@@ -24,6 +24,8 @@ let servingState: DailyListsServingState = "unknown";
 
 const SOURCE_TO_STATE: Record<DailyListsSource, DailyListsServingState> = {
   fresh_provider: "serving_fresh",
+  // Replayed from disk because the provider is failing: degraded, not fresh.
+  last_good: "serving_stale",
   stale_daily_archive: "serving_stale",
   unavailable: "unavailable",
 };
