@@ -68,7 +68,13 @@ export function mapApiFixtureToQualifiedFixture(
     matchId: row.matchId,
     marketKind: kind,
     league: row.competition,
-    country: row.country,
+    /*
+     * Either form the provider used: the full-name field when present, else the ISO code —
+     * including one backfilled from same-day league-mates (`countryBackfill.ts`). Downstream,
+     * `countryDisplay` resolves both to the same name+flag pair, so which field carried the
+     * fact does not change what renders.
+     */
+    country: row.country ?? row.countryCode,
     leagueCode: leagueCode(row as FootyMatchRow),
     home: row.homeTeam,
     away: row.awayTeam,

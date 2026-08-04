@@ -81,11 +81,17 @@ export function FunnelLine({
         {descent.map((step) => {
           const cleared = step.stage === "qualified";
           return (
-            <div key={step.stage} className="relative min-w-0">
+            <div key={step.stage} className="rw-stage relative min-w-0">
               {/*
                 The stage sits at its own level. `top` is the descent's own offset plus the shared
                 top inset — the only arithmetic here, and it adds a constant rather than deriving
                 a level.
+              */}
+              {/*
+                The map's stage response: the text lifts 2px and its ink deepens; the RULE holds
+                still, so the level — the funnel's actual claim — never appears to move, and
+                neighbours are untouched because a transform costs no layout. The cleared stage's
+                accent overline is not part of the response and does not change.
               */}
               <div className="absolute inset-x-0" style={{ top: TOP_PX + step.offset }}>
                 <div
@@ -94,10 +100,10 @@ export function FunnelLine({
                     cleared ? "bg-[var(--hero-accent)]" : "bg-[var(--hero-ink)]"
                   }`}
                 />
-                <p className="rw-m mt-[5px] whitespace-nowrap tracking-[0.08em] text-[var(--hero-ink)]">
+                <p className="rw-stage-text rw-m mt-[5px] whitespace-nowrap tracking-[0.08em] text-[var(--hero-ink)]">
                   <span className="rw-tnum">{step.value}</span>
                   {"\u00a0\u00a0"}
-                  <span className="text-[var(--hero-ink-2)]">
+                  <span className="rw-stage-label text-[var(--hero-ink-2)]">
                     {copy[step.label] ?? step.stage}
                     {cleared ? (
                       <>

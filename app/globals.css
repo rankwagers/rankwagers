@@ -691,23 +691,59 @@ textarea,
  * Only opacity transitions — the rule occupies its box from the first frame, so hover costs no
  * layout and `prefers-reduced-motion` (below) keeps the rule and drops only the fade.
  */
+/*
+ * THE RAIL LIVES INSIDE THE ROW. It sat at `left: -14px` — in the gutter, per the map — and an
+ * overflow ancestor clipped it, so the hover response never painted. A rail outside its row's box
+ * is at the mercy of every wrapper between it and the viewport; a rail INSIDE the box cannot be
+ * clipped by anything that doesn't also clip the row's own text. So the row carries a 14px
+ * left padding (`.rw-row` sites set `pl-3.5` on rows AND their column heads, keeping the columns
+ * aligned) and the rail draws at `left: 0`, inside that gutter.
+ *
+ * It DRAWS — `scaleY` from the top over `--dur-respond` — rather than fading: a rule that draws
+ * is the page's one gesture for "this is live under your hand", and the transform costs no
+ * layout. Reduced motion keeps the rail (it states which row is under the pointer) and drops
+ * only the drawing.
+ */
 .rw-hero .rw-row {
   position: relative;
 }
 .rw-hero .rw-row::before {
   content: "";
   position: absolute;
-  left: -14px;
+  left: 0;
   top: 4px;
   bottom: 4px;
   width: 2px;
   background: var(--rw-tint, var(--hero-ink));
-  opacity: 0;
-  transition: opacity var(--dur-respond) var(--ease-settle);
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform var(--dur-respond) var(--ease-settle);
 }
 .rw-hero .rw-row:hover::before,
 .rw-hero .rw-row:focus-visible::before {
-  opacity: 1;
+  transform: scaleY(1);
+}
+
+/*
+ * THE FUNNEL STAGES RESPOND. On hover the stage's text lifts 2px — inside the motion law's
+ * travel budget — and the label's ink deepens from ink-2 to ink; the rule the stage hangs from
+ * does not move, so the descent's levels never appear to change. Transform and colour only:
+ * neighbours cannot reflow. Reduced motion strips the lift by name and keeps the ink response,
+ * which reads without movement.
+ */
+.rw-hero .rw-stage-text {
+  transition:
+    transform var(--dur-respond) var(--ease-settle),
+    color var(--dur-respond) var(--ease-settle);
+}
+.rw-hero .rw-stage-label {
+  transition: color var(--dur-respond) var(--ease-settle);
+}
+.rw-hero .rw-stage:hover .rw-stage-text {
+  transform: translateY(-2px);
+}
+.rw-hero .rw-stage:hover .rw-stage-label {
+  color: var(--hero-ink);
 }
 
 /* ========================================================================= *
@@ -982,9 +1018,17 @@ textarea,
  * parallax planes must sit at their neutral offset.
  */
 @media (prefers-reduced-motion: reduce) {
-  /* The hover rule stays — it states which row is under the pointer — only its fade goes. */
+  /* The hover rail stays — it states which row is under the pointer — only its drawing goes. */
   .rw-hero .rw-row::before {
     transition: none;
+  }
+
+  /* The funnel stage keeps its ink response and loses the lift, by name. */
+  .rw-hero .rw-stage-text {
+    transition: none;
+  }
+  .rw-hero .rw-stage:hover .rw-stage-text {
+    transform: none;
   }
 
   .rw-hero .reveal,

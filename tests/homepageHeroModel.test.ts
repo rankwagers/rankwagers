@@ -589,10 +589,15 @@ test("the lead meta prints one date, one kickoff, and the country with the leagu
 test("countryDisplay resolves codes and names, and refuses to invent", () => {
   const { countryDisplay } = require("../lib/countryDisplay") as typeof import("../lib/countryDisplay");
 
-  assert.deepEqual(countryDisplay("fi"), { name: "Finland", flag: "🇫🇮" });
-  assert.deepEqual(countryDisplay("UZ"), { name: "Uzbekistan", flag: "🇺🇿" });
+  /*
+   * `iso`, not an emoji: the resolver yields the asset key for the self-hosted SVG. Windows
+   * renders flag emoji as bare letter pairs, so the emoji path is deleted — see masterFixPass
+   * for the probe that keeps it deleted.
+   */
+  assert.deepEqual(countryDisplay("fi"), { name: "Finland", iso: "fi" });
+  assert.deepEqual(countryDisplay("UZ"), { name: "Uzbekistan", iso: "uz" });
   assert.equal(countryDisplay("Bolivia")?.name, "Bolivia", "a full name passes through as given");
-  assert.equal(countryDisplay("Bolivia")?.flag, "🇧🇴", "and gains its flag when the name is known");
+  assert.equal(countryDisplay("Bolivia")?.iso, "bo", "and recovers its asset key when the name is known");
   assert.equal(countryDisplay(undefined), null, "absent stays absent");
   assert.equal(countryDisplay("  "), null);
   /*

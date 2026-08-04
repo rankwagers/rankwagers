@@ -58,7 +58,7 @@ export function BibleOperatorStrip({
           <li key={operator.slug}>
             <a
               href={operator.outboundPath}
-              className="rw-row grid grid-cols-[36px_minmax(0,1fr)_auto] items-baseline gap-x-3.5 border-b-[0.5px] border-[var(--hero-line)] py-2.5"
+              className="rw-row grid grid-cols-[36px_minmax(0,1fr)_auto] items-baseline gap-x-3.5 border-b-[0.5px] border-[var(--hero-line)] py-2.5 pl-3.5"
               aria-label={`${operator.name} — continue to sportsbook`}
               rel="noopener sponsored"
             >

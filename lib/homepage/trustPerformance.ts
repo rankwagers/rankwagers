@@ -4,6 +4,7 @@
  */
 
 import fs from "fs/promises";
+import { competitionCountryMap } from "@/lib/footystats/countryBackfill";
 import path from "path";
 import { marketForListKind } from "@/lib/research/fixturePresentation";
 import { fixturePath } from "@/lib/fixtures/paths";
@@ -122,6 +123,12 @@ function collectRecentResults(
 ): HomepageRecentResult[] {
   const items: HomepageRecentResult[] = [];
   for (const archive of archives) {
+    /*
+     * The same country inference the live board gets, per archived day: a row missing its code
+     * borrows the one its league-mates carried on that day's own lists. Archives written before
+     * the provider populated the field stay as recorded.
+     */
+    const countryMap = competitionCountryMap(TABS.flatMap((t) => archive[t]));
     for (const tab of TABS) {
       const market = marketForListKind(tab);
       for (const row of archive[tab]) {
@@ -131,9 +138,13 @@ function collectRecentResults(
           matchId: row.matchId,
           home: row.homeTeam,
           away: row.awayTeam,
+          ...(row.homeImage ? { homeImage: row.homeImage } : {}),
+          ...(row.awayImage ? { awayImage: row.awayImage } : {}),
           competition: row.competition || "Competition",
           // Omitted rather than defaulted — see `HomepageRecentResult.country`.
-          ...(row.countryCode ? { country: row.countryCode } : {}),
+          ...(row.countryCode || countryMap.get(row.competition)
+            ? { country: row.countryCode || countryMap.get(row.competition) }
+            : {}),
           marketKey: tab,
           marketLabel: market.label,
           status,

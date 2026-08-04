@@ -3,6 +3,7 @@ import { getDictionary } from "@/lib/dictionaries";
 import { type Locale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
 import { getDailyMatchListsSafe, emptyLists, todayMatchDateStr } from "@/lib/footystats/client";
+import { backfillCountryCodes } from "@/lib/footystats/countryBackfill";
 import { formatKickoff } from "@/lib/dates";
 import { PredictionsPageJsonLd } from "@/components/predictions/PredictionsPageJsonLd";
 import { RankWagersHome } from "@/components/bible/RankWagersHome";
@@ -44,7 +45,12 @@ export default async function LocaleHomePage({
   const selectedDate =
     rawDate && /^\d{4}-\d{2}-\d{2}$/.test(rawDate) ? rawDate : today;
   const result = await getDailyMatchListsSafe(selectedDate);
-  const lists = "error" in result ? emptyLists() : result;
+  /*
+   * Country gaps filled from the board's own rows (same league, same day) before ANY consumer
+   * reads them — hero, ranked section and research desk all see the same filled rows. See
+   * `countryBackfill.ts` for why this is an inference from the payload, not a table.
+   */
+  const lists = backfillCountryCodes("error" in result ? emptyLists() : result);
   const apiError = "error" in result ? result.error : null;
   const allRows = [...lists.fh, ...lists.over15, ...lists.over25, ...lists.sh];
   const matchCount = new Set(allRows.map((row) => row.matchId)).size;

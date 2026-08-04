@@ -125,15 +125,20 @@ test("availability page uses light Design Bible classes", () => {
   assert.doesNotMatch(src, /text-slate-300/);
 });
 
-test("explorer wires detail error retry and URL deep-open", () => {
+test("explorer deep-open lands the reader on the row", () => {
   const src = readFileSync(
     path.join(root, "components/bible/BibleFixtureExplorer.tsx"),
     "utf8"
   );
-  assert.match(src, /detailError/);
-  assert.match(src, /onRetryDetail/);
+  /*
+   * The detail fetch, its error state and the retry button went with the accordion (master fix
+   * pass, item 8): rows are LINKS now, and the fixture page owns loading its own evidence. What
+   * a deep link still owes the reader is unchanged — filter, page and scroll to the row — so
+   * that contract is what remains pinned.
+   */
   assert.match(src, /params\.get\(["']fixture["']\)/);
-  assert.match(src, /could not load match evidence/i);
+  assert.match(src, /scrollIntoView/);
+  assert.doesNotMatch(src, /onRetryDetail|detailError/, "the accordion's fetch machinery is gone");
 });
 
 test("RankWagersHome sets heading ids and date control props", () => {

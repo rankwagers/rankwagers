@@ -41,6 +41,7 @@ import { buildProofBandFigures } from "@/lib/homepage/proofBand";
 import { settledFirst } from "@/lib/homepage/recentResults";
 import { leagueKeyFor } from "@/lib/homepage/heroModel";
 import { tint } from "@/components/homepage/hero/leagueTint";
+import { Crest } from "@/components/homepage/hero/Crest";
 import type { CSSProperties } from "react";
 import { formatDict } from "@/lib/dictionaryExtras";
 
@@ -50,7 +51,7 @@ import { formatDict } from "@/lib/dictionaryExtras";
  * Stacked below `sm` — a six-column table at 360px is a table nobody can read.
  */
 const RESULT_COLUMNS =
-  "sm:grid sm:grid-cols-[44px_minmax(0,1.5fr)_minmax(0,0.9fr)_minmax(0,1fr)_70px_92px] sm:gap-x-3.5";
+  "pl-3.5 sm:grid sm:grid-cols-[44px_minmax(0,1.5fr)_minmax(0,0.9fr)_minmax(0,1fr)_70px_92px] sm:gap-x-3.5";
 
 const marketNames = {
   fh: "1st half goal",
@@ -470,9 +471,14 @@ export function RankWagersHome({
                       <span className="rw-tnum rw-m hidden text-[var(--hero-ink-2)] sm:block">
                         {String(index + 1).padStart(2, "0")}
                       </span>
-                      <span className="min-w-0 truncate text-[14px] font-semibold tracking-[-0.01em] text-[var(--hero-ink)]">
-                        {row.home} <span className="rw-m text-[var(--hero-ink-2)]">vs</span>{" "}
-                        {row.away}
+                      {/* The crest pair, 22px, bare. A row whose crests are absent renders names alone. */}
+                      <span className="flex min-w-0 items-center gap-2">
+                        {row.homeImage ? <Crest src={row.homeImage} name={row.home} size={22} /> : null}
+                        {row.awayImage ? <Crest src={row.awayImage} name={row.away} size={22} /> : null}
+                        <span className="min-w-0 truncate text-[14px] font-semibold tracking-[-0.01em] text-[var(--hero-ink)]">
+                          {row.home} <span className="rw-m text-[var(--hero-ink-2)]">vs</span>{" "}
+                          {row.away}
+                        </span>
                       </span>
                       <span className="mt-1.5 block sm:mt-0">
                         <V2LeagueCell country={row.country} league={row.competition} />
@@ -639,10 +645,21 @@ export function RankWagersHome({
 
                 <V2LeagueCell country={fixture.country} league={fixture.league} />
 
-                <p className="rw-h mt-2.5 text-[20px] leading-[1.15] tracking-[-0.025em] text-[var(--hero-ink)]">
-                  {fixture.home}{" "}
-                  <span className="rw-m align-middle text-[var(--hero-ink-2)]">vs</span>{" "}
-                  {fixture.away}
+                {/* The map's fixture line: crest · name · vs · crest · name, crests 22px bare. */}
+                <p className="mt-2.5 flex flex-wrap items-center gap-x-2 gap-y-1">
+                  {fixture.homeImage ? (
+                    <Crest src={fixture.homeImage} name={fixture.home} size={22} />
+                  ) : null}
+                  <span className="rw-h text-[20px] leading-[1.15] tracking-[-0.025em] text-[var(--hero-ink)]">
+                    {fixture.home}
+                  </span>
+                  <span className="rw-m text-[var(--hero-ink-2)]">vs</span>
+                  {fixture.awayImage ? (
+                    <Crest src={fixture.awayImage} name={fixture.away} size={22} />
+                  ) : null}
+                  <span className="rw-h text-[20px] leading-[1.15] tracking-[-0.025em] text-[var(--hero-ink)]">
+                    {fixture.away}
+                  </span>
                 </p>
 
                 <p className="rw-m mt-1.5 tracking-[0.06em] text-[var(--hero-ink-2)]">
@@ -675,8 +692,16 @@ export function RankWagersHome({
                   >
                     {p.rankedOpenMatch}
                   </V2Button>
+                  {/*
+                    THE MAP'S FORM: "+ ACCUMULATOR", the bordered mono twin of OPEN MATCH →.
+                    The v2 className replaces the component's soft green default — the component
+                    itself is shared with unconverted routes, so the form is stated here, at the
+                    one converted call site, rather than changed under four other pages. The `+`
+                    is a glyph, not copy, so it composes here rather than entering the dictionary.
+                  */}
                   <AddToAccaButton
-                    labelAdd={p.rankedAddAcca}
+                    labelAdd={`+ ${p.rankedAddAcca}`}
+                    className="rw-m inline-flex items-center gap-2 border border-[var(--hero-ink)] px-3 py-2 tracking-[0.1em] text-[var(--hero-ink)] transition-colors duration-[var(--dur-respond)] ease-[var(--ease-settle)] hover:bg-[var(--hero-ink)] hover:text-[var(--hero-canvas)] aria-pressed:bg-[var(--hero-ink)] aria-pressed:text-[var(--hero-canvas)]"
                     draft={{
                       matchId: fixture.matchId,
                       homeTeam: fixture.home,

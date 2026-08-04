@@ -437,6 +437,12 @@ test("the supporting table collapses to stacked rows below sm, never two columns
   const track = /const COLUMNS =\s*\n?\s*"([^"]*)"/.exec(src);
   assert.ok(track, "the column track is declared in one place");
   for (const cls of track[1].split(/\s+/).filter(Boolean)) {
+    /*
+     * `pl-3.5` is the one deliberate base-width class: the 14px gutter the hover rail draws
+     * inside, which the stacked mobile rows keep so the rail works there too. Every LAYOUT
+     * class — anything that could turn 360px into two columns — must still be sm-and-up.
+     */
+    if (cls === "pl-3.5") continue;
     assert.match(cls, /^sm:/, `every grid class is sm-and-up — "${cls}" applies below sm`);
   }
   assert.match(src, /hidden border-b .*sm:grid|hidden[^"]*\$\{COLUMNS\}/, "the head is hidden below sm");
@@ -845,9 +851,10 @@ test("the masthead meta drops a step and keeps clear of the nav cluster", () => 
 test("row hover draws the tinted left rule and never darkens the ground", () => {
   const css = readFileSync(path.join(process.cwd(), "app/globals.css"), "utf8");
 
-  assert.match(css, /\.rw-hero \.rw-row::before[\s\S]{0,400}?var\(--rw-tint, var\(--hero-ink\)\)/,
+  assert.match(css, /\.rw-hero \.rw-row::before[\s\S]{0,700}?var\(--rw-tint, var\(--hero-ink\)\)/,
     "the rule takes the row's tint, falling back to ink");
-  assert.match(css, /\.rw-hero \.rw-row:hover::before[\s\S]{0,80}?opacity: 1/, "and appears on hover");
+  // The rail DRAWS now (scaleY from the top); masterFixPass carries the full geometry probe.
+  assert.match(css, /\.rw-hero \.rw-row:hover::before[\s\S]{0,120}?scaleY\(1\)/, "and draws on hover");
   assert.doesNotMatch(
     css,
     /\.rw-hero \.rw-row:hover \{[^}]*background/,
@@ -865,4 +872,154 @@ test("row hover draws the tinted left rule and never darkens the ground", () => 
   ]) {
     assert.match(readSurface(rel), /--rw-tint/, `${rel} sets the row tint`);
   }
+});
+
+/* ------------------------------------------------------------------ *
+ * MASTER FIX PASS — funnel hover, crest columns, the acca twin
+ * ------------------------------------------------------------------ */
+
+/** Every element of a named component type in a tree, with props — the walk keeps all, not the last. */
+function collectAll(node: unknown, name: string, found: Array<Record<string, unknown>> = []) {
+  if (Array.isArray(node)) {
+    for (const child of node) collectAll(child, name, found);
+    return found;
+  }
+  if (!node || typeof node !== "object") return found;
+  const element = node as { type?: unknown; props?: Record<string, unknown> };
+  if (typeof element.type === "function" && (element.type as { name?: string }).name === name) {
+    found.push(element.props ?? {});
+  }
+  if (element.props && typeof element.props === "object") {
+    for (const value of Object.values(element.props)) collectAll(value, name, found);
+  }
+  return found;
+}
+
+/** The page tree with DATA on it: one qualified fixture and two settled results, crests included. */
+function homepageTreeWithData() {
+  const { RankWagersHome } =
+    require("../components/bible/RankWagersHome") as typeof import("../components/bible/RankWagersHome");
+  const { getDictionary } = require("../lib/dictionaries") as typeof import("../lib/dictionaries");
+
+  const row = {
+    matchId: 9001,
+    homeTeam: "Respublika",
+    awayTeam: "Gazalkent",
+    competition: "Pro League A",
+    countryCode: "uz",
+    kickoffTime: 1770213600,
+    over15Pct: 92,
+    fhOver05Pct: 88,
+    over25Pct: 81,
+    shOver05Pct: 84,
+    homeImage: "https://cdn.example/r.png",
+    awayImage: "https://cdn.example/g.png",
+  };
+  const result = (id: string, status: string) => ({
+    id,
+    matchId: 1,
+    home: "ABB",
+    away: "Real Oruro",
+    homeImage: "https://cdn.example/abb.png",
+    awayImage: "https://cdn.example/oru.png",
+    competition: "LFPB",
+    country: "bo",
+    marketKey: "over15",
+    marketLabel: "Over 1.5",
+    status,
+    scoreLabel: "2–1",
+    matchHref: "/en/fixtures/1",
+    date: "2026-08-03",
+  });
+
+  const tree = RankWagersHome({
+    lists: {
+      date: "2026-08-04",
+      fetchedAt: "2026-08-04T09:00:00.000Z",
+      fh: [],
+      over15: [row],
+      over25: [],
+      sh: [],
+    },
+    dict: getDictionary("en"),
+    locale: "en",
+    displayDate: "Tuesday 4 August",
+    modelMeta: "Lists retrieved 09:00 UTC",
+    countryContext: { source: "default" },
+    selectedDate: "2026-08-04",
+    today: "2026-08-04",
+    trust: {
+      /*
+       * AVAILABLE, deliberately: the recent-results table renders inside the settled-record
+       * band's available branch, so an unavailable record would leave this walk asserting
+       * against a section that never mounted — a test of nothing wearing a proof's clothes.
+       */
+      verified: {
+        availability: "available",
+        won: 334,
+        lost: 87,
+        windowLabel: "2026-08-01 → 2026-08-03",
+        sampleNote: "Counts cover qualified goal-market lists only.",
+        lastUpdatedAt: "2026-08-03T21:00:00.000Z",
+        totalPredictions: 447,
+        settledPredictions: 421,
+        pendingPredictions: 21,
+        hitRatePct: 79.3,
+        methodologyHref: "/en/methodology",
+        archiveEntryHref: "/en/archive",
+      },
+      recentResults: [result("r1", "won"), result("r2", "pending")],
+      featuredLeagues: [],
+      qualifiedFixtureCount: 1,
+      liveMatchCount: 0,
+    },
+  } as never);
+  return tree;
+}
+
+test("MOUNTED: the funnel stages carry their hover classes in rendered markup", () => {
+  const html = renderHero();
+  assert.ok(html.includes("rw-stage"), "the stage is the hover group");
+  assert.ok(html.includes("rw-stage-text"), "its text is the element that lifts");
+  assert.ok(html.includes("rw-stage-label"), "and its label is the ink that deepens");
+});
+
+test("MOUNTED: the recent-results rows carry the 22px crest pair", () => {
+  const tree = homepageTreeWithData();
+  const crests = collectAll(tree, "Crest").filter(
+    (p) => typeof p.src === "string" && String(p.src).includes("abb")
+  );
+  assert.ok(crests.length >= 1, "the settled row mounts its home crest");
+  for (const crest of collectAll(tree, "Crest").filter((p) => p.size === 22)) {
+    assert.equal(crest.size, 22, "at the map's 22px, bare");
+  }
+  assert.ok(
+    collectAll(tree, "Crest").some((p) => p.size === 22),
+    "at least one 22px crest is mounted — results or ranked"
+  );
+});
+
+test("MOUNTED: the ranked card mounts crests, the league cell, and the acca twin", () => {
+  const tree = homepageTreeWithData();
+
+  // The ranked fixture's crests, 22px, from the same fields the row carried.
+  const ranked = collectAll(tree, "Crest").filter((p) =>
+    String(p.src ?? "").includes("cdn.example/r.png")
+  );
+  assert.ok(ranked.length >= 1, "the ranked card mounts the home crest");
+
+  // The league cell is fed the (backfill-eligible) country.
+  const cells = collectAll(tree, "V2LeagueCell").filter((p) => p.league === "Pro League A");
+  assert.ok(cells.length >= 1, "the ranked card mounts its league cell");
+  assert.equal(cells[0].country, "uz", "fed the row's country");
+
+  // The acca button is the bordered mono twin — form stated in its mounted props.
+  const acca = collectAll(tree, "AddToAccaButton");
+  assert.ok(acca.length >= 1, "the acca control is mounted");
+  const cls = String(acca[0].className ?? "");
+  assert.match(cls, /border border-\[var\(--hero-ink\)\]/, "ink border on transparent");
+  assert.match(cls, /hover:bg-\[var\(--hero-ink\)\]/, "hover fills ink");
+  assert.match(cls, /rw-m/, "in the mono face");
+  assert.match(String(acca[0].labelAdd ?? ""), /^\+ /, "labelled + ACCUMULATOR-style");
+  assert.doesNotMatch(cls, /rounded|green|brand/, "no soft variant survives");
 });

@@ -138,14 +138,18 @@ export function V2Chip({
 
 /**
  * A league cell: the country's real flag and FULL NAME over its competition —
- * "🇫🇮 Finland / Kolmonen Länsi", the map's cell.
+ * the map's "flag · Finland / Kolmonen Länsi".
  *
- * The first version printed the raw field, so a provider row carrying `fi` rendered "FI" under a
- * white placeholder glyph — an ISO code wearing a country's clothes. `countryDisplay` resolves
- * code or name to the real pair, and a row whose country cannot be resolved renders the league
- * ALONE: no glyph, no code, nothing standing in for an observation nobody made.
+ * THE FLAG IS A SELF-HOSTED SVG, not an emoji. Windows renders flag emoji as bare letter pairs,
+ * so the first version promised a flag and delivered "FI" to half the audience. The asset comes
+ * from `public/flags/4x3/{iso}.svg` (vendored, MIT — README in that directory), so `img-src`
+ * stays `'self'` and no flag ever loads from a third party. 16×12 at the map's 4:3, hairline
+ * outline, radius 0 by scope; `aria-hidden` because the country's NAME prints beside it and a
+ * screen reader must not hear the country twice.
  *
- * The flag is an emoji rather than an asset, so a cell costs no request and cannot half-load.
+ * Refuse-to-invent stands: a row whose country cannot be resolved renders the league ALONE — no
+ * glyph, no code, nothing standing in for an observation nobody made. A resolved name whose ISO
+ * cannot be recovered prints the name without a flag.
  */
 export function V2LeagueCell({
   country,
@@ -158,10 +162,18 @@ export function V2LeagueCell({
 
   return (
     <span className="inline-flex min-w-0 items-baseline gap-2">
-      {resolved?.flag ? (
-        <span aria-hidden className="shrink-0 text-[13px] leading-none">
-          {resolved.flag}
-        </span>
+      {resolved?.iso ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={`/flags/4x3/${resolved.iso}.svg`}
+          alt=""
+          aria-hidden
+          width={16}
+          height={12}
+          loading="lazy"
+          decoding="async"
+          className="block shrink-0 self-center outline outline-[0.5px] outline-[var(--hero-line)]"
+        />
       ) : null}
       <span className="min-w-0">
         {resolved ? (

@@ -93,7 +93,13 @@ test("BibleFixtureExplorer client does not call resolveAffiliateOffers or buildG
     "utf8"
   );
   assert.match(src, /use client/);
-  assert.match(src, /signedPartnerOffersByMarket/);
+  /*
+   * This asserted the client CONSUMED pre-signed offers (`signedPartnerOffersByMarket`) rather
+   * than resolving its own. The partner cards went with the accordion (master fix pass, item 8),
+   * so the boundary tightens: the explorer now carries NO affiliate machinery at all, signed or
+   * otherwise. The import bans below still hold — they are the boundary itself.
+   */
+  assert.doesNotMatch(src, /signedPartnerOffers|partnerOffers|ResolvedOperatorOffer/);
   const importLines = src
     .split(/\r?\n/)
     .filter((line) => /^\s*import\b/.test(line))

@@ -200,7 +200,13 @@ test("add-to-acca wired on homepage match explorer competition team", () => {
     readFileSync(path.join(root, "components/bible/RankWagersHome.tsx"), "utf8"),
     /AddToAccaButton/
   );
-  assert.match(
+  /*
+   * The explorer's add-to-acca went with the accordion it lived in (master fix pass, item 8).
+   * The desk row navigates to the fixture page, which carries its own AddToAccaButton — pinned
+   * below via MatchPredictionsPanel — so the capability moved with the reader, not away from
+   * them. The explorer must now NOT import it: a leftover import is the accordion's seed.
+   */
+  assert.doesNotMatch(
     readFileSync(
       path.join(root, "components/bible/BibleFixtureExplorer.tsx"),
       "utf8"

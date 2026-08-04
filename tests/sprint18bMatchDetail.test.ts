@@ -253,8 +253,11 @@ test("explorer and saved surfaces link to canonical fixture paths", () => {
     path.join(root, "components/bible/BibleFixtureExplorer.tsx"),
     "utf8"
   );
-  assert.match(explorer, /Open match page/);
-  assert.match(explorer, /fixturePath/);
+  /*
+   * "Open match page" was a link INSIDE the accordion panel; the accordion is deleted and the
+   * whole row is the link now. The canonical-path contract is unchanged and still pinned.
+   */
+  assert.match(explorer, /fixturePath\(locale, fixture\.matchId, fixture\.marketKind/);
 
   const saved = readFileSync(
     path.join(root, "components/bible/SavedFixturesPanel.tsx"),

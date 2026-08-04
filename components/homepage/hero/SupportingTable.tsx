@@ -65,7 +65,7 @@ export type SupportingCopy = {
  * figures sit under the wrong words — the failure is silent and it is total.
  */
 const COLUMNS =
-  "sm:grid sm:grid-cols-[44px_minmax(0,1.7fr)_minmax(0,1.1fr)_minmax(0,0.8fr)_72px_72px_78px_minmax(0,1fr)] sm:gap-x-3.5";
+  "pl-3.5 sm:grid sm:grid-cols-[44px_minmax(0,1.7fr)_minmax(0,1.1fr)_minmax(0,0.8fr)_72px_72px_78px_minmax(0,1fr)] sm:gap-x-3.5";
 
 /**
  * A venue rate cell.

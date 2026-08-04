@@ -123,6 +123,8 @@ test("the league cell resolves a name and the country field survives both format
   assert.ok(html.includes("Bolivia"), "a full-name country renders as itself");
   assert.ok(html.includes("Uzbekistan"), "an ISO code resolves to its full name");
   assert.equal(/\bUZ\b/.test(html), false, "and the raw code never prints");
+  assert.ok(html.includes("/flags/4x3/bo.svg"), "the desk's flag is the vendored SVG");
+  assert.equal(/🇧🇴|🇺🇿/u.test(html), false, "never an emoji");
 });
 
 test("a feed with nothing live states the empty desk rather than teasing one", () => {

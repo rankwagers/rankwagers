@@ -28,6 +28,9 @@ export type HomepageRecentResult = {
   matchId: number;
   home: string;
   away: string;
+  /** Crest assets, when the archived row carried them. A row without them renders names alone. */
+  homeImage?: string;
+  awayImage?: string;
   competition: string;
   /**
    * The competition's country, when the provider row carried one.
