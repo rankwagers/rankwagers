@@ -3,6 +3,7 @@
 import { useEffect, useLayoutEffect, useState } from "react";
 import type { CSSProperties } from "react";
 import type { Locale } from "@/lib/i18n";
+import type { RateWithSample, VenueRates } from "@/lib/fixtures/evidenceView";
 import type { HeroFunnel, HeroPick, HomepageHeroModel } from "@/lib/homepage/types";
 import type { ResearchStage } from "@/lib/research/researchRun";
 import { SectionTrackLink } from "@/components/analytics/SectionTrackLink";
@@ -64,7 +65,26 @@ type Copy = {
    * reading cannot be encountered without the sentence that bounds it.
    */
   probabilityNote: string;
+  /** Venue-split labels for the three rates set around the dial. */
+  venueHome: string;
+  venueAway: string;
+  venueLeague: string;
 };
+
+/**
+ * A rate, split into its two weights.
+ *
+ * The model publishes ONE string — `82% (9/11)` — and this composition sets the rate and its
+ * sample at different weights. It SPLITS that string rather than rebuilding it from the parts:
+ * re-deriving a football figure for presentation is the same class of mistake as inventing one
+ * (§3.2), and a split cannot disagree with what was scored. A string carrying no sample is
+ * returned whole, so nothing is silently dropped.
+ */
+export function splitRate(display: string): { rate: string; sample: string | null } {
+  const at = display.indexOf(" (");
+  if (at === -1) return { rate: display, sample: null };
+  return { rate: display.slice(0, at), sample: display.slice(at + 1) };
+}
 
 /**
  * The one template this component resolves itself, because the label depends on which fixture is
@@ -406,6 +426,19 @@ function PickRow({
   const colour = tinted(pick.leagueKey, 1);
   const crest = lead ? 40 : 24;
 
+  /*
+   * THE CARD.
+   *
+   * Card ground, not page ground: every pick sits on `--hero-surface` inside a `--hero-line`
+   * hairline, so the list reads as a stack of objects on the canvas rather than as rules drawn
+   * across it.
+   *
+   * SELECTION IS STATED BY GROUND AND EDGE. The held card keeps the same surface and the same
+   * hairline and gains a 2px strip of its competition's colour down the left edge. There is no
+   * shadow and no scale: a card that grows or lifts on selection makes the choice feel like an
+   * effect, and a raised card at rest leaves nowhere for hover to go. Hover is `.m-lift` — the
+   * −3px rise the motion language reserves for surfaces — and `prefers-reduced-motion` removes it.
+   */
   return (
     <button
       type="button"
@@ -414,62 +447,29 @@ function PickRow({
       onFocus={onHold}
       onClick={onHold}
       aria-pressed={held}
-      className="group relative block w-full overflow-hidden border-b border-[var(--hero-line-2)] text-left transition-[border-color,box-shadow] duration-[var(--dur-respond)] ease-[var(--ease-respond)] hover:border-[var(--hero-line)]"
-      style={{
-        boxShadow: held
-          ? `inset 0 1px 0 rgb(255 255 255 / 0.9), 0 8px 28px -22px ${tinted(pick.leagueKey, 0.95)}`
-          : "none",
-      }}
+      className={`m-lift group relative mt-2 block w-full overflow-hidden rounded-xl border bg-[var(--hero-surface)] text-left ${
+        held ? "border-[var(--hero-line)]" : "border-[var(--hero-line-2)] hover:border-[var(--hero-line)]"
+      }`}
     >
-      {/* the competition's colour, felt across the held row and nowhere else */}
+      {/*
+        THE EDGE THAT MARKS THE HELD SELECTION.
+        Always 2px wide, so nothing reflows and no geometry animates; only its presence changes.
+        The competition supplies the colour, which is the one place its identity is stated at full
+        strength anywhere in this hero.
+      */}
       <span
         aria-hidden
-        className="pointer-events-none absolute inset-0 transition-opacity duration-[var(--dur-expand)] ease-[var(--ease-settle)]"
-        style={{
-          opacity: held || lead ? 1 : 0,
-          background: lead
-            ? `linear-gradient(to right, ${tinted(pick.leagueKey, held ? 0.16 : 0.11)} 0%, ${tinted(
-                pick.leagueKey,
-                held ? 0.07 : 0.05
-              )} 24%, transparent 54%)`
-            : `linear-gradient(to right, ${tinted(pick.leagueKey, 0.05)}, transparent 62%)`,
-        }}
+        className="absolute left-0 top-0 h-full w-[2px] transition-opacity duration-[var(--dur-expand)] ease-[var(--ease-respond)]"
+        style={{ background: colour, opacity: held ? 1 : 0 }}
       />
 
       {/*
-        THE COMPETITION, ON THE LEAD CARD ONLY
-        Two layers and no more: the competition's colour banked against the left margin, and its
-        mark set large enough to be read as a mark — cropped by a third at the edge, hung above
-        centre, and behind everything. The wash is spent before the fixture title begins, so the
-        text column is set on paper rather than on colour.
+        Fixed padding. The previous row shifted its contents 5px right when held; with the edge
+        stating selection that shift is a second signal for the same fact, and it moved every
+        line of type on the card to say something the 2px strip already says.
       */}
-      {lead && pick.leagueImage ? (
-        <span
-          aria-hidden
-          className="pointer-events-none absolute top-1/2 transition-opacity duration-[var(--dur-expand)] ease-[var(--ease-settle)]"
-          style={{
-            left: -66,
-            transform: "translateY(-55%)",
-            opacity: held ? 0.115 : 0.095,
-          }}
-        >
-          <Crest src={pick.leagueImage} name={pick.league} size={164} />
-        </span>
-      ) : null}
-
-      {/* the rail that marks the held selection */}
-      <span
-        aria-hidden
-        className={`absolute left-0 top-0 h-full w-[2px] origin-top transition-transform duration-[var(--dur-expand)] ease-[var(--ease-respond)] ${
-          held ? "scale-y-100" : "scale-y-0"
-        }`}
-        style={{ background: colour }}
-      />
-
       <div
-        className={`relative flex gap-4 transition-[padding] duration-[var(--dur-expand)] ease-[var(--ease-respond)] ${
-          lead ? "items-start py-6" : "items-center py-3.5"
-        } ${held ? "pl-5" : "pl-0 group-hover:pl-2"}`}
+        className={`relative flex gap-4 px-5 ${lead ? "items-start py-6" : "items-center py-4"}`}
       >
         <span
           className={`rw-tnum rw-mono shrink-0 transition-colors duration-[var(--dur-respond)] ${
@@ -545,16 +545,85 @@ function PickRow({
   );
 }
 
+/**
+ * ONE VENUE RATE, IN THE SLOT BESIDE THE DIAL.
+ *
+ * The slot holds a fixed height whether or not the rate resolves, so a fixture the provider holds
+ * no venue history for occupies exactly the space of one it does, and the dial never moves as the
+ * selection changes. Zero CLS is a property of the container, not of the data.
+ *
+ * What is omitted is the FIGURE — label included. There is no dash, no zero and no skeleton: each
+ * would state something (nothing happened / a number is coming) that this product cannot evidence
+ * (§3.2, §3.8). And the rate is never bare: its sample is set beneath it, from the same string.
+ */
+function VenueRate({
+  label,
+  rate,
+  align,
+}: {
+  label: string;
+  rate: RateWithSample | null;
+  align: "left" | "right";
+}) {
+  const parts = rate ? splitRate(rate.display) : null;
+
+  return (
+    <div className={`min-h-[64px] ${align === "right" ? "text-right" : "text-left"}`}>
+      {parts ? (
+        <>
+          <p className="rw-label text-[var(--hero-ink-3)]">{label}</p>
+          <p className="rw-tnum mt-1.5 text-[19px] font-medium tracking-[-0.02em]">{parts.rate}</p>
+          {parts.sample ? (
+            <p className="rw-tnum rw-label mt-0.5 text-[var(--hero-ink-3)]">{parts.sample}</p>
+          ) : null}
+        </>
+      ) : null}
+    </div>
+  );
+}
+
+/**
+ * THE LEAGUE THE TWO VENUE RECORDS ARE READ AGAINST.
+ *
+ * One line, always in the same place, carrying its own sample. Omitted whole when the competition
+ * is below the sample floor the evidence model publishes a baseline at — a league rate drawn from
+ * four fixtures is not a baseline, and stating it would give the two records something to be
+ * compared against that cannot bear the comparison.
+ */
+function LeagueRate({ label, rate }: { label: string; rate: RateWithSample | null }) {
+  const parts = rate ? splitRate(rate.display) : null;
+
+  return (
+    <div className="mt-4 flex min-h-[20px] items-baseline justify-center gap-2">
+      {parts ? (
+        <>
+          <span className="rw-label text-[var(--hero-ink-3)]">{label}</span>
+          <span className="rw-tnum text-[13px] font-medium">{parts.rate}</span>
+          {parts.sample ? (
+            <span className="rw-tnum rw-label text-[var(--hero-ink-3)]">{parts.sample}</span>
+          ) : null}
+        </>
+      ) : null}
+    </div>
+  );
+}
+
 export function HeroStage({
   model,
   copy,
   locale,
   headingId,
+  venueRates,
 }: {
   model: HomepageHeroModel;
   copy: Copy;
   locale: Locale;
   headingId: string;
+  /**
+   * Venue rates by fixture, resolved on the server. A fixture absent from the map, or present
+   * with null sides, renders its slots empty — the space is held, the figure is not invented.
+   */
+  venueRates?: Record<number, VenueRates>;
 }) {
   const [held, setHeld] = useState(0);
   const stage = usePointerDrift<HTMLElement>();
@@ -588,13 +657,24 @@ export function HeroStage({
         }}
       />
 
-      {/* the competition's light, felt across the whole stage */}
+      {/*
+        LEAGUE ATMOSPHERE — TINT, NOT LOGO.
+        The competition's own colour, washed across the stage at very low alpha. This is the only
+        thing that carries which football is being looked at; it replaces the crest wallpaper
+        entirely.
+
+        It never carries text contrast. Every figure and every line of type in this hero is set
+        either on the page canvas or on an opaque `--hero-surface` card, both of which sit ABOVE
+        this plane — so removing the wash changes no contrast ratio anywhere. The alpha stays
+        inside what the tint table was calibrated for (`leagueTint.ts`: "a rail, a wash, an
+        atmosphere"), which is why it is stated once, broadly, rather than repeated per element.
+      */}
       {pick ? (
         <div
           aria-hidden
           className="pointer-events-none absolute inset-0 transition-[background] duration-[var(--dur-resolve)] ease-[var(--ease-settle)]"
           style={{
-            background: `radial-gradient(72% 58% at 78% 22%, ${tinted(pick.leagueKey, 0.075)} 0%, transparent 68%)`,
+            background: `radial-gradient(88% 72% at 74% 18%, ${tinted(pick.leagueKey, 0.055)} 0%, transparent 72%)`,
           }}
         />
       ) : null}
@@ -619,35 +699,22 @@ export function HeroStage({
         }}
       />
 
-      {/* the clubs of the held selection, crossfading behind the stage */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 hidden lg:block"
-        style={drift(24, 14)}
-      >
-        {picks.map((entry, index) => (
-          <div
-            key={entry.matchId}
-            className="absolute inset-0 transition-opacity duration-[var(--dur-reveal)] ease-[var(--ease-settle)]"
-            style={{ opacity: index === held ? 1 : 0 }}
-          >
-            <Crest
-              src={entry.homeImage}
-              name={entry.home}
-              size={560}
-              className="absolute -right-[10%] top-[6%] opacity-[0.07]"
-            />
-            <Crest
-              src={entry.awayImage}
-              name={entry.away}
-              size={440}
-              className="absolute bottom-[2%] right-[26%] opacity-[0.05]"
-            />
-          </div>
-        ))}
-      </div>
+      {/*
+        NO WATERMARK.
+        The held selection's clubs used to be blown up to 560px and laid behind the stage at 5–7%
+        opacity. A crest at that scale is a logo used as wallpaper: it says nothing the pick rows
+        do not already say, and it competes with the one thing the composition is for. The
+        competition's presence is carried by the tint wash above instead — colour, not a mark.
+        Crests now appear only where they identify something: sharp and small, in the dial's core
+        and on the pick rows.
+      */}
 
-      <div className="relative mx-auto flex min-h-[86vh] max-w-[1240px] flex-col px-5 pb-16 pt-12 lg:px-8 lg:pb-24 lg:pt-14">
+      {/*
+        THE RHYTHM ABOVE THIS BLOCK BELONGS TO THE PAGE SHELL — `Section rhythm="heavy"` — and the
+        hero adds none of its own. Two owners produced ~150px of dead air between the sticky header
+        and the first line; there is one owner now, and it is the one pacing every other section.
+      */}
+      <div className="relative mx-auto flex min-h-[86vh] max-w-[1240px] flex-col px-5 pb-16 lg:px-8 lg:pb-24">
         {/* ------------------------------------------------- the top line */}
         <div
           className="rw-enter flex flex-wrap items-center gap-x-6 gap-y-2"
@@ -833,18 +900,58 @@ export function HeroStage({
           {pick ? (
             <div className="relative z-10 flex justify-center lg:pt-8" style={drift(8, 5)}>
               {/* the instrument arrives after the narrative has been read, not during it */}
-              <div className="rw-enter w-full max-w-[520px]" style={{ animationDelay: "940ms" }}>
-                <EvidenceDial
-                  home={{ name: pick.home, ...(pick.homeImage ? { image: pick.homeImage } : {}) }}
-                  away={{ name: pick.away, ...(pick.awayImage ? { image: pick.awayImage } : {}) }}
-                  probability={pick.probability}
-                  evidence={pick.evidence}
-                  confidence={pick.confidence}
-                  confidenceLabel={pick.confidenceLabel}
-                  signals={pick.signals}
-                  history={pick.history}
-                  probabilityNote={copy.probabilityNote}
-                  size={440}
+              {/*
+                CARD GROUND. The instrument sits on `--hero-surface` inside a `--hero-line`
+                hairline, like the picks it reads. It is also what keeps the league tint behind
+                every figure in this column rather than under one: the panel is opaque, so no
+                reading here takes any part of its contrast from the wash.
+              */}
+              <div
+                className="rw-enter w-full max-w-[520px] rounded-2xl border border-[var(--hero-line)] bg-[var(--hero-surface)] p-6"
+                style={{ animationDelay: "940ms" }}
+              >
+                {/*
+                  THE VENUE SPLIT, EITHER SIDE OF THE DIAL.
+                  Left, the home side's record AT HOME; right, the away side's record AWAY — the
+                  same two fields the fixture page reads, through the same formatter, for the same
+                  market the dial is reading. The flanks size to their content and the dial takes
+                  what is left, so the row holds at every width without the figures wrapping.
+                */}
+                <div className="grid grid-cols-[minmax(52px,auto)_minmax(0,1fr)_minmax(52px,auto)] items-center gap-x-3">
+                  <VenueRate
+                    label={copy.venueHome}
+                    rate={venueRates?.[pick.matchId]?.home ?? null}
+                    align="left"
+                  />
+                  <div className="flex justify-center">
+                    <EvidenceDial
+                      home={{ name: pick.home, ...(pick.homeImage ? { image: pick.homeImage } : {}) }}
+                      away={{ name: pick.away, ...(pick.awayImage ? { image: pick.awayImage } : {}) }}
+                      probability={pick.probability}
+                      evidence={pick.evidence}
+                      confidence={pick.confidence}
+                      confidenceLabel={pick.confidenceLabel}
+                      signals={pick.signals}
+                      history={pick.history}
+                      probabilityNote={copy.probabilityNote}
+                      size={400}
+                    />
+                  </div>
+                  <VenueRate
+                    label={copy.venueAway}
+                    rate={venueRates?.[pick.matchId]?.away ?? null}
+                    align="right"
+                  />
+                </div>
+
+                {/*
+                  The league the two records are read against, on one line, with its own sample.
+                  The slot keeps its height when the league is below `LEAGUE_MIN_SAMPLE` and no
+                  baseline is published, so the block under it never moves.
+                */}
+                <LeagueRate
+                  label={copy.venueLeague}
+                  rate={venueRates?.[pick.matchId]?.league ?? null}
                 />
 
                 {/*

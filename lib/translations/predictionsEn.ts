@@ -131,6 +131,14 @@ export const predictionsEn = {
     "No fixture cleared the qualification threshold for this date. The lists are published as they are — an empty day is a result, not an outage.",
   heroOpenResearch: "Open {home} v {away} research",
   heroProbabilityLabel: "Model probability",
+  /*
+   * The venue split beside the dial. Each label names WHERE the rate was observed, because a
+   * side's home record and its overall record are different figures and that distinction is the
+   * whole point of the pairing.
+   */
+  heroVenueHome: "At home",
+  heroVenueAway: "Away",
+  heroVenueLeague: "League",
   topPicksEyebrow: "Today",
   topPicksTitle: "Highest model probabilities today",
   topPicksDescription:

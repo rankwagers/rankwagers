@@ -23,7 +23,11 @@ import {
   type EvidenceModel,
   type MarketInput,
 } from "@/lib/evidence-capture/model/derive";
-import type { MatchDetailPublic, VenueSideStats } from "@/lib/footystats/matchDetail";
+import type {
+  LeagueSeasonContext,
+  MatchDetailPublic,
+  VenueSideStats,
+} from "@/lib/footystats/matchDetail";
 import type { EvidenceSignal, SupportedMarket } from "@/types/evidence";
 
 /** Venue/baseline split keys the evidence model scores, by market axis. */
@@ -113,6 +117,51 @@ function rateDisplay(stat: { pct: number; played: number; hits: number | null })
     ? `${stat.hits}/${stat.played}`
     : `${stat.played}`;
   return { display: `${stat.pct}% (${denom})`, sampleSize: stat.played };
+}
+
+/** The league's own rate for a market, gated on `LEAGUE_MIN_SAMPLE`. Null below the floor. */
+function leagueBaseline(
+  league: LeagueSeasonContext | undefined,
+  marketKey: string | null
+): RateWithSample | null {
+  if (!marketKey) return null;
+  const key = VENUE_KEY_BY_MARKET[marketKey];
+  const pct = key ? league?.[key] : undefined;
+  const played = league?.played;
+  if (typeof pct !== "number" || typeof played !== "number") return null;
+  if (played < LEAGUE_MIN_SAMPLE) return null;
+  return { display: `${pct}% (${played})`, sampleSize: played };
+}
+
+/** The three rates one market is read against: the home side at home, the away side away, the league. */
+export type VenueRates = {
+  home: RateWithSample | null;
+  away: RateWithSample | null;
+  league: RateWithSample | null;
+};
+
+/**
+ * The venue rates for ONE market, formatted exactly as the fixture page formats them.
+ *
+ * Exported so a second surface — the homepage hero — can state the same three figures without a
+ * second implementation of the rate string. Two formatters would be two standards on one product
+ * (§18.4), and the sample is part of the figure: a rate is never published bare (§3.2).
+ *
+ * Each slot is independently `null` when the provider holds nothing for it. A caller omits that
+ * slot; it never substitutes a dash or a zero, both of which are claims (§3.8).
+ */
+export function venueRatesForMarket(
+  detail: MatchDetailPublic | null | undefined,
+  marketKey: string
+): VenueRates {
+  if (!detail) return { home: null, away: null, league: null };
+  const home = venueStat(detail.homeAtHome, marketKey);
+  const away = venueStat(detail.awayAtAway, marketKey);
+  return {
+    home: home ? rateDisplay(home) : null,
+    away: away ? rateDisplay(away) : null,
+    league: leagueBaseline(detail.leagueSeason, marketKey),
+  };
 }
 
 /** `season_over25_home` → `over25`. Returns null for counter/unknown signal keys. */
@@ -205,15 +254,9 @@ export function buildFixtureEvidenceView(
 
   const model = result.model;
 
-  const baselineFor = (marketKey: string | null): RateWithSample | null => {
-    if (!marketKey) return null;
-    const key = VENUE_KEY_BY_MARKET[marketKey];
-    const pct = key ? league?.[key] : undefined;
-    const played = league?.played;
-    if (typeof pct !== "number" || typeof played !== "number") return null;
-    if (played < LEAGUE_MIN_SAMPLE) return null;
-    return { display: `${pct}% (${played})`, sampleSize: played };
-  };
+  /* One implementation of the baseline string, shared with `venueRatesForMarket` above. */
+  const baselineFor = (marketKey: string | null): RateWithSample | null =>
+    leagueBaseline(league, marketKey);
 
   const marketViews: FixtureEvidenceMarketView[] = model.supportedMarkets.map((m) => {
     const home = venueStat(detail.homeAtHome, m.marketKey);
