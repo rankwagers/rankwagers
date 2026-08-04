@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useLayoutEffect, useState } from "react";
+import { useState } from "react";
 import type { CSSProperties } from "react";
 import type { Locale } from "@/lib/i18n";
 import type { RateWithSample, VenueRates } from "@/lib/fixtures/evidenceView";
@@ -8,9 +8,10 @@ import type { HeroFunnel, HeroPick, HomepageHeroModel } from "@/lib/homepage/typ
 import type { ResearchStage } from "@/lib/research/researchRun";
 import { SectionTrackLink } from "@/components/analytics/SectionTrackLink";
 import { Crest } from "./Crest";
-import { EvidenceDial } from "./EvidenceDial";
+import { FunnelLine } from "./FunnelLine";
+import { HeroLead } from "./HeroLead";
 import { tinted } from "./leagueTint";
-import { prefersReducedMotion, useIntent, usePointerDrift } from "./motion";
+import { useIntent, usePointerDrift } from "./motion";
 
 /* ============================================================================
    TODAY'S SELECTION
@@ -205,210 +206,6 @@ export function funnelDescent(funnel: HeroFunnel): Array<{
   return rendered;
 }
 
-/* ============================================================================
-   THE RESEARCH REVEAL (rwdesign §20)
-   ----------------------------------------------------------------------------
-   Disclosure, not counting.
-
-   A numeral travelling 0 → 241 paints figures the pipeline never observed:
-   `partitionDailyMatches` partitions in ONE pass and never holds an
-   intermediate total, so every frame reading "137" describes nothing. §3.2
-   governs motion exactly as it governs a static value, so the sequence reveals
-   each stage ALREADY CARRYING its true count. `useResolve` in `./motion` is the
-   ramp this deliberately does not use.
-   ========================================================================== */
-
-type RevealPhase = "settled" | "armed" | "playing";
-
-const REVEAL_STORAGE_PREFIX = "rankwagers:research-reveal:";
-
-/** The run's own day, taken from its retrieval stamp. Null when the stamp is unusable. */
-export function researchRunDay(fetchedAt: string | null): string | null {
-  if (!fetchedAt) return null;
-  const parsed = Date.parse(fetchedAt);
-  if (Number.isNaN(parsed)) return null;
-  return new Date(parsed).toISOString().slice(0, 10);
-}
-
-/**
- * Whether the sequence runs, decided from facts rather than from a page load.
- *
- * Four reasons it does not, each returned by name so the decision is testable and so a future
- * reader can see that "it did not animate" is never an accident:
- *
- *   incomplete_chain  an archive day omits analysed/validated/inScope. A two-step descent is not
- *                     a descent, and animating one would dramatise an absence.
- *   reduced_motion    final state immediately. No exception, no reduced variant.
- *   seen_today        keyed to the RUN's day, not to a session. Reload, new tab, or a return visit
- *                     four hours later: the funnel is simply there.
- *   no_run_day        without a usable stamp there is no key, so the sequence cannot be bounded to
- *                     a day — and an unbounded reveal would replay on every load.
- */
-export function researchRevealDecision(input: {
-  stageCount: number;
-  totalStages: number;
-  reducedMotion: boolean;
-  seenToday: boolean;
-  day: string | null;
-}): { plays: boolean; reason: "plays" | "incomplete_chain" | "reduced_motion" | "seen_today" | "no_run_day" } {
-  if (input.stageCount < input.totalStages) return { plays: false, reason: "incomplete_chain" };
-  if (input.reducedMotion) return { plays: false, reason: "reduced_motion" };
-  if (!input.day) return { plays: false, reason: "no_run_day" };
-  if (input.seenToday) return { plays: false, reason: "seen_today" };
-  return { plays: true, reason: "plays" };
-}
-
-/** `useLayoutEffect` on the client, `useEffect` on the server, so SSR emits no warning. */
-const useIsomorphicLayoutEffect =
-  typeof window !== "undefined" ? useLayoutEffect : useEffect;
-
-/**
- * The phase the descent renders in.
- *
- * `settled` is the SSR and no-JS answer, so the funnel is readable before a single line of script
- * runs and stays readable if none ever does (§3.8 — never silently display blanks). The client
- * arms the sequence only when it has decided it should play.
- */
-function useResearchReveal(day: string | null, stageCount: number): RevealPhase {
-  const [phase, setPhase] = useState<RevealPhase>("settled");
-
-  useIsomorphicLayoutEffect(() => {
-    let seenToday = false;
-    try {
-      seenToday = day
-        ? window.localStorage.getItem(`${REVEAL_STORAGE_PREFIX}${day}`) === "1"
-        : false;
-    } catch {
-      // A blocked or full store is not a reason to replay the sequence on every load.
-      seenToday = true;
-    }
-
-    const decision = researchRevealDecision({
-      stageCount,
-      totalStages: FUNNEL_STEPS.length,
-      reducedMotion: prefersReducedMotion(),
-      seenToday,
-      day,
-    });
-    if (!decision.plays) return;
-
-    setPhase("armed");
-    // Two frames: the first commits the armed state, the second releases the transition.
-    const outer = window.requestAnimationFrame(() => {
-      window.requestAnimationFrame(() => setPhase("playing"));
-    });
-    try {
-      if (day) window.localStorage.setItem(`${REVEAL_STORAGE_PREFIX}${day}`, "1");
-    } catch {
-      /* the sequence still runs this once; it simply cannot record that it did */
-    }
-    return () => window.cancelAnimationFrame(outer);
-  }, [day, stageCount]);
-
-  return phase;
-}
-
-/**
- * The stepped hairline behind the measures.
- *
- * One path, not one rule per measure: the claim is that hundreds became five, and a claim is a
- * movement rather than a list. Percentage geometry so it tracks the grid at any column count, with
- * `non-scaling-stroke` so the hairline stays a hairline under the non-uniform scale that
- * `preserveAspectRatio="none"` applies.
- *
- * Hidden below `sm`, where the descent is carried by indent instead and a horizontal staircase
- * would describe a layout that is not on screen.
- */
-function FunnelDescentLine({ offsets }: { offsets: readonly number[] }) {
-  const count = offsets.length;
-  if (count < 2) return null;
-
-  /*
-    Built from the offsets themselves, so the line describes the same claim the measures do: a run
-    of equal counts is one straight segment, and a vertical only appears where a stage actually
-    rejected something. Deriving it from the index again would draw a staircase under numbers that
-    do not descend.
-  */
-  const columnWidth = 100 / count;
-  const height = Math.max(...offsets);
-  let path = `M 0 ${(offsets[0] ?? 0) + 0.5}`;
-  for (let i = 1; i < count; i += 1) {
-    const previous = offsets[i - 1] ?? 0;
-    const current = offsets[i] ?? 0;
-    path += ` H ${(columnWidth * i).toFixed(3)}`;
-    if (current !== previous) path += ` V ${(current + 0.5).toFixed(1)}`;
-  }
-
-  return (
-    <svg
-      aria-hidden
-      viewBox={`0 0 100 ${height + 1}`}
-      preserveAspectRatio="none"
-      fill="none"
-      stroke="var(--hero-line)"
-      strokeWidth="1"
-      vectorEffect="non-scaling-stroke"
-      className="pointer-events-none absolute inset-x-0 top-0 hidden sm:block"
-      style={{ height: height + 1 }}
-    >
-      <path d={path} pathLength={1} vectorEffect="non-scaling-stroke" className="rw-descent-line" />
-    </svg>
-  );
-}
-
-/** A measure in the funnel: a numeral hung under a hairline, never a stat card. */
-function Measure({
-  value,
-  label,
-  offset,
-  emphasised,
-  revealIndex = null,
-  revealed = false,
-}: {
-  value: number;
-  label: string;
-  offset: number;
-  emphasised: boolean;
-  /** Stagger index for the shared `.rw-reveal` rule, or null when the sequence is not running. */
-  revealIndex?: number | null;
-  revealed?: boolean;
-}) {
-  return (
-    <div
-      /*
-       * One offset, two readings. Stacked below `sm` it is a left indent; at `sm` and up it is the
-       * vertical drop. The value is passed as a local custom property because an inline style
-       * cannot carry a breakpoint, and the alternative — two absolutely positioned variants — would
-       * render the same measure twice.
-       *
-       * The reveal only ever touches opacity, transform and blur — never a box property — so the
-       * block occupies its final height from the first frame and the sequence costs no layout.
-       */
-      className={`relative min-w-0 pl-[var(--rw-descent)] pt-4 sm:pl-0 sm:mt-[var(--rw-descent)]${
-        revealIndex === null ? "" : ` rw-reveal${revealed ? " is-in" : ""}`
-      }`}
-      style={
-        {
-          "--rw-descent": `${offset}px`,
-          ...(revealIndex === null ? {} : { "--i": revealIndex }),
-        } as CSSProperties
-      }
-    >
-      {/*
-        The mark hangs above the numeral. Green is reserved for what survived; every earlier stage
-        is drawn in ink, and the surviving stages carry a heavier rule so the eye lands on them.
-      */}
-      <span
-        className={`absolute left-0 top-0 h-3 ${
-          emphasised ? "w-[1.5px] bg-[var(--hero-pos)]" : "w-px bg-[var(--hero-ink-3)]"
-        }`}
-      />
-      <p className="rw-tnum rw-display text-[32px] leading-none text-[var(--hero-ink)]">{value}</p>
-      <p className="rw-label mt-2 text-[var(--hero-ink-3)]">{label}</p>
-    </div>
-  );
-}
-
 function PickRow({
   pick,
   rank,
@@ -545,69 +342,6 @@ function PickRow({
   );
 }
 
-/**
- * ONE VENUE RATE, IN THE SLOT BESIDE THE DIAL.
- *
- * The slot holds a fixed height whether or not the rate resolves, so a fixture the provider holds
- * no venue history for occupies exactly the space of one it does, and the dial never moves as the
- * selection changes. Zero CLS is a property of the container, not of the data.
- *
- * What is omitted is the FIGURE — label included. There is no dash, no zero and no skeleton: each
- * would state something (nothing happened / a number is coming) that this product cannot evidence
- * (§3.2, §3.8). And the rate is never bare: its sample is set beneath it, from the same string.
- */
-function VenueRate({
-  label,
-  rate,
-  align,
-}: {
-  label: string;
-  rate: RateWithSample | null;
-  align: "left" | "right";
-}) {
-  const parts = rate ? splitRate(rate.display) : null;
-
-  return (
-    <div className={`min-h-[64px] ${align === "right" ? "text-right" : "text-left"}`}>
-      {parts ? (
-        <>
-          <p className="rw-label text-[var(--hero-ink-3)]">{label}</p>
-          <p className="rw-tnum mt-1.5 text-[19px] font-medium tracking-[-0.02em]">{parts.rate}</p>
-          {parts.sample ? (
-            <p className="rw-tnum rw-label mt-0.5 text-[var(--hero-ink-3)]">{parts.sample}</p>
-          ) : null}
-        </>
-      ) : null}
-    </div>
-  );
-}
-
-/**
- * THE LEAGUE THE TWO VENUE RECORDS ARE READ AGAINST.
- *
- * One line, always in the same place, carrying its own sample. Omitted whole when the competition
- * is below the sample floor the evidence model publishes a baseline at — a league rate drawn from
- * four fixtures is not a baseline, and stating it would give the two records something to be
- * compared against that cannot bear the comparison.
- */
-function LeagueRate({ label, rate }: { label: string; rate: RateWithSample | null }) {
-  const parts = rate ? splitRate(rate.display) : null;
-
-  return (
-    <div className="mt-4 flex min-h-[20px] items-baseline justify-center gap-2">
-      {parts ? (
-        <>
-          <span className="rw-label text-[var(--hero-ink-3)]">{label}</span>
-          <span className="rw-tnum text-[13px] font-medium">{parts.rate}</span>
-          {parts.sample ? (
-            <span className="rw-tnum rw-label text-[var(--hero-ink-3)]">{parts.sample}</span>
-          ) : null}
-        </>
-      ) : null}
-    </div>
-  );
-}
-
 export function HeroStage({
   model,
   copy,
@@ -629,8 +363,6 @@ export function HeroStage({
   const stage = usePointerDrift<HTMLElement>();
 
   const { picks, funnel } = model;
-  const descent = funnelDescent(funnel);
-  const revealPhase = useResearchReveal(researchRunDay(model.fetchedAt), descent.length);
   const pick = picks[held] ?? picks[0] ?? null;
   const [leadPick, ...supporting] = picks;
 
@@ -796,36 +528,14 @@ export function HeroStage({
                     distinct from qualification. `analysed`, `validated` and `inScope` render on
                     a live run and drop out when the day is served from an archive.
                   */}
-                  {descent.length ? (
-                    <div
-                      className="rw-descent rw-enter relative mt-6 grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-[repeat(var(--rw-columns),minmax(0,1fr))] sm:gap-y-0"
-                      {...(revealPhase === "settled" ? {} : { "data-reveal": revealPhase })}
-                      style={
-                        {
-                          animationDelay: "560ms",
-                          "--rw-columns": String(descent.length),
-                        } as CSSProperties
-                      }
-                    >
-                      <FunnelDescentLine offsets={descent.map((step) => step.offset)} />
-                      {descent.map(({ stage, label, value, offset, emphasised }, index) => (
-                        <Measure
-                          key={stage}
-                          value={value}
-                          label={copy[label]}
-                          offset={offset}
-                          emphasised={emphasised}
-                          /*
-                            `--i` is the stagger index the shared `.rw-reveal` rule already reads.
-                            The class is applied only while the sequence is running: settled renders
-                            carry no transition at all, so a return visit cannot flicker.
-                          */
-                          revealIndex={revealPhase === "settled" ? null : index}
-                          revealed={revealPhase === "playing"}
-                        />
-                      ))}
-                    </div>
-                  ) : null}
+                  {/*
+                    THE FUNNEL LINE (rebrand v2). The staircase that stood here is replaced, not
+                    supplemented. `FunnelLine` consumes the same `funnel` this component already
+                    holds and calls `funnelDescent` itself, so the omission rule the staircase
+                    enforced — a null stage is dropped, never drawn as zero — is unchanged because
+                    it is the same function deciding it.
+                  */}
+                  <FunnelLine funnel={funnel} copy={copy as unknown as Record<string, string>} />
 
                   {/*
                     The ledger and its descent belong here, between the funnel and the list. Both
@@ -896,120 +606,27 @@ export function HeroStage({
             )}
           </div>
 
-          {/* the instrument, reading whichever selection is held */}
+          {/*
+            THE LEAD (rebrand v2). Substitution, not addition: the dial-and-flanks instrument that
+            stood here is replaced outright rather than left beside the new composition, or the
+            page would ship two visual languages at once — the exact fault this rebrand exists to
+            end. It is fed from the SAME `pick` and `venueRates` the instrument read; no value is
+            derived here that was not already on this page.
+          */}
           {pick ? (
-            <div className="relative z-10 flex justify-center lg:pt-8" style={drift(8, 5)}>
-              {/* the instrument arrives after the narrative has been read, not during it */}
-              {/*
-                CARD GROUND. The instrument sits on `--hero-surface` inside a `--hero-line`
-                hairline, like the picks it reads. It is also what keeps the league tint behind
-                every figure in this column rather than under one: the panel is opaque, so no
-                reading here takes any part of its contrast from the wash.
-              */}
-              <div
-                className="rw-enter w-full max-w-[520px] rounded-2xl border border-[var(--hero-line)] bg-[var(--hero-surface)] p-6"
-                style={{ animationDelay: "940ms" }}
-              >
-                {/*
-                  THE VENUE SPLIT, EITHER SIDE OF THE DIAL.
-                  Left, the home side's record AT HOME; right, the away side's record AWAY — the
-                  same two fields the fixture page reads, through the same formatter, for the same
-                  market the dial is reading. The flanks size to their content and the dial takes
-                  what is left, so the row holds at every width without the figures wrapping.
-                */}
-                <div className="grid grid-cols-[minmax(52px,auto)_minmax(0,1fr)_minmax(52px,auto)] items-center gap-x-3">
-                  <VenueRate
-                    label={copy.venueHome}
-                    rate={venueRates?.[pick.matchId]?.home ?? null}
-                    align="left"
-                  />
-                  <div className="flex justify-center">
-                    <EvidenceDial
-                      home={{ name: pick.home, ...(pick.homeImage ? { image: pick.homeImage } : {}) }}
-                      away={{ name: pick.away, ...(pick.awayImage ? { image: pick.awayImage } : {}) }}
-                      probability={pick.probability}
-                      evidence={pick.evidence}
-                      confidence={pick.confidence}
-                      confidenceLabel={pick.confidenceLabel}
-                      signals={pick.signals}
-                      history={pick.history}
-                      probabilityNote={copy.probabilityNote}
-                      size={400}
-                    />
-                  </div>
-                  <VenueRate
-                    label={copy.venueAway}
-                    rate={venueRates?.[pick.matchId]?.away ?? null}
-                    align="right"
-                  />
-                </div>
-
-                {/*
-                  The league the two records are read against, on one line, with its own sample.
-                  The slot keeps its height when the league is below `LEAGUE_MIN_SAMPLE` and no
-                  baseline is published, so the block under it never moves.
-                */}
-                <LeagueRate
-                  label={copy.venueLeague}
-                  rate={venueRates?.[pick.matchId]?.league ?? null}
-                />
-
-                {/*
-                  The reading, in a slot sized for the longest of them so nothing below ever moves.
-                  The three stated reasons and the summary paragraph that fill it belong to the
-                  Sprint 23B evidence model; the height is held so that enabling them moves
-                  nothing on this page.
-                */}
-                <div className="relative mx-auto mt-8 min-h-[200px] max-w-[46ch] border-t border-[var(--hero-line)] pt-6">
-                  <div key={pick.matchId} className="rw-fade">
-                    <p className="rw-label flex items-center gap-2 text-[var(--hero-ink-3)]">
-                      <span className="shrink-0">
-                        <Crest src={pick.leagueImage} name={pick.league} size={13} />
-                      </span>
-                      <span className="min-w-0 truncate">{pick.league}</span>
-                      <span className="shrink-0">· {pick.kickoff}</span>
-                    </p>
-                    <p className="mt-4 text-[13px] leading-6 text-[var(--hero-ink-2)]">
-                      {pick.market}
-                    </p>
-                  </div>
-                </div>
-
-                <SectionTrackLink
-                  href={pick.matchHref}
-                  section="hero"
-                  locale={locale}
-                  className="group relative mt-6 inline-flex max-w-[46ch] items-center gap-2.5 pb-2.5 text-left text-[13px] font-medium"
-                >
-                  <span className="min-w-0">
-                    {fill(copy.openResearch, { home: pick.home, away: pick.away })}
-                  </span>
-                  <svg
-                    viewBox="0 0 16 16"
-                    width="13"
-                    height="13"
-                    fill="none"
-                    aria-hidden
-                    className="shrink-0 transition-transform duration-[var(--dur-respond)] ease-[var(--ease-respond)] group-hover:translate-x-1.5"
-                  >
-                    <path
-                      d="M2.5 8h11m0 0L9.5 4m4 4-4 4"
-                      stroke="currentColor"
-                      strokeWidth="1.4"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                  <span
-                    aria-hidden
-                    className="absolute bottom-0 left-0 h-px w-full bg-[var(--hero-line)]"
-                  />
-                  <span
-                    aria-hidden
-                    className="absolute bottom-0 left-0 h-px w-full origin-left scale-x-0 bg-[var(--hero-accent)] transition-transform duration-[var(--dur-expand)] ease-[var(--ease-settle)] group-hover:scale-x-100"
-                  />
-                </SectionTrackLink>
-              </div>
+            <div className="relative z-10 lg:pt-8">
+              <HeroLead
+                pick={pick}
+                rates={venueRates?.[pick.matchId] ?? null}
+                locale={locale}
+                copy={{
+                  probabilityNote: copy.probabilityNote,
+                  venueHome: copy.venueHome,
+                  venueAway: copy.venueAway,
+                  venueLeague: copy.venueLeague,
+                  openResearch: copy.openResearch,
+                }}
+              />
             </div>
           ) : null}
         </div>

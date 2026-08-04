@@ -21,6 +21,7 @@ import { HomepageSearchEntry } from "@/components/homepage/HomepageSearchEntry";
 import { HomepageAccaEntry } from "@/components/homepage/HomepageAccaEntry";
 import { AddToAccaButton } from "@/components/acca/AddToAccaButton";
 import { HomepageViewedTracker } from "@/components/homepage/HomepageViewedTracker";
+import { FunnelFootnote } from "@/components/homepage/hero/FunnelLine";
 import { HomepageHero } from "@/components/homepage/hero/HomepageHero";
 import { Section } from "@/components/layout/Section";
 import {
@@ -971,6 +972,33 @@ export function RankWagersHome({
         </div>
       </Section>
 
+      {/*
+        THE † FOOTNOTE, AT THE FOOT OF THE PAGE.
+
+        `FunnelLine` prints a † beside "Cleared threshold" in the hero and an `sr-only` link to
+        `#funnel-cleared-threshold`. Until now nothing on the page carried that id, so the marker
+        pointed at nothing and the link went nowhere — a qualifier promised and not delivered,
+        which is worse than no marker at all because the reader is told a bound exists.
+
+        It sits here rather than beside the funnel deliberately: the qualifier is defined once, at
+        the foot, and referenced from the figure — so the hero states the number without a
+        parenthesis hanging off it, and the definition is still one keystroke away for anyone who
+        wants it. The wording belongs to the dictionary (`heroFunnelFootnote`) and says what the
+        stage counts and what it does not: a filter, not a verdict.
+
+        Outside `Section` because it is not a section — no rhythm, no ground, no heading. It is the
+        page's last line.
+
+        It carries NO `rw-hero` of its own: the page wrapper above already establishes that scope,
+        and the palette and typefaces reach here by inheritance. Repeating the class would declare
+        the scope twice, which is the thing `homepageProofBand` asserts against — one declaration
+        is what makes "inside the hero scope" a fact about the page rather than a per-section habit.
+      */}
+      <div className="border-t border-[var(--hero-line)]">
+        <div className="mx-auto w-full max-w-[1240px] px-5 py-8 lg:px-8">
+          <FunnelFootnote note={p.heroFunnelFootnote} />
+        </div>
+      </div>
     </div>
   );
 }

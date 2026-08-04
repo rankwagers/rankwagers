@@ -710,43 +710,16 @@ textarea,
 }
 
 /*
- * THE RESEARCH REVEAL (rwdesign §20) — the descent disclosing itself.
+ * THE RESEARCH REVEAL (rwdesign §20) — REMOVED WITH ITS COMPOSITION.
  *
- * Built on `.rw-reveal` above rather than beside it: the pre-state, the settled state and the
- * `--i` stagger are already correct, so this only re-times them for the funnel. There is no second
- * mechanism to keep in sync.
+ * The stepped descent this re-timed (`.rw-descent`, `.rw-descent-line` and the `data-reveal`
+ * phases) was replaced by `FunnelLine` in rebrand v2. Its rules are deleted rather than left
+ * behind: a selector that can no longer match anything reads as a live decision to the next
+ * person, and the block above it documented timings for a sequence that no longer runs.
  *
- * The timing is the existing scale and adds no token:
- *   first stage begins at   var(--lead)         220ms
- *   each subsequent stage   var(--stagger)      140ms after the previous
- *   each settles over       var(--dur-respond)  520ms
- * so the fifth stage begins at 780ms and the sequence completes at ~1.30s.
- *
- * Only opacity, transform and filter move. No box property is animated anywhere in this block, so
- * the funnel occupies its final height from the first frame and the sequence contributes no CLS.
+ * The generic `.rw-reveal` / `.reveal` primitive above STAYS — it is the shared scroll-reveal for
+ * the scope, not part of the descent, and surfaces built from here on are meant to use it.
  */
-.rw-hero .rw-descent .rw-reveal {
-  transition-duration: var(--dur-respond);
-  transition-delay: calc(var(--lead) + var(--i, 0) * var(--stagger));
-}
-
-/*
- * The connector draws itself left to right across the whole sequence: it begins with the first
- * stage and finishes with the last, so the stages appear to land on a line that is still arriving.
- * `pathLength="1"` normalises the geometry, so the dash maths is independent of the viewBox
- * distortion that `preserveAspectRatio="none"` applies.
- */
-.rw-hero .rw-descent[data-reveal] .rw-descent-line {
-  stroke-dasharray: 1;
-  transition: stroke-dashoffset var(--dur-expand) var(--ease-settle);
-  transition-delay: var(--lead);
-}
-.rw-hero .rw-descent[data-reveal="armed"] .rw-descent-line {
-  stroke-dashoffset: 1;
-}
-.rw-hero .rw-descent[data-reveal="playing"] .rw-descent-line {
-  stroke-dashoffset: 0;
-}
 
 /* --- state response ----------------------------------------------------- */
 
@@ -851,12 +824,6 @@ textarea,
  * parallax planes must sit at their neutral offset.
  */
 @media (prefers-reduced-motion: reduce) {
-  /* The descent lands on its final state with no sequence. No reduced variant, no exception. */
-  .rw-hero .rw-descent-line {
-    stroke-dasharray: none;
-    stroke-dashoffset: 0;
-  }
-
   .rw-hero .reveal,
   .rw-hero .rw-reveal {
     opacity: 1;

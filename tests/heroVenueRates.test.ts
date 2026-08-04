@@ -193,6 +193,16 @@ const HERO_SRC = readFileSync(
   "utf8"
 );
 
+/*
+ * The three figures moved into `HeroLead` with rebrand v2 — it is the component that consumes
+ * `venueRates` now. Assertions about how they are PRESENTED have to read it rather than the stage
+ * that merely passes them through.
+ */
+const LEAD_SRC = readFileSync(
+  path.join(process.cwd(), "components/homepage/hero/HeroLead.tsx"),
+  "utf8"
+);
+
 test("the hero builds no rate string of its own", () => {
   // A `%` glued to an interpolated value is the shape of a rebuilt rate. The only percent sign in
   // this file belongs to the probability reading, which is a separate figure with its own source.
@@ -204,11 +214,30 @@ test("the hero builds no rate string of its own", () => {
   );
 });
 
-test("the venue slots hold their height whether or not they resolve", () => {
-  // Zero CLS is a property of the container, not of the data: the reserved height is what makes a
-  // fixture with no venue history occupy the same space as one that has it.
-  assert.match(HERO_SRC, /min-h-\[64px\]/, "the flanking slots reserve their height");
-  assert.match(HERO_SRC, /min-h-\[20px\]/, "the league line reserves its height");
+test("an unresolved venue rate is omitted whole, and costs no layout when it is", () => {
+  /*
+   * REBRAND V2 CHANGED THE MECHANISM, NOT THE RULE.
+   *
+   * The replaced composition held reserved slots (`min-h-[64px]` beside the dial, `min-h-[20px]`
+   * for the league) so that a fixture with no venue history occupied the same space as one that
+   * had it. `HeroLead` does not reserve: it drops each unresolved line, and drops the block
+   * entirely when none resolve. Both satisfy §3.8 — no dash, no zero, no skeleton — and neither
+   * shifts anything, but they satisfy it in opposite ways, so the assertion has to follow.
+   *
+   * Why omission still costs no layout: the filter runs at RENDER, from props the server already
+   * resolved. There is no later fill that could push the page around, which is the only thing the
+   * reserved height ever protected against.
+   */
+  assert.match(LEAD_SRC, /\.filter\(\(l\): l is \{ label: string; rate: RateWithSample \} => l\.rate !== null\)/,
+    "unresolved lines are filtered out rather than drawn empty");
+  assert.match(LEAD_SRC, /const hasLines = lines\.length > 0/, "and the block is dropped when none resolve");
+  assert.match(LEAD_SRC, /\{hasLines \? \(/, "the omission is a render-time branch, not a later fill");
+
+  // The rate is never invented in the gap it leaves behind.
+  const stripped = LEAD_SRC.replace(/\/\*[\s\S]*?\*\//g, "").replace(/\/\/[^\n]*/g, "");
+  for (const placeholder of [/>\s*—\s*</, /skeleton/i, /animate-pulse/]) {
+    assert.doesNotMatch(stripped, placeholder, "an absent rate is absent, not a placeholder");
+  }
 });
 
 /* ------------------------------------------------------------------ *

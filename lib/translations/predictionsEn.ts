@@ -122,6 +122,14 @@ export const predictionsEn = {
   heroFunnelInScope: "In scope",
   heroFunnelQualified: "Cleared threshold",
   heroFunnelFeatured: "Featured",
+  /*
+   * The † definition. "Cleared threshold" names the rule that actually runs — a market-potential
+   * comparison — and this line says so, so the marker on the funnel is never a claim a reader
+   * cannot check. It deliberately does NOT use the word "qualified": that belongs to the evidence
+   * model alone (§18.4).
+   */
+  heroFunnelFootnote:
+    "Cleared threshold counts fixtures whose provider potential met the published market threshold for the day. It is a filter, not a verdict on the fixture.",
   heroLeadTitle: "Today's strongest research",
   heroLeadNote: "1 of {count} shown",
   heroSupportingTitle: "Supporting research",
