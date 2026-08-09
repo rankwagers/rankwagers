@@ -70,7 +70,7 @@ const mkSnapshot = (markets: SupportedMarket[], capturedAt = ANCHOR): EvidenceSn
   return r.snapshot;
 };
 
-const mkRow = (over: Partial<FootyMatchRow> = {}): FootyMatchRow => ({ matchId: FIX, homeTeam: "H", awayTeam: "A", competition: "L", country: "C", flag: "", kickoffTime: 1_754_000_000, kickoff: "2026-08-01T18:00:00.000Z", over15Pct: 0, fhOver05Pct: 0, over25Pct: 0, shOver05Pct: 0, status: "finished", isLive: false, isFinished: true, homeScore: 2, awayScore: 1, htHome: 1, htAway: 0, minute: 90, highlightPct: 0, ...over });
+const mkRow = (over: Partial<FootyMatchRow> = {}): FootyMatchRow => ({ matchId: FIX, homeTeam: "H", awayTeam: "A", competition: "L", country: "C", flag: "", kickoffTime: 1_785_607_200, kickoff: "2026-08-01T18:00:00.000Z", over15Pct: 0, fhOver05Pct: 0, over25Pct: 0, shOver05Pct: 0, status: "finished", isLive: false, isFinished: true, homeScore: 2, awayScore: 1, htHome: 1, htAway: 0, minute: 90, highlightPct: 0, ...over });
 
 function reset(): void {
   resetJobLog();

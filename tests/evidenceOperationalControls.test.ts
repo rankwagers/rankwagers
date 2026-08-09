@@ -102,7 +102,7 @@ const mkRow = (over: Partial<FootyMatchRow> = {}): FootyMatchRow => ({
   competition: "L",
   country: "C",
   flag: "",
-  kickoffTime: 1_754_000_000,
+  kickoffTime: 1_785_607_200, // = the row's own 2026-08-01T18:00Z — captures in these fixtures are PRE-kickoff (truth-pass law),
   kickoff: "2026-08-01T18:00:00.000Z",
   over15Pct: 0,
   fhOver05Pct: 0,

@@ -262,7 +262,13 @@ function collectProductionSources(): string[] {
   return files;
 }
 
-test("15: readDailyArchiveStrict has zero production callers (dormancy — RF-1 broadened)", () => {
+test("15: readDailyArchiveStrict has exactly the sanctioned production caller (RF-1, activated)", () => {
+  /*
+   * The dormancy pin's successor. The settlement campaign built Slice 4's rows-projection
+   * bridge (`candidates/archive-rows.ts`) — the ONE production caller the reader was always
+   * waiting for. Anything beyond that single sanctioned module is still an offence: the strict
+   * reader is a settlement-side seam, not a general-purpose archive API.
+   */
   const offenders: string[] = [];
   for (const abs of collectProductionSources()) {
     if (path.resolve(abs) === DEFINING_MODULE) continue; // the definition itself is allowed
@@ -277,8 +283,8 @@ test("15: readDailyArchiveStrict has zero production callers (dormancy — RF-1 
   offenders.sort(); // deterministic ordering before assertion
   assert.deepEqual(
     offenders,
-    [],
-    `readDailyArchiveStrict must have zero production callers; found in: ${offenders.join(", ")}`
+    ["lib/evidence-capture/candidates/archive-rows.ts"],
+    `readDailyArchiveStrict allows exactly the Slice-4 bridge; found in: ${offenders.join(", ")}`
   );
 });
 

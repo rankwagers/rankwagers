@@ -83,7 +83,7 @@ const mkRow = (over: Partial<FootyMatchRow> = {}): FootyMatchRow => ({
   competition: "L",
   country: "C",
   flag: "",
-  kickoffTime: 1_754_000_000,
+  kickoffTime: 1_785_607_200, // = the row's own 2026-08-01T18:00Z — captures in these fixtures are PRE-kickoff (truth-pass law),
   kickoff: "2026-08-01T18:00:00.000Z",
   over15Pct: 0,
   fhOver05Pct: 0,
@@ -553,11 +553,23 @@ test("scope: settlement-pipeline.ts CODE contains no correctionCause and no curr
   assert.equal(code.includes("currentValidationHeads"), false, "no currentValidationHeads consumed in code");
 });
 
-test("scope: prediction-settlement cron route remains the dormant one-line M9 delegate", () => {
+test("scope: prediction-settlement cron route delegates to the fail-closed composition", () => {
+  /*
+   * The dormancy pin's successor: the settlement campaign wired the route to the mode-aware
+   * composition. What this pin now protects is the fail-closed shape — one delegate, whose OFF
+   * path is byte-for-byte the old bare job, with the master flag still gating inside the
+   * runner. The route itself still wires no producer and holds no logic.
+   */
   const route = readFileSync(
     path.join(process.cwd(), "app/api/internal/cron/prediction-settlement/route.ts"),
     "utf8"
   );
-  assert.ok(route.includes("runPredictionSettlementJob()"), "route calls the bare job (no producer)");
-  assert.equal(route.includes("provideCandidates"), false, "route wires no producer");
+  assert.ok(route.includes("runComposedSettlementJob()"), "route calls the composition, bare");
+  assert.equal(route.includes("provideCandidates"), false, "the route itself wires no producer");
+  const composed = readFileSync(
+    path.join(process.cwd(), "lib/evidence-capture/jobs/composed-settlement.ts"),
+    "utf8"
+  );
+  assert.match(composed, /if \(mode === "off"\) \{[\s\S]*?runPredictionSettlementJob\(\{ env \}\)/,
+    "OFF mode is today's bare flag-gated job, exactly");
 });
