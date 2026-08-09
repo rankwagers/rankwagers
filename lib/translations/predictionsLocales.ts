@@ -92,6 +92,60 @@ const pt: PredictionStrings = mergePredictions({
   matchDetailAiReason: "Por quê",
   matchDetailPlayedNote: "Amostra da temporada: {home} jogos em casa · {away} fora",
   matchDetailError: "Não foi possível carregar os detalhes do jogo.",
+  /* Fixture page — the five-level architecture (fx*), translated in the close-out pass. */
+  fxLeadEyebrow: "Achado principal",
+  fxSupportsTitle: "Sinais de apoio",
+  fxSupportsDescription:
+    "Cada linha segue a mesma gramática: o achado, a frequência, o número de jogos e a taxa da liga como referência.",
+  fxExplainerLabel: "Como classificamos",
+  fxExplainerBody:
+    "Cada sinal é pontuado pela distância entre a sua taxa e a taxa da liga nesta competição, ponderada pelo tamanho da amostra (n/(n+5)). Menos de cinco jogos nunca entra no ranking — uma sequência curta é contexto, não um achado. Um mercado sem referência da liga nunca é comparado a um número inventado; fica no detalhe completo abaixo. O sinal mais forte só lidera a página quando supera um limiar fixo; quando nenhum supera, a página fica sem achado principal em vez de fabricar um.",
+  fxSignalLine: "{finding}: {count} de {scope} ({rate}%) — média da liga {baseline}%.",
+  fxSignalLineNoBaseline: "{finding}: {count} de {scope} ({rate}%) — sem referência da liga.",
+  fxScopeHomeVenue: "{n} jogos em casa do {team} nesta temporada",
+  fxScopeAwayVenue: "{n} jogos fora do {team} nesta temporada",
+  fxScopeRecentHome: "últimos {n} jogos do {team} em casa",
+  fxScopeRecentAway: "últimos {n} jogos do {team} fora",
+  fxScopeH2h: "últimos {n} confrontos diretos",
+  fxFindingOver15Up: "Os gols continuam saindo",
+  fxFindingOver15Down: "Gols estão escassos",
+  fxFindingOver25Up: "Jogos de muitos gols continuam",
+  fxFindingOver25Down: "Jogos de muitos gols são raros",
+  fxFindingOver35Up: "Jogos de quatro gols continuam",
+  fxFindingOver35Down: "Jogos de quatro gols são raros",
+  fxFindingFh05Up: "Gols no primeiro tempo continuam",
+  fxFindingFh05Down: "Primeiros tempos começam quietos",
+  fxFindingSh05Up: "Gols no segundo tempo continuam",
+  fxFindingSh05Down: "Segundos tempos ficam quietos",
+  fxFindingBttsUp: "As duas equipes seguem marcando",
+  fxFindingBttsDown: "Um lado segue sem marcar",
+  fxFindingCleanSheetsUp: "Jogos sem sofrer gols continuam",
+  fxFindingCleanSheetsDown: "Jogos sem sofrer gols são raros",
+  fxFindingFailedToScoreUp: "Jogos sem marcar continuam",
+  fxFindingFailedToScoreDown: "Jogos sem marcar são raros",
+  fxModelTitle: "A visão do modelo",
+  fxModelPotentialLine:
+    "Potencial do provedor {pct}% em {market} — o número publicado pelo provedor. Não é confiança, não é preço e não carrega amostra.",
+  fxWhyTitle: "Por quê",
+  fxWhyIntro:
+    "Como os sinais classificados acima se encontram com a leitura do próprio modelo para este jogo.",
+  fxWhyAgrees:
+    "Os sinais classificados e a evidência pontuada do modelo apontam na mesma direção: {supporting} de {total} sinais apoiam a direção do mercado.",
+  fxWhyCaution:
+    "A forma recente diz “{finding}”, mas o modelo é cauteloso: {opposing} de {total} sinais pontuados se opõem, e este jogo não superou o limiar de qualificação do modelo.",
+  fxWhyModelCounts:
+    "Dos {total} sinais pontuados do modelo, {supporting} apoiam e {opposing} se opõem.",
+  fxWhyArchiveLine:
+    "Snapshot {seq}, capturado {time} · modelo {version} · pontuação de evidência {score} · {signals} sinais: {supporting} a favor, {opposing} contra.",
+  fxWhyArchiveNone:
+    "Nenhum snapshot de evidência foi capturado para este jogo ainda. A leitura acima é derivada ao vivo das mesmas taxas de mando e da referência da liga que o modelo lê — nada além disso é afirmado.",
+  fxDetailTitle: "Detalhe completo da pesquisa",
+  fxDetailDescription:
+    "Todas as taxas de mercado e mando por trás dos níveis acima — denso de propósito. Cada taxa carrega sua amostra; uma taxa ausente está ausente, não é zero.",
+  fxOperatorsTitle: "Opções de operadores",
+  fxOperatorsNote:
+    "A pesquisa editorial acima é separada das ofertas comerciais. Os links usam redirecionamentos assinados no servidor.",
+
 });
 
 const es: PredictionStrings = mergePredictions({
@@ -181,6 +235,60 @@ const es: PredictionStrings = mergePredictions({
   matchDetailAiReason: "Por qué",
   matchDetailPlayedNote: "Muestra de temporada: {home} en casa · {away} fuera",
   matchDetailError: "No se pudieron cargar los detalles del partido.",
+  /* Fixture page — the five-level architecture (fx*), translated in the close-out pass. */
+  fxLeadEyebrow: "Hallazgo principal",
+  fxSupportsTitle: "Señales de apoyo",
+  fxSupportsDescription:
+    "Cada fila sigue la misma gramática: el hallazgo, la frecuencia, el número de partidos y la tasa de la liga como referencia.",
+  fxExplainerLabel: "Cómo se clasifican",
+  fxExplainerBody:
+    "Cada señal se puntúa por la distancia entre su tasa y la tasa de la liga en esta competición, ponderada por el tamaño de la muestra (n/(n+5)). Menos de cinco partidos nunca entra en el ranking — una racha corta es contexto, no un hallazgo. Un mercado sin referencia de liga nunca se compara con un número inventado; vive en el detalle completo de abajo. La señal más fuerte solo lidera la página cuando supera un umbral fijo; cuando ninguna lo hace, la página queda sin hallazgo principal en lugar de fabricarlo.",
+  fxSignalLine: "{finding}: {count} de {scope} ({rate}%) — media de la liga {baseline}%.",
+  fxSignalLineNoBaseline: "{finding}: {count} de {scope} ({rate}%) — sin referencia de la liga.",
+  fxScopeHomeVenue: "{n} partidos en casa del {team} esta temporada",
+  fxScopeAwayVenue: "{n} partidos fuera del {team} esta temporada",
+  fxScopeRecentHome: "últimos {n} partidos del {team} en casa",
+  fxScopeRecentAway: "últimos {n} partidos del {team} fuera",
+  fxScopeH2h: "últimos {n} enfrentamientos directos",
+  fxFindingOver15Up: "Los goles siguen llegando",
+  fxFindingOver15Down: "Los goles escasean",
+  fxFindingOver25Up: "Los partidos con muchos goles continúan",
+  fxFindingOver25Down: "Los partidos con muchos goles son raros",
+  fxFindingOver35Up: "Los partidos de cuatro goles continúan",
+  fxFindingOver35Down: "Los partidos de cuatro goles son raros",
+  fxFindingFh05Up: "Los goles en la primera parte continúan",
+  fxFindingFh05Down: "Las primeras partes empiezan tranquilas",
+  fxFindingSh05Up: "Los goles en la segunda parte continúan",
+  fxFindingSh05Down: "Las segundas partes siguen tranquilas",
+  fxFindingBttsUp: "Ambos equipos siguen marcando",
+  fxFindingBttsDown: "Un lado sigue sin marcar",
+  fxFindingCleanSheetsUp: "Las porterías a cero continúan",
+  fxFindingCleanSheetsDown: "Las porterías a cero son raras",
+  fxFindingFailedToScoreUp: "Los partidos sin marcar continúan",
+  fxFindingFailedToScoreDown: "Los partidos sin marcar son raros",
+  fxModelTitle: "La visión del modelo",
+  fxModelPotentialLine:
+    "Potencial del proveedor {pct}% en {market} — la cifra publicada por el proveedor. No es confianza, no es un precio y no lleva muestra.",
+  fxWhyTitle: "Por qué",
+  fxWhyIntro:
+    "Cómo las señales clasificadas de arriba se encuentran con la lectura del propio modelo para este partido.",
+  fxWhyAgrees:
+    "Las señales clasificadas y la evidencia puntuada del modelo apuntan en la misma dirección: {supporting} de {total} señales apoyan la dirección del mercado.",
+  fxWhyCaution:
+    "La forma reciente dice «{finding}», pero el modelo es cauto: {opposing} de {total} señales puntuadas se oponen, y este partido no ha superado el umbral de calificación del modelo.",
+  fxWhyModelCounts:
+    "De las {total} señales puntuadas del modelo, {supporting} apoyan y {opposing} se oponen.",
+  fxWhyArchiveLine:
+    "Snapshot {seq}, capturado {time} · modelo {version} · puntuación de evidencia {score} · {signals} señales: {supporting} a favor, {opposing} en contra.",
+  fxWhyArchiveNone:
+    "Aún no se ha capturado ningún snapshot de evidencia para este partido. La lectura de arriba se deriva en vivo de las mismas tasas por sede y la referencia de la liga que lee el modelo — no se afirma nada más.",
+  fxDetailTitle: "Detalle completo de la investigación",
+  fxDetailDescription:
+    "Todas las tasas de mercado y sede detrás de los niveles de arriba — denso a propósito. Cada tasa lleva su muestra; una tasa ausente está ausente, no es cero.",
+  fxOperatorsTitle: "Opciones de operadores",
+  fxOperatorsNote:
+    "La investigación editorial de arriba está separada de las ofertas comerciales. Los enlaces usan redirecciones firmadas en el servidor.",
+
 });
 
 const esEs: PredictionStrings = {
@@ -276,6 +384,60 @@ const de: PredictionStrings = mergePredictions({
   matchDetailAiReason: "Warum",
   matchDetailPlayedNote: "Saisonstichprobe: {home} Heim · {away} Auswärts",
   matchDetailError: "Spieldetails konnten nicht geladen werden.",
+  /* Fixture page — the five-level architecture (fx*), translated in the close-out pass. */
+  fxLeadEyebrow: "Zentraler Befund",
+  fxSupportsTitle: "Stützende Signale",
+  fxSupportsDescription:
+    "Jede Zeile folgt derselben Grammatik: der Befund, die Häufigkeit, die Zahl der Spiele und der Ligaschnitt als Referenz.",
+  fxExplainerLabel: "So wird sortiert",
+  fxExplainerBody:
+    "Jedes Signal wird nach dem Abstand seiner Quote zum Ligaschnitt dieser Liga bewertet, gewichtet mit der Stichprobengröße (n/(n+5)). Weniger als fünf Spiele kommen nie in die Rangliste — eine kurze Serie ist Kontext, kein Befund. Ein Markt ohne Liga-Referenz wird nie mit einer erfundenen Zahl verglichen; er steht im vollständigen Detail unten. Das stärkste Signal führt die Seite nur an, wenn es eine feste Schwelle überschreitet; schafft das keines, bleibt die Seite ohne zentralen Befund, statt einen zu erfinden.",
+  fxSignalLine: "{finding}: {count} von {scope} ({rate}%) — Ligaschnitt {baseline}%.",
+  fxSignalLineNoBaseline: "{finding}: {count} von {scope} ({rate}%) — keine Liga-Referenz.",
+  fxScopeHomeVenue: "{n} Heimspielen von {team} in dieser Saison",
+  fxScopeAwayVenue: "{n} Auswärtsspielen von {team} in dieser Saison",
+  fxScopeRecentHome: "den letzten {n} Heimspielen von {team}",
+  fxScopeRecentAway: "den letzten {n} Auswärtsspielen von {team}",
+  fxScopeH2h: "den letzten {n} Duellen",
+  fxFindingOver15Up: "Die Tore fallen weiter",
+  fxFindingOver15Down: "Tore sind Mangelware",
+  fxFindingOver25Up: "Torreiche Spiele halten an",
+  fxFindingOver25Down: "Torreiche Spiele sind selten",
+  fxFindingOver35Up: "Spiele mit vier Toren halten an",
+  fxFindingOver35Down: "Spiele mit vier Toren sind selten",
+  fxFindingFh05Up: "Tore vor der Pause halten an",
+  fxFindingFh05Down: "Erste Halbzeiten beginnen ruhig",
+  fxFindingSh05Up: "Tore nach der Pause halten an",
+  fxFindingSh05Down: "Zweite Halbzeiten bleiben ruhig",
+  fxFindingBttsUp: "Beide Teams treffen weiter",
+  fxFindingBttsDown: "Eine Seite bleibt weiter ohne Tor",
+  fxFindingCleanSheetsUp: "Zu-null-Spiele halten an",
+  fxFindingCleanSheetsDown: "Zu-null-Spiele sind selten",
+  fxFindingFailedToScoreUp: "Torlose Auftritte halten an",
+  fxFindingFailedToScoreDown: "Torlose Auftritte sind selten",
+  fxModelTitle: "Die Sicht des Modells",
+  fxModelPotentialLine:
+    "Anbieter-Potenzial {pct}% auf {market} — die veröffentlichte Zahl des Anbieters. Keine Konfidenz, kein Preis, und ohne Stichprobe.",
+  fxWhyTitle: "Warum",
+  fxWhyIntro:
+    "Wie die oben gereihten Signale auf die eigene Lesart des Modells für dieses Spiel treffen.",
+  fxWhyAgrees:
+    "Die gereihten Signale und die bewertete Evidenz des Modells zeigen in dieselbe Richtung: {supporting} von {total} Signalen stützen die Marktrichtung.",
+  fxWhyCaution:
+    "Die jüngste Form sagt „{finding}“, doch das Modell bleibt vorsichtig: {opposing} von {total} bewerteten Signalen sprechen dagegen, und dieses Spiel hat die Qualifikationsschwelle des Modells nicht überschritten.",
+  fxWhyModelCounts:
+    "Von den {total} bewerteten Signalen des Modells stützen {supporting}, {opposing} sprechen dagegen.",
+  fxWhyArchiveLine:
+    "Snapshot {seq}, erfasst {time} · Modell {version} · Evidenz-Score {score} · {signals} Signale: {supporting} dafür, {opposing} dagegen.",
+  fxWhyArchiveNone:
+    "Für dieses Spiel wurde noch kein Evidenz-Snapshot erfasst. Die Lesart oben wird live aus denselben Heim-/Auswärtsquoten und der Liga-Referenz abgeleitet, die das Modell liest — mehr wird nicht behauptet.",
+  fxDetailTitle: "Vollständiges Recherche-Detail",
+  fxDetailDescription:
+    "Alle Markt- und Heim-/Auswärtsquoten hinter den Ebenen oben — bewusst dicht. Jede Quote trägt ihre Stichprobe; eine fehlende Quote fehlt, sie ist nicht null.",
+  fxOperatorsTitle: "Anbieter-Optionen",
+  fxOperatorsNote:
+    "Die redaktionelle Recherche oben ist von kommerziellen Angeboten getrennt. Links nutzen serversignierte Weiterleitungen.",
+
 });
 
 const it: PredictionStrings = mergePredictions({
@@ -365,6 +527,60 @@ const it: PredictionStrings = mergePredictions({
   matchDetailAiReason: "Perché",
   matchDetailPlayedNote: "Campione stagione: {home} casa · {away} trasferta",
   matchDetailError: "Impossibile caricare i dettagli della partita.",
+  /* Fixture page — the five-level architecture (fx*), translated in the close-out pass. */
+  fxLeadEyebrow: "Riscontro principale",
+  fxSupportsTitle: "Segnali a supporto",
+  fxSupportsDescription:
+    "Ogni riga segue la stessa grammatica: il riscontro, la frequenza, il numero di partite e il tasso della lega come riferimento.",
+  fxExplainerLabel: "Come vengono ordinati",
+  fxExplainerBody:
+    "Ogni segnale è valutato in base alla distanza tra il suo tasso e il tasso della lega in questa competizione, ponderata per la dimensione del campione (n/(n+5)). Meno di cinque partite non entra mai in classifica — una serie breve è contesto, non un riscontro. Un mercato senza riferimento di lega non viene mai confrontato con un numero inventato; vive nel dettaglio completo qui sotto. Il segnale più forte guida la pagina solo se supera una soglia fissa; quando nessuno la supera, la pagina resta senza riscontro principale invece di fabbricarne uno.",
+  fxSignalLine: "{finding}: {count} su {scope} ({rate}%) — media della lega {baseline}%.",
+  fxSignalLineNoBaseline: "{finding}: {count} su {scope} ({rate}%) — nessun riferimento di lega.",
+  fxScopeHomeVenue: "{n} partite in casa del {team} in questa stagione",
+  fxScopeAwayVenue: "{n} partite in trasferta del {team} in questa stagione",
+  fxScopeRecentHome: "le ultime {n} partite del {team} in casa",
+  fxScopeRecentAway: "le ultime {n} partite del {team} in trasferta",
+  fxScopeH2h: "gli ultimi {n} scontri diretti",
+  fxFindingOver15Up: "I gol continuano ad arrivare",
+  fxFindingOver15Down: "I gol scarseggiano",
+  fxFindingOver25Up: "Le partite ricche di gol continuano",
+  fxFindingOver25Down: "Le partite ricche di gol sono rare",
+  fxFindingOver35Up: "Le partite da quattro gol continuano",
+  fxFindingOver35Down: "Le partite da quattro gol sono rare",
+  fxFindingFh05Up: "I gol nel primo tempo continuano",
+  fxFindingFh05Down: "I primi tempi partono quieti",
+  fxFindingSh05Up: "I gol nel secondo tempo continuano",
+  fxFindingSh05Down: "I secondi tempi restano quieti",
+  fxFindingBttsUp: "Entrambe le squadre continuano a segnare",
+  fxFindingBttsDown: "Una parte resta a secco",
+  fxFindingCleanSheetsUp: "Le porte inviolate continuano",
+  fxFindingCleanSheetsDown: "Le porte inviolate sono rare",
+  fxFindingFailedToScoreUp: "Le partite senza segnare continuano",
+  fxFindingFailedToScoreDown: "Le partite senza segnare sono rare",
+  fxModelTitle: "La lettura del modello",
+  fxModelPotentialLine:
+    "Potenziale del provider {pct}% su {market} — la cifra pubblicata dal provider. Non è confidenza, non è un prezzo e non porta campione.",
+  fxWhyTitle: "Perché",
+  fxWhyIntro:
+    "Come i segnali ordinati sopra incontrano la lettura del modello stesso per questa partita.",
+  fxWhyAgrees:
+    "I segnali ordinati e l'evidenza valutata del modello puntano nella stessa direzione: {supporting} dei suoi {total} segnali sostengono la direzione del mercato.",
+  fxWhyCaution:
+    "La forma recente dice “{finding}”, ma il modello resta cauto: {opposing} dei suoi {total} segnali valutati si oppongono, e questa partita non ha superato la soglia di qualificazione del modello.",
+  fxWhyModelCounts:
+    "Dei {total} segnali valutati del modello, {supporting} sostengono e {opposing} si oppongono.",
+  fxWhyArchiveLine:
+    "Snapshot {seq}, catturato {time} · modello {version} · punteggio di evidenza {score} · {signals} segnali: {supporting} a favore, {opposing} contrari.",
+  fxWhyArchiveNone:
+    "Per questa partita non è stato ancora catturato alcuno snapshot di evidenza. La lettura sopra è derivata dal vivo dagli stessi tassi per sede e dal riferimento di lega che il modello legge — nulla oltre viene affermato.",
+  fxDetailTitle: "Dettaglio completo della ricerca",
+  fxDetailDescription:
+    "Tutti i tassi di mercato e di sede dietro i livelli sopra — denso di proposito. Ogni tasso porta il suo campione; un tasso assente è assente, non è zero.",
+  fxOperatorsTitle: "Opzioni operatori",
+  fxOperatorsNote:
+    "La ricerca editoriale sopra è separata dalle offerte commerciali. I link usano redirect firmati lato server.",
+
 });
 
 const fr: PredictionStrings = mergePredictions({
@@ -454,6 +670,60 @@ const fr: PredictionStrings = mergePredictions({
   matchDetailAiReason: "Pourquoi",
   matchDetailPlayedNote: "Échantillon saison : {home} à domicile · {away} extérieur",
   matchDetailError: "Impossible de charger le détail du match.",
+  /* Fixture page — the five-level architecture (fx*), translated in the close-out pass. */
+  fxLeadEyebrow: "Constat principal",
+  fxSupportsTitle: "Signaux à l'appui",
+  fxSupportsDescription:
+    "Chaque ligne suit la même grammaire : le constat, la fréquence, le nombre de matchs et le taux de la ligue en référence.",
+  fxExplainerLabel: "Comment ils sont classés",
+  fxExplainerBody:
+    "Chaque signal est noté selon l'écart entre son taux et le taux de la ligue dans cette compétition, pondéré par la taille de l'échantillon (n/(n+5)). Moins de cinq matchs n'entre jamais au classement — une série courte est du contexte, pas un constat. Un marché sans référence de ligue n'est jamais comparé à un chiffre inventé ; il vit dans le détail complet ci-dessous. Le signal le plus fort ne mène la page que s'il franchit un seuil fixe ; quand aucun n'y parvient, la page reste sans constat principal plutôt que d'en fabriquer un.",
+  fxSignalLine: "{finding} : {count} sur {scope} ({rate}%) — moyenne de la ligue {baseline}%.",
+  fxSignalLineNoBaseline: "{finding} : {count} sur {scope} ({rate}%) — pas de référence de ligue.",
+  fxScopeHomeVenue: "les {n} matchs à domicile de {team} cette saison",
+  fxScopeAwayVenue: "les {n} matchs à l'extérieur de {team} cette saison",
+  fxScopeRecentHome: "les {n} derniers matchs de {team} à domicile",
+  fxScopeRecentAway: "les {n} derniers matchs de {team} à l'extérieur",
+  fxScopeH2h: "les {n} dernières confrontations",
+  fxFindingOver15Up: "Les buts continuent de tomber",
+  fxFindingOver15Down: "Les buts se font rares",
+  fxFindingOver25Up: "Les matchs à buts se poursuivent",
+  fxFindingOver25Down: "Les matchs à buts sont rares",
+  fxFindingOver35Up: "Les matchs à quatre buts se poursuivent",
+  fxFindingOver35Down: "Les matchs à quatre buts sont rares",
+  fxFindingFh05Up: "Les buts en première période continuent",
+  fxFindingFh05Down: "Les premières périodes démarrent calmes",
+  fxFindingSh05Up: "Les buts en seconde période continuent",
+  fxFindingSh05Down: "Les secondes périodes restent calmes",
+  fxFindingBttsUp: "Les deux équipes continuent de marquer",
+  fxFindingBttsDown: "Un camp reste muet",
+  fxFindingCleanSheetsUp: "Les clean sheets se poursuivent",
+  fxFindingCleanSheetsDown: "Les clean sheets sont rares",
+  fxFindingFailedToScoreUp: "Les matchs sans marquer se poursuivent",
+  fxFindingFailedToScoreDown: "Les matchs sans marquer sont rares",
+  fxModelTitle: "La lecture du modèle",
+  fxModelPotentialLine:
+    "Potentiel du fournisseur {pct}% sur {market} — le chiffre publié par le fournisseur. Ni une confiance, ni un prix, et sans échantillon.",
+  fxWhyTitle: "Pourquoi",
+  fxWhyIntro:
+    "Comment les signaux classés ci-dessus rencontrent la propre lecture du modèle pour ce match.",
+  fxWhyAgrees:
+    "Les signaux classés et l'évidence notée du modèle pointent dans la même direction : {supporting} de ses {total} signaux soutiennent la direction du marché.",
+  fxWhyCaution:
+    "La forme récente dit « {finding} », mais le modèle reste prudent : {opposing} de ses {total} signaux notés s'y opposent, et ce match n'a pas franchi le seuil de qualification du modèle.",
+  fxWhyModelCounts:
+    "Sur les {total} signaux notés du modèle, {supporting} soutiennent et {opposing} s'opposent.",
+  fxWhyArchiveLine:
+    "Snapshot {seq}, capturé {time} · modèle {version} · score d'évidence {score} · {signals} signaux : {supporting} pour, {opposing} contre.",
+  fxWhyArchiveNone:
+    "Aucun snapshot d'évidence n'a encore été capturé pour ce match. La lecture ci-dessus est dérivée en direct des mêmes taux par lieu et de la référence de ligue que lit le modèle — rien de plus n'est affirmé.",
+  fxDetailTitle: "Détail complet de la recherche",
+  fxDetailDescription:
+    "Tous les taux de marché et de lieu derrière les niveaux ci-dessus — dense à dessein. Chaque taux porte son échantillon ; un taux absent est absent, pas zéro.",
+  fxOperatorsTitle: "Options d'opérateurs",
+  fxOperatorsNote:
+    "La recherche éditoriale ci-dessus est séparée des offres commerciales. Les liens utilisent des redirections signées côté serveur.",
+
 });
 
 export const predictionsByLocale: Record<Locale, PredictionStrings> = {

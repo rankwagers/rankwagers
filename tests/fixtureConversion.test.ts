@@ -200,18 +200,43 @@ test("L3 renders the archive provenance line from a real snapshot view shape", (
 
 /* ------------------------------------------------------------------ locales */
 
-test("every fx* key resolves to a non-empty string in all thirty locales", () => {
-  const fxKeys = Object.keys(predictionsEn).filter((k) => k.startsWith("fx"));
+test("every fx* key is translated in every non-EN locale, placeholders intact", () => {
+  const en = predictionsEn as Record<string, string>;
+  const fxKeys = Object.keys(en).filter((k) => k.startsWith("fx"));
   assert.ok(fxKeys.length >= 40, `the fixture keys exist — found ${fxKeys.length}`);
   const locales = Object.keys(predictionsByLocale);
   assert.ok(locales.length >= 30, `thirty locales resolve — found ${locales.length}`);
+
+  /*
+   * Cognate allowance: a value may legitimately match English when the language genuinely uses
+   * the same word (listed per key, never per locale). Anything else equal to EN is an
+   * untranslated fallback and fails — that is the debt this probe retires.
+   */
+  const COGNATE_OK = new Set<string>(); // empty today — every locale translated every key
+
   for (const locale of locales) {
     const strings = predictionsByLocale[locale as never] as Record<string, string>;
     for (const key of fxKeys) {
+      const value = strings[key];
       assert.ok(
-        typeof strings[key] === "string" && strings[key].length > 0,
-        `${locale}.${key} must resolve (EN fallback is the stated interim)`
+        typeof value === "string" && value.length > 0,
+        `${locale}.${key} must resolve`
       );
+      if (locale !== "en" && !COGNATE_OK.has(key)) {
+        assert.notEqual(
+          value,
+          en[key],
+          `${locale}.${key} still falls back to English — the translation debt returned`
+        );
+      }
+      // The sentence grammar survives translation: every placeholder the English carries
+      // must appear in the localized template, or the page renders a hole.
+      for (const token of en[key].match(/\{[a-zA-Z]+\}/g) ?? []) {
+        assert.ok(
+          value.includes(token),
+          `${locale}.${key} lost the ${token} placeholder: ${value}`
+        );
+      }
     }
   }
 });

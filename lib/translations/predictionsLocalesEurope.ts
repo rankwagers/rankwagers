@@ -256,6 +256,60 @@ export const nl = euroPredictions({
   bibleMethodologyLink: "Lees de aanbiedersmethodologie →",
   bibleOperatorsTitle: "Vergelijk vergunde bookmakers",
   bibleOperatorsCompareLink: "Volledige aanbiedersranglijst",
+  /* Fixture page — the five-level architecture (fx*), translated in the close-out pass. */
+  fxLeadEyebrow: "Hoofdbevinding",
+  fxSupportsTitle: "Ondersteunende signalen",
+  fxSupportsDescription:
+    "Elke regel volgt dezelfde grammatica: de bevinding, hoe vaak, over hoeveel wedstrijden, tegen het competitiegemiddelde.",
+  fxExplainerLabel: "Hoe dit wordt gerangschikt",
+  fxExplainerBody:
+    "Elk signaal wordt gescoord op de afstand tussen zijn percentage en het competitiegemiddelde, gewogen naar steekproefgrootte (n/(n+5)). Minder dan vijf wedstrijden komt nooit in de rangschikking — een korte reeks is context, geen bevinding. Een markt zonder competitiereferentie wordt nooit vergeleken met een verzonnen getal; die staat in het volledige detail hieronder. Het sterkste signaal leidt de pagina alleen boven een vaste drempel; haalt niets die, dan heeft de pagina geen hoofdbevinding in plaats van een gefabriceerde.",
+  fxSignalLine: "{finding}: {count} van {scope} ({rate}%) — competitiegemiddelde {baseline}%.",
+  fxSignalLineNoBaseline: "{finding}: {count} van {scope} ({rate}%) — geen competitiereferentie.",
+  fxScopeHomeVenue: "{n} thuiswedstrijden van {team} dit seizoen",
+  fxScopeAwayVenue: "{n} uitwedstrijden van {team} dit seizoen",
+  fxScopeRecentHome: "de laatste {n} thuiswedstrijden van {team}",
+  fxScopeRecentAway: "de laatste {n} uitwedstrijden van {team}",
+  fxScopeH2h: "de laatste {n} onderlinge duels",
+  fxFindingOver15Up: "De doelpunten blijven komen",
+  fxFindingOver15Down: "Doelpunten zijn schaars",
+  fxFindingOver25Up: "Doelpuntrijke wedstrijden houden aan",
+  fxFindingOver25Down: "Doelpuntrijke wedstrijden zijn zeldzaam",
+  fxFindingOver35Up: "Wedstrijden met vier doelpunten houden aan",
+  fxFindingOver35Down: "Wedstrijden met vier doelpunten zijn zeldzaam",
+  fxFindingFh05Up: "Doelpunten voor rust blijven komen",
+  fxFindingFh05Down: "Eerste helften beginnen stil",
+  fxFindingSh05Up: "Doelpunten na rust blijven komen",
+  fxFindingSh05Down: "Tweede helften blijven stil",
+  fxFindingBttsUp: "Beide teams blijven scoren",
+  fxFindingBttsDown: "Eén kant blijft droog staan",
+  fxFindingCleanSheetsUp: "De nul blijft staan",
+  fxFindingCleanSheetsDown: "Clean sheets zijn zeldzaam",
+  fxFindingFailedToScoreUp: "Wedstrijden zonder eigen doelpunt houden aan",
+  fxFindingFailedToScoreDown: "Wedstrijden zonder eigen doelpunt zijn zeldzaam",
+  fxModelTitle: "De lezing van het model",
+  fxModelPotentialLine:
+    "Provider-potentieel {pct}% op {market} — het gepubliceerde cijfer van de provider. Geen zekerheidsmaat, geen prijs, en zonder steekproef.",
+  fxWhyTitle: "Waarom",
+  fxWhyIntro:
+    "Hoe de gerangschikte signalen hierboven de eigen lezing van het model voor deze wedstrijd ontmoeten.",
+  fxWhyAgrees:
+    "De gerangschikte signalen en het gescoorde bewijs van het model wijzen dezelfde kant op: {supporting} van de {total} signalen steunen de marktrichting.",
+  fxWhyCaution:
+    "De recente vorm zegt “{finding}”, maar het model blijft voorzichtig: {opposing} van de {total} gescoorde signalen spreken tegen, en deze wedstrijd haalde de kwalificatiedrempel van het model niet.",
+  fxWhyModelCounts:
+    "Van de {total} gescoorde signalen van het model steunen er {supporting} en spreken er {opposing} tegen.",
+  fxWhyArchiveLine:
+    "Snapshot {seq}, vastgelegd {time} · model {version} · bewijsscore {score} · {signals} signalen: {supporting} voor, {opposing} tegen.",
+  fxWhyArchiveNone:
+    "Voor deze wedstrijd is nog geen bewijssnapshot vastgelegd. De lezing hierboven is live afgeleid uit dezelfde venue-percentages en competitiereferentie die het model leest — meer wordt niet beweerd.",
+  fxDetailTitle: "Volledig onderzoeksdetail",
+  fxDetailDescription:
+    "Alle markt- en venue-percentages achter de niveaus hierboven — bewust dicht. Elk percentage draagt zijn steekproef; een ontbrekend percentage ontbreekt, het is geen nul.",
+  fxOperatorsTitle: "Aanbiedersopties",
+  fxOperatorsNote:
+    "Het redactionele onderzoek hierboven staat los van commerciële aanbiedingen. Links gebruiken servergetekende doorverwijzingen.",
+
 });
 
 export const pl = euroPredictions({
@@ -341,6 +395,60 @@ export const pl = euroPredictions({
   matchDetailAiReason: "Dlaczego",
   matchDetailPlayedNote: "Próbka sezonu: {home} u siebie · {away} wyjazd",
   matchDetailError: "Nie można załadować szczegółów meczu.",
+  /* Fixture page — the five-level architecture (fx*), translated in the close-out pass. */
+  fxLeadEyebrow: "Główne ustalenie",
+  fxSupportsTitle: "Sygnały wspierające",
+  fxSupportsDescription:
+    "Każdy wiersz ma tę samą gramatykę: ustalenie, częstość, liczba meczów i średnia ligi jako odniesienie.",
+  fxExplainerLabel: "Jak powstaje ranking",
+  fxExplainerBody:
+    "Każdy sygnał jest punktowany za odległość jego wskaźnika od średniej ligi w tych rozgrywkach, ważoną wielkością próby (n/(n+5)). Mniej niż pięć meczów nigdy nie wchodzi do rankingu — krótka seria to kontekst, nie ustalenie. Rynek bez ligowego odniesienia nigdy nie jest porównywany z wymyśloną liczbą; trafia do pełnych szczegółów poniżej. Najsilniejszy sygnał prowadzi stronę tylko powyżej stałego progu; gdy żaden go nie przekracza, strona nie ma głównego ustalenia zamiast sfabrykowanego.",
+  fxSignalLine: "{finding}: {count} z {scope} ({rate}%) — średnia ligi {baseline}%.",
+  fxSignalLineNoBaseline: "{finding}: {count} z {scope} ({rate}%) — brak ligowego odniesienia.",
+  fxScopeHomeVenue: "{n} meczów domowych {team} w tym sezonie",
+  fxScopeAwayVenue: "{n} meczów wyjazdowych {team} w tym sezonie",
+  fxScopeRecentHome: "ostatnich {n} meczów {team} u siebie",
+  fxScopeRecentAway: "ostatnich {n} meczów {team} na wyjeździe",
+  fxScopeH2h: "ostatnich {n} bezpośrednich spotkań",
+  fxFindingOver15Up: "Bramki wciąż padają",
+  fxFindingOver15Down: "Bramek jest mało",
+  fxFindingOver25Up: "Bramkostrzelne mecze trwają",
+  fxFindingOver25Down: "Bramkostrzelne mecze są rzadkie",
+  fxFindingOver35Up: "Mecze z czterema golami trwają",
+  fxFindingOver35Down: "Mecze z czterema golami są rzadkie",
+  fxFindingFh05Up: "Gole przed przerwą wciąż padają",
+  fxFindingFh05Down: "Pierwsze połowy zaczynają się spokojnie",
+  fxFindingSh05Up: "Gole po przerwie wciąż padają",
+  fxFindingSh05Down: "Drugie połowy pozostają spokojne",
+  fxFindingBttsUp: "Obie drużyny wciąż strzelają",
+  fxFindingBttsDown: "Jedna strona wciąż bez gola",
+  fxFindingCleanSheetsUp: "Czyste konta trwają",
+  fxFindingCleanSheetsDown: "Czyste konta są rzadkie",
+  fxFindingFailedToScoreUp: "Mecze bez zdobytej bramki trwają",
+  fxFindingFailedToScoreDown: "Mecze bez zdobytej bramki są rzadkie",
+  fxModelTitle: "Odczyt modelu",
+  fxModelPotentialLine:
+    "Potencjał dostawcy {pct}% na {market} — liczba opublikowana przez dostawcę. To nie pewność, nie cena i bez próby.",
+  fxWhyTitle: "Dlaczego",
+  fxWhyIntro:
+    "Jak sygnały z rankingu powyżej spotykają się z własnym odczytem modelu dla tego meczu.",
+  fxWhyAgrees:
+    "Sygnały z rankingu i punktowane dowody modelu wskazują ten sam kierunek: {supporting} z {total} sygnałów wspiera kierunek rynku.",
+  fxWhyCaution:
+    "Ostatnia forma mówi „{finding}”, ale model pozostaje ostrożny: {opposing} z {total} punktowanych sygnałów jest przeciw, a ten mecz nie przekroczył progu kwalifikacji modelu.",
+  fxWhyModelCounts:
+    "Z {total} punktowanych sygnałów modelu {supporting} wspiera, a {opposing} jest przeciw.",
+  fxWhyArchiveLine:
+    "Snapshot {seq}, zarejestrowany {time} · model {version} · wynik dowodowy {score} · {signals} sygnałów: {supporting} za, {opposing} przeciw.",
+  fxWhyArchiveNone:
+    "Dla tego meczu nie zarejestrowano jeszcze snapshotu dowodowego. Odczyt powyżej jest wyprowadzany na żywo z tych samych wskaźników dom/wyjazd i ligowego odniesienia, które czyta model — nic ponadto nie jest twierdzone.",
+  fxDetailTitle: "Pełne szczegóły badania",
+  fxDetailDescription:
+    "Wszystkie wskaźniki rynków i miejsc za poziomami powyżej — celowo gęste. Każdy wskaźnik niesie swoją próbę; brakujący wskaźnik jest brakujący, nie zerowy.",
+  fxOperatorsTitle: "Opcje operatorów",
+  fxOperatorsNote:
+    "Redakcyjne badanie powyżej jest oddzielone od ofert komercyjnych. Linki używają podpisanych przekierowań serwera.",
+
 });
 
 export const cs = euroPredictions({
@@ -426,6 +534,59 @@ export const cs = euroPredictions({
   matchDetailAiReason: "Proč",
   matchDetailPlayedNote: "Vzorek sezóny: {home} doma · {away} venku",
   matchDetailError: "Nelze načíst detail zápasu.",
+  /* Fixture page — the five-level architecture (fx*), translated in the close-out pass. */
+  fxLeadEyebrow: "Hlavní zjištění",
+  fxSupportsTitle: "Podpůrné signály",
+  fxSupportsDescription:
+    "Každý řádek má stejnou gramatiku: zjištění, četnost, počet zápasů a ligový průměr jako měřítko.",
+  fxExplainerLabel: "Jak se řadí",
+  fxExplainerBody:
+    "Každý signál je hodnocen podle vzdálenosti jeho míry od ligového průměru v této soutěži, vážené velikostí vzorku (n/(n+5)). Méně než pět zápasů se nikdy neřadí — krátká série je kontext, ne zjištění. Trh bez ligového měřítka se nikdy nesrovnává s vymyšleným číslem; žije v plném detailu níže. Nejsilnější signál vede stránku jen nad pevným prahem; když ho nic nepřekročí, stránka hlavní zjištění nemá, místo aby ho vyráběla.",
+  fxSignalLine: "{finding}: {count} z {scope} ({rate}%) — ligový průměr {baseline}%.",
+  fxSignalLineNoBaseline: "{finding}: {count} z {scope} ({rate}%) — bez ligového měřítka.",
+  fxScopeHomeVenue: "{n} domácích zápasů {team} v této sezóně",
+  fxScopeAwayVenue: "{n} venkovních zápasů {team} v této sezóně",
+  fxScopeRecentHome: "posledních {n} zápasů {team} doma",
+  fxScopeRecentAway: "posledních {n} zápasů {team} venku",
+  fxScopeH2h: "posledních {n} vzájemných zápasů",
+  fxFindingOver15Up: "Góly dál padají",
+  fxFindingOver15Down: "Gólů je málo",
+  fxFindingOver25Up: "Gólové zápasy pokračují",
+  fxFindingOver25Down: "Gólové zápasy jsou vzácné",
+  fxFindingOver35Up: "Zápasy o čtyřech gólech pokračují",
+  fxFindingOver35Down: "Zápasy o čtyřech gólech jsou vzácné",
+  fxFindingFh05Up: "Góly v prvním poločase pokračují",
+  fxFindingFh05Down: "První poločasy začínají tiše",
+  fxFindingSh05Up: "Góly ve druhém poločase pokračují",
+  fxFindingSh05Down: "Druhé poločasy zůstávají tiché",
+  fxFindingBttsUp: "Oba týmy dál skórují",
+  fxFindingBttsDown: "Jedna strana dál neskóruje",
+  fxFindingCleanSheetsUp: "Čistá konta pokračují",
+  fxFindingCleanSheetsDown: "Čistá konta jsou vzácná",
+  fxFindingFailedToScoreUp: "Zápasy bez vstřelené branky pokračují",
+  fxFindingFailedToScoreDown: "Zápasy bez vstřelené branky jsou vzácné",
+  fxModelTitle: "Pohled modelu",
+  fxModelPotentialLine:
+    "Potenciál poskytovatele {pct}% na {market} — číslo zveřejněné poskytovatelem. Není to jistota, není to cena a nenese vzorek.",
+  fxWhyTitle: "Proč",
+  fxWhyIntro: "Jak se seřazené signály výše potkávají s vlastním čtením modelu pro tento zápas.",
+  fxWhyAgrees:
+    "Seřazené signály a hodnocené důkazy modelu ukazují stejným směrem: {supporting} z {total} signálů podporuje směr trhu.",
+  fxWhyCaution:
+    "Nedávná forma říká „{finding}“, ale model zůstává opatrný: {opposing} z {total} hodnocených signálů je proti a tento zápas nepřekročil kvalifikační práh modelu.",
+  fxWhyModelCounts:
+    "Z {total} hodnocených signálů modelu {supporting} podporuje a {opposing} je proti.",
+  fxWhyArchiveLine:
+    "Snapshot {seq}, zachycen {time} · model {version} · skóre důkazů {score} · {signals} signálů: {supporting} pro, {opposing} proti.",
+  fxWhyArchiveNone:
+    "Pro tento zápas zatím nebyl zachycen žádný snapshot důkazů. Čtení výše je odvozeno živě ze stejných měr dle prostředí a ligového měřítka, které model čte — nic víc se netvrdí.",
+  fxDetailTitle: "Kompletní detail výzkumu",
+  fxDetailDescription:
+    "Všechny míry trhů a prostředí za úrovněmi výše — záměrně husté. Každá míra nese svůj vzorek; chybějící míra chybí, není nula.",
+  fxOperatorsTitle: "Možnosti operátorů",
+  fxOperatorsNote:
+    "Redakční výzkum výše je oddělen od komerčních nabídek. Odkazy používají serverem podepsaná přesměrování.",
+
 });
 
 export const da = euroPredictions({
@@ -510,6 +671,60 @@ export const da = euroPredictions({
   matchDetailAiReason: "Hvorfor",
   matchDetailPlayedNote: "Sæsonudvalg: {home} hjemme · {away} ude",
   matchDetailError: "Kunne ikke hente kampdetaljer.",
+  /* Fixture page — the five-level architecture (fx*), translated in the close-out pass. */
+  fxLeadEyebrow: "Hovedfund",
+  fxSupportsTitle: "Støttende signaler",
+  fxSupportsDescription:
+    "Hver række følger samme grammatik: fundet, hyppigheden, antallet af kampe og ligaens gennemsnit som reference.",
+  fxExplainerLabel: "Sådan rangeres de",
+  fxExplainerBody:
+    "Hvert signal scores efter afstanden mellem dets rate og ligaens gennemsnit i denne turnering, vægtet med stikprøvens størrelse (n/(n+5)). Færre end fem kampe rangerer aldrig — en kort stime er kontekst, ikke et fund. Et marked uden ligareference sammenlignes aldrig med et opfundet tal; det bor i det fulde detaljeafsnit nedenfor. Det stærkeste signal fører kun siden over en fast tærskel; når intet når den, står siden uden hovedfund i stedet for et fabrikeret.",
+  fxSignalLine: "{finding}: {count} af {scope} ({rate}%) — ligagennemsnit {baseline}%.",
+  fxSignalLineNoBaseline: "{finding}: {count} af {scope} ({rate}%) — ingen ligareference.",
+  fxScopeHomeVenue: "{team}s {n} hjemmekampe i denne sæson",
+  fxScopeAwayVenue: "{team}s {n} udekampe i denne sæson",
+  fxScopeRecentHome: "{team}s seneste {n} hjemmekampe",
+  fxScopeRecentAway: "{team}s seneste {n} udekampe",
+  fxScopeH2h: "de seneste {n} indbyrdes opgør",
+  fxFindingOver15Up: "Målene bliver ved med at komme",
+  fxFindingOver15Down: "Målene er få",
+  fxFindingOver25Up: "Målrige kampe fortsætter",
+  fxFindingOver25Down: "Målrige kampe er sjældne",
+  fxFindingOver35Up: "Kampe med fire mål fortsætter",
+  fxFindingOver35Down: "Kampe med fire mål er sjældne",
+  fxFindingFh05Up: "Mål før pausen fortsætter",
+  fxFindingFh05Down: "Første halvlege starter stille",
+  fxFindingSh05Up: "Mål efter pausen fortsætter",
+  fxFindingSh05Down: "Anden halvlege forbliver stille",
+  fxFindingBttsUp: "Begge hold bliver ved med at score",
+  fxFindingBttsDown: "Én side scorer stadig ikke",
+  fxFindingCleanSheetsUp: "Rene bure fortsætter",
+  fxFindingCleanSheetsDown: "Rene bure er sjældne",
+  fxFindingFailedToScoreUp: "Kampe uden scoring fortsætter",
+  fxFindingFailedToScoreDown: "Kampe uden scoring er sjældne",
+  fxModelTitle: "Modellens læsning",
+  fxModelPotentialLine:
+    "Udbyderpotentiale {pct}% på {market} — udbyderens offentliggjorte tal. Ikke en sikkerhed, ikke en pris, og uden stikprøve.",
+  fxWhyTitle: "Hvorfor",
+  fxWhyIntro:
+    "Hvordan de rangerede signaler ovenfor møder modellens egen læsning af denne kamp.",
+  fxWhyAgrees:
+    "De rangerede signaler og modellens scorede evidens peger samme vej: {supporting} af dens {total} signaler støtter markedsretningen.",
+  fxWhyCaution:
+    "Den seneste form siger “{finding}”, men modellen er forsigtig: {opposing} af dens {total} scorede signaler taler imod, og denne kamp har ikke passeret modellens kvalifikationstærskel.",
+  fxWhyModelCounts:
+    "Af modellens {total} scorede signaler støtter {supporting}, og {opposing} taler imod.",
+  fxWhyArchiveLine:
+    "Snapshot {seq}, indfanget {time} · model {version} · evidensscore {score} · {signals} signaler: {supporting} for, {opposing} imod.",
+  fxWhyArchiveNone:
+    "Der er endnu ikke indfanget et evidenssnapshot for denne kamp. Læsningen ovenfor udledes live af de samme hjemme-/uderater og den ligareference, modellen læser — mere påstås ikke.",
+  fxDetailTitle: "Fuldt forskningsdetalje",
+  fxDetailDescription:
+    "Alle markeds- og banerater bag niveauerne ovenfor — tæt med vilje. Hver rate bærer sin stikprøve; en manglende rate mangler, den er ikke nul.",
+  fxOperatorsTitle: "Udbydermuligheder",
+  fxOperatorsNote:
+    "Den redaktionelle forskning ovenfor er adskilt fra kommercielle tilbud. Links bruger serversignerede viderestillinger.",
+
 });
 
 export const sv = euroPredictions({
@@ -594,6 +809,59 @@ export const sv = euroPredictions({
   matchDetailAiReason: "Varför",
   matchDetailPlayedNote: "Säsongsurval: {home} hemma · {away} borta",
   matchDetailError: "Kunde inte ladda matchdetaljer.",
+  /* Fixture page — the five-level architecture (fx*), translated in the close-out pass. */
+  fxLeadEyebrow: "Huvudfynd",
+  fxSupportsTitle: "Stödjande signaler",
+  fxSupportsDescription:
+    "Varje rad följer samma grammatik: fyndet, frekvensen, antalet matcher och ligans snitt som referens.",
+  fxExplainerLabel: "Så rangordnas de",
+  fxExplainerBody:
+    "Varje signal poängsätts efter avståndet mellan dess andel och ligans snitt i denna tävling, viktat med urvalets storlek (n/(n+5)). Färre än fem matcher rangordnas aldrig — en kort svit är kontext, inte ett fynd. En marknad utan ligareferens jämförs aldrig med ett påhittat tal; den bor i den fullständiga detaljen nedan. Den starkaste signalen leder sidan bara över en fast tröskel; när ingen når den står sidan utan huvudfynd i stället för ett tillverkat.",
+  fxSignalLine: "{finding}: {count} av {scope} ({rate}%) — ligasnitt {baseline}%.",
+  fxSignalLineNoBaseline: "{finding}: {count} av {scope} ({rate}%) — ingen ligareferens.",
+  fxScopeHomeVenue: "{team}s {n} hemmamatcher denna säsong",
+  fxScopeAwayVenue: "{team}s {n} bortamatcher denna säsong",
+  fxScopeRecentHome: "{team}s senaste {n} hemmamatcher",
+  fxScopeRecentAway: "{team}s senaste {n} bortamatcher",
+  fxScopeH2h: "de senaste {n} inbördes mötena",
+  fxFindingOver15Up: "Målen fortsätter komma",
+  fxFindingOver15Down: "Målen är få",
+  fxFindingOver25Up: "Målrika matcher fortsätter",
+  fxFindingOver25Down: "Målrika matcher är sällsynta",
+  fxFindingOver35Up: "Matcher med fyra mål fortsätter",
+  fxFindingOver35Down: "Matcher med fyra mål är sällsynta",
+  fxFindingFh05Up: "Mål före paus fortsätter",
+  fxFindingFh05Down: "Första halvlekar börjar tyst",
+  fxFindingSh05Up: "Mål efter paus fortsätter",
+  fxFindingSh05Down: "Andra halvlekar förblir tysta",
+  fxFindingBttsUp: "Båda lagen fortsätter göra mål",
+  fxFindingBttsDown: "Ena sidan förblir mållös",
+  fxFindingCleanSheetsUp: "Hållna nollor fortsätter",
+  fxFindingCleanSheetsDown: "Hållna nollor är sällsynta",
+  fxFindingFailedToScoreUp: "Matcher utan egna mål fortsätter",
+  fxFindingFailedToScoreDown: "Matcher utan egna mål är sällsynta",
+  fxModelTitle: "Modellens läsning",
+  fxModelPotentialLine:
+    "Leverantörspotential {pct}% på {market} — leverantörens publicerade siffra. Ingen konfidens, inget pris, och utan urval.",
+  fxWhyTitle: "Varför",
+  fxWhyIntro: "Hur de rangordnade signalerna ovan möter modellens egen läsning av denna match.",
+  fxWhyAgrees:
+    "De rangordnade signalerna och modellens poängsatta evidens pekar åt samma håll: {supporting} av dess {total} signaler stödjer marknadsriktningen.",
+  fxWhyCaution:
+    "Den senaste formen säger “{finding}”, men modellen är försiktig: {opposing} av dess {total} poängsatta signaler talar emot, och denna match har inte passerat modellens kvalificeringströskel.",
+  fxWhyModelCounts:
+    "Av modellens {total} poängsatta signaler stödjer {supporting} och {opposing} talar emot.",
+  fxWhyArchiveLine:
+    "Snapshot {seq}, infångad {time} · modell {version} · evidenspoäng {score} · {signals} signaler: {supporting} för, {opposing} emot.",
+  fxWhyArchiveNone:
+    "Inget evidenssnapshot har ännu infångats för denna match. Läsningen ovan härleds live ur samma hemma-/bortaandelar och den ligareferens modellen läser — inget mer påstås.",
+  fxDetailTitle: "Fullständig forskningsdetalj",
+  fxDetailDescription:
+    "Alla marknads- och arenaandelar bakom nivåerna ovan — tätt med avsikt. Varje andel bär sitt urval; en saknad andel saknas, den är inte noll.",
+  fxOperatorsTitle: "Operatörsalternativ",
+  fxOperatorsNote:
+    "Den redaktionella forskningen ovan är åtskild från kommersiella erbjudanden. Länkar använder serversignerade omdirigeringar.",
+
 });
 
 export const no = euroPredictions({
@@ -678,6 +946,59 @@ export const no = euroPredictions({
   matchDetailAiReason: "Hvorfor",
   matchDetailPlayedNote: "Sesongutvalg: {home} hjemme · {away} borte",
   matchDetailError: "Kunne ikke laste kampdetaljer.",
+  /* Fixture page — the five-level architecture (fx*), translated in the close-out pass. */
+  fxLeadEyebrow: "Hovedfunn",
+  fxSupportsTitle: "Støttende signaler",
+  fxSupportsDescription:
+    "Hver rad følger samme grammatikk: funnet, hyppigheten, antall kamper og ligasnittet som referanse.",
+  fxExplainerLabel: "Slik rangeres de",
+  fxExplainerBody:
+    "Hvert signal skåres etter avstanden mellom raten og ligasnittet i denne turneringen, vektet med utvalgets størrelse (n/(n+5)). Færre enn fem kamper rangeres aldri — en kort rekke er kontekst, ikke et funn. Et marked uten ligareferanse sammenlignes aldri med et oppdiktet tall; det bor i den fulle detaljen nedenfor. Det sterkeste signalet leder siden bare over en fast terskel; når ingen når den, står siden uten hovedfunn i stedet for et fabrikkert.",
+  fxSignalLine: "{finding}: {count} av {scope} ({rate}%) — ligasnitt {baseline}%.",
+  fxSignalLineNoBaseline: "{finding}: {count} av {scope} ({rate}%) — ingen ligareferanse.",
+  fxScopeHomeVenue: "{team}s {n} hjemmekamper denne sesongen",
+  fxScopeAwayVenue: "{team}s {n} bortekamper denne sesongen",
+  fxScopeRecentHome: "{team}s siste {n} hjemmekamper",
+  fxScopeRecentAway: "{team}s siste {n} bortekamper",
+  fxScopeH2h: "de siste {n} innbyrdes oppgjørene",
+  fxFindingOver15Up: "Målene fortsetter å komme",
+  fxFindingOver15Down: "Målene er få",
+  fxFindingOver25Up: "Målrike kamper fortsetter",
+  fxFindingOver25Down: "Målrike kamper er sjeldne",
+  fxFindingOver35Up: "Kamper med fire mål fortsetter",
+  fxFindingOver35Down: "Kamper med fire mål er sjeldne",
+  fxFindingFh05Up: "Mål før pause fortsetter",
+  fxFindingFh05Down: "Første omganger starter stille",
+  fxFindingSh05Up: "Mål etter pause fortsetter",
+  fxFindingSh05Down: "Andre omganger forblir stille",
+  fxFindingBttsUp: "Begge lag fortsetter å score",
+  fxFindingBttsDown: "Én side forblir målløs",
+  fxFindingCleanSheetsUp: "Holdte nuller fortsetter",
+  fxFindingCleanSheetsDown: "Holdte nuller er sjeldne",
+  fxFindingFailedToScoreUp: "Kamper uten egne mål fortsetter",
+  fxFindingFailedToScoreDown: "Kamper uten egne mål er sjeldne",
+  fxModelTitle: "Modellens lesning",
+  fxModelPotentialLine:
+    "Leverandørpotensial {pct}% på {market} — leverandørens publiserte tall. Ingen konfidens, ingen pris, og uten utvalg.",
+  fxWhyTitle: "Hvorfor",
+  fxWhyIntro: "Hvordan de rangerte signalene over møter modellens egen lesning av denne kampen.",
+  fxWhyAgrees:
+    "De rangerte signalene og modellens skårede evidens peker samme vei: {supporting} av dens {total} signaler støtter markedsretningen.",
+  fxWhyCaution:
+    "Den siste formen sier “{finding}”, men modellen er forsiktig: {opposing} av dens {total} skårede signaler taler imot, og denne kampen har ikke passert modellens kvalifiseringsterskel.",
+  fxWhyModelCounts:
+    "Av modellens {total} skårede signaler støtter {supporting}, og {opposing} taler imot.",
+  fxWhyArchiveLine:
+    "Snapshot {seq}, fanget {time} · modell {version} · evidensskår {score} · {signals} signaler: {supporting} for, {opposing} imot.",
+  fxWhyArchiveNone:
+    "Ingen evidenssnapshot er fanget for denne kampen ennå. Lesningen over utledes live fra de samme hjemme-/borteratene og ligareferansen modellen leser — mer påstås ikke.",
+  fxDetailTitle: "Full forskningsdetalj",
+  fxDetailDescription:
+    "Alle markeds- og banerater bak nivåene over — tett med hensikt. Hver rate bærer sitt utvalg; en manglende rate mangler, den er ikke null.",
+  fxOperatorsTitle: "Operatøralternativer",
+  fxOperatorsNote:
+    "Den redaksjonelle forskningen over er atskilt fra kommersielle tilbud. Lenker bruker serversignerte videresendinger.",
+
 });
 
 export const fi = euroPredictions({
@@ -762,6 +1083,59 @@ export const fi = euroPredictions({
   matchDetailAiReason: "Miksi",
   matchDetailPlayedNote: "Kausinäyte: {home} koti · {away} vieras",
   matchDetailError: "Ottelun tiedot ei ladattu.",
+  /* Fixture page — the five-level architecture (fx*), translated in the close-out pass. */
+  fxLeadEyebrow: "Päälöydös",
+  fxSupportsTitle: "Tukevat signaalit",
+  fxSupportsDescription:
+    "Jokainen rivi noudattaa samaa kielioppia: löydös, kuinka usein, kuinka monessa ottelussa ja sarjan keskiarvo vertailukohtana.",
+  fxExplainerLabel: "Näin järjestys syntyy",
+  fxExplainerBody:
+    "Jokainen signaali pisteytetään sen mukaan, kuinka kaukana sen osuus on sarjan keskiarvosta tässä kilpailussa, painotettuna otoskoolla (n/(n+5)). Alle viisi ottelua ei koskaan sijoitu — lyhyt putki on kontekstia, ei löydös. Markkinaa ilman sarjavertailua ei koskaan verrata keksittyyn lukuun; se elää alla olevassa täydessä erittelyssä. Vahvin signaali johtaa sivua vain kiinteän kynnyksen yli; kun mikään ei ylitä sitä, sivu jää ilman päälöydöstä valmistetun sijaan.",
+  fxSignalLine: "{finding}: {count}/{scope} ({rate}%) — sarjan keskiarvo {baseline}%.",
+  fxSignalLineNoBaseline: "{finding}: {count}/{scope} ({rate}%) — ei sarjavertailua.",
+  fxScopeHomeVenue: "{team}in {n} kotiottelusta tällä kaudella",
+  fxScopeAwayVenue: "{team}in {n} vierasottelusta tällä kaudella",
+  fxScopeRecentHome: "{team}in viimeisestä {n} kotiottelusta",
+  fxScopeRecentAway: "{team}in viimeisestä {n} vierasottelusta",
+  fxScopeH2h: "viimeisestä {n} keskinäisestä ottelusta",
+  fxFindingOver15Up: "Maaleja syntyy edelleen",
+  fxFindingOver15Down: "Maalit ovat vähissä",
+  fxFindingOver25Up: "Runsasmaaliset ottelut jatkuvat",
+  fxFindingOver25Down: "Runsasmaaliset ottelut ovat harvassa",
+  fxFindingOver35Up: "Neljän maalin ottelut jatkuvat",
+  fxFindingOver35Down: "Neljän maalin ottelut ovat harvassa",
+  fxFindingFh05Up: "Avausjakson maalit jatkuvat",
+  fxFindingFh05Down: "Ensimmäiset puoliajat alkavat hiljaa",
+  fxFindingSh05Up: "Toisen jakson maalit jatkuvat",
+  fxFindingSh05Down: "Toiset puoliajat pysyvät hiljaisina",
+  fxFindingBttsUp: "Molemmat joukkueet tekevät yhä maaleja",
+  fxFindingBttsDown: "Toinen puoli pysyy maalitta",
+  fxFindingCleanSheetsUp: "Nollapelit jatkuvat",
+  fxFindingCleanSheetsDown: "Nollapelit ovat harvassa",
+  fxFindingFailedToScoreUp: "Maalittomat esitykset jatkuvat",
+  fxFindingFailedToScoreDown: "Maalittomat esitykset ovat harvassa",
+  fxModelTitle: "Mallin näkemys",
+  fxModelPotentialLine:
+    "Tarjoajan potentiaali {pct}% markkinalla {market} — tarjoajan julkaisema luku. Ei luottamus, ei hinta, eikä sillä ole otosta.",
+  fxWhyTitle: "Miksi",
+  fxWhyIntro: "Miten yllä järjestetyt signaalit kohtaavat mallin oman luennan tästä ottelusta.",
+  fxWhyAgrees:
+    "Järjestetyt signaalit ja mallin pisteytetty näyttö osoittavat samaan suuntaan: {supporting}/{total} signaalia tukee markkinan suuntaa.",
+  fxWhyCaution:
+    "Viimeaikainen vire sanoo ”{finding}”, mutta malli on varovainen: {opposing}/{total} pisteytettyä signaalia on vastaan, eikä tämä ottelu ylittänyt mallin karsintakynnystä.",
+  fxWhyModelCounts:
+    "Mallin {total} pisteytetystä signaalista {supporting} tukee ja {opposing} on vastaan.",
+  fxWhyArchiveLine:
+    "Snapshot {seq}, tallennettu {time} · malli {version} · näyttöpisteet {score} · {signals} signaalia: {supporting} puolesta, {opposing} vastaan.",
+  fxWhyArchiveNone:
+    "Tälle ottelulle ei ole vielä tallennettu näyttö-snapshotia. Yllä oleva luenta johdetaan livenä samoista koti-/vierasosuuksista ja sarjavertailusta, joita malli lukee — muuta ei väitetä.",
+  fxDetailTitle: "Tutkimuksen täysi erittely",
+  fxDetailDescription:
+    "Kaikki markkina- ja kenttäosuudet yllä olevien tasojen takana — tarkoituksella tiivis. Jokainen osuus kantaa otoksensa; puuttuva osuus puuttuu, se ei ole nolla.",
+  fxOperatorsTitle: "Operaattorivaihtoehdot",
+  fxOperatorsNote:
+    "Yllä oleva toimituksellinen tutkimus on erillään kaupallisista tarjouksista. Linkit käyttävät palvelimen allekirjoittamia uudelleenohjauksia.",
+
 });
 
 export const ro = euroPredictions({
@@ -846,6 +1220,60 @@ export const ro = euroPredictions({
   matchDetailAiReason: "De ce",
   matchDetailPlayedNote: "Sample sezon: {home} acasă · {away} deplasare",
   matchDetailError: "Nu s-au putut încărca detaliile meciului.",
+  /* Fixture page — the five-level architecture (fx*), translated in the close-out pass. */
+  fxLeadEyebrow: "Constatarea principală",
+  fxSupportsTitle: "Semnale de susținere",
+  fxSupportsDescription:
+    "Fiecare rând urmează aceeași gramatică: constatarea, frecvența, numărul de meciuri și media ligii ca reper.",
+  fxExplainerLabel: "Cum se face clasamentul",
+  fxExplainerBody:
+    "Fiecare semnal este punctat după distanța dintre rata sa și media ligii în această competiție, ponderată cu mărimea eșantionului (n/(n+5)). Mai puțin de cinci meciuri nu intră niciodată în clasament — o serie scurtă este context, nu o constatare. O piață fără reper de ligă nu este comparată niciodată cu un număr inventat; trăiește în detaliul complet de mai jos. Cel mai puternic semnal conduce pagina doar peste un prag fix; când niciunul nu îl trece, pagina rămâne fără constatare principală în loc să fabrice una.",
+  fxSignalLine: "{finding}: {count} din {scope} ({rate}%) — media ligii {baseline}%.",
+  fxSignalLineNoBaseline: "{finding}: {count} din {scope} ({rate}%) — fără reper de ligă.",
+  fxScopeHomeVenue: "cele {n} meciuri de acasă ale {team} în acest sezon",
+  fxScopeAwayVenue: "cele {n} meciuri în deplasare ale {team} în acest sezon",
+  fxScopeRecentHome: "ultimele {n} meciuri de acasă ale {team}",
+  fxScopeRecentAway: "ultimele {n} meciuri în deplasare ale {team}",
+  fxScopeH2h: "ultimele {n} întâlniri directe",
+  fxFindingOver15Up: "Golurile continuă să vină",
+  fxFindingOver15Down: "Golurile sunt rare",
+  fxFindingOver25Up: "Meciurile cu multe goluri continuă",
+  fxFindingOver25Down: "Meciurile cu multe goluri sunt rare",
+  fxFindingOver35Up: "Meciurile cu patru goluri continuă",
+  fxFindingOver35Down: "Meciurile cu patru goluri sunt rare",
+  fxFindingFh05Up: "Golurile din prima repriză continuă",
+  fxFindingFh05Down: "Primele reprize încep liniștit",
+  fxFindingSh05Up: "Golurile din repriza a doua continuă",
+  fxFindingSh05Down: "Reprizele secunde rămân liniștite",
+  fxFindingBttsUp: "Ambele echipe continuă să marcheze",
+  fxFindingBttsDown: "O parte rămâne fără gol",
+  fxFindingCleanSheetsUp: "Porțile intacte continuă",
+  fxFindingCleanSheetsDown: "Porțile intacte sunt rare",
+  fxFindingFailedToScoreUp: "Meciurile fără gol marcat continuă",
+  fxFindingFailedToScoreDown: "Meciurile fără gol marcat sunt rare",
+  fxModelTitle: "Lectura modelului",
+  fxModelPotentialLine:
+    "Potențial furnizor {pct}% pe {market} — cifra publicată de furnizor. Nu e încredere, nu e preț și nu poartă eșantion.",
+  fxWhyTitle: "De ce",
+  fxWhyIntro:
+    "Cum se întâlnesc semnalele clasate de mai sus cu propria lectură a modelului pentru acest meci.",
+  fxWhyAgrees:
+    "Semnalele clasate și evidența punctată a modelului arată în aceeași direcție: {supporting} din {total} semnale susțin direcția pieței.",
+  fxWhyCaution:
+    "Forma recentă spune „{finding}”, dar modelul rămâne prudent: {opposing} din {total} semnale punctate se opun, iar acest meci nu a trecut pragul de calificare al modelului.",
+  fxWhyModelCounts:
+    "Din cele {total} semnale punctate ale modelului, {supporting} susțin și {opposing} se opun.",
+  fxWhyArchiveLine:
+    "Snapshot {seq}, capturat {time} · model {version} · scor de evidență {score} · {signals} semnale: {supporting} pentru, {opposing} împotrivă.",
+  fxWhyArchiveNone:
+    "Niciun snapshot de evidență nu a fost încă capturat pentru acest meci. Lectura de mai sus este derivată live din aceleași rate pe teren și reperul de ligă pe care le citește modelul — nimic în plus nu este afirmat.",
+  fxDetailTitle: "Detaliul complet al cercetării",
+  fxDetailDescription:
+    "Toate ratele de piață și de teren din spatele nivelurilor de mai sus — dens intenționat. Fiecare rată își poartă eșantionul; o rată absentă e absentă, nu zero.",
+  fxOperatorsTitle: "Opțiuni de operatori",
+  fxOperatorsNote:
+    "Cercetarea editorială de mai sus este separată de ofertele comerciale. Linkurile folosesc redirecționări semnate de server.",
+
 });
 
 export const el = euroPredictions({
@@ -930,6 +1358,60 @@ export const el = euroPredictions({
   matchDetailAiReason: "Γιατί",
   matchDetailPlayedNote: "Δείγμα σεζόν: {home} εντός · {away} εκτός",
   matchDetailError: "Δεν φορτώθηκαν λεπτομέρειες αγώνα.",
+  /* Fixture page — the five-level architecture (fx*), translated in the close-out pass. */
+  fxLeadEyebrow: "Κύριο εύρημα",
+  fxSupportsTitle: "Υποστηρικτικά σήματα",
+  fxSupportsDescription:
+    "Κάθε γραμμή ακολουθεί την ίδια γραμματική: το εύρημα, τη συχνότητα, τον αριθμό αγώνων και τον μέσο όρο της λίγκας ως αναφορά.",
+  fxExplainerLabel: "Πώς κατατάσσονται",
+  fxExplainerBody:
+    "Κάθε σήμα βαθμολογείται με την απόσταση του ποσοστού του από τον μέσο όρο της λίγκας σε αυτή τη διοργάνωση, σταθμισμένη με το μέγεθος του δείγματος (n/(n+5)). Κάτω από πέντε αγώνες δεν κατατάσσεται ποτέ — ένα σύντομο σερί είναι πλαίσιο, όχι εύρημα. Μια αγορά χωρίς αναφορά λίγκας δεν συγκρίνεται ποτέ με έναν επινοημένο αριθμό· ζει στην πλήρη ανάλυση παρακάτω. Το ισχυρότερο σήμα οδηγεί τη σελίδα μόνο πάνω από ένα σταθερό κατώφλι· όταν κανένα δεν το περνά, η σελίδα μένει χωρίς κύριο εύρημα αντί για ένα κατασκευασμένο.",
+  fxSignalLine: "{finding}: {count} από {scope} ({rate}%) — μέσος όρος λίγκας {baseline}%.",
+  fxSignalLineNoBaseline: "{finding}: {count} από {scope} ({rate}%) — χωρίς αναφορά λίγκας.",
+  fxScopeHomeVenue: "τους {n} εντός έδρας αγώνες της {team} φέτος",
+  fxScopeAwayVenue: "τους {n} εκτός έδρας αγώνες της {team} φέτος",
+  fxScopeRecentHome: "τους τελευταίους {n} εντός έδρας αγώνες της {team}",
+  fxScopeRecentAway: "τους τελευταίους {n} εκτός έδρας αγώνες της {team}",
+  fxScopeH2h: "τις τελευταίες {n} μεταξύ τους αναμετρήσεις",
+  fxFindingOver15Up: "Τα γκολ συνεχίζουν να έρχονται",
+  fxFindingOver15Down: "Τα γκολ σπανίζουν",
+  fxFindingOver25Up: "Οι αγώνες με πολλά γκολ συνεχίζονται",
+  fxFindingOver25Down: "Οι αγώνες με πολλά γκολ είναι σπάνιοι",
+  fxFindingOver35Up: "Οι αγώνες με τέσσερα γκολ συνεχίζονται",
+  fxFindingOver35Down: "Οι αγώνες με τέσσερα γκολ είναι σπάνιοι",
+  fxFindingFh05Up: "Τα γκολ πρώτου ημιχρόνου συνεχίζονται",
+  fxFindingFh05Down: "Τα πρώτα ημίχρονα ξεκινούν ήσυχα",
+  fxFindingSh05Up: "Τα γκολ δεύτερου ημιχρόνου συνεχίζονται",
+  fxFindingSh05Down: "Τα δεύτερα ημίχρονα μένουν ήσυχα",
+  fxFindingBttsUp: "Και οι δύο ομάδες συνεχίζουν να σκοράρουν",
+  fxFindingBttsDown: "Η μία πλευρά μένει χωρίς γκολ",
+  fxFindingCleanSheetsUp: "Τα ανέπαφα τέρματα συνεχίζονται",
+  fxFindingCleanSheetsDown: "Τα ανέπαφα τέρματα είναι σπάνια",
+  fxFindingFailedToScoreUp: "Οι αγώνες χωρίς δικό τους γκολ συνεχίζονται",
+  fxFindingFailedToScoreDown: "Οι αγώνες χωρίς δικό τους γκολ είναι σπάνιοι",
+  fxModelTitle: "Η ανάγνωση του μοντέλου",
+  fxModelPotentialLine:
+    "Δυναμικό παρόχου {pct}% στην αγορά {market} — ο δημοσιευμένος αριθμός του παρόχου. Ούτε βεβαιότητα, ούτε τιμή, και χωρίς δείγμα.",
+  fxWhyTitle: "Γιατί",
+  fxWhyIntro:
+    "Πώς τα κατατεταγμένα σήματα παραπάνω συναντούν τη δική του ανάγνωση του μοντέλου για αυτόν τον αγώνα.",
+  fxWhyAgrees:
+    "Τα κατατεταγμένα σήματα και τα βαθμολογημένα στοιχεία του μοντέλου δείχνουν την ίδια κατεύθυνση: {supporting} από τα {total} σήματα στηρίζουν την κατεύθυνση της αγοράς.",
+  fxWhyCaution:
+    "Η πρόσφατη φόρμα λέει «{finding}», αλλά το μοντέλο μένει επιφυλακτικό: {opposing} από τα {total} βαθμολογημένα σήματα αντιτίθενται, και ο αγώνας δεν πέρασε το κατώφλι πρόκρισης του μοντέλου.",
+  fxWhyModelCounts:
+    "Από τα {total} βαθμολογημένα σήματα του μοντέλου, {supporting} στηρίζουν και {opposing} αντιτίθενται.",
+  fxWhyArchiveLine:
+    "Snapshot {seq}, καταγράφηκε {time} · μοντέλο {version} · βαθμός στοιχείων {score} · {signals} σήματα: {supporting} υπέρ, {opposing} κατά.",
+  fxWhyArchiveNone:
+    "Δεν έχει καταγραφεί ακόμη snapshot στοιχείων για αυτόν τον αγώνα. Η ανάγνωση παραπάνω παράγεται ζωντανά από τα ίδια ποσοστά έδρας και την αναφορά λίγκας που διαβάζει το μοντέλο — τίποτα παραπάνω δεν δηλώνεται.",
+  fxDetailTitle: "Πλήρης λεπτομέρεια έρευνας",
+  fxDetailDescription:
+    "Όλα τα ποσοστά αγορών και έδρας πίσω από τα επίπεδα παραπάνω — πυκνά επίτηδες. Κάθε ποσοστό φέρει το δείγμα του· ένα ποσοστό που λείπει, λείπει — δεν είναι μηδέν.",
+  fxOperatorsTitle: "Επιλογές παρόχων",
+  fxOperatorsNote:
+    "Η συντακτική έρευνα παραπάνω είναι χωριστή από τις εμπορικές προσφορές. Οι σύνδεσμοι χρησιμοποιούν υπογεγραμμένες ανακατευθύνσεις διακομιστή.",
+
 });
 
 export const hu = euroPredictions({
@@ -1014,4 +1496,58 @@ export const hu = euroPredictions({
   matchDetailAiReason: "Miért",
   matchDetailPlayedNote: "Szezon minta: {home} hazai · {away} vendég",
   matchDetailError: "Meccs részletek nem töltődtek be.",
+  /* Fixture page — the five-level architecture (fx*), translated in the close-out pass. */
+  fxLeadEyebrow: "Fő megállapítás",
+  fxSupportsTitle: "Támogató jelek",
+  fxSupportsDescription:
+    "Minden sor ugyanazt a nyelvtant követi: a megállapítás, a gyakoriság, a mérkőzések száma és a liga átlaga viszonyítási pontként.",
+  fxExplainerLabel: "Így rangsorolunk",
+  fxExplainerBody:
+    "Minden jel pontszáma az aránya és a liga átlaga közötti távolság ebben a sorozatban, a minta méretével súlyozva (n/(n+5)). Öt mérkőzés alatt soha nem rangsorolódik — egy rövid széria kontextus, nem megállapítás. Liga-viszonyítás nélküli piacot soha nem hasonlítunk kitalált számhoz; az a lenti teljes részletben él. A legerősebb jel csak egy rögzített küszöb felett vezeti az oldalt; ha egyik sem éri el, az oldal fő megállapítás nélkül marad, nem gyárt egyet.",
+  fxSignalLine: "{finding}: {count} a(z) {scope} közül ({rate}%) — ligaátlag {baseline}%.",
+  fxSignalLineNoBaseline: "{finding}: {count} a(z) {scope} közül ({rate}%) — nincs liga-viszonyítás.",
+  fxScopeHomeVenue: "a {team} {n} hazai mérkőzése ebben a szezonban",
+  fxScopeAwayVenue: "a {team} {n} idegenbeli mérkőzése ebben a szezonban",
+  fxScopeRecentHome: "a {team} legutóbbi {n} hazai mérkőzése",
+  fxScopeRecentAway: "a {team} legutóbbi {n} idegenbeli mérkőzése",
+  fxScopeH2h: "a legutóbbi {n} egymás elleni mérkőzés",
+  fxFindingOver15Up: "A gólok csak jönnek",
+  fxFindingOver15Down: "Kevés a gól",
+  fxFindingOver25Up: "A gólgazdag meccsek folytatódnak",
+  fxFindingOver25Down: "A gólgazdag meccsek ritkák",
+  fxFindingOver35Up: "A négygólos meccsek folytatódnak",
+  fxFindingOver35Down: "A négygólos meccsek ritkák",
+  fxFindingFh05Up: "Az első félidős gólok folytatódnak",
+  fxFindingFh05Down: "Az első félidők csendesen indulnak",
+  fxFindingSh05Up: "A második félidős gólok folytatódnak",
+  fxFindingSh05Down: "A második félidők csendesek maradnak",
+  fxFindingBttsUp: "Mindkét csapat továbbra is betalál",
+  fxFindingBttsDown: "Az egyik oldal gól nélkül marad",
+  fxFindingCleanSheetsUp: "A kapott gól nélküli meccsek folytatódnak",
+  fxFindingCleanSheetsDown: "A kapott gól nélküli meccsek ritkák",
+  fxFindingFailedToScoreUp: "A gólszerzés nélküli meccsek folytatódnak",
+  fxFindingFailedToScoreDown: "A gólszerzés nélküli meccsek ritkák",
+  fxModelTitle: "A modell olvasata",
+  fxModelPotentialLine:
+    "Szolgáltatói potenciál {pct}% a(z) {market} piacon — a szolgáltató közzétett száma. Nem bizonyosság, nem ár, és nincs mögötte minta.",
+  fxWhyTitle: "Miért",
+  fxWhyIntro:
+    "Hogyan találkoznak a fent rangsorolt jelek a modell saját olvasatával erről a mérkőzésről.",
+  fxWhyAgrees:
+    "A rangsorolt jelek és a modell pontozott bizonyítékai ugyanabba az irányba mutatnak: {total} jelből {supporting} támogatja a piac irányát.",
+  fxWhyCaution:
+    "A friss forma azt mondja: „{finding}”, de a modell óvatos: {total} pontozott jelből {opposing} ellene szól, és ez a mérkőzés nem lépte át a modell kvalifikációs küszöbét.",
+  fxWhyModelCounts:
+    "A modell {total} pontozott jeléből {supporting} támogatja, {opposing} ellene szól.",
+  fxWhyArchiveLine:
+    "Snapshot {seq}, rögzítve {time} · modell {version} · bizonyítékpontszám {score} · {signals} jel: {supporting} mellette, {opposing} ellene.",
+  fxWhyArchiveNone:
+    "Ehhez a mérkőzéshez még nem készült bizonyíték-snapshot. A fenti olvasat élőben származik ugyanazokból a hazai/idegenbeli arányokból és liga-viszonyításból, amelyeket a modell olvas — ennél többet nem állítunk.",
+  fxDetailTitle: "Teljes kutatási részlet",
+  fxDetailDescription:
+    "Minden piaci és pálya szerinti arány a fenti szintek mögött — szándékosan sűrű. Minden arány hordozza a mintáját; a hiányzó arány hiányzik, nem nulla.",
+  fxOperatorsTitle: "Szolgáltatói lehetőségek",
+  fxOperatorsNote:
+    "A fenti szerkesztőségi kutatás elkülönül a kereskedelmi ajánlatoktól. A linkek szerver által aláírt átirányításokat használnak.",
+
 });
