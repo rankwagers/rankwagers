@@ -70,6 +70,8 @@ export type SettlementBatchCounts = {
   pending: number;
   /** Market not settleable from daily-list data. */
   unsupported: number;
+  /** Latest snapshot captured at/after kickoff — excluded from settlement (truth-pass law). */
+  skippedAfterKickoff: number;
   /** No snapshot for the fixture — nothing to settle. */
   notFound: number;
   /** C3 — row.matchId did not match the target fixtureId (skipped, never settled). */
@@ -104,6 +106,7 @@ function emptyCounts(): SettlementBatchCounts {
     noChange: 0,
     pending: 0,
     unsupported: 0,
+    skippedAfterKickoff: 0,
     notFound: 0,
     fixtureMismatch: 0,
     invalidScore: 0,
@@ -173,6 +176,35 @@ export async function runSettlementBatch(
       counts.invalidScore++;
       failures.push({ fixtureId, code: "invalid_score", message: "FT/HT scores must be non-negative integers" });
       continue;
+    }
+
+    /*
+     * THE CAPTURED-AFTER-KICKOFF EXCLUSION (truth-pass law, enforced OUTSIDE the frozen
+     * service). A snapshot minted at or after kickoff is not a publication and must never be
+     * settled — the live capture pipeline only mints pre-kickoff by eligibility, so this is a
+     * belt-and-braces invariant over the record as it actually is, not as it should be. The
+     * row is COUNTED and skipped, never written: appending a void validation would burn an
+     * append-only entry for something a later human decision might legitimately settle.
+     * Cost: one extra latest-snapshot read per candidate, accepted and bounded by ceilings.
+     */
+    const kickoffMs =
+      candidate.row.kickoffTime != null ? candidate.row.kickoffTime * 1000 : null;
+    if (kickoffMs != null) {
+      let latest;
+      try {
+        latest = await deps.evidenceStore.latestSnapshot(fixtureId);
+      } catch (error) {
+        counts.writeFailed++;
+        failures.push({ fixtureId, code: "settle_threw", message: error instanceof Error ? error.message : "latest snapshot read threw" });
+        continue;
+      }
+      if (latest) {
+        const capturedMs = Date.parse(latest.capturedAt);
+        if (Number.isFinite(capturedMs) && capturedMs >= kickoffMs) {
+          counts.skippedAfterKickoff++;
+          continue;
+        }
+      }
     }
 
     let result;
