@@ -436,6 +436,32 @@ export const nl = euroPredictions({
   tmResetFilters: "Filters wissen",
   tmInternational: "Internationaal",
 
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "Onderzoekslanden",
+  ctIndexTitle: "Landelijke onderzoeksknooppunten",
+  ctIndexLede:
+    "Een knooppunt bestaat alleen wanneer unieke competities, operators en onderzoekscontext voor de regio samengesteld kunnen worden — nooit als dunne geo-doorgang.",
+  ctIndexEmpty: "Geen enkel landknooppunt haalt momenteel de kwaliteitsdrempel.",
+  ctEyebrow: "Landknooppunt",
+  ctLeadLine:
+    "Dit knooppunt verbindt {competitions} competities, {operators} operators en {fixtures} gearchiveerde wedstrijden.",
+  ctCompetitionsCount: "{n} gekoppelde competities",
+  ctOperatorsCount: "{n} beschikbare operators",
+  ctFixturesCount: "{n} gearchiveerde wedstrijdvoorbeelden",
+  ctCompetitionsTitle: "Relevante competities",
+  ctCompetitionsEmpty: "Nog geen registercompetities gevonden voor dit profiel.",
+  ctFixturesTitle: "Gerelateerde wedstrijden",
+  ctFixturesEmpty: "Geen recente gearchiveerde wedstrijden voor dit land.",
+  ctContinueTitle: "Verder verkennen",
+  ctOperatorsTitle: "Bookmakers ontdekken",
+  ctOperatorsEmpty: "Geen geverifieerde operators beschikbaar voor deze landcontext.",
+  ctNoindexNote: "Dit knooppunt is momenteel niet geïndexeerd ({reason}).",
+  ctLinkMarkets: "Onderzoeksmarkten",
+  ctLinkCompetitions: "Alle competities",
+  ctLinkOperators: "Alle bookmakers",
+  ctLinkPerformance: "Geverifieerde prestaties",
+  ctLinkAcca: "Acca Studio",
+
 });
 
 export const pl = euroPredictions({
@@ -702,6 +728,32 @@ export const pl = euroPredictions({
   tmResetFilters: "Wyczyść filtry",
   tmInternational: "Międzynarodowe",
 
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "Kraje badawcze",
+  ctIndexTitle: "Krajowe węzły badawcze",
+  ctIndexLede:
+    "Węzeł istnieje tylko wtedy, gdy dla regionu można zebrać unikalne rozgrywki, operatorów i kontekst badawczy — nigdy jako pusta geo-brama.",
+  ctIndexEmpty: "Żaden węzeł krajowy nie przechodzi obecnie progu jakości.",
+  ctEyebrow: "Węzeł kraju",
+  ctLeadLine:
+    "Ten węzeł łączy {competitions} rozgrywek, {operators} operatorów i {fixtures} zarchiwizowanych meczów.",
+  ctCompetitionsCount: "{n} powiązanych rozgrywek",
+  ctOperatorsCount: "{n} dostępnych operatorów",
+  ctFixturesCount: "{n} próbek zarchiwizowanych meczów",
+  ctCompetitionsTitle: "Istotne rozgrywki",
+  ctCompetitionsEmpty: "Brak rozgrywek z rejestru dla tego profilu.",
+  ctFixturesTitle: "Powiązane mecze",
+  ctFixturesEmpty: "Żaden niedawno zarchiwizowany mecz nie pasuje do tego kraju.",
+  ctContinueTitle: "Odkrywaj dalej",
+  ctOperatorsTitle: "Odkrywanie bukmacherów",
+  ctOperatorsEmpty: "Brak zweryfikowanych operatorów dla tego kontekstu kraju.",
+  ctNoindexNote: "Ten węzeł nie jest obecnie indeksowany ({reason}).",
+  ctLinkMarkets: "Rynki badawcze",
+  ctLinkCompetitions: "Wszystkie rozgrywki",
+  ctLinkOperators: "Wszyscy bukmacherzy",
+  ctLinkPerformance: "Zweryfikowane wyniki",
+  ctLinkAcca: "Acca Studio",
+
 });
 
 export const cs = euroPredictions({
@@ -963,6 +1015,32 @@ export const cs = euroPredictions({
   tmResetFilters: "Obnovit filtry",
   tmInternational: "Mezinárodní",
 
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "Výzkumné země",
+  ctIndexTitle: "Zemské výzkumné uzly",
+  ctIndexLede:
+    "Uzel existuje, jen když lze pro region sestavit jedinečné soutěže, operátory a výzkumný kontext — nikdy jako prázdná geo-brána.",
+  ctIndexEmpty: "Žádný zemský uzel momentálně neprochází kvalitativním prahem.",
+  ctEyebrow: "Uzel země",
+  ctLeadLine:
+    "Tento uzel spojuje {competitions} soutěží, {operators} operátorů a {fixtures} archivovaných zápasů.",
+  ctCompetitionsCount: "{n} propojených soutěží",
+  ctOperatorsCount: "{n} dostupných operátorů",
+  ctFixturesCount: "{n} archivovaných vzorků zápasů",
+  ctCompetitionsTitle: "Relevantní soutěže",
+  ctCompetitionsEmpty: "Pro tento profil zatím žádné soutěže z registru.",
+  ctFixturesTitle: "Související zápasy",
+  ctFixturesEmpty: "Žádné nedávno archivované zápasy pro tuto zemi.",
+  ctContinueTitle: "Pokračovat v objevování",
+  ctOperatorsTitle: "Objevování sázkových kanceláří",
+  ctOperatorsEmpty: "Pro tento kontext země nejsou dostupní žádní ověření operátoři.",
+  ctNoindexNote: "Tento uzel není momentálně indexován ({reason}).",
+  ctLinkMarkets: "Výzkumné trhy",
+  ctLinkCompetitions: "Všechny soutěže",
+  ctLinkOperators: "Všechny sázkové kanceláře",
+  ctLinkPerformance: "Ověřené výsledky",
+  ctLinkAcca: "Acca Studio",
+
 });
 
 export const da = euroPredictions({
@@ -1223,6 +1301,32 @@ export const da = euroPredictions({
   tmResetFilters: "Nulstil filtre",
   tmInternational: "International",
 
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "Forskningslande",
+  ctIndexTitle: "Landeforskningsknudepunkter",
+  ctIndexLede:
+    "Et knudepunkt findes kun, når unikke turneringer, operatører og forskningskontekst kan samles for regionen — aldrig som en tynd geo-dør.",
+  ctIndexEmpty: "Intet landeknudepunkt består i øjeblikket kvalitetstærsklen.",
+  ctEyebrow: "Landeknudepunkt",
+  ctLeadLine:
+    "Dette knudepunkt forbinder {competitions} turneringer, {operators} operatører og {fixtures} arkiverede kampe.",
+  ctCompetitionsCount: "{n} tilknyttede turneringer",
+  ctOperatorsCount: "{n} tilgængelige operatører",
+  ctFixturesCount: "{n} arkiverede kampeksempler",
+  ctCompetitionsTitle: "Relevante turneringer",
+  ctCompetitionsEmpty: "Ingen registerturneringer fundet for denne profil endnu.",
+  ctFixturesTitle: "Relaterede kampe",
+  ctFixturesEmpty: "Ingen nyligt arkiverede kampe matchede dette land.",
+  ctContinueTitle: "Udforsk videre",
+  ctOperatorsTitle: "Bookmaker-opdagelse",
+  ctOperatorsEmpty: "Ingen verificerede operatører tilgængelige for denne landekontekst.",
+  ctNoindexNote: "Dette knudepunkt er i øjeblikket ikke indekseret ({reason}).",
+  ctLinkMarkets: "Forskningsmarkeder",
+  ctLinkCompetitions: "Alle turneringer",
+  ctLinkOperators: "Alle bookmakere",
+  ctLinkPerformance: "Verificeret resultat",
+  ctLinkAcca: "Acca Studio",
+
 });
 
 export const sv = euroPredictions({
@@ -1482,6 +1586,32 @@ export const sv = euroPredictions({
   tmFiltersEmpty: "Inga lag matchar dessa filter.",
   tmResetFilters: "Återställ filter",
   tmInternational: "Internationell",
+
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "Forskningsländer",
+  ctIndexTitle: "Landsforskningsnav",
+  ctIndexLede:
+    "Ett nav finns bara när unika tävlingar, operatörer och forskningskontext kan sättas samman för regionen — aldrig som en tunn geo-dörr.",
+  ctIndexEmpty: "Inget landsnav klarar för närvarande kvalitetströskeln.",
+  ctEyebrow: "Landsnav",
+  ctLeadLine:
+    "Detta nav knyter {competitions} tävlingar, {operators} operatörer och {fixtures} arkiverade matcher.",
+  ctCompetitionsCount: "{n} kopplade tävlingar",
+  ctOperatorsCount: "{n} tillgängliga operatörer",
+  ctFixturesCount: "{n} arkiverade matchexempel",
+  ctCompetitionsTitle: "Relevanta tävlingar",
+  ctCompetitionsEmpty: "Inga registertävlingar hittade för denna profil ännu.",
+  ctFixturesTitle: "Relaterade matcher",
+  ctFixturesEmpty: "Inga nyligen arkiverade matcher matchade detta land.",
+  ctContinueTitle: "Fortsätt utforska",
+  ctOperatorsTitle: "Bookmakerupptäckt",
+  ctOperatorsEmpty: "Inga verifierade operatörer tillgängliga för denna landskontext.",
+  ctNoindexNote: "Detta nav är för närvarande inte indexerat ({reason}).",
+  ctLinkMarkets: "Forskningsmarknader",
+  ctLinkCompetitions: "Alla tävlingar",
+  ctLinkOperators: "Alla bookmakers",
+  ctLinkPerformance: "Verifierat resultat",
+  ctLinkAcca: "Acca Studio",
 
 });
 
@@ -1745,6 +1875,32 @@ export const no = euroPredictions({
   tmResetFilters: "Nullstill filtre",
   tmInternational: "Internasjonal",
 
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "Forskningsland",
+  ctIndexTitle: "Landsforskningsknutepunkter",
+  ctIndexLede:
+    "Et knutepunkt finnes bare når unike turneringer, operatører og forskningskontekst kan settes sammen for regionen — aldri som en tynn geo-dør.",
+  ctIndexEmpty: "Ingen landsknutepunkter består for øyeblikket kvalitetsterskelen.",
+  ctEyebrow: "Landsknutepunkt",
+  ctLeadLine:
+    "Dette knutepunktet knytter {competitions} turneringer, {operators} operatører og {fixtures} arkiverte kamper.",
+  ctCompetitionsCount: "{n} tilknyttede turneringer",
+  ctOperatorsCount: "{n} tilgjengelige operatører",
+  ctFixturesCount: "{n} arkiverte kampeksempler",
+  ctCompetitionsTitle: "Relevante turneringer",
+  ctCompetitionsEmpty: "Ingen registerturneringer funnet for denne profilen ennå.",
+  ctFixturesTitle: "Relaterte kamper",
+  ctFixturesEmpty: "Ingen nylig arkiverte kamper matchet dette landet.",
+  ctContinueTitle: "Utforsk videre",
+  ctOperatorsTitle: "Bookmaker-oppdagelse",
+  ctOperatorsEmpty: "Ingen verifiserte operatører tilgjengelige for denne landskonteksten.",
+  ctNoindexNote: "Dette knutepunktet er for øyeblikket ikke indeksert ({reason}).",
+  ctLinkMarkets: "Forskningsmarkeder",
+  ctLinkCompetitions: "Alle turneringer",
+  ctLinkOperators: "Alle bookmakere",
+  ctLinkPerformance: "Verifisert resultat",
+  ctLinkAcca: "Acca Studio",
+
 });
 
 export const fi = euroPredictions({
@@ -2002,6 +2158,32 @@ export const fi = euroPredictions({
   tmFiltersEmpty: "Mikään joukkue ei vastaa näitä suodattimia.",
   tmResetFilters: "Tyhjennä suodattimet",
   tmInternational: "Kansainvälinen",
+
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "Tutkimusmaat",
+  ctIndexTitle: "Maakohtaiset tutkimussolmut",
+  ctIndexLede:
+    "Solmu on olemassa vain, kun alueelle voidaan koota omat sarjat, operaattorit ja tutkimuskonteksti — ei koskaan ohuena geo-porttina.",
+  ctIndexEmpty: "Yksikään maasolmu ei tällä hetkellä ylitä laatukynnystä.",
+  ctEyebrow: "Maasolmu",
+  ctLeadLine:
+    "Tämä solmu yhdistää {competitions} sarjaa, {operators} operaattoria ja {fixtures} arkistoitua ottelua.",
+  ctCompetitionsCount: "{n} linkitettyä sarjaa",
+  ctOperatorsCount: "{n} saatavilla olevaa operaattoria",
+  ctFixturesCount: "{n} arkistoitua ottelunäytettä",
+  ctCompetitionsTitle: "Olennaiset sarjat",
+  ctCompetitionsEmpty: "Tälle profiilille ei ole vielä rekisterisarjoja.",
+  ctFixturesTitle: "Liittyvät ottelut",
+  ctFixturesEmpty: "Yksikään äskettäin arkistoitu ottelu ei vastannut tätä maata.",
+  ctContinueTitle: "Jatka tutkimista",
+  ctOperatorsTitle: "Vedonlyöntisivustojen löytäminen",
+  ctOperatorsEmpty: "Tähän maakontekstiin ei ole vahvistettuja operaattoreita.",
+  ctNoindexNote: "Tätä solmua ei tällä hetkellä indeksoida ({reason}).",
+  ctLinkMarkets: "Tutkimusmarkkinat",
+  ctLinkCompetitions: "Kaikki sarjat",
+  ctLinkOperators: "Kaikki vedonlyöntisivustot",
+  ctLinkPerformance: "Vahvistettu tulos",
+  ctLinkAcca: "Acca Studio",
 
 });
 
@@ -2265,6 +2447,32 @@ export const ro = euroPredictions({
   tmFiltersEmpty: "Nicio echipă nu corespunde acestor filtre.",
   tmResetFilters: "Resetează filtrele",
   tmInternational: "Internațional",
+
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "Țări de cercetare",
+  ctIndexTitle: "Noduri de cercetare pe țări",
+  ctIndexLede:
+    "Un nod există doar când pentru regiune se pot asambla competiții, operatori și context de cercetare unice — niciodată ca o poartă geo subțire.",
+  ctIndexEmpty: "Niciun nod de țară nu trece în prezent pragul de calitate.",
+  ctEyebrow: "Nodul țării",
+  ctLeadLine:
+    "Acest nod leagă {competitions} competiții, {operators} operatori și {fixtures} meciuri arhivate.",
+  ctCompetitionsCount: "{n} competiții legate",
+  ctOperatorsCount: "{n} operatori disponibili",
+  ctFixturesCount: "{n} mostre de meciuri arhivate",
+  ctCompetitionsTitle: "Competiții relevante",
+  ctCompetitionsEmpty: "Încă nicio competiție din registru pentru acest profil.",
+  ctFixturesTitle: "Meciuri conexe",
+  ctFixturesEmpty: "Niciun meci arhivat recent nu a corespuns acestei țări.",
+  ctContinueTitle: "Continuă explorarea",
+  ctOperatorsTitle: "Descoperirea caselor de pariuri",
+  ctOperatorsEmpty: "Niciun operator verificat disponibil pentru acest context de țară.",
+  ctNoindexNote: "Acest nod nu este indexat în prezent ({reason}).",
+  ctLinkMarkets: "Piețe de cercetare",
+  ctLinkCompetitions: "Toate competițiile",
+  ctLinkOperators: "Toate casele de pariuri",
+  ctLinkPerformance: "Performanță verificată",
+  ctLinkAcca: "Acca Studio",
 
 });
 
@@ -2531,6 +2739,32 @@ export const el = euroPredictions({
   tmResetFilters: "Επαναφορά φίλτρων",
   tmInternational: "Διεθνής",
 
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "Χώρες έρευνας",
+  ctIndexTitle: "Κόμβοι έρευνας ανά χώρα",
+  ctIndexLede:
+    "Ένας κόμβος υπάρχει μόνο όταν μπορούν να συγκεντρωθούν μοναδικές διοργανώσεις, πάροχοι και ερευνητικό πλαίσιο για την περιοχή — ποτέ ως κενή γεωγραφική πύλη.",
+  ctIndexEmpty: "Κανένας κόμβος χώρας δεν περνά αυτή τη στιγμή το κατώφλι ποιότητας.",
+  ctEyebrow: "Κόμβος χώρας",
+  ctLeadLine:
+    "Αυτός ο κόμβος συνδέει {competitions} διοργανώσεις, {operators} παρόχους και {fixtures} αρχειοθετημένους αγώνες.",
+  ctCompetitionsCount: "{n} συνδεδεμένες διοργανώσεις",
+  ctOperatorsCount: "{n} διαθέσιμοι πάροχοι",
+  ctFixturesCount: "{n} αρχειοθετημένα δείγματα αγώνων",
+  ctCompetitionsTitle: "Σχετικές διοργανώσεις",
+  ctCompetitionsEmpty: "Καμία διοργάνωση μητρώου για αυτό το προφίλ ακόμη.",
+  ctFixturesTitle: "Σχετικοί αγώνες",
+  ctFixturesEmpty: "Κανένας πρόσφατα αρχειοθετημένος αγώνας δεν αντιστοιχεί σε αυτή τη χώρα.",
+  ctContinueTitle: "Συνεχίστε την εξερεύνηση",
+  ctOperatorsTitle: "Ανακάλυψη στοιχηματικών",
+  ctOperatorsEmpty: "Κανένας επαληθευμένος πάροχος για αυτό το πλαίσιο χώρας.",
+  ctNoindexNote: "Αυτός ο κόμβος δεν ευρετηριάζεται αυτή τη στιγμή ({reason}).",
+  ctLinkMarkets: "Αγορές έρευνας",
+  ctLinkCompetitions: "Όλες οι διοργανώσεις",
+  ctLinkOperators: "Όλες οι στοιχηματικές",
+  ctLinkPerformance: "Επαληθευμένη απόδοση",
+  ctLinkAcca: "Acca Studio",
+
 });
 
 export const hu = euroPredictions({
@@ -2793,5 +3027,31 @@ export const hu = euroPredictions({
   tmFiltersEmpty: "Egy csapat sem felel meg ezeknek a szűrőknek.",
   tmResetFilters: "Szűrők törlése",
   tmInternational: "Nemzetközi",
+
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "Kutatási országok",
+  ctIndexTitle: "Országos kutatási csomópontok",
+  ctIndexLede:
+    "Egy csomópont csak akkor létezik, ha a régióhoz egyedi sorozatok, szolgáltatók és kutatási kontextus állítható össze — sosem vékony geo-kapuként.",
+  ctIndexEmpty: "Jelenleg egyetlen országcsomópont sem éri el a minőségi küszöböt.",
+  ctEyebrow: "Országcsomópont",
+  ctLeadLine:
+    "Ez a csomópont {competitions} sorozatot, {operators} szolgáltatót és {fixtures} archivált mérkőzést köt össze.",
+  ctCompetitionsCount: "{n} kapcsolt sorozat",
+  ctOperatorsCount: "{n} elérhető szolgáltató",
+  ctFixturesCount: "{n} archivált mérkőzésminta",
+  ctCompetitionsTitle: "Releváns sorozatok",
+  ctCompetitionsEmpty: "Ehhez a profilhoz még nincs regiszterbeli sorozat.",
+  ctFixturesTitle: "Kapcsolódó mérkőzések",
+  ctFixturesEmpty: "Nincs friss archivált mérkőzés ehhez az országhoz.",
+  ctContinueTitle: "Fedezz fel tovább",
+  ctOperatorsTitle: "Fogadóirodák felfedezése",
+  ctOperatorsEmpty: "Nincs ellenőrzött szolgáltató ehhez az országkontextushoz.",
+  ctNoindexNote: "Ez a csomópont jelenleg nincs indexelve ({reason}).",
+  ctLinkMarkets: "Kutatási piacok",
+  ctLinkCompetitions: "Minden sorozat",
+  ctLinkOperators: "Minden fogadóiroda",
+  ctLinkPerformance: "Ellenőrzött teljesítmény",
+  ctLinkAcca: "Acca Studio",
 
 });

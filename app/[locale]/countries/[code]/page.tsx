@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { JsonLd } from "@/components/JsonLd";
-import { SemanticSection } from "@/components/seo/SemanticEntitySections";
 import {
   buildCountryLanding,
   isConfiguredCountryCode,
@@ -15,7 +14,20 @@ import { countriesIndexPath } from "@/lib/countries/links";
 import { CountryFlagIcon } from "@/components/CountryFlagIcon";
 import { countryName } from "@/lib/geoNames";
 import { locales, type Locale } from "@/lib/i18n";
+import { getDictionary } from "@/lib/dictionaries";
+import { formatDict } from "@/lib/dictionaryExtras";
 import { pageMetadata } from "@/lib/seo";
+
+/* ============================================================================
+   THE COUNTRY HUB — form-guide conversion, fixture-style hierarchy
+   ----------------------------------------------------------------------------
+   LEAD      what this hub connects — one sentence with its counts inline,
+             omitted whole when the hub holds nothing.
+   SUPPORTS  the three counts as ruled rows, zero rows omitted.
+   CONTENT   competitions, then archived fixtures — honest empties.
+   DETAIL    continue-exploring links, quiet.
+   LAST      one commercial block: bookmaker discovery.
+   ========================================================================== */
 
 export function generateStaticParams() {
   // Demand-render by code; sitemap lists only indexable hubs.
@@ -58,167 +70,209 @@ export default function CountryLandingPage({
   const model = buildCountryLanding(params.locale, params.code);
   if (!model) notFound();
 
+  const p = getDictionary(params.locale).predictions;
+  const total =
+    model.competitions.length + model.operators.length + model.fixtureSamples.length;
+
   // Thin / doorway hubs stay reachable for personalization but are noindex;
   // still render useful content when partially available.
   return (
-    <div className="container-wide py-10 pb-16">
+    <div className="rw-hero container-wide bg-[var(--hero-canvas)] pb-24">
       <JsonLd data={countryLandingBreadcrumbLd({ locale: params.locale, model })} />
       {model.indexability.indexable ? (
         <JsonLd data={countryLandingWebPageLd({ locale: params.locale, model })} />
       ) : null}
 
-      <nav aria-label="Breadcrumb" className="mb-6 text-xs text-muted-foreground">
-        <ol className="flex flex-wrap gap-1">
-          <li>
-            <Link href={`/${params.locale}`} className="hover:text-brand">
-              Home
-            </Link>
-          </li>
-          <li aria-hidden>/</li>
-          <li>
-            <Link href={countriesIndexPath(params.locale)} className="hover:text-brand">
-              Countries
-            </Link>
-          </li>
-          <li aria-hidden>/</li>
-          <li className="text-foreground" aria-current="page">
-            {countryName(model.code)}
-          </li>
-        </ol>
+      <nav aria-label="Breadcrumb" className="rw-m pt-5 text-[var(--hero-ink-2)]">
+        <Link href={`/${params.locale}`} className="hover:text-[var(--hero-ink)]">
+          Home
+        </Link>
+        <span className="mx-1.5" aria-hidden>
+          /
+        </span>
+        <Link
+          href={countriesIndexPath(params.locale)}
+          className="hover:text-[var(--hero-ink)]"
+        >
+          {p.ctIndexTitle}
+        </Link>
+        <span className="mx-1.5" aria-hidden>
+          /
+        </span>
+        <span className="text-[var(--hero-ink)]">{countryName(model.code)}</span>
       </nav>
 
-      <header id="overview">
-        <p className="text-metadata font-medium uppercase tracking-label text-brand">
-          Country hub · {model.code}
+      <header id="overview" className="mt-6 border-b border-[var(--hero-line)] pb-10">
+        <span aria-hidden className="block h-[2px] w-10 bg-[var(--hero-ink)]" />
+        <p className="rw-m mt-3.5 text-[var(--hero-ink-2)]">
+          {p.ctEyebrow} · {model.code}
         </p>
-        <h1 className="mt-2 flex items-center gap-3 font-display text-3xl font-semibold text-foreground">
+        <h1 className="rw-h mt-1.5 flex items-center gap-3 text-[clamp(2.125rem,4.4vw,2.875rem)] text-[var(--hero-ink)]">
           <CountryFlagIcon code={model.code} />
           {model.title}
         </h1>
-        <p className="mt-3 max-w-3xl text-sm leading-relaxed text-[var(--ink-secondary)]">
+        <p className="mt-2.5 max-w-[62ch] text-[15px] leading-[1.55] text-[var(--hero-ink-2)]">
           {model.summary}
         </p>
         {!model.indexability.indexable ? (
-          <p className="mt-3 text-xs text-muted-foreground" role="status">
-            This hub is currently noindex ({model.indexability.reason.replaceAll("_", " ")}).
+          <p className="rw-m mt-3 normal-case tracking-[0.04em] text-[var(--hero-ink-2)]" role="status">
+            {formatDict(p.ctNoindexNote, {
+              reason: model.indexability.reason.replaceAll("_", " "),
+            })}
           </p>
         ) : null}
       </header>
 
-      <div className="mt-10 space-y-10">
-        <SemanticSection id="key-facts" title="Key facts">
-          <ul className="grid gap-2 text-sm text-[var(--ink-secondary)] sm:grid-cols-3">
-            <li className="rounded-lg border border-border px-3 py-2">
-              Competitions linked:{" "}
-              <strong className="text-foreground">{model.competitions.length}</strong>
-            </li>
-            <li className="rounded-lg border border-border px-3 py-2">
-              Operators available:{" "}
-              <strong className="text-foreground">{model.operators.length}</strong>
-            </li>
-            <li className="rounded-lg border border-border px-3 py-2">
-              Fixture samples:{" "}
-              <strong className="text-foreground">{model.fixtureSamples.length}</strong>
-            </li>
+      {/* LEAD — omitted whole when the hub holds nothing (the empty-state law). */}
+      {total > 0 ? (
+        <section aria-labelledby="ct-lead-heading" className="mt-14">
+          <p className="rw-m text-[var(--hero-ink-2)]">{p.mktLeadEyebrow}</p>
+          <h2
+            id="ct-lead-heading"
+            className="rw-h mt-2.5 max-w-[30ch] text-[clamp(1.6rem,3.6vw,2.4rem)] text-[var(--hero-ink)]"
+          >
+            {formatDict(p.ctLeadLine, {
+              competitions: String(model.competitions.length),
+              operators: String(model.operators.length),
+              fixtures: String(model.fixtureSamples.length),
+            })}
+          </h2>
+          <ul className="mt-8 border-t-[1.5px] border-[var(--hero-ink)]">
+            {model.competitions.length > 0 ? (
+              <li className="rw-row border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] text-[var(--hero-ink)]">
+                {formatDict(p.ctCompetitionsCount, { n: String(model.competitions.length) })}
+              </li>
+            ) : null}
+            {model.operators.length > 0 ? (
+              <li className="rw-row border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] text-[var(--hero-ink)]">
+                {formatDict(p.ctOperatorsCount, { n: String(model.operators.length) })}
+              </li>
+            ) : null}
+            {model.fixtureSamples.length > 0 ? (
+              <li className="rw-row border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] text-[var(--hero-ink)]">
+                {formatDict(p.ctFixturesCount, { n: String(model.fixtureSamples.length) })}
+              </li>
+            ) : null}
           </ul>
-        </SemanticSection>
+        </section>
+      ) : null}
 
-        <SemanticSection id="competitions" title="Relevant competitions">
-          {model.competitions.length ? (
-            <ul className="grid gap-2 sm:grid-cols-2">
-              {model.competitions.map((row) => (
-                <li key={row.slug}>
-                  <Link
-                    href={row.href}
-                    className="flex min-h-11 items-center rounded-lg border border-border bg-[var(--canvas-secondary)] px-4 text-sm font-medium hover:border-brand/35"
-                  >
-                    {row.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-sm text-muted-foreground">
-              No registry competitions resolved for this profile yet.
-            </p>
-          )}
-        </SemanticSection>
-
-        <SemanticSection id="operators" title="Bookmaker discovery">
-          {model.operators.length ? (
-            <ul className="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
-              {model.operators.map((row) => (
-                <li key={row.slug}>
-                  <Link
-                    href={row.href}
-                    className="flex min-h-11 items-center rounded-lg border border-border px-4 text-sm font-medium hover:border-brand/35"
-                    rel="noopener"
-                  >
-                    {row.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-sm text-muted-foreground">
-              No verified operators are available for this country context.
-            </p>
-          )}
-        </SemanticSection>
-
-        <SemanticSection id="related" title="Related fixtures">
-          <p className="mb-3 text-xs text-muted-foreground">
-            Open a match to add settlement-supported markets to{" "}
-            <Link href={`/${params.locale}/acca`} className="text-brand hover:underline">
-              Acca Studio
-            </Link>
-            .
+      <section
+        id="competitions"
+        aria-labelledby="ct-competitions-heading"
+        className="mt-16 border-t border-[var(--hero-line)] pt-12"
+      >
+        <h2 id="ct-competitions-heading" className="rw-m text-[var(--hero-ink-2)]">
+          {p.ctCompetitionsTitle}
+        </h2>
+        {model.competitions.length ? (
+          <ul className="mt-5 border-t border-[var(--hero-line)]">
+            {model.competitions.map((row) => (
+              <li key={row.slug}>
+                <Link
+                  href={row.href}
+                  className="rw-row block border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] font-semibold tracking-[-0.01em] text-[var(--hero-ink)]"
+                >
+                  {row.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="mt-4 max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]">
+            {p.ctCompetitionsEmpty}
           </p>
-          {model.fixtureSamples.length ? (
-            <ul className="divide-y divide-[var(--border-subtle)] rounded-lg border border-border">
-              {model.fixtureSamples.map((row) => (
-                <li key={row.slug}>
-                  <Link
-                    href={row.href}
-                    className="block px-4 py-3 text-sm font-medium hover:bg-[var(--canvas-secondary)]"
-                  >
-                    {row.title}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="text-sm text-muted-foreground">
-              No recent archived fixtures matched this country. Browse markets instead.
-            </p>
-          )}
-        </SemanticSection>
+        )}
+      </section>
 
-        <SemanticSection id="continue" title="Continue exploring">
-          <ul className="flex flex-wrap gap-3 text-sm">
-            <li>
-              <Link href={model.marketsHref} className="text-brand hover:underline">
-                Prediction markets
-              </Link>
-            </li>
-            <li>
-              <Link href={`/${params.locale}/competitions`} className="text-brand hover:underline">
-                All competitions
-              </Link>
-            </li>
-            <li>
-              <Link href={`/${params.locale}/operators`} className="text-brand hover:underline">
-                All bookmakers
-              </Link>
-            </li>
-            <li>
-              <Link href={`/${params.locale}#verified-performance`} className="text-brand hover:underline">
-                Verified performance
-              </Link>
-            </li>
+      <section
+        id="related"
+        aria-labelledby="ct-fixtures-heading"
+        className="mt-12"
+      >
+        <h2 id="ct-fixtures-heading" className="rw-m text-[var(--hero-ink-2)]">
+          {p.ctFixturesTitle}
+        </h2>
+        {model.fixtureSamples.length ? (
+          <ul className="mt-5 border-t border-[var(--hero-line)]">
+            {model.fixtureSamples.map((row) => (
+              <li key={row.slug}>
+                <Link
+                  href={row.href}
+                  className="rw-row block border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] text-[var(--hero-ink)]"
+                >
+                  {row.title}
+                </Link>
+              </li>
+            ))}
           </ul>
-        </SemanticSection>
-      </div>
+        ) : (
+          <p className="mt-4 max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]">
+            {p.ctFixturesEmpty}
+          </p>
+        )}
+      </section>
+
+      <section
+        id="continue"
+        aria-labelledby="ct-continue-heading"
+        className="mt-16 border-t border-[var(--hero-line)] pt-12"
+      >
+        <h2 id="ct-continue-heading" className="rw-m text-[var(--hero-ink-2)]">
+          {p.ctContinueTitle}
+        </h2>
+        <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
+          {[
+            { href: model.marketsHref, label: p.ctLinkMarkets },
+            { href: `/${params.locale}/competitions`, label: p.ctLinkCompetitions },
+            { href: `/${params.locale}/operators`, label: p.ctLinkOperators },
+            { href: `/${params.locale}/acca`, label: p.ctLinkAcca },
+            { href: `/${params.locale}#verified-performance`, label: p.ctLinkPerformance },
+          ].map((link) => (
+            <li key={link.label}>
+              <Link
+                href={link.href}
+                className="text-[15px] text-[var(--hero-ink)] underline decoration-[var(--hero-line)] underline-offset-4 hover:decoration-[var(--hero-ink)]"
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* LAST — the single commercial block. */}
+      <section
+        id="operators"
+        aria-labelledby="ct-operators-heading"
+        className="mt-16 border-t border-[var(--hero-line)] pt-12"
+      >
+        <h2 id="ct-operators-heading" className="rw-m text-[var(--hero-ink-2)]">
+          {p.ctOperatorsTitle}
+        </h2>
+        {model.operators.length ? (
+          <ul className="mt-5 border-t border-[var(--hero-line)]">
+            {model.operators.map((row) => (
+              <li key={row.slug}>
+                <Link
+                  href={row.href}
+                  rel="noopener"
+                  className="rw-row block border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] text-[var(--hero-ink)]"
+                >
+                  {row.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="mt-4 max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]">
+            {p.ctOperatorsEmpty}
+          </p>
+        )}
+        <p className="rw-m mt-3 normal-case tracking-[0.04em] text-[var(--hero-ink-2)]">
+          {p.fxOperatorsNote}
+        </p>
+      </section>
     </div>
   );
 }

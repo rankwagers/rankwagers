@@ -249,6 +249,32 @@ export const ar = mergePredictions({
   tmResetFilters: "إعادة تعيين المرشحات",
   tmInternational: "دولي",
 
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "دول البحث",
+  ctIndexTitle: "عقد البحث حسب الدولة",
+  ctIndexLede:
+    "لا توجد العقدة إلا عندما يمكن تجميع بطولات ومشغّلين وسياق بحثي فريد للمنطقة — وليست أبدًا بوابة جغرافية فارغة.",
+  ctIndexEmpty: "لا تجتاز أي عقدة دولة حاليًا عتبة الجودة.",
+  ctEyebrow: "عقدة الدولة",
+  ctLeadLine:
+    "تربط هذه العقدة {competitions} بطولة و{operators} مشغّلًا و{fixtures} مباراة مؤرشفة.",
+  ctCompetitionsCount: "{n} بطولات مرتبطة",
+  ctOperatorsCount: "{n} مشغّلون متاحون",
+  ctFixturesCount: "{n} عيّنات مباريات مؤرشفة",
+  ctCompetitionsTitle: "بطولات ذات صلة",
+  ctCompetitionsEmpty: "لا توجد بعد بطولات من السجل لهذا الملف.",
+  ctFixturesTitle: "مباريات ذات صلة",
+  ctFixturesEmpty: "لا توجد مباريات مؤرشفة حديثة مطابقة لهذه الدولة.",
+  ctContinueTitle: "تابع الاستكشاف",
+  ctOperatorsTitle: "اكتشاف شركات المراهنات",
+  ctOperatorsEmpty: "لا يوجد مشغّلون موثّقون لهذا السياق الوطني.",
+  ctNoindexNote: "هذه العقدة غير مفهرسة حاليًا ({reason}).",
+  ctLinkMarkets: "أسواق البحث",
+  ctLinkCompetitions: "كل البطولات",
+  ctLinkOperators: "كل شركات المراهنات",
+  ctLinkPerformance: "الأداء الموثّق",
+  ctLinkAcca: "Acca Studio",
+
 });
 
 export const hi = mergePredictions({
@@ -503,6 +529,32 @@ export const hi = mergePredictions({
   tmResetFilters: "फ़िल्टर रीसेट करें",
   tmInternational: "अंतरराष्ट्रीय",
 
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "शोध देश",
+  ctIndexTitle: "देश शोध केंद्र",
+  ctIndexLede:
+    "केंद्र केवल तभी मौजूद होता है जब क्षेत्र के लिए अद्वितीय प्रतियोगिताएँ, ऑपरेटर और शोध संदर्भ जुटाए जा सकें — कभी खोखला भू-द्वार नहीं।",
+  ctIndexEmpty: "फ़िलहाल कोई देश केंद्र गुणवत्ता सीमा पार नहीं करता।",
+  ctEyebrow: "देश केंद्र",
+  ctLeadLine:
+    "यह केंद्र {competitions} प्रतियोगिताएँ, {operators} ऑपरेटर और {fixtures} संग्रहीत मैच जोड़ता है।",
+  ctCompetitionsCount: "{n} जुड़ी प्रतियोगिताएँ",
+  ctOperatorsCount: "{n} उपलब्ध ऑपरेटर",
+  ctFixturesCount: "{n} संग्रहीत मैच नमूने",
+  ctCompetitionsTitle: "प्रासंगिक प्रतियोगिताएँ",
+  ctCompetitionsEmpty: "इस प्रोफ़ाइल के लिए अभी कोई रजिस्ट्री प्रतियोगिता नहीं।",
+  ctFixturesTitle: "संबंधित मैच",
+  ctFixturesEmpty: "इस देश से मेल खाने वाला कोई हालिया संग्रहीत मैच नहीं।",
+  ctContinueTitle: "आगे देखें",
+  ctOperatorsTitle: "बुकमेकर खोज",
+  ctOperatorsEmpty: "इस देश संदर्भ के लिए कोई सत्यापित ऑपरेटर उपलब्ध नहीं।",
+  ctNoindexNote: "यह केंद्र फ़िलहाल अनुक्रमित नहीं है ({reason})।",
+  ctLinkMarkets: "शोध बाज़ार",
+  ctLinkCompetitions: "सभी प्रतियोगिताएँ",
+  ctLinkOperators: "सभी बुकमेकर",
+  ctLinkPerformance: "सत्यापित प्रदर्शन",
+  ctLinkAcca: "Acca Studio",
+
 });
 
 export const ja = mergePredictions({
@@ -737,6 +789,30 @@ export const ja = mergePredictions({
   tmFiltersEmpty: "これらのフィルターに一致するチームはありません。",
   tmResetFilters: "フィルターをリセット",
   tmInternational: "国際",
+
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "リサーチ対象国",
+  ctIndexTitle: "国別リサーチ拠点",
+  ctIndexLede: "拠点は、その地域に固有の大会・オペレーター・リサーチ文脈を組み立てられる場合にのみ存在します — 薄いジオ・ドアウェイには決してなりません。",
+  ctIndexEmpty: "現在、品質基準を満たす国別拠点はありません。",
+  ctEyebrow: "国別拠点",
+  ctLeadLine: "この拠点は{competitions}大会、{operators}オペレーター、{fixtures}件のアーカイブ試合を結びます。",
+  ctCompetitionsCount: "{n}大会をリンク",
+  ctOperatorsCount: "{n}オペレーターが利用可能",
+  ctFixturesCount: "{n}件のアーカイブ試合サンプル",
+  ctCompetitionsTitle: "関連する大会",
+  ctCompetitionsEmpty: "このプロファイルに該当するレジストリ大会はまだありません。",
+  ctFixturesTitle: "関連試合",
+  ctFixturesEmpty: "この国に一致する最近のアーカイブ試合はありません。",
+  ctContinueTitle: "さらに探索",
+  ctOperatorsTitle: "ブックメーカー探索",
+  ctOperatorsEmpty: "この国のコンテキストで検証済みオペレーターはありません。",
+  ctNoindexNote: "この拠点は現在インデックスされていません({reason})。",
+  ctLinkMarkets: "リサーチ市場",
+  ctLinkCompetitions: "すべての大会",
+  ctLinkOperators: "すべてのブックメーカー",
+  ctLinkPerformance: "検証済みパフォーマンス",
+  ctLinkAcca: "Acca Studio",
 
 });
 
@@ -973,6 +1049,30 @@ export const ko = mergePredictions({
   tmFiltersEmpty: "이 필터와 일치하는 팀이 없습니다.",
   tmResetFilters: "필터 초기화",
   tmInternational: "국제",
+
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "리서치 국가",
+  ctIndexTitle: "국가별 리서치 허브",
+  ctIndexLede: "허브는 해당 지역에 고유한 대회, 운영사, 리서치 맥락을 구성할 수 있을 때만 존재합니다 — 결코 얕은 지역 관문이 아닙니다.",
+  ctIndexEmpty: "현재 품질 기준을 통과하는 국가 허브가 없습니다.",
+  ctEyebrow: "국가 허브",
+  ctLeadLine: "이 허브는 {competitions}개 대회, {operators}개 운영사, {fixtures}건의 보관 경기를 연결합니다.",
+  ctCompetitionsCount: "연결된 대회 {n}개",
+  ctOperatorsCount: "이용 가능한 운영사 {n}개",
+  ctFixturesCount: "보관된 경기 표본 {n}건",
+  ctCompetitionsTitle: "관련 대회",
+  ctCompetitionsEmpty: "이 프로필에 해당하는 레지스트리 대회가 아직 없습니다.",
+  ctFixturesTitle: "관련 경기",
+  ctFixturesEmpty: "이 국가와 일치하는 최근 보관 경기가 없습니다.",
+  ctContinueTitle: "계속 탐색",
+  ctOperatorsTitle: "북메이커 탐색",
+  ctOperatorsEmpty: "이 국가 맥락에서 검증된 운영사가 없습니다.",
+  ctNoindexNote: "이 허브는 현재 색인되지 않습니다({reason}).",
+  ctLinkMarkets: "리서치 마켓",
+  ctLinkCompetitions: "모든 대회",
+  ctLinkOperators: "모든 북메이커",
+  ctLinkPerformance: "검증된 성과",
+  ctLinkAcca: "Acca Studio",
 
 });
 
@@ -1228,6 +1328,32 @@ export const th = mergePredictions({
   tmFiltersEmpty: "ไม่มีทีมที่ตรงกับตัวกรองเหล่านี้",
   tmResetFilters: "รีเซ็ตตัวกรอง",
   tmInternational: "นานาชาติ",
+
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "ประเทศเพื่อการวิจัย",
+  ctIndexTitle: "ศูนย์วิจัยรายประเทศ",
+  ctIndexLede:
+    "ศูนย์จะมีอยู่ก็ต่อเมื่อสามารถรวบรวมรายการแข่งขัน ผู้ให้บริการ และบริบทวิจัยเฉพาะของภูมิภาคได้ — ไม่ใช่ประตูภูมิศาสตร์กลวงเด็ดขาด",
+  ctIndexEmpty: "ขณะนี้ไม่มีศูนย์ประเทศใดผ่านเกณฑ์คุณภาพ",
+  ctEyebrow: "ศูนย์ประเทศ",
+  ctLeadLine:
+    "ศูนย์นี้เชื่อม {competitions} รายการแข่งขัน {operators} ผู้ให้บริการ และ {fixtures} แมตช์ที่เก็บถาวร",
+  ctCompetitionsCount: "{n} รายการแข่งขันที่เชื่อมโยง",
+  ctOperatorsCount: "{n} ผู้ให้บริการที่พร้อมใช้งาน",
+  ctFixturesCount: "{n} ตัวอย่างแมตช์ที่เก็บถาวร",
+  ctCompetitionsTitle: "รายการแข่งขันที่เกี่ยวข้อง",
+  ctCompetitionsEmpty: "ยังไม่มีรายการแข่งขันจากทะเบียนสำหรับโปรไฟล์นี้",
+  ctFixturesTitle: "แมตช์ที่เกี่ยวข้อง",
+  ctFixturesEmpty: "ไม่มีแมตช์ที่เก็บถาวรล่าสุดตรงกับประเทศนี้",
+  ctContinueTitle: "สำรวจต่อ",
+  ctOperatorsTitle: "ค้นหาเจ้ามือรับพนัน",
+  ctOperatorsEmpty: "ไม่มีผู้ให้บริการที่ตรวจสอบแล้วสำหรับบริบทประเทศนี้",
+  ctNoindexNote: "ศูนย์นี้ยังไม่ถูกจัดทำดัชนีในขณะนี้ ({reason})",
+  ctLinkMarkets: "ตลาดวิจัย",
+  ctLinkCompetitions: "ทุกรายการแข่งขัน",
+  ctLinkOperators: "เจ้ามือทั้งหมด",
+  ctLinkPerformance: "ผลงานที่ตรวจสอบแล้ว",
+  ctLinkAcca: "Acca Studio",
 
 });
 
@@ -1487,6 +1613,32 @@ export const vi = mergePredictions({
   tmFiltersEmpty: "Không có đội nào khớp với các bộ lọc này.",
   tmResetFilters: "Đặt lại bộ lọc",
   tmInternational: "Quốc tế",
+
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "Quốc gia nghiên cứu",
+  ctIndexTitle: "Trung tâm nghiên cứu theo quốc gia",
+  ctIndexLede:
+    "Trung tâm chỉ tồn tại khi có thể tập hợp giải đấu, nhà điều hành và bối cảnh nghiên cứu riêng cho khu vực — không bao giờ là cửa ngõ địa lý rỗng.",
+  ctIndexEmpty: "Hiện không có trung tâm quốc gia nào vượt ngưỡng chất lượng.",
+  ctEyebrow: "Trung tâm quốc gia",
+  ctLeadLine:
+    "Trung tâm này kết nối {competitions} giải đấu, {operators} nhà điều hành và {fixtures} trận đã lưu trữ.",
+  ctCompetitionsCount: "{n} giải đấu được liên kết",
+  ctOperatorsCount: "{n} nhà điều hành khả dụng",
+  ctFixturesCount: "{n} mẫu trận đã lưu trữ",
+  ctCompetitionsTitle: "Giải đấu liên quan",
+  ctCompetitionsEmpty: "Chưa có giải đấu nào từ sổ đăng ký cho hồ sơ này.",
+  ctFixturesTitle: "Trận liên quan",
+  ctFixturesEmpty: "Không có trận lưu trữ gần đây khớp với quốc gia này.",
+  ctContinueTitle: "Tiếp tục khám phá",
+  ctOperatorsTitle: "Khám phá nhà cái",
+  ctOperatorsEmpty: "Không có nhà điều hành đã xác minh cho bối cảnh quốc gia này.",
+  ctNoindexNote: "Trung tâm này hiện không được lập chỉ mục ({reason}).",
+  ctLinkMarkets: "Thị trường nghiên cứu",
+  ctLinkCompetitions: "Tất cả giải đấu",
+  ctLinkOperators: "Tất cả nhà cái",
+  ctLinkPerformance: "Hiệu suất đã xác minh",
+  ctLinkAcca: "Acca Studio",
 
 });
 
@@ -1750,6 +1902,32 @@ export const id = mergePredictions({
   tmResetFilters: "Atur ulang filter",
   tmInternational: "Internasional",
 
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "Negara riset",
+  ctIndexTitle: "Pusat riset per negara",
+  ctIndexLede:
+    "Pusat hanya ada bila kompetisi, operator, dan konteks riset unik dapat dirangkai untuk wilayah itu — tidak pernah sebagai pintu geo tipis.",
+  ctIndexEmpty: "Saat ini tidak ada pusat negara yang melewati ambang kualitas.",
+  ctEyebrow: "Pusat negara",
+  ctLeadLine:
+    "Pusat ini menghubungkan {competitions} kompetisi, {operators} operator, dan {fixtures} pertandingan terarsip.",
+  ctCompetitionsCount: "{n} kompetisi tertaut",
+  ctOperatorsCount: "{n} operator tersedia",
+  ctFixturesCount: "{n} sampel pertandingan terarsip",
+  ctCompetitionsTitle: "Kompetisi relevan",
+  ctCompetitionsEmpty: "Belum ada kompetisi registri untuk profil ini.",
+  ctFixturesTitle: "Pertandingan terkait",
+  ctFixturesEmpty: "Tidak ada pertandingan terarsip terbaru yang cocok dengan negara ini.",
+  ctContinueTitle: "Lanjutkan menjelajah",
+  ctOperatorsTitle: "Penemuan bandar taruhan",
+  ctOperatorsEmpty: "Tidak ada operator terverifikasi untuk konteks negara ini.",
+  ctNoindexNote: "Pusat ini saat ini tidak diindeks ({reason}).",
+  ctLinkMarkets: "Pasar riset",
+  ctLinkCompetitions: "Semua kompetisi",
+  ctLinkOperators: "Semua bandar",
+  ctLinkPerformance: "Kinerja terverifikasi",
+  ctLinkAcca: "Acca Studio",
+
 });
 
 export const zh = mergePredictions({
@@ -1984,6 +2162,30 @@ export const zh = mergePredictions({
   tmResetFilters: "重置筛选",
   tmInternational: "国际",
 
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "研究国家",
+  ctIndexTitle: "国家研究枢纽",
+  ctIndexLede: "只有当能为该地区汇集独特的赛事、运营商与研究语境时,枢纽才会存在 — 绝不是空洞的地理门页。",
+  ctIndexEmpty: "目前没有国家枢纽通过质量门槛。",
+  ctEyebrow: "国家枢纽",
+  ctLeadLine: "该枢纽连接{competitions}项赛事、{operators}家运营商和{fixtures}场已归档比赛。",
+  ctCompetitionsCount: "{n}项已关联赛事",
+  ctOperatorsCount: "{n}家可用运营商",
+  ctFixturesCount: "{n}个已归档比赛样本",
+  ctCompetitionsTitle: "相关赛事",
+  ctCompetitionsEmpty: "此档案暂无注册表赛事。",
+  ctFixturesTitle: "相关比赛",
+  ctFixturesEmpty: "没有与该国匹配的近期归档比赛。",
+  ctContinueTitle: "继续探索",
+  ctOperatorsTitle: "博彩公司发现",
+  ctOperatorsEmpty: "该国家语境下没有已验证的运营商。",
+  ctNoindexNote: "该枢纽当前未被索引({reason})。",
+  ctLinkMarkets: "研究市场",
+  ctLinkCompetitions: "全部赛事",
+  ctLinkOperators: "全部博彩公司",
+  ctLinkPerformance: "已验证表现",
+  ctLinkAcca: "Acca Studio",
+
 });
 
 export const bn = mergePredictions({
@@ -2170,6 +2372,32 @@ export const bn = mergePredictions({
   tmFiltersEmpty: "এই ফিল্টারগুলির সাথে কোনও দল মেলে না।",
   tmResetFilters: "ফিল্টার রিসেট করুন",
   tmInternational: "আন্তর্জাতিক",
+
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "গবেষণা দেশ",
+  ctIndexTitle: "দেশভিত্তিক গবেষণা কেন্দ্র",
+  ctIndexLede:
+    "কেন্দ্র কেবল তখনই থাকে যখন অঞ্চলটির জন্য অনন্য প্রতিযোগিতা, অপারেটর ও গবেষণা প্রেক্ষাপট একত্র করা যায় — কখনও ফাঁপা জিও-দরজা নয়।",
+  ctIndexEmpty: "বর্তমানে কোনও দেশ কেন্দ্র মান সীমা পেরোয় না।",
+  ctEyebrow: "দেশ কেন্দ্র",
+  ctLeadLine:
+    "এই কেন্দ্র {competitions}টি প্রতিযোগিতা, {operators}টি অপারেটর ও {fixtures}টি সংরক্ষিত ম্যাচ যুক্ত করে।",
+  ctCompetitionsCount: "{n}টি যুক্ত প্রতিযোগিতা",
+  ctOperatorsCount: "{n}টি উপলব্ধ অপারেটর",
+  ctFixturesCount: "{n}টি সংরক্ষিত ম্যাচ নমুনা",
+  ctCompetitionsTitle: "প্রাসঙ্গিক প্রতিযোগিতা",
+  ctCompetitionsEmpty: "এই প্রোফাইলের জন্য এখনও কোনও রেজিস্ট্রি প্রতিযোগিতা নেই।",
+  ctFixturesTitle: "সম্পর্কিত ম্যাচ",
+  ctFixturesEmpty: "এই দেশের সাথে মেলে এমন সাম্প্রতিক সংরক্ষিত ম্যাচ নেই।",
+  ctContinueTitle: "আরও দেখুন",
+  ctOperatorsTitle: "বুকমেকার আবিষ্কার",
+  ctOperatorsEmpty: "এই দেশ প্রেক্ষাপটে কোনও যাচাইকৃত অপারেটর নেই।",
+  ctNoindexNote: "এই কেন্দ্র বর্তমানে সূচিত নয় ({reason})।",
+  ctLinkMarkets: "গবেষণা বাজার",
+  ctLinkCompetitions: "সব প্রতিযোগিতা",
+  ctLinkOperators: "সব বুকমেকার",
+  ctLinkPerformance: "যাচাইকৃত পারফরম্যান্স",
+  ctLinkAcca: "Acca Studio",
 
 });
 
@@ -2367,6 +2595,32 @@ export const ta = mergePredictions({
   tmResetFilters: "வடிப்பான்களை மீட்டமை",
   tmInternational: "சர்வதேசம்",
 
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "ஆய்வு நாடுகள்",
+  ctIndexTitle: "நாடு வாரியான ஆய்வு மையங்கள்",
+  ctIndexLede:
+    "அப்பகுதிக்கே உரிய தொடர்கள், இயக்குநர்கள், ஆய்வுச் சூழலைத் திரட்ட முடிந்தால் மட்டுமே மையம் இருக்கும் — ஒருபோதும் வெற்று புவி-வாயிலாக அல்ல.",
+  ctIndexEmpty: "தற்போது எந்த நாட்டு மையமும் தரத் தடையைக் கடக்கவில்லை.",
+  ctEyebrow: "நாட்டு மையம்",
+  ctLeadLine:
+    "இந்த மையம் {competitions} தொடர்களையும் {operators} இயக்குநர்களையும் {fixtures} காப்பக ஆட்டங்களையும் இணைக்கிறது.",
+  ctCompetitionsCount: "{n} இணைந்த தொடர்கள்",
+  ctOperatorsCount: "{n} கிடைக்கும் இயக்குநர்கள்",
+  ctFixturesCount: "{n} காப்பக ஆட்ட மாதிரிகள்",
+  ctCompetitionsTitle: "தொடர்புடைய தொடர்கள்",
+  ctCompetitionsEmpty: "இந்தச் சுயவிவரத்திற்கு இன்னும் பதிவேட்டுத் தொடர்கள் இல்லை.",
+  ctFixturesTitle: "தொடர்புடைய ஆட்டங்கள்",
+  ctFixturesEmpty: "இந்த நாட்டுக்குப் பொருந்தும் சமீபத்திய காப்பக ஆட்டங்கள் இல்லை.",
+  ctContinueTitle: "மேலும் ஆராயுங்கள்",
+  ctOperatorsTitle: "புக்மேக்கர் கண்டறிதல்",
+  ctOperatorsEmpty: "இந்த நாட்டுச் சூழலுக்குச் சரிபார்க்கப்பட்ட இயக்குநர்கள் இல்லை.",
+  ctNoindexNote: "இந்த மையம் தற்போது குறியீட்டில் இல்லை ({reason}).",
+  ctLinkMarkets: "ஆய்வுச் சந்தைகள்",
+  ctLinkCompetitions: "அனைத்து தொடர்களும்",
+  ctLinkOperators: "அனைத்து புக்மேக்கர்களும்",
+  ctLinkPerformance: "சரிபார்க்கப்பட்ட செயல்திறன்",
+  ctLinkAcca: "Acca Studio",
+
 });
 
 export const te = mergePredictions({
@@ -2554,6 +2808,32 @@ export const te = mergePredictions({
   tmResetFilters: "ఫిల్టర్లను రీసెట్ చేయండి",
   tmInternational: "అంతర్జాతీయ",
 
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "పరిశోధన దేశాలు",
+  ctIndexTitle: "దేశాలవారీ పరిశోధన కేంద్రాలు",
+  ctIndexLede:
+    "ప్రాంతానికి ప్రత్యేకమైన పోటీలు, ఆపరేటర్లు, పరిశోధన సందర్భం సమకూర్చగలిగినప్పుడే కేంద్రం ఉంటుంది — ఎప్పుడూ డొల్ల జియో-ద్వారం కాదు.",
+  ctIndexEmpty: "ప్రస్తుతం ఏ దేశ కేంద్రమూ నాణ్యత పరిమితిని దాటడం లేదు.",
+  ctEyebrow: "దేశ కేంద్రం",
+  ctLeadLine:
+    "ఈ కేంద్రం {competitions} పోటీలను, {operators} ఆపరేటర్లను, {fixtures} ఆర్కైవ్ మ్యాచ్‌లను కలుపుతుంది.",
+  ctCompetitionsCount: "{n} అనుసంధానిత పోటీలు",
+  ctOperatorsCount: "{n} అందుబాటులో ఉన్న ఆపరేటర్లు",
+  ctFixturesCount: "{n} ఆర్కైవ్ మ్యాచ్ నమూనాలు",
+  ctCompetitionsTitle: "సంబంధిత పోటీలు",
+  ctCompetitionsEmpty: "ఈ ప్రొఫైల్‌కు ఇంకా రిజిస్ట్రీ పోటీలు లేవు.",
+  ctFixturesTitle: "సంబంధిత మ్యాచ్‌లు",
+  ctFixturesEmpty: "ఈ దేశానికి సరిపోలే ఇటీవలి ఆర్కైవ్ మ్యాచ్‌లు లేవు.",
+  ctContinueTitle: "మరింత అన్వేషించండి",
+  ctOperatorsTitle: "బుక్‌మేకర్ అన్వేషణ",
+  ctOperatorsEmpty: "ఈ దేశ సందర్భానికి ధృవీకరించిన ఆపరేటర్లు లేరు.",
+  ctNoindexNote: "ఈ కేంద్రం ప్రస్తుతం సూచికలో లేదు ({reason}).",
+  ctLinkMarkets: "పరిశోధన మార్కెట్లు",
+  ctLinkCompetitions: "అన్ని పోటీలు",
+  ctLinkOperators: "అన్ని బుక్‌మేకర్లు",
+  ctLinkPerformance: "ధృవీకరించిన పనితీరు",
+  ctLinkAcca: "Acca Studio",
+
 });
 
 export const mr = mergePredictions({
@@ -2740,6 +3020,32 @@ export const mr = mergePredictions({
   tmFiltersEmpty: "या फिल्टरशी जुळणारा कोणताही संघ नाही.",
   tmResetFilters: "फिल्टर रीसेट करा",
   tmInternational: "आंतरराष्ट्रीय",
+
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "संशोधन देश",
+  ctIndexTitle: "देशनिहाय संशोधन केंद्रे",
+  ctIndexLede:
+    "प्रदेशासाठी वेगळ्या स्पर्धा, ऑपरेटर आणि संशोधन संदर्भ जुळवता आले तरच केंद्र अस्तित्वात असते — कधीही पोकळ भू-द्वार नाही.",
+  ctIndexEmpty: "सध्या कोणतेही देश केंद्र गुणवत्ता उंबरठा ओलांडत नाही.",
+  ctEyebrow: "देश केंद्र",
+  ctLeadLine:
+    "हे केंद्र {competitions} स्पर्धा, {operators} ऑपरेटर आणि {fixtures} संग्रहित सामने जोडते.",
+  ctCompetitionsCount: "{n} जोडलेल्या स्पर्धा",
+  ctOperatorsCount: "{n} उपलब्ध ऑपरेटर",
+  ctFixturesCount: "{n} संग्रहित सामना नमुने",
+  ctCompetitionsTitle: "संबंधित स्पर्धा",
+  ctCompetitionsEmpty: "या प्रोफाइलसाठी अद्याप नोंदणीतील स्पर्धा नाहीत.",
+  ctFixturesTitle: "संबंधित सामने",
+  ctFixturesEmpty: "या देशाशी जुळणारे अलीकडील संग्रहित सामने नाहीत.",
+  ctContinueTitle: "आणखी पाहा",
+  ctOperatorsTitle: "बुकमेकर शोध",
+  ctOperatorsEmpty: "या देश संदर्भासाठी पडताळलेले ऑपरेटर नाहीत.",
+  ctNoindexNote: "हे केंद्र सध्या अनुक्रमित नाही ({reason}).",
+  ctLinkMarkets: "संशोधन बाजार",
+  ctLinkCompetitions: "सर्व स्पर्धा",
+  ctLinkOperators: "सर्व बुकमेकर",
+  ctLinkPerformance: "पडताळलेली कामगिरी",
+  ctLinkAcca: "Acca Studio",
 
 });
 
@@ -3001,5 +3307,31 @@ export const sw = mergePredictions({
   tmFiltersEmpty: "Hakuna timu inayolingana na vichujio hivi.",
   tmResetFilters: "Weka upya vichujio",
   tmInternational: "Kimataifa",
+
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "Nchi za utafiti",
+  ctIndexTitle: "Vituo vya utafiti kwa nchi",
+  ctIndexLede:
+    "Kituo kipo tu pale mashindano, waendeshaji na muktadha wa utafiti wa kipekee vinaweza kukusanywa kwa eneo hilo — kamwe si mlango mwembamba wa kijiografia.",
+  ctIndexEmpty: "Hakuna kituo cha nchi kinachopita kizingiti cha ubora kwa sasa.",
+  ctEyebrow: "Kituo cha nchi",
+  ctLeadLine:
+    "Kituo hiki kinaunganisha mashindano {competitions}, waendeshaji {operators} na mechi {fixtures} zilizohifadhiwa.",
+  ctCompetitionsCount: "Mashindano {n} yaliyounganishwa",
+  ctOperatorsCount: "Waendeshaji {n} waliopo",
+  ctFixturesCount: "Sampuli {n} za mechi zilizohifadhiwa",
+  ctCompetitionsTitle: "Mashindano muhimu",
+  ctCompetitionsEmpty: "Bado hakuna mashindano ya rejista kwa wasifu huu.",
+  ctFixturesTitle: "Mechi zinazohusiana",
+  ctFixturesEmpty: "Hakuna mechi za hivi karibuni zilizohifadhiwa zinazolingana na nchi hii.",
+  ctContinueTitle: "Endelea kuchunguza",
+  ctOperatorsTitle: "Ugunduzi wa kampuni za kamari",
+  ctOperatorsEmpty: "Hakuna waendeshaji waliothibitishwa kwa muktadha wa nchi hii.",
+  ctNoindexNote: "Kituo hiki hakijaorodheshwa kwa sasa ({reason}).",
+  ctLinkMarkets: "Masoko ya utafiti",
+  ctLinkCompetitions: "Mashindano yote",
+  ctLinkOperators: "Kampuni zote za kamari",
+  ctLinkPerformance: "Utendaji uliothibitishwa",
+  ctLinkAcca: "Acca Studio",
 
 });

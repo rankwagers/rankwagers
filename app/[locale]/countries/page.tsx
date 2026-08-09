@@ -6,6 +6,7 @@ import { listIndexableCountryCodes } from "@/lib/countries/landing";
 import { CountryFlagIcon } from "@/components/CountryFlagIcon";
 import { countryName } from "@/lib/geoNames";
 import { locales, type Locale } from "@/lib/i18n";
+import { getDictionary } from "@/lib/dictionaries";
 import { pageMetadata } from "@/lib/seo";
 
 export function generateMetadata({
@@ -30,53 +31,48 @@ export default function CountriesIndexPage({
 }) {
   if (!locales.includes(params.locale)) notFound();
   const codes = listIndexableCountryCodes();
+  const p = getDictionary(params.locale).predictions;
 
   return (
-    <div className="container-wide py-10 pb-16">
-      <nav aria-label="Breadcrumb" className="mb-6 text-xs text-muted-foreground">
-        <ol className="flex flex-wrap gap-1">
-          <li>
-            <Link href={`/${params.locale}`} className="hover:text-brand">
-              Home
-            </Link>
-          </li>
-          <li aria-hidden>/</li>
-          <li className="text-foreground" aria-current="page">
-            Countries
-          </li>
-        </ol>
-      </nav>
-      <h1 className="font-display text-3xl font-semibold text-foreground">
-        Country research hubs
-      </h1>
-      <p className="mt-3 max-w-2xl text-sm text-[var(--ink-secondary)]">
-        These pages exist only when RankWagers can assemble unique competitions, operators, and
-        research context for the region — not as thin geo doorways.
-      </p>
+    <div className="rw-hero container-wide bg-[var(--hero-canvas)] pb-24">
+      <header className="border-b border-[var(--hero-line)] pb-10 pt-10">
+        <span aria-hidden className="block h-[2px] w-10 bg-[var(--hero-ink)]" />
+        <p className="rw-m mt-3.5 text-[var(--hero-ink-2)]">{p.ctIndexEyebrow}</p>
+        <h1 className="rw-h mt-1.5 text-[clamp(2.125rem,4.4vw,2.875rem)] text-[var(--hero-ink)]">
+          {p.ctIndexTitle}
+        </h1>
+        <p className="mt-2.5 max-w-[62ch] text-[15px] leading-[1.55] text-[var(--hero-ink-2)]">
+          {p.ctIndexLede}
+        </p>
+      </header>
+
       {codes.length ? (
-        <ul className="mt-8 grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+        <ul className="mt-10 border-t-[1.5px] border-[var(--hero-ink)]">
           {codes.map((code) => (
             <li key={code}>
               <Link
                 href={countryPath(params.locale, code)}
-                className="flex min-h-12 items-center justify-between rounded-lg border border-border bg-[var(--canvas-secondary)] px-4 text-sm font-medium hover:border-brand/35"
+                className="rw-row flex items-baseline justify-between gap-x-4 border-b border-[var(--hero-line)] py-4 pl-3.5"
               >
-                <span className="flex items-center gap-2">
+                <span className="flex items-center gap-2.5 text-[15px] font-semibold tracking-[-0.01em] text-[var(--hero-ink)]">
                   <CountryFlagIcon code={code} />
                   {countryName(code)}
                 </span>
-                <span className="font-mono text-xs text-muted-foreground">{code}</span>
+                <span className="rw-m text-[var(--hero-ink-2)]">{code}</span>
               </Link>
             </li>
           ))}
         </ul>
       ) : (
-        <p className="mt-8 text-sm text-muted-foreground" role="status">
-          No country hubs currently pass the quality gate.
+        <p
+          className="mt-10 max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]"
+          role="status"
+        >
+          {p.ctIndexEmpty}
         </p>
       )}
-      <p className="mt-6 text-xs text-muted-foreground">
-        Index: <span className="font-mono">{countriesIndexPath(params.locale)}</span>
+      <p className="rw-m mt-8 normal-case tracking-[0.04em] text-[var(--hero-ink-2)]">
+        {countriesIndexPath(params.locale)}
       </p>
     </div>
   );

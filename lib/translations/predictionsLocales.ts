@@ -274,6 +274,32 @@ const pt: PredictionStrings = mergePredictions({
   tmResetFilters: "Repor filtros",
   tmInternational: "Internacional",
 
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "Países de pesquisa",
+  ctIndexTitle: "Polos de pesquisa por país",
+  ctIndexLede:
+    "Um polo existe apenas quando é possível reunir competições, operadores e contexto de pesquisa únicos para a região — nunca como porta geográfica vazia.",
+  ctIndexEmpty: "Nenhum polo de país passa atualmente o critério de qualidade.",
+  ctEyebrow: "Polo do país",
+  ctLeadLine:
+    "Este polo liga {competitions} competições, {operators} operadores e {fixtures} jogos arquivados.",
+  ctCompetitionsCount: "{n} competições ligadas",
+  ctOperatorsCount: "{n} operadores disponíveis",
+  ctFixturesCount: "{n} amostras de jogos arquivados",
+  ctCompetitionsTitle: "Competições relevantes",
+  ctCompetitionsEmpty: "Ainda nenhuma competição do registo resolvida para este perfil.",
+  ctFixturesTitle: "Jogos relacionados",
+  ctFixturesEmpty: "Nenhum jogo arquivado recente correspondeu a este país.",
+  ctContinueTitle: "Continuar a explorar",
+  ctOperatorsTitle: "Descoberta de casas de apostas",
+  ctOperatorsEmpty: "Nenhum operador verificado disponível para este contexto de país.",
+  ctNoindexNote: "Este polo não está atualmente indexado ({reason}).",
+  ctLinkMarkets: "Mercados de pesquisa",
+  ctLinkCompetitions: "Todas as competições",
+  ctLinkOperators: "Todas as casas de apostas",
+  ctLinkPerformance: "Desempenho verificado",
+  ctLinkAcca: "Acca Studio",
+
 });
 
 const es: PredictionStrings = mergePredictions({
@@ -547,6 +573,32 @@ const es: PredictionStrings = mergePredictions({
   tmFiltersEmpty: "Ningún equipo coincide con estos filtros.",
   tmResetFilters: "Restablecer filtros",
   tmInternational: "Internacional",
+
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "Países de investigación",
+  ctIndexTitle: "Núcleos de investigación por país",
+  ctIndexLede:
+    "Un núcleo existe solo cuando se pueden reunir competiciones, operadores y contexto de investigación únicos para la región — nunca como puerta geográfica vacía.",
+  ctIndexEmpty: "Ningún núcleo de país supera actualmente el filtro de calidad.",
+  ctEyebrow: "Núcleo del país",
+  ctLeadLine:
+    "Este núcleo conecta {competitions} competiciones, {operators} operadores y {fixtures} partidos archivados.",
+  ctCompetitionsCount: "{n} competiciones vinculadas",
+  ctOperatorsCount: "{n} operadores disponibles",
+  ctFixturesCount: "{n} muestras de partidos archivados",
+  ctCompetitionsTitle: "Competiciones relevantes",
+  ctCompetitionsEmpty: "Aún no hay competiciones del registro resueltas para este perfil.",
+  ctFixturesTitle: "Partidos relacionados",
+  ctFixturesEmpty: "Ningún partido archivado reciente coincidió con este país.",
+  ctContinueTitle: "Seguir explorando",
+  ctOperatorsTitle: "Descubrimiento de casas de apuestas",
+  ctOperatorsEmpty: "Ningún operador verificado disponible para este contexto de país.",
+  ctNoindexNote: "Este núcleo no está indexado actualmente ({reason}).",
+  ctLinkMarkets: "Mercados de investigación",
+  ctLinkCompetitions: "Todas las competiciones",
+  ctLinkOperators: "Todas las casas de apuestas",
+  ctLinkPerformance: "Rendimiento verificado",
+  ctLinkAcca: "Acca Studio",
 
 });
 
@@ -823,6 +875,32 @@ const de: PredictionStrings = mergePredictions({
   tmResetFilters: "Filter zurücksetzen",
   tmInternational: "International",
 
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "Recherche-Länder",
+  ctIndexTitle: "Länder-Recherche-Knoten",
+  ctIndexLede:
+    "Ein Knoten existiert nur, wenn sich für die Region eigene Wettbewerbe, Anbieter und Recherche-Kontext zusammenstellen lassen — niemals als dünne Geo-Türseite.",
+  ctIndexEmpty: "Kein Länder-Knoten besteht derzeit die Qualitätsprüfung.",
+  ctEyebrow: "Länder-Knoten",
+  ctLeadLine:
+    "Dieser Knoten verbindet {competitions} Wettbewerbe, {operators} Anbieter und {fixtures} archivierte Spiele.",
+  ctCompetitionsCount: "{n} verknüpfte Wettbewerbe",
+  ctOperatorsCount: "{n} verfügbare Anbieter",
+  ctFixturesCount: "{n} archivierte Spielbeispiele",
+  ctCompetitionsTitle: "Relevante Wettbewerbe",
+  ctCompetitionsEmpty: "Noch keine Registry-Wettbewerbe für dieses Profil aufgelöst.",
+  ctFixturesTitle: "Verwandte Spiele",
+  ctFixturesEmpty: "Keine kürzlich archivierten Spiele entsprachen diesem Land.",
+  ctContinueTitle: "Weiter erkunden",
+  ctOperatorsTitle: "Buchmacher-Entdeckung",
+  ctOperatorsEmpty: "Keine verifizierten Anbieter für diesen Länderkontext verfügbar.",
+  ctNoindexNote: "Dieser Knoten ist derzeit nicht indexiert ({reason}).",
+  ctLinkMarkets: "Recherche-Märkte",
+  ctLinkCompetitions: "Alle Wettbewerbe",
+  ctLinkOperators: "Alle Buchmacher",
+  ctLinkPerformance: "Verifizierte Ergebnisse",
+  ctLinkAcca: "Acca Studio",
+
 });
 
 const it: PredictionStrings = mergePredictions({
@@ -1093,6 +1171,32 @@ const it: PredictionStrings = mergePredictions({
   tmFiltersEmpty: "Nessuna squadra corrisponde a questi filtri.",
   tmResetFilters: "Reimposta filtri",
   tmInternational: "Internazionale",
+
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "Paesi di ricerca",
+  ctIndexTitle: "Nodi di ricerca per paese",
+  ctIndexLede:
+    "Un nodo esiste solo quando è possibile riunire competizioni, operatori e contesto di ricerca unici per la regione — mai come porta geografica vuota.",
+  ctIndexEmpty: "Nessun nodo paese supera attualmente il filtro di qualità.",
+  ctEyebrow: "Nodo del paese",
+  ctLeadLine:
+    "Questo nodo collega {competitions} competizioni, {operators} operatori e {fixtures} partite archiviate.",
+  ctCompetitionsCount: "{n} competizioni collegate",
+  ctOperatorsCount: "{n} operatori disponibili",
+  ctFixturesCount: "{n} campioni di partite archiviate",
+  ctCompetitionsTitle: "Competizioni rilevanti",
+  ctCompetitionsEmpty: "Nessuna competizione del registro risolta per questo profilo, per ora.",
+  ctFixturesTitle: "Partite correlate",
+  ctFixturesEmpty: "Nessuna partita archiviata recente corrisponde a questo paese.",
+  ctContinueTitle: "Continua a esplorare",
+  ctOperatorsTitle: "Scoperta dei bookmaker",
+  ctOperatorsEmpty: "Nessun operatore verificato disponibile per questo contesto paese.",
+  ctNoindexNote: "Questo nodo non è attualmente indicizzato ({reason}).",
+  ctLinkMarkets: "Mercati di ricerca",
+  ctLinkCompetitions: "Tutte le competizioni",
+  ctLinkOperators: "Tutti i bookmaker",
+  ctLinkPerformance: "Rendimento verificato",
+  ctLinkAcca: "Acca Studio",
 
 });
 
@@ -1365,6 +1469,32 @@ const fr: PredictionStrings = mergePredictions({
   tmFiltersEmpty: "Aucune équipe ne correspond à ces filtres.",
   tmResetFilters: "Réinitialiser les filtres",
   tmInternational: "International",
+
+  /* Country pages — form-guide conversion (ct keys). */
+  ctIndexEyebrow: "Pays de recherche",
+  ctIndexTitle: "Pôles de recherche par pays",
+  ctIndexLede:
+    "Un pôle n'existe que lorsqu'on peut assembler des compétitions, opérateurs et un contexte de recherche uniques pour la région — jamais comme porte géographique vide.",
+  ctIndexEmpty: "Aucun pôle pays ne passe actuellement le filtre de qualité.",
+  ctEyebrow: "Pôle pays",
+  ctLeadLine:
+    "Ce pôle relie {competitions} compétitions, {operators} opérateurs et {fixtures} matchs archivés.",
+  ctCompetitionsCount: "{n} compétitions liées",
+  ctOperatorsCount: "{n} opérateurs disponibles",
+  ctFixturesCount: "{n} échantillons de matchs archivés",
+  ctCompetitionsTitle: "Compétitions pertinentes",
+  ctCompetitionsEmpty: "Aucune compétition du registre résolue pour ce profil pour l'instant.",
+  ctFixturesTitle: "Matchs liés",
+  ctFixturesEmpty: "Aucun match archivé récent ne correspond à ce pays.",
+  ctContinueTitle: "Continuer l'exploration",
+  ctOperatorsTitle: "Découverte de bookmakers",
+  ctOperatorsEmpty: "Aucun opérateur vérifié disponible pour ce contexte pays.",
+  ctNoindexNote: "Ce pôle n'est actuellement pas indexé ({reason}).",
+  ctLinkMarkets: "Marchés de recherche",
+  ctLinkCompetitions: "Toutes les compétitions",
+  ctLinkOperators: "Tous les bookmakers",
+  ctLinkPerformance: "Performance vérifiée",
+  ctLinkAcca: "Acca Studio",
 
 });
 
