@@ -22,9 +22,25 @@ None. Zero writer failures, zero immutable violations, zero torn lines, zero une
 
 The 2E-B correctness category (settled outcomes vs known final scores over the real capture) cannot run in this tree: **the dev environment has no evidence archive**. To run it, place read-only copies at exactly these paths:
 
-1. `/var/www/rankwagers/data/evidence-archive/snapshots.ndjson` and `.../validations.ndjson` → `/var/www/rankwagers-dev/data/evidence-archive-prodcopy/` (both files; the 88-snapshot capture)
-2. `/var/www/rankwagers/data/daily-archives/` (the whole directory of `YYYY-MM-DD.json` files — the replay needs the archives covering every snapshot's `capturedAt` date, and the whole set is small) → `/var/www/rankwagers-dev/data/daily-archives-prodcopy/`
+**CORRECTED after storage reconciliation (2026-08-09, session follow-up):** the production evidence
+archive is NOT in the deploy tree and NOT in Postgres. `createDefaultStore()` has exactly two
+adapters — memory (explicit opt-in) and the durable NDJSON file store — and under production
+config (`NODE_ENV=production`) the file store resolves to **`/opt/rankwagers/shared/evidence-archive/`**
+(`SHARED_DEFAULT_DIR`, the MG-1 shared-dir landing; `EVIDENCE_ARCHIVE_DIR` overrides when set).
+`EVIDENCE_DATABASE_URL` binds only the durable advisory lock, and the `provider_snapshots`
+Postgres table is Sprint 17's serving-payload cache (`lib/snapshots/postgres.ts`) — a different
+system. The export is therefore a file copy, not a pg_dump:
 
-Nothing else: settlement correctness derives from FT/HT scores in the daily rows; the odds and raw-provider archives are capture-side inputs and are not required. The replay will then run the dry-run composition against the copies with `EVIDENCE_ARCHIVE_DIR` pointed at the prodcopy directory and every result written to a scratch dry-run store — the copies are never written to.
+1. `/opt/rankwagers/shared/evidence-archive/snapshots.ndjson` → `/var/www/rankwagers-dev/data/evidence-archive-prodcopy/snapshots.ndjson`
+2. `/opt/rankwagers/shared/evidence-archive/validations.ndjson` → same target dir — **may not exist** (settlement has never run; an absent validations file is a valid store state, copy it only if present)
+3. `/var/www/rankwagers/data/daily-archives/` → `/var/www/rankwagers-dev/data/daily-archives-prodcopy/` — **already placed, thank you**
+
+If `EVIDENCE_ARCHIVE_DIR` is set in `/opt/rankwagers/shared/.env`, that path is authoritative
+over the default — `grep EVIDENCE_ARCHIVE_DIR /opt/rankwagers/shared/.env` and copy from
+wherever it points. If no snapshots.ndjson exists there either, then capture has never actually
+appended despite the flag — that would be a finding to investigate before any DRY-RUN.
+
+Nothing from Postgres: settlement correctness derives from FT/HT scores in the daily rows; the
+odds and raw-provider archives are capture-side inputs and are not required. The replay will then run the dry-run composition against the copies with `EVIDENCE_ARCHIVE_DIR` pointed at the prodcopy directory and every result written to a scratch dry-run store — the copies are never written to.
 
 Alternatively, the go/no-go plan obtains the same correctness evidence from the production DRY-RUN period itself (5 days, real volume, zero record risk) — the dev replay is a pre-check, not a gate replacement.
