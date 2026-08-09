@@ -357,6 +357,54 @@ export const nl = euroPredictions({
   mktIndicatorUsed: "gebruikt in onderzoek",
   mktIndicatorConceptual: "conceptueel",
 
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "Onderzoekscompetities",
+  cmpIndexTitle: "Competities",
+  cmpIndexLede:
+    "Competities als onderzoeksknooppunten — gekwalificeerde wedstrijden, markten, operators en waargenomen noteringen. Onderzoeksstructuur, nooit tips.",
+  cmpLeadLine:
+    "De dekking van vandaag concentreert zich op {market}: {count} van {total} gekwalificeerde regels ({pct}%).",
+  cmpQualifiedRowsLine: "{n} gekwalificeerde marktregels in de huidige onderzoeksset",
+  cmpUniqueFixturesLine: "{n} unieke wedstrijden",
+  cmpMarketRow: "{market} — {count} van {total} ({pct}%)",
+  cmpUpcomingTitle: "Komende gekwalificeerde wedstrijden",
+  cmpUpcomingEmpty:
+    "Geen komende gekwalificeerde wedstrijden voor deze competitie in de huidige onderzoeksset.",
+  cmpRecentTitle: "Regels met het sterkste signaal",
+  cmpRecentNote:
+    "De sterkste gekwalificeerde regels uit de huidige onderzoeksset — onderzoeksitems, geen uitslagen.",
+  cmpRecentEmpty: "Geen geanalyseerde wedstrijden voor deze competitie in de huidige onderzoeksset.",
+  cmpDetailTitle: "Competitiedetail",
+  cmpSeasonsTitle: "Seizoenen",
+  cmpSeasonCurrent: "huidig",
+  cmpMarketActivityTitle: "Marktactiviteit in de steekproef",
+  cmpMarketActivityEmpty:
+    "Marktregels verschijnen wanneer gekwalificeerde wedstrijden bij deze competitie horen.",
+  cmpRowsProviderMeta: "{n} regels · providergemiddelde {pct}%",
+  cmpRelatedCompetitions: "Gerelateerde competities",
+  cmpRelatedTeams: "Gerelateerde teams",
+  cmpRelatedTeamsNote:
+    "Gelinkt wanneer een canonieke teamentiteit bestaat; anders getoond als onderzoekslabels.",
+  cmpMethodologyLink: "Methodologie en bewijs",
+  ssnEyebrow: "Seizoensonderzoek",
+  ssnCurrent: "Huidig",
+  ssnArchived: "Gearchiveerd",
+  ssnWindowLine: "Seizoensvenster {start} → {end}",
+  ssnLeadLine:
+    "De onderzoeksset van dit seizoen bevat {count} gekwalificeerde regels over {fixtures} wedstrijden.",
+  ssnTeamsTitle: "Deelnemende teams",
+  ssnTeamsEmpty:
+    "Teams verschijnen alleen wanneer ze voorkomen in gekwalificeerde wedstrijden van dit seizoen.",
+  ssnTeamsCountLine: "{n} deelnemende teams",
+  ssnUpcomingRowsLine: "{n} komende regels",
+  ssnCompletedRowsLine: "{n} afgeronde regels",
+  ssnHomeAwayLine: "{home} thuisregels · {away} uitregels",
+  ssnEnrichmentAbsent:
+    "Doelpunten- en xG-cijfers op seizoensniveau verschijnen alleen wanneer wedstrijddetail-verrijking bestaat — deze pagina verzint ze niet.",
+  ssnDetailTitle: "Seizoensdetail",
+  ssnOperatorsTitle: "Beschikbare operators",
+  ssnOperatorsEmpty: "Geen operators met actieve affiliatie voor het vastgestelde bezoekersland.",
+
 });
 
 export const pl = euroPredictions({
@@ -543,6 +591,55 @@ export const pl = euroPredictions({
   mktIndicatorUsed: "używany w badaniu",
   mktIndicatorConceptual: "koncepcyjny",
 
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "Rozgrywki badawcze",
+  cmpIndexTitle: "Rozgrywki",
+  cmpIndexLede:
+    "Rozgrywki jako węzły badawcze — zakwalifikowane mecze, rynki, operatorzy i zaobserwowane kursy. Struktura badawcza, nigdy typy.",
+  cmpLeadLine:
+    "Dzisiejsze pokrycie koncentruje się na {market}: {count} z {total} zakwalifikowanych wierszy ({pct}%).",
+  cmpQualifiedRowsLine: "{n} zakwalifikowanych wierszy rynkowych w bieżącym zbiorze badawczym",
+  cmpUniqueFixturesLine: "{n} unikalnych meczów",
+  cmpMarketRow: "{market} — {count} z {total} ({pct}%)",
+  cmpUpcomingTitle: "Nadchodzące zakwalifikowane mecze",
+  cmpUpcomingEmpty:
+    "Żaden nadchodzący zakwalifikowany mecz nie pasuje do tych rozgrywek w bieżącym zbiorze badawczym.",
+  cmpRecentTitle: "Wiersze o najsilniejszym sygnale",
+  cmpRecentNote:
+    "Najsilniejsze zakwalifikowane wiersze z bieżącego zbioru badawczego — wpisy badawcze, nie wyniki.",
+  cmpRecentEmpty:
+    "Żaden przeanalizowany mecz nie pasuje do tych rozgrywek w bieżącym zbiorze badawczym.",
+  cmpDetailTitle: "Szczegóły rozgrywek",
+  cmpSeasonsTitle: "Sezony",
+  cmpSeasonCurrent: "bieżący",
+  cmpMarketActivityTitle: "Aktywność rynkowa w próbie",
+  cmpMarketActivityEmpty:
+    "Wiersze rynkowe pojawiają się, gdy zakwalifikowane mecze pasują do tych rozgrywek.",
+  cmpRowsProviderMeta: "{n} wierszy · średnia dostawcy {pct}%",
+  cmpRelatedCompetitions: "Powiązane rozgrywki",
+  cmpRelatedTeams: "Powiązane drużyny",
+  cmpRelatedTeamsNote:
+    "Z linkiem, gdy istnieje kanoniczna encja drużyny; w przeciwnym razie pokazywane jako etykiety badawcze.",
+  cmpMethodologyLink: "Metodologia i dowody",
+  ssnEyebrow: "Badanie sezonu",
+  ssnCurrent: "Bieżący",
+  ssnArchived: "Zarchiwizowany",
+  ssnWindowLine: "Okno sezonu {start} → {end}",
+  ssnLeadLine:
+    "Zbiór badawczy tego sezonu zawiera {count} zakwalifikowanych wierszy w {fixtures} meczach.",
+  ssnTeamsTitle: "Drużyny uczestniczące",
+  ssnTeamsEmpty:
+    "Drużyny pojawiają się tylko wtedy, gdy występują w zakwalifikowanych meczach tego sezonu.",
+  ssnTeamsCountLine: "{n} drużyn uczestniczących",
+  ssnUpcomingRowsLine: "{n} nadchodzących wierszy",
+  ssnCompletedRowsLine: "{n} ukończonych wierszy",
+  ssnHomeAwayLine: "{home} wierszy u siebie · {away} wierszy na wyjeździe",
+  ssnEnrichmentAbsent:
+    "Sezonowe wskaźniki goli i xG pojawiają się tylko wtedy, gdy istnieje wzbogacenie o szczegóły meczu — ta strona ich nie wymyśla.",
+  ssnDetailTitle: "Szczegóły sezonu",
+  ssnOperatorsTitle: "Dostępni operatorzy",
+  ssnOperatorsEmpty: "Brak operatorów z aktywną afiliacją dla ustalonego kraju odwiedzającego.",
+
 });
 
 export const cs = euroPredictions({
@@ -727,6 +824,53 @@ export const cs = euroPredictions({
   mktIndicatorsNote: "Definice metrik tohoto trhu — ne živé hodnoty, ne skóre jistoty.",
   mktIndicatorUsed: "používán ve výzkumu",
   mktIndicatorConceptual: "konceptuální",
+
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "Výzkumné soutěže",
+  cmpIndexTitle: "Soutěže",
+  cmpIndexLede:
+    "Soutěže jako výzkumné uzly — kvalifikované zápasy, trhy, operátoři a pozorované kurzy. Výzkumná struktura, nikdy tipy.",
+  cmpLeadLine:
+    "Dnešní pokrytí se soustředí na {market}: {count} z {total} kvalifikovaných řádků ({pct}%).",
+  cmpQualifiedRowsLine: "{n} kvalifikovaných tržních řádků v aktuální výzkumné sadě",
+  cmpUniqueFixturesLine: "{n} jedinečných zápasů",
+  cmpMarketRow: "{market} — {count} z {total} ({pct}%)",
+  cmpUpcomingTitle: "Nadcházející kvalifikované zápasy",
+  cmpUpcomingEmpty:
+    "Žádný nadcházející kvalifikovaný zápas neodpovídá této soutěži v aktuální výzkumné sadě.",
+  cmpRecentTitle: "Řádky s nejsilnějším signálem",
+  cmpRecentNote:
+    "Nejsilnější kvalifikované řádky z aktuální výzkumné sady — výzkumné záznamy, ne výsledky.",
+  cmpRecentEmpty: "Žádný analyzovaný zápas neodpovídá této soutěži v aktuální výzkumné sadě.",
+  cmpDetailTitle: "Detail soutěže",
+  cmpSeasonsTitle: "Sezóny",
+  cmpSeasonCurrent: "aktuální",
+  cmpMarketActivityTitle: "Tržní aktivita ve vzorku",
+  cmpMarketActivityEmpty: "Tržní řádky se objeví, když kvalifikované zápasy odpovídají této soutěži.",
+  cmpRowsProviderMeta: "{n} řádků · průměr poskytovatele {pct}%",
+  cmpRelatedCompetitions: "Související soutěže",
+  cmpRelatedTeams: "Související týmy",
+  cmpRelatedTeamsNote:
+    "S odkazem, pokud existuje kanonická entita týmu; jinak zobrazeny jako výzkumné štítky.",
+  cmpMethodologyLink: "Metodika a důkazy",
+  ssnEyebrow: "Výzkum sezóny",
+  ssnCurrent: "Aktuální",
+  ssnArchived: "Archivovaná",
+  ssnWindowLine: "Okno sezóny {start} → {end}",
+  ssnLeadLine:
+    "Výzkumná sada této sezóny obsahuje {count} kvalifikovaných řádků napříč {fixtures} zápasy.",
+  ssnTeamsTitle: "Zúčastněné týmy",
+  ssnTeamsEmpty:
+    "Týmy se objeví, pouze pokud jsou přítomny v kvalifikovaných zápasech této sezóny.",
+  ssnTeamsCountLine: "{n} zúčastněných týmů",
+  ssnUpcomingRowsLine: "{n} nadcházejících řádků",
+  ssnCompletedRowsLine: "{n} dokončených řádků",
+  ssnHomeAwayLine: "{home} domácích řádků · {away} venkovních řádků",
+  ssnEnrichmentAbsent:
+    "Sezónní míry gólů a xG se zobrazují, jen když existuje obohacení o detail zápasu — tato stránka si je nevymýšlí.",
+  ssnDetailTitle: "Detail sezóny",
+  ssnOperatorsTitle: "Dostupní operátoři",
+  ssnOperatorsEmpty: "Žádní operátoři s aktivní afiliací pro zjištěnou zemi návštěvníka.",
 
 });
 
@@ -913,6 +1057,51 @@ export const da = euroPredictions({
   mktIndicatorUsed: "brugt i forskningen",
   mktIndicatorConceptual: "konceptuel",
 
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "Forskningsturneringer",
+  cmpIndexTitle: "Turneringer",
+  cmpIndexLede:
+    "Turneringer som forskningsknudepunkter — kvalificerede kampe, markeder, operatører og observerede odds. Forskningsstruktur, aldrig tips.",
+  cmpLeadLine:
+    "Dagens dækning koncentrerer sig om {market}: {count} af {total} kvalificerede rækker ({pct}%).",
+  cmpQualifiedRowsLine: "{n} kvalificerede markedsrækker i det aktuelle forskningssæt",
+  cmpUniqueFixturesLine: "{n} unikke kampe",
+  cmpMarketRow: "{market} — {count} af {total} ({pct}%)",
+  cmpUpcomingTitle: "Kommende kvalificerede kampe",
+  cmpUpcomingEmpty:
+    "Ingen kommende kvalificerede kampe matchede denne turnering i det aktuelle forskningssæt.",
+  cmpRecentTitle: "Rækker med stærkest signal",
+  cmpRecentNote:
+    "De stærkeste kvalificerede rækker fra det aktuelle forskningssæt — forskningsposter, ikke resultater.",
+  cmpRecentEmpty: "Ingen analyserede kampe matchede denne turnering i det aktuelle forskningssæt.",
+  cmpDetailTitle: "Turneringsdetalje",
+  cmpSeasonsTitle: "Sæsoner",
+  cmpSeasonCurrent: "nuværende",
+  cmpMarketActivityTitle: "Markedsaktivitet i stikprøven",
+  cmpMarketActivityEmpty: "Markedsrækker vises, når kvalificerede kampe matcher denne turnering.",
+  cmpRowsProviderMeta: "{n} rækker · udbydergennemsnit {pct}%",
+  cmpRelatedCompetitions: "Relaterede turneringer",
+  cmpRelatedTeams: "Relaterede hold",
+  cmpRelatedTeamsNote: "Linket når en kanonisk holdentitet findes; ellers vist som forskningsetiketter.",
+  cmpMethodologyLink: "Metodologi og evidens",
+  ssnEyebrow: "Sæsonforskning",
+  ssnCurrent: "Nuværende",
+  ssnArchived: "Arkiveret",
+  ssnWindowLine: "Sæsonvindue {start} → {end}",
+  ssnLeadLine:
+    "Denne sæsons forskningssæt indeholder {count} kvalificerede rækker på tværs af {fixtures} kampe.",
+  ssnTeamsTitle: "Deltagende hold",
+  ssnTeamsEmpty: "Hold vises kun, når de indgår i kvalificerede kampe i denne sæson.",
+  ssnTeamsCountLine: "{n} deltagende hold",
+  ssnUpcomingRowsLine: "{n} kommende rækker",
+  ssnCompletedRowsLine: "{n} afsluttede rækker",
+  ssnHomeAwayLine: "{home} hjemmerækker · {away} uderækker",
+  ssnEnrichmentAbsent:
+    "Mål- og xG-rater på sæsonniveau vises kun, når kampdetalje-berigelse findes — denne side opfinder dem ikke.",
+  ssnDetailTitle: "Sæsondetalje",
+  ssnOperatorsTitle: "Tilgængelige operatører",
+  ssnOperatorsEmpty: "Ingen operatører med aktiv affiliering for det bestemte besøgsland.",
+
 });
 
 export const sv = euroPredictions({
@@ -1096,6 +1285,52 @@ export const sv = euroPredictions({
   mktIndicatorsNote: "Metrikdefinitioner för denna marknad — inte live-värden, inte konfidenspoäng.",
   mktIndicatorUsed: "används i forskningen",
   mktIndicatorConceptual: "konceptuell",
+
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "Forskningstävlingar",
+  cmpIndexTitle: "Tävlingar",
+  cmpIndexLede:
+    "Tävlingar som forskningsnav — kvalificerade matcher, marknader, operatörer och observerade odds. Forskningsstruktur, aldrig tips.",
+  cmpLeadLine:
+    "Dagens täckning koncentreras till {market}: {count} av {total} kvalificerade rader ({pct}%).",
+  cmpQualifiedRowsLine: "{n} kvalificerade marknadsrader i den aktuella forskningsmängden",
+  cmpUniqueFixturesLine: "{n} unika matcher",
+  cmpMarketRow: "{market} — {count} av {total} ({pct}%)",
+  cmpUpcomingTitle: "Kommande kvalificerade matcher",
+  cmpUpcomingEmpty:
+    "Inga kommande kvalificerade matcher matchade denna tävling i den aktuella forskningsmängden.",
+  cmpRecentTitle: "Rader med starkast signal",
+  cmpRecentNote:
+    "De starkaste kvalificerade raderna ur den aktuella forskningsmängden — forskningsposter, inte resultat.",
+  cmpRecentEmpty:
+    "Inga analyserade matcher matchade denna tävling i den aktuella forskningsmängden.",
+  cmpDetailTitle: "Tävlingsdetalj",
+  cmpSeasonsTitle: "Säsonger",
+  cmpSeasonCurrent: "pågående",
+  cmpMarketActivityTitle: "Marknadsaktivitet i urvalet",
+  cmpMarketActivityEmpty: "Marknadsrader visas när kvalificerade matcher matchar denna tävling.",
+  cmpRowsProviderMeta: "{n} rader · leverantörsgenomsnitt {pct}%",
+  cmpRelatedCompetitions: "Relaterade tävlingar",
+  cmpRelatedTeams: "Relaterade lag",
+  cmpRelatedTeamsNote: "Länkat när en kanonisk lagentitet finns; annars visade som forskningsetiketter.",
+  cmpMethodologyLink: "Metodologi och evidens",
+  ssnEyebrow: "Säsongsforskning",
+  ssnCurrent: "Pågående",
+  ssnArchived: "Arkiverad",
+  ssnWindowLine: "Säsongsfönster {start} → {end}",
+  ssnLeadLine:
+    "Denna säsongs forskningsmängd innehåller {count} kvalificerade rader över {fixtures} matcher.",
+  ssnTeamsTitle: "Deltagande lag",
+  ssnTeamsEmpty: "Lag visas endast när de förekommer i kvalificerade matcher denna säsong.",
+  ssnTeamsCountLine: "{n} deltagande lag",
+  ssnUpcomingRowsLine: "{n} kommande rader",
+  ssnCompletedRowsLine: "{n} avslutade rader",
+  ssnHomeAwayLine: "{home} hemmarader · {away} bortarader",
+  ssnEnrichmentAbsent:
+    "Mål- och xG-tal på säsongsnivå visas bara när matchdetalj-berikning finns — denna sida hittar inte på dem.",
+  ssnDetailTitle: "Säsongsdetalj",
+  ssnOperatorsTitle: "Tillgängliga operatörer",
+  ssnOperatorsEmpty: "Inga operatörer med aktiv affiliering för det fastställda besökarlandet.",
 
 });
 
@@ -1282,6 +1517,52 @@ export const no = euroPredictions({
   mktIndicatorUsed: "brukt i forskningen",
   mktIndicatorConceptual: "konseptuell",
 
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "Forskningsturneringer",
+  cmpIndexTitle: "Turneringer",
+  cmpIndexLede:
+    "Turneringer som forskningsknutepunkter — kvalifiserte kamper, markeder, operatører og observerte odds. Forskningsstruktur, aldri tips.",
+  cmpLeadLine:
+    "Dagens dekning konsentreres om {market}: {count} av {total} kvalifiserte rader ({pct}%).",
+  cmpQualifiedRowsLine: "{n} kvalifiserte markedsrader i det gjeldende forskningssettet",
+  cmpUniqueFixturesLine: "{n} unike kamper",
+  cmpMarketRow: "{market} — {count} av {total} ({pct}%)",
+  cmpUpcomingTitle: "Kommende kvalifiserte kamper",
+  cmpUpcomingEmpty:
+    "Ingen kommende kvalifiserte kamper matchet denne turneringen i det gjeldende forskningssettet.",
+  cmpRecentTitle: "Rader med sterkest signal",
+  cmpRecentNote:
+    "De sterkeste kvalifiserte radene fra det gjeldende forskningssettet — forskningsoppføringer, ikke resultater.",
+  cmpRecentEmpty:
+    "Ingen analyserte kamper matchet denne turneringen i det gjeldende forskningssettet.",
+  cmpDetailTitle: "Turneringsdetalj",
+  cmpSeasonsTitle: "Sesonger",
+  cmpSeasonCurrent: "inneværende",
+  cmpMarketActivityTitle: "Markedsaktivitet i utvalget",
+  cmpMarketActivityEmpty: "Markedsrader vises når kvalifiserte kamper matcher denne turneringen.",
+  cmpRowsProviderMeta: "{n} rader · leverandørgjennomsnitt {pct}%",
+  cmpRelatedCompetitions: "Relaterte turneringer",
+  cmpRelatedTeams: "Relaterte lag",
+  cmpRelatedTeamsNote: "Lenket når en kanonisk lagentitet finnes; ellers vist som forskningsetiketter.",
+  cmpMethodologyLink: "Metodologi og evidens",
+  ssnEyebrow: "Sesongforskning",
+  ssnCurrent: "Inneværende",
+  ssnArchived: "Arkivert",
+  ssnWindowLine: "Sesongvindu {start} → {end}",
+  ssnLeadLine:
+    "Denne sesongens forskningssett inneholder {count} kvalifiserte rader over {fixtures} kamper.",
+  ssnTeamsTitle: "Deltakende lag",
+  ssnTeamsEmpty: "Lag vises bare når de finnes i kvalifiserte kamper denne sesongen.",
+  ssnTeamsCountLine: "{n} deltakende lag",
+  ssnUpcomingRowsLine: "{n} kommende rader",
+  ssnCompletedRowsLine: "{n} fullførte rader",
+  ssnHomeAwayLine: "{home} hjemmerader · {away} borterader",
+  ssnEnrichmentAbsent:
+    "Mål- og xG-rater på sesongnivå vises bare når kampdetalj-berikelse finnes — denne siden finner dem ikke opp.",
+  ssnDetailTitle: "Sesongdetalj",
+  ssnOperatorsTitle: "Tilgjengelige operatører",
+  ssnOperatorsEmpty: "Ingen operatører med aktiv affiliering for det fastslåtte besøkslandet.",
+
 });
 
 export const fi = euroPredictions({
@@ -1465,6 +1746,51 @@ export const fi = euroPredictions({
   mktIndicatorsNote: "Tämän markkinan metriikkamääritelmät — ei live-arvoja, ei varmuuspisteitä.",
   mktIndicatorUsed: "käytössä tutkimuksessa",
   mktIndicatorConceptual: "käsitteellinen",
+
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "Tutkimussarjat",
+  cmpIndexTitle: "Sarjat",
+  cmpIndexLede:
+    "Sarjat tutkimuksen solmukohtina — karsitut ottelut, markkinat, operaattorit ja havaitut kertoimet. Tutkimusrakenne, ei koskaan vihjeitä.",
+  cmpLeadLine:
+    "Päivän kattavuus keskittyy markkinaan {market}: {count}/{total} karsittua riviä ({pct}%).",
+  cmpQualifiedRowsLine: "{n} karsittua markkinariviä nykyisessä tutkimusjoukossa",
+  cmpUniqueFixturesLine: "{n} yksittäistä ottelua",
+  cmpMarketRow: "{market} — {count}/{total} ({pct}%)",
+  cmpUpcomingTitle: "Tulevat karsitut ottelut",
+  cmpUpcomingEmpty:
+    "Yksikään tuleva karsittu ottelu ei vastannut tätä sarjaa nykyisessä tutkimusjoukossa.",
+  cmpRecentTitle: "Vahvimman signaalin rivit",
+  cmpRecentNote:
+    "Nykyisen tutkimusjoukon vahvimmat karsitut rivit — tutkimusmerkintöjä, eivät tuloksia.",
+  cmpRecentEmpty: "Yksikään analysoitu ottelu ei vastannut tätä sarjaa nykyisessä tutkimusjoukossa.",
+  cmpDetailTitle: "Sarjan tiedot",
+  cmpSeasonsTitle: "Kaudet",
+  cmpSeasonCurrent: "nykyinen",
+  cmpMarketActivityTitle: "Markkina-aktiivisuus otoksessa",
+  cmpMarketActivityEmpty: "Markkinarivit ilmestyvät, kun karsitut ottelut vastaavat tätä sarjaa.",
+  cmpRowsProviderMeta: "{n} riviä · tarjoajan keskiarvo {pct}%",
+  cmpRelatedCompetitions: "Liittyvät sarjat",
+  cmpRelatedTeams: "Liittyvät joukkueet",
+  cmpRelatedTeamsNote:
+    "Linkitetty, kun kanoninen joukkue-entiteetti on olemassa; muuten näytetään tutkimusnimikkeinä.",
+  cmpMethodologyLink: "Metodologia ja näyttö",
+  ssnEyebrow: "Kausitutkimus",
+  ssnCurrent: "Nykyinen",
+  ssnArchived: "Arkistoitu",
+  ssnWindowLine: "Kauden ikkuna {start} → {end}",
+  ssnLeadLine: "Tämän kauden tutkimusjoukossa on {count} karsittua riviä {fixtures} ottelussa.",
+  ssnTeamsTitle: "Osallistuvat joukkueet",
+  ssnTeamsEmpty: "Joukkueet näkyvät vain, kun ne esiintyvät tämän kauden karsituissa otteluissa.",
+  ssnTeamsCountLine: "{n} osallistuvaa joukkuetta",
+  ssnUpcomingRowsLine: "{n} tulevaa riviä",
+  ssnCompletedRowsLine: "{n} valmistunutta riviä",
+  ssnHomeAwayLine: "{home} kotiriviä · {away} vierasriviä",
+  ssnEnrichmentAbsent:
+    "Kausitason maali- ja xG-luvut näkyvät vain, kun otteludetaljien rikastus on olemassa — tämä sivu ei keksi niitä.",
+  ssnDetailTitle: "Kauden tiedot",
+  ssnOperatorsTitle: "Saatavilla olevat operaattorit",
+  ssnOperatorsEmpty: "Ei aktiivisen kumppanuuden operaattoreita todetulle kävijämaalle.",
 
 });
 
@@ -1652,6 +1978,53 @@ export const ro = euroPredictions({
   mktIndicatorUsed: "folosit în cercetare",
   mktIndicatorConceptual: "conceptual",
 
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "Competiții de cercetare",
+  cmpIndexTitle: "Competiții",
+  cmpIndexLede:
+    "Competițiile ca noduri de cercetare — meciuri calificate, piețe, operatori și cote observate. Structură de cercetare, niciodată ponturi.",
+  cmpLeadLine:
+    "Acoperirea de azi se concentrează pe {market}: {count} din {total} rânduri calificate ({pct}%).",
+  cmpQualifiedRowsLine: "{n} rânduri de piață calificate în setul de cercetare curent",
+  cmpUniqueFixturesLine: "{n} meciuri unice",
+  cmpMarketRow: "{market} — {count} din {total} ({pct}%)",
+  cmpUpcomingTitle: "Meciuri calificate viitoare",
+  cmpUpcomingEmpty:
+    "Niciun meci calificat viitor nu a corespuns acestei competiții în setul de cercetare curent.",
+  cmpRecentTitle: "Rânduri cu cel mai puternic semnal",
+  cmpRecentNote:
+    "Cele mai puternice rânduri calificate din setul de cercetare curent — intrări de cercetare, nu rezultate.",
+  cmpRecentEmpty:
+    "Niciun meci analizat nu a corespuns acestei competiții în setul de cercetare curent.",
+  cmpDetailTitle: "Detaliul competiției",
+  cmpSeasonsTitle: "Sezoane",
+  cmpSeasonCurrent: "curent",
+  cmpMarketActivityTitle: "Activitatea pieței în eșantion",
+  cmpMarketActivityEmpty: "Rândurile de piață apar când meciuri calificate corespund acestei competiții.",
+  cmpRowsProviderMeta: "{n} rânduri · media furnizorului {pct}%",
+  cmpRelatedCompetitions: "Competiții conexe",
+  cmpRelatedTeams: "Echipe conexe",
+  cmpRelatedTeamsNote:
+    "Cu legătură când există o entitate canonică a echipei; altfel afișate ca etichete de cercetare.",
+  cmpMethodologyLink: "Metodologie și evidență",
+  ssnEyebrow: "Cercetarea sezonului",
+  ssnCurrent: "Curent",
+  ssnArchived: "Arhivat",
+  ssnWindowLine: "Fereastra sezonului {start} → {end}",
+  ssnLeadLine:
+    "Setul de cercetare al acestui sezon conține {count} rânduri calificate în {fixtures} meciuri.",
+  ssnTeamsTitle: "Echipe participante",
+  ssnTeamsEmpty: "Echipele apar doar când sunt prezente în meciuri calificate ale acestui sezon.",
+  ssnTeamsCountLine: "{n} echipe participante",
+  ssnUpcomingRowsLine: "{n} rânduri viitoare",
+  ssnCompletedRowsLine: "{n} rânduri încheiate",
+  ssnHomeAwayLine: "{home} rânduri acasă · {away} rânduri în deplasare",
+  ssnEnrichmentAbsent:
+    "Ratele de goluri și xG la nivel de sezon apar doar când există îmbogățirea cu detalii de meci — această pagină nu le inventează.",
+  ssnDetailTitle: "Detaliul sezonului",
+  ssnOperatorsTitle: "Operatori disponibili",
+  ssnOperatorsEmpty: "Niciun operator cu afiliere activă pentru țara vizitatorului determinată.",
+
 });
 
 export const el = euroPredictions({
@@ -1838,6 +2211,55 @@ export const el = euroPredictions({
   mktIndicatorUsed: "σε χρήση στην έρευνα",
   mktIndicatorConceptual: "εννοιολογικός",
 
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "Διοργανώσεις έρευνας",
+  cmpIndexTitle: "Διοργανώσεις",
+  cmpIndexLede:
+    "Οι διοργανώσεις ως κόμβοι έρευνας — προκριθέντες αγώνες, αγορές, πάροχοι και παρατηρημένες αποδόσεις. Δομή έρευνας, ποτέ προγνωστικά.",
+  cmpLeadLine:
+    "Η σημερινή κάλυψη συγκεντρώνεται στην αγορά {market}: {count} από {total} προκριθείσες γραμμές ({pct}%).",
+  cmpQualifiedRowsLine: "{n} προκριθείσες γραμμές αγορών στο τρέχον σύνολο έρευνας",
+  cmpUniqueFixturesLine: "{n} μοναδικοί αγώνες",
+  cmpMarketRow: "{market} — {count} από {total} ({pct}%)",
+  cmpUpcomingTitle: "Επερχόμενοι προκριθέντες αγώνες",
+  cmpUpcomingEmpty:
+    "Κανένας επερχόμενος προκριθείς αγώνας δεν αντιστοιχεί σε αυτή τη διοργάνωση στο τρέχον σύνολο έρευνας.",
+  cmpRecentTitle: "Γραμμές με το ισχυρότερο σήμα",
+  cmpRecentNote:
+    "Οι ισχυρότερες προκριθείσες γραμμές του τρέχοντος συνόλου έρευνας — εγγραφές έρευνας, όχι αποτελέσματα.",
+  cmpRecentEmpty:
+    "Κανένας αναλυμένος αγώνας δεν αντιστοιχεί σε αυτή τη διοργάνωση στο τρέχον σύνολο έρευνας.",
+  cmpDetailTitle: "Λεπτομέρεια διοργάνωσης",
+  cmpSeasonsTitle: "Σεζόν",
+  cmpSeasonCurrent: "τρέχουσα",
+  cmpMarketActivityTitle: "Δραστηριότητα αγορών στο δείγμα",
+  cmpMarketActivityEmpty:
+    "Οι γραμμές αγορών εμφανίζονται όταν προκριθέντες αγώνες αντιστοιχούν σε αυτή τη διοργάνωση.",
+  cmpRowsProviderMeta: "{n} γραμμές · μέσος όρος παρόχου {pct}%",
+  cmpRelatedCompetitions: "Σχετικές διοργανώσεις",
+  cmpRelatedTeams: "Σχετικές ομάδες",
+  cmpRelatedTeamsNote:
+    "Με σύνδεσμο όταν υπάρχει κανονική οντότητα ομάδας· διαφορετικά εμφανίζονται ως ετικέτες έρευνας.",
+  cmpMethodologyLink: "Μεθοδολογία και στοιχεία",
+  ssnEyebrow: "Έρευνα σεζόν",
+  ssnCurrent: "Τρέχουσα",
+  ssnArchived: "Αρχειοθετημένη",
+  ssnWindowLine: "Παράθυρο σεζόν {start} → {end}",
+  ssnLeadLine:
+    "Το σύνολο έρευνας αυτής της σεζόν περιέχει {count} προκριθείσες γραμμές σε {fixtures} αγώνες.",
+  ssnTeamsTitle: "Συμμετέχουσες ομάδες",
+  ssnTeamsEmpty:
+    "Οι ομάδες εμφανίζονται μόνο όταν υπάρχουν σε προκριθέντες αγώνες αυτής της σεζόν.",
+  ssnTeamsCountLine: "{n} συμμετέχουσες ομάδες",
+  ssnUpcomingRowsLine: "{n} επερχόμενες γραμμές",
+  ssnCompletedRowsLine: "{n} ολοκληρωμένες γραμμές",
+  ssnHomeAwayLine: "{home} γραμμές εντός · {away} γραμμές εκτός",
+  ssnEnrichmentAbsent:
+    "Τα ποσοστά γκολ και xG σε επίπεδο σεζόν εμφανίζονται μόνο όταν υπάρχει εμπλουτισμός λεπτομερειών αγώνα — αυτή η σελίδα δεν τα εφευρίσκει.",
+  ssnDetailTitle: "Λεπτομέρεια σεζόν",
+  ssnOperatorsTitle: "Διαθέσιμοι πάροχοι",
+  ssnOperatorsEmpty: "Κανένας πάροχος με ενεργή συνεργασία για τη χώρα του επισκέπτη.",
+
 });
 
 export const hu = euroPredictions({
@@ -2022,5 +2444,53 @@ export const hu = euroPredictions({
   mktIndicatorsNote: "E piac metrika-definíciói — nem élő értékek, nem bizonyossági pontszámok.",
   mktIndicatorUsed: "a kutatásban használt",
   mktIndicatorConceptual: "fogalmi",
+
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "Kutatási sorozatok",
+  cmpIndexTitle: "Sorozatok",
+  cmpIndexLede:
+    "Sorozatok mint kutatási csomópontok — kvalifikált mérkőzések, piacok, szolgáltatók és megfigyelt szorzók. Kutatási szerkezet, sosem tippek.",
+  cmpLeadLine:
+    "A mai lefedettség a(z) {market} piacra összpontosul: {count} a(z) {total} kvalifikált sorból ({pct}%).",
+  cmpQualifiedRowsLine: "{n} kvalifikált piaci sor a jelenlegi kutatási készletben",
+  cmpUniqueFixturesLine: "{n} egyedi mérkőzés",
+  cmpMarketRow: "{market} — {count} a(z) {total}-ból ({pct}%)",
+  cmpUpcomingTitle: "Közelgő kvalifikált mérkőzések",
+  cmpUpcomingEmpty:
+    "Nincs közelgő kvalifikált mérkőzés ehhez a sorozathoz a jelenlegi kutatási készletben.",
+  cmpRecentTitle: "A legerősebb jelű sorok",
+  cmpRecentNote:
+    "A jelenlegi kutatási készlet legerősebb kvalifikált sorai — kutatási bejegyzések, nem eredmények.",
+  cmpRecentEmpty: "Nincs elemzett mérkőzés ehhez a sorozathoz a jelenlegi kutatási készletben.",
+  cmpDetailTitle: "Sorozat részletei",
+  cmpSeasonsTitle: "Szezonok",
+  cmpSeasonCurrent: "aktuális",
+  cmpMarketActivityTitle: "Piaci aktivitás a mintában",
+  cmpMarketActivityEmpty:
+    "A piaci sorok akkor jelennek meg, ha kvalifikált mérkőzések tartoznak ehhez a sorozathoz.",
+  cmpRowsProviderMeta: "{n} sor · szolgáltatói átlag {pct}%",
+  cmpRelatedCompetitions: "Kapcsolódó sorozatok",
+  cmpRelatedTeams: "Kapcsolódó csapatok",
+  cmpRelatedTeamsNote:
+    "Hivatkozással, ha létezik kanonikus csapatentitás; egyébként kutatási címkeként jelennek meg.",
+  cmpMethodologyLink: "Módszertan és bizonyíték",
+  ssnEyebrow: "Szezonkutatás",
+  ssnCurrent: "Aktuális",
+  ssnArchived: "Archivált",
+  ssnWindowLine: "Szezonablak {start} → {end}",
+  ssnLeadLine:
+    "E szezon kutatási készlete {count} kvalifikált sort tartalmaz {fixtures} mérkőzésen.",
+  ssnTeamsTitle: "Résztvevő csapatok",
+  ssnTeamsEmpty:
+    "A csapatok csak akkor jelennek meg, ha e szezon kvalifikált mérkőzésein szerepelnek.",
+  ssnTeamsCountLine: "{n} résztvevő csapat",
+  ssnUpcomingRowsLine: "{n} közelgő sor",
+  ssnCompletedRowsLine: "{n} lezárt sor",
+  ssnHomeAwayLine: "{home} hazai sor · {away} idegenbeli sor",
+  ssnEnrichmentAbsent:
+    "A szezonszintű gól- és xG-arányok csak akkor jelennek meg, ha létezik mérkőzésrészlet-dúsítás — ez az oldal nem találja ki őket.",
+  ssnDetailTitle: "Szezon részletei",
+  ssnOperatorsTitle: "Elérhető szolgáltatók",
+  ssnOperatorsEmpty: "Nincs aktív partnerségű szolgáltató a megállapított látogatói országhoz.",
 
 });

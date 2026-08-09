@@ -505,6 +505,55 @@ export const predictionsEn = {
   mktIndicatorsNote: "Metric definitions for this market — not live values, not confidence scores.",
   mktIndicatorUsed: "used in research",
   mktIndicatorConceptual: "conceptual",
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "Research competitions",
+  cmpIndexTitle: "Competitions",
+  cmpIndexLede:
+    "Competitions as research hubs — qualified fixtures, markets, operators and observed odds. Research structure, never tips.",
+  cmpLeadLine:
+    "Today's coverage concentrates in {market}: {count} of {total} qualified rows ({pct}%).",
+  cmpQualifiedRowsLine: "{n} qualified market rows in the current research set",
+  cmpUniqueFixturesLine: "{n} unique fixtures",
+  cmpMarketRow: "{market} — {count} of {total} ({pct}%)",
+  cmpUpcomingTitle: "Upcoming qualified fixtures",
+  cmpUpcomingEmpty:
+    "No upcoming qualified fixtures matched this competition in the current research set.",
+  cmpRecentTitle: "Highest-signal rows",
+  cmpRecentNote:
+    "The strongest qualified rows from the current research set — research entries, not results.",
+  cmpRecentEmpty:
+    "No analyzed fixtures matched this competition in the current research set.",
+  cmpDetailTitle: "Competition detail",
+  cmpSeasonsTitle: "Seasons",
+  cmpSeasonCurrent: "current",
+  cmpMarketActivityTitle: "Market activity in sample",
+  cmpMarketActivityEmpty:
+    "Market rows appear when qualified fixtures match this competition.",
+  cmpRowsProviderMeta: "{n} rows · provider avg {pct}%",
+  cmpRelatedCompetitions: "Related competitions",
+  cmpRelatedTeams: "Related teams",
+  cmpRelatedTeamsNote:
+    "Linked when a canonical team entity exists; otherwise shown as research labels.",
+  cmpMethodologyLink: "Methodology & evidence",
+  ssnEyebrow: "Season research",
+  ssnCurrent: "Current",
+  ssnArchived: "Archived",
+  ssnWindowLine: "Season window {start} → {end}",
+  ssnLeadLine:
+    "This season's research set holds {count} qualified rows across {fixtures} fixtures.",
+  ssnTeamsTitle: "Participating teams",
+  ssnTeamsEmpty:
+    "Teams appear only when present in qualified fixtures for this season.",
+  ssnTeamsCountLine: "{n} participating teams",
+  ssnUpcomingRowsLine: "{n} upcoming rows",
+  ssnCompletedRowsLine: "{n} completed rows",
+  ssnHomeAwayLine: "{home} home rows · {away} away rows",
+  ssnEnrichmentAbsent:
+    "Season-level goal and xG rates render only when match-detail enrichment exists — this page does not invent them.",
+  ssnDetailTitle: "Season detail",
+  ssnOperatorsTitle: "Available operators",
+  ssnOperatorsEmpty:
+    "No affiliate-enabled operators for the resolved visitor country.",
   navQualified: "Qualified lists",
   navLiveSignals: "Live signals",
   navMethodology: "Methodology",

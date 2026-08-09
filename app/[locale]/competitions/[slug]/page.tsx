@@ -16,6 +16,7 @@ import {
 } from "@/lib/competitions/stats";
 import { emptyLists, getDailyMatchListsSafe, todayMatchDateStr } from "@/lib/footystats/client";
 import { locales, type Locale } from "@/lib/i18n";
+import { getDictionary } from "@/lib/dictionaries";
 import { getRequestCountryContext } from "@/lib/personalization/server";
 import { mapDailyListsToQualifiedFixtures } from "@/lib/research/qualifiedFixture";
 import { pageMetadata } from "@/lib/seo";
@@ -78,6 +79,7 @@ export default async function CompetitionDetailPage({
       odds={odds}
       operators={operators}
       visitorCountry={countryContext.country}
+      p={getDictionary(params.locale).predictions}
     />
   );
 }

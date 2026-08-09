@@ -195,6 +195,55 @@ const pt: PredictionStrings = mergePredictions({
   mktIndicatorUsed: "usado na pesquisa",
   mktIndicatorConceptual: "conceitual",
 
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "Competições de pesquisa",
+  cmpIndexTitle: "Competições",
+  cmpIndexLede:
+    "Competições como polos de pesquisa — jogos qualificados, mercados, operadores e odds observadas. Estrutura de pesquisa, nunca palpites.",
+  cmpLeadLine:
+    "A cobertura de hoje concentra-se em {market}: {count} de {total} linhas qualificadas ({pct}%).",
+  cmpQualifiedRowsLine: "{n} linhas de mercado qualificadas no conjunto de pesquisa atual",
+  cmpUniqueFixturesLine: "{n} jogos únicos",
+  cmpMarketRow: "{market} — {count} de {total} ({pct}%)",
+  cmpUpcomingTitle: "Próximos jogos qualificados",
+  cmpUpcomingEmpty:
+    "Nenhum jogo qualificado próximo correspondeu a esta competição no conjunto de pesquisa atual.",
+  cmpRecentTitle: "Linhas de maior sinal",
+  cmpRecentNote:
+    "As linhas qualificadas mais fortes do conjunto de pesquisa atual — entradas de pesquisa, não resultados.",
+  cmpRecentEmpty:
+    "Nenhum jogo analisado correspondeu a esta competição no conjunto de pesquisa atual.",
+  cmpDetailTitle: "Detalhe da competição",
+  cmpSeasonsTitle: "Temporadas",
+  cmpSeasonCurrent: "atual",
+  cmpMarketActivityTitle: "Atividade de mercado na amostra",
+  cmpMarketActivityEmpty:
+    "As linhas de mercado aparecem quando jogos qualificados correspondem a esta competição.",
+  cmpRowsProviderMeta: "{n} linhas · média do fornecedor {pct}%",
+  cmpRelatedCompetitions: "Competições relacionadas",
+  cmpRelatedTeams: "Equipas relacionadas",
+  cmpRelatedTeamsNote:
+    "Com ligação quando existe uma entidade canónica da equipa; caso contrário, mostradas como rótulos de pesquisa.",
+  cmpMethodologyLink: "Metodologia e evidência",
+  ssnEyebrow: "Pesquisa da temporada",
+  ssnCurrent: "Atual",
+  ssnArchived: "Arquivada",
+  ssnWindowLine: "Janela da temporada {start} → {end}",
+  ssnLeadLine:
+    "O conjunto de pesquisa desta temporada contém {count} linhas qualificadas em {fixtures} jogos.",
+  ssnTeamsTitle: "Equipas participantes",
+  ssnTeamsEmpty:
+    "As equipas aparecem apenas quando presentes em jogos qualificados desta temporada.",
+  ssnTeamsCountLine: "{n} equipas participantes",
+  ssnUpcomingRowsLine: "{n} linhas por disputar",
+  ssnCompletedRowsLine: "{n} linhas concluídas",
+  ssnHomeAwayLine: "{home} linhas em casa · {away} linhas fora",
+  ssnEnrichmentAbsent:
+    "As taxas de golos e xG ao nível da temporada só aparecem quando existe enriquecimento de detalhe do jogo — esta página não as inventa.",
+  ssnDetailTitle: "Detalhe da temporada",
+  ssnOperatorsTitle: "Operadores disponíveis",
+  ssnOperatorsEmpty: "Nenhum operador com afiliação ativa para o país do visitante resolvido.",
+
 });
 
 const es: PredictionStrings = mergePredictions({
@@ -387,6 +436,55 @@ const es: PredictionStrings = mergePredictions({
     "Definiciones de métricas de este mercado — no son valores en vivo ni puntuaciones de confianza.",
   mktIndicatorUsed: "usado en la investigación",
   mktIndicatorConceptual: "conceptual",
+
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "Competiciones de investigación",
+  cmpIndexTitle: "Competiciones",
+  cmpIndexLede:
+    "Competiciones como núcleos de investigación — partidos calificados, mercados, operadores y cuotas observadas. Estructura de investigación, nunca pronósticos.",
+  cmpLeadLine:
+    "La cobertura de hoy se concentra en {market}: {count} de {total} filas calificadas ({pct}%).",
+  cmpQualifiedRowsLine: "{n} filas de mercado calificadas en el conjunto de investigación actual",
+  cmpUniqueFixturesLine: "{n} partidos únicos",
+  cmpMarketRow: "{market} — {count} de {total} ({pct}%)",
+  cmpUpcomingTitle: "Próximos partidos calificados",
+  cmpUpcomingEmpty:
+    "Ningún partido calificado próximo coincidió con esta competición en el conjunto de investigación actual.",
+  cmpRecentTitle: "Filas de mayor señal",
+  cmpRecentNote:
+    "Las filas calificadas más fuertes del conjunto de investigación actual — entradas de investigación, no resultados.",
+  cmpRecentEmpty:
+    "Ningún partido analizado coincidió con esta competición en el conjunto de investigación actual.",
+  cmpDetailTitle: "Detalle de la competición",
+  cmpSeasonsTitle: "Temporadas",
+  cmpSeasonCurrent: "actual",
+  cmpMarketActivityTitle: "Actividad de mercado en la muestra",
+  cmpMarketActivityEmpty:
+    "Las filas de mercado aparecen cuando hay partidos calificados que coinciden con esta competición.",
+  cmpRowsProviderMeta: "{n} filas · media del proveedor {pct}%",
+  cmpRelatedCompetitions: "Competiciones relacionadas",
+  cmpRelatedTeams: "Equipos relacionados",
+  cmpRelatedTeamsNote:
+    "Con enlace cuando existe una entidad canónica del equipo; de lo contrario, se muestran como etiquetas de investigación.",
+  cmpMethodologyLink: "Metodología y evidencia",
+  ssnEyebrow: "Investigación de temporada",
+  ssnCurrent: "Actual",
+  ssnArchived: "Archivada",
+  ssnWindowLine: "Ventana de la temporada {start} → {end}",
+  ssnLeadLine:
+    "El conjunto de investigación de esta temporada contiene {count} filas calificadas en {fixtures} partidos.",
+  ssnTeamsTitle: "Equipos participantes",
+  ssnTeamsEmpty:
+    "Los equipos aparecen solo cuando están presentes en partidos calificados de esta temporada.",
+  ssnTeamsCountLine: "{n} equipos participantes",
+  ssnUpcomingRowsLine: "{n} filas por disputar",
+  ssnCompletedRowsLine: "{n} filas completadas",
+  ssnHomeAwayLine: "{home} filas en casa · {away} filas fuera",
+  ssnEnrichmentAbsent:
+    "Las tasas de goles y xG a nivel de temporada solo se muestran cuando existe enriquecimiento de detalle del partido — esta página no las inventa.",
+  ssnDetailTitle: "Detalle de la temporada",
+  ssnOperatorsTitle: "Operadores disponibles",
+  ssnOperatorsEmpty: "Ningún operador con afiliación activa para el país del visitante resuelto.",
 
 });
 
@@ -584,6 +682,54 @@ const de: PredictionStrings = mergePredictions({
   mktIndicatorUsed: "in der Recherche genutzt",
   mktIndicatorConceptual: "konzeptionell",
 
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "Recherche-Wettbewerbe",
+  cmpIndexTitle: "Wettbewerbe",
+  cmpIndexLede:
+    "Wettbewerbe als Recherche-Knoten — qualifizierte Spiele, Märkte, Anbieter und beobachtete Quoten. Recherche-Struktur, niemals Tipps.",
+  cmpLeadLine:
+    "Die heutige Abdeckung konzentriert sich auf {market}: {count} von {total} qualifizierten Zeilen ({pct}%).",
+  cmpQualifiedRowsLine: "{n} qualifizierte Marktzeilen im aktuellen Recherche-Satz",
+  cmpUniqueFixturesLine: "{n} einzelne Spiele",
+  cmpMarketRow: "{market} — {count} von {total} ({pct}%)",
+  cmpUpcomingTitle: "Kommende qualifizierte Spiele",
+  cmpUpcomingEmpty:
+    "Keine kommenden qualifizierten Spiele entsprachen diesem Wettbewerb im aktuellen Recherche-Satz.",
+  cmpRecentTitle: "Zeilen mit dem stärksten Signal",
+  cmpRecentNote:
+    "Die stärksten qualifizierten Zeilen aus dem aktuellen Recherche-Satz — Recherche-Einträge, keine Ergebnisse.",
+  cmpRecentEmpty:
+    "Keine analysierten Spiele entsprachen diesem Wettbewerb im aktuellen Recherche-Satz.",
+  cmpDetailTitle: "Wettbewerbsdetail",
+  cmpSeasonsTitle: "Saisons",
+  cmpSeasonCurrent: "aktuell",
+  cmpMarketActivityTitle: "Marktaktivität in der Stichprobe",
+  cmpMarketActivityEmpty: "Marktzeilen erscheinen, wenn qualifizierte Spiele diesem Wettbewerb entsprechen.",
+  cmpRowsProviderMeta: "{n} Zeilen · Anbieter-Durchschnitt {pct}%",
+  cmpRelatedCompetitions: "Verwandte Wettbewerbe",
+  cmpRelatedTeams: "Verwandte Teams",
+  cmpRelatedTeamsNote:
+    "Verlinkt, wenn eine kanonische Team-Entität existiert; andernfalls als Recherche-Etiketten angezeigt.",
+  cmpMethodologyLink: "Methodik und Evidenz",
+  ssnEyebrow: "Saison-Recherche",
+  ssnCurrent: "Aktuell",
+  ssnArchived: "Archiviert",
+  ssnWindowLine: "Saisonfenster {start} → {end}",
+  ssnLeadLine:
+    "Der Recherche-Satz dieser Saison enthält {count} qualifizierte Zeilen über {fixtures} Spiele.",
+  ssnTeamsTitle: "Teilnehmende Teams",
+  ssnTeamsEmpty:
+    "Teams erscheinen nur, wenn sie in qualifizierten Spielen dieser Saison vorkommen.",
+  ssnTeamsCountLine: "{n} teilnehmende Teams",
+  ssnUpcomingRowsLine: "{n} anstehende Zeilen",
+  ssnCompletedRowsLine: "{n} abgeschlossene Zeilen",
+  ssnHomeAwayLine: "{home} Heimzeilen · {away} Auswärtszeilen",
+  ssnEnrichmentAbsent:
+    "Tor- und xG-Raten auf Saisonebene erscheinen nur, wenn eine Spieldetail-Anreicherung existiert — diese Seite erfindet sie nicht.",
+  ssnDetailTitle: "Saisondetail",
+  ssnOperatorsTitle: "Verfügbare Anbieter",
+  ssnOperatorsEmpty: "Keine affiliierten Anbieter für das ermittelte Besucherland.",
+
 });
 
 const it: PredictionStrings = mergePredictions({
@@ -774,6 +920,55 @@ const it: PredictionStrings = mergePredictions({
     "Definizioni delle metriche di questo mercato — non valori live né punteggi di fiducia.",
   mktIndicatorUsed: "usato nella ricerca",
   mktIndicatorConceptual: "concettuale",
+
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "Competizioni di ricerca",
+  cmpIndexTitle: "Competizioni",
+  cmpIndexLede:
+    "Le competizioni come nodi di ricerca — partite qualificate, mercati, operatori e quote osservate. Struttura di ricerca, mai pronostici.",
+  cmpLeadLine:
+    "La copertura di oggi si concentra su {market}: {count} su {total} righe qualificate ({pct}%).",
+  cmpQualifiedRowsLine: "{n} righe di mercato qualificate nell'insieme di ricerca attuale",
+  cmpUniqueFixturesLine: "{n} partite uniche",
+  cmpMarketRow: "{market} — {count} su {total} ({pct}%)",
+  cmpUpcomingTitle: "Prossime partite qualificate",
+  cmpUpcomingEmpty:
+    "Nessuna partita qualificata in arrivo corrisponde a questa competizione nell'insieme di ricerca attuale.",
+  cmpRecentTitle: "Righe con il segnale più forte",
+  cmpRecentNote:
+    "Le righe qualificate più forti dell'insieme di ricerca attuale — voci di ricerca, non risultati.",
+  cmpRecentEmpty:
+    "Nessuna partita analizzata corrisponde a questa competizione nell'insieme di ricerca attuale.",
+  cmpDetailTitle: "Dettaglio della competizione",
+  cmpSeasonsTitle: "Stagioni",
+  cmpSeasonCurrent: "in corso",
+  cmpMarketActivityTitle: "Attività di mercato nel campione",
+  cmpMarketActivityEmpty:
+    "Le righe di mercato compaiono quando partite qualificate corrispondono a questa competizione.",
+  cmpRowsProviderMeta: "{n} righe · media fornitore {pct}%",
+  cmpRelatedCompetitions: "Competizioni correlate",
+  cmpRelatedTeams: "Squadre correlate",
+  cmpRelatedTeamsNote:
+    "Con collegamento quando esiste un'entità canonica della squadra; altrimenti mostrate come etichette di ricerca.",
+  cmpMethodologyLink: "Metodologia ed evidenza",
+  ssnEyebrow: "Ricerca di stagione",
+  ssnCurrent: "In corso",
+  ssnArchived: "Archiviata",
+  ssnWindowLine: "Finestra della stagione {start} → {end}",
+  ssnLeadLine:
+    "L'insieme di ricerca di questa stagione contiene {count} righe qualificate su {fixtures} partite.",
+  ssnTeamsTitle: "Squadre partecipanti",
+  ssnTeamsEmpty:
+    "Le squadre compaiono solo quando presenti in partite qualificate di questa stagione.",
+  ssnTeamsCountLine: "{n} squadre partecipanti",
+  ssnUpcomingRowsLine: "{n} righe in arrivo",
+  ssnCompletedRowsLine: "{n} righe completate",
+  ssnHomeAwayLine: "{home} righe in casa · {away} righe in trasferta",
+  ssnEnrichmentAbsent:
+    "I tassi di gol e xG a livello di stagione compaiono solo quando esiste l'arricchimento del dettaglio partita — questa pagina non li inventa.",
+  ssnDetailTitle: "Dettaglio della stagione",
+  ssnOperatorsTitle: "Operatori disponibili",
+  ssnOperatorsEmpty: "Nessun operatore affiliato attivo per il paese del visitatore risolto.",
 
 });
 
@@ -966,6 +1161,55 @@ const fr: PredictionStrings = mergePredictions({
     "Définitions des métriques de ce marché — ni valeurs en direct, ni scores de confiance.",
   mktIndicatorUsed: "utilisé dans la recherche",
   mktIndicatorConceptual: "conceptuel",
+
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "Compétitions de recherche",
+  cmpIndexTitle: "Compétitions",
+  cmpIndexLede:
+    "Les compétitions comme pôles de recherche — matchs qualifiés, marchés, opérateurs et cotes observées. Structure de recherche, jamais de pronostics.",
+  cmpLeadLine:
+    "La couverture du jour se concentre sur {market} : {count} sur {total} lignes qualifiées ({pct}%).",
+  cmpQualifiedRowsLine: "{n} lignes de marché qualifiées dans l'ensemble de recherche actuel",
+  cmpUniqueFixturesLine: "{n} matchs uniques",
+  cmpMarketRow: "{market} — {count} sur {total} ({pct}%)",
+  cmpUpcomingTitle: "Prochains matchs qualifiés",
+  cmpUpcomingEmpty:
+    "Aucun match qualifié à venir ne correspond à cette compétition dans l'ensemble de recherche actuel.",
+  cmpRecentTitle: "Lignes au signal le plus fort",
+  cmpRecentNote:
+    "Les lignes qualifiées les plus fortes de l'ensemble de recherche actuel — des entrées de recherche, pas des résultats.",
+  cmpRecentEmpty:
+    "Aucun match analysé ne correspond à cette compétition dans l'ensemble de recherche actuel.",
+  cmpDetailTitle: "Détail de la compétition",
+  cmpSeasonsTitle: "Saisons",
+  cmpSeasonCurrent: "en cours",
+  cmpMarketActivityTitle: "Activité de marché dans l'échantillon",
+  cmpMarketActivityEmpty:
+    "Les lignes de marché apparaissent lorsque des matchs qualifiés correspondent à cette compétition.",
+  cmpRowsProviderMeta: "{n} lignes · moyenne fournisseur {pct}%",
+  cmpRelatedCompetitions: "Compétitions liées",
+  cmpRelatedTeams: "Équipes liées",
+  cmpRelatedTeamsNote:
+    "Lien affiché lorsqu'une entité canonique d'équipe existe ; sinon, affichées comme libellés de recherche.",
+  cmpMethodologyLink: "Méthodologie et preuves",
+  ssnEyebrow: "Recherche de saison",
+  ssnCurrent: "En cours",
+  ssnArchived: "Archivée",
+  ssnWindowLine: "Fenêtre de la saison {start} → {end}",
+  ssnLeadLine:
+    "L'ensemble de recherche de cette saison contient {count} lignes qualifiées sur {fixtures} matchs.",
+  ssnTeamsTitle: "Équipes participantes",
+  ssnTeamsEmpty:
+    "Les équipes n'apparaissent que lorsqu'elles figurent dans des matchs qualifiés de cette saison.",
+  ssnTeamsCountLine: "{n} équipes participantes",
+  ssnUpcomingRowsLine: "{n} lignes à venir",
+  ssnCompletedRowsLine: "{n} lignes terminées",
+  ssnHomeAwayLine: "{home} lignes à domicile · {away} lignes à l'extérieur",
+  ssnEnrichmentAbsent:
+    "Les taux de buts et de xG au niveau de la saison ne s'affichent que lorsqu'un enrichissement du détail des matchs existe — cette page ne les invente pas.",
+  ssnDetailTitle: "Détail de la saison",
+  ssnOperatorsTitle: "Opérateurs disponibles",
+  ssnOperatorsEmpty: "Aucun opérateur affilié actif pour le pays du visiteur résolu.",
 
 });
 

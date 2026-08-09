@@ -4,6 +4,7 @@ import { SeasonDetailView } from "@/components/seasons/SeasonDetailView";
 import { getCompetition } from "@/lib/competitions/registry";
 import { emptyLists, getDailyMatchListsSafe, todayMatchDateStr } from "@/lib/footystats/client";
 import { locales, type Locale } from "@/lib/i18n";
+import { getDictionary } from "@/lib/dictionaries";
 import { getRequestCountryContext } from "@/lib/personalization/server";
 import { mapDailyListsToQualifiedFixtures } from "@/lib/research/qualifiedFixture";
 import {
@@ -74,6 +75,7 @@ export default async function SeasonDetailPage({
       teams={teams}
       operators={operators}
       visitorCountry={countryContext.country}
+      p={getDictionary(params.locale).predictions}
     />
   );
 }

@@ -7,6 +7,7 @@ import { competitionsIndexLd } from "@/lib/competitions/schema";
 import { CountryFlagIcon } from "@/components/CountryFlagIcon";
 import { countryName } from "@/lib/geoNames";
 import { locales, type Locale } from "@/lib/i18n";
+import { getDictionary } from "@/lib/dictionaries";
 import { pageMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
@@ -33,33 +34,34 @@ export default function CompetitionsIndexPage({
   params: { locale: Locale };
 }) {
   const competitions = listCompetitions();
+  const p = getDictionary(params.locale).predictions;
   return (
     <>
       <JsonLd data={competitionsIndexLd({ locale: params.locale, competitions })} />
-      <div className="container-wide pb-16 pt-5">
-        <section className="border-b border-[var(--border-subtle)] pb-8">
-          <p className="text-metadata font-medium uppercase tracking-label text-brand">
-            Competition intelligence
-          </p>
-          <h1 className="mt-3 font-display text-3xl font-semibold tracking-display text-foreground md:text-4xl">
-            Competitions
+      <div className="rw-hero container-wide bg-[var(--hero-canvas)] pb-24">
+        <header className="border-b border-[var(--hero-line)] pb-10 pt-10">
+          <span aria-hidden className="block h-[2px] w-10 bg-[var(--hero-ink)]" />
+          <p className="rw-m mt-3.5 text-[var(--hero-ink-2)]">{p.cmpIndexEyebrow}</p>
+          <h1 className="rw-h mt-1.5 text-[clamp(2.125rem,4.4vw,2.875rem)] text-[var(--hero-ink)]">
+            {p.cmpIndexTitle}
           </h1>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--ink-secondary)] md:text-base">
-            Major football competitions as research hubs — fixtures, markets, operators, and odds
-            without tips or fabricated rankings.
+          <p className="mt-2.5 max-w-[62ch] text-[15px] leading-[1.55] text-[var(--hero-ink-2)]">
+            {p.cmpIndexLede}
           </p>
-        </section>
+        </header>
 
-        <ul className="mt-8 divide-y divide-[var(--border-subtle)] border-y border-[var(--border-subtle)]">
+        <ul className="mt-10 border-t-[1.5px] border-[var(--hero-ink)]">
           {competitions.map((competition) => (
             <li key={competition.slug}>
               <Link
                 href={competitionPath(params.locale, competition.slug)}
-                className="block py-4 transition-colors hover:bg-[var(--canvas-secondary)]"
+                className="rw-row block border-b border-[var(--hero-line)] py-4 pl-3.5"
               >
-                <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <p className="font-semibold text-foreground">{competition.name}</p>
-                  <span className="flex items-center gap-1.5 text-metadata uppercase tracking-label text-muted-foreground">
+                <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                  <p className="text-[15px] font-semibold tracking-[-0.01em] text-[var(--hero-ink)]">
+                    {competition.name}
+                  </p>
+                  <span className="rw-m flex items-center gap-1.5 text-[var(--hero-ink-2)]">
                     {competition.confederation}
                     {competition.country ? (
                       <>
@@ -70,7 +72,7 @@ export default function CompetitionsIndexPage({
                     ) : null}
                   </span>
                 </div>
-                <p className="mt-1 max-w-3xl text-sm text-[var(--ink-secondary)]">
+                <p className="mt-1 max-w-[70ch] text-sm leading-relaxed text-[var(--hero-ink-2)]">
                   {competition.description}
                 </p>
               </Link>

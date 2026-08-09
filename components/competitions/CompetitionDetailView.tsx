@@ -2,12 +2,10 @@ import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { EntityDiscoverySection } from "@/components/discovery/EntityDiscoverySection";
 import { EvidenceSection } from "@/components/evidence-ui/EvidenceSection";
-import { EvidenceSummaryChip } from "@/components/evidence-ui/EvidenceSummaryChip";
 import { EntityViewTracker } from "@/components/knowledge-graph/EntityViewTracker";
 import { GraphEntityPanel } from "@/components/knowledge-graph/GraphEntityPanel";
 import { GraphNavLink } from "@/components/knowledge-graph/GraphNavLink";
 import { fromCompetitionStats } from "@/lib/evidence-ui";
-import { EmptyState } from "@/components/ui/EmptyState";
 import type { CompetitionOperatorRow } from "@/lib/competitions/operators";
 import { OperatorEvidenceCardList } from "@/components/operators/OperatorEvidenceCard";
 import { buildOperatorEvidenceCards, recommendableCards } from "@/lib/operators/evidenceCard";
@@ -15,7 +13,6 @@ import {
   competitionEvidenceHref,
   competitionFixtureHref,
   competitionMarketHref,
-  competitionOperatorHref,
   competitionPath,
   competitionsIndexPath,
 } from "@/lib/competitions/links";
@@ -35,6 +32,8 @@ import { countryName } from "@/lib/geoNames";
 import { graphRelatedItemListLd } from "@/lib/knowledge-graph/schema";
 import { getMarket } from "@/lib/markets/registry";
 import type { QualifiedFixture } from "@/lib/research/qualifiedFixture";
+import type { PredictionStrings } from "@/lib/translations/predictionsEn";
+import { formatDict } from "@/lib/dictionaryExtras";
 import { AddToAccaButton } from "@/components/acca/AddToAccaButton";
 import { fixturePath } from "@/lib/fixtures/paths";
 import { siteUrl } from "@/lib/seo";
@@ -46,9 +45,27 @@ import {
   CompetitionFixtureLink,
   CompetitionMarketLink,
   CompetitionOddsSection,
-  CompetitionOperatorLink,
   CompetitionPageTracker,
 } from "./CompetitionInteractive";
+
+/* ============================================================================
+   THE COMPETITION PAGE — form-guide conversion, fixture-style hierarchy
+   ----------------------------------------------------------------------------
+   Top-down:
+
+     LEAD      where today's qualified coverage concentrates by market — one
+               sentence, its counts inline, pct computed from the printed
+               fraction. Omitted whole when the research set is empty.
+     SUPPORTS  qualified rows / unique fixtures / the market breakdown as
+               paired `count of total (pct%)` rows; the provider average
+               demoted to the label register.
+     FIXTURES  upcoming qualified rows, then the highest-signal rows — both
+               honest-empty, both provider-labelled.
+     DETAIL    description, seasons, evidence bundle, market activity,
+               observed odds, related entities. Dense on purpose.
+     LAST      one commercial block. The duplicated all-operators list is
+               dead — same law as the market and fixture pages.
+   ========================================================================== */
 
 export function CompetitionDetailView({
   competition,
@@ -60,6 +77,7 @@ export function CompetitionDetailView({
   odds,
   operators,
   visitorCountry,
+  p,
 }: {
   competition: CompetitionDefinition;
   locale: Locale;
@@ -70,6 +88,7 @@ export function CompetitionDetailView({
   odds: CompetitionOddsSummary;
   operators: CompetitionOperatorRow[];
   visitorCountry: string;
+  p: PredictionStrings;
 }) {
   const relatedCompetitions = getRelatedCompetitions(competition.slug);
   const relatedMarkets = competition.relatedMarketSlugs
@@ -85,6 +104,11 @@ export function CompetitionDetailView({
   });
   const evidenceBundle = fromCompetitionStats(stats, `competition:${competition.slug}`);
 
+  const total = stats.qualifiedFixtureCount;
+  const topMarket = total > 0 && stats.marketBreakdown.length > 0 ? stats.marketBreakdown[0] : null;
+  /* Pairing by construction: the printed pct is computed from the printed fraction. */
+  const leadPct = topMarket ? Math.round((topMarket.count / total) * 100) : 0;
+
   return (
     <>
       <CompetitionPageTracker competitionSlug={competition.slug} locale={locale} />
@@ -99,268 +123,254 @@ export function CompetitionDetailView({
       <JsonLd data={competitionBreadcrumbLd({ competition, locale })} />
       {relatedItemList && <JsonLd data={relatedItemList} />}
 
-      <div className="container-wide pb-16 pt-5">
-        <nav aria-label="Breadcrumb" className="text-xs text-muted-foreground">
-          <Link href={`/${locale}`} className="hover:text-foreground">Home</Link>
-          <span className="mx-1.5">/</span>
-          <Link href={competitionsIndexPath(locale)} className="hover:text-foreground">Competitions</Link>
-          <span className="mx-1.5">/</span>
-          <span className="text-foreground">{competition.name}</span>
+      <div className="rw-hero container-wide bg-[var(--hero-canvas)] pb-24">
+        <nav aria-label="Breadcrumb" className="rw-m pt-5 text-[var(--hero-ink-2)]">
+          <Link href={`/${locale}`} className="hover:text-[var(--hero-ink)]">
+            Home
+          </Link>
+          <span className="mx-1.5" aria-hidden>
+            /
+          </span>
+          <Link href={competitionsIndexPath(locale)} className="hover:text-[var(--hero-ink)]">
+            {p.cmpIndexEyebrow}
+          </Link>
+          <span className="mx-1.5" aria-hidden>
+            /
+          </span>
+          <span className="text-[var(--hero-ink)]">{competition.name}</span>
         </nav>
 
-        <section className="border-b border-[var(--border-subtle)] pb-8 pt-6">
-          <p className="text-metadata font-medium uppercase tracking-label text-brand">
-            Competition intelligence · {competition.confederation}
+        <header className="mt-6 border-b border-[var(--hero-line)] pb-10">
+          <span aria-hidden className="block h-[2px] w-10 bg-[var(--hero-ink)]" />
+          <p className="rw-m mt-3.5 text-[var(--hero-ink-2)]">
+            {competition.confederation}
             {competition.country ? (
               <>
                 {" · "}
                 <Link
                   href={countryPath(locale, competition.country)}
-                  className="hover:underline"
+                  className="hover:text-[var(--hero-ink)]"
                 >
                   {countryName(competition.country)}
                 </Link>
               </>
             ) : null}
           </p>
-          <h1 className="mt-3 font-display text-3xl font-semibold tracking-display text-foreground md:text-4xl">
+          <h1 className="rw-h mt-1.5 text-[clamp(2.125rem,4.4vw,2.875rem)] text-[var(--hero-ink)]">
             {competition.name}
           </h1>
-          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-[var(--ink-secondary)] md:text-base">
+          <p className="mt-2.5 max-w-[62ch] text-[15px] leading-[1.55] text-[var(--hero-ink-2)]">
             {competition.description}
           </p>
-          <p className="mt-3 text-xs text-muted-foreground">
-            Visitor country {visitorCountry}
-            {activeSeason ? ` · Current season ${activeSeason.yearLabel}` : ""}
-          </p>
-        </section>
+        </header>
 
-        <section className="border-b border-[var(--border-subtle)] py-8" aria-labelledby="overview">
-          <h2 id="overview" className="font-display text-xl font-semibold text-foreground">
-            Competition overview
-          </h2>
-          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-[var(--ink-secondary)]">
-            This page aggregates RankWagers research entities for {competition.name}: qualified
-            fixtures, related markets, operators, and observed odds. It does not generate tips
-            or editorial rankings.
-          </p>
-        </section>
+        {/* LEAD — omitted whole on an empty research set (the empty-state law). */}
+        {topMarket ? (
+          <section aria-labelledby="cmp-lead-heading" className="mt-14">
+            <p className="rw-m text-[var(--hero-ink-2)]">{p.mktLeadEyebrow}</p>
+            <h2
+              id="cmp-lead-heading"
+              className="rw-h mt-2.5 max-w-[30ch] text-[clamp(1.6rem,3.6vw,2.4rem)] text-[var(--hero-ink)]"
+            >
+              {formatDict(p.cmpLeadLine, {
+                market: topMarket.market,
+                count: String(topMarket.count),
+                total: String(total),
+                pct: String(leadPct),
+              })}
+            </h2>
+          </section>
+        ) : null}
 
-        <section className="border-b border-[var(--border-subtle)] py-8" aria-labelledby="season">
-          <h2 id="season" className="font-display text-xl font-semibold text-foreground">
-            Current season research snapshot
-          </h2>
-          <dl className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <Stat label="Qualified market rows" value={String(stats.qualifiedFixtureCount)} />
-            <Stat label="Unique fixtures" value={String(stats.uniqueMatchCount)} />
-            <Stat
-              label="Avg model probability"
-              value={
-                stats.averageModelProbability === null
-                  ? "—"
-                  : `${Math.round(stats.averageModelProbability)}%`
-              }
-            />
-            <div className="rounded-md border border-border px-3 py-2">
-              <p className="text-metadata uppercase tracking-label text-muted-foreground">Evidence strength</p>
-              <div className="mt-2">
-                <EvidenceSummaryChip
-                  strength={evidenceBundle.summaryStrength}
-                  sampleSize={stats.uniqueMatchCount}
-                />
-              </div>
-            </div>
-          </dl>
-          <p className="mt-3 text-xs text-muted-foreground">{stats.sampleNote}</p>
-          {activeSeason ? (
-            <p className="mt-4 text-sm">
-              <Link
-                href={seasonPath(locale, competition.slug, activeSeason.slug)}
-                className="font-medium text-brand hover:underline"
-              >
-                Open {activeSeason.displayName} season intelligence →
-              </Link>
+        {/* SUPPORTS — the coverage signals, counts paired, provider figure demoted. */}
+        {total > 0 ? (
+          <section aria-labelledby="cmp-supports-heading" className="mt-12">
+            <h2 id="cmp-supports-heading" className="rw-m text-[var(--hero-ink-2)]">
+              {p.mktSupportsTitle}
+            </h2>
+            <p className="mt-1.5 max-w-[52ch] text-[13px] leading-relaxed text-[var(--hero-ink-2)]">
+              {p.mktSupportsNote}
             </p>
-          ) : null}
-          {availableSeasons.length > 1 ? (
-            <ul className="mt-3 flex flex-wrap gap-2">
-              {availableSeasons.map((season) => (
-                <li key={season.id}>
-                  <Link
-                    href={seasonPath(locale, competition.slug, season.slug)}
-                    className="inline-flex rounded-md border border-border px-2.5 py-1 text-xs font-medium text-brand hover:bg-[var(--canvas-secondary)]"
-                  >
-                    {season.yearLabel}
-                    {season.active ? " · current" : ""}
-                  </Link>
+            <ul className="mt-5 border-t-[1.5px] border-[var(--hero-ink)]">
+              <li className="rw-row border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] text-[var(--hero-ink)]">
+                {formatDict(p.cmpQualifiedRowsLine, { n: String(total) })}
+              </li>
+              {stats.uniqueMatchCount > 0 ? (
+                <li className="rw-row border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] text-[var(--hero-ink)]">
+                  {formatDict(p.cmpUniqueFixturesLine, { n: String(stats.uniqueMatchCount) })}
+                </li>
+              ) : null}
+              {stats.marketBreakdown.slice(0, 5).map((row) => (
+                <li
+                  key={row.market}
+                  className="rw-row border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] text-[var(--hero-ink)]"
+                >
+                  {formatDict(p.cmpMarketRow, {
+                    market: row.market,
+                    count: String(row.count),
+                    total: String(total),
+                    pct: String(Math.round((row.count / total) * 100)),
+                  })}
                 </li>
               ))}
             </ul>
-          ) : null}
-        </section>
+            {stats.averageModelProbability !== null ? (
+              <p className="rw-m mt-4 normal-case tracking-[0.04em] text-[var(--hero-ink-2)]">
+                {formatDict(p.mktProviderAvgLine, {
+                  pct: String(Math.round(stats.averageModelProbability)),
+                })}
+              </p>
+            ) : null}
+          </section>
+        ) : null}
 
-        <section className="border-b border-[var(--border-subtle)] py-8" aria-labelledby="upcoming">
-          <h2 id="upcoming" className="font-display text-xl font-semibold text-foreground">
-            Upcoming qualified fixtures
+        {/* FIXTURES — upcoming, then the highest-signal rows. Honest empties. */}
+        <section
+          aria-labelledby="cmp-upcoming-heading"
+          className="mt-16 border-t border-[var(--hero-line)] pt-12"
+        >
+          <h2 id="cmp-upcoming-heading" className="rw-m text-[var(--hero-ink-2)]">
+            {p.cmpUpcomingTitle}
           </h2>
-          <FixtureList
+          <FixtureRows
             fixtures={upcoming}
             competitionSlug={competition.slug}
             locale={locale}
-            empty="No upcoming qualified fixtures matched this competition today."
+            empty={p.cmpUpcomingEmpty}
+            potentialLabel={p.rankedPotentialLabel}
           />
         </section>
 
-        <section className="border-b border-[var(--border-subtle)] py-8" aria-labelledby="recent">
-          <h2 id="recent" className="font-display text-xl font-semibold text-foreground">
-            Recently analyzed fixtures
+        <section aria-labelledby="cmp-recent-heading" className="mt-12">
+          <h2 id="cmp-recent-heading" className="rw-m text-[var(--hero-ink-2)]">
+            {p.cmpRecentTitle}
           </h2>
-          <p className="mt-1 text-xs text-muted-foreground">
-            Highest-signal qualified rows from the current research set (not invented results).
+          <p className="mt-1.5 max-w-[52ch] text-[13px] leading-relaxed text-[var(--hero-ink-2)]">
+            {p.cmpRecentNote}
           </p>
-          <FixtureList
+          <FixtureRows
             fixtures={recent}
             competitionSlug={competition.slug}
             locale={locale}
-            empty="No analyzed fixtures matched this competition in the current set."
+            empty={p.cmpRecentEmpty}
+            potentialLabel={p.rankedPotentialLabel}
           />
         </section>
 
-        <EvidenceSection
-          bundle={evidenceBundle}
-          locale={locale}
-          country={visitorCountry}
-        />
-
-        <section className="border-b border-[var(--border-subtle)] py-8" aria-labelledby="evidence">
-          <h2 id="evidence" className="font-display text-xl font-semibold text-foreground">
-            Market activity in sample
+        {/* DETAIL — seasons, evidence, market activity, observed odds, relations. */}
+        <section
+          aria-labelledby="cmp-detail-heading"
+          className="mt-16 border-t border-[var(--hero-line)] pt-12"
+        >
+          <h2 id="cmp-detail-heading" className="rw-m text-[var(--hero-ink-2)]">
+            {p.cmpDetailTitle}
           </h2>
-          {stats.marketBreakdown.length ? (
-            <ul className="mt-4 space-y-2">
-              {stats.marketBreakdown.map((row) => (
-                <li
-                  key={row.market}
-                  className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-border px-3 py-2 text-sm"
-                >
-                  <span>{row.market}</span>
-                  <span className="font-mono text-xs tabular-nums text-muted-foreground">
-                    {row.count} rows · avg {Math.round(row.averageProbability)}%
-                  </span>
-                </li>
-              ))}
-            </ul>
-          ) : (
-            <p className="mt-3 text-sm text-muted-foreground">
-              Evidence breakdown appears when qualified fixtures match this competition.
-            </p>
-          )}
-          <p className="mt-3 text-sm">
-            <Link href={competitionEvidenceHref(locale)} className="text-brand hover:underline">
-              Methodology & evidence
-            </Link>
-          </p>
-        </section>
 
-        <section className="border-b border-[var(--border-subtle)] py-8" aria-labelledby="markets">
-          <h2 id="markets" className="font-display text-xl font-semibold text-foreground">
-            Popular markets
-          </h2>
-          <ul className="mt-4 flex flex-wrap gap-3">
-            {relatedMarkets.map((market) => (
-              <li key={market.slug}>
-                <CompetitionMarketLink
-                  href={competitionMarketHref(locale, market.slug)}
-                  competitionSlug={competition.slug}
-                  marketSlug={market.slug}
-                  locale={locale}
-                >
-                  {market.name}
-                </CompetitionMarketLink>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <OperatorEvidenceCardList
-          cards={recommendableCards(
-            buildOperatorEvidenceCards(
-              operators.map(({ operator, availability }) => ({
-                operator,
-                availability,
-                marketKey: null,
-              })),
-              { nowIso: new Date().toISOString(), limit: 3 },
-            ),
-          )}
-          locale={locale}
-          country={visitorCountry}
-          surface="competition"
-          headingId="operator-recommendations"
-          heading="Recommended operators"
-        />
-        <section className="border-b border-[var(--border-subtle)] py-8" aria-labelledby="operators">
-          <h2 id="operators" className="font-display text-xl font-semibold text-foreground">
-            All supported operators
-          </h2>
-          <ul className="mt-4 space-y-2">
-            {operators.slice(0, 8).map(({ operator, availability }) => (
-              <li
-                key={operator.slug}
-                className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-border px-3 py-2"
+          {availableSeasons.length > 0 ? (
+            <div className="mt-6">
+              <h3 className="rw-label text-[var(--hero-ink-2)]">{p.cmpSeasonsTitle}</h3>
+              <ul className="mt-2.5 flex flex-wrap gap-2">
+                {availableSeasons.map((season) => (
+                  <li key={season.id}>
+                    <Link
+                      href={seasonPath(locale, competition.slug, season.slug)}
+                      className={`rw-m inline-flex border px-3 py-1.5 transition-colors hover:border-[var(--hero-ink)] ${
+                        season.active
+                          ? "border-[var(--hero-ink)] text-[var(--hero-ink)]"
+                          : "border-[var(--hero-line)] text-[var(--hero-ink-2)]"
+                      }`}
+                    >
+                      {season.yearLabel}
+                      {season.active ? ` · ${p.cmpSeasonCurrent}` : ""}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+          {activeSeason ? (
+            <p className="mt-4">
+              <Link
+                href={seasonPath(locale, competition.slug, activeSeason.slug)}
+                className="text-[15px] text-[var(--hero-ink)] underline decoration-[var(--hero-line)] underline-offset-4 hover:decoration-[var(--hero-ink)]"
               >
-                <CompetitionOperatorLink
-                  href={competitionOperatorHref(locale, operator.slug)}
-                  competitionSlug={competition.slug}
-                  operatorSlug={operator.slug}
-                  locale={locale}
-                >
-                  {operator.name}
-                </CompetitionOperatorLink>
-                <span
-                  className={`text-xs ${
-                    availability.available ? "text-[var(--green-deep)]" : "text-[var(--amber-primary)]"
-                  }`}
-                >
-                  {availability.label}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </section>
+                {activeSeason.displayName}
+              </Link>
+            </p>
+          ) : null}
 
-        <CompetitionOddsSection
-          competitionSlug={competition.slug}
-          locale={locale}
-          sampleSize={odds.sampleSize}
-          bestOdds={odds.bestOdds}
-          averageOdds={odds.averageOdds}
-          movementCount={odds.movementCount}
-        />
+          <div className="mt-8">
+            <EvidenceSection bundle={evidenceBundle} locale={locale} country={visitorCountry} />
+          </div>
 
-        <GraphEntityPanel
-          entityType="competition"
-          entitySlug={competition.slug}
-          locale={locale}
-        />
+          <div className="mt-8">
+            <h3 className="rw-label text-[var(--hero-ink-2)]">{p.cmpMarketActivityTitle}</h3>
+            {stats.marketBreakdown.length ? (
+              <ul className="mt-2.5 border-t border-[var(--hero-line)]">
+                {stats.marketBreakdown.map((row) => (
+                  <li
+                    key={row.market}
+                    className="rw-row flex flex-wrap items-baseline justify-between gap-x-4 border-b border-[var(--hero-line)] py-2.5 pl-3.5"
+                  >
+                    <span className="text-[15px] text-[var(--hero-ink)]">{row.market}</span>
+                    <span className="rw-m text-[var(--hero-ink-2)]">
+                      {formatDict(p.cmpRowsProviderMeta, {
+                        n: String(row.count),
+                        pct: String(Math.round(row.averageProbability)),
+                      })}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="mt-2.5 max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]">
+                {p.cmpMarketActivityEmpty}
+              </p>
+            )}
+            <p className="mt-3">
+              <Link
+                href={competitionEvidenceHref(locale)}
+                className="rw-m text-[var(--hero-ink-2)] underline decoration-[var(--hero-line)] underline-offset-4 hover:text-[var(--hero-ink)]"
+              >
+                {p.cmpMethodologyLink}
+              </Link>
+            </p>
+          </div>
 
-        <EntityDiscoverySection
-          entityType="competition"
-          entitySlug={competition.slug}
-          locale={locale}
-          country={visitorCountry}
-        />
+          <CompetitionOddsSection
+            competitionSlug={competition.slug}
+            locale={locale}
+            sampleSize={odds.sampleSize}
+            bestOdds={odds.bestOdds}
+            averageOdds={odds.averageOdds}
+            movementCount={odds.movementCount}
+            p={p}
+          />
 
-        <section className="border-b border-[var(--border-subtle)] py-8" aria-labelledby="related">
-          <h2 id="related" className="font-display text-xl font-semibold text-foreground">
-            Related competitions & teams
-          </h2>
-          <div className="mt-4 grid gap-6 md:grid-cols-2">
+          {relatedMarkets.length ? (
+            <div className="mt-8">
+              <h3 className="rw-label text-[var(--hero-ink-2)]">{p.mktRelatedTitle}</h3>
+              <ul className="mt-2.5 flex flex-wrap gap-2">
+                {relatedMarkets.map((market) => (
+                  <li key={market.slug}>
+                    <CompetitionMarketLink
+                      href={competitionMarketHref(locale, market.slug)}
+                      competitionSlug={competition.slug}
+                      marketSlug={market.slug}
+                      locale={locale}
+                    >
+                      {market.name}
+                    </CompetitionMarketLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+
+          <div className="mt-8 grid gap-8 md:grid-cols-2">
             <div>
-              <h3 className="text-metadata font-semibold uppercase tracking-label text-muted-foreground">
-                Related competitions
-              </h3>
-              <ul className="mt-2 space-y-1.5">
+              <h3 className="rw-label text-[var(--hero-ink-2)]">{p.cmpRelatedCompetitions}</h3>
+              <ul className="mt-2.5 space-y-1.5">
                 {relatedCompetitions.map((related) => (
                   <li key={related.slug}>
                     <GraphNavLink
@@ -371,7 +381,7 @@ export function CompetitionDetailView({
                       toSlug={related.slug}
                       locale={locale}
                       intent="related"
-                      className="text-sm font-medium text-brand hover:underline"
+                      className="text-[15px] text-[var(--hero-ink)] underline decoration-[var(--hero-line)] underline-offset-4 hover:decoration-[var(--hero-ink)]"
                     >
                       {related.name}
                     </GraphNavLink>
@@ -380,10 +390,8 @@ export function CompetitionDetailView({
               </ul>
             </div>
             <div>
-              <h3 className="text-metadata font-semibold uppercase tracking-label text-muted-foreground">
-                Related teams
-              </h3>
-              <ul className="mt-2 flex flex-wrap gap-2 text-sm text-[var(--ink-secondary)]">
+              <h3 className="rw-label text-[var(--hero-ink-2)]">{p.cmpRelatedTeams}</h3>
+              <ul className="mt-2.5 flex flex-wrap gap-2 text-sm">
                 {teams.map((teamName) => {
                   const resolved = resolveRegisteredTeam({
                     name: teamName,
@@ -400,7 +408,7 @@ export function CompetitionDetailView({
                           toSlug={resolved.team.slug}
                           locale={locale}
                           intent="related"
-                          className="rounded border border-border px-2.5 py-1 text-brand hover:bg-[var(--canvas-secondary)]"
+                          className="rw-m inline-flex border border-[var(--hero-line)] px-2.5 py-1 text-[var(--hero-ink)] transition-colors hover:border-[var(--hero-ink)]"
                         >
                           {resolved.team.name}
                         </GraphNavLink>
@@ -408,99 +416,127 @@ export function CompetitionDetailView({
                     );
                   }
                   return (
-                    <li key={teamName} className="rounded border border-border px-2.5 py-1">
+                    <li
+                      key={teamName}
+                      className="rw-m inline-flex border border-[var(--hero-line)] px-2.5 py-1 text-[var(--hero-ink-2)]"
+                    >
                       {teamName}
                     </li>
                   );
                 })}
               </ul>
-              <p className="mt-2 text-metadata text-muted-foreground">
-                Linked when a canonical team entity exists; otherwise shown as research labels.
+              <p className="rw-m mt-2.5 normal-case tracking-[0.04em] text-[var(--hero-ink-2)]">
+                {p.cmpRelatedTeamsNote}
               </p>
             </div>
           </div>
+
+          <GraphEntityPanel entityType="competition" entitySlug={competition.slug} locale={locale} />
+
+          <EntityDiscoverySection
+            entityType="competition"
+            entitySlug={competition.slug}
+            locale={locale}
+            country={visitorCountry}
+          />
         </section>
+
+        {/* LAST — the single commercial block. */}
+        <div className="mt-16 border-t border-[var(--hero-line)] pt-12">
+          <OperatorEvidenceCardList
+            cards={recommendableCards(
+              buildOperatorEvidenceCards(
+                operators.map(({ operator, availability }) => ({
+                  operator,
+                  availability,
+                  marketKey: null,
+                })),
+                { nowIso: new Date().toISOString(), limit: 3 }
+              )
+            )}
+            locale={locale}
+            country={visitorCountry}
+            surface="competition"
+            headingId="operator-recommendations"
+            heading={p.fxOperatorsTitle}
+          />
+          <p className="rw-m mt-3 normal-case tracking-[0.04em] text-[var(--hero-ink-2)]">
+            {p.fxOperatorsNote}
+          </p>
+        </div>
       </div>
     </>
   );
 }
 
-function FixtureList({
+function FixtureRows({
   fixtures,
   competitionSlug,
   locale,
   empty,
+  potentialLabel,
 }: {
   fixtures: QualifiedFixture[];
   competitionSlug: string;
   locale: Locale;
   empty: string;
+  potentialLabel: string;
 }) {
   if (!fixtures.length) {
     return (
-      <div className="mt-3">
-        <EmptyState
-          title="No fixtures in this sample"
-          description={empty}
-        />
-      </div>
+      <p className="mt-4 max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]">
+        {empty}
+      </p>
     );
   }
   return (
-    <ul className="mt-4 divide-y divide-[var(--border-subtle)] border-y border-[var(--border-subtle)]">
+    <ul className="mt-5 border-t-[1.5px] border-[var(--hero-ink)]">
       {fixtures.map((fixture) => (
-        <li key={fixture.id} className="flex flex-wrap items-center justify-between gap-3 py-3">
-          <div>
-            <CompetitionFixtureLink
-              href={competitionFixtureHref(locale)}
-              competitionSlug={competitionSlug}
-              fixtureId={fixture.matchId}
-              locale={locale}
-            >
-              {fixture.home} vs {fixture.away}
-            </CompetitionFixtureLink>
-            <p className="mt-0.5 text-xs text-muted-foreground">
-              {fixture.market} · {fixture.kickoff}
-            </p>
-          </div>
-          <div className="flex items-center gap-3">
-            <p className="font-mono text-sm tabular-nums text-brand">{fixture.modelProbability}%</p>
-            <AddToAccaButton
-              compact
-              draft={{
-                matchId: fixture.matchId,
-                homeTeam: fixture.home,
-                awayTeam: fixture.away,
-                competition: fixture.league,
-                kickoffAt: fixture.kickoffDateTime,
-                marketKey: fixture.marketKind,
-                confidence: fixture.modelProbability,
-                odds: null,
-                evidenceSummary: [
-                  `Model ${fixture.modelProbability}% · ${fixture.market}`,
-                ],
-                publishedAt: fixture.updatedDateTime,
-                matchHref: fixturePath(
-                  locale,
-                  fixture.matchId,
-                  fixture.marketKind,
-                  "competition"
-                ),
-                source: "competition",
-              }}
-            />
+        <li key={fixture.id}>
+          <div className="rw-row grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-4 border-b border-[var(--hero-line)] py-3 pl-3.5">
+            <div className="min-w-0">
+              <CompetitionFixtureLink
+                href={competitionFixtureHref(locale)}
+                competitionSlug={competitionSlug}
+                fixtureId={fixture.matchId}
+                locale={locale}
+              >
+                <span className="text-[14px] font-semibold tracking-[-0.01em] text-[var(--hero-ink)]">
+                  {fixture.home} v {fixture.away}
+                </span>
+              </CompetitionFixtureLink>
+              <p className="rw-m mt-1 text-[var(--hero-ink-2)]">
+                {fixture.market} · {fixture.kickoff}
+              </p>
+            </div>
+            <div className="flex shrink-0 items-baseline gap-3">
+              <p className="text-right">
+                <span className="rw-tnum text-[15px] font-bold text-[var(--hero-ink)]">
+                  {fixture.modelProbability}%
+                </span>
+                <span className="rw-m block text-[var(--hero-ink-2)]">{potentialLabel}</span>
+              </p>
+              <AddToAccaButton
+                compact
+                draft={{
+                  matchId: fixture.matchId,
+                  homeTeam: fixture.home,
+                  awayTeam: fixture.away,
+                  competition: fixture.league,
+                  kickoffAt: fixture.kickoffDateTime,
+                  marketKey: fixture.marketKind,
+                  confidence: fixture.modelProbability,
+                  odds: null,
+                  evidenceSummary: [`Model ${fixture.modelProbability}% · ${fixture.market}`],
+                  publishedAt: fixture.updatedDateTime,
+                  matchHref: fixturePath(locale, fixture.matchId, fixture.marketKind, "competition"),
+                  source: "competition",
+                }}
+              />
+            </div>
           </div>
         </li>
       ))}
     </ul>
-  );
-}
-
-function Stat({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-md border border-border bg-[var(--canvas-secondary)] px-3 py-3">
-      <dt className="text-metadata uppercase tracking-label text-muted-foreground">{label}</dt>
-      <dd className="mt-1 font-mono text-base font-semibold tabular-nums text-foreground">{value}</dd>
-    </div>
   );
 }

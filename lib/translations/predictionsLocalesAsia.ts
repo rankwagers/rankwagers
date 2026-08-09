@@ -180,6 +180,47 @@ export const ar = mergePredictions({
   mktIndicatorUsed: "مستخدم في البحث",
   mktIndicatorConceptual: "مفاهيمي",
 
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "بطولات البحث",
+  cmpIndexTitle: "البطولات",
+  cmpIndexLede:
+    "البطولات كعقد بحثية — مباريات مؤهّلة وأسواق ومشغّلون وأرقام مرصودة. بنية بحثية، وليست نصائح أبدًا.",
+  cmpLeadLine: "تتركّز تغطية اليوم في {market}: {count} من {total} صفًا مؤهّلًا ({pct}%).",
+  cmpQualifiedRowsLine: "{n} صفوف سوق مؤهّلة في مجموعة البحث الحالية",
+  cmpUniqueFixturesLine: "{n} مباراة فريدة",
+  cmpMarketRow: "{market} — {count} من {total} ({pct}%)",
+  cmpUpcomingTitle: "المباريات المؤهّلة القادمة",
+  cmpUpcomingEmpty: "لا توجد مباريات مؤهّلة قادمة مطابقة لهذه البطولة في مجموعة البحث الحالية.",
+  cmpRecentTitle: "الصفوف الأقوى إشارة",
+  cmpRecentNote: "أقوى الصفوف المؤهّلة من مجموعة البحث الحالية — مدخلات بحثية، وليست نتائج.",
+  cmpRecentEmpty: "لا توجد مباريات محلّلة مطابقة لهذه البطولة في مجموعة البحث الحالية.",
+  cmpDetailTitle: "تفاصيل البطولة",
+  cmpSeasonsTitle: "المواسم",
+  cmpSeasonCurrent: "الحالي",
+  cmpMarketActivityTitle: "نشاط الأسواق في العيّنة",
+  cmpMarketActivityEmpty: "تظهر صفوف الأسواق عندما تطابق مباريات مؤهّلة هذه البطولة.",
+  cmpRowsProviderMeta: "{n} صفوف · متوسط المزوّد {pct}%",
+  cmpRelatedCompetitions: "بطولات ذات صلة",
+  cmpRelatedTeams: "فرق ذات صلة",
+  cmpRelatedTeamsNote: "تُربط عند وجود كيان فريق معتمد؛ وإلا تُعرض كوسوم بحثية.",
+  cmpMethodologyLink: "المنهجية والأدلة",
+  ssnEyebrow: "بحث الموسم",
+  ssnCurrent: "الحالي",
+  ssnArchived: "مؤرشف",
+  ssnWindowLine: "نافذة الموسم {start} → {end}",
+  ssnLeadLine: "تحتوي مجموعة بحث هذا الموسم على {count} صفًا مؤهّلًا عبر {fixtures} مباراة.",
+  ssnTeamsTitle: "الفرق المشاركة",
+  ssnTeamsEmpty: "تظهر الفرق فقط عند وجودها في مباريات مؤهّلة لهذا الموسم.",
+  ssnTeamsCountLine: "{n} فرق مشاركة",
+  ssnUpcomingRowsLine: "{n} صفوف قادمة",
+  ssnCompletedRowsLine: "{n} صفوف مكتملة",
+  ssnHomeAwayLine: "{home} صفوف أرضه · {away} صفوف خارجها",
+  ssnEnrichmentAbsent:
+    "لا تظهر معدلات الأهداف وxG على مستوى الموسم إلا عند وجود إثراء تفاصيل المباراة — هذه الصفحة لا تخترعها.",
+  ssnDetailTitle: "تفاصيل الموسم",
+  ssnOperatorsTitle: "المشغّلون المتاحون",
+  ssnOperatorsEmpty: "لا يوجد مشغّلون بشراكة نشطة لبلد الزائر المحدد.",
+
 });
 
 export const hi = mergePredictions({
@@ -363,6 +404,49 @@ export const hi = mergePredictions({
   mktIndicatorUsed: "शोध में प्रयुक्त",
   mktIndicatorConceptual: "सैद्धांतिक",
 
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "शोध प्रतियोगिताएँ",
+  cmpIndexTitle: "प्रतियोगिताएँ",
+  cmpIndexLede:
+    "शोध केंद्रों के रूप में प्रतियोगिताएँ — योग्य मैच, बाज़ार, ऑपरेटर और दर्ज ऑड्स। शोध संरचना, कभी टिप्स नहीं।",
+  cmpLeadLine:
+    "आज की कवरेज {market} में केंद्रित है: {total} योग्य पंक्तियों में से {count} ({pct}%)।",
+  cmpQualifiedRowsLine: "वर्तमान शोध सेट में {n} योग्य बाज़ार पंक्तियाँ",
+  cmpUniqueFixturesLine: "{n} अद्वितीय मैच",
+  cmpMarketRow: "{market} — {total} में से {count} ({pct}%)",
+  cmpUpcomingTitle: "आगामी योग्य मैच",
+  cmpUpcomingEmpty: "वर्तमान शोध सेट में इस प्रतियोगिता से मेल खाने वाला कोई आगामी योग्य मैच नहीं।",
+  cmpRecentTitle: "सबसे मज़बूत संकेत वाली पंक्तियाँ",
+  cmpRecentNote: "वर्तमान शोध सेट की सबसे मज़बूत योग्य पंक्तियाँ — शोध प्रविष्टियाँ, परिणाम नहीं।",
+  cmpRecentEmpty: "वर्तमान शोध सेट में इस प्रतियोगिता से मेल खाने वाला कोई विश्लेषित मैच नहीं।",
+  cmpDetailTitle: "प्रतियोगिता विवरण",
+  cmpSeasonsTitle: "सीज़न",
+  cmpSeasonCurrent: "वर्तमान",
+  cmpMarketActivityTitle: "नमूने में बाज़ार गतिविधि",
+  cmpMarketActivityEmpty: "बाज़ार पंक्तियाँ तब दिखती हैं जब योग्य मैच इस प्रतियोगिता से मेल खाते हैं।",
+  cmpRowsProviderMeta: "{n} पंक्तियाँ · प्रदाता औसत {pct}%",
+  cmpRelatedCompetitions: "संबंधित प्रतियोगिताएँ",
+  cmpRelatedTeams: "संबंधित टीमें",
+  cmpRelatedTeamsNote:
+    "कैननिकल टीम इकाई होने पर लिंक की जाती हैं; अन्यथा शोध लेबल के रूप में दिखाई जाती हैं।",
+  cmpMethodologyLink: "कार्यप्रणाली और प्रमाण",
+  ssnEyebrow: "सीज़न शोध",
+  ssnCurrent: "वर्तमान",
+  ssnArchived: "संग्रहीत",
+  ssnWindowLine: "सीज़न विंडो {start} → {end}",
+  ssnLeadLine: "इस सीज़न के शोध सेट में {fixtures} मैचों में {count} योग्य पंक्तियाँ हैं।",
+  ssnTeamsTitle: "भाग लेने वाली टीमें",
+  ssnTeamsEmpty: "टीमें केवल तभी दिखती हैं जब वे इस सीज़न के योग्य मैचों में मौजूद हों।",
+  ssnTeamsCountLine: "{n} भाग लेने वाली टीमें",
+  ssnUpcomingRowsLine: "{n} आगामी पंक्तियाँ",
+  ssnCompletedRowsLine: "{n} पूर्ण पंक्तियाँ",
+  ssnHomeAwayLine: "{home} घरेलू पंक्तियाँ · {away} बाहर की पंक्तियाँ",
+  ssnEnrichmentAbsent:
+    "सीज़न-स्तरीय गोल और xG दरें केवल मैच-विवरण संवर्धन होने पर दिखती हैं — यह पृष्ठ उन्हें गढ़ता नहीं।",
+  ssnDetailTitle: "सीज़न विवरण",
+  ssnOperatorsTitle: "उपलब्ध ऑपरेटर",
+  ssnOperatorsEmpty: "निर्धारित आगंतुक देश के लिए कोई सक्रिय संबद्ध ऑपरेटर नहीं।",
+
 });
 
 export const ja = mergePredictions({
@@ -533,6 +617,45 @@ export const ja = mergePredictions({
   mktIndicatorsNote: "この市場の指標定義です — ライブ値でも確信度スコアでもありません。",
   mktIndicatorUsed: "リサーチで使用",
   mktIndicatorConceptual: "概念的",
+
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "リサーチ大会",
+  cmpIndexTitle: "大会",
+  cmpIndexLede: "リサーチの拠点としての大会 — 適格試合・市場・オペレーター・記録済みオッズ。リサーチの構造であり、決してティップスではありません。",
+  cmpLeadLine: "本日のカバレッジは{market}に集中しています:適格{total}行中{count}行({pct}%)。",
+  cmpQualifiedRowsLine: "現在のリサーチセットで適格な市場行{n}件",
+  cmpUniqueFixturesLine: "{n}試合(重複なし)",
+  cmpMarketRow: "{market} — {total}中{count}({pct}%)",
+  cmpUpcomingTitle: "今後の適格試合",
+  cmpUpcomingEmpty: "現在のリサーチセットにこの大会の今後の適格試合はありません。",
+  cmpRecentTitle: "最も強いシグナルの行",
+  cmpRecentNote: "現在のリサーチセットで最も強い適格行 — リサーチ項目であり、結果ではありません。",
+  cmpRecentEmpty: "現在のリサーチセットにこの大会の分析済み試合はありません。",
+  cmpDetailTitle: "大会の詳細",
+  cmpSeasonsTitle: "シーズン",
+  cmpSeasonCurrent: "現行",
+  cmpMarketActivityTitle: "サンプル内の市場動向",
+  cmpMarketActivityEmpty: "適格試合がこの大会に一致すると市場行が表示されます。",
+  cmpRowsProviderMeta: "{n}行 · プロバイダー平均{pct}%",
+  cmpRelatedCompetitions: "関連大会",
+  cmpRelatedTeams: "関連チーム",
+  cmpRelatedTeamsNote: "正規のチームエンティティが存在する場合はリンクされ、それ以外はリサーチラベルとして表示されます。",
+  cmpMethodologyLink: "方法論と根拠",
+  ssnEyebrow: "シーズンリサーチ",
+  ssnCurrent: "現行",
+  ssnArchived: "アーカイブ済み",
+  ssnWindowLine: "シーズン期間 {start} → {end}",
+  ssnLeadLine: "このシーズンのリサーチセットには{fixtures}試合にわたる適格行{count}件があります。",
+  ssnTeamsTitle: "参加チーム",
+  ssnTeamsEmpty: "チームはこのシーズンの適格試合に含まれる場合のみ表示されます。",
+  ssnTeamsCountLine: "参加チーム{n}件",
+  ssnUpcomingRowsLine: "今後の行{n}件",
+  ssnCompletedRowsLine: "完了した行{n}件",
+  ssnHomeAwayLine: "ホーム行{home}件 · アウェイ行{away}件",
+  ssnEnrichmentAbsent: "シーズン単位のゴール・xG率は試合詳細の付加データがある場合のみ表示されます — このページはそれを作り出しません。",
+  ssnDetailTitle: "シーズンの詳細",
+  ssnOperatorsTitle: "利用可能なオペレーター",
+  ssnOperatorsEmpty: "判定された訪問国で有効な提携オペレーターはありません。",
 
 });
 
@@ -705,6 +828,45 @@ export const ko = mergePredictions({
   mktIndicatorsNote: "이 마켓의 지표 정의입니다 — 실시간 값도, 확신 점수도 아닙니다.",
   mktIndicatorUsed: "리서치에 사용됨",
   mktIndicatorConceptual: "개념적",
+
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "리서치 대회",
+  cmpIndexTitle: "대회",
+  cmpIndexLede: "리서치 허브로서의 대회 — 적격 경기, 마켓, 운영사, 기록된 배당. 리서치 구조이며, 결코 팁이 아닙니다.",
+  cmpLeadLine: "오늘의 커버리지는 {market}에 집중되어 있습니다: 적격 {total}행 중 {count}행({pct}%).",
+  cmpQualifiedRowsLine: "현재 리서치 세트의 적격 마켓 행 {n}건",
+  cmpUniqueFixturesLine: "고유 경기 {n}건",
+  cmpMarketRow: "{market} — {total} 중 {count}({pct}%)",
+  cmpUpcomingTitle: "다가오는 적격 경기",
+  cmpUpcomingEmpty: "현재 리서치 세트에 이 대회와 일치하는 다가오는 적격 경기가 없습니다.",
+  cmpRecentTitle: "가장 강한 신호의 행",
+  cmpRecentNote: "현재 리서치 세트에서 가장 강한 적격 행 — 리서치 항목이며 결과가 아닙니다.",
+  cmpRecentEmpty: "현재 리서치 세트에 이 대회와 일치하는 분석된 경기가 없습니다.",
+  cmpDetailTitle: "대회 상세",
+  cmpSeasonsTitle: "시즌",
+  cmpSeasonCurrent: "현재",
+  cmpMarketActivityTitle: "표본 내 마켓 활동",
+  cmpMarketActivityEmpty: "적격 경기가 이 대회와 일치하면 마켓 행이 표시됩니다.",
+  cmpRowsProviderMeta: "{n}행 · 공급자 평균 {pct}%",
+  cmpRelatedCompetitions: "관련 대회",
+  cmpRelatedTeams: "관련 팀",
+  cmpRelatedTeamsNote: "정규 팀 엔티티가 있으면 링크되고, 없으면 리서치 라벨로 표시됩니다.",
+  cmpMethodologyLink: "방법론과 근거",
+  ssnEyebrow: "시즌 리서치",
+  ssnCurrent: "현재",
+  ssnArchived: "보관됨",
+  ssnWindowLine: "시즌 기간 {start} → {end}",
+  ssnLeadLine: "이 시즌의 리서치 세트에는 {fixtures}경기에 걸친 적격 행 {count}건이 있습니다.",
+  ssnTeamsTitle: "참가 팀",
+  ssnTeamsEmpty: "팀은 이 시즌의 적격 경기에 포함될 때만 표시됩니다.",
+  ssnTeamsCountLine: "참가 팀 {n}팀",
+  ssnUpcomingRowsLine: "다가오는 행 {n}건",
+  ssnCompletedRowsLine: "완료된 행 {n}건",
+  ssnHomeAwayLine: "홈 행 {home}건 · 원정 행 {away}건",
+  ssnEnrichmentAbsent: "시즌 수준의 득점·xG 비율은 경기 상세 보강이 있을 때만 표시됩니다 — 이 페이지는 이를 지어내지 않습니다.",
+  ssnDetailTitle: "시즌 상세",
+  ssnOperatorsTitle: "이용 가능한 운영사",
+  ssnOperatorsEmpty: "판정된 방문 국가에 활성 제휴 운영사가 없습니다.",
 
 });
 
@@ -890,6 +1052,49 @@ export const th = mergePredictions({
   mktIndicatorUsed: "ใช้ในการวิจัย",
   mktIndicatorConceptual: "เชิงแนวคิด",
 
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "รายการแข่งขันเพื่อการวิจัย",
+  cmpIndexTitle: "รายการแข่งขัน",
+  cmpIndexLede:
+    "รายการแข่งขันในฐานะศูนย์กลางการวิจัย — แมตช์ที่ผ่านเกณฑ์ ตลาด ผู้ให้บริการ และราคาที่บันทึกไว้ โครงสร้างเชิงวิจัย ไม่ใช่ทิปเด็ดขาด",
+  cmpLeadLine:
+    "ความครอบคลุมวันนี้กระจุกอยู่ที่ {market}: {count} จาก {total} แถวที่ผ่านเกณฑ์ ({pct}%)",
+  cmpQualifiedRowsLine: "{n} แถวตลาดที่ผ่านเกณฑ์ในชุดวิจัยปัจจุบัน",
+  cmpUniqueFixturesLine: "{n} แมตช์ไม่ซ้ำ",
+  cmpMarketRow: "{market} — {count} จาก {total} ({pct}%)",
+  cmpUpcomingTitle: "แมตช์ที่ผ่านเกณฑ์ที่กำลังจะมาถึง",
+  cmpUpcomingEmpty: "ไม่มีแมตช์ที่ผ่านเกณฑ์ที่กำลังจะมาถึงตรงกับรายการแข่งขันนี้ในชุดวิจัยปัจจุบัน",
+  cmpRecentTitle: "แถวที่มีสัญญาณแรงที่สุด",
+  cmpRecentNote:
+    "แถวที่ผ่านเกณฑ์ที่แรงที่สุดจากชุดวิจัยปัจจุบัน — เป็นรายการวิจัย ไม่ใช่ผลการแข่งขัน",
+  cmpRecentEmpty: "ไม่มีแมตช์ที่วิเคราะห์แล้วตรงกับรายการแข่งขันนี้ในชุดวิจัยปัจจุบัน",
+  cmpDetailTitle: "รายละเอียดรายการแข่งขัน",
+  cmpSeasonsTitle: "ฤดูกาล",
+  cmpSeasonCurrent: "ปัจจุบัน",
+  cmpMarketActivityTitle: "กิจกรรมตลาดในตัวอย่าง",
+  cmpMarketActivityEmpty: "แถวตลาดจะปรากฏเมื่อมีแมตช์ที่ผ่านเกณฑ์ตรงกับรายการแข่งขันนี้",
+  cmpRowsProviderMeta: "{n} แถว · ค่าเฉลี่ยผู้ให้บริการ {pct}%",
+  cmpRelatedCompetitions: "รายการแข่งขันที่เกี่ยวข้อง",
+  cmpRelatedTeams: "ทีมที่เกี่ยวข้อง",
+  cmpRelatedTeamsNote: "มีลิงก์เมื่อมีเอนทิตีทีมมาตรฐาน มิฉะนั้นแสดงเป็นป้ายวิจัย",
+  cmpMethodologyLink: "ระเบียบวิธีและหลักฐาน",
+  ssnEyebrow: "การวิจัยฤดูกาล",
+  ssnCurrent: "ปัจจุบัน",
+  ssnArchived: "เก็บถาวร",
+  ssnWindowLine: "ช่วงฤดูกาล {start} → {end}",
+  ssnLeadLine: "ชุดวิจัยของฤดูกาลนี้มี {count} แถวที่ผ่านเกณฑ์ใน {fixtures} แมตช์",
+  ssnTeamsTitle: "ทีมที่เข้าร่วม",
+  ssnTeamsEmpty: "ทีมจะปรากฏเฉพาะเมื่ออยู่ในแมตช์ที่ผ่านเกณฑ์ของฤดูกาลนี้",
+  ssnTeamsCountLine: "{n} ทีมที่เข้าร่วม",
+  ssnUpcomingRowsLine: "{n} แถวที่กำลังจะมาถึง",
+  ssnCompletedRowsLine: "{n} แถวที่เสร็จสิ้น",
+  ssnHomeAwayLine: "{home} แถวเหย้า · {away} แถวเยือน",
+  ssnEnrichmentAbsent:
+    "อัตราประตูและ xG ระดับฤดูกาลจะแสดงเมื่อมีข้อมูลรายละเอียดแมตช์เท่านั้น — หน้านี้ไม่กุขึ้นเอง",
+  ssnDetailTitle: "รายละเอียดฤดูกาล",
+  ssnOperatorsTitle: "ผู้ให้บริการที่พร้อมใช้งาน",
+  ssnOperatorsEmpty: "ไม่มีผู้ให้บริการพันธมิตรที่ใช้งานได้สำหรับประเทศผู้เข้าชมที่ระบุ",
+
 });
 
 export const vi = mergePredictions({
@@ -1073,6 +1278,53 @@ export const vi = mergePredictions({
     "Định nghĩa chỉ số của thị trường này — không phải giá trị trực tiếp, không phải điểm chắc chắn.",
   mktIndicatorUsed: "dùng trong nghiên cứu",
   mktIndicatorConceptual: "mang tính khái niệm",
+
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "Giải đấu nghiên cứu",
+  cmpIndexTitle: "Giải đấu",
+  cmpIndexLede:
+    "Giải đấu như các trung tâm nghiên cứu — trận đủ điều kiện, thị trường, nhà điều hành và tỷ lệ đã ghi nhận. Cấu trúc nghiên cứu, không bao giờ là mách kèo.",
+  cmpLeadLine:
+    "Độ phủ hôm nay tập trung ở {market}: {count} trong {total} dòng đủ điều kiện ({pct}%).",
+  cmpQualifiedRowsLine: "{n} dòng thị trường đủ điều kiện trong tập nghiên cứu hiện tại",
+  cmpUniqueFixturesLine: "{n} trận duy nhất",
+  cmpMarketRow: "{market} — {count} trong {total} ({pct}%)",
+  cmpUpcomingTitle: "Trận đủ điều kiện sắp tới",
+  cmpUpcomingEmpty:
+    "Không có trận đủ điều kiện sắp tới khớp với giải đấu này trong tập nghiên cứu hiện tại.",
+  cmpRecentTitle: "Dòng có tín hiệu mạnh nhất",
+  cmpRecentNote:
+    "Những dòng đủ điều kiện mạnh nhất từ tập nghiên cứu hiện tại — mục nghiên cứu, không phải kết quả.",
+  cmpRecentEmpty: "Không có trận đã phân tích khớp với giải đấu này trong tập nghiên cứu hiện tại.",
+  cmpDetailTitle: "Chi tiết giải đấu",
+  cmpSeasonsTitle: "Mùa giải",
+  cmpSeasonCurrent: "hiện tại",
+  cmpMarketActivityTitle: "Hoạt động thị trường trong mẫu",
+  cmpMarketActivityEmpty: "Dòng thị trường xuất hiện khi có trận đủ điều kiện khớp với giải đấu này.",
+  cmpRowsProviderMeta: "{n} dòng · trung bình nhà cung cấp {pct}%",
+  cmpRelatedCompetitions: "Giải đấu liên quan",
+  cmpRelatedTeams: "Đội liên quan",
+  cmpRelatedTeamsNote:
+    "Có liên kết khi tồn tại thực thể đội chuẩn; nếu không, hiển thị dưới dạng nhãn nghiên cứu.",
+  cmpMethodologyLink: "Phương pháp và bằng chứng",
+  ssnEyebrow: "Nghiên cứu mùa giải",
+  ssnCurrent: "Hiện tại",
+  ssnArchived: "Đã lưu trữ",
+  ssnWindowLine: "Khung mùa giải {start} → {end}",
+  ssnLeadLine:
+    "Tập nghiên cứu của mùa giải này chứa {count} dòng đủ điều kiện trên {fixtures} trận.",
+  ssnTeamsTitle: "Đội tham gia",
+  ssnTeamsEmpty: "Đội chỉ xuất hiện khi có mặt trong các trận đủ điều kiện của mùa giải này.",
+  ssnTeamsCountLine: "{n} đội tham gia",
+  ssnUpcomingRowsLine: "{n} dòng sắp tới",
+  ssnCompletedRowsLine: "{n} dòng đã hoàn tất",
+  ssnHomeAwayLine: "{home} dòng sân nhà · {away} dòng sân khách",
+  ssnEnrichmentAbsent:
+    "Tỷ lệ bàn thắng và xG cấp mùa giải chỉ hiển thị khi có dữ liệu chi tiết trận đấu — trang này không bịa ra chúng.",
+  ssnDetailTitle: "Chi tiết mùa giải",
+  ssnOperatorsTitle: "Nhà điều hành khả dụng",
+  ssnOperatorsEmpty:
+    "Không có nhà điều hành liên kết đang hoạt động cho quốc gia khách truy cập được xác định.",
 
 });
 
@@ -1260,6 +1512,52 @@ export const id = mergePredictions({
   mktIndicatorUsed: "dipakai dalam riset",
   mktIndicatorConceptual: "konseptual",
 
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "Kompetisi riset",
+  cmpIndexTitle: "Kompetisi",
+  cmpIndexLede:
+    "Kompetisi sebagai simpul riset — pertandingan terkualifikasi, pasar, operator, dan odds yang tercatat. Struktur riset, tidak pernah tips.",
+  cmpLeadLine:
+    "Cakupan hari ini terkonsentrasi di {market}: {count} dari {total} baris terkualifikasi ({pct}%).",
+  cmpQualifiedRowsLine: "{n} baris pasar terkualifikasi dalam set riset saat ini",
+  cmpUniqueFixturesLine: "{n} pertandingan unik",
+  cmpMarketRow: "{market} — {count} dari {total} ({pct}%)",
+  cmpUpcomingTitle: "Pertandingan terkualifikasi mendatang",
+  cmpUpcomingEmpty:
+    "Tidak ada pertandingan terkualifikasi mendatang yang cocok dengan kompetisi ini dalam set riset saat ini.",
+  cmpRecentTitle: "Baris dengan sinyal terkuat",
+  cmpRecentNote: "Baris terkualifikasi terkuat dari set riset saat ini — entri riset, bukan hasil.",
+  cmpRecentEmpty:
+    "Tidak ada pertandingan yang dianalisis cocok dengan kompetisi ini dalam set riset saat ini.",
+  cmpDetailTitle: "Detail kompetisi",
+  cmpSeasonsTitle: "Musim",
+  cmpSeasonCurrent: "berjalan",
+  cmpMarketActivityTitle: "Aktivitas pasar dalam sampel",
+  cmpMarketActivityEmpty: "Baris pasar muncul saat pertandingan terkualifikasi cocok dengan kompetisi ini.",
+  cmpRowsProviderMeta: "{n} baris · rata-rata penyedia {pct}%",
+  cmpRelatedCompetitions: "Kompetisi terkait",
+  cmpRelatedTeams: "Tim terkait",
+  cmpRelatedTeamsNote:
+    "Ditautkan bila entitas tim kanonik ada; jika tidak, ditampilkan sebagai label riset.",
+  cmpMethodologyLink: "Metodologi dan bukti",
+  ssnEyebrow: "Riset musim",
+  ssnCurrent: "Berjalan",
+  ssnArchived: "Diarsipkan",
+  ssnWindowLine: "Jendela musim {start} → {end}",
+  ssnLeadLine:
+    "Set riset musim ini memuat {count} baris terkualifikasi di {fixtures} pertandingan.",
+  ssnTeamsTitle: "Tim peserta",
+  ssnTeamsEmpty: "Tim hanya muncul bila hadir dalam pertandingan terkualifikasi musim ini.",
+  ssnTeamsCountLine: "{n} tim peserta",
+  ssnUpcomingRowsLine: "{n} baris mendatang",
+  ssnCompletedRowsLine: "{n} baris selesai",
+  ssnHomeAwayLine: "{home} baris kandang · {away} baris tandang",
+  ssnEnrichmentAbsent:
+    "Tingkat gol dan xG level musim hanya tampil bila pengayaan detail pertandingan ada — halaman ini tidak mengarangnya.",
+  ssnDetailTitle: "Detail musim",
+  ssnOperatorsTitle: "Operator tersedia",
+  ssnOperatorsEmpty: "Tidak ada operator afiliasi aktif untuk negara pengunjung yang ditetapkan.",
+
 });
 
 export const zh = mergePredictions({
@@ -1430,6 +1728,45 @@ export const zh = mergePredictions({
   mktIndicatorUsed: "用于研究",
   mktIndicatorConceptual: "概念性",
 
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "研究赛事",
+  cmpIndexTitle: "赛事",
+  cmpIndexLede: "赛事作为研究枢纽 — 合格比赛、市场、运营商与已记录赔率。研究结构,绝非贴士。",
+  cmpLeadLine: "今日覆盖集中于{market}:{total}条合格行中的{count}条({pct}%)。",
+  cmpQualifiedRowsLine: "当前研究集中有{n}条合格市场行",
+  cmpUniqueFixturesLine: "{n}场独立比赛",
+  cmpMarketRow: "{market} — {total}中的{count}({pct}%)",
+  cmpUpcomingTitle: "即将进行的合格比赛",
+  cmpUpcomingEmpty: "当前研究集中没有与该赛事匹配的即将进行的合格比赛。",
+  cmpRecentTitle: "信号最强的行",
+  cmpRecentNote: "当前研究集中最强的合格行 — 研究条目,不是结果。",
+  cmpRecentEmpty: "当前研究集中没有与该赛事匹配的已分析比赛。",
+  cmpDetailTitle: "赛事详情",
+  cmpSeasonsTitle: "赛季",
+  cmpSeasonCurrent: "当前",
+  cmpMarketActivityTitle: "样本中的市场活动",
+  cmpMarketActivityEmpty: "当合格比赛与该赛事匹配时,市场行才会出现。",
+  cmpRowsProviderMeta: "{n}行 · 供应方平均{pct}%",
+  cmpRelatedCompetitions: "相关赛事",
+  cmpRelatedTeams: "相关球队",
+  cmpRelatedTeamsNote: "存在标准球队实体时提供链接;否则显示为研究标签。",
+  cmpMethodologyLink: "方法论与证据",
+  ssnEyebrow: "赛季研究",
+  ssnCurrent: "当前",
+  ssnArchived: "已归档",
+  ssnWindowLine: "赛季窗口 {start} → {end}",
+  ssnLeadLine: "本赛季研究集包含{fixtures}场比赛中的{count}条合格行。",
+  ssnTeamsTitle: "参赛球队",
+  ssnTeamsEmpty: "球队仅在出现于本赛季合格比赛中时显示。",
+  ssnTeamsCountLine: "{n}支参赛球队",
+  ssnUpcomingRowsLine: "{n}条即将进行的行",
+  ssnCompletedRowsLine: "{n}条已完成的行",
+  ssnHomeAwayLine: "{home}条主场行 · {away}条客场行",
+  ssnEnrichmentAbsent: "赛季级进球与xG比率仅在存在比赛详情补充数据时显示 — 本页不会编造它们。",
+  ssnDetailTitle: "赛季详情",
+  ssnOperatorsTitle: "可用运营商",
+  ssnOperatorsEmpty: "判定的访客国家没有有效的联盟运营商。",
+
 });
 
 export const bn = mergePredictions({
@@ -1546,6 +1883,48 @@ export const bn = mergePredictions({
   mktIndicatorsNote: "এই বাজারের মেট্রিক সংজ্ঞা — লাইভ মান নয়, নিশ্চয়তার স্কোরও নয়।",
   mktIndicatorUsed: "গবেষণায় ব্যবহৃত",
   mktIndicatorConceptual: "ধারণাগত",
+
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "গবেষণা প্রতিযোগিতা",
+  cmpIndexTitle: "প্রতিযোগিতা",
+  cmpIndexLede:
+    "গবেষণা কেন্দ্র হিসেবে প্রতিযোগিতা — যোগ্য ম্যাচ, বাজার, অপারেটর ও নথিভুক্ত অডস। গবেষণার কাঠামো, কখনও টিপস নয়।",
+  cmpLeadLine:
+    "আজকের কভারেজ {market}-এ কেন্দ্রীভূত: {total}টি যোগ্য সারির মধ্যে {count}টি ({pct}%)।",
+  cmpQualifiedRowsLine: "বর্তমান গবেষণা সেটে {n}টি যোগ্য বাজার সারি",
+  cmpUniqueFixturesLine: "{n}টি অনন্য ম্যাচ",
+  cmpMarketRow: "{market} — {total}-এর মধ্যে {count} ({pct}%)",
+  cmpUpcomingTitle: "আসন্ন যোগ্য ম্যাচ",
+  cmpUpcomingEmpty: "বর্তমান গবেষণা সেটে এই প্রতিযোগিতার সাথে মেলে এমন কোনও আসন্ন যোগ্য ম্যাচ নেই।",
+  cmpRecentTitle: "সবচেয়ে শক্তিশালী সংকেতের সারি",
+  cmpRecentNote: "বর্তমান গবেষণা সেটের সবচেয়ে শক্তিশালী যোগ্য সারি — গবেষণা এন্ট্রি, ফলাফল নয়।",
+  cmpRecentEmpty: "বর্তমান গবেষণা সেটে এই প্রতিযোগিতার সাথে মেলে এমন কোনও বিশ্লেষিত ম্যাচ নেই।",
+  cmpDetailTitle: "প্রতিযোগিতার বিবরণ",
+  cmpSeasonsTitle: "মৌসুম",
+  cmpSeasonCurrent: "বর্তমান",
+  cmpMarketActivityTitle: "নমুনায় বাজার কার্যকলাপ",
+  cmpMarketActivityEmpty: "যোগ্য ম্যাচ এই প্রতিযোগিতার সাথে মিললে বাজার সারি দেখা যায়।",
+  cmpRowsProviderMeta: "{n}টি সারি · সরবরাহকারীর গড় {pct}%",
+  cmpRelatedCompetitions: "সম্পর্কিত প্রতিযোগিতা",
+  cmpRelatedTeams: "সম্পর্কিত দল",
+  cmpRelatedTeamsNote: "কানোনিকাল দল-সত্তা থাকলে লিঙ্ক করা হয়; নাহলে গবেষণা লেবেল হিসেবে দেখানো হয়।",
+  cmpMethodologyLink: "পদ্ধতি ও প্রমাণ",
+  ssnEyebrow: "মৌসুম গবেষণা",
+  ssnCurrent: "বর্তমান",
+  ssnArchived: "সংরক্ষিত",
+  ssnWindowLine: "মৌসুমের সময়সীমা {start} → {end}",
+  ssnLeadLine: "এই মৌসুমের গবেষণা সেটে {fixtures}টি ম্যাচ জুড়ে {count}টি যোগ্য সারি আছে।",
+  ssnTeamsTitle: "অংশগ্রহণকারী দল",
+  ssnTeamsEmpty: "দল কেবল তখনই দেখা যায় যখন তারা এই মৌসুমের যোগ্য ম্যাচে থাকে।",
+  ssnTeamsCountLine: "{n}টি অংশগ্রহণকারী দল",
+  ssnUpcomingRowsLine: "{n}টি আসন্ন সারি",
+  ssnCompletedRowsLine: "{n}টি সম্পন্ন সারি",
+  ssnHomeAwayLine: "{home}টি হোম সারি · {away}টি অ্যাওয়ে সারি",
+  ssnEnrichmentAbsent:
+    "মৌসুম-স্তরের গোল ও xG হার কেবল ম্যাচ-বিবরণ সমৃদ্ধি থাকলে দেখা যায় — এই পাতা সেগুলি বানায় না।",
+  ssnDetailTitle: "মৌসুমের বিবরণ",
+  ssnOperatorsTitle: "উপলব্ধ অপারেটর",
+  ssnOperatorsEmpty: "নির্ধারিত দর্শকের দেশের জন্য কোনও সক্রিয় অ্যাফিলিয়েট অপারেটর নেই।",
 
 });
 
@@ -1668,6 +2047,52 @@ export const ta = mergePredictions({
   mktIndicatorUsed: "ஆய்வில் பயன்பாட்டில்",
   mktIndicatorConceptual: "கருத்தியல்",
 
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "ஆய்வுப் போட்டித் தொடர்கள்",
+  cmpIndexTitle: "போட்டித் தொடர்கள்",
+  cmpIndexLede:
+    "ஆய்வு மையங்களாகப் போட்டித் தொடர்கள் — தகுதியான ஆட்டங்கள், சந்தைகள், இயக்குநர்கள், பதிவான விகிதங்கள். ஆய்வுக் கட்டமைப்பு, ஒருபோதும் டிப்ஸ் அல்ல.",
+  cmpLeadLine:
+    "இன்றைய கவரேஜ் {market}-இல் குவிந்துள்ளது: தகுதியான {total} வரிசைகளில் {count} ({pct}%).",
+  cmpQualifiedRowsLine: "தற்போதைய ஆய்வுத் தொகுப்பில் {n} தகுதியான சந்தை வரிசைகள்",
+  cmpUniqueFixturesLine: "{n} தனித்த ஆட்டங்கள்",
+  cmpMarketRow: "{market} — {total}-இல் {count} ({pct}%)",
+  cmpUpcomingTitle: "வரவிருக்கும் தகுதியான ஆட்டங்கள்",
+  cmpUpcomingEmpty:
+    "தற்போதைய ஆய்வுத் தொகுப்பில் இந்தத் தொடருக்குப் பொருந்தும் வரவிருக்கும் தகுதியான ஆட்டங்கள் இல்லை.",
+  cmpRecentTitle: "வலுவான சமிக்ஞை வரிசைகள்",
+  cmpRecentNote:
+    "தற்போதைய ஆய்வுத் தொகுப்பின் மிக வலுவான தகுதியான வரிசைகள் — ஆய்வுப் பதிவுகள், முடிவுகள் அல்ல.",
+  cmpRecentEmpty:
+    "தற்போதைய ஆய்வுத் தொகுப்பில் இந்தத் தொடருக்குப் பொருந்தும் பகுப்பாய்ந்த ஆட்டங்கள் இல்லை.",
+  cmpDetailTitle: "தொடர் விவரம்",
+  cmpSeasonsTitle: "சீசன்கள்",
+  cmpSeasonCurrent: "நடப்பு",
+  cmpMarketActivityTitle: "மாதிரியில் சந்தை செயல்பாடு",
+  cmpMarketActivityEmpty: "தகுதியான ஆட்டங்கள் இந்தத் தொடருக்குப் பொருந்தும்போது சந்தை வரிசைகள் தோன்றும்.",
+  cmpRowsProviderMeta: "{n} வரிசைகள் · வழங்குநர் சராசரி {pct}%",
+  cmpRelatedCompetitions: "தொடர்புடைய தொடர்கள்",
+  cmpRelatedTeams: "தொடர்புடைய அணிகள்",
+  cmpRelatedTeamsNote: "நியமன அணி இருப்பின் இணைக்கப்படும்; இல்லையேல் ஆய்வு அடையாளங்களாகக் காட்டப்படும்.",
+  cmpMethodologyLink: "முறையியல் மற்றும் சான்று",
+  ssnEyebrow: "சீசன் ஆய்வு",
+  ssnCurrent: "நடப்பு",
+  ssnArchived: "காப்பகப்படுத்தப்பட்டது",
+  ssnWindowLine: "சீசன் காலம் {start} → {end}",
+  ssnLeadLine:
+    "இந்தச் சீசனின் ஆய்வுத் தொகுப்பில் {fixtures} ஆட்டங்களில் {count} தகுதியான வரிசைகள் உள்ளன.",
+  ssnTeamsTitle: "பங்கேற்கும் அணிகள்",
+  ssnTeamsEmpty: "இந்தச் சீசனின் தகுதியான ஆட்டங்களில் இருந்தால் மட்டுமே அணிகள் தோன்றும்.",
+  ssnTeamsCountLine: "{n} பங்கேற்கும் அணிகள்",
+  ssnUpcomingRowsLine: "{n} வரவிருக்கும் வரிசைகள்",
+  ssnCompletedRowsLine: "{n} முடிந்த வரிசைகள்",
+  ssnHomeAwayLine: "{home} சொந்த வரிசைகள் · {away} வெளி வரிசைகள்",
+  ssnEnrichmentAbsent:
+    "சீசன் அளவிலான கோல் மற்றும் xG விகிதங்கள் ஆட்ட விவர வளமாக்கம் இருந்தால் மட்டுமே தோன்றும் — இந்தப் பக்கம் அவற்றை உருவாக்காது.",
+  ssnDetailTitle: "சீசன் விவரம்",
+  ssnOperatorsTitle: "கிடைக்கும் இயக்குநர்கள்",
+  ssnOperatorsEmpty: "தீர்மானிக்கப்பட்ட பார்வையாளர் நாட்டிற்கு செயலில் உள்ள கூட்டு இயக்குநர்கள் இல்லை.",
+
 });
 
 export const te = mergePredictions({
@@ -1785,6 +2210,48 @@ export const te = mergePredictions({
   mktIndicatorUsed: "పరిశోధనలో వాడుకలో",
   mktIndicatorConceptual: "సైద్ధాంతిక",
 
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "పరిశోధన పోటీలు",
+  cmpIndexTitle: "పోటీలు",
+  cmpIndexLede:
+    "పరిశోధన కేంద్రాలుగా పోటీలు — అర్హత మ్యాచ్‌లు, మార్కెట్లు, ఆపరేటర్లు, నమోదైన ఆడ్స్. పరిశోధన నిర్మాణం, ఎప్పుడూ టిప్స్ కాదు.",
+  cmpLeadLine: "నేటి కవరేజీ {market}లో కేంద్రీకృతమైంది: అర్హత {total} వరుసలలో {count} ({pct}%).",
+  cmpQualifiedRowsLine: "ప్రస్తుత పరిశోధన సెట్‌లో {n} అర్హత మార్కెట్ వరుసలు",
+  cmpUniqueFixturesLine: "{n} ప్రత్యేక మ్యాచ్‌లు",
+  cmpMarketRow: "{market} — {total}లో {count} ({pct}%)",
+  cmpUpcomingTitle: "రాబోయే అర్హత మ్యాచ్‌లు",
+  cmpUpcomingEmpty: "ప్రస్తుత పరిశోధన సెట్‌లో ఈ పోటీకి సరిపోలే రాబోయే అర్హత మ్యాచ్‌లు లేవు.",
+  cmpRecentTitle: "అత్యంత బలమైన సంకేత వరుసలు",
+  cmpRecentNote:
+    "ప్రస్తుత పరిశోధన సెట్ నుండి అత్యంత బలమైన అర్హత వరుసలు — పరిశోధన నమోదులు, ఫలితాలు కావు.",
+  cmpRecentEmpty: "ప్రస్తుత పరిశోధన సెట్‌లో ఈ పోటీకి సరిపోలే విశ్లేషించిన మ్యాచ్‌లు లేవు.",
+  cmpDetailTitle: "పోటీ వివరాలు",
+  cmpSeasonsTitle: "సీజన్లు",
+  cmpSeasonCurrent: "ప్రస్తుత",
+  cmpMarketActivityTitle: "నమూనాలో మార్కెట్ కార్యకలాపం",
+  cmpMarketActivityEmpty: "అర్హత మ్యాచ్‌లు ఈ పోటీకి సరిపోలినప్పుడు మార్కెట్ వరుసలు కనిపిస్తాయి.",
+  cmpRowsProviderMeta: "{n} వరుసలు · ప్రొవైడర్ సగటు {pct}%",
+  cmpRelatedCompetitions: "సంబంధిత పోటీలు",
+  cmpRelatedTeams: "సంబంధిత జట్లు",
+  cmpRelatedTeamsNote: "కానానికల్ జట్టు ఉంటే లింక్ చేయబడతాయి; లేకపోతే పరిశోధన లేబుళ్లుగా చూపబడతాయి.",
+  cmpMethodologyLink: "పద్ధతి మరియు ఆధారం",
+  ssnEyebrow: "సీజన్ పరిశోధన",
+  ssnCurrent: "ప్రస్తుత",
+  ssnArchived: "ఆర్కైవ్ చేయబడింది",
+  ssnWindowLine: "సీజన్ కాలం {start} → {end}",
+  ssnLeadLine: "ఈ సీజన్ పరిశోధన సెట్‌లో {fixtures} మ్యాచ్‌లలో {count} అర్హత వరుసలు ఉన్నాయి.",
+  ssnTeamsTitle: "పాల్గొనే జట్లు",
+  ssnTeamsEmpty: "ఈ సీజన్ అర్హత మ్యాచ్‌లలో ఉన్నప్పుడే జట్లు కనిపిస్తాయి.",
+  ssnTeamsCountLine: "{n} పాల్గొనే జట్లు",
+  ssnUpcomingRowsLine: "{n} రాబోయే వరుసలు",
+  ssnCompletedRowsLine: "{n} పూర్తయిన వరుసలు",
+  ssnHomeAwayLine: "{home} స్వస్థల వరుసలు · {away} బయటి వరుసలు",
+  ssnEnrichmentAbsent:
+    "సీజన్-స్థాయి గోల్ మరియు xG రేట్లు మ్యాచ్ వివరాల సుసంపన్నత ఉన్నప్పుడే కనిపిస్తాయి — ఈ పేజీ వాటిని కల్పించదు.",
+  ssnDetailTitle: "సీజన్ వివరాలు",
+  ssnOperatorsTitle: "అందుబాటులో ఉన్న ఆపరేటర్లు",
+  ssnOperatorsEmpty: "నిర్ధారించిన సందర్శకుల దేశానికి క్రియాశీల అనుబంధ ఆపరేటర్లు లేరు.",
+
 });
 
 export const mr = mergePredictions({
@@ -1901,6 +2368,48 @@ export const mr = mergePredictions({
   mktIndicatorsNote: "या बाजाराच्या मेट्रिक व्याख्या — थेट मूल्ये नाहीत, खात्रीचे गुणही नाहीत.",
   mktIndicatorUsed: "संशोधनात वापरात",
   mktIndicatorConceptual: "संकल्पनात्मक",
+
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "संशोधन स्पर्धा",
+  cmpIndexTitle: "स्पर्धा",
+  cmpIndexLede:
+    "संशोधन केंद्रे म्हणून स्पर्धा — पात्र सामने, बाजार, ऑपरेटर आणि नोंदवलेले ऑड्स. संशोधन रचना, कधीही टिप्स नाहीत.",
+  cmpLeadLine: "आजचे कव्हरेज {market}मध्ये एकवटले आहे: पात्र {total} ओळींपैकी {count} ({pct}%).",
+  cmpQualifiedRowsLine: "सध्याच्या संशोधन संचात {n} पात्र बाजार ओळी",
+  cmpUniqueFixturesLine: "{n} वेगळे सामने",
+  cmpMarketRow: "{market} — {total}पैकी {count} ({pct}%)",
+  cmpUpcomingTitle: "आगामी पात्र सामने",
+  cmpUpcomingEmpty: "सध्याच्या संशोधन संचात या स्पर्धेशी जुळणारे आगामी पात्र सामने नाहीत.",
+  cmpRecentTitle: "सर्वात मजबूत संकेताच्या ओळी",
+  cmpRecentNote: "सध्याच्या संशोधन संचातील सर्वात मजबूत पात्र ओळी — संशोधन नोंदी, निकाल नाहीत.",
+  cmpRecentEmpty: "सध्याच्या संशोधन संचात या स्पर्धेशी जुळणारे विश्लेषित सामने नाहीत.",
+  cmpDetailTitle: "स्पर्धेचा तपशील",
+  cmpSeasonsTitle: "हंगाम",
+  cmpSeasonCurrent: "चालू",
+  cmpMarketActivityTitle: "नमुन्यातील बाजार क्रिया",
+  cmpMarketActivityEmpty: "पात्र सामने या स्पर्धेशी जुळल्यावर बाजार ओळी दिसतात.",
+  cmpRowsProviderMeta: "{n} ओळी · पुरवठादार सरासरी {pct}%",
+  cmpRelatedCompetitions: "संबंधित स्पर्धा",
+  cmpRelatedTeams: "संबंधित संघ",
+  cmpRelatedTeamsNote:
+    "कॅनॉनिकल संघ अस्तित्वात असल्यास दुवा दिला जातो; अन्यथा संशोधन लेबल म्हणून दाखवले जाते.",
+  cmpMethodologyLink: "कार्यपद्धती आणि पुरावा",
+  ssnEyebrow: "हंगाम संशोधन",
+  ssnCurrent: "चालू",
+  ssnArchived: "संग्रहित",
+  ssnWindowLine: "हंगाम कालावधी {start} → {end}",
+  ssnLeadLine: "या हंगामाच्या संशोधन संचात {fixtures} सामन्यांमध्ये {count} पात्र ओळी आहेत.",
+  ssnTeamsTitle: "सहभागी संघ",
+  ssnTeamsEmpty: "संघ केवळ या हंगामाच्या पात्र सामन्यांत असल्यासच दिसतात.",
+  ssnTeamsCountLine: "{n} सहभागी संघ",
+  ssnUpcomingRowsLine: "{n} आगामी ओळी",
+  ssnCompletedRowsLine: "{n} पूर्ण ओळी",
+  ssnHomeAwayLine: "{home} घरच्या ओळी · {away} बाहेरच्या ओळी",
+  ssnEnrichmentAbsent:
+    "हंगाम-स्तरीय गोल आणि xG दर सामना-तपशील समृद्धी असल्यासच दिसतात — हे पान ते रचत नाही.",
+  ssnDetailTitle: "हंगामाचा तपशील",
+  ssnOperatorsTitle: "उपलब्ध ऑपरेटर",
+  ssnOperatorsEmpty: "निर्धारित अभ्यागत देशासाठी सक्रिय संलग्न ऑपरेटर नाहीत.",
 
 });
 
@@ -2088,5 +2597,51 @@ export const sw = mergePredictions({
     "Fasili za vipimo vya soko hili — si thamani za moja kwa moja, si alama za uhakika.",
   mktIndicatorUsed: "inatumika katika utafiti",
   mktIndicatorConceptual: "dhana",
+
+  /* Competition + season pages — form-guide conversion (cmp / ssn keys). */
+  cmpIndexEyebrow: "Mashindano ya utafiti",
+  cmpIndexTitle: "Mashindano",
+  cmpIndexLede:
+    "Mashindano kama vituo vya utafiti — mechi zilizofuzu, masoko, waendeshaji na odds zilizorekodiwa. Muundo wa utafiti, kamwe si dokezo.",
+  cmpLeadLine:
+    "Ufikiaji wa leo umejikita kwenye {market}: safu {count} kati ya {total} zilizofuzu ({pct}%).",
+  cmpQualifiedRowsLine: "Safu {n} za soko zilizofuzu katika seti ya utafiti ya sasa",
+  cmpUniqueFixturesLine: "Mechi {n} za kipekee",
+  cmpMarketRow: "{market} — {count} kati ya {total} ({pct}%)",
+  cmpUpcomingTitle: "Mechi zijazo zilizofuzu",
+  cmpUpcomingEmpty:
+    "Hakuna mechi zijazo zilizofuzu zinazolingana na shindano hili katika seti ya utafiti ya sasa.",
+  cmpRecentTitle: "Safu zenye ishara kali zaidi",
+  cmpRecentNote:
+    "Safu zilizofuzu zenye nguvu zaidi kutoka seti ya utafiti ya sasa — maingizo ya utafiti, si matokeo.",
+  cmpRecentEmpty:
+    "Hakuna mechi zilizochambuliwa zinazolingana na shindano hili katika seti ya utafiti ya sasa.",
+  cmpDetailTitle: "Maelezo ya shindano",
+  cmpSeasonsTitle: "Misimu",
+  cmpSeasonCurrent: "wa sasa",
+  cmpMarketActivityTitle: "Shughuli za soko katika sampuli",
+  cmpMarketActivityEmpty: "Safu za soko huonekana wakati mechi zilizofuzu zinalingana na shindano hili.",
+  cmpRowsProviderMeta: "Safu {n} · wastani wa mtoa huduma {pct}%",
+  cmpRelatedCompetitions: "Mashindano yanayohusiana",
+  cmpRelatedTeams: "Timu zinazohusiana",
+  cmpRelatedTeamsNote: "Huunganishwa pale kuna timu rasmi; vinginevyo huonyeshwa kama lebo za utafiti.",
+  cmpMethodologyLink: "Mbinu na ushahidi",
+  ssnEyebrow: "Utafiti wa msimu",
+  ssnCurrent: "Wa sasa",
+  ssnArchived: "Umehifadhiwa",
+  ssnWindowLine: "Dirisha la msimu {start} → {end}",
+  ssnLeadLine:
+    "Seti ya utafiti ya msimu huu ina safu {count} zilizofuzu katika mechi {fixtures}.",
+  ssnTeamsTitle: "Timu zinazoshiriki",
+  ssnTeamsEmpty: "Timu huonekana tu zinapokuwepo katika mechi zilizofuzu za msimu huu.",
+  ssnTeamsCountLine: "Timu {n} zinazoshiriki",
+  ssnUpcomingRowsLine: "Safu {n} zijazo",
+  ssnCompletedRowsLine: "Safu {n} zilizokamilika",
+  ssnHomeAwayLine: "Safu {home} za nyumbani · safu {away} za ugenini",
+  ssnEnrichmentAbsent:
+    "Viwango vya mabao na xG vya ngazi ya msimu huonekana tu pale uboreshaji wa maelezo ya mechi upo — ukurasa huu hauvibuni.",
+  ssnDetailTitle: "Maelezo ya msimu",
+  ssnOperatorsTitle: "Waendeshaji waliopo",
+  ssnOperatorsEmpty: "Hakuna waendeshaji washirika hai kwa nchi ya mgeni iliyobainika.",
 
 });
