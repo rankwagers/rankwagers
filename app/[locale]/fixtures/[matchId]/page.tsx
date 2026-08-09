@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { EvidenceHistorySection } from "@/components/evidence/EvidenceHistorySection";
+import { FixtureOperatorsSection } from "@/components/fixtures/FixtureOperatorsSection";
 import { MatchDetailView } from "@/components/fixtures/MatchDetailView";
+import { getEvidenceHistoryView } from "@/lib/archive/evidence";
+import { getDictionary } from "@/lib/dictionaries";
 import { loadMatchPageBundle } from "@/lib/fixtures/loadMatchPage.server";
 import { parseFixtureMatchId } from "@/lib/fixtures/paths";
 import { locales, type Locale } from "@/lib/i18n";
@@ -111,14 +114,22 @@ export default async function FixtureMatchPage({
       availability: resolveOperatorAvailability(operator, countryContext.country),
     }));
 
+  /*
+   * One archive read serves two levels: L3's provenance line takes the latest snapshot, the
+   * history section (L4's tail) takes the whole view. Reading twice would be two chances for
+   * the two to disagree about the same archive.
+   */
+  const dict = getDictionary(params.locale);
+  const evidenceHistory = await getEvidenceHistoryView(matchId, { locale: params.locale });
+
   return (
     <>
       <MatchDetailView
         locale={params.locale}
         bundle={bundle}
         source={searchParams?.source ?? null}
-        operators={operators}
-        visitorCountry={countryContext.country}
+        latestSnapshot={evidenceHistory.latest}
+        p={dict.predictions}
       />
       {/*
         Sprint 23 — Evidence History. Rendered as a sibling of the match view rather than
@@ -131,6 +142,20 @@ export default async function FixtureMatchPage({
           fixtureId={matchId}
           locale={params.locale}
           fixtureName={`${bundle.model.header.homeTeam} vs ${bundle.model.header.awayTeam}`}
+          view={evidenceHistory}
+        />
+        {/*
+          L5 — OPERATORS, LAST. Below every content level including the evidence archive:
+          the separation between research and commerce is a property of the layout.
+        */}
+        <FixtureOperatorsSection
+          locale={params.locale}
+          signedOffers={bundle.signedOffers}
+          operators={operators}
+          visitorCountry={countryContext.country}
+          matchId={matchId}
+          focusMarket={bundle.focusMarket ?? null}
+          p={dict.predictions}
         />
       </div>
     </>

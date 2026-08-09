@@ -4,14 +4,16 @@ import type { ReactNode } from "react";
 import { JsonLd } from "@/components/JsonLd";
 import { LiveMatchSection } from "@/components/live/LiveMatchSection";
 import type { Locale } from "@/lib/i18n";
-import type { OperatorCountryAvailability, Operator } from "@/lib/operators/types";
-import { OperatorEvidenceCardList } from "@/components/operators/OperatorEvidenceCard";
-import { buildOperatorEvidenceCards, recommendableCards } from "@/lib/operators/evidenceCard";
 import type { MatchPageBundle } from "@/lib/fixtures/loadMatchPage.server";
+import type { PredictionStrings } from "@/lib/translations/predictionsEn";
+import type { EvidenceSnapshotView } from "@/types/evidence";
 import { matchBreadcrumbLd, matchSportsEventLd } from "@/lib/fixtures/schema";
 import { buildFixtureEvidenceView } from "@/lib/fixtures/evidenceView";
+import { scoreFixtureSignals } from "@/lib/fixtureSignals";
+import { FixtureModelWhy } from "./FixtureModelWhy";
 import { FixtureResearchSection } from "./FixtureResearchSection";
 import { FixtureRecordSection } from "./FixtureRecordSection";
+import { FixtureSignalLevels } from "./FixtureSignalLevels";
 import { MatchDetailTracker } from "./MatchDetailTracker";
 import { MatchLiveRefresh } from "./MatchLiveRefresh";
 import { MatchPredictionsPanel } from "./MatchPredictionsPanel";
@@ -38,16 +40,17 @@ export function MatchDetailView({
   locale,
   bundle,
   source,
-  operators,
-  visitorCountry,
+  latestSnapshot,
+  p,
 }: {
   locale: Locale;
   bundle: MatchPageBundle;
   source: string | null;
-  operators: ReadonlyArray<{ operator: Operator; availability: OperatorCountryAvailability }>;
-  visitorCountry: string;
+  /** The newest archived evidence snapshot for this fixture, or null — L3's provenance line. */
+  latestSnapshot: EvidenceSnapshotView | null;
+  p: PredictionStrings;
 }) {
-  const { model, signedOffers, focusMarket, detail } = bundle;
+  const { model, focusMarket, detail } = bundle;
   const { header } = model;
   const description = `${header.homeTeam} vs ${header.awayTeam} — evidence, live context, and transparent prediction settlement on RankWagers.`;
   const sportsEvent = matchSportsEventLd({ locale, header, description });
@@ -64,6 +67,27 @@ export function MatchDetailView({
       : null;
 
   const evidence = buildFixtureEvidenceView(detail);
+
+  /*
+   * THE FIVE LEVELS. Signals are scored once, here, and split by level — L1/L2 render the ranked
+   * findings, L3 reconciles them with the model, L4 carries everything else, and no sentence
+   * appears at two levels. The provider potential for the page's market feeds L3's numeral.
+   */
+  const signalReport = scoreFixtureSignals({
+    homeAtHome: detail?.homeAtHome,
+    awayAtAway: detail?.awayAtAway,
+    leagueSeason: detail?.leagueSeason,
+    history: detail?.history,
+  });
+  const teams = { home: header.homeTeam, away: header.awayTeam };
+  const focusPrediction =
+    model.predictions.find((row) => row.marketKey === focusMarket && row.confidence != null) ??
+    model.predictions.find((row) => row.confidence != null) ??
+    null;
+  const potential =
+    focusPrediction && focusPrediction.confidence != null
+      ? { pct: Math.round(focusPrediction.confidence), marketLabel: focusPrediction.marketLabel }
+      : null;
 
   return (
     <div className="rw-hero container-wide bg-[var(--hero-canvas)] pb-24">
@@ -114,6 +138,10 @@ export function MatchDetailView({
       </nav>
 
       <header className="border-b border-[var(--hero-line)] pb-10">
+        {/* The document's one h1 — the heading order below it walks the five levels. */}
+        <h1 className="sr-only">
+          {header.homeTeam} vs {header.awayTeam}
+        </h1>
         {/*
           The eyebrow renders only when there is something to put in it. It previously printed an
           empty line whenever `competition` was blank or the provider's "—" placeholder, which is
@@ -206,13 +234,41 @@ export function MatchDetailView({
       </header>
 
       {/*
-        THE GRID. Research used to sit inside the narrow left column beside a sticky operator rail
-        that runs out of content halfway down, so the page's centre was squeezed against a wide
-        blank while "Why" — the thing the page exists for — wrapped at ~62ch inside it. The
-        research section now spans the full measure, and the two-column grid starts below it where
-        a supporting rail has something to sit alongside.
+        L1 + L2 — THE LEAD FINDING AND ITS SUPPORTS. Omitted whole when nothing clears the bar:
+        the reader meets the strongest real signal first, or meets the model directly.
       */}
-      <div className="mt-16 lg:mt-24">
+      <div className="mt-14 lg:mt-20">
+        <FixtureSignalLevels report={signalReport} teams={teams} p={p} />
+      </div>
+
+      {/*
+        L3 — THE MODEL'S VIEW AND WHY. The potential for the page's market, the model's scored
+        signals, one honest reconciliation sentence, and the archive's provenance line.
+      */}
+      <div className="mt-16 border-t border-[var(--hero-line)] pt-14 lg:mt-24">
+        <FixtureModelWhy
+          view={evidence}
+          potential={potential}
+          lead={signalReport.lead}
+          latest={latestSnapshot}
+          teams={teams}
+          p={p}
+        />
+      </div>
+
+      {/*
+        L4 — SCANNABLE DETAIL. Everything else, dense on purpose, one column at the full
+        measure: the market/venue table, live context, events, statistics, the published
+        record, the timeline. A reader here chose to go deep.
+      */}
+      <div className="mt-16 border-t border-[var(--hero-line)] pt-14 lg:mt-24">
+        <h2 className="rw-m text-[var(--hero-ink-2)]">{p.fxDetailTitle}</h2>
+        <p className="mt-1.5 max-w-[52ch] text-[13px] leading-relaxed text-[var(--hero-ink-2)]">
+          {p.fxDetailDescription}
+        </p>
+      </div>
+
+      <div className="mt-10">
         <FixtureResearchSection
           view={evidence}
           homeTeam={header.homeTeam}
@@ -220,7 +276,7 @@ export function MatchDetailView({
         />
       </div>
 
-      <div className="mt-20 grid gap-x-12 gap-y-16 lg:mt-28 lg:grid-cols-[minmax(0,1fr)_320px]">
+      <div className="mt-16">
         <div className="space-y-20">
           {/*
             Sprint 22 — Live Match Intelligence. Renders itself only for in-play fixtures and
@@ -232,12 +288,12 @@ export function MatchDetailView({
 
 
           <section aria-labelledby="events-heading">
-            <h2
+            <h3
               id="events-heading"
               className="rw-display text-[22px] text-[var(--hero-ink)] sm:text-[26px]"
             >
               Key match events
-            </h2>
+            </h3>
             <SectionState
               availability={model.sections.events.availability}
               message={model.sections.events.message}
@@ -269,12 +325,12 @@ export function MatchDetailView({
               not price or recommend, then labelled a section by its usefulness for betting —
               the one framing the rest of the page spends its length refusing.
             */}
-            <h2
+            <h3
               id="stats-heading"
               className="rw-display text-[22px] text-[var(--hero-ink)] sm:text-[26px]"
             >
               Match statistics
-            </h2>
+            </h3>
             <SectionState
               availability={model.sections.statistics.availability}
               message={model.sections.statistics.message}
@@ -313,9 +369,9 @@ export function MatchDetailView({
           <FixtureRecordSection predictions={model.predictions} />
 
           <section aria-labelledby="deferred-heading">
-            <h2 id="deferred-heading" className="rw-label text-[var(--hero-ink-3)]">
+            <h3 id="deferred-heading" className="rw-label text-[var(--hero-ink-3)]">
               Not covered on this page
-            </h2>
+            </h3>
             <p className="mt-3 max-w-[62ch] text-[13px] leading-relaxed text-[var(--hero-ink-3)]">
               We do not publish research for these markets yet:{" "}
               {model.deferredMarkets.join(", ")}.
@@ -327,9 +383,9 @@ export function MatchDetailView({
             record it annotates rather than above the research it is not.
           */}
           <section aria-labelledby="timeline-heading">
-            <h2 id="timeline-heading" className="rw-label text-[var(--hero-ink-3)]">
+            <h3 id="timeline-heading" className="rw-label text-[var(--hero-ink-3)]">
               Publication timeline
-            </h2>
+            </h3>
             <div className="mt-4">
               <MatchPredictionsPanel
                 matchId={header.matchId}
@@ -345,45 +401,13 @@ export function MatchDetailView({
               />
             </div>
           </section>
-        </div>
-
-        <aside className="space-y-6 lg:sticky lg:top-24 lg:self-start">
-          <section
-            aria-labelledby="offers-heading"
-            className="rounded-lg border border-border bg-[var(--canvas-secondary)] p-4"
-          >
-            <h2 id="offers-heading" className="text-sm font-semibold text-foreground">
-              Operator options
-            </h2>
-            <p className="mt-1 text-xs text-muted-foreground">
-              Editorial research above is separate from commercial offers. Links use
-              server-signed redirects.
-            </p>
-            {signedOffers.length ? (
-              <ul className="mt-3 space-y-2">
-                {signedOffers.slice(0, 4).map((offer) => (
-                  <li key={offer.slug}>
-                    <a
-                      href={offer.outboundPath}
-                      rel="noopener sponsored"
-                      className="m-press flex items-center justify-between gap-2 rounded-md border border-transparent px-2 py-2 text-sm hover:border-brand/30 hover:bg-card"
-                    >
-                      <span className="font-medium">{offer.displayName}</span>
-                      <span className="text-xs text-brand">Continue</span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="mt-3 text-xs text-muted-foreground">
-                No verified operator offers are available for this market context.
-              </p>
-            )}
-          </section>
-
-          <section className="text-sm">
-            <h2 className="text-sm font-semibold">Explore</h2>
-            <ul className="mt-2 space-y-1 text-[var(--ink-secondary)]">
+          {/* Research navigation stays with the research — the commercial block is L5, after
+              every content level including the evidence archive (the page assembles it last). */}
+          <section aria-labelledby="explore-heading" className="text-sm">
+            <h3 id="explore-heading" className="rw-m text-[var(--hero-ink-2)]">
+              Explore
+            </h3>
+            <ul className="mt-2 space-y-1 text-[var(--hero-ink-2)]">
               {model.related.homeTeamHref ? (
                 <li>
                   <MatchRelatedLink
@@ -424,33 +448,13 @@ export function MatchDetailView({
                 </li>
               ) : null}
               <li>
-                <Link href={`/${locale}#fixtures`} className="hover:text-brand">
+                <Link href={`/${locale}#fixtures`} className="border-b border-[var(--border-subtle)] hover:border-current">
                   Today&apos;s qualified fixtures
                 </Link>
               </li>
             </ul>
           </section>
-        </aside>
-
-        <OperatorEvidenceCardList
-          cards={recommendableCards(
-            buildOperatorEvidenceCards(
-              operators.map(({ operator, availability }) => ({
-                operator,
-                availability,
-                marketKey: null,
-              })),
-              { nowIso: new Date().toISOString(), limit: 3 },
-            ),
-          )}
-          locale={locale}
-          country={visitorCountry}
-          surface="fixture"
-          headingId="operator-recommendations"
-          heading="Recommended operators"
-          fixtureId={header.matchId}
-          market={focusMarket ?? null}
-        />
+        </div>
       </div>
     </div>
   );

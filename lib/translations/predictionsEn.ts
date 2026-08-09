@@ -401,6 +401,66 @@ export const predictionsEn = {
    * "FULL OPERATOR RANKINGS → →".
    */
   bibleOperatorsCompareLink: "Full operator rankings",
+  /* ======================================================================
+     FIXTURE PAGE CONVERSION — the five-level architecture
+     ----------------------------------------------------------------------
+     L1 lead finding · L2 supporting signals + ⓘ · L3 model + why · L4 full
+     detail · L5 operators. Sentence grammar is one template — finding,
+     count, scope, rate, baseline — so every signal reads the same way in
+     every language. Locale files carry all of these (fixture-pass debt is
+     paid in the same pass that mints the keys).
+     ====================================================================== */
+  fxLeadEyebrow: "Lead finding",
+  fxSupportsTitle: "Supporting signals",
+  fxSupportsDescription:
+    "Every row reads the same way: the finding, how often, over how many matches, against the league rate.",
+  fxExplainerLabel: "How these are ranked",
+  fxExplainerBody:
+    "Each signal is scored by how far its rate sits from the league rate for this competition, weighted by sample size (n/(n+5)). Fewer than five matches never ranks — a short run is context, not a finding. A market with no league baseline is never ranked against an invented number; it lives in the full detail below. The strongest signal leads the page only when it clears a fixed bar; when nothing does, the page has no lead finding rather than a manufactured one.",
+  fxSignalLine: "{finding}: {count} of {scope} ({rate}%) — league average {baseline}%.",
+  fxSignalLineNoBaseline: "{finding}: {count} of {scope} ({rate}%) — no league baseline.",
+  fxScopeHomeVenue: "{team}'s {n} home matches this season",
+  fxScopeAwayVenue: "{team}'s {n} away matches this season",
+  fxScopeRecentHome: "{team}'s last {n} at home",
+  fxScopeRecentAway: "{team}'s last {n} away",
+  fxScopeH2h: "the last {n} meetings",
+  fxFindingOver15Up: "Goals keep coming",
+  fxFindingOver15Down: "Goals are scarce",
+  fxFindingOver25Up: "High-scoring matches keep coming",
+  fxFindingOver25Down: "High-scoring matches are rare",
+  fxFindingOver35Up: "Four-goal matches keep coming",
+  fxFindingOver35Down: "Four-goal matches are rare",
+  fxFindingFh05Up: "First-half goals keep coming",
+  fxFindingFh05Down: "First halves start quiet",
+  fxFindingSh05Up: "Second-half goals keep coming",
+  fxFindingSh05Down: "Second halves stay quiet",
+  fxFindingBttsUp: "Both teams keep scoring",
+  fxFindingBttsDown: "One side keeps getting shut out",
+  fxFindingCleanSheetsUp: "Clean sheets keep coming",
+  fxFindingCleanSheetsDown: "Clean sheets are rare",
+  fxFindingFailedToScoreUp: "Blanks keep coming",
+  fxFindingFailedToScoreDown: "Blanks are rare",
+  fxModelTitle: "The model's view",
+  fxModelPotentialLine:
+    "Provider potential {pct}% on {market} — the provider's published figure. Not a confidence, not a price, and it carries no sample.",
+  fxWhyTitle: "Why",
+  fxWhyIntro: "How the ranked signals above meet the model's own reading of this fixture.",
+  fxWhyAgrees:
+    "The ranked signals and the model's scored evidence point the same way: {supporting} of its {total} signals support the market direction.",
+  fxWhyCaution:
+    "Recent form says “{finding}”, but the model is cautious: {opposing} of its {total} scored signals oppose it, and this fixture has not cleared the model's qualification bar.",
+  fxWhyModelCounts:
+    "Of the model's {total} scored signals, {supporting} support and {opposing} oppose.",
+  fxWhyArchiveLine:
+    "Snapshot {seq}, captured {time} · model {version} · evidence score {score} · {signals} signals: {supporting} supporting, {opposing} opposing.",
+  fxWhyArchiveNone:
+    "No evidence snapshot has been captured for this fixture yet. The reading above is derived live from the same venue rates and league baseline the model reads — nothing beyond them is claimed.",
+  fxDetailTitle: "Full research detail",
+  fxDetailDescription:
+    "Every market and venue rate behind the levels above — dense on purpose. Each rate carries its sample; a missing rate is missing, not zero.",
+  fxOperatorsTitle: "Operator options",
+  fxOperatorsNote:
+    "Editorial research above is separate from commercial offers. Links use server-signed redirects.",
   navQualified: "Qualified lists",
   navLiveSignals: "Live signals",
   navMethodology: "Methodology",
