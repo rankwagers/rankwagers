@@ -22,6 +22,7 @@ import { HomepageAccaEntry } from "@/components/homepage/HomepageAccaEntry";
 import { AddToAccaButton } from "@/components/acca/AddToAccaButton";
 import { HomepageViewedTracker } from "@/components/homepage/HomepageViewedTracker";
 import {
+  V2ArrowLabel,
   V2Button,
   V2Chip,
   V2LeagueCell,
@@ -642,12 +643,13 @@ export function RankWagersHome({
             {topFixtures.map((fixture) => (
               <article
                 key={fixture.id}
-                className="group relative border-t-[0.5px] border-[var(--hero-ink-2)] pt-3.5"
+                className="rw-island group relative border-t-[0.5px] border-[var(--hero-ink-2)] pt-3.5"
               >
-                {/* The ink rule draws in from the left on approach — the map's hover for a figure. */}
+                {/* The ink rule draws in from the left on approach — the map's hover for a figure.
+                    `group-active:` fires the same ray on touch, where group-hover is media-gated. */}
                 <span
                   aria-hidden
-                  className="absolute left-0 top-[-0.5px] h-[2px] w-full origin-left scale-x-0 bg-[var(--hero-ink)] transition-transform duration-[var(--dur-expand)] ease-[var(--ease-settle)] group-hover:scale-x-100"
+                  className="absolute left-0 top-[-0.5px] h-[2px] w-full origin-left scale-x-0 bg-[var(--hero-ink)] transition-transform duration-[var(--dur-expand)] ease-[var(--ease-settle)] group-hover:scale-x-100 group-active:scale-x-100"
                 />
 
                 <V2LeagueCell country={fixture.country} league={fixture.league} />
@@ -728,7 +730,7 @@ export function RankWagersHome({
                   */}
                   <AddToAccaButton
                     labelAdd={`+ ${p.rankedAddAcca}`}
-                    className="rw-m inline-flex items-center gap-2 border border-[var(--hero-ink)] px-3 py-2 tracking-[0.1em] text-[var(--hero-ink)] transition-colors duration-[var(--dur-respond)] ease-[var(--ease-settle)] hover:bg-[var(--hero-ink)] hover:text-[var(--hero-canvas)] aria-pressed:bg-[var(--hero-ink)] aria-pressed:text-[var(--hero-canvas)]"
+                    className="rw-m inline-flex items-center gap-2 border border-[var(--hero-ink)] px-3 py-2 tracking-[0.1em] text-[var(--hero-ink)] transition-colors duration-[var(--dur-respond)] ease-[var(--ease-settle)] hover:bg-[var(--hero-ink)] hover:text-[var(--hero-canvas)] active:bg-[var(--hero-ink)] active:text-[var(--hero-canvas)] aria-pressed:bg-[var(--hero-ink)] aria-pressed:text-[var(--hero-canvas)]"
                     draft={{
                       matchId: fixture.matchId,
                       homeTeam: fixture.home,
@@ -770,7 +772,7 @@ export function RankWagersHome({
             locale={locale}
             className="border-b-2 border-[var(--hero-ink)] font-bold text-[var(--hero-ink)]"
           >
-            Open Acca Builder <span aria-hidden className="rw-arrow">→</span>
+            <V2ArrowLabel text="Open Acca Builder" />
           </SectionTrackLink>
         </p>
       </Section>

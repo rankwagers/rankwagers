@@ -262,8 +262,8 @@ test("below sm a supporting row spends at most five lines: pairs share them", ()
   const league = code("components/homepage/v2Chrome.tsx");
   assert.match(
     league,
-    /flex min-w-0 items-baseline gap-x-1\.5 sm:block/,
-    "V2LeagueCell collapses to one line below sm and restores the stacked form from sm"
+    /flex min-w-0 flex-wrap items-baseline gap-x-1\.5 sm:block/,
+    "V2LeagueCell collapses to one line below sm (wrap as overflow fallback) and restores the stacked form from sm"
   );
 
   // The rate cells still carry their own labels below sm, where no column head exists.
@@ -360,8 +360,8 @@ test("the operators compare link carries one arrow: the template's, never the la
   const strip = code("components/bible/BibleOperatorStrip.tsx");
   assert.match(
     strip,
-    /\{p\.bibleOperatorsCompareLink\} <span aria-hidden className="rw-arrow">/,
-    "the template appends exactly one arrow, through the primitive"
+    /<V2ArrowLabel text=\{p\.bibleOperatorsCompareLink\} \/>/,
+    "the template appends exactly one arrow, through the orphan-proof primitive"
   );
   assert.equal(
     (strip.match(/bibleOperatorsCompareLink/g) ?? []).length,
@@ -377,7 +377,7 @@ test("the live desk's close never re-prints the destination the label already na
   const panel = code("components/predictions/LiveFeedPanel.tsx");
   assert.match(
     panel,
-    /\{p\.liveMoreVia\} <span aria-hidden className="rw-arrow">→<\/span>\s*<\/a>/,
+    /<V2ArrowLabel text=\{p\.liveMoreVia\} \/>\s*<\/a>/,
     "the anchor is the whole label plus the template's arrow"
   );
   assert.doesNotMatch(

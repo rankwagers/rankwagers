@@ -1,6 +1,15 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  /*
+   * `hover:` variants compile behind `@media (hover: hover) and (pointer: fine)`. Touch browsers
+   * apply :hover after a tap and KEEP it until the next tap — which is how the lead's OPEN MATCH
+   * button shipped stuck in its filled state on phones. Touch gets its own `active:` treatments
+   * instead; the two can never conflict because the media query splits them by capability.
+   */
+  future: {
+    hoverOnlyWhenSupported: true,
+  },
   content: [
     "./app/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",

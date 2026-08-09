@@ -4,6 +4,7 @@ import type { Locale } from "@/lib/i18n";
 import type { VenueRates } from "@/lib/fixtures/evidenceView";
 import type { HomepageHeroModel } from "@/lib/homepage/types";
 import { SectionTrackLink } from "@/components/analytics/SectionTrackLink";
+import { V2ArrowLabel } from "@/components/homepage/v2Chrome";
 import { FunnelLine } from "./FunnelLine";
 import { HeroLead } from "./HeroLead";
 import { SupportingTable } from "./SupportingTable";
@@ -192,7 +193,7 @@ export function HeroStage({
                     locale={locale}
                     className="rw-h inline-block border-b-2 border-[var(--hero-ink)] pb-0.5 text-[14px] tracking-[0.01em] text-[var(--hero-ink)]"
                   >
-                    {copy.cta} <span aria-hidden className="rw-arrow">→</span>
+                    <V2ArrowLabel text={copy.cta} />
                   </SectionTrackLink>
                 </div>
               </>

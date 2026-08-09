@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { V2ArrowLabel } from "@/components/homepage/v2Chrome";
 import type { FullDictionary } from "@/lib/dictionaries";
 import type { Locale } from "@/lib/i18n";
 import type { CountryContext } from "@/lib/personalization/types";
@@ -44,7 +45,7 @@ export function BibleOperatorStrip({
           href={`/${locale}/operators`}
           className="font-bold text-[var(--hero-ink)]"
         >
-          {p.bibleOperatorsCompareLink} <span aria-hidden className="rw-arrow">→</span>
+          <V2ArrowLabel text={p.bibleOperatorsCompareLink} />
         </Link>
       </div>
       <p className="rw-m mt-2 normal-case tracking-[0.04em] text-[var(--hero-ink-2)]">
@@ -74,7 +75,7 @@ export function BibleOperatorStrip({
                 </span>
               </span>
               <span className="rw-m text-[var(--hero-ink)]">
-                Continue <span aria-hidden className="rw-arrow">→</span>
+                <V2ArrowLabel text="Continue" />
               </span>
             </a>
           </li>

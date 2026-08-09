@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { SectionTrackLink } from "@/components/analytics/SectionTrackLink";
+import { V2ArrowLabel } from "@/components/homepage/v2Chrome";
 
 /**
  * Acca Studio + Builder entry — manual workspace and automatic generation.
@@ -45,14 +46,14 @@ export function HomepageAccaEntry({
           locale={locale}
           className="border-b-2 border-[var(--hero-ink)] font-bold text-[var(--hero-ink)]"
         >
-          {ctaLabel} <span aria-hidden className="rw-arrow">→</span>
+          <V2ArrowLabel text={ctaLabel} />
         </SectionTrackLink>{" "}
         ·{" "}
         <Link
           href={`/${locale}/acca/builder`}
           className="border-b-2 border-[var(--hero-ink)] font-bold text-[var(--hero-ink)]"
         >
-          Auto Acca Builder <span aria-hidden className="rw-arrow">→</span>
+          <V2ArrowLabel text="Auto Acca Builder" />
         </Link>
         {/*
           THE "/combo" NOTE IS GONE FROM READER COPY.

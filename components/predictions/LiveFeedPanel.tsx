@@ -6,6 +6,7 @@ import type { FullDictionary } from "@/lib/dictionaries";
 import type { LiveFeedResponse, LiveSignalPublic } from "@/lib/live-feed/types";
 import { LIVE_SIGNALS_FRAMING } from "@/lib/trust/claims";
 import { resolveTelegramBotUrl } from "@/lib/telegram";
+import { V2ArrowLabel } from "@/components/homepage/v2Chrome";
 import { LiveHistoryModal } from "./LiveFeedParts";
 import { LiveDeskCard, LiveUpcomingRow } from "./LiveDeskCard";
 import { trackAnalyticsEvent } from "@/lib/analytics/client";
@@ -367,7 +368,7 @@ export function LiveFeedPanel({
  onClick={() => openTelegram("footer_link")}
  className="border-b-2 border-[var(--hero-ink)] font-bold text-[var(--hero-ink)]"
  >
- {p.liveMoreVia} <span aria-hidden className="rw-arrow">→</span>
+ <V2ArrowLabel text={p.liveMoreVia} />
  </a>
  </p>
  </div>

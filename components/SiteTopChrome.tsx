@@ -69,7 +69,15 @@ export async function SiteTopChrome({
      * thick rule, and a masthead that follows the reader down the page is a toolbar wearing one.
      * The map prints it once, at the top, and lets it scroll away.
      */
-    <div className="rw-hero w-full bg-[var(--hero-canvas)]">
+    /*
+     * `pb-px -mb-px`: the masthead's ground bleeds one pixel UNDER the next block. The masthead
+     * and `main` are siblings with different backdrops — the layout wrapper behind both is the
+     * site's cream — and on fractional-DPR phone screens the browser can round the two boxes'
+     * edges to different device pixels, exposing a hair of that cream between them. The bleed
+     * makes the two grounds overlap instead of abut, so rounding has nothing to expose. Net
+     * height change is zero (the negative margin returns the pixel), so no layout moves.
+     */
+    <div className="rw-hero w-full bg-[var(--hero-canvas)] pb-px -mb-px">
       <Header dict={dict} locale={locale} meta={meta} embedded />
     </div>
   );

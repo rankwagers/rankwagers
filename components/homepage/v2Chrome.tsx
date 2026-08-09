@@ -51,6 +51,30 @@ export function V2SectionOpen({
 }
 
 /**
+ * A label with its trailing arrow bound to the last word.
+ *
+ * "OPEN ACCUMULATORS →" wrapped with the arrow alone on the second line — an arrow pointing at
+ * nothing. The last word and the arrow share a `white-space: nowrap` span, so wherever the label
+ * breaks, the arrow travels with the word it belongs to. Inline label+arrow sites use THIS;
+ * `V2Button` does not need it (an inline-flex box cannot wrap between its items).
+ */
+export function V2ArrowLabel({ text }: { text: string }) {
+  const label = text.trim();
+  const cut = label.lastIndexOf(" ");
+  return (
+    <>
+      {cut > 0 ? `${label.slice(0, cut)} ` : null}
+      <span className="whitespace-nowrap">
+        {cut > 0 ? label.slice(cut + 1) : label}{" "}
+        <span aria-hidden className="rw-arrow">
+          →
+        </span>
+      </span>
+    </>
+  );
+}
+
+/**
  * A bordered mono button — the map's only button shape.
  *
  * Bordered, never filled: a solid slab is the loudest thing available and this page spends that
@@ -73,8 +97,13 @@ export function V2Button({
   external?: boolean;
   [key: string]: unknown;
 }) {
+  /*
+   * `active:` mirrors the hover invert for touch, where hover is gated behind
+   * `@media (hover: hover)` (tailwind future.hoverOnlyWhenSupported) — a tap fires the invert
+   * while pressed and releases clean, instead of the hover state sticking after the tap.
+   */
   const className =
-    "rw-m group inline-flex items-center gap-2.5 border border-[var(--hero-ink)] px-3 py-2 tracking-[0.1em] text-[var(--hero-ink)] transition-colors duration-[var(--dur-respond)] ease-[var(--ease-settle)] hover:bg-[var(--hero-ink)] hover:text-[var(--hero-canvas)]";
+    "rw-m group inline-flex items-center gap-2.5 border border-[var(--hero-ink)] px-3 py-2 tracking-[0.1em] text-[var(--hero-ink)] transition-colors duration-[var(--dur-respond)] ease-[var(--ease-settle)] hover:bg-[var(--hero-ink)] hover:text-[var(--hero-canvas)] active:bg-[var(--hero-ink)] active:text-[var(--hero-canvas)]";
   const inner = (
     <>
       {children}
@@ -125,7 +154,7 @@ export function V2Chip({
       className={`rw-m inline-flex items-baseline gap-2.5 border border-[var(--hero-line)] px-3 py-2 tracking-[0.1em] transition-colors duration-[var(--dur-respond)] ease-[var(--ease-settle)] ${
         selected
           ? "bg-[var(--hero-ink)] text-[var(--hero-canvas)]"
-          : "text-[var(--hero-ink)] hover:border-[var(--hero-ink)]"
+          : "text-[var(--hero-ink)] hover:border-[var(--hero-ink)] active:border-[var(--hero-ink)]"
       }`}
       {...rest}
     >
@@ -151,6 +180,34 @@ export function V2Chip({
  * glyph, no code, nothing standing in for an observation nobody made. A resolved name whose ISO
  * cannot be recovered prints the name without a flag.
  */
+
+/**
+ * Mobile short forms for long country names — DISPLAY LAYER ONLY, below `sm`.
+ *
+ * "UNITED STA…" in a stacked row names nothing. The map is keyed by the RESOLVED display name
+ * (never by slug, route or data value — those are untouched), and a name it does not carry
+ * renders in full with a two-line wrap as the fallback rather than an ellipsis. Desktop always
+ * prints the full name.
+ */
+const SHORT_COUNTRY: Record<string, string> = {
+  "United States": "USA",
+  "United Kingdom": "UK",
+  "United Arab Emirates": "UAE",
+  "Bosnia & Herzegovina": "Bosnia",
+  "Bosnia and Herzegovina": "Bosnia",
+  "Northern Ireland": "N. Ireland",
+  "South Korea": "S. Korea",
+  "North Korea": "N. Korea",
+  "Czech Republic": "Czechia",
+  "Dominican Republic": "Dominican Rep.",
+  "Trinidad & Tobago": "Trinidad",
+  "Trinidad and Tobago": "Trinidad",
+  "Papua New Guinea": "Papua N.G.",
+  "Central African Republic": "C.A.R.",
+  "Equatorial Guinea": "Eq. Guinea",
+  "Congo - Kinshasa": "DR Congo",
+  "Congo - Brazzaville": "Congo",
+};
 export function V2LeagueCell({
   country,
   league,
@@ -180,11 +237,22 @@ export function V2LeagueCell({
         because a stacked row has five lines to spend and this cell was taking two of them. From
         `sm` up it restores the map's form: the country over its competition.
       */}
-      <span className="flex min-w-0 items-baseline gap-x-1.5 sm:block">
+      <span className="flex min-w-0 flex-wrap items-baseline gap-x-1.5 sm:block">
         {resolved ? (
-          <span className="rw-m block max-w-[45%] truncate font-bold text-[var(--hero-ink)] sm:max-w-none">
-            {resolved.name}
-          </span>
+          <>
+            {/*
+              Two spans, one visible per breakpoint: the mobile one prints the short form (or
+              wraps in full — never an ellipsis), the desktop one keeps the map's full name.
+              `display: none` keeps the hidden twin out of the accessibility tree, so a screen
+              reader hears the country exactly once at either width.
+            */}
+            <span className="rw-m font-bold text-[var(--hero-ink)] sm:hidden">
+              {SHORT_COUNTRY[resolved.name] ?? resolved.name}
+            </span>
+            <span className="rw-m hidden font-bold text-[var(--hero-ink)] sm:block sm:truncate">
+              {resolved.name}
+            </span>
+          </>
         ) : null}
         <span className="rw-m block min-w-0 truncate text-[var(--hero-ink-2)]">{league}</span>
       </span>

@@ -819,6 +819,72 @@ textarea,
   color: var(--hero-ink);
 }
 
+/* ------------------------------------------------------------------------- *
+ * TOUCH (doc §Below sm follow-up: pointer states)
+ *
+ * Touch browsers apply :hover on tap and keep it until the next tap, so every hover treatment
+ * above would stick. Under `(hover: none)` the hover halves are neutralised and :active carries
+ * the SAME language — the ray and the wash — snappy in (0ms, a press is an event, not an
+ * approach) and soft out (150ms, the release settles). Order matters within this block: the
+ * :active rules follow the :hover neutralisers at equal specificity, so during the press,
+ * :active wins. Tailwind's own hover: utilities are gated the same way by
+ * `future.hoverOnlyWhenSupported`; touch call sites carry `active:` / `group-active:` twins.
+ * Inside `.rw-ink` the wash inverts automatically — `--hero-ink-rgb` is paper there.
+ * ------------------------------------------------------------------------- */
+@media (hover: none) {
+  /* The soft way out: the release travels back over 150ms, not the desktop 520. */
+  .rw-hero .rw-row,
+  .rw-hero .rw-row::before,
+  .rw-hero .rw-row .rw-cell-arrow,
+  .rw-hero .rw-lead,
+  .rw-hero .rw-island,
+  .rw-hero [data-live-signal-id] {
+    transition-duration: 150ms;
+  }
+
+  /* Hover, neutralised: a tap must not leave a pointer state behind. */
+  .rw-hero .rw-row:hover {
+    background-color: transparent;
+  }
+  .rw-hero .rw-row:hover::before {
+    transform: scaleY(0);
+  }
+  .rw-hero .rw-row:hover .rw-cell-arrow {
+    background: transparent;
+    border-color: var(--hero-line);
+    color: var(--hero-ink);
+  }
+  .rw-hero .rw-stage:hover .rw-stage-text {
+    transform: none;
+  }
+  .rw-hero .rw-stage:hover .rw-stage-label {
+    color: var(--hero-ink-2);
+  }
+
+  /* The press: ray + wash, instantly. */
+  .rw-hero .rw-row:active {
+    background-color: rgb(var(--hero-ink-rgb) / 0.03);
+    transition-duration: 0ms;
+  }
+  .rw-hero .rw-row:active::before {
+    transform: scaleY(1);
+    transition-duration: 0ms;
+  }
+  .rw-hero .rw-row:active .rw-cell-arrow {
+    background: var(--hero-ink);
+    border-color: var(--hero-ink);
+    color: var(--hero-canvas);
+    transition-duration: 0ms;
+  }
+  /* The wash composes rgb() HERE, at the CSS site — components feed raw triplets only. */
+  .rw-hero .rw-lead:active,
+  .rw-hero .rw-island:active,
+  .rw-hero [data-live-signal-id]:active {
+    background-color: rgb(var(--hero-ink-rgb) / 0.03);
+    transition-duration: 0ms;
+  }
+}
+
 /* ========================================================================= *
  * THE INVERTED GROUND
  *
@@ -975,6 +1041,24 @@ textarea,
   transform: none;
   filter: blur(0);
   will-change: auto;
+}
+
+/*
+ * BELOW sm THE ENTRANCE IS QUICKER AND PLAINER (doc §Below sm follow-up). Same observer, same
+ * once-per-element `is-in`, same rule — only the mobile timing differs: an 8px rise and a fade
+ * over 260ms with a 40ms stagger step, no blur (a phone GPU pays for backdrop blur in dropped
+ * frames). Worst case on the page (index 5) resolves in 460ms — under half a second. Desktop
+ * keeps the scope's own values; the reduced-motion block further down still neutralises
+ * everything at every width, because it comes later at the same specificity.
+ */
+@media (max-width: 639.98px) {
+  .rw-hero .reveal,
+  .rw-hero .rw-reveal {
+    --travel: 8px;
+    --focus: 0px;
+    transition-duration: 260ms;
+    transition-delay: calc(var(--i, 0) * 40ms);
+  }
 }
 
 /*

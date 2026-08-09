@@ -223,7 +223,7 @@ export function HeroLead({
             {/* The rule draws in from the left on approach — scaleX(0) at rest, per the map. */}
             <span
               aria-hidden
-              className="mt-2.5 block h-px w-full origin-left scale-x-0 bg-[var(--hero-ink)] transition-transform duration-[520ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-x-100"
+              className="mt-2.5 block h-px w-full origin-left scale-x-0 bg-[var(--hero-ink)] transition-transform duration-[520ms] ease-[cubic-bezier(.16,1,.3,1)] group-hover:scale-x-100 group-active:scale-x-100"
             />
             {/*
               THE QUALIFIER, AT THE MAP'S MEASURE. It sits directly under the numeral it bounds, so
@@ -245,7 +245,8 @@ export function HeroLead({
 
         {/* ---- the close: bordered mono, bottom right ---- */}
         <div className="mt-6 flex justify-end">
-          <span className="rw-m inline-flex items-baseline gap-2.5 border border-[var(--hero-ink)] px-3.5 py-2 tracking-[0.1em] text-[var(--hero-ink)] transition-colors duration-[var(--dur-respond)] ease-[var(--ease-settle)] group-hover:bg-[var(--hero-ink)] group-hover:text-[var(--hero-canvas)]">
+          {/* `group-active:` mirrors the invert for touch, where group-hover is media-gated. */}
+          <span className="rw-m inline-flex items-baseline gap-2.5 border border-[var(--hero-ink)] px-3.5 py-2 tracking-[0.1em] text-[var(--hero-ink)] transition-colors duration-[var(--dur-respond)] ease-[var(--ease-settle)] group-hover:bg-[var(--hero-ink)] group-hover:text-[var(--hero-canvas)] group-active:bg-[var(--hero-ink)] group-active:text-[var(--hero-canvas)]">
             {copy.openResearchCta}
             <span
               aria-hidden
