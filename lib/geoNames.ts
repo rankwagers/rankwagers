@@ -1,13 +1,8 @@
-// Ülke kodundan bayrak emojisi (regional indicator harfleri).
-export function flagEmoji(cc: string): string {
-  const code = (cc || "").toUpperCase();
-  if (code.length !== 2 || !/^[A-Z]{2}$/.test(code)) return "🏳️";
-  const A = 0x1f1e6;
-  return String.fromCodePoint(
-    A + (code.charCodeAt(0) - 65),
-    A + (code.charCodeAt(1) - 65)
-  );
-}
+/*
+ * `flagEmoji` is RETIRED. Regional-indicator emoji render as bare letter pairs on Windows; every
+ * flag on the product is the vendored SVG via `CountryFlagIcon` (public/flags/4x3). This module
+ * keeps only the name resolver.
+ */
 
 let regionDisplay: Intl.DisplayNames | null = null;
 try {

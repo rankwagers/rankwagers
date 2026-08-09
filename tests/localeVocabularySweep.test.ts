@@ -10,8 +10,8 @@ import { predictionsByLocale } from "../lib/translations/predictionsLocales";
  * "gratis tip per uur" against it. NL was fixed with vocabulary-safe Dutch; this sweep walks ALL
  * locale dictionaries' live* and ranked* keys so the word cannot ship unnoticed again.
  *
- * THE DEBT BELOW IS A REPORT, NOT AN EXEMPTION LIST TO GROW. Twelve locales still carry the
- * word; they are recorded verbatim from the sweep that found them, and the honest fix is
+ * THE DEBT BELOW IS A REPORT, NOT AN EXEMPTION LIST TO GROW. Six locales still carry the
+ * word (the Europe file was cleaned whole in the fixture pass); they are recorded verbatim from the sweep that found them, and the honest fix is
  * register-appropriate wording per language — the fixture pass's job, not a mass edit here.
  * A key fixed in a locale must leave the map (staleness fails); a key ADDED anywhere fails
  * outright. English and Dutch are pinned clean.
@@ -26,27 +26,6 @@ const TIP_DEBT: Record<string, readonly string[]> = {
   "es-es": ["liveSoonBody", "liveFeedHourlyNote", "liveFeaturedLabel", "liveUnlockTitle", "liveEmptySoft"],
   fr: ["liveSoonBody", "liveFeedHourlyNote", "liveFeaturedLabel", "liveUnlockTitle", "liveEmptySoft"],
   it: ["liveSoonBody", "liveFeedHourlyNote", "liveFeaturedLabel", "liveUnlockTitle", "liveEmptySoft"],
-  cs: [
-    "liveSoonBody", "liveFeedHourlyNote", "liveFeaturedLabel", "liveFeaturedWonLine",
-    "liveUnlockTitle", "liveUnlockBody", "liveEmptySoft",
-  ],
-  da: [
-    "liveSoonBody", "liveFeedHourlyNote", "liveFeaturedLabel", "liveFeaturedMoreCta",
-    "liveFeaturedWonLine", "liveUnlockTitle", "liveUnlockBody", "liveEmptySoft",
-  ],
-  sv: [
-    "liveSoonBody", "liveFeedHourlyNote", "liveFeaturedLabel", "liveFeaturedMoreCta",
-    "liveFeaturedWonLine", "liveUnlockTitle", "liveUnlockBody", "liveEmptySoft",
-  ],
-  no: [
-    "liveSoonBody", "liveFeedHourlyNote", "liveFeaturedLabel", "liveFeaturedMoreCta",
-    "liveFeaturedWonLine", "liveUnlockTitle", "liveUnlockBody", "liveEmptySoft",
-  ],
-  ro: ["liveSoonBody", "liveFeedHourlyNote", "liveUnlockTitle", "liveUnlockBody", "liveEmptySoft"],
-  el: [
-    "liveSoonBody", "liveFeedHourlyNote", "liveFeaturedLabel", "liveUnlockTitle",
-    "liveUnlockBody", "liveEmptySoft",
-  ],
   vi: ["liveSoonBody", "liveFeedHourlyNote", "liveFeaturedLabel", "liveUnlockTitle", "liveEmptySoft"],
   id: ["liveSoonBody", "liveFeedHourlyNote", "liveFeaturedLabel", "liveUnlockTitle", "liveEmptySoft"],
 };

@@ -12,6 +12,7 @@ import {
   countryLandingWebPageLd,
 } from "@/lib/countries/schema";
 import { countriesIndexPath } from "@/lib/countries/links";
+import { CountryFlagIcon } from "@/components/CountryFlagIcon";
 import { countryName } from "@/lib/geoNames";
 import { locales, type Locale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
@@ -90,7 +91,8 @@ export default function CountryLandingPage({
         <p className="text-metadata font-medium uppercase tracking-label text-brand">
           Country hub · {model.code}
         </p>
-        <h1 className="mt-2 font-display text-3xl font-semibold text-foreground">
+        <h1 className="mt-2 flex items-center gap-3 font-display text-3xl font-semibold text-foreground">
+          <CountryFlagIcon code={model.code} />
           {model.title}
         </h1>
         <p className="mt-3 max-w-3xl text-sm leading-relaxed text-[var(--ink-secondary)]">

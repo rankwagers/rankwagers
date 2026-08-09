@@ -180,31 +180,10 @@ export function flagImageUrl(iso2: string | undefined, width = 20): string | und
   return `https://flagcdn.com/w${width}/${iso2.toLowerCase()}.png`;
 }
 
-const COUNTRY_FLAGS: Record<string, string> = {
-  usa: "🇺🇸",
-  us: "🇺🇸",
-  "united states": "🇺🇸",
-  england: "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-  germany: "🇩🇪",
-  spain: "🇪🇸",
-  italy: "🇮🇹",
-  france: "🇫🇷",
-  turkey: "🇹🇷",
-  brazil: "🇧🇷",
-  mexico: "🇲🇽",
-  ireland: "🇮🇪",
-  irish: "🇮🇪",
-  "republic of ireland": "🇮🇪",
-  belarus: "🇧🇾",
-};
-
-export function flagEmojiForCountry(country: string): string {
-  if (!country) return "🏳️";
-  const key = normalizeKey(country);
-  if (key.includes("ireland") && !key.includes("northern")) return "🇮🇪";
-  return COUNTRY_FLAGS[key] ?? "🏳️";
-}
-
-export function flagForCountry(country: string): string {
-  return flagEmojiForCountry(country);
-}
+/*
+ * THE EMOJI TABLE IS RETIRED. `COUNTRY_FLAGS`, `flagEmojiForCountry` and `flagForCountry`
+ * minted regional-indicator emoji that Windows renders as bare letter pairs; the product's flag
+ * is the vendored SVG (`public/flags/4x3/{iso}.svg`, `CountryFlagIcon` / `V2LeagueCell`), keyed
+ * by `countryToIso2` above. Nothing consumed the emoji any more except the dead `MatchRow.flag`
+ * field, retired with it.
+ */

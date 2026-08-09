@@ -4,6 +4,7 @@ import { JsonLd } from "@/components/JsonLd";
 import { competitionPath } from "@/lib/competitions/links";
 import { listCompetitions } from "@/lib/competitions/registry";
 import { competitionsIndexLd } from "@/lib/competitions/schema";
+import { CountryFlagIcon } from "@/components/CountryFlagIcon";
 import { countryName } from "@/lib/geoNames";
 import { locales, type Locale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
@@ -58,9 +59,15 @@ export default function CompetitionsIndexPage({
               >
                 <div className="flex flex-wrap items-baseline justify-between gap-2">
                   <p className="font-semibold text-foreground">{competition.name}</p>
-                  <span className="text-metadata uppercase tracking-label text-muted-foreground">
+                  <span className="flex items-center gap-1.5 text-metadata uppercase tracking-label text-muted-foreground">
                     {competition.confederation}
-                    {competition.country ? ` · ${countryName(competition.country)}` : ""}
+                    {competition.country ? (
+                      <>
+                        {" · "}
+                        <CountryFlagIcon code={competition.country} />
+                        {countryName(competition.country)}
+                      </>
+                    ) : null}
                   </span>
                 </div>
                 <p className="mt-1 max-w-3xl text-sm text-[var(--ink-secondary)]">

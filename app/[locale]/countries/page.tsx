@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { countriesIndexPath, countryPath } from "@/lib/countries/links";
 import { listIndexableCountryCodes } from "@/lib/countries/landing";
+import { CountryFlagIcon } from "@/components/CountryFlagIcon";
 import { countryName } from "@/lib/geoNames";
 import { locales, type Locale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
@@ -60,7 +61,10 @@ export default function CountriesIndexPage({
                 href={countryPath(params.locale, code)}
                 className="flex min-h-12 items-center justify-between rounded-lg border border-border bg-[var(--canvas-secondary)] px-4 text-sm font-medium hover:border-brand/35"
               >
-                {countryName(code)}
+                <span className="flex items-center gap-2">
+                  <CountryFlagIcon code={code} />
+                  {countryName(code)}
+                </span>
                 <span className="font-mono text-xs text-muted-foreground">{code}</span>
               </Link>
             </li>

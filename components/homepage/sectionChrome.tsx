@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { STATUS_TONE_CLASS, type StatusTone } from "@/lib/ui/tokens";
+import { type StatusTone } from "@/lib/ui/tokens";
 
 /**
  * Section heading.
@@ -84,6 +84,25 @@ export function EmptySection({ text }: { text: string }) {
   );
 }
 
+/*
+ * MONOCHROME, PER THE FORM-GUIDE LANGUAGE. This component is shared by recent results, the
+ * archive table and the transparency dashboard — all record surfaces, where "Grey = Historical"
+ * holds and colour would rank outcomes the record itself does not. State is carried by a glyph
+ * and a weight, never a hue: won is ink with its tick, lost is ink with its cross (bold — the
+ * record exists to not hide them), void and pending drop to the secondary ink with the neutral
+ * mark. The change lands once, here, exactly as the homepage note promised it would.
+ */
+const STATUS_MONO: Record<StatusTone, { glyph: string; tone: string }> = {
+  won: { glyph: "✓", tone: "border-[var(--hero-ink,#201e1d)] text-[var(--hero-ink,#201e1d)]" },
+  lost: {
+    glyph: "✗",
+    tone: "border-[var(--hero-ink,#201e1d)] font-bold text-[var(--hero-ink,#201e1d)]",
+  },
+  void: { glyph: "·", tone: "border-[var(--border-subtle)] text-[var(--ink-secondary)]" },
+  pending: { glyph: "·", tone: "border-[var(--border-subtle)] text-[var(--ink-secondary)]" },
+  live: { glyph: "·", tone: "border-[var(--border-subtle)] text-[var(--ink-secondary)]" },
+};
+
 export function StatusBadge({
   status,
   label,
@@ -91,11 +110,12 @@ export function StatusBadge({
   status: StatusTone;
   label: string;
 }) {
+  const mono = STATUS_MONO[status];
   return (
     <span
-      className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1 text-metadata font-medium uppercase tracking-label ${STATUS_TONE_CLASS[status]}`}
+      className={`inline-flex items-center gap-1.5 whitespace-nowrap border px-2 py-1 text-metadata font-medium uppercase tracking-label ${mono.tone}`}
     >
-      <span aria-hidden className="h-1.5 w-1.5 rounded-full bg-current" />
+      <span aria-hidden>{mono.glyph}</span>
       <span className="sr-only">Status: </span>
       {label}
     </span>

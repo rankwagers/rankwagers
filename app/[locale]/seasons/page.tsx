@@ -3,6 +3,7 @@ import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { getCompetition } from "@/lib/competitions/registry";
+import { CountryFlagIcon } from "@/components/CountryFlagIcon";
 import { countryName } from "@/lib/geoNames";
 import { locales, type Locale } from "@/lib/i18n";
 import { listSeasons } from "@/lib/seasons/registry";
@@ -159,9 +160,15 @@ export default function SeasonsIndexPage({
                 >
                   <div className="flex flex-wrap items-baseline justify-between gap-2">
                     <p className="font-semibold text-foreground">{season.displayName}</p>
-                    <span className="text-metadata uppercase tracking-label text-muted-foreground">
+                    <span className="flex items-center gap-1.5 text-metadata uppercase tracking-label text-muted-foreground">
                       {season.active ? "Current" : "Archived"}
-                      {season.countryCode ? ` · ${countryName(season.countryCode)}` : ""}
+                      {season.countryCode ? (
+                        <>
+                          {" · "}
+                          <CountryFlagIcon code={season.countryCode} />
+                          {countryName(season.countryCode)}
+                        </>
+                      ) : null}
                     </span>
                   </div>
                   <p className="mt-1 text-sm text-[var(--ink-secondary)]">

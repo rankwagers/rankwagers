@@ -344,12 +344,10 @@ export function RankWagersHome({
         and their summary are one argument, and splitting them across a rule made the reader assemble
         it themselves.
 
-        CARRIED FORWARD: `StatusBadge` in `#recent-results` still renders won/lost/void in state
-        colour, so it is the one coloured element left in this band. It is deliberately unchanged.
-        The component is shared with `ArchiveTable` and `TransparencyDashboard`; all three are
-        record surfaces, so "Grey = Historical" applies to all three, and it changes once — in the
-        component — when those surfaces are converted. Forking a local copy to settle one section
-        is how two components drift.
+        RESOLVED: `StatusBadge` went monochrome in the fixture-conversion pass — glyph and
+        weight carry the state now, no hue. The change landed once, in the shared component, so
+        this band, `ArchiveTable` and `TransparencyDashboard` moved together, exactly as the
+        earlier note here promised.
 
         Surface rather than the tonal band: the section is set on white against the canvas above it,
         so what marks it is a change of ground rather than a change of hue.

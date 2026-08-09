@@ -12,7 +12,6 @@ export type FootyMatchRow = {
   competition: string;
   country: string;
   countryCode?: string;
-  flag: string;
   kickoffTime: number;
   kickoff: string;
   over15Pct: number;

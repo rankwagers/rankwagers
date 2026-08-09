@@ -11,7 +11,7 @@ import {
 import { enrichAllLists } from "@/lib/api-football/enrich";
 import { observedResearchRun, unobservedResearchRun } from "@/lib/research/researchRun";
 import { footyRowCoreSchema, type FootyRowCore } from "@/lib/research/footyRowContract";
-import { countryToIso2, flagEmojiForCountry } from "./flags";
+import { countryToIso2 } from "./flags";
 import { leagueImageUrl, teamImageUrl } from "./images";
 import {
   archiveToDailyLists,
@@ -289,7 +289,6 @@ function buildRow(m: RawMatch, info: LeagueInfo, highlightPct: number): FootyMat
     competition: info.league,
     country,
     countryCode,
-    flag: flagEmojiForCountry(country),
     kickoff: toIstanbulTime(kickoff),
     status,
     isLive,

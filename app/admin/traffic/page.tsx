@@ -3,7 +3,8 @@ import { cookies, headers } from "next/headers";
 import { readAnalyticsEvents } from "@/lib/events";
 import { buildAnalytics } from "@/lib/analytics";
 import { getBrand } from "@/lib/brands";
-import { countryName, flagEmoji } from "@/lib/geoNames";
+import { CountryFlagIcon } from "@/components/CountryFlagIcon";
+import { countryName } from "@/lib/geoNames";
 import { localeForCountry } from "@/lib/countries";
 import { localeNames } from "@/lib/i18n";
 import {
@@ -144,7 +145,7 @@ function CountryBreakdown({
  return (
  <tr key={cc} className="border-t border-border">
  <td className="py-2">
- <span className="mr-2">{flagEmoji(cc)}</span>
+ <span className="mr-2 inline-flex align-middle"><CountryFlagIcon code={cc} /></span>
  <span className="text-foreground">{countryName(cc)}</span>
  <span className="ml-2 text-xs text-muted-foreground">{cc}</span>
  </td>

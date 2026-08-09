@@ -131,9 +131,9 @@ test("the scan actually covers the product's user-facing copy", () => {
 const SOURCE_CLAIM_DEBT = {
   file: "lib/translations/predictionsLocalesEurope.ts",
   match: /^live\s+tip$/i,
-  // 9 recorded in Sprint 35; the NL pair was fixed with vocabulary-safe Dutch in the
-  // mobile-pass sprint, leaving the cs/da/el renderings. The count may only fall.
-  count: 7,
+  // 9 recorded in Sprint 35 → 7 after the NL fix → 0: the fixture pass moved the cs/da/el
+  // (and sv/no/ro) live-desk strings to the research register. The count may only fall.
+  count: 0,
 } as const;
 
 test("no user-facing string promises an outcome, asserts certainty or claims profit", () => {
