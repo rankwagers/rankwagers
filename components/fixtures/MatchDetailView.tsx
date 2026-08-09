@@ -96,10 +96,10 @@ export function MatchDetailView({
       <JsonLd data={matchBreadcrumbLd({ locale, header })} />
       {sportsEvent ? <JsonLd data={sportsEvent} /> : null}
 
-      <nav aria-label="Breadcrumb" className="mb-6 text-xs text-muted-foreground">
+      <nav aria-label="Breadcrumb" className="rw-m mb-6 text-[var(--hero-ink-2)]">
         <ol className="flex flex-wrap items-center gap-1">
           <li>
-            <Link href={model.related.homeHref} className="hover:text-brand">
+            <Link href={model.related.homeHref} className="hover:text-[var(--hero-ink)]">
               Home
             </Link>
           </li>
@@ -120,7 +120,7 @@ export function MatchDetailView({
               <li aria-hidden>/</li>
             </>
           ) : null}
-          <li className="font-medium text-foreground" aria-current="page">
+          <li className="font-medium text-[var(--hero-ink)]" aria-current="page">
             {header.homeTeam} vs {header.awayTeam}
           </li>
         </ol>
@@ -294,9 +294,9 @@ export function MatchDetailView({
                 {model.sections.events.items.map((event) => (
                   <li
                     key={event.id}
-                    className="flex items-start gap-3 rounded-md border border-border px-3 py-2 text-sm"
+                    className="flex items-start gap-3 border-b border-[var(--hero-line)] py-2 pl-3.5 text-sm text-[var(--hero-ink)]"
                   >
-                    <span className="font-mono text-xs text-muted-foreground">
+                    <span className="font-mono text-xs text-[var(--hero-ink-2)]">
                       {event.minute != null ? `${event.minute}'` : "—"}
                     </span>
                     <span>
@@ -330,7 +330,7 @@ export function MatchDetailView({
               <div className="mt-3 overflow-x-auto">
                 <table className="min-w-full text-sm">
                   <thead>
-                    <tr className="border-b border-border text-left text-metadata uppercase tracking-label text-muted-foreground">
+                    <tr className="rw-label border-b border-[var(--hero-line)] text-left text-[var(--hero-ink-2)]">
                       <th scope="col" className="py-2 pr-3">{header.homeTeam}</th>
                       <th scope="col" className="py-2 pr-3">Stat</th>
                       <th scope="col" className="py-2">{header.awayTeam}</th>
@@ -472,7 +472,7 @@ function TeamBlock({
       {logo ? (
         <Image src={logo} alt="" width={48} height={48} className="h-12 w-12 object-contain" />
       ) : (
-        <span className="flex h-12 w-12 items-center justify-center rounded-md bg-background text-sm font-semibold">
+        <span className="flex h-12 w-12 items-center justify-center border-[0.5px] border-[var(--hero-line)] text-sm font-semibold text-[var(--hero-ink)]">
           {name.slice(0, 1)}
         </span>
       )}
@@ -499,7 +499,7 @@ function TeamBlock({
       locale={locale}
       kind="team"
       target={name}
-      className={`flex min-w-0 items-center gap-2 hover:text-brand ${align === "right" ? "flex-row-reverse" : ""}`}
+      className={`flex min-w-0 items-center gap-2 hover:text-[var(--hero-ink-2)] ${align === "right" ? "flex-row-reverse" : ""}`}
     >
       {content}
     </MatchRelatedLink>
@@ -517,7 +517,7 @@ function SectionState({
 }) {
   if (availability !== "available") {
     return (
-      <p className="mt-3 rounded-lg border border-border bg-[var(--canvas-secondary)] px-4 py-5 text-sm text-muted-foreground">
+      <p className="mt-3 max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-sm text-[var(--hero-ink-2)]">
         {message ?? "Data unavailable."}
       </p>
     );

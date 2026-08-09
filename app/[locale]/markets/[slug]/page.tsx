@@ -10,6 +10,7 @@ import { getMarket, marketSlugs } from "@/lib/markets/registry";
 import { getRequestCountryContext } from "@/lib/personalization/server";
 import { mapDailyListsToQualifiedFixtures } from "@/lib/research/qualifiedFixture";
 import { pageMetadata } from "@/lib/seo";
+import { getDictionary } from "@/lib/dictionaries";
 
 export function generateStaticParams() {
   return locales.flatMap((locale) =>
@@ -64,6 +65,7 @@ export default async function MarketDetailPage({
       odds={odds}
       operators={operators}
       visitorCountry={countryContext.country}
+        p={getDictionary(params.locale).predictions}
     />
   );
 }

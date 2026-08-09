@@ -145,6 +145,41 @@ export const ar = mergePredictions({
   fxRecordAfterKickoff: "التُقط بعد ضربة البداية — مستبعد من التسوية.",
   fxLiveUnavailable: "التحديثات المباشرة غير متاحة لهذه المسابقة",
 
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "أسواق البحث",
+  mktIndexLede:
+    "مراجع الأسواق التي تربط المباريات والأدلة والأرقام المرصودة. بنية بحثية، وليست نصائح أبدًا.",
+  mktLeadEyebrow: "تركّز التغطية",
+  mktLeadLine: "تتركّز التغطية في {league}: {count} من {total} مباراة مؤهّلة ({pct}%).",
+  mktSupportsTitle: "إشارات التغطية",
+  mktSupportsNote:
+    "أعداد من مجموعة البحث الحالية — قوائم اليوم المؤهّلة. أعداد تغطية، وليست معدلات حدوث.",
+  mktQualifiedLine: "{n} مباراة مؤهّلة في مجموعة البحث الحالية",
+  mktLeagueCoverageLine: "{n} بطولة مشمولة",
+  mktTopLeagueRow: "{league} — {count} من {total} ({pct}%)",
+  mktProviderAvgLine:
+    "متوسط إمكانات المزوّد {pct}% عبر المجموعة المؤهّلة — رقم من المزوّد، وليس معدلًا مقيسًا.",
+  mktFixturesTitle: "المباريات المؤهّلة اليوم",
+  mktFixturesEmpty: "لا توجد مباريات مؤهّلة لهذا السوق في مجموعة البحث الحالية.",
+  mktDetailTitle: "تفاصيل السوق",
+  mktFaqTitle: "أسئلة",
+  mktRelatedTitle: "أسواق ذات صلة",
+  mktOddsTitle: "الأرقام المرصودة",
+  mktOddsEmpty:
+    "لا توجد بعد أرصاد مخزّنة للأرقام في هذا السوق — تظهر الأرقام فقط بعد أرصاد موثّقة.",
+  mktOddsBest: "الأفضل المرصود",
+  mktOddsAverage: "المتوسط المرصود",
+  mktOddsLowest: "الأدنى المرصود",
+  mktOddsMovements: "التحركات",
+  mktOddsClv: "متوسط CLV",
+  mktOddsWindowNote: "كل الأرقام من مجموعة الأرصاد المخزّنة — وليست أبدًا سعرًا مباشرًا.",
+  mktIndicatorsTitle: "مؤشرات الأدلة",
+  mktIndicatorsShow: "عرض التعريفات",
+  mktIndicatorsHide: "إخفاء التعريفات",
+  mktIndicatorsNote: "تعريفات مقاييس هذا السوق — ليست قيمًا مباشرة، وليست درجات يقين.",
+  mktIndicatorUsed: "مستخدم في البحث",
+  mktIndicatorConceptual: "مفاهيمي",
+
 });
 
 export const hi = mergePredictions({
@@ -293,6 +328,41 @@ export const hi = mergePredictions({
   fxRecordAfterKickoff: "किक-ऑफ़ के बाद दर्ज — निपटान से बाहर।",
   fxLiveUnavailable: "इस प्रतियोगिता के लिए लाइव अपडेट उपलब्ध नहीं",
 
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "शोध बाज़ार",
+  mktIndexLede:
+    "बाज़ार संदर्भ जो मैच, प्रमाण और दर्ज ऑड्स को जोड़ते हैं। शोध संरचना, कभी टिप्स नहीं।",
+  mktLeadEyebrow: "कवरेज संकेंद्रण",
+  mktLeadLine: "कवरेज {league} में केंद्रित है: {total} योग्य मैचों में से {count} ({pct}%)।",
+  mktSupportsTitle: "कवरेज संकेत",
+  mktSupportsNote:
+    "वर्तमान शोध सेट — आज की योग्य सूचियों — से गिनतियाँ। ये कवरेज गिनतियाँ हैं, घटना दरें नहीं।",
+  mktQualifiedLine: "वर्तमान शोध सेट में {n} योग्य मैच",
+  mktLeagueCoverageLine: "{n} प्रतियोगिताएँ शामिल",
+  mktTopLeagueRow: "{league} — {total} में से {count} ({pct}%)",
+  mktProviderAvgLine:
+    "योग्य सेट पर औसत प्रदाता संभाव्यता {pct}% — यह प्रदाता का आँकड़ा है, मापी गई दर नहीं।",
+  mktFixturesTitle: "आज के योग्य मैच",
+  mktFixturesEmpty: "वर्तमान शोध सेट में इस बाज़ार के लिए कोई योग्य मैच नहीं।",
+  mktDetailTitle: "बाज़ार विवरण",
+  mktFaqTitle: "प्रश्न",
+  mktRelatedTitle: "संबंधित बाज़ार",
+  mktOddsTitle: "दर्ज ऑड्स",
+  mktOddsEmpty:
+    "इस बाज़ार के लिए अभी कोई संग्रहीत ऑड्स अवलोकन नहीं — आँकड़े सत्यापित अवलोकनों के बाद ही दिखते हैं।",
+  mktOddsBest: "सर्वोत्तम दर्ज",
+  mktOddsAverage: "औसत दर्ज",
+  mktOddsLowest: "न्यूनतम दर्ज",
+  mktOddsMovements: "बदलाव",
+  mktOddsClv: "CLV औसत",
+  mktOddsWindowNote: "सभी आँकड़े संग्रहीत अवलोकन सेट से हैं — कभी लाइव क़ीमत से नहीं।",
+  mktIndicatorsTitle: "प्रमाण संकेतक",
+  mktIndicatorsShow: "परिभाषाएँ खोलें",
+  mktIndicatorsHide: "परिभाषाएँ छिपाएँ",
+  mktIndicatorsNote: "इस बाज़ार की मीट्रिक परिभाषाएँ — लाइव मान नहीं, निश्चितता स्कोर नहीं।",
+  mktIndicatorUsed: "शोध में प्रयुक्त",
+  mktIndicatorConceptual: "सैद्धांतिक",
+
 });
 
 export const ja = mergePredictions({
@@ -432,6 +502,37 @@ export const ja = mergePredictions({
   fxRateLeagueSeason: "リーグ — 今季",
   fxRecordAfterKickoff: "キックオフ後に取得 — 清算から除外。",
   fxLiveUnavailable: "この大会ではライブ更新を利用できません",
+
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "リサーチ市場",
+  mktIndexLede: "試合・根拠・記録済みオッズを結ぶ市場リファレンス。リサーチの構造であり、決してティップスではありません。",
+  mktLeadEyebrow: "カバレッジの集中",
+  mktLeadLine: "カバレッジは{league}に集中しています:適格{total}試合中{count}試合({pct}%)。",
+  mktSupportsTitle: "カバレッジ指標",
+  mktSupportsNote: "現在のリサーチセット(本日の適格リスト)からの件数です。カバレッジ件数であり、発生率ではありません。",
+  mktQualifiedLine: "現在のリサーチセットで適格{n}試合",
+  mktLeagueCoverageLine: "{n}大会をカバー",
+  mktTopLeagueRow: "{league} — {total}中{count}({pct}%)",
+  mktProviderAvgLine: "適格セット全体のプロバイダー平均ポテンシャルは{pct}% — プロバイダーの数値であり、計測された率ではありません。",
+  mktFixturesTitle: "本日の適格試合",
+  mktFixturesEmpty: "現在のリサーチセットにこの市場の適格試合はありません。",
+  mktDetailTitle: "市場の詳細",
+  mktFaqTitle: "質問",
+  mktRelatedTitle: "関連市場",
+  mktOddsTitle: "記録済みオッズ",
+  mktOddsEmpty: "この市場の保存済みオッズ観測はまだありません — 数値は検証済みの観測後にのみ表示されます。",
+  mktOddsBest: "記録内の最良値",
+  mktOddsAverage: "記録内の平均値",
+  mktOddsLowest: "記録内の最低値",
+  mktOddsMovements: "変動",
+  mktOddsClv: "CLV平均",
+  mktOddsWindowNote: "すべての数値は保存済み観測セットに基づきます — ライブ価格は用いません。",
+  mktIndicatorsTitle: "根拠指標",
+  mktIndicatorsShow: "定義を開く",
+  mktIndicatorsHide: "定義を閉じる",
+  mktIndicatorsNote: "この市場の指標定義です — ライブ値でも確信度スコアでもありません。",
+  mktIndicatorUsed: "リサーチで使用",
+  mktIndicatorConceptual: "概念的",
 
 });
 
@@ -573,6 +674,37 @@ export const ko = mergePredictions({
   fxRateLeagueSeason: "리그 — 이번 시즌",
   fxRecordAfterKickoff: "킥오프 후 캡처 — 정산에서 제외.",
   fxLiveUnavailable: "이 대회는 라이브 업데이트를 제공하지 않습니다",
+
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "리서치 마켓",
+  mktIndexLede: "경기·근거·기록된 배당을 잇는 마켓 레퍼런스. 리서치 구조이며, 결코 팁이 아닙니다.",
+  mktLeadEyebrow: "커버리지 집중",
+  mktLeadLine: "커버리지가 {league}에 집중되어 있습니다: 적격 {total}경기 중 {count}경기({pct}%).",
+  mktSupportsTitle: "커버리지 신호",
+  mktSupportsNote: "현재 리서치 세트(오늘의 적격 목록)에서 나온 집계입니다. 발생률이 아닌 커버리지 집계입니다.",
+  mktQualifiedLine: "현재 리서치 세트의 적격 경기 {n}건",
+  mktLeagueCoverageLine: "{n}개 대회 포함",
+  mktTopLeagueRow: "{league} — {total} 중 {count}({pct}%)",
+  mktProviderAvgLine: "적격 세트 전반의 공급자 평균 잠재치 {pct}% — 공급자 수치이며 측정된 비율이 아닙니다.",
+  mktFixturesTitle: "오늘의 적격 경기",
+  mktFixturesEmpty: "현재 리서치 세트에 이 마켓의 적격 경기가 없습니다.",
+  mktDetailTitle: "마켓 상세",
+  mktFaqTitle: "질문",
+  mktRelatedTitle: "관련 마켓",
+  mktOddsTitle: "기록된 배당",
+  mktOddsEmpty: "이 마켓에 저장된 배당 관측이 아직 없습니다 — 수치는 검증된 관측 이후에만 표시됩니다.",
+  mktOddsBest: "기록상 최고",
+  mktOddsAverage: "기록상 평균",
+  mktOddsLowest: "기록상 최저",
+  mktOddsMovements: "변동",
+  mktOddsClv: "CLV 평균",
+  mktOddsWindowNote: "모든 수치는 저장된 관측 세트에서 나옵니다 — 결코 실시간 가격이 아닙니다.",
+  mktIndicatorsTitle: "근거 지표",
+  mktIndicatorsShow: "정의 펼치기",
+  mktIndicatorsHide: "정의 숨기기",
+  mktIndicatorsNote: "이 마켓의 지표 정의입니다 — 실시간 값도, 확신 점수도 아닙니다.",
+  mktIndicatorUsed: "리서치에 사용됨",
+  mktIndicatorConceptual: "개념적",
 
 });
 
@@ -722,6 +854,42 @@ export const th = mergePredictions({
   fxRecordAfterKickoff: "บันทึกหลังเขี่ยบอล — ไม่นับในการชำระผล",
   fxLiveUnavailable: "การอัปเดตสดไม่พร้อมใช้งานสำหรับรายการนี้",
 
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "ตลาดเพื่อการวิจัย",
+  mktIndexLede:
+    "ข้อมูลอ้างอิงตลาดที่เชื่อมโยงแมตช์ หลักฐาน และราคาที่บันทึกไว้ โครงสร้างเชิงวิจัย ไม่ใช่ทิปเด็ดขาด",
+  mktLeadEyebrow: "จุดรวมความครอบคลุม",
+  mktLeadLine:
+    "ความครอบคลุมกระจุกอยู่ที่ {league}: {count} จาก {total} แมตช์ที่ผ่านเกณฑ์ ({pct}%)",
+  mktSupportsTitle: "สัญญาณความครอบคลุม",
+  mktSupportsNote:
+    "จำนวนนับจากชุดวิจัยปัจจุบัน — รายการที่ผ่านเกณฑ์ของวันนี้ เป็นจำนวนความครอบคลุม ไม่ใช่อัตราการเกิด",
+  mktQualifiedLine: "{n} แมตช์ที่ผ่านเกณฑ์ในชุดวิจัยปัจจุบัน",
+  mktLeagueCoverageLine: "ครอบคลุม {n} รายการแข่งขัน",
+  mktTopLeagueRow: "{league} — {count} จาก {total} ({pct}%)",
+  mktProviderAvgLine:
+    "ศักยภาพเฉลี่ยจากผู้ให้บริการ {pct}% ทั่วชุดที่ผ่านเกณฑ์ — เป็นตัวเลขของผู้ให้บริการ ไม่ใช่อัตราที่วัดจริง",
+  mktFixturesTitle: "แมตช์ที่ผ่านเกณฑ์วันนี้",
+  mktFixturesEmpty: "ไม่มีแมตช์ที่ผ่านเกณฑ์สำหรับตลาดนี้ในชุดวิจัยปัจจุบัน",
+  mktDetailTitle: "รายละเอียดตลาด",
+  mktFaqTitle: "คำถาม",
+  mktRelatedTitle: "ตลาดที่เกี่ยวข้อง",
+  mktOddsTitle: "ราคาที่บันทึกไว้",
+  mktOddsEmpty:
+    "ยังไม่มีการบันทึกราคาสำหรับตลาดนี้ — ตัวเลขจะปรากฏหลังการบันทึกที่ตรวจสอบแล้วเท่านั้น",
+  mktOddsBest: "ดีที่สุดที่บันทึกไว้",
+  mktOddsAverage: "ค่าเฉลี่ยที่บันทึกไว้",
+  mktOddsLowest: "ต่ำสุดที่บันทึกไว้",
+  mktOddsMovements: "การเคลื่อนไหว",
+  mktOddsClv: "ค่าเฉลี่ย CLV",
+  mktOddsWindowNote: "ตัวเลขทั้งหมดมาจากชุดการบันทึกที่จัดเก็บไว้ — ไม่ใช่ราคาสดเด็ดขาด",
+  mktIndicatorsTitle: "ตัวชี้วัดหลักฐาน",
+  mktIndicatorsShow: "แสดงคำนิยาม",
+  mktIndicatorsHide: "ซ่อนคำนิยาม",
+  mktIndicatorsNote: "คำนิยามเมตริกของตลาดนี้ — ไม่ใช่ค่าสด ไม่ใช่คะแนนความมั่นใจ",
+  mktIndicatorUsed: "ใช้ในการวิจัย",
+  mktIndicatorConceptual: "เชิงแนวคิด",
+
 });
 
 export const vi = mergePredictions({
@@ -869,6 +1037,42 @@ export const vi = mergePredictions({
   fxRateLeagueSeason: "Giải đấu — mùa này",
   fxRecordAfterKickoff: "Ghi nhận sau giờ bóng lăn — loại khỏi quyết toán.",
   fxLiveUnavailable: "cập nhật trực tiếp không khả dụng cho giải đấu này",
+
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "Thị trường nghiên cứu",
+  mktIndexLede:
+    "Tài liệu tham chiếu thị trường kết nối trận đấu, bằng chứng và tỷ lệ đã ghi nhận. Cấu trúc nghiên cứu, không bao giờ là mách kèo.",
+  mktLeadEyebrow: "Mức tập trung độ phủ",
+  mktLeadLine: "Độ phủ tập trung ở {league}: {count} trong {total} trận đủ điều kiện ({pct}%).",
+  mktSupportsTitle: "Tín hiệu độ phủ",
+  mktSupportsNote:
+    "Số đếm từ tập nghiên cứu hiện tại — các danh sách đủ điều kiện hôm nay. Là số đếm độ phủ, không phải tỷ lệ xảy ra.",
+  mktQualifiedLine: "{n} trận đủ điều kiện trong tập nghiên cứu hiện tại",
+  mktLeagueCoverageLine: "{n} giải đấu được phủ",
+  mktTopLeagueRow: "{league} — {count} trong {total} ({pct}%)",
+  mktProviderAvgLine:
+    "Tiềm năng trung bình từ nhà cung cấp {pct}% trên tập đủ điều kiện — con số của nhà cung cấp, không phải tỷ lệ đo được.",
+  mktFixturesTitle: "Trận đủ điều kiện hôm nay",
+  mktFixturesEmpty: "Không có trận đủ điều kiện cho thị trường này trong tập nghiên cứu hiện tại.",
+  mktDetailTitle: "Chi tiết thị trường",
+  mktFaqTitle: "Câu hỏi",
+  mktRelatedTitle: "Thị trường liên quan",
+  mktOddsTitle: "Tỷ lệ đã ghi nhận",
+  mktOddsEmpty:
+    "Chưa có quan sát tỷ lệ nào được lưu cho thị trường này — con số chỉ xuất hiện sau các quan sát đã xác minh.",
+  mktOddsBest: "Tốt nhất đã ghi nhận",
+  mktOddsAverage: "Trung bình đã ghi nhận",
+  mktOddsLowest: "Thấp nhất đã ghi nhận",
+  mktOddsMovements: "Biến động",
+  mktOddsClv: "Trung bình CLV",
+  mktOddsWindowNote: "Mọi con số đều lấy từ tập quan sát đã lưu — không bao giờ là giá trực tiếp.",
+  mktIndicatorsTitle: "Chỉ báo bằng chứng",
+  mktIndicatorsShow: "Mở phần định nghĩa",
+  mktIndicatorsHide: "Ẩn phần định nghĩa",
+  mktIndicatorsNote:
+    "Định nghĩa chỉ số của thị trường này — không phải giá trị trực tiếp, không phải điểm chắc chắn.",
+  mktIndicatorUsed: "dùng trong nghiên cứu",
+  mktIndicatorConceptual: "mang tính khái niệm",
 
 });
 
@@ -1019,6 +1223,43 @@ export const id = mergePredictions({
   fxRecordAfterKickoff: "Direkam setelah sepak mula — dikecualikan dari penyelesaian.",
   fxLiveUnavailable: "pembaruan langsung tidak tersedia untuk kompetisi ini",
 
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "Pasar riset",
+  mktIndexLede:
+    "Referensi pasar yang menghubungkan pertandingan, bukti, dan odds yang tercatat. Struktur riset, tidak pernah tips.",
+  mktLeadEyebrow: "Konsentrasi cakupan",
+  mktLeadLine:
+    "Cakupan terkonsentrasi di {league}: {count} dari {total} pertandingan yang lolos kualifikasi ({pct}%).",
+  mktSupportsTitle: "Sinyal cakupan",
+  mktSupportsNote:
+    "Hitungan dari set riset saat ini — daftar terkualifikasi hari ini. Hitungan cakupan, bukan tingkat kejadian.",
+  mktQualifiedLine: "{n} pertandingan terkualifikasi dalam set riset saat ini",
+  mktLeagueCoverageLine: "{n} kompetisi tercakup",
+  mktTopLeagueRow: "{league} — {count} dari {total} ({pct}%)",
+  mktProviderAvgLine:
+    "Potensi rata-rata penyedia {pct}% pada set terkualifikasi — angka penyedia, bukan tingkat yang terukur.",
+  mktFixturesTitle: "Pertandingan terkualifikasi hari ini",
+  mktFixturesEmpty: "Tidak ada pertandingan terkualifikasi untuk pasar ini dalam set riset saat ini.",
+  mktDetailTitle: "Detail pasar",
+  mktFaqTitle: "Pertanyaan",
+  mktRelatedTitle: "Pasar terkait",
+  mktOddsTitle: "Odds yang tercatat",
+  mktOddsEmpty:
+    "Belum ada pengamatan odds tersimpan untuk pasar ini — angka baru muncul setelah pengamatan terverifikasi.",
+  mktOddsBest: "Terbaik yang tercatat",
+  mktOddsAverage: "Rata-rata yang tercatat",
+  mktOddsLowest: "Terendah yang tercatat",
+  mktOddsMovements: "Pergerakan",
+  mktOddsClv: "Rata-rata CLV",
+  mktOddsWindowNote:
+    "Semua angka berasal dari set pengamatan tersimpan — tidak pernah dari harga langsung.",
+  mktIndicatorsTitle: "Indikator bukti",
+  mktIndicatorsShow: "Buka definisi",
+  mktIndicatorsHide: "Sembunyikan definisi",
+  mktIndicatorsNote: "Definisi metrik pasar ini — bukan nilai langsung, bukan skor keyakinan.",
+  mktIndicatorUsed: "dipakai dalam riset",
+  mktIndicatorConceptual: "konseptual",
+
 });
 
 export const zh = mergePredictions({
@@ -1158,6 +1399,37 @@ export const zh = mergePredictions({
   fxRecordAfterKickoff: "开球后采集——不计入结算。",
   fxLiveUnavailable: "本项赛事暂无实时更新",
 
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "研究市场",
+  mktIndexLede: "连接比赛、证据与已记录赔率的市场参考。研究结构,绝非贴士。",
+  mktLeadEyebrow: "覆盖集中度",
+  mktLeadLine: "覆盖集中于{league}:{total}场合格比赛中的{count}场({pct}%)。",
+  mktSupportsTitle: "覆盖信号",
+  mktSupportsNote: "来自当前研究集(今日合格名单)的计数。这是覆盖计数,不是发生率。",
+  mktQualifiedLine: "当前研究集中有{n}场合格比赛",
+  mktLeagueCoverageLine: "覆盖{n}项赛事",
+  mktTopLeagueRow: "{league} — {total}中的{count}({pct}%)",
+  mktProviderAvgLine: "合格集内供应方平均潜力{pct}% — 这是供应方数字,不是实测比率。",
+  mktFixturesTitle: "今日合格比赛",
+  mktFixturesEmpty: "当前研究集中没有该市场的合格比赛。",
+  mktDetailTitle: "市场详情",
+  mktFaqTitle: "问题",
+  mktRelatedTitle: "相关市场",
+  mktOddsTitle: "已记录赔率",
+  mktOddsEmpty: "该市场尚无已存储的赔率观测 — 数字只在观测经验证后出现。",
+  mktOddsBest: "记录中最佳",
+  mktOddsAverage: "记录中平均",
+  mktOddsLowest: "记录中最低",
+  mktOddsMovements: "变动",
+  mktOddsClv: "CLV平均",
+  mktOddsWindowNote: "所有数字均来自已存储的观测集 — 绝非实时价格。",
+  mktIndicatorsTitle: "证据指标",
+  mktIndicatorsShow: "展开定义",
+  mktIndicatorsHide: "收起定义",
+  mktIndicatorsNote: "该市场的指标定义 — 不是实时数值,也不是确信度评分。",
+  mktIndicatorUsed: "用于研究",
+  mktIndicatorConceptual: "概念性",
+
 });
 
 export const bn = mergePredictions({
@@ -1239,6 +1511,41 @@ export const bn = mergePredictions({
   fxRateLeagueSeason: "লিগ — এই মৌসুম",
   fxRecordAfterKickoff: "কিক-অফের পরে ধারণ — নিষ্পত্তি থেকে বাদ।",
   fxLiveUnavailable: "এই প্রতিযোগিতার জন্য লাইভ আপডেট নেই",
+
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "গবেষণা বাজার",
+  mktIndexLede:
+    "ম্যাচ, প্রমাণ ও নথিভুক্ত অডস যুক্তকারী বাজার-রেফারেন্স। গবেষণার কাঠামো, কখনও টিপস নয়।",
+  mktLeadEyebrow: "কভারেজ কেন্দ্রীভবন",
+  mktLeadLine: "কভারেজ {league}-এ কেন্দ্রীভূত: {total}টি যোগ্য ম্যাচের মধ্যে {count}টি ({pct}%)।",
+  mktSupportsTitle: "কভারেজ সংকেত",
+  mktSupportsNote:
+    "বর্তমান গবেষণা সেট — আজকের যোগ্য তালিকা — থেকে গণনা। এগুলি কভারেজ গণনা, ঘটনার হার নয়।",
+  mktQualifiedLine: "বর্তমান গবেষণা সেটে {n}টি যোগ্য ম্যাচ",
+  mktLeagueCoverageLine: "{n}টি প্রতিযোগিতা অন্তর্ভুক্ত",
+  mktTopLeagueRow: "{league} — {total}-এর মধ্যে {count} ({pct}%)",
+  mktProviderAvgLine:
+    "যোগ্য সেট জুড়ে সরবরাহকারীর গড় সম্ভাবনা {pct}% — এটি সরবরাহকারীর সংখ্যা, মাপা হার নয়।",
+  mktFixturesTitle: "আজকের যোগ্য ম্যাচ",
+  mktFixturesEmpty: "বর্তমান গবেষণা সেটে এই বাজারের জন্য কোনও যোগ্য ম্যাচ নেই।",
+  mktDetailTitle: "বাজারের বিবরণ",
+  mktFaqTitle: "প্রশ্ন",
+  mktRelatedTitle: "সম্পর্কিত বাজার",
+  mktOddsTitle: "নথিভুক্ত অডস",
+  mktOddsEmpty:
+    "এই বাজারের জন্য এখনও কোনও সংরক্ষিত অডস-পর্যবেক্ষণ নেই — সংখ্যা কেবল যাচাইকৃত পর্যবেক্ষণের পরে দেখা যায়।",
+  mktOddsBest: "নথিভুক্ত সেরা",
+  mktOddsAverage: "নথিভুক্ত গড়",
+  mktOddsLowest: "নথিভুক্ত সর্বনিম্ন",
+  mktOddsMovements: "পরিবর্তন",
+  mktOddsClv: "CLV গড়",
+  mktOddsWindowNote: "সব সংখ্যা সংরক্ষিত পর্যবেক্ষণ সেট থেকে — কখনও লাইভ দাম থেকে নয়।",
+  mktIndicatorsTitle: "প্রমাণ সূচক",
+  mktIndicatorsShow: "সংজ্ঞা খুলুন",
+  mktIndicatorsHide: "সংজ্ঞা লুকান",
+  mktIndicatorsNote: "এই বাজারের মেট্রিক সংজ্ঞা — লাইভ মান নয়, নিশ্চয়তার স্কোরও নয়।",
+  mktIndicatorUsed: "গবেষণায় ব্যবহৃত",
+  mktIndicatorConceptual: "ধারণাগত",
 
 });
 
@@ -1323,6 +1630,44 @@ export const ta = mergePredictions({
   fxRecordAfterKickoff: "தொடக்கத்திற்குப் பிறகு பதிவு — தீர்விலிருந்து விலக்கு.",
   fxLiveUnavailable: "இந்தப் போட்டிக்கு நேரடி புதுப்பிப்புகள் இல்லை",
 
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "ஆய்வுச் சந்தைகள்",
+  mktIndexLede:
+    "ஆட்டங்கள், சான்றுகள், பதிவான விகிதங்களை இணைக்கும் சந்தை மேற்கோள்கள். ஆய்வுக் கட்டமைப்பு, ஒருபோதும் டிப்ஸ் அல்ல.",
+  mktLeadEyebrow: "கவரேஜ் குவிப்பு",
+  mktLeadLine:
+    "கவரேஜ் {league}-இல் குவிந்துள்ளது: தகுதியான {total} ஆட்டங்களில் {count} ({pct}%).",
+  mktSupportsTitle: "கவரேஜ் சமிக்ஞைகள்",
+  mktSupportsNote:
+    "தற்போதைய ஆய்வுத் தொகுப்பிலிருந்து — இன்றைய தகுதிப் பட்டியல்களிலிருந்து — எண்ணிக்கைகள். இவை கவரேஜ் எண்ணிக்கைகள், நிகழ்வு விகிதங்கள் அல்ல.",
+  mktQualifiedLine: "தற்போதைய ஆய்வுத் தொகுப்பில் {n} தகுதியான ஆட்டங்கள்",
+  mktLeagueCoverageLine: "{n} போட்டித் தொடர்கள் உள்ளடக்கம்",
+  mktTopLeagueRow: "{league} — {total}-இல் {count} ({pct}%)",
+  mktProviderAvgLine:
+    "தகுதித் தொகுப்பில் வழங்குநர் சராசரி சாத்தியம் {pct}% — இது வழங்குநரின் எண், அளக்கப்பட்ட விகிதம் அல்ல.",
+  mktFixturesTitle: "இன்றைய தகுதியான ஆட்டங்கள்",
+  mktFixturesEmpty: "தற்போதைய ஆய்வுத் தொகுப்பில் இந்தச் சந்தைக்குத் தகுதியான ஆட்டங்கள் இல்லை.",
+  mktDetailTitle: "சந்தை விவரம்",
+  mktFaqTitle: "கேள்விகள்",
+  mktRelatedTitle: "தொடர்புடைய சந்தைகள்",
+  mktOddsTitle: "பதிவான விகிதங்கள்",
+  mktOddsEmpty:
+    "இந்தச் சந்தைக்குச் சேமிக்கப்பட்ட விகிதக் கண்காணிப்புகள் இன்னும் இல்லை — சரிபார்க்கப்பட்ட கண்காணிப்புகளுக்குப் பிறகே எண்கள் தோன்றும்.",
+  mktOddsBest: "பதிவில் சிறந்தது",
+  mktOddsAverage: "பதிவில் சராசரி",
+  mktOddsLowest: "பதிவில் குறைந்தது",
+  mktOddsMovements: "மாற்றங்கள்",
+  mktOddsClv: "CLV சராசரி",
+  mktOddsWindowNote:
+    "எல்லா எண்களும் சேமிக்கப்பட்ட கண்காணிப்புத் தொகுப்பிலிருந்தே — ஒருபோதும் நேரடி விலையிலிருந்து அல்ல.",
+  mktIndicatorsTitle: "சான்று குறிகாட்டிகள்",
+  mktIndicatorsShow: "வரையறைகளை விரிக்க",
+  mktIndicatorsHide: "வரையறைகளை மறைக்க",
+  mktIndicatorsNote:
+    "இந்தச் சந்தையின் அளவீட்டு வரையறைகள் — நேரடி மதிப்புகள் அல்ல, உறுதிப் புள்ளிகளும் அல்ல.",
+  mktIndicatorUsed: "ஆய்வில் பயன்பாட்டில்",
+  mktIndicatorConceptual: "கருத்தியல்",
+
 });
 
 export const te = mergePredictions({
@@ -1403,6 +1748,42 @@ export const te = mergePredictions({
   fxRateLeagueSeason: "లీగ్ — ఈ సీజన్",
   fxRecordAfterKickoff: "కిక్-ఆఫ్ తర్వాత నమోదు — సెటిల్మెంట్ నుండి మినహాయింపు.",
   fxLiveUnavailable: "ఈ పోటీకి లైవ్ అప్డేట్లు అందుబాటులో లేవు",
+
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "పరిశోధన మార్కెట్లు",
+  mktIndexLede:
+    "మ్యాచ్‌లు, ఆధారాలు, నమోదైన ఆడ్స్‌ను కలిపే మార్కెట్ సూచికలు. పరిశోధన నిర్మాణం, ఎప్పుడూ టిప్స్ కాదు.",
+  mktLeadEyebrow: "కవరేజీ కేంద్రీకరణ",
+  mktLeadLine:
+    "కవరేజీ {league}లో కేంద్రీకృతమైంది: అర్హత పొందిన {total} మ్యాచ్‌లలో {count} ({pct}%).",
+  mktSupportsTitle: "కవరేజీ సంకేతాలు",
+  mktSupportsNote:
+    "ప్రస్తుత పరిశోధన సెట్ — నేటి అర్హత జాబితాల — నుండి లెక్కలు. ఇవి కవరేజీ లెక్కలు, సంభవ రేట్లు కావు.",
+  mktQualifiedLine: "ప్రస్తుత పరిశోధన సెట్‌లో {n} అర్హత మ్యాచ్‌లు",
+  mktLeagueCoverageLine: "{n} పోటీలు కవర్ అయ్యాయి",
+  mktTopLeagueRow: "{league} — {total}లో {count} ({pct}%)",
+  mktProviderAvgLine:
+    "అర్హత సెట్‌పై ప్రొవైడర్ సగటు సామర్థ్యం {pct}% — ఇది ప్రొవైడర్ సంఖ్య, కొలిచిన రేటు కాదు.",
+  mktFixturesTitle: "నేటి అర్హత మ్యాచ్‌లు",
+  mktFixturesEmpty: "ప్రస్తుత పరిశోధన సెట్‌లో ఈ మార్కెట్‌కు అర్హత మ్యాచ్‌లు లేవు.",
+  mktDetailTitle: "మార్కెట్ వివరాలు",
+  mktFaqTitle: "ప్రశ్నలు",
+  mktRelatedTitle: "సంబంధిత మార్కెట్లు",
+  mktOddsTitle: "నమోదైన ఆడ్స్",
+  mktOddsEmpty:
+    "ఈ మార్కెట్‌కు నిల్వ చేసిన ఆడ్స్ పరిశీలనలు ఇంకా లేవు — ధృవీకరించిన పరిశీలనల తర్వాతే సంఖ్యలు కనిపిస్తాయి.",
+  mktOddsBest: "నమోదులో ఉత్తమం",
+  mktOddsAverage: "నమోదులో సగటు",
+  mktOddsLowest: "నమోదులో కనిష్ఠం",
+  mktOddsMovements: "కదలికలు",
+  mktOddsClv: "CLV సగటు",
+  mktOddsWindowNote: "అన్ని సంఖ్యలు నిల్వ చేసిన పరిశీలన సెట్ నుండే — ఎప్పుడూ ప్రత్యక్ష ధర నుండి కాదు.",
+  mktIndicatorsTitle: "ఆధార సూచికలు",
+  mktIndicatorsShow: "నిర్వచనాలు చూపించు",
+  mktIndicatorsHide: "నిర్వచనాలు దాచు",
+  mktIndicatorsNote: "ఈ మార్కెట్ మెట్రిక్ నిర్వచనాలు — ప్రత్యక్ష విలువలు కావు, నమ్మక స్కోర్లూ కావు.",
+  mktIndicatorUsed: "పరిశోధనలో వాడుకలో",
+  mktIndicatorConceptual: "సైద్ధాంతిక",
 
 });
 
@@ -1485,6 +1866,41 @@ export const mr = mergePredictions({
   fxRateLeagueSeason: "लीग — हा हंगाम",
   fxRecordAfterKickoff: "किक-ऑफनंतर नोंद — निपटाऱ्यातून वगळले.",
   fxLiveUnavailable: "या स्पर्धेसाठी थेट अद्यतने उपलब्ध नाहीत",
+
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "संशोधन बाजार",
+  mktIndexLede:
+    "सामने, पुरावे आणि नोंदवलेले ऑड्स जोडणारे बाजार-संदर्भ. संशोधन रचना, कधीही टिप्स नाहीत.",
+  mktLeadEyebrow: "कव्हरेज एकवटणे",
+  mktLeadLine: "कव्हरेज {league}मध्ये एकवटले आहे: पात्र {total} सामन्यांपैकी {count} ({pct}%).",
+  mktSupportsTitle: "कव्हरेज संकेत",
+  mktSupportsNote:
+    "सध्याच्या संशोधन संचातून — आजच्या पात्र याद्यांमधून — मोजण्या. या कव्हरेज मोजण्या आहेत, घटना दर नाहीत.",
+  mktQualifiedLine: "सध्याच्या संशोधन संचात {n} पात्र सामने",
+  mktLeagueCoverageLine: "{n} स्पर्धा समाविष्ट",
+  mktTopLeagueRow: "{league} — {total}पैकी {count} ({pct}%)",
+  mktProviderAvgLine:
+    "पात्र संचावर पुरवठादाराची सरासरी क्षमता {pct}% — हा पुरवठादाराचा आकडा आहे, मोजलेला दर नाही.",
+  mktFixturesTitle: "आजचे पात्र सामने",
+  mktFixturesEmpty: "सध्याच्या संशोधन संचात या बाजारासाठी पात्र सामने नाहीत.",
+  mktDetailTitle: "बाजाराचा तपशील",
+  mktFaqTitle: "प्रश्न",
+  mktRelatedTitle: "संबंधित बाजार",
+  mktOddsTitle: "नोंदवलेले ऑड्स",
+  mktOddsEmpty:
+    "या बाजारासाठी अद्याप साठवलेली ऑड्स-निरीक्षणे नाहीत — पडताळलेल्या निरीक्षणांनंतरच आकडे दिसतात.",
+  mktOddsBest: "नोंदीतील सर्वोत्तम",
+  mktOddsAverage: "नोंदीतील सरासरी",
+  mktOddsLowest: "नोंदीतील किमान",
+  mktOddsMovements: "हालचाली",
+  mktOddsClv: "CLV सरासरी",
+  mktOddsWindowNote: "सर्व आकडे साठवलेल्या निरीक्षण संचातून येतात — कधीही थेट किमतीतून नाहीत.",
+  mktIndicatorsTitle: "पुरावा निर्देशक",
+  mktIndicatorsShow: "व्याख्या उघडा",
+  mktIndicatorsHide: "व्याख्या लपवा",
+  mktIndicatorsNote: "या बाजाराच्या मेट्रिक व्याख्या — थेट मूल्ये नाहीत, खात्रीचे गुणही नाहीत.",
+  mktIndicatorUsed: "संशोधनात वापरात",
+  mktIndicatorConceptual: "संकल्पनात्मक",
 
 });
 
@@ -1634,5 +2050,43 @@ export const sw = mergePredictions({
   fxRateLeagueSeason: "Ligi — msimu huu",
   fxRecordAfterKickoff: "Imenaswa baada ya kuanza mchezo — imetengwa na usuluhishi.",
   fxLiveUnavailable: "masasisho ya moja kwa moja hayapatikani kwa shindano hili",
+
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "Masoko ya utafiti",
+  mktIndexLede:
+    "Marejeleo ya masoko yanayounganisha mechi, ushahidi na odds zilizorekodiwa. Muundo wa utafiti, kamwe si dokezo.",
+  mktLeadEyebrow: "Mkusanyiko wa ufikiaji",
+  mktLeadLine:
+    "Ufikiaji umejikita katika {league}: mechi {count} kati ya {total} zilizofuzu ({pct}%).",
+  mktSupportsTitle: "Ishara za ufikiaji",
+  mktSupportsNote:
+    "Hesabu kutoka seti ya utafiti ya sasa — orodha za leo zilizofuzu. Ni hesabu za ufikiaji, si viwango vya matukio.",
+  mktQualifiedLine: "Mechi {n} zilizofuzu katika seti ya utafiti ya sasa",
+  mktLeagueCoverageLine: "Mashindano {n} yamefikiwa",
+  mktTopLeagueRow: "{league} — {count} kati ya {total} ({pct}%)",
+  mktProviderAvgLine:
+    "Wastani wa uwezekano wa mtoa huduma {pct}% kwenye seti iliyofuzu — ni namba ya mtoa huduma, si kiwango kilichopimwa.",
+  mktFixturesTitle: "Mechi zilizofuzu leo",
+  mktFixturesEmpty: "Hakuna mechi zilizofuzu kwa soko hili katika seti ya utafiti ya sasa.",
+  mktDetailTitle: "Maelezo ya soko",
+  mktFaqTitle: "Maswali",
+  mktRelatedTitle: "Masoko yanayohusiana",
+  mktOddsTitle: "Odds zilizorekodiwa",
+  mktOddsEmpty:
+    "Bado hakuna uchunguzi wa odds uliohifadhiwa kwa soko hili — namba huonekana tu baada ya uchunguzi uliothibitishwa.",
+  mktOddsBest: "Bora iliyorekodiwa",
+  mktOddsAverage: "Wastani uliorekodiwa",
+  mktOddsLowest: "Chini kabisa iliyorekodiwa",
+  mktOddsMovements: "Mabadiliko",
+  mktOddsClv: "Wastani wa CLV",
+  mktOddsWindowNote:
+    "Namba zote zinatoka kwenye seti ya uchunguzi iliyohifadhiwa — kamwe si bei ya moja kwa moja.",
+  mktIndicatorsTitle: "Viashiria vya ushahidi",
+  mktIndicatorsShow: "Onyesha fasili",
+  mktIndicatorsHide: "Ficha fasili",
+  mktIndicatorsNote:
+    "Fasili za vipimo vya soko hili — si thamani za moja kwa moja, si alama za uhakika.",
+  mktIndicatorUsed: "inatumika katika utafiti",
+  mktIndicatorConceptual: "dhana",
 
 });

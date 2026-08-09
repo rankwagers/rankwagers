@@ -6,6 +6,7 @@ import { marketPath } from "@/lib/markets/links";
 import { listMarkets } from "@/lib/markets/registry";
 import { marketsIndexLd } from "@/lib/markets/schema";
 import { pageMetadata } from "@/lib/seo";
+import { getDictionary } from "@/lib/dictionaries";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -31,38 +32,36 @@ export default function MarketsIndexPage({
   params: { locale: Locale };
 }) {
   const markets = listMarkets();
+  const p = getDictionary(params.locale).predictions;
   return (
     <>
       <JsonLd data={marketsIndexLd({ locale: params.locale, markets })} />
-      <div className="container-wide pb-16 pt-5">
-        <section className="border-b border-[var(--border-subtle)] pb-8">
-          <p className="text-metadata font-medium uppercase tracking-label text-brand">
-            Market intelligence
-          </p>
-          <h1 className="mt-3 font-display text-3xl font-semibold tracking-display text-foreground md:text-4xl">
+      <div className="rw-hero container-wide bg-[var(--hero-canvas)] pb-24 pt-5">
+        <header className="border-b border-[var(--hero-line)] pb-10">
+          <span aria-hidden className="block h-[2px] w-10 bg-[var(--hero-ink)]" />
+          <p className="rw-m mt-3.5 text-[var(--hero-ink-2)]">{p.mktIndexEyebrow}</p>
+          <h1 className="rw-h mt-1.5 text-[clamp(2.125rem,4.4vw,2.875rem)] text-[var(--hero-ink)]">
             Markets
           </h1>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--ink-secondary)] md:text-base">
-            Educational market references that connect fixtures, evidence, operators, and odds.
-            No tips — only research structure.
+          <p className="mt-2.5 max-w-[62ch] text-[15px] leading-[1.55] text-[var(--hero-ink-2)]">
+            {p.mktIndexLede}
           </p>
-        </section>
+        </header>
 
-        <ul className="mt-8 divide-y divide-[var(--border-subtle)] border-y border-[var(--border-subtle)]">
+        <ul className="mt-10 border-t-[1.5px] border-[var(--hero-ink)]">
           {markets.map((market) => (
             <li key={market.slug}>
               <Link
                 href={marketPath(params.locale, market.slug)}
-                className="block py-4 transition-colors hover:bg-[var(--canvas-secondary)]"
+                className="rw-row block border-b border-[var(--hero-line)] py-3.5 pl-3.5"
               >
-                <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <p className="font-semibold text-foreground">{market.name}</p>
-                  <span className="text-metadata uppercase tracking-label text-muted-foreground">
-                    {market.category}
-                    {market.listKind ? " · tracked" : " · educational"}
-                  </span>
+                <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
+                  <p className="text-[15px] font-semibold tracking-[-0.01em] text-[var(--hero-ink)]">
+                    {market.name}
+                  </p>
+                  <span className="rw-m text-[var(--hero-ink-2)]">{market.category}</span>
                 </div>
-                <p className="mt-1 max-w-3xl text-sm text-[var(--ink-secondary)]">
+                <p className="mt-1 max-w-[62ch] text-[13px] leading-relaxed text-[var(--hero-ink-2)]">
                   {market.shortDescription}
                 </p>
               </Link>

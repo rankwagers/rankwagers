@@ -321,6 +321,42 @@ export const nl = euroPredictions({
   fxRecordAfterKickoff: "Vastgelegd na de aftrap — uitgesloten van afwikkeling.",
   fxLiveUnavailable: "live-updates niet beschikbaar voor deze competitie",
 
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "Onderzoeksmarkten",
+  mktIndexLede:
+    "Marktreferenties die wedstrijden, bewijs en waargenomen noteringen verbinden. Onderzoeksstructuur, nooit tips.",
+  mktLeadEyebrow: "Dekkingsconcentratie",
+  mktLeadLine:
+    "De dekking concentreert zich in {league}: {count} van {total} gekwalificeerde wedstrijden ({pct}%).",
+  mktSupportsTitle: "Dekkingssignalen",
+  mktSupportsNote:
+    "Tellingen uit de huidige onderzoeksset — de gekwalificeerde lijsten van vandaag. Dekkingstellingen, geen voorkomenspercentages.",
+  mktQualifiedLine: "{n} gekwalificeerde wedstrijden in de huidige onderzoeksset",
+  mktLeagueCoverageLine: "{n} competities gedekt",
+  mktTopLeagueRow: "{league} — {count} van {total} ({pct}%)",
+  mktProviderAvgLine:
+    "Gemiddeld provider-potentieel {pct}% over de gekwalificeerde set — een providercijfer, geen gemeten percentage.",
+  mktFixturesTitle: "Vandaag gekwalificeerde wedstrijden",
+  mktFixturesEmpty: "Geen gekwalificeerde wedstrijden voor deze markt in de huidige onderzoeksset.",
+  mktDetailTitle: "Marktdetail",
+  mktFaqTitle: "Vragen",
+  mktRelatedTitle: "Gerelateerde markten",
+  mktOddsTitle: "Waargenomen noteringen",
+  mktOddsEmpty:
+    "Nog geen opgeslagen noteringswaarnemingen voor deze markt — cijfers verschijnen pas na geverifieerde waarnemingen.",
+  mktOddsBest: "Beste waargenomen",
+  mktOddsAverage: "Gemiddeld waargenomen",
+  mktOddsLowest: "Laagste waargenomen",
+  mktOddsMovements: "Bewegingen",
+  mktOddsClv: "CLV-gemiddelde",
+  mktOddsWindowNote: "Alle cijfers komen uit de opgeslagen waarnemingsset — nooit een live prijs.",
+  mktIndicatorsTitle: "Bewijsindicatoren",
+  mktIndicatorsShow: "Definities uitklappen",
+  mktIndicatorsHide: "Definities verbergen",
+  mktIndicatorsNote: "Metriekdefinities voor deze markt — geen live waarden, geen zekerheidsscores.",
+  mktIndicatorUsed: "gebruikt in onderzoek",
+  mktIndicatorConceptual: "conceptueel",
+
 });
 
 export const pl = euroPredictions({
@@ -471,6 +507,42 @@ export const pl = euroPredictions({
   fxRecordAfterKickoff: "Zarejestrowane po rozpoczęciu — wyłączone z rozliczenia.",
   fxLiveUnavailable: "aktualizacje na żywo niedostępne dla tych rozgrywek",
 
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "Rynki badawcze",
+  mktIndexLede:
+    "Odniesienia rynkowe łączące mecze, dowody i zaobserwowane kursy. Struktura badawcza, nigdy typy.",
+  mktLeadEyebrow: "Koncentracja pokrycia",
+  mktLeadLine:
+    "Pokrycie koncentruje się w {league}: {count} z {total} zakwalifikowanych meczów ({pct}%).",
+  mktSupportsTitle: "Sygnały pokrycia",
+  mktSupportsNote:
+    "Liczby z bieżącego zbioru badawczego — dzisiejszych list kwalifikowanych. Liczby pokrycia, nie wskaźniki występowania.",
+  mktQualifiedLine: "{n} zakwalifikowanych meczów w bieżącym zbiorze badawczym",
+  mktLeagueCoverageLine: "{n} rozgrywek objętych",
+  mktTopLeagueRow: "{league} — {count} z {total} ({pct}%)",
+  mktProviderAvgLine:
+    "Średni potencjał dostawcy {pct}% w zbiorze kwalifikowanym — liczba dostawcy, nie zmierzony wskaźnik.",
+  mktFixturesTitle: "Dziś zakwalifikowane mecze",
+  mktFixturesEmpty: "Brak zakwalifikowanych meczów dla tego rynku w bieżącym zbiorze badawczym.",
+  mktDetailTitle: "Szczegóły rynku",
+  mktFaqTitle: "Pytania",
+  mktRelatedTitle: "Powiązane rynki",
+  mktOddsTitle: "Zaobserwowane kursy",
+  mktOddsEmpty:
+    "Brak zapisanych obserwacji kursów dla tego rynku — liczby pojawiają się dopiero po zweryfikowanych obserwacjach.",
+  mktOddsBest: "Najlepszy zaobserwowany",
+  mktOddsAverage: "Średni zaobserwowany",
+  mktOddsLowest: "Najniższy zaobserwowany",
+  mktOddsMovements: "Ruchy",
+  mktOddsClv: "Średnia CLV",
+  mktOddsWindowNote: "Wszystkie liczby pochodzą z zapisanego zbioru obserwacji — nigdy z ceny na żywo.",
+  mktIndicatorsTitle: "Wskaźniki dowodowe",
+  mktIndicatorsShow: "Rozwiń definicje",
+  mktIndicatorsHide: "Ukryj definicje",
+  mktIndicatorsNote: "Definicje metryk tego rynku — nie wartości na żywo, nie oceny pewności.",
+  mktIndicatorUsed: "używany w badaniu",
+  mktIndicatorConceptual: "koncepcyjny",
+
 });
 
 export const cs = euroPredictions({
@@ -619,6 +691,42 @@ export const cs = euroPredictions({
   fxRateLeagueSeason: "Liga — tato sezóna",
   fxRecordAfterKickoff: "Zachyceno po výkopu — vyloučeno z vypořádání.",
   fxLiveUnavailable: "živé aktualizace pro tuto soutěž nejsou k dispozici",
+
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "Výzkumné trhy",
+  mktIndexLede:
+    "Tržní reference spojující zápasy, důkazy a pozorované kurzy. Výzkumná struktura, nikdy tipy.",
+  mktLeadEyebrow: "Koncentrace pokrytí",
+  mktLeadLine:
+    "Pokrytí se soustředí v {league}: {count} z {total} kvalifikovaných zápasů ({pct}%).",
+  mktSupportsTitle: "Signály pokrytí",
+  mktSupportsNote:
+    "Počty z aktuální výzkumné sady — dnešních kvalifikovaných listů. Počty pokrytí, ne míry výskytu.",
+  mktQualifiedLine: "{n} kvalifikovaných zápasů v aktuální výzkumné sadě",
+  mktLeagueCoverageLine: "{n} pokrytých soutěží",
+  mktTopLeagueRow: "{league} — {count} z {total} ({pct}%)",
+  mktProviderAvgLine:
+    "Průměrný potenciál poskytovatele {pct}% v kvalifikované sadě — číslo poskytovatele, ne měřená míra.",
+  mktFixturesTitle: "Dnes kvalifikované zápasy",
+  mktFixturesEmpty: "Žádné kvalifikované zápasy pro tento trh v aktuální výzkumné sadě.",
+  mktDetailTitle: "Detail trhu",
+  mktFaqTitle: "Otázky",
+  mktRelatedTitle: "Související trhy",
+  mktOddsTitle: "Pozorované kurzy",
+  mktOddsEmpty:
+    "Zatím žádná uložená pozorování kurzů pro tento trh — čísla se objeví až po ověřených pozorováních.",
+  mktOddsBest: "Nejlepší pozorovaný",
+  mktOddsAverage: "Průměrný pozorovaný",
+  mktOddsLowest: "Nejnižší pozorovaný",
+  mktOddsMovements: "Pohyby",
+  mktOddsClv: "Průměr CLV",
+  mktOddsWindowNote: "Všechna čísla pocházejí z uložené sady pozorování — nikdy z živé ceny.",
+  mktIndicatorsTitle: "Důkazní ukazatele",
+  mktIndicatorsShow: "Rozbalit definice",
+  mktIndicatorsHide: "Skrýt definice",
+  mktIndicatorsNote: "Definice metrik tohoto trhu — ne živé hodnoty, ne skóre jistoty.",
+  mktIndicatorUsed: "používán ve výzkumu",
+  mktIndicatorConceptual: "konceptuální",
 
 });
 
@@ -769,6 +877,42 @@ export const da = euroPredictions({
   fxRecordAfterKickoff: "Indfanget efter kampstart — udelukket fra afregning.",
   fxLiveUnavailable: "live-opdateringer er ikke tilgængelige for denne turnering",
 
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "Forskningsmarkeder",
+  mktIndexLede:
+    "Markedsreferencer der forbinder kampe, evidens og observerede odds. Forskningsstruktur, aldrig tips.",
+  mktLeadEyebrow: "Dækningskoncentration",
+  mktLeadLine:
+    "Dækningen koncentrerer sig i {league}: {count} af {total} kvalificerede kampe ({pct}%).",
+  mktSupportsTitle: "Dækningssignaler",
+  mktSupportsNote:
+    "Optællinger fra det aktuelle forskningssæt — dagens kvalificerede lister. Dækningstal, ikke forekomstrater.",
+  mktQualifiedLine: "{n} kvalificerede kampe i det aktuelle forskningssæt",
+  mktLeagueCoverageLine: "{n} turneringer dækket",
+  mktTopLeagueRow: "{league} — {count} af {total} ({pct}%)",
+  mktProviderAvgLine:
+    "Gennemsnitligt udbyderpotentiale {pct}% over det kvalificerede sæt — et udbydertal, ikke en målt rate.",
+  mktFixturesTitle: "Kvalificerede kampe i dag",
+  mktFixturesEmpty: "Ingen kvalificerede kampe for dette marked i det aktuelle forskningssæt.",
+  mktDetailTitle: "Markedsdetalje",
+  mktFaqTitle: "Spørgsmål",
+  mktRelatedTitle: "Relaterede markeder",
+  mktOddsTitle: "Observerede odds",
+  mktOddsEmpty:
+    "Endnu ingen gemte odds-observationer for dette marked — tal vises først efter verificerede observationer.",
+  mktOddsBest: "Bedst observeret",
+  mktOddsAverage: "Gennemsnit observeret",
+  mktOddsLowest: "Lavest observeret",
+  mktOddsMovements: "Bevægelser",
+  mktOddsClv: "CLV-gennemsnit",
+  mktOddsWindowNote: "Alle tal stammer fra det gemte observationssæt — aldrig en live-pris.",
+  mktIndicatorsTitle: "Evidensindikatorer",
+  mktIndicatorsShow: "Fold definitioner ud",
+  mktIndicatorsHide: "Skjul definitioner",
+  mktIndicatorsNote: "Metrikdefinitioner for dette marked — ikke live-værdier, ikke sikkerhedsscorer.",
+  mktIndicatorUsed: "brugt i forskningen",
+  mktIndicatorConceptual: "konceptuel",
+
 });
 
 export const sv = euroPredictions({
@@ -916,6 +1060,42 @@ export const sv = euroPredictions({
   fxRateLeagueSeason: "Liga — denna säsong",
   fxRecordAfterKickoff: "Infångad efter avspark — utesluten från avräkning.",
   fxLiveUnavailable: "liveuppdateringar är inte tillgängliga för denna tävling",
+
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "Forskningsmarknader",
+  mktIndexLede:
+    "Marknadsreferenser som knyter matcher, evidens och observerade odds. Forskningsstruktur, aldrig tips.",
+  mktLeadEyebrow: "Täckningskoncentration",
+  mktLeadLine:
+    "Täckningen koncentreras i {league}: {count} av {total} kvalificerade matcher ({pct}%).",
+  mktSupportsTitle: "Täckningssignaler",
+  mktSupportsNote:
+    "Antal från den aktuella forskningsmängden — dagens kvalificerade listor. Täckningsantal, inte förekomstandelar.",
+  mktQualifiedLine: "{n} kvalificerade matcher i den aktuella forskningsmängden",
+  mktLeagueCoverageLine: "{n} tävlingar täckta",
+  mktTopLeagueRow: "{league} — {count} av {total} ({pct}%)",
+  mktProviderAvgLine:
+    "Genomsnittlig leverantörspotential {pct}% över den kvalificerade mängden — en leverantörssiffra, inte en uppmätt andel.",
+  mktFixturesTitle: "Kvalificerade matcher i dag",
+  mktFixturesEmpty: "Inga kvalificerade matcher för denna marknad i den aktuella forskningsmängden.",
+  mktDetailTitle: "Marknadsdetalj",
+  mktFaqTitle: "Frågor",
+  mktRelatedTitle: "Relaterade marknader",
+  mktOddsTitle: "Observerade odds",
+  mktOddsEmpty:
+    "Ännu inga lagrade oddsobservationer för denna marknad — siffror visas först efter verifierade observationer.",
+  mktOddsBest: "Bäst observerad",
+  mktOddsAverage: "Genomsnitt observerad",
+  mktOddsLowest: "Lägst observerad",
+  mktOddsMovements: "Rörelser",
+  mktOddsClv: "CLV-genomsnitt",
+  mktOddsWindowNote: "Alla siffror kommer från den lagrade observationsmängden — aldrig ett live-pris.",
+  mktIndicatorsTitle: "Evidensindikatorer",
+  mktIndicatorsShow: "Visa definitioner",
+  mktIndicatorsHide: "Dölj definitioner",
+  mktIndicatorsNote: "Metrikdefinitioner för denna marknad — inte live-värden, inte konfidenspoäng.",
+  mktIndicatorUsed: "används i forskningen",
+  mktIndicatorConceptual: "konceptuell",
 
 });
 
@@ -1065,6 +1245,43 @@ export const no = euroPredictions({
   fxRecordAfterKickoff: "Fanget etter avspark — utelukket fra oppgjør.",
   fxLiveUnavailable: "live-oppdateringer er ikke tilgjengelige for denne turneringen",
 
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "Forskningsmarkeder",
+  mktIndexLede:
+    "Markedsreferanser som knytter kamper, evidens og observerte odds. Forskningsstruktur, aldri tips.",
+  mktLeadEyebrow: "Dekningskonsentrasjon",
+  mktLeadLine:
+    "Dekningen konsentreres i {league}: {count} av {total} kvalifiserte kamper ({pct}%).",
+  mktSupportsTitle: "Dekningssignaler",
+  mktSupportsNote:
+    "Antall fra det gjeldende forskningssettet — dagens kvalifiserte lister. Dekningstall, ikke forekomstrater.",
+  mktQualifiedLine: "{n} kvalifiserte kamper i det gjeldende forskningssettet",
+  mktLeagueCoverageLine: "{n} turneringer dekket",
+  mktTopLeagueRow: "{league} — {count} av {total} ({pct}%)",
+  mktProviderAvgLine:
+    "Gjennomsnittlig leverandørpotensial {pct}% over det kvalifiserte settet — et leverandørtall, ikke en målt rate.",
+  mktFixturesTitle: "Kvalifiserte kamper i dag",
+  mktFixturesEmpty: "Ingen kvalifiserte kamper for dette markedet i det gjeldende forskningssettet.",
+  mktDetailTitle: "Markedsdetalj",
+  mktFaqTitle: "Spørsmål",
+  mktRelatedTitle: "Relaterte markeder",
+  mktOddsTitle: "Observerte odds",
+  mktOddsEmpty:
+    "Ingen lagrede oddsobservasjoner for dette markedet ennå — tall vises først etter verifiserte observasjoner.",
+  mktOddsBest: "Best observert",
+  mktOddsAverage: "Gjennomsnitt observert",
+  mktOddsLowest: "Lavest observert",
+  mktOddsMovements: "Bevegelser",
+  mktOddsClv: "CLV-gjennomsnitt",
+  mktOddsWindowNote: "Alle tall stammer fra det lagrede observasjonssettet — aldri en live-pris.",
+  mktIndicatorsTitle: "Evidensindikatorer",
+  mktIndicatorsShow: "Vis definisjoner",
+  mktIndicatorsHide: "Skjul definisjoner",
+  mktIndicatorsNote:
+    "Metrikkdefinisjoner for dette markedet — ikke live-verdier, ikke konfidensskårer.",
+  mktIndicatorUsed: "brukt i forskningen",
+  mktIndicatorConceptual: "konseptuell",
+
 });
 
 export const fi = euroPredictions({
@@ -1212,6 +1429,42 @@ export const fi = euroPredictions({
   fxRateLeagueSeason: "Sarja — tämä kausi",
   fxRecordAfterKickoff: "Tallennettu aloituspotkun jälkeen — jätetty selvityksen ulkopuolelle.",
   fxLiveUnavailable: "live-päivitykset eivät ole saatavilla tähän kilpailuun",
+
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "Tutkimusmarkkinat",
+  mktIndexLede:
+    "Markkinaviitteet, jotka yhdistävät ottelut, näytön ja havaitut kertoimet. Tutkimusrakenne, ei koskaan vihjeitä.",
+  mktLeadEyebrow: "Kattavuuden keskittymä",
+  mktLeadLine:
+    "Kattavuus keskittyy sarjaan {league}: {count}/{total} karsinnan läpäissyttä ottelua ({pct}%).",
+  mktSupportsTitle: "Kattavuussignaalit",
+  mktSupportsNote:
+    "Lukumäärät nykyisestä tutkimusjoukosta — päivän karsituista listoista. Kattavuuslukuja, ei esiintymisosuuksia.",
+  mktQualifiedLine: "{n} karsinnan läpäissyttä ottelua nykyisessä tutkimusjoukossa",
+  mktLeagueCoverageLine: "{n} sarjaa katettu",
+  mktTopLeagueRow: "{league} — {count}/{total} ({pct}%)",
+  mktProviderAvgLine:
+    "Tarjoajan keskipotentiaali {pct}% karsitussa joukossa — tarjoajan luku, ei mitattu osuus.",
+  mktFixturesTitle: "Tänään karsitut ottelut",
+  mktFixturesEmpty: "Ei karsittuja otteluita tälle markkinalle nykyisessä tutkimusjoukossa.",
+  mktDetailTitle: "Markkinan tiedot",
+  mktFaqTitle: "Kysymykset",
+  mktRelatedTitle: "Liittyvät markkinat",
+  mktOddsTitle: "Havaitut kertoimet",
+  mktOddsEmpty:
+    "Ei vielä tallennettuja kerroinhavaintoja tälle markkinalle — luvut ilmestyvät vasta vahvistettujen havaintojen jälkeen.",
+  mktOddsBest: "Paras havaittu",
+  mktOddsAverage: "Keskiarvo havaittu",
+  mktOddsLowest: "Matalin havaittu",
+  mktOddsMovements: "Liikkeet",
+  mktOddsClv: "CLV-keskiarvo",
+  mktOddsWindowNote: "Kaikki luvut ovat tallennetusta havaintojoukosta — ei koskaan live-hinnasta.",
+  mktIndicatorsTitle: "Näyttöindikaattorit",
+  mktIndicatorsShow: "Avaa määritelmät",
+  mktIndicatorsHide: "Piilota määritelmät",
+  mktIndicatorsNote: "Tämän markkinan metriikkamääritelmät — ei live-arvoja, ei varmuuspisteitä.",
+  mktIndicatorUsed: "käytössä tutkimuksessa",
+  mktIndicatorConceptual: "käsitteellinen",
 
 });
 
@@ -1362,6 +1615,43 @@ export const ro = euroPredictions({
   fxRecordAfterKickoff: "Capturat după lovitura de start — exclus din decontare.",
   fxLiveUnavailable: "actualizările live nu sunt disponibile pentru această competiție",
 
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "Piețe de cercetare",
+  mktIndexLede:
+    "Referințe de piață care leagă meciuri, evidență și cote observate. Structură de cercetare, niciodată ponturi.",
+  mktLeadEyebrow: "Concentrarea acoperirii",
+  mktLeadLine:
+    "Acoperirea se concentrează în {league}: {count} din {total} meciuri calificate ({pct}%).",
+  mktSupportsTitle: "Semnale de acoperire",
+  mktSupportsNote:
+    "Numărători din setul de cercetare curent — listele calificate de azi. Numărători de acoperire, nu rate de apariție.",
+  mktQualifiedLine: "{n} meciuri calificate în setul de cercetare curent",
+  mktLeagueCoverageLine: "{n} competiții acoperite",
+  mktTopLeagueRow: "{league} — {count} din {total} ({pct}%)",
+  mktProviderAvgLine:
+    "Potențial mediu al furnizorului {pct}% pe setul calificat — cifră a furnizorului, nu o rată măsurată.",
+  mktFixturesTitle: "Meciuri calificate azi",
+  mktFixturesEmpty: "Niciun meci calificat pentru această piață în setul de cercetare curent.",
+  mktDetailTitle: "Detaliul pieței",
+  mktFaqTitle: "Întrebări",
+  mktRelatedTitle: "Piețe conexe",
+  mktOddsTitle: "Cote observate",
+  mktOddsEmpty:
+    "Încă nu există observații de cote stocate pentru această piață — cifrele apar doar după observații verificate.",
+  mktOddsBest: "Cea mai bună observată",
+  mktOddsAverage: "Media observată",
+  mktOddsLowest: "Cea mai mică observată",
+  mktOddsMovements: "Mișcări",
+  mktOddsClv: "Media CLV",
+  mktOddsWindowNote:
+    "Toate cifrele provin din setul de observații stocat — niciodată dintr-un preț live.",
+  mktIndicatorsTitle: "Indicatori de evidență",
+  mktIndicatorsShow: "Extinde definițiile",
+  mktIndicatorsHide: "Ascunde definițiile",
+  mktIndicatorsNote: "Definițiile metricilor acestei piețe — nu valori live, nu scoruri de încredere.",
+  mktIndicatorUsed: "folosit în cercetare",
+  mktIndicatorConceptual: "conceptual",
+
 });
 
 export const el = euroPredictions({
@@ -1511,6 +1801,43 @@ export const el = euroPredictions({
   fxRecordAfterKickoff: "Καταγράφηκε μετά τη σέντρα — εξαιρείται από τον διακανονισμό.",
   fxLiveUnavailable: "οι ζωντανές ενημερώσεις δεν είναι διαθέσιμες για αυτή τη διοργάνωση",
 
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "Αγορές έρευνας",
+  mktIndexLede:
+    "Αναφορές αγορών που συνδέουν αγώνες, στοιχεία και παρατηρημένες αποδόσεις. Δομή έρευνας, ποτέ προγνωστικά.",
+  mktLeadEyebrow: "Συγκέντρωση κάλυψης",
+  mktLeadLine:
+    "Η κάλυψη συγκεντρώνεται στη {league}: {count} από {total} προκριθέντες αγώνες ({pct}%).",
+  mktSupportsTitle: "Σήματα κάλυψης",
+  mktSupportsNote:
+    "Καταμετρήσεις από το τρέχον σύνολο έρευνας — τις σημερινές προκριθείσες λίστες. Αριθμοί κάλυψης, όχι ποσοστά εμφάνισης.",
+  mktQualifiedLine: "{n} προκριθέντες αγώνες στο τρέχον σύνολο έρευνας",
+  mktLeagueCoverageLine: "{n} διοργανώσεις καλυμμένες",
+  mktTopLeagueRow: "{league} — {count} από {total} ({pct}%)",
+  mktProviderAvgLine:
+    "Μέσο δυναμικό παρόχου {pct}% στο προκριθέν σύνολο — αριθμός παρόχου, όχι μετρημένο ποσοστό.",
+  mktFixturesTitle: "Προκριθέντες αγώνες σήμερα",
+  mktFixturesEmpty: "Κανένας προκριθείς αγώνας για αυτή την αγορά στο τρέχον σύνολο έρευνας.",
+  mktDetailTitle: "Λεπτομέρεια αγοράς",
+  mktFaqTitle: "Ερωτήσεις",
+  mktRelatedTitle: "Σχετικές αγορές",
+  mktOddsTitle: "Παρατηρημένες αποδόσεις",
+  mktOddsEmpty:
+    "Δεν υπάρχουν ακόμη αποθηκευμένες παρατηρήσεις αποδόσεων για αυτή την αγορά — τα νούμερα εμφανίζονται μόνο μετά από επαληθευμένες παρατηρήσεις.",
+  mktOddsBest: "Καλύτερη παρατηρημένη",
+  mktOddsAverage: "Μέση παρατηρημένη",
+  mktOddsLowest: "Χαμηλότερη παρατηρημένη",
+  mktOddsMovements: "Κινήσεις",
+  mktOddsClv: "Μέσος CLV",
+  mktOddsWindowNote:
+    "Όλα τα νούμερα προέρχονται από το αποθηκευμένο σύνολο παρατηρήσεων — ποτέ από ζωντανή τιμή.",
+  mktIndicatorsTitle: "Δείκτες στοιχείων",
+  mktIndicatorsShow: "Ανάπτυξη ορισμών",
+  mktIndicatorsHide: "Απόκρυψη ορισμών",
+  mktIndicatorsNote: "Ορισμοί μετρικών αυτής της αγοράς — όχι ζωντανές τιμές, όχι βαθμοί βεβαιότητας.",
+  mktIndicatorUsed: "σε χρήση στην έρευνα",
+  mktIndicatorConceptual: "εννοιολογικός",
+
 });
 
 export const hu = euroPredictions({
@@ -1659,5 +1986,41 @@ export const hu = euroPredictions({
   fxRateLeagueSeason: "Liga — ez a szezon",
   fxRecordAfterKickoff: "Kezdőrúgás után rögzítve — az elszámolásból kizárva.",
   fxLiveUnavailable: "élő frissítések nem érhetők el ehhez a sorozathoz",
+
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "Kutatási piacok",
+  mktIndexLede:
+    "Piaci referenciák, amelyek mérkőzéseket, bizonyítékokat és megfigyelt szorzókat kötnek össze. Kutatási szerkezet, sosem tippek.",
+  mktLeadEyebrow: "Lefedettségi súlypont",
+  mktLeadLine:
+    "A lefedettség a(z) {league} sorozatban összpontosul: {count} a(z) {total} kvalifikált mérkőzésből ({pct}%).",
+  mktSupportsTitle: "Lefedettségi jelek",
+  mktSupportsNote:
+    "Számok a jelenlegi kutatási készletből — a mai kvalifikált listákból. Lefedettségi számok, nem előfordulási arányok.",
+  mktQualifiedLine: "{n} kvalifikált mérkőzés a jelenlegi kutatási készletben",
+  mktLeagueCoverageLine: "{n} sorozat lefedve",
+  mktTopLeagueRow: "{league} — {count} a(z) {total}-ból ({pct}%)",
+  mktProviderAvgLine:
+    "Átlagos szolgáltatói potenciál {pct}% a kvalifikált készleten — szolgáltatói szám, nem mért arány.",
+  mktFixturesTitle: "Ma kvalifikált mérkőzések",
+  mktFixturesEmpty: "Nincs kvalifikált mérkőzés ehhez a piachoz a jelenlegi kutatási készletben.",
+  mktDetailTitle: "Piaci részlet",
+  mktFaqTitle: "Kérdések",
+  mktRelatedTitle: "Kapcsolódó piacok",
+  mktOddsTitle: "Megfigyelt szorzók",
+  mktOddsEmpty:
+    "Még nincsenek tárolt szorzómegfigyelések ehhez a piachoz — a számok csak ellenőrzött megfigyelések után jelennek meg.",
+  mktOddsBest: "Legjobb megfigyelt",
+  mktOddsAverage: "Átlagos megfigyelt",
+  mktOddsLowest: "Legalacsonyabb megfigyelt",
+  mktOddsMovements: "Mozgások",
+  mktOddsClv: "CLV-átlag",
+  mktOddsWindowNote: "Minden szám a tárolt megfigyelési készletből származik — sosem élő árból.",
+  mktIndicatorsTitle: "Bizonyíték-mutatók",
+  mktIndicatorsShow: "Definíciók kibontása",
+  mktIndicatorsHide: "Definíciók elrejtése",
+  mktIndicatorsNote: "E piac metrika-definíciói — nem élő értékek, nem bizonyossági pontszámok.",
+  mktIndicatorUsed: "a kutatásban használt",
+  mktIndicatorConceptual: "fogalmi",
 
 });

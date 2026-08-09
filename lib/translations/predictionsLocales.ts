@@ -157,6 +157,44 @@ const pt: PredictionStrings = mergePredictions({
   fxRecordAfterKickoff: "Capturado após o pontapé inicial — excluído da liquidação.",
   fxLiveUnavailable: "atualizações ao vivo indisponíveis para esta competição",
 
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "Mercados de pesquisa",
+  mktIndexLede:
+    "Referências de mercado ligando jogos, evidência e odds observadas. Estrutura de pesquisa, nunca dicas.",
+  mktLeadEyebrow: "Concentração de cobertura",
+  mktLeadLine:
+    "A cobertura concentra-se em {league}: {count} de {total} jogos qualificados ({pct}%).",
+  mktSupportsTitle: "Sinais de cobertura",
+  mktSupportsNote:
+    "Contagens do conjunto de pesquisa atual — as listas qualificadas de hoje. Contagens de cobertura, não taxas de ocorrência.",
+  mktQualifiedLine: "{n} jogos qualificados no conjunto de pesquisa atual",
+  mktLeagueCoverageLine: "{n} competições cobertas",
+  mktTopLeagueRow: "{league} — {count} de {total} ({pct}%)",
+  mktProviderAvgLine:
+    "Potencial médio do provedor {pct}% no conjunto qualificado — número do provedor, não uma taxa medida.",
+  mktFixturesTitle: "Jogos qualificados hoje",
+  mktFixturesEmpty: "Nenhum jogo qualificado para este mercado no conjunto de pesquisa atual.",
+  mktDetailTitle: "Detalhe do mercado",
+  mktFaqTitle: "Perguntas",
+  mktRelatedTitle: "Mercados relacionados",
+  mktOddsTitle: "Odds observadas",
+  mktOddsEmpty:
+    "Ainda não há observações de odds armazenadas para este mercado — os números aparecem só após observações verificadas.",
+  mktOddsBest: "Melhor observada",
+  mktOddsAverage: "Média observada",
+  mktOddsLowest: "Menor observada",
+  mktOddsMovements: "Movimentos",
+  mktOddsClv: "Média de CLV",
+  mktOddsWindowNote:
+    "Todos os números vêm do conjunto de observações armazenado — nunca um preço ao vivo.",
+  mktIndicatorsTitle: "Indicadores de evidência",
+  mktIndicatorsShow: "Expandir definições",
+  mktIndicatorsHide: "Ocultar definições",
+  mktIndicatorsNote:
+    "Definições de métricas deste mercado — não são valores ao vivo nem notas de confiança.",
+  mktIndicatorUsed: "usado na pesquisa",
+  mktIndicatorConceptual: "conceitual",
+
 });
 
 const es: PredictionStrings = mergePredictions({
@@ -310,6 +348,45 @@ const es: PredictionStrings = mergePredictions({
   fxRateLeagueSeason: "Liga — esta temporada",
   fxRecordAfterKickoff: "Capturado tras el inicio — excluido de la liquidación.",
   fxLiveUnavailable: "actualizaciones en vivo no disponibles para esta competición",
+
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "Mercados de investigación",
+  mktIndexLede:
+    "Referencias de mercado que conectan partidos, evidencia y cuotas observadas. Estructura de investigación, nunca pronósticos.",
+  mktLeadEyebrow: "Concentración de cobertura",
+  mktLeadLine:
+    "La cobertura se concentra en {league}: {count} de {total} partidos calificados ({pct}%).",
+  mktSupportsTitle: "Señales de cobertura",
+  mktSupportsNote:
+    "Recuentos del conjunto de investigación actual — las listas calificadas de hoy. Recuentos de cobertura, no tasas de ocurrencia.",
+  mktQualifiedLine: "{n} partidos calificados en el conjunto de investigación actual",
+  mktLeagueCoverageLine: "{n} competiciones cubiertas",
+  mktTopLeagueRow: "{league} — {count} de {total} ({pct}%)",
+  mktProviderAvgLine:
+    "Potencial medio del proveedor {pct}% en el conjunto calificado — cifra del proveedor, no una tasa medida.",
+  mktFixturesTitle: "Partidos calificados hoy",
+  mktFixturesEmpty:
+    "No hay partidos calificados para este mercado en el conjunto de investigación actual.",
+  mktDetailTitle: "Detalle del mercado",
+  mktFaqTitle: "Preguntas",
+  mktRelatedTitle: "Mercados relacionados",
+  mktOddsTitle: "Cuotas observadas",
+  mktOddsEmpty:
+    "Aún no hay observaciones de cuotas almacenadas para este mercado — las cifras aparecen solo tras observaciones verificadas.",
+  mktOddsBest: "Mejor observada",
+  mktOddsAverage: "Media observada",
+  mktOddsLowest: "Mínima observada",
+  mktOddsMovements: "Movimientos",
+  mktOddsClv: "Media de CLV",
+  mktOddsWindowNote:
+    "Todas las cifras provienen del conjunto de observaciones almacenado — nunca un precio en vivo.",
+  mktIndicatorsTitle: "Indicadores de evidencia",
+  mktIndicatorsShow: "Ampliar definiciones",
+  mktIndicatorsHide: "Ocultar definiciones",
+  mktIndicatorsNote:
+    "Definiciones de métricas de este mercado — no son valores en vivo ni puntuaciones de confianza.",
+  mktIndicatorUsed: "usado en la investigación",
+  mktIndicatorConceptual: "conceptual",
 
 });
 
@@ -471,6 +548,42 @@ const de: PredictionStrings = mergePredictions({
   fxRecordAfterKickoff: "Nach Anpfiff erfasst — von der Abrechnung ausgeschlossen.",
   fxLiveUnavailable: "Live-Updates für diesen Wettbewerb nicht verfügbar",
 
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "Recherche-Märkte",
+  mktIndexLede:
+    "Marktreferenzen, die Spiele, Evidenz und beobachtete Quoten verbinden. Recherche-Struktur, niemals Tipps.",
+  mktLeadEyebrow: "Abdeckungs-Schwerpunkt",
+  mktLeadLine:
+    "Die Abdeckung konzentriert sich auf {league}: {count} von {total} qualifizierten Spielen ({pct}%).",
+  mktSupportsTitle: "Abdeckungssignale",
+  mktSupportsNote:
+    "Zählungen aus dem aktuellen Recherche-Satz — den heutigen qualifizierten Listen. Abdeckungszählungen, keine Häufigkeitsraten.",
+  mktQualifiedLine: "{n} qualifizierte Spiele im aktuellen Recherche-Satz",
+  mktLeagueCoverageLine: "{n} Wettbewerbe abgedeckt",
+  mktTopLeagueRow: "{league} — {count} von {total} ({pct}%)",
+  mktProviderAvgLine:
+    "Mittleres Anbieter-Potenzial {pct}% über den qualifizierten Satz — eine Anbieter-Zahl, keine gemessene Rate.",
+  mktFixturesTitle: "Heute qualifizierte Spiele",
+  mktFixturesEmpty: "Keine qualifizierten Spiele für diesen Markt im aktuellen Recherche-Satz.",
+  mktDetailTitle: "Marktdetail",
+  mktFaqTitle: "Fragen",
+  mktRelatedTitle: "Verwandte Märkte",
+  mktOddsTitle: "Beobachtete Quoten",
+  mktOddsEmpty:
+    "Noch keine gespeicherten Quotenbeobachtungen für diesen Markt — Zahlen erscheinen erst nach verifizierten Beobachtungen.",
+  mktOddsBest: "Beste beobachtet",
+  mktOddsAverage: "Durchschnitt beobachtet",
+  mktOddsLowest: "Niedrigste beobachtet",
+  mktOddsMovements: "Bewegungen",
+  mktOddsClv: "CLV-Durchschnitt",
+  mktOddsWindowNote: "Alle Zahlen stammen aus dem gespeicherten Beobachtungssatz — nie ein Live-Preis.",
+  mktIndicatorsTitle: "Evidenz-Indikatoren",
+  mktIndicatorsShow: "Definitionen aufklappen",
+  mktIndicatorsHide: "Definitionen verbergen",
+  mktIndicatorsNote: "Metrik-Definitionen für diesen Markt — keine Live-Werte, keine Konfidenzwerte.",
+  mktIndicatorUsed: "in der Recherche genutzt",
+  mktIndicatorConceptual: "konzeptionell",
+
 });
 
 const it: PredictionStrings = mergePredictions({
@@ -625,6 +738,43 @@ const it: PredictionStrings = mergePredictions({
   fxRecordAfterKickoff: "Catturato dopo il fischio d'inizio — escluso dal regolamento.",
   fxLiveUnavailable: "aggiornamenti live non disponibili per questa competizione",
 
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "Mercati di ricerca",
+  mktIndexLede:
+    "Riferimenti di mercato che collegano partite, evidenza e quote osservate. Struttura di ricerca, mai pronostici.",
+  mktLeadEyebrow: "Concentrazione di copertura",
+  mktLeadLine:
+    "La copertura si concentra su {league}: {count} di {total} partite qualificate ({pct}%).",
+  mktSupportsTitle: "Segnali di copertura",
+  mktSupportsNote:
+    "Conteggi dal set di ricerca attuale — le liste qualificate di oggi. Conteggi di copertura, non tassi di occorrenza.",
+  mktQualifiedLine: "{n} partite qualificate nel set di ricerca attuale",
+  mktLeagueCoverageLine: "{n} competizioni coperte",
+  mktTopLeagueRow: "{league} — {count} di {total} ({pct}%)",
+  mktProviderAvgLine:
+    "Potenziale medio del provider {pct}% sul set qualificato — cifra del provider, non un tasso misurato.",
+  mktFixturesTitle: "Partite qualificate oggi",
+  mktFixturesEmpty: "Nessuna partita qualificata per questo mercato nel set di ricerca attuale.",
+  mktDetailTitle: "Dettaglio del mercato",
+  mktFaqTitle: "Domande",
+  mktRelatedTitle: "Mercati correlati",
+  mktOddsTitle: "Quote osservate",
+  mktOddsEmpty:
+    "Ancora nessuna osservazione di quote archiviata per questo mercato — le cifre appaiono solo dopo osservazioni verificate.",
+  mktOddsBest: "Migliore osservata",
+  mktOddsAverage: "Media osservata",
+  mktOddsLowest: "Minima osservata",
+  mktOddsMovements: "Movimenti",
+  mktOddsClv: "Media CLV",
+  mktOddsWindowNote: "Tutte le cifre vengono dal set di osservazioni archiviato — mai un prezzo live.",
+  mktIndicatorsTitle: "Indicatori di evidenza",
+  mktIndicatorsShow: "Espandi definizioni",
+  mktIndicatorsHide: "Nascondi definizioni",
+  mktIndicatorsNote:
+    "Definizioni delle metriche di questo mercato — non valori live né punteggi di fiducia.",
+  mktIndicatorUsed: "usato nella ricerca",
+  mktIndicatorConceptual: "concettuale",
+
 });
 
 const fr: PredictionStrings = mergePredictions({
@@ -778,6 +928,44 @@ const fr: PredictionStrings = mergePredictions({
   fxRateLeagueSeason: "Ligue — cette saison",
   fxRecordAfterKickoff: "Capturé après le coup d'envoi — exclu du règlement.",
   fxLiveUnavailable: "mises à jour en direct indisponibles pour cette compétition",
+
+  /* Market pages — form-guide conversion (mkt*). */
+  mktIndexEyebrow: "Marchés de recherche",
+  mktIndexLede:
+    "Références de marché reliant matchs, évidence et cotes observées. Structure de recherche, jamais de pronostics.",
+  mktLeadEyebrow: "Concentration de couverture",
+  mktLeadLine:
+    "La couverture se concentre sur {league} : {count} des {total} matchs qualifiés ({pct}%).",
+  mktSupportsTitle: "Signaux de couverture",
+  mktSupportsNote:
+    "Comptes du jeu de recherche actuel — les listes qualifiées du jour. Des comptes de couverture, pas des taux d'occurrence.",
+  mktQualifiedLine: "{n} matchs qualifiés dans le jeu de recherche actuel",
+  mktLeagueCoverageLine: "{n} compétitions couvertes",
+  mktTopLeagueRow: "{league} — {count} sur {total} ({pct}%)",
+  mktProviderAvgLine:
+    "Potentiel moyen du fournisseur {pct}% sur le jeu qualifié — chiffre du fournisseur, pas un taux mesuré.",
+  mktFixturesTitle: "Matchs qualifiés aujourd'hui",
+  mktFixturesEmpty: "Aucun match qualifié pour ce marché dans le jeu de recherche actuel.",
+  mktDetailTitle: "Détail du marché",
+  mktFaqTitle: "Questions",
+  mktRelatedTitle: "Marchés liés",
+  mktOddsTitle: "Cotes observées",
+  mktOddsEmpty:
+    "Pas encore d'observations de cotes stockées pour ce marché — les chiffres n'apparaissent qu'après des observations vérifiées.",
+  mktOddsBest: "Meilleure observée",
+  mktOddsAverage: "Moyenne observée",
+  mktOddsLowest: "Plus basse observée",
+  mktOddsMovements: "Mouvements",
+  mktOddsClv: "Moyenne CLV",
+  mktOddsWindowNote:
+    "Tous les chiffres viennent du jeu d'observations stocké — jamais un prix en direct.",
+  mktIndicatorsTitle: "Indicateurs d'évidence",
+  mktIndicatorsShow: "Déplier les définitions",
+  mktIndicatorsHide: "Masquer les définitions",
+  mktIndicatorsNote:
+    "Définitions des métriques de ce marché — ni valeurs en direct, ni scores de confiance.",
+  mktIndicatorUsed: "utilisé dans la recherche",
+  mktIndicatorConceptual: "conceptuel",
 
 });
 
