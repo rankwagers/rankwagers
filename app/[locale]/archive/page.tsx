@@ -6,11 +6,9 @@ import { ArchivePagination } from "@/components/archive/ArchivePagination";
 import { ArchiveTable } from "@/components/archive/ArchiveTable";
 import { ArchiveViewTracker } from "@/components/archive/ArchiveViewTracker";
 import { TransparencyDashboard } from "@/components/archive/TransparencyDashboard";
-import { EmptyState } from "@/components/ui/EmptyState";
 import {
   archiveDayPath,
   archiveIndexPath,
-  methodologyPath,
 } from "@/lib/archive/links";
 import { queryArchive } from "@/lib/archive/load";
 import {
@@ -18,7 +16,23 @@ import {
   archiveHubWebPageLd,
 } from "@/lib/archive/schema";
 import { locales, type Locale } from "@/lib/i18n";
+import { getDictionary } from "@/lib/dictionaries";
+import { formatDict } from "@/lib/dictionaryExtras";
 import { pageMetadata } from "@/lib/seo";
+
+/* ============================================================================
+   THE ARCHIVE HUB — form-guide conversion, fixture-style hierarchy
+   ----------------------------------------------------------------------------
+   LEAD      the verified record itself — of the settled predictions, how many
+             won and lost, the percentage computed from that printed fraction.
+             Omitted whole when nothing is settled.
+   SUPPORTS  the record's shape: totals, splits, per-market and per-competition
+             rows, every rate paired with its sample.
+   ROWS      the predictions — the ruled table, wins and losses alike.
+   DETAIL    day chips and filters for the reader who digs.
+   LAST      nothing. The archive is the verification surface; it carries no
+             commercial block by design.
+   ========================================================================== */
 
 const TITLE = "Prediction archive — every published prediction and its settled result";
 const DESCRIPTION =
@@ -55,6 +69,7 @@ export default async function ArchiveHubPage({
     searchParams,
     { dateLimit: 60 }
   );
+  const p = getDictionary(params.locale).predictions;
 
   const filterQuery = {
     market: page.filters.market === "all" ? undefined : page.filters.market,
@@ -65,7 +80,7 @@ export default async function ArchiveHubPage({
   };
 
   return (
-    <div className="container-wide pb-20">
+    <div className="rw-hero container-wide bg-[var(--hero-canvas)] pb-24">
       <ArchiveViewTracker locale={params.locale} kind="hub" />
       <JsonLd
         data={archiveHubWebPageLd({
@@ -76,82 +91,87 @@ export default async function ArchiveHubPage({
       />
       <JsonLd data={archiveHubBreadcrumbLd(params.locale)} />
 
-      <nav aria-label="Breadcrumb" className="mb-6 text-xs text-muted-foreground">
-        <ol className="flex flex-wrap gap-1">
-          <li>
-            <Link href={`/${params.locale}`} className="hover:text-brand">
-              Home
-            </Link>
-          </li>
-          <li aria-hidden>/</li>
-          <li className="text-foreground" aria-current="page">
-            Prediction archive
-          </li>
-        </ol>
+      <nav aria-label="Breadcrumb" className="rw-m pt-5 text-[var(--hero-ink-2)]">
+        <Link href={`/${params.locale}`} className="hover:text-[var(--hero-ink)]">
+          Home
+        </Link>
+        <span className="mx-1.5" aria-hidden>
+          /
+        </span>
+        <span className="text-[var(--hero-ink)]">{p.arcIndexTitle}</span>
       </nav>
 
-      <header className="max-w-3xl">
-        <p className="text-metadata font-medium uppercase tracking-label text-brand">
-          Verification
-        </p>
-        <h1 className="mt-2 font-display text-3xl font-semibold text-foreground">
-          Prediction archive
+      <header className="mt-6 border-b border-[var(--hero-line)] pb-10">
+        <span aria-hidden className="block h-[2px] w-10 bg-[var(--hero-ink)]" />
+        <p className="rw-m mt-3.5 text-[var(--hero-ink-2)]">{p.arcIndexEyebrow}</p>
+        <h1 className="rw-h mt-1.5 text-[clamp(2.125rem,4.4vw,2.875rem)] text-[var(--hero-ink)]">
+          {p.arcIndexTitle}
         </h1>
-        <p className="mt-3 text-sm leading-relaxed text-[var(--ink-secondary)]">
-          Historical qualified-list predictions from RankWagers daily archives. Settled
-          wins and losses are both shown. Average odds and ROI stay unavailable until
-          publication odds are durably stored.{" "}
-          <Link
-            href={methodologyPath(params.locale)}
-            className="font-semibold text-brand hover:underline"
-          >
-            Methodology
-          </Link>
+        <p className="mt-2.5 max-w-[62ch] text-[15px] leading-[1.55] text-[var(--hero-ink-2)]">
+          {p.arcIndexLede}
         </p>
       </header>
 
-      <div className="mt-8">
-        <TransparencyDashboard metrics={metrics} locale={params.locale} />
+      {/* LEAD + SUPPORTS — the verified record, rates paired by construction. */}
+      <div className="mt-14">
+        <TransparencyDashboard metrics={metrics} locale={params.locale} p={p} />
       </div>
 
-      <nav
-        className="mt-8 flex flex-wrap gap-3 text-sm"
-        aria-label="Related research destinations"
+      {/* ROWS — the predictions themselves. */}
+      <section
+        className="mt-16 border-t border-[var(--hero-line)] pt-12"
+        aria-labelledby="archive-results-heading"
       >
-        <Link href={`/${params.locale}#fixtures`} className="text-brand hover:underline">
-          Fixtures
-        </Link>
-        <Link href={`/${params.locale}/competitions`} className="text-brand hover:underline">
-          Competitions
-        </Link>
-        <Link href={`/${params.locale}/teams`} className="text-brand hover:underline">
-          Teams
-        </Link>
-        <Link href={`/${params.locale}/markets`} className="text-brand hover:underline">
-          Markets
-        </Link>
-        <Link href={`/${params.locale}/countries`} className="text-brand hover:underline">
-          Countries
-        </Link>
-        <Link href={`/${params.locale}/operators`} className="text-brand hover:underline">
-          Bookmakers
-        </Link>
-        <Link href={methodologyPath(params.locale)} className="text-brand hover:underline">
-          Methodology
-        </Link>
-      </nav>
+        <h2 id="archive-results-heading" className="rw-m text-[var(--hero-ink-2)]">
+          {p.arcBrowseTitle}
+        </h2>
+        <div className="mt-5">
+          <ArchiveFilters
+            locale={params.locale}
+            filters={page.filters}
+            competitions={competitions}
+            p={p}
+          />
+        </div>
+        <p className="rw-m mt-4 text-[var(--hero-ink-2)]" role="status">
+          {formatDict(p.arcShowingLine, {
+            shown: String(page.records.length),
+            total: String(page.total),
+          })}
+          {page.pageCount > 1
+            ? ` · ${formatDict(p.arcPageOf, {
+                page: String(page.page),
+                total: String(page.pageCount),
+              })}`
+            : ""}
+        </p>
+        <div className="mt-4">
+          <ArchiveTable records={page.records} locale={params.locale} p={p} />
+        </div>
+        <ArchivePagination
+          basePath={archiveIndexPath(params.locale)}
+          page={page.page}
+          pageCount={page.pageCount}
+          query={filterQuery}
+          p={p}
+        />
+      </section>
 
-      <section className="mt-10" aria-labelledby="archive-days-heading">
-        <h2 id="archive-days-heading" className="font-display text-xl font-semibold">
-          Archive days
+      {/* DETAIL — the day chips. */}
+      <section
+        className="mt-16 border-t border-[var(--hero-line)] pt-12"
+        aria-labelledby="archive-days-heading"
+      >
+        <h2 id="archive-days-heading" className="rw-m text-[var(--hero-ink-2)]">
+          {p.arcDaysTitle}
         </h2>
         {dates.length ? (
-          <ul className="mt-3 flex flex-wrap gap-2">
+          <ul className="mt-4 flex flex-wrap gap-2">
             {dates.slice(0, 24).map((date) => (
               <li key={date}>
                 <Link
                   href={archiveDayPath(params.locale, date)}
-                  className="inline-flex min-h-9 items-center rounded-md border border-border px-3 text-sm hover:border-brand/35"
+                  className="rw-m inline-flex min-h-9 items-center border border-[var(--hero-line)] px-3 text-[var(--hero-ink)] transition-colors hover:border-[var(--hero-ink)]"
                 >
                   {date}
                 </Link>
@@ -159,35 +179,10 @@ export default async function ArchiveHubPage({
             ))}
           </ul>
         ) : (
-          <div className="mt-3">
-            <EmptyState
-              title="No archive days yet"
-              description="No daily prediction archives are available yet. Settled fixtures are archived permanently and appear here."
-            />
-          </div>
+          <p className="mt-4 max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]">
+            {p.arcDaysEmpty}
+          </p>
         )}
-      </section>
-
-      <section className="mt-10 space-y-4" aria-labelledby="archive-results-heading">
-        <h2 id="archive-results-heading" className="font-display text-xl font-semibold">
-          Browse predictions
-        </h2>
-        <ArchiveFilters
-          locale={params.locale}
-          filters={page.filters}
-          competitions={competitions}
-        />
-        <p className="text-xs text-muted-foreground" role="status">
-          Showing {page.records.length} of {page.total} matching rows
-          {page.pageCount > 1 ? ` · page ${page.page} of ${page.pageCount}` : ""}
-        </p>
-        <ArchiveTable records={page.records} locale={params.locale} />
-        <ArchivePagination
-          basePath={archiveIndexPath(params.locale)}
-          page={page.page}
-          pageCount={page.pageCount}
-          query={filterQuery}
-        />
       </section>
     </div>
   );

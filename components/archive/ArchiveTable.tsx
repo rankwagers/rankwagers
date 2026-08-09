@@ -2,68 +2,76 @@
 
 import Link from "next/link";
 import type { ArchivePredictionRecord } from "@/lib/archive/types";
+import type { PredictionStrings } from "@/lib/translations/predictionsEn";
 import { StatusBadge } from "@/components/homepage/sectionChrome";
+import { LocalTime } from "@/components/fixtures/LocalTime";
 import { trackArchiveEvent } from "@/lib/archive/analytics";
 
+/*
+ * THE ARCHIVE TABLE — form-guide conversion. Ruled rows, mono labels, the
+ * monochrome StatusBadge. Truth laws: a null figure omits its line rather
+ * than printing a dash; times render through LocalTime (viewer-local, SSR
+ * UTC — one clock); the potential column carries the provider label, never a
+ * confidence; the absent odds/P&L are stated in words, not dashed cells.
+ */
 export function ArchiveTable({
   records,
   locale,
-  emptyText = "No archived predictions match these filters.",
+  p,
+  emptyText,
 }: {
   records: ArchivePredictionRecord[];
   locale: string;
+  p: PredictionStrings;
   emptyText?: string;
 }) {
   if (!records.length) {
     return (
       <p
-        className="rounded-lg border border-dashed border-border px-4 py-8 text-center text-sm text-muted-foreground"
+        className="max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]"
         role="status"
       >
-        {emptyText}
+        {emptyText ?? p.arcTableEmpty}
       </p>
     );
   }
 
   return (
-    <div className="table-shell">
-      <table className="table-base">
+    <div className="overflow-x-auto">
+      <table className="min-w-full border-t-[1.5px] border-[var(--hero-ink)] text-sm">
         <caption className="sr-only">
-          Archived qualified-list predictions with publication time, kickoff,
-          market, confidence, evidence, and settlement outcome
+          {p.arcIndexTitle}: {p.arcTableMatch}, {p.arcTableMarket}, {p.heroTablePotential},{" "}
+          {p.arcTableResult}, {p.arcTableScore}, {p.arcTableTiming}
         </caption>
         <thead>
-          <tr>
-            <th scope="col">
-              Match
+          <tr className="rw-label border-b border-[var(--hero-line)] text-left text-[var(--hero-ink-2)]">
+            <th scope="col" className="py-2.5 pl-3.5 pr-3">
+              {p.arcTableMatch}
             </th>
-            <th scope="col">
-              Market
+            <th scope="col" className="py-2.5 pr-3">
+              {p.arcTableMarket}
             </th>
-            <th scope="col">
-              Model %
+            <th scope="col" className="py-2.5 pr-3">
+              {p.heroTablePotential}
             </th>
-            <th scope="col">
-              Result
+            <th scope="col" className="py-2.5 pr-3">
+              {p.arcTableResult}
             </th>
-            <th scope="col">
-              Score
+            <th scope="col" className="py-2.5 pr-3">
+              {p.arcTableScore}
             </th>
-            <th scope="col">
-              Timing
+            <th scope="col" className="py-2.5">
+              {p.arcTableTiming}
             </th>
           </tr>
         </thead>
         <tbody>
           {records.map((row) => (
-            <tr
-              key={row.id}
-              className="align-top"
-            >
-              <td className="py-3">
+            <tr key={row.id} className="rw-row border-b border-[var(--hero-line)] align-top">
+              <td className="py-3 pl-3.5 pr-3">
                 <Link
                   href={row.matchHref}
-                  className="font-medium text-brand hover:underline"
+                  className="font-semibold tracking-[-0.01em] text-[var(--hero-ink)] underline decoration-[var(--hero-line)] underline-offset-4 hover:decoration-[var(--hero-ink)]"
                   onClick={() =>
                     trackArchiveEvent("archive_prediction_opened", {
                       locale,
@@ -77,53 +85,62 @@ export function ArchiveTable({
                 >
                   {row.homeTeam} vs {row.awayTeam}
                 </Link>
-                <p className="mt-0.5 text-xs text-muted-foreground">
+                <p className="rw-m mt-1 text-[var(--hero-ink-2)]">
                   {row.competition}
                   {row.country ? ` · ${row.country}` : ""}
                 </p>
-                <details className="mt-2 text-xs text-[var(--ink-secondary)]">
-                  <summary className="cursor-pointer font-medium text-foreground">
-                    Settlement &amp; evidence
+                <details className="mt-2 text-xs text-[var(--hero-ink-2)]">
+                  <summary className="cursor-pointer font-medium text-[var(--hero-ink)]">
+                    {p.arcSettlementSummary}
                   </summary>
                   <p className="mt-1">{row.settlementReason}</p>
-                  <ul className="mt-1 list-disc space-y-0.5 pl-4">
+                  <ul className="mt-1 space-y-0.5 border-l border-[var(--hero-line)] pl-3">
                     {row.evidenceSummary.map((line) => (
                       <li key={line}>{line}</li>
                     ))}
                   </ul>
-                  <p className="mt-1 text-muted-foreground">
-                    Original odds: unavailable · Unit P/L: unavailable
-                  </p>
+                  <p className="mt-1">{p.arcOddsRowUnavailable}</p>
                 </details>
               </td>
-              <td className="py-3">
-                <p>{row.marketLabel}</p>
-                <p className="text-xs text-muted-foreground">{row.selectionLabel}</p>
+              <td className="py-3 pr-3">
+                <p className="text-[var(--hero-ink)]">{row.marketLabel}</p>
+                <p className="rw-m mt-0.5 text-[var(--hero-ink-2)]">{row.selectionLabel}</p>
               </td>
-              <td className="table-num py-3">
-                {row.confidence != null ? `${row.confidence}%` : "—"}
+              <td className="py-3 pr-3">
+                {row.confidence != null ? (
+                  <>
+                    <span className="rw-tnum font-bold text-[var(--hero-ink)]">
+                      {row.confidence}%
+                    </span>
+                    <span className="rw-m block text-[var(--hero-ink-2)]">
+                      {p.rankedPotentialLabel}
+                    </span>
+                  </>
+                ) : null}
               </td>
-              <td className="py-3">
+              <td className="py-3 pr-3">
                 <StatusBadge status={row.status} label={row.status} />
               </td>
-              <td className="py-3 font-mono text-xs">{row.scoreLabel}</td>
-              <td className="py-3 text-xs text-muted-foreground">
+              <td className="rw-tnum py-3 pr-3 font-mono text-xs text-[var(--hero-ink)]">
+                {row.scoreLabel}
+              </td>
+              <td className="py-3 text-xs text-[var(--hero-ink-2)]">
                 <p>
-                  <span className="font-medium text-foreground">Archive </span>
+                  <span className="rw-m text-[var(--hero-ink)]">{p.arcArchiveLabel}</span>{" "}
                   {row.date}
                 </p>
-                <p className="mt-1">
-                  Kickoff{" "}
-                  {row.kickoffAt
-                    ? new Date(row.kickoffAt).toLocaleString()
-                    : "—"}
-                </p>
-                <p className="mt-1">
-                  Published{" "}
-                  {row.publishedAt
-                    ? new Date(row.publishedAt).toLocaleString()
-                    : "—"}
-                </p>
+                {row.kickoffAt ? (
+                  <p className="mt-1">
+                    <span className="rw-m">{p.arcKickoffLabel}</span>{" "}
+                    <LocalTime iso={row.kickoffAt} locale={locale} />
+                  </p>
+                ) : null}
+                {row.publishedAt ? (
+                  <p className="mt-1">
+                    <span className="rw-m">{p.arcPublishedLabel}</span>{" "}
+                    <LocalTime iso={row.publishedAt} locale={locale} />
+                  </p>
+                ) : null}
               </td>
             </tr>
           ))}

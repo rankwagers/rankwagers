@@ -16,3 +16,5 @@ When disabled:
 | cron | 404 / 403 / 405 |
 | combo route flag off | 404 |
 | affiliate flag off | safe `/not-available` |
+
+**Decision (Family E, 2026-08-09):** `/today` is a deliberate, permanent redirect to `/{locale}` — the homepage is today's research page (one clock, one home for the current day). Not a placeholder; do not build a separate today page.

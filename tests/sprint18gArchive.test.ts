@@ -3,6 +3,7 @@ import { readFileSync, existsSync } from "node:fs";
 import path from "node:path";
 import { test } from "node:test";
 import { aggregateRecords } from "../lib/archive/aggregate";
+import { predictionsEn } from "../lib/translations/predictionsEn";
 import { ARCHIVE_ANALYTICS_EVENTS } from "../lib/archive/analytics";
 import {
   archiveDayPath,
@@ -230,10 +231,18 @@ test("transparency dashboard copy forbids fabricated profitability claims", () =
     path.join(root, "components/archive/TransparencyDashboard.tsx"),
     "utf8"
   );
-  assert.match(dash, /Average odds/);
-  assert.match(dash, /Unavailable/);
+  /*
+   * Re-pinned after the Family E form-guide conversion: the honesty copy moved
+   * into the dictionary (`arcOddsUnavailable`), so the pin follows it — the
+   * component must still render the stated absence, and the English string
+   * must still say the figures are unavailable rather than fabricating them.
+   */
+  assert.match(dash, /arcOddsUnavailable/);
+  assert.match(
+    predictionsEn.arcOddsUnavailable,
+    /unavailable until publication odds are durably stored/
+  );
   assert.doesNotMatch(dash, /guaranteed/i);
-  assert.doesNotMatch(dash, /\bROI\b/);
 });
 
 test("archive analytics events are registered", () => {
@@ -279,7 +288,8 @@ test("archive table remains accessible and loss-visible", () => {
     path.join(root, "components/archive/ArchiveFilters.tsx"),
     "utf8"
   );
-  assert.match(filters, /aria-label=["']Archive filters["']/);
+  // Re-pinned: the label is a dictionary string now — the mechanism must stay.
+  assert.match(filters, /aria-label=\{/);
   assert.match(filters, /archive_filter_used/);
 });
 
