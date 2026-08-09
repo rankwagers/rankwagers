@@ -2,23 +2,20 @@ import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { EntityDiscoverySection } from "@/components/discovery/EntityDiscoverySection";
 import { EvidenceSection } from "@/components/evidence-ui/EvidenceSection";
-import { EvidenceSummaryChip } from "@/components/evidence-ui/EvidenceSummaryChip";
 import { EntityViewTracker } from "@/components/knowledge-graph/EntityViewTracker";
 import { GraphEntityPanel } from "@/components/knowledge-graph/GraphEntityPanel";
 import { fromTeamIntelligence } from "@/lib/evidence-ui";
-import { EmptyState } from "@/components/ui/EmptyState";
 import { countryPath } from "@/lib/countries/links";
 import { countryName } from "@/lib/geoNames";
 import { graphRelatedItemListLd } from "@/lib/knowledge-graph/schema";
 import type { Locale } from "@/lib/i18n";
 import type { QualifiedFixture } from "@/lib/research/qualifiedFixture";
+import type { PredictionStrings } from "@/lib/translations/predictionsEn";
+import { formatDict } from "@/lib/dictionaryExtras";
 import { AddToAccaButton } from "@/components/acca/AddToAccaButton";
 import { fixturePath } from "@/lib/fixtures/paths";
 import { siteUrl } from "@/lib/seo";
-import {
-  teamBreadcrumbLd,
-  teamWebPageLd,
-} from "@/lib/teams/schema";
+import { teamBreadcrumbLd, teamWebPageLd } from "@/lib/teams/schema";
 import {
   teamCompetitionHref,
   teamEvidenceHref,
@@ -30,6 +27,7 @@ import {
 } from "@/lib/teams/links";
 import type { TeamOperatorRow } from "@/lib/teams/operators";
 import { getRelatedTeams } from "@/lib/teams/registry";
+import { getCompetition } from "@/lib/competitions/registry";
 import type { TeamEntity, TeamIntelligence } from "@/lib/teams/types";
 import {
   TeamCompetitionLink,
@@ -41,6 +39,22 @@ import {
   TeamRelatedLink,
 } from "./TeamInteractive";
 
+/* ============================================================================
+   THE TEAM PAGE — form-guide conversion, fixture-style hierarchy
+   ----------------------------------------------------------------------------
+   Top-down:
+
+     LEAD      what this team's research set holds — one sentence with its
+               counts inline. Omitted whole when the set is empty.
+     SUPPORTS  the sample's shape: qualified rows, unique fixtures, home/away
+               split; the provider average demoted to the label register.
+     FIXTURES  upcoming then recent qualified rows — honest empties.
+     DETAIL    competitions, goal-market profile, evidence bundle, the honest
+               absence of goal/xG enrichment, related graph entities and
+               related teams.
+     LAST      one commercial block: available operators as ruled rows.
+   ========================================================================== */
+
 export function TeamDetailView({
   team,
   locale,
@@ -49,6 +63,7 @@ export function TeamDetailView({
   recent,
   operators,
   visitorCountry,
+  p,
 }: {
   team: TeamEntity;
   locale: Locale;
@@ -57,6 +72,7 @@ export function TeamDetailView({
   recent: QualifiedFixture[];
   operators: TeamOperatorRow[];
   visitorCountry: string;
+  p: PredictionStrings;
 }) {
   const relatedTeams = getRelatedTeams(team.slug, 6);
   const relatedItemList = graphRelatedItemListLd({
@@ -66,6 +82,7 @@ export function TeamDetailView({
     siteUrl: siteUrl(),
   });
   const evidenceBundle = fromTeamIntelligence(intelligence, `team:${team.slug}`);
+  const total = intelligence.matchesInSample;
 
   return (
     <>
@@ -81,243 +98,294 @@ export function TeamDetailView({
       <JsonLd data={teamBreadcrumbLd({ team, locale })} />
       {relatedItemList && <JsonLd data={relatedItemList} />}
 
-      <div className="container-wide pb-16 pt-5">
-        <nav aria-label="Breadcrumb" className="text-xs text-muted-foreground">
-          <Link href={`/${locale}`} className="hover:text-foreground">Home</Link>
-          <span className="mx-1.5">/</span>
-          <Link href={teamsIndexPath(locale)} className="hover:text-foreground">Teams</Link>
-          <span className="mx-1.5">/</span>
-          <span className="text-foreground">{team.name}</span>
+      <div className="rw-hero container-wide bg-[var(--hero-canvas)] pb-24">
+        <nav aria-label="Breadcrumb" className="rw-m pt-5 text-[var(--hero-ink-2)]">
+          <Link href={`/${locale}`} className="hover:text-[var(--hero-ink)]">
+            Home
+          </Link>
+          <span className="mx-1.5" aria-hidden>
+            /
+          </span>
+          <Link href={teamsIndexPath(locale)} className="hover:text-[var(--hero-ink)]">
+            {p.tmIndexTitle}
+          </Link>
+          <span className="mx-1.5" aria-hidden>
+            /
+          </span>
+          <span className="text-[var(--hero-ink)]">{team.name}</span>
         </nav>
 
-        <section className="border-b border-[var(--border-subtle)] pb-8 pt-6">
-          <p className="text-metadata font-medium uppercase tracking-label text-brand">
-            Team intelligence
+        <header className="mt-6 border-b border-[var(--hero-line)] pb-10">
+          <span aria-hidden className="block h-[2px] w-10 bg-[var(--hero-ink)]" />
+          <p className="rw-m mt-3.5 text-[var(--hero-ink-2)]">
+            {p.tmIndexEyebrow}
             {team.countryCode ? (
               <>
                 {" · "}
                 <Link
                   href={countryPath(locale, team.countryCode)}
-                  className="hover:underline"
+                  className="hover:text-[var(--hero-ink)]"
                 >
                   {countryName(team.countryCode)}
                 </Link>
               </>
             ) : null}
           </p>
-          <h1 className="mt-3 font-display text-3xl font-semibold tracking-display text-foreground md:text-4xl">
+          <h1 className="rw-h mt-1.5 text-[clamp(2.125rem,4.4vw,2.875rem)] text-[var(--hero-ink)]">
             {team.name}
           </h1>
-          <p className="mt-3 max-w-3xl text-sm leading-relaxed text-[var(--ink-secondary)] md:text-base">
-            Research surface for {team.name}: qualified fixtures, market evidence from the
-            RankWagers queue, and country-aware operators. No tips, ratings, or invented
-            statistics.
-          </p>
-          <p className="mt-3 text-xs text-muted-foreground">
-            Visitor country {visitorCountry}
-          </p>
-        </section>
+        </header>
 
-        <section className="border-b border-[var(--border-subtle)] py-8" aria-labelledby="overview">
-          <h2 id="overview" className="font-display text-xl font-semibold text-foreground">
-            Team overview
-          </h2>
-          <dl className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-            <Stat label="Qualified market rows" value={String(intelligence.matchesInSample)} />
-            <Stat label="Unique fixtures" value={String(intelligence.uniqueMatchCount)} />
-            <Stat
-              label="Avg model probability"
-              value={
-                intelligence.averageModelProbability === null
-                  ? "—"
-                  : `${intelligence.averageModelProbability}%`
-              }
-            />
-            <div className="rounded-md border border-border px-3 py-2">
-              <p className="text-metadata uppercase tracking-label text-muted-foreground">Evidence strength</p>
-              <div className="mt-2">
-                <EvidenceSummaryChip
-                  strength={evidenceBundle.summaryStrength}
-                  sampleSize={intelligence.uniqueMatchCount}
-                />
-              </div>
-            </div>
-          </dl>
-          <p className="mt-3 text-xs text-muted-foreground">{intelligence.sampleNote}</p>
-        </section>
+        {/* LEAD — omitted whole on an empty research set (the empty-state law). */}
+        {total > 0 ? (
+          <section aria-labelledby="tm-lead-heading" className="mt-14">
+            <p className="rw-m text-[var(--hero-ink-2)]">{p.mktLeadEyebrow}</p>
+            <h2
+              id="tm-lead-heading"
+              className="rw-h mt-2.5 max-w-[30ch] text-[clamp(1.6rem,3.6vw,2.4rem)] text-[var(--hero-ink)]"
+            >
+              {formatDict(p.tmLeadLine, {
+                count: String(total),
+                fixtures: String(intelligence.uniqueMatchCount),
+              })}
+            </h2>
+          </section>
+        ) : null}
 
-        <section className="border-b border-[var(--border-subtle)] py-8" aria-labelledby="competitions">
-          <h2 id="competitions" className="font-display text-xl font-semibold text-foreground">
-            Current competitions
-          </h2>
-          <ul className="mt-4 flex flex-wrap gap-2">
-            {team.competitionSlugs.map((slug) => (
-              <li key={slug}>
-                <TeamCompetitionLink
-                  href={teamCompetitionHref(locale, slug)}
-                  teamSlug={team.slug}
-                  teamId={team.id}
-                  competitionSlug={slug}
-                  locale={locale}
-                  className="inline-flex rounded-md border border-border px-3 py-1.5 text-sm font-medium text-brand hover:bg-[var(--canvas-secondary)]"
-                >
-                  {slug.replace(/-/g, " ")}
-                </TeamCompetitionLink>
+        {/* SUPPORTS — the sample's shape, counts only, provider figure demoted. */}
+        {total > 0 ? (
+          <section aria-labelledby="tm-supports-heading" className="mt-12">
+            <h2 id="tm-supports-heading" className="rw-m text-[var(--hero-ink-2)]">
+              {p.mktSupportsTitle}
+            </h2>
+            <p className="mt-1.5 max-w-[52ch] text-[13px] leading-relaxed text-[var(--hero-ink-2)]">
+              {p.mktSupportsNote}
+            </p>
+            <ul className="mt-5 border-t-[1.5px] border-[var(--hero-ink)]">
+              <li className="rw-row border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] text-[var(--hero-ink)]">
+                {formatDict(p.cmpQualifiedRowsLine, { n: String(total) })}
               </li>
-            ))}
-          </ul>
-        </section>
+              {intelligence.uniqueMatchCount > 0 ? (
+                <li className="rw-row border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] text-[var(--hero-ink)]">
+                  {formatDict(p.cmpUniqueFixturesLine, {
+                    n: String(intelligence.uniqueMatchCount),
+                  })}
+                </li>
+              ) : null}
+              {intelligence.homeAppearances + intelligence.awayAppearances > 0 ? (
+                <li className="rw-row border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] text-[var(--hero-ink)]">
+                  {formatDict(p.ssnHomeAwayLine, {
+                    home: String(intelligence.homeAppearances),
+                    away: String(intelligence.awayAppearances),
+                  })}
+                </li>
+              ) : null}
+            </ul>
+            <p className="mt-3 max-w-[52ch] text-[13px] leading-relaxed text-[var(--hero-ink-2)]">
+              {formatDict(p.tmHomeAwayNote, { team: team.name })}
+            </p>
+            {intelligence.averageModelProbability !== null ? (
+              <p className="rw-m mt-3 normal-case tracking-[0.04em] text-[var(--hero-ink-2)]">
+                {formatDict(p.mktProviderAvgLine, {
+                  pct: String(Math.round(intelligence.averageModelProbability)),
+                })}
+              </p>
+            ) : null}
+          </section>
+        ) : null}
 
-        <section className="border-b border-[var(--border-subtle)] py-8" aria-labelledby="upcoming">
-          <h2 id="upcoming" className="font-display text-xl font-semibold text-foreground">
-            Upcoming qualified fixtures
+        {/* FIXTURES — upcoming, then recent. Honest empties. */}
+        <section
+          aria-labelledby="tm-upcoming-heading"
+          className="mt-16 border-t border-[var(--hero-line)] pt-12"
+        >
+          <h2 id="tm-upcoming-heading" className="rw-m text-[var(--hero-ink-2)]">
+            {p.cmpUpcomingTitle}
           </h2>
-          <FixtureList
+          <FixtureRows
             fixtures={upcoming}
-            teamSlug={team.slug}
-            teamId={team.id}
+            team={team}
             locale={locale}
-            empty="No upcoming qualified fixtures for this team in the current research queue."
+            empty={p.tmUpcomingEmpty}
+            potentialLabel={p.rankedPotentialLabel}
           />
         </section>
 
-        <section className="border-b border-[var(--border-subtle)] py-8" aria-labelledby="recent">
-          <h2 id="recent" className="font-display text-xl font-semibold text-foreground">
-            Recently analyzed fixtures
+        <section aria-labelledby="tm-recent-heading" className="mt-12">
+          <h2 id="tm-recent-heading" className="rw-m text-[var(--hero-ink-2)]">
+            {p.cmpRecentTitle}
           </h2>
-          <FixtureList
+          <p className="mt-1.5 max-w-[52ch] text-[13px] leading-relaxed text-[var(--hero-ink-2)]">
+            {p.cmpRecentNote}
+          </p>
+          <FixtureRows
             fixtures={recent}
-            teamSlug={team.slug}
-            teamId={team.id}
+            team={team}
             locale={locale}
-            empty="No recently analyzed fixtures for this team in the current sample."
+            empty={p.tmRecentEmpty}
+            potentialLabel={p.rankedPotentialLabel}
           />
         </section>
 
-        <EvidenceSection
-          bundle={evidenceBundle}
-          locale={locale}
-          country={visitorCountry}
-        />
-
-        <section className="border-b border-[var(--border-subtle)] py-8" aria-labelledby="evidence">
-          <h2 id="evidence" className="font-display text-xl font-semibold text-foreground">
-            Evidence snapshot
+        {/* DETAIL — competitions, market profile, evidence, honest absences. */}
+        <section
+          aria-labelledby="tm-detail-heading"
+          className="mt-16 border-t border-[var(--hero-line)] pt-12"
+        >
+          <h2 id="tm-detail-heading" className="rw-m text-[var(--hero-ink-2)]">
+            {p.tmDetailTitle}
           </h2>
-          <div className="mt-4 grid gap-3 sm:grid-cols-2">
-            <Stat label="Home appearances in sample" value={String(intelligence.homeAppearances)} />
-            <Stat label="Away appearances in sample" value={String(intelligence.awayAppearances)} />
-          </div>
-          {!intelligence.hasGoalEnrichment ? (
-            <div className="mt-4">
-              <EmptyState
-                title="Goal and xG enrichment unavailable"
-                description="Team-level goals, xG, and clean-sheet rates are only shown when match-detail enrichment exists. This page does not invent those statistics."
-                action={
-                  <TeamEvidenceLink
-                    href={teamEvidenceHref(locale)}
-                    teamSlug={team.slug}
-                    teamId={team.id}
-                    locale={locale}
-                    className="text-sm font-medium text-brand hover:underline"
+
+          {team.competitionSlugs.length ? (
+            <div className="mt-6">
+              <h3 className="rw-label text-[var(--hero-ink-2)]">{p.tmCompetitionsTitle}</h3>
+              <ul className="mt-2.5 flex flex-wrap gap-2">
+                {team.competitionSlugs.map((slug) => (
+                  <li key={slug}>
+                    <TeamCompetitionLink
+                      href={teamCompetitionHref(locale, slug)}
+                      teamSlug={team.slug}
+                      teamId={team.id}
+                      competitionSlug={slug}
+                      locale={locale}
+                      className="rw-m inline-flex border border-[var(--hero-line)] px-2.5 py-1 text-[var(--hero-ink)] transition-colors hover:border-[var(--hero-ink)]"
+                    >
+                      {getCompetition(slug)?.name ?? slug.replace(/-/g, " ")}
+                    </TeamCompetitionLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+
+          <div className="mt-8">
+            <h3 className="rw-label text-[var(--hero-ink-2)]">{p.tmMarketProfileTitle}</h3>
+            {intelligence.marketProfile.length === 0 ? (
+              <p className="mt-2.5 max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]">
+                {p.tmMarketProfileEmpty}
+              </p>
+            ) : (
+              <ul className="mt-2.5 border-t border-[var(--hero-line)]">
+                {intelligence.marketProfile.map((row) => (
+                  <li
+                    key={row.marketSlug}
+                    className="rw-row flex flex-wrap items-baseline justify-between gap-x-4 border-b border-[var(--hero-line)] py-2.5 pl-3.5"
                   >
-                    Review methodology
-                  </TeamEvidenceLink>
-                }
-              />
+                    <TeamMarketLink
+                      href={teamMarketHref(locale, row.marketSlug)}
+                      teamSlug={team.slug}
+                      teamId={team.id}
+                      marketSlug={row.marketSlug}
+                      locale={locale}
+                      className="text-[15px] text-[var(--hero-ink)] underline decoration-[var(--hero-line)] underline-offset-4 hover:decoration-[var(--hero-ink)]"
+                    >
+                      {row.marketLabel}
+                    </TeamMarketLink>
+                    <span className="rw-m text-[var(--hero-ink-2)]">
+                      {row.averageModelProbability !== null
+                        ? formatDict(p.cmpRowsProviderMeta, {
+                            n: String(row.qualifiedCount),
+                            pct: String(Math.round(row.averageModelProbability)),
+                          })
+                        : formatDict(p.cmpQualifiedRowsLine, { n: String(row.qualifiedCount) })}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          {team.relatedMarketSlugs.length ? (
+            <div className="mt-8">
+              <h3 className="rw-label text-[var(--hero-ink-2)]">{p.mktRelatedTitle}</h3>
+              <ul className="mt-2.5 flex flex-wrap gap-2">
+                {team.relatedMarketSlugs.map((slug) => (
+                  <li key={slug}>
+                    <TeamMarketLink
+                      href={teamMarketHref(locale, slug)}
+                      teamSlug={team.slug}
+                      teamId={team.id}
+                      marketSlug={slug}
+                      locale={locale}
+                      className="rw-m inline-flex border border-[var(--hero-line)] px-2.5 py-1 text-[var(--hero-ink)] transition-colors hover:border-[var(--hero-ink)]"
+                    >
+                      {slug.replace(/-/g, " ")}
+                    </TeamMarketLink>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ) : null}
+
+          <div className="mt-8">
+            <EvidenceSection bundle={evidenceBundle} locale={locale} country={visitorCountry} />
+          </div>
+
+          {!intelligence.hasGoalEnrichment ? (
+            <p className="mt-8 max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]">
+              {p.tmEnrichmentAbsent}{" "}
+              <TeamEvidenceLink
+                href={teamEvidenceHref(locale)}
+                teamSlug={team.slug}
+                teamId={team.id}
+                locale={locale}
+                className="underline decoration-[var(--hero-line)] underline-offset-4 hover:decoration-[var(--hero-ink)]"
+              >
+                {p.cmpMethodologyLink}
+              </TeamEvidenceLink>
+            </p>
+          ) : null}
+
+          <GraphEntityPanel entityType="team" entitySlug={team.slug} locale={locale} />
+
+          <EntityDiscoverySection
+            entityType="team"
+            entitySlug={team.slug}
+            locale={locale}
+            country={visitorCountry}
+          />
+
+          {relatedTeams.length ? (
+            <div className="mt-8">
+              <h3 className="rw-label text-[var(--hero-ink-2)]">{p.tmRelatedTeams}</h3>
+              <ul className="mt-2.5 flex flex-wrap gap-2">
+                {relatedTeams.map((related) => (
+                  <li key={related.slug}>
+                    <TeamRelatedLink
+                      href={teamPath(locale, related.slug)}
+                      teamSlug={team.slug}
+                      teamId={team.id}
+                      relatedSlug={related.slug}
+                      locale={locale}
+                      className="rw-m inline-flex border border-[var(--hero-line)] px-2.5 py-1 text-[var(--hero-ink)] transition-colors hover:border-[var(--hero-ink)]"
+                    >
+                      {related.name}
+                    </TeamRelatedLink>
+                  </li>
+                ))}
+              </ul>
             </div>
           ) : null}
         </section>
 
-        <section className="border-b border-[var(--border-subtle)] py-8" aria-labelledby="home-away">
-          <h2 id="home-away" className="font-display text-xl font-semibold text-foreground">
-            Home and away profile
-          </h2>
-          <p className="mt-3 max-w-3xl text-sm text-[var(--ink-secondary)]">
-            Counts reflect qualified research rows where {team.name} appears as home or away.
-            This is not a form table or tipster rating.
-          </p>
-          <dl className="mt-4 grid gap-3 sm:grid-cols-2">
-            <Stat label="Home rows" value={String(intelligence.homeAppearances)} />
-            <Stat label="Away rows" value={String(intelligence.awayAppearances)} />
-          </dl>
-        </section>
-
-        <section className="border-b border-[var(--border-subtle)] py-8" aria-labelledby="markets">
-          <h2 id="markets" className="font-display text-xl font-semibold text-foreground">
-            Goal-market profile
-          </h2>
-          {intelligence.marketProfile.length === 0 ? (
-            <div className="mt-4">
-              <EmptyState
-                title="No market profile yet"
-                description="Qualified market rows for this team are not present in the current research sample."
-              />
-            </div>
-          ) : (
-            <ul className="mt-4 divide-y divide-[var(--border-subtle)] border-y border-[var(--border-subtle)]">
-              {intelligence.marketProfile.map((row) => (
-                <li key={row.marketSlug} className="flex flex-wrap items-center justify-between gap-3 py-3">
-                  <TeamMarketLink
-                    href={teamMarketHref(locale, row.marketSlug)}
-                    teamSlug={team.slug}
-                    teamId={team.id}
-                    marketSlug={row.marketSlug}
-                    locale={locale}
-                    className="text-sm font-medium text-brand hover:underline"
-                  >
-                    {row.marketLabel}
-                  </TeamMarketLink>
-                  <p className="text-xs text-muted-foreground">
-                    {row.qualifiedCount} rows
-                    {row.averageModelProbability !== null
-                      ? ` · avg model ${row.averageModelProbability}%`
-                      : ""}
-                  </p>
-                </li>
-              ))}
-            </ul>
-          )}
-          <div className="mt-4">
-            <h3 className="text-metadata font-semibold uppercase tracking-label text-muted-foreground">
-              Related markets
-            </h3>
-            <ul className="mt-2 flex flex-wrap gap-2">
-              {team.relatedMarketSlugs.map((slug) => (
-                <li key={slug}>
-                  <TeamMarketLink
-                    href={teamMarketHref(locale, slug)}
-                    teamSlug={team.slug}
-                    teamId={team.id}
-                    marketSlug={slug}
-                    locale={locale}
-                    className="inline-flex rounded-md border border-border px-2.5 py-1 text-sm text-brand hover:bg-[var(--canvas-secondary)]"
-                  >
-                    {slug.replace(/-/g, " ")}
-                  </TeamMarketLink>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </section>
-
-        <section className="border-b border-[var(--border-subtle)] py-8" aria-labelledby="operators">
-          <h2 id="operators" className="font-display text-xl font-semibold text-foreground">
-            Available operators
+        {/* LAST — the single commercial block. */}
+        <section
+          aria-labelledby="tm-operators-heading"
+          className="mt-16 border-t border-[var(--hero-line)] pt-12"
+        >
+          <h2 id="tm-operators-heading" className="rw-m text-[var(--hero-ink-2)]">
+            {p.ssnOperatorsTitle}
           </h2>
           {operators.length === 0 ? (
-            <div className="mt-4">
-              <EmptyState
-                title="No operators listed"
-                description="Affiliate-enabled operator coverage is unavailable for this context."
-              />
-            </div>
+            <p className="mt-4 max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]">
+              {p.ssnOperatorsEmpty}
+            </p>
           ) : (
-            <ul className="mt-4 space-y-2">
+            <ul className="mt-5 border-t border-[var(--hero-line)]">
               {operators.slice(0, 8).map(({ operator, availability }) => (
                 <li
                   key={operator.slug}
-                  className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-border px-3 py-2"
+                  className="rw-row flex flex-wrap items-baseline justify-between gap-x-4 border-b border-[var(--hero-line)] py-2.5 pl-3.5"
                 >
                   <TeamOperatorLink
                     href={teamOperatorHref(locale, operator.slug)}
@@ -325,135 +393,94 @@ export function TeamDetailView({
                     teamId={team.id}
                     operatorSlug={operator.slug}
                     locale={locale}
-                    className="text-sm font-medium text-brand hover:underline"
+                    className="text-[15px] text-[var(--hero-ink)] underline decoration-[var(--hero-line)] underline-offset-4 hover:decoration-[var(--hero-ink)]"
                   >
                     {operator.name}
                   </TeamOperatorLink>
-                  <span
-                    className={`text-xs ${
-                      availability.available ? "text-[var(--green-deep)]" : "text-[var(--amber-primary)]"
-                    }`}
-                  >
-                    {availability.label}
-                  </span>
+                  <span className="rw-m text-[var(--hero-ink-2)]">{availability.label}</span>
                 </li>
               ))}
             </ul>
           )}
-        </section>
-
-        <GraphEntityPanel entityType="team" entitySlug={team.slug} locale={locale} />
-
-        <EntityDiscoverySection
-          entityType="team"
-          entitySlug={team.slug}
-          locale={locale}
-          country={visitorCountry}
-        />
-
-        <section className="border-b border-[var(--border-subtle)] py-8" aria-labelledby="related-teams">
-          <h2 id="related-teams" className="font-display text-xl font-semibold text-foreground">
-            Related teams
-          </h2>
-          <ul className="mt-4 flex flex-wrap gap-2">
-            {relatedTeams.map((related) => (
-              <li key={related.slug}>
-                <TeamRelatedLink
-                  href={teamPath(locale, related.slug)}
-                  teamSlug={team.slug}
-                  teamId={team.id}
-                  relatedSlug={related.slug}
-                  locale={locale}
-                  className="inline-flex rounded-md border border-border px-3 py-1.5 text-sm font-medium text-brand hover:bg-[var(--canvas-secondary)]"
-                >
-                  {related.name}
-                </TeamRelatedLink>
-              </li>
-            ))}
-          </ul>
+          <p className="rw-m mt-3 normal-case tracking-[0.04em] text-[var(--hero-ink-2)]">
+            {p.fxOperatorsNote}
+          </p>
         </section>
       </div>
     </>
   );
 }
 
-function FixtureList({
+function FixtureRows({
   fixtures,
-  teamSlug,
-  teamId,
+  team,
   locale,
   empty,
+  potentialLabel,
 }: {
   fixtures: QualifiedFixture[];
-  teamSlug: string;
-  teamId: string;
+  team: TeamEntity;
   locale: Locale;
   empty: string;
+  potentialLabel: string;
 }) {
   if (!fixtures.length) {
     return (
-      <div className="mt-3">
-        <EmptyState title="No fixtures in this sample" description={empty} />
-      </div>
+      <p className="mt-4 max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]">
+        {empty}
+      </p>
     );
   }
   return (
-    <ul className="mt-4 divide-y divide-[var(--border-subtle)] border-y border-[var(--border-subtle)]">
+    <ul className="mt-5 border-t-[1.5px] border-[var(--hero-ink)]">
       {fixtures.map((fixture) => (
-        <li key={fixture.id} className="flex flex-wrap items-center justify-between gap-3 py-3">
-          <div>
-            <TeamFixtureLink
-              href={teamFixtureHref(locale)}
-              teamSlug={teamSlug}
-              teamId={teamId}
-              fixtureId={fixture.matchId}
-              locale={locale}
-              className="text-sm font-medium text-brand hover:underline"
-            >
-              {fixture.home} vs {fixture.away}
-            </TeamFixtureLink>
-            <p className="mt-0.5 text-xs text-muted-foreground">
-              {fixture.league} · {fixture.market} · {fixture.kickoff}
-            </p>
-          </div>
-          <div className="flex items-center gap-3">
-            <p className="font-mono text-sm tabular-nums text-brand">{fixture.modelProbability}%</p>
-            <AddToAccaButton
-              compact
-              draft={{
-                matchId: fixture.matchId,
-                homeTeam: fixture.home,
-                awayTeam: fixture.away,
-                competition: fixture.league,
-                kickoffAt: fixture.kickoffDateTime,
-                marketKey: fixture.marketKind,
-                confidence: fixture.modelProbability,
-                odds: null,
-                evidenceSummary: [
-                  `Model ${fixture.modelProbability}% · ${fixture.market}`,
-                ],
-                publishedAt: fixture.updatedDateTime,
-                matchHref: fixturePath(
-                  locale,
-                  fixture.matchId,
-                  fixture.marketKind,
-                  "team"
-                ),
-                source: "team",
-              }}
-            />
+        <li key={fixture.id}>
+          <div className="rw-row grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-4 border-b border-[var(--hero-line)] py-3 pl-3.5">
+            <div className="min-w-0">
+              <TeamFixtureLink
+                href={teamFixtureHref(locale)}
+                teamSlug={team.slug}
+                teamId={team.id}
+                fixtureId={fixture.matchId}
+                locale={locale}
+                className="text-[var(--hero-ink)] underline decoration-[var(--hero-line)] underline-offset-4 hover:decoration-[var(--hero-ink)]"
+              >
+                <span className="text-[14px] font-semibold tracking-[-0.01em]">
+                  {fixture.home} v {fixture.away}
+                </span>
+              </TeamFixtureLink>
+              <p className="rw-m mt-1 text-[var(--hero-ink-2)]">
+                {fixture.league} · {fixture.market} · {fixture.kickoff}
+              </p>
+            </div>
+            <div className="flex shrink-0 items-baseline gap-3">
+              <p className="text-right">
+                <span className="rw-tnum text-[15px] font-bold text-[var(--hero-ink)]">
+                  {fixture.modelProbability}%
+                </span>
+                <span className="rw-m block text-[var(--hero-ink-2)]">{potentialLabel}</span>
+              </p>
+              <AddToAccaButton
+                compact
+                draft={{
+                  matchId: fixture.matchId,
+                  homeTeam: fixture.home,
+                  awayTeam: fixture.away,
+                  competition: fixture.league,
+                  kickoffAt: fixture.kickoffDateTime,
+                  marketKey: fixture.marketKind,
+                  confidence: fixture.modelProbability,
+                  odds: null,
+                  evidenceSummary: [`Model ${fixture.modelProbability}% · ${fixture.market}`],
+                  publishedAt: fixture.updatedDateTime,
+                  matchHref: fixturePath(locale, fixture.matchId, fixture.marketKind, "team"),
+                  source: "team",
+                }}
+              />
+            </div>
           </div>
         </li>
       ))}
     </ul>
-  );
-}
-
-function Stat({ label, value }: { label: string; value: string }) {
-  return (
-    <div className="rounded-md border border-border bg-[var(--canvas-secondary)] px-3 py-3">
-      <dt className="text-metadata uppercase tracking-label text-muted-foreground">{label}</dt>
-      <dd className="mt-1 font-mono text-base font-semibold tabular-nums text-foreground">{value}</dd>
-    </div>
   );
 }

@@ -221,6 +221,34 @@ export const ar = mergePredictions({
   ssnOperatorsTitle: "المشغّلون المتاحون",
   ssnOperatorsEmpty: "لا يوجد مشغّلون بشراكة نشطة لبلد الزائر المحدد.",
 
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "فرق البحث",
+  tmIndexTitle: "الفرق",
+  tmIndexLede:
+    "عقد بحثية معتمدة للفرق — بطولات ومباريات مؤهّلة وأسواق ومشغّلون. علاقات وقائعية فقط، وليست تقييمات أبدًا.",
+  tmLeadLine: "تحتوي مجموعة بحث هذا الفريق على {count} صفًا مؤهّلًا عبر {fixtures} مباراة.",
+  tmUpcomingEmpty: "لا توجد مباريات مؤهّلة قادمة لهذا الفريق في مجموعة البحث الحالية.",
+  tmRecentEmpty: "لا توجد مباريات محلّلة لهذا الفريق في مجموعة البحث الحالية.",
+  tmCompetitionsTitle: "البطولات الحالية",
+  tmDetailTitle: "تفاصيل الفريق",
+  tmMarketProfileTitle: "ملف أسواق الأهداف",
+  tmMarketProfileEmpty: "لا توجد صفوف سوق مؤهّلة لهذا الفريق في عيّنة البحث الحالية.",
+  tmHomeAwayNote:
+    "تعكس الأعداد صفوف بحث مؤهّلة يلعب فيها {team} على أرضه أو خارجها — ليست جدول فورمة ولا تقييمًا.",
+  tmEnrichmentAbsent:
+    "لا تظهر معدلات أهداف وxG الفريق إلا عند وجود إثراء تفاصيل المباراة — هذه الصفحة لا تخترعها.",
+  tmRelatedTeams: "فرق ذات صلة",
+  tmSearchLabel: "بحث",
+  tmSearchPlaceholder: "اسم الفريق",
+  tmFilterCompetition: "البطولة",
+  tmFilterCountry: "الدولة",
+  tmAllCompetitions: "كل البطولات",
+  tmAllCountries: "كل الدول",
+  tmApplyFilters: "تطبيق المرشحات",
+  tmFiltersEmpty: "لا يطابق أي فريق هذه المرشحات.",
+  tmResetFilters: "إعادة تعيين المرشحات",
+  tmInternational: "دولي",
+
 });
 
 export const hi = mergePredictions({
@@ -447,6 +475,34 @@ export const hi = mergePredictions({
   ssnOperatorsTitle: "उपलब्ध ऑपरेटर",
   ssnOperatorsEmpty: "निर्धारित आगंतुक देश के लिए कोई सक्रिय संबद्ध ऑपरेटर नहीं।",
 
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "शोध टीमें",
+  tmIndexTitle: "टीमें",
+  tmIndexLede:
+    "कैननिकल टीम शोध केंद्र — प्रतियोगिताएँ, योग्य मैच, बाज़ार और ऑपरेटर। केवल तथ्यात्मक संबंध, कभी रेटिंग नहीं।",
+  tmLeadLine: "इस टीम के शोध सेट में {fixtures} मैचों में {count} योग्य पंक्तियाँ हैं।",
+  tmUpcomingEmpty: "वर्तमान शोध सेट में इस टीम का कोई आगामी योग्य मैच नहीं।",
+  tmRecentEmpty: "वर्तमान शोध सेट में इस टीम का कोई विश्लेषित मैच नहीं।",
+  tmCompetitionsTitle: "वर्तमान प्रतियोगिताएँ",
+  tmDetailTitle: "टीम विवरण",
+  tmMarketProfileTitle: "गोल-बाज़ार प्रोफ़ाइल",
+  tmMarketProfileEmpty: "वर्तमान शोध नमूने में इस टीम की कोई योग्य बाज़ार पंक्ति नहीं।",
+  tmHomeAwayNote:
+    "गिनतियाँ उन योग्य शोध पंक्तियों को दर्शाती हैं जिनमें {team} घर या बाहर खेलती है — यह फ़ॉर्म तालिका या रेटिंग नहीं है।",
+  tmEnrichmentAbsent:
+    "टीम-स्तरीय गोल और xG दरें केवल मैच-विवरण संवर्धन होने पर दिखती हैं — यह पृष्ठ उन्हें गढ़ता नहीं।",
+  tmRelatedTeams: "संबंधित टीमें",
+  tmSearchLabel: "खोजें",
+  tmSearchPlaceholder: "टीम का नाम",
+  tmFilterCompetition: "प्रतियोगिता",
+  tmFilterCountry: "देश",
+  tmAllCompetitions: "सभी प्रतियोगिताएँ",
+  tmAllCountries: "सभी देश",
+  tmApplyFilters: "फ़िल्टर लागू करें",
+  tmFiltersEmpty: "इन फ़िल्टरों से कोई टीम मेल नहीं खाती।",
+  tmResetFilters: "फ़िल्टर रीसेट करें",
+  tmInternational: "अंतरराष्ट्रीय",
+
 });
 
 export const ja = mergePredictions({
@@ -656,6 +712,31 @@ export const ja = mergePredictions({
   ssnDetailTitle: "シーズンの詳細",
   ssnOperatorsTitle: "利用可能なオペレーター",
   ssnOperatorsEmpty: "判定された訪問国で有効な提携オペレーターはありません。",
+
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "リサーチチーム",
+  tmIndexTitle: "チーム",
+  tmIndexLede: "正規のチームリサーチ拠点 — 大会・適格試合・市場・オペレーター。事実に基づく関係のみで、評価は決してしません。",
+  tmLeadLine: "このチームのリサーチセットには{fixtures}試合にわたる適格行{count}件があります。",
+  tmUpcomingEmpty: "現在のリサーチセットにこのチームの今後の適格試合はありません。",
+  tmRecentEmpty: "現在のリサーチセットにこのチームの分析済み試合はありません。",
+  tmCompetitionsTitle: "現在の大会",
+  tmDetailTitle: "チームの詳細",
+  tmMarketProfileTitle: "ゴール市場プロファイル",
+  tmMarketProfileEmpty: "現在のリサーチサンプルにこのチームの適格な市場行はありません。",
+  tmHomeAwayNote: "件数は{team}がホームまたはアウェイで登場する適格リサーチ行を反映します — フォーム表でも評価でもありません。",
+  tmEnrichmentAbsent: "チーム単位のゴール・xG率は試合詳細の付加データがある場合のみ表示されます — このページはそれを作り出しません。",
+  tmRelatedTeams: "関連チーム",
+  tmSearchLabel: "検索",
+  tmSearchPlaceholder: "チーム名",
+  tmFilterCompetition: "大会",
+  tmFilterCountry: "国",
+  tmAllCompetitions: "すべての大会",
+  tmAllCountries: "すべての国",
+  tmApplyFilters: "フィルターを適用",
+  tmFiltersEmpty: "これらのフィルターに一致するチームはありません。",
+  tmResetFilters: "フィルターをリセット",
+  tmInternational: "国際",
 
 });
 
@@ -867,6 +948,31 @@ export const ko = mergePredictions({
   ssnDetailTitle: "시즌 상세",
   ssnOperatorsTitle: "이용 가능한 운영사",
   ssnOperatorsEmpty: "판정된 방문 국가에 활성 제휴 운영사가 없습니다.",
+
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "리서치 팀",
+  tmIndexTitle: "팀",
+  tmIndexLede: "정규 팀 리서치 허브 — 대회, 적격 경기, 마켓, 운영사. 사실 관계만 다루며, 결코 평점이 아닙니다.",
+  tmLeadLine: "이 팀의 리서치 세트에는 {fixtures}경기에 걸친 적격 행 {count}건이 있습니다.",
+  tmUpcomingEmpty: "현재 리서치 세트에 이 팀의 다가오는 적격 경기가 없습니다.",
+  tmRecentEmpty: "현재 리서치 세트에 이 팀의 분석된 경기가 없습니다.",
+  tmCompetitionsTitle: "현재 대회",
+  tmDetailTitle: "팀 상세",
+  tmMarketProfileTitle: "골 마켓 프로필",
+  tmMarketProfileEmpty: "현재 리서치 표본에 이 팀의 적격 마켓 행이 없습니다.",
+  tmHomeAwayNote: "집계는 {team}이(가) 홈 또는 원정으로 등장하는 적격 리서치 행을 반영합니다 — 폼 테이블도, 평점도 아닙니다.",
+  tmEnrichmentAbsent: "팀 수준의 득점·xG 비율은 경기 상세 보강이 있을 때만 표시됩니다 — 이 페이지는 이를 지어내지 않습니다.",
+  tmRelatedTeams: "관련 팀",
+  tmSearchLabel: "검색",
+  tmSearchPlaceholder: "팀 이름",
+  tmFilterCompetition: "대회",
+  tmFilterCountry: "국가",
+  tmAllCompetitions: "모든 대회",
+  tmAllCountries: "모든 국가",
+  tmApplyFilters: "필터 적용",
+  tmFiltersEmpty: "이 필터와 일치하는 팀이 없습니다.",
+  tmResetFilters: "필터 초기화",
+  tmInternational: "국제",
 
 });
 
@@ -1094,6 +1200,34 @@ export const th = mergePredictions({
   ssnDetailTitle: "รายละเอียดฤดูกาล",
   ssnOperatorsTitle: "ผู้ให้บริการที่พร้อมใช้งาน",
   ssnOperatorsEmpty: "ไม่มีผู้ให้บริการพันธมิตรที่ใช้งานได้สำหรับประเทศผู้เข้าชมที่ระบุ",
+
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "ทีมเพื่อการวิจัย",
+  tmIndexTitle: "ทีม",
+  tmIndexLede:
+    "ศูนย์วิจัยทีมมาตรฐาน — รายการแข่งขัน แมตช์ที่ผ่านเกณฑ์ ตลาด และผู้ให้บริการ ความสัมพันธ์เชิงข้อเท็จจริงเท่านั้น ไม่ใช่การจัดอันดับ",
+  tmLeadLine: "ชุดวิจัยของทีมนี้มี {count} แถวที่ผ่านเกณฑ์ใน {fixtures} แมตช์",
+  tmUpcomingEmpty: "ไม่มีแมตช์ที่ผ่านเกณฑ์ที่กำลังจะมาถึงของทีมนี้ในชุดวิจัยปัจจุบัน",
+  tmRecentEmpty: "ไม่มีแมตช์ที่วิเคราะห์แล้วของทีมนี้ในชุดวิจัยปัจจุบัน",
+  tmCompetitionsTitle: "รายการแข่งขันปัจจุบัน",
+  tmDetailTitle: "รายละเอียดทีม",
+  tmMarketProfileTitle: "โปรไฟล์ตลาดประตู",
+  tmMarketProfileEmpty: "ไม่มีแถวตลาดที่ผ่านเกณฑ์ของทีมนี้ในตัวอย่างวิจัยปัจจุบัน",
+  tmHomeAwayNote:
+    "จำนวนสะท้อนแถววิจัยที่ผ่านเกณฑ์ซึ่ง {team} เล่นเหย้าหรือเยือน — ไม่ใช่ตารางฟอร์มหรือการจัดอันดับ",
+  tmEnrichmentAbsent:
+    "อัตราประตูและ xG ระดับทีมจะแสดงเมื่อมีข้อมูลรายละเอียดแมตช์เท่านั้น — หน้านี้ไม่กุขึ้นเอง",
+  tmRelatedTeams: "ทีมที่เกี่ยวข้อง",
+  tmSearchLabel: "ค้นหา",
+  tmSearchPlaceholder: "ชื่อทีม",
+  tmFilterCompetition: "รายการแข่งขัน",
+  tmFilterCountry: "ประเทศ",
+  tmAllCompetitions: "ทุกรายการแข่งขัน",
+  tmAllCountries: "ทุกประเทศ",
+  tmApplyFilters: "ใช้ตัวกรอง",
+  tmFiltersEmpty: "ไม่มีทีมที่ตรงกับตัวกรองเหล่านี้",
+  tmResetFilters: "รีเซ็ตตัวกรอง",
+  tmInternational: "นานาชาติ",
 
 });
 
@@ -1325,6 +1459,34 @@ export const vi = mergePredictions({
   ssnOperatorsTitle: "Nhà điều hành khả dụng",
   ssnOperatorsEmpty:
     "Không có nhà điều hành liên kết đang hoạt động cho quốc gia khách truy cập được xác định.",
+
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "Đội bóng nghiên cứu",
+  tmIndexTitle: "Đội bóng",
+  tmIndexLede:
+    "Trung tâm nghiên cứu đội bóng chuẩn — giải đấu, trận đủ điều kiện, thị trường và nhà điều hành. Chỉ quan hệ thực tế, không bao giờ xếp hạng.",
+  tmLeadLine: "Tập nghiên cứu của đội này chứa {count} dòng đủ điều kiện trên {fixtures} trận.",
+  tmUpcomingEmpty: "Không có trận đủ điều kiện sắp tới của đội này trong tập nghiên cứu hiện tại.",
+  tmRecentEmpty: "Không có trận đã phân tích của đội này trong tập nghiên cứu hiện tại.",
+  tmCompetitionsTitle: "Giải đấu hiện tại",
+  tmDetailTitle: "Chi tiết đội",
+  tmMarketProfileTitle: "Hồ sơ thị trường bàn thắng",
+  tmMarketProfileEmpty: "Không có dòng thị trường đủ điều kiện của đội này trong mẫu nghiên cứu hiện tại.",
+  tmHomeAwayNote:
+    "Số đếm phản ánh các dòng nghiên cứu đủ điều kiện mà {team} đá sân nhà hoặc sân khách — không phải bảng phong độ, không phải xếp hạng.",
+  tmEnrichmentAbsent:
+    "Tỷ lệ bàn thắng và xG cấp đội chỉ hiển thị khi có dữ liệu chi tiết trận đấu — trang này không bịa ra chúng.",
+  tmRelatedTeams: "Đội liên quan",
+  tmSearchLabel: "Tìm kiếm",
+  tmSearchPlaceholder: "Tên đội",
+  tmFilterCompetition: "Giải đấu",
+  tmFilterCountry: "Quốc gia",
+  tmAllCompetitions: "Tất cả giải đấu",
+  tmAllCountries: "Tất cả quốc gia",
+  tmApplyFilters: "Áp dụng bộ lọc",
+  tmFiltersEmpty: "Không có đội nào khớp với các bộ lọc này.",
+  tmResetFilters: "Đặt lại bộ lọc",
+  tmInternational: "Quốc tế",
 
 });
 
@@ -1558,6 +1720,36 @@ export const id = mergePredictions({
   ssnOperatorsTitle: "Operator tersedia",
   ssnOperatorsEmpty: "Tidak ada operator afiliasi aktif untuk negara pengunjung yang ditetapkan.",
 
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "Tim riset",
+  tmIndexTitle: "Tim",
+  tmIndexLede:
+    "Simpul riset tim kanonik — kompetisi, pertandingan terkualifikasi, pasar, dan operator. Hanya relasi faktual, tidak pernah peringkat.",
+  tmLeadLine:
+    "Set riset tim ini memuat {count} baris terkualifikasi di {fixtures} pertandingan.",
+  tmUpcomingEmpty:
+    "Tidak ada pertandingan terkualifikasi mendatang untuk tim ini dalam set riset saat ini.",
+  tmRecentEmpty: "Tidak ada pertandingan yang dianalisis untuk tim ini dalam set riset saat ini.",
+  tmCompetitionsTitle: "Kompetisi saat ini",
+  tmDetailTitle: "Detail tim",
+  tmMarketProfileTitle: "Profil pasar gol",
+  tmMarketProfileEmpty: "Tidak ada baris pasar terkualifikasi untuk tim ini dalam sampel riset saat ini.",
+  tmHomeAwayNote:
+    "Hitungan mencerminkan baris riset terkualifikasi tempat {team} bermain kandang atau tandang — bukan tabel performa, bukan peringkat.",
+  tmEnrichmentAbsent:
+    "Tingkat gol dan xG level tim hanya tampil bila pengayaan detail pertandingan ada — halaman ini tidak mengarangnya.",
+  tmRelatedTeams: "Tim terkait",
+  tmSearchLabel: "Cari",
+  tmSearchPlaceholder: "Nama tim",
+  tmFilterCompetition: "Kompetisi",
+  tmFilterCountry: "Negara",
+  tmAllCompetitions: "Semua kompetisi",
+  tmAllCountries: "Semua negara",
+  tmApplyFilters: "Terapkan filter",
+  tmFiltersEmpty: "Tidak ada tim yang cocok dengan filter ini.",
+  tmResetFilters: "Atur ulang filter",
+  tmInternational: "Internasional",
+
 });
 
 export const zh = mergePredictions({
@@ -1767,6 +1959,31 @@ export const zh = mergePredictions({
   ssnOperatorsTitle: "可用运营商",
   ssnOperatorsEmpty: "判定的访客国家没有有效的联盟运营商。",
 
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "研究球队",
+  tmIndexTitle: "球队",
+  tmIndexLede: "标准球队研究枢纽 — 赛事、合格比赛、市场与运营商。仅呈现事实关系,绝非评级。",
+  tmLeadLine: "该球队的研究集包含{fixtures}场比赛中的{count}条合格行。",
+  tmUpcomingEmpty: "当前研究集中没有该球队即将进行的合格比赛。",
+  tmRecentEmpty: "当前研究集中没有该球队的已分析比赛。",
+  tmCompetitionsTitle: "当前赛事",
+  tmDetailTitle: "球队详情",
+  tmMarketProfileTitle: "进球市场概况",
+  tmMarketProfileEmpty: "当前研究样本中没有该球队的合格市场行。",
+  tmHomeAwayNote: "计数反映{team}以主场或客场身份出现的合格研究行 — 不是状态表,也不是评级。",
+  tmEnrichmentAbsent: "球队级进球与xG比率仅在存在比赛详情补充数据时显示 — 本页不会编造它们。",
+  tmRelatedTeams: "相关球队",
+  tmSearchLabel: "搜索",
+  tmSearchPlaceholder: "球队名称",
+  tmFilterCompetition: "赛事",
+  tmFilterCountry: "国家",
+  tmAllCompetitions: "全部赛事",
+  tmAllCountries: "全部国家",
+  tmApplyFilters: "应用筛选",
+  tmFiltersEmpty: "没有符合这些筛选条件的球队。",
+  tmResetFilters: "重置筛选",
+  tmInternational: "国际",
+
 });
 
 export const bn = mergePredictions({
@@ -1925,6 +2142,34 @@ export const bn = mergePredictions({
   ssnDetailTitle: "মৌসুমের বিবরণ",
   ssnOperatorsTitle: "উপলব্ধ অপারেটর",
   ssnOperatorsEmpty: "নির্ধারিত দর্শকের দেশের জন্য কোনও সক্রিয় অ্যাফিলিয়েট অপারেটর নেই।",
+
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "গবেষণা দল",
+  tmIndexTitle: "দল",
+  tmIndexLede:
+    "কানোনিকাল দল-গবেষণা কেন্দ্র — প্রতিযোগিতা, যোগ্য ম্যাচ, বাজার ও অপারেটর। কেবল তথ্যভিত্তিক সম্পর্ক, কখনও রেটিং নয়।",
+  tmLeadLine: "এই দলের গবেষণা সেটে {fixtures}টি ম্যাচ জুড়ে {count}টি যোগ্য সারি আছে।",
+  tmUpcomingEmpty: "বর্তমান গবেষণা সেটে এই দলের কোনও আসন্ন যোগ্য ম্যাচ নেই।",
+  tmRecentEmpty: "বর্তমান গবেষণা সেটে এই দলের কোনও বিশ্লেষিত ম্যাচ নেই।",
+  tmCompetitionsTitle: "বর্তমান প্রতিযোগিতা",
+  tmDetailTitle: "দলের বিবরণ",
+  tmMarketProfileTitle: "গোল-বাজার প্রোফাইল",
+  tmMarketProfileEmpty: "বর্তমান গবেষণা নমুনায় এই দলের কোনও যোগ্য বাজার সারি নেই।",
+  tmHomeAwayNote:
+    "গণনাগুলি সেই যোগ্য গবেষণা সারি প্রতিফলিত করে যেখানে {team} হোম বা অ্যাওয়ে খেলে — এটি ফর্ম টেবিল বা রেটিং নয়।",
+  tmEnrichmentAbsent:
+    "দল-স্তরের গোল ও xG হার কেবল ম্যাচ-বিবরণ সমৃদ্ধি থাকলে দেখা যায় — এই পাতা সেগুলি বানায় না।",
+  tmRelatedTeams: "সম্পর্কিত দল",
+  tmSearchLabel: "খুঁজুন",
+  tmSearchPlaceholder: "দলের নাম",
+  tmFilterCompetition: "প্রতিযোগিতা",
+  tmFilterCountry: "দেশ",
+  tmAllCompetitions: "সব প্রতিযোগিতা",
+  tmAllCountries: "সব দেশ",
+  tmApplyFilters: "ফিল্টার প্রয়োগ করুন",
+  tmFiltersEmpty: "এই ফিল্টারগুলির সাথে কোনও দল মেলে না।",
+  tmResetFilters: "ফিল্টার রিসেট করুন",
+  tmInternational: "আন্তর্জাতিক",
 
 });
 
@@ -2093,6 +2338,35 @@ export const ta = mergePredictions({
   ssnOperatorsTitle: "கிடைக்கும் இயக்குநர்கள்",
   ssnOperatorsEmpty: "தீர்மானிக்கப்பட்ட பார்வையாளர் நாட்டிற்கு செயலில் உள்ள கூட்டு இயக்குநர்கள் இல்லை.",
 
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "ஆய்வு அணிகள்",
+  tmIndexTitle: "அணிகள்",
+  tmIndexLede:
+    "நியமன அணி ஆய்வு மையங்கள் — தொடர்கள், தகுதியான ஆட்டங்கள், சந்தைகள், இயக்குநர்கள். உண்மை உறவுகள் மட்டுமே, ஒருபோதும் மதிப்பீடுகள் அல்ல.",
+  tmLeadLine:
+    "இந்த அணியின் ஆய்வுத் தொகுப்பில் {fixtures} ஆட்டங்களில் {count} தகுதியான வரிசைகள் உள்ளன.",
+  tmUpcomingEmpty: "தற்போதைய ஆய்வுத் தொகுப்பில் இந்த அணிக்கு வரவிருக்கும் தகுதியான ஆட்டங்கள் இல்லை.",
+  tmRecentEmpty: "தற்போதைய ஆய்வுத் தொகுப்பில் இந்த அணிக்குப் பகுப்பாய்ந்த ஆட்டங்கள் இல்லை.",
+  tmCompetitionsTitle: "தற்போதைய தொடர்கள்",
+  tmDetailTitle: "அணி விவரம்",
+  tmMarketProfileTitle: "கோல் சந்தை சுயவிவரம்",
+  tmMarketProfileEmpty: "தற்போதைய ஆய்வு மாதிரியில் இந்த அணிக்குத் தகுதியான சந்தை வரிசைகள் இல்லை.",
+  tmHomeAwayNote:
+    "எண்ணிக்கைகள் {team} சொந்த களத்திலோ வெளியிலோ இடம்பெறும் தகுதியான ஆய்வு வரிசைகளைக் காட்டுகின்றன — இது ஃபார்ம் அட்டவணையோ மதிப்பீடோ அல்ல.",
+  tmEnrichmentAbsent:
+    "அணி அளவிலான கோல் மற்றும் xG விகிதங்கள் ஆட்ட விவர வளமாக்கம் இருந்தால் மட்டுமே தோன்றும் — இந்தப் பக்கம் அவற்றை உருவாக்காது.",
+  tmRelatedTeams: "தொடர்புடைய அணிகள்",
+  tmSearchLabel: "தேடு",
+  tmSearchPlaceholder: "அணியின் பெயர்",
+  tmFilterCompetition: "தொடர்",
+  tmFilterCountry: "நாடு",
+  tmAllCompetitions: "அனைத்து தொடர்களும்",
+  tmAllCountries: "அனைத்து நாடுகளும்",
+  tmApplyFilters: "வடிப்பான்களைப் பயன்படுத்து",
+  tmFiltersEmpty: "இந்த வடிப்பான்களுக்குப் பொருந்தும் அணி இல்லை.",
+  tmResetFilters: "வடிப்பான்களை மீட்டமை",
+  tmInternational: "சர்வதேசம்",
+
 });
 
 export const te = mergePredictions({
@@ -2252,6 +2526,34 @@ export const te = mergePredictions({
   ssnOperatorsTitle: "అందుబాటులో ఉన్న ఆపరేటర్లు",
   ssnOperatorsEmpty: "నిర్ధారించిన సందర్శకుల దేశానికి క్రియాశీల అనుబంధ ఆపరేటర్లు లేరు.",
 
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "పరిశోధన జట్లు",
+  tmIndexTitle: "జట్లు",
+  tmIndexLede:
+    "కానానికల్ జట్టు పరిశోధన కేంద్రాలు — పోటీలు, అర్హత మ్యాచ్‌లు, మార్కెట్లు, ఆపరేటర్లు. వాస్తవ సంబంధాలు మాత్రమే, ఎప్పుడూ రేటింగ్‌లు కావు.",
+  tmLeadLine: "ఈ జట్టు పరిశోధన సెట్‌లో {fixtures} మ్యాచ్‌లలో {count} అర్హత వరుసలు ఉన్నాయి.",
+  tmUpcomingEmpty: "ప్రస్తుత పరిశోధన సెట్‌లో ఈ జట్టుకు రాబోయే అర్హత మ్యాచ్‌లు లేవు.",
+  tmRecentEmpty: "ప్రస్తుత పరిశోధన సెట్‌లో ఈ జట్టుకు విశ్లేషించిన మ్యాచ్‌లు లేవు.",
+  tmCompetitionsTitle: "ప్రస్తుత పోటీలు",
+  tmDetailTitle: "జట్టు వివరాలు",
+  tmMarketProfileTitle: "గోల్-మార్కెట్ ప్రొఫైల్",
+  tmMarketProfileEmpty: "ప్రస్తుత పరిశోధన నమూనాలో ఈ జట్టుకు అర్హత మార్కెట్ వరుసలు లేవు.",
+  tmHomeAwayNote:
+    "లెక్కలు {team} స్వస్థలంలో లేదా బయట ఆడే అర్హత పరిశోధన వరుసలను ప్రతిబింబిస్తాయి — ఇది ఫారమ్ పట్టిక కాదు, రేటింగ్ కాదు.",
+  tmEnrichmentAbsent:
+    "జట్టు-స్థాయి గోల్ మరియు xG రేట్లు మ్యాచ్ వివరాల సుసంపన్నత ఉన్నప్పుడే కనిపిస్తాయి — ఈ పేజీ వాటిని కల్పించదు.",
+  tmRelatedTeams: "సంబంధిత జట్లు",
+  tmSearchLabel: "వెతకండి",
+  tmSearchPlaceholder: "జట్టు పేరు",
+  tmFilterCompetition: "పోటీ",
+  tmFilterCountry: "దేశం",
+  tmAllCompetitions: "అన్ని పోటీలు",
+  tmAllCountries: "అన్ని దేశాలు",
+  tmApplyFilters: "ఫిల్టర్లు వర్తించండి",
+  tmFiltersEmpty: "ఈ ఫిల్టర్లకు సరిపోలే జట్టు లేదు.",
+  tmResetFilters: "ఫిల్టర్లను రీసెట్ చేయండి",
+  tmInternational: "అంతర్జాతీయ",
+
 });
 
 export const mr = mergePredictions({
@@ -2410,6 +2712,34 @@ export const mr = mergePredictions({
   ssnDetailTitle: "हंगामाचा तपशील",
   ssnOperatorsTitle: "उपलब्ध ऑपरेटर",
   ssnOperatorsEmpty: "निर्धारित अभ्यागत देशासाठी सक्रिय संलग्न ऑपरेटर नाहीत.",
+
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "संशोधन संघ",
+  tmIndexTitle: "संघ",
+  tmIndexLede:
+    "कॅनॉनिकल संघ-संशोधन केंद्रे — स्पर्धा, पात्र सामने, बाजार आणि ऑपरेटर. केवळ तथ्यात्मक संबंध, कधीही रेटिंग नाही.",
+  tmLeadLine: "या संघाच्या संशोधन संचात {fixtures} सामन्यांमध्ये {count} पात्र ओळी आहेत.",
+  tmUpcomingEmpty: "सध्याच्या संशोधन संचात या संघाचे आगामी पात्र सामने नाहीत.",
+  tmRecentEmpty: "सध्याच्या संशोधन संचात या संघाचे विश्लेषित सामने नाहीत.",
+  tmCompetitionsTitle: "सध्याच्या स्पर्धा",
+  tmDetailTitle: "संघाचा तपशील",
+  tmMarketProfileTitle: "गोल-बाजार प्रोफाइल",
+  tmMarketProfileEmpty: "सध्याच्या संशोधन नमुन्यात या संघाच्या पात्र बाजार ओळी नाहीत.",
+  tmHomeAwayNote:
+    "मोजण्या त्या पात्र संशोधन ओळी दर्शवतात जिथे {team} घरी किंवा बाहेर खेळतो — हे फॉर्म तक्ता किंवा रेटिंग नाही.",
+  tmEnrichmentAbsent:
+    "संघ-स्तरीय गोल आणि xG दर सामना-तपशील समृद्धी असल्यासच दिसतात — हे पान ते रचत नाही.",
+  tmRelatedTeams: "संबंधित संघ",
+  tmSearchLabel: "शोधा",
+  tmSearchPlaceholder: "संघाचे नाव",
+  tmFilterCompetition: "स्पर्धा",
+  tmFilterCountry: "देश",
+  tmAllCompetitions: "सर्व स्पर्धा",
+  tmAllCountries: "सर्व देश",
+  tmApplyFilters: "फिल्टर लागू करा",
+  tmFiltersEmpty: "या फिल्टरशी जुळणारा कोणताही संघ नाही.",
+  tmResetFilters: "फिल्टर रीसेट करा",
+  tmInternational: "आंतरराष्ट्रीय",
 
 });
 
@@ -2643,5 +2973,33 @@ export const sw = mergePredictions({
   ssnDetailTitle: "Maelezo ya msimu",
   ssnOperatorsTitle: "Waendeshaji waliopo",
   ssnOperatorsEmpty: "Hakuna waendeshaji washirika hai kwa nchi ya mgeni iliyobainika.",
+
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "Timu za utafiti",
+  tmIndexTitle: "Timu",
+  tmIndexLede:
+    "Vituo rasmi vya utafiti wa timu — mashindano, mechi zilizofuzu, masoko na waendeshaji. Uhusiano wa kweli pekee, kamwe si viwango.",
+  tmLeadLine: "Seti ya utafiti ya timu hii ina safu {count} zilizofuzu katika mechi {fixtures}.",
+  tmUpcomingEmpty: "Hakuna mechi zijazo zilizofuzu za timu hii katika seti ya utafiti ya sasa.",
+  tmRecentEmpty: "Hakuna mechi zilizochambuliwa za timu hii katika seti ya utafiti ya sasa.",
+  tmCompetitionsTitle: "Mashindano ya sasa",
+  tmDetailTitle: "Maelezo ya timu",
+  tmMarketProfileTitle: "Wasifu wa masoko ya mabao",
+  tmMarketProfileEmpty: "Hakuna safu za soko zilizofuzu za timu hii katika sampuli ya utafiti ya sasa.",
+  tmHomeAwayNote:
+    "Hesabu zinaonyesha safu za utafiti zilizofuzu ambapo {team} inacheza nyumbani au ugenini — si jedwali la fomu wala kiwango.",
+  tmEnrichmentAbsent:
+    "Viwango vya mabao na xG vya timu huonekana tu pale uboreshaji wa maelezo ya mechi upo — ukurasa huu hauvibuni.",
+  tmRelatedTeams: "Timu zinazohusiana",
+  tmSearchLabel: "Tafuta",
+  tmSearchPlaceholder: "Jina la timu",
+  tmFilterCompetition: "Shindano",
+  tmFilterCountry: "Nchi",
+  tmAllCompetitions: "Mashindano yote",
+  tmAllCountries: "Nchi zote",
+  tmApplyFilters: "Tumia vichujio",
+  tmFiltersEmpty: "Hakuna timu inayolingana na vichujio hivi.",
+  tmResetFilters: "Weka upya vichujio",
+  tmInternational: "Kimataifa",
 
 });

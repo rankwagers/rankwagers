@@ -244,6 +244,36 @@ const pt: PredictionStrings = mergePredictions({
   ssnOperatorsTitle: "Operadores disponíveis",
   ssnOperatorsEmpty: "Nenhum operador com afiliação ativa para o país do visitante resolvido.",
 
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "Equipas de pesquisa",
+  tmIndexTitle: "Equipas",
+  tmIndexLede:
+    "Polos canónicos de pesquisa de equipas — competições, jogos qualificados, mercados e operadores. Apenas relações factuais, nunca classificações.",
+  tmLeadLine:
+    "O conjunto de pesquisa desta equipa contém {count} linhas qualificadas em {fixtures} jogos.",
+  tmUpcomingEmpty: "Nenhum jogo qualificado próximo para esta equipa no conjunto de pesquisa atual.",
+  tmRecentEmpty: "Nenhum jogo analisado para esta equipa no conjunto de pesquisa atual.",
+  tmCompetitionsTitle: "Competições atuais",
+  tmDetailTitle: "Detalhe da equipa",
+  tmMarketProfileTitle: "Perfil de mercados de golos",
+  tmMarketProfileEmpty:
+    "Nenhuma linha de mercado qualificada para esta equipa na amostra de pesquisa atual.",
+  tmHomeAwayNote:
+    "As contagens refletem linhas de pesquisa qualificadas em que {team} joga em casa ou fora — não é uma tabela de forma nem uma classificação.",
+  tmEnrichmentAbsent:
+    "As taxas de golos e xG da equipa só aparecem quando existe enriquecimento de detalhe do jogo — esta página não as inventa.",
+  tmRelatedTeams: "Equipas relacionadas",
+  tmSearchLabel: "Pesquisar",
+  tmSearchPlaceholder: "Nome da equipa",
+  tmFilterCompetition: "Competição",
+  tmFilterCountry: "País",
+  tmAllCompetitions: "Todas as competições",
+  tmAllCountries: "Todos os países",
+  tmApplyFilters: "Aplicar filtros",
+  tmFiltersEmpty: "Nenhuma equipa corresponde a estes filtros.",
+  tmResetFilters: "Repor filtros",
+  tmInternational: "Internacional",
+
 });
 
 const es: PredictionStrings = mergePredictions({
@@ -485,6 +515,38 @@ const es: PredictionStrings = mergePredictions({
   ssnDetailTitle: "Detalle de la temporada",
   ssnOperatorsTitle: "Operadores disponibles",
   ssnOperatorsEmpty: "Ningún operador con afiliación activa para el país del visitante resuelto.",
+
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "Equipos de investigación",
+  tmIndexTitle: "Equipos",
+  tmIndexLede:
+    "Núcleos canónicos de investigación de equipos — competiciones, partidos calificados, mercados y operadores. Solo relaciones factuales, nunca clasificaciones.",
+  tmLeadLine:
+    "El conjunto de investigación de este equipo contiene {count} filas calificadas en {fixtures} partidos.",
+  tmUpcomingEmpty:
+    "Ningún partido calificado próximo para este equipo en el conjunto de investigación actual.",
+  tmRecentEmpty:
+    "Ningún partido analizado para este equipo en el conjunto de investigación actual.",
+  tmCompetitionsTitle: "Competiciones actuales",
+  tmDetailTitle: "Detalle del equipo",
+  tmMarketProfileTitle: "Perfil de mercados de goles",
+  tmMarketProfileEmpty:
+    "Ninguna fila de mercado calificada para este equipo en la muestra de investigación actual.",
+  tmHomeAwayNote:
+    "Los recuentos reflejan filas de investigación calificadas donde {team} juega en casa o fuera — no es una tabla de forma ni una clasificación.",
+  tmEnrichmentAbsent:
+    "Las tasas de goles y xG del equipo solo se muestran cuando existe enriquecimiento de detalle del partido — esta página no las inventa.",
+  tmRelatedTeams: "Equipos relacionados",
+  tmSearchLabel: "Buscar",
+  tmSearchPlaceholder: "Nombre del equipo",
+  tmFilterCompetition: "Competición",
+  tmFilterCountry: "País",
+  tmAllCompetitions: "Todas las competiciones",
+  tmAllCountries: "Todos los países",
+  tmApplyFilters: "Aplicar filtros",
+  tmFiltersEmpty: "Ningún equipo coincide con estos filtros.",
+  tmResetFilters: "Restablecer filtros",
+  tmInternational: "Internacional",
 
 });
 
@@ -730,6 +792,37 @@ const de: PredictionStrings = mergePredictions({
   ssnOperatorsTitle: "Verfügbare Anbieter",
   ssnOperatorsEmpty: "Keine affiliierten Anbieter für das ermittelte Besucherland.",
 
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "Recherche-Teams",
+  tmIndexTitle: "Teams",
+  tmIndexLede:
+    "Kanonische Team-Recherche-Knoten — Wettbewerbe, qualifizierte Spiele, Märkte und Anbieter. Nur faktische Beziehungen, niemals Bewertungen.",
+  tmLeadLine:
+    "Der Recherche-Satz dieses Teams enthält {count} qualifizierte Zeilen über {fixtures} Spiele.",
+  tmUpcomingEmpty:
+    "Keine kommenden qualifizierten Spiele für dieses Team im aktuellen Recherche-Satz.",
+  tmRecentEmpty: "Keine analysierten Spiele für dieses Team im aktuellen Recherche-Satz.",
+  tmCompetitionsTitle: "Aktuelle Wettbewerbe",
+  tmDetailTitle: "Teamdetail",
+  tmMarketProfileTitle: "Tormarkt-Profil",
+  tmMarketProfileEmpty:
+    "Keine qualifizierten Marktzeilen für dieses Team in der aktuellen Recherche-Stichprobe.",
+  tmHomeAwayNote:
+    "Die Zählungen spiegeln qualifizierte Recherche-Zeilen wider, in denen {team} heim oder auswärts spielt — keine Formtabelle, keine Bewertung.",
+  tmEnrichmentAbsent:
+    "Tor- und xG-Raten des Teams erscheinen nur, wenn eine Spieldetail-Anreicherung existiert — diese Seite erfindet sie nicht.",
+  tmRelatedTeams: "Verwandte Teams",
+  tmSearchLabel: "Suchen",
+  tmSearchPlaceholder: "Teamname",
+  tmFilterCompetition: "Wettbewerb",
+  tmFilterCountry: "Land",
+  tmAllCompetitions: "Alle Wettbewerbe",
+  tmAllCountries: "Alle Länder",
+  tmApplyFilters: "Filter anwenden",
+  tmFiltersEmpty: "Kein Team entspricht diesen Filtern.",
+  tmResetFilters: "Filter zurücksetzen",
+  tmInternational: "International",
+
 });
 
 const it: PredictionStrings = mergePredictions({
@@ -969,6 +1062,37 @@ const it: PredictionStrings = mergePredictions({
   ssnDetailTitle: "Dettaglio della stagione",
   ssnOperatorsTitle: "Operatori disponibili",
   ssnOperatorsEmpty: "Nessun operatore affiliato attivo per il paese del visitatore risolto.",
+
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "Squadre di ricerca",
+  tmIndexTitle: "Squadre",
+  tmIndexLede:
+    "Nodi canonici di ricerca sulle squadre — competizioni, partite qualificate, mercati e operatori. Solo relazioni fattuali, mai valutazioni.",
+  tmLeadLine:
+    "L'insieme di ricerca di questa squadra contiene {count} righe qualificate su {fixtures} partite.",
+  tmUpcomingEmpty:
+    "Nessuna partita qualificata in arrivo per questa squadra nell'insieme di ricerca attuale.",
+  tmRecentEmpty: "Nessuna partita analizzata per questa squadra nell'insieme di ricerca attuale.",
+  tmCompetitionsTitle: "Competizioni attuali",
+  tmDetailTitle: "Dettaglio della squadra",
+  tmMarketProfileTitle: "Profilo dei mercati gol",
+  tmMarketProfileEmpty:
+    "Nessuna riga di mercato qualificata per questa squadra nel campione di ricerca attuale.",
+  tmHomeAwayNote:
+    "I conteggi riflettono righe di ricerca qualificate in cui {team} gioca in casa o in trasferta — non è una tabella di forma né una valutazione.",
+  tmEnrichmentAbsent:
+    "I tassi di gol e xG della squadra compaiono solo quando esiste l'arricchimento del dettaglio partita — questa pagina non li inventa.",
+  tmRelatedTeams: "Squadre correlate",
+  tmSearchLabel: "Cerca",
+  tmSearchPlaceholder: "Nome della squadra",
+  tmFilterCompetition: "Competizione",
+  tmFilterCountry: "Paese",
+  tmAllCompetitions: "Tutte le competizioni",
+  tmAllCountries: "Tutti i paesi",
+  tmApplyFilters: "Applica filtri",
+  tmFiltersEmpty: "Nessuna squadra corrisponde a questi filtri.",
+  tmResetFilters: "Reimposta filtri",
+  tmInternational: "Internazionale",
 
 });
 
@@ -1210,6 +1334,37 @@ const fr: PredictionStrings = mergePredictions({
   ssnDetailTitle: "Détail de la saison",
   ssnOperatorsTitle: "Opérateurs disponibles",
   ssnOperatorsEmpty: "Aucun opérateur affilié actif pour le pays du visiteur résolu.",
+
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "Équipes de recherche",
+  tmIndexTitle: "Équipes",
+  tmIndexLede:
+    "Pôles canoniques de recherche d'équipes — compétitions, matchs qualifiés, marchés et opérateurs. Relations factuelles uniquement, jamais de notes.",
+  tmLeadLine:
+    "L'ensemble de recherche de cette équipe contient {count} lignes qualifiées sur {fixtures} matchs.",
+  tmUpcomingEmpty:
+    "Aucun match qualifié à venir pour cette équipe dans l'ensemble de recherche actuel.",
+  tmRecentEmpty: "Aucun match analysé pour cette équipe dans l'ensemble de recherche actuel.",
+  tmCompetitionsTitle: "Compétitions actuelles",
+  tmDetailTitle: "Détail de l'équipe",
+  tmMarketProfileTitle: "Profil des marchés de buts",
+  tmMarketProfileEmpty:
+    "Aucune ligne de marché qualifiée pour cette équipe dans l'échantillon de recherche actuel.",
+  tmHomeAwayNote:
+    "Les décomptes reflètent les lignes de recherche qualifiées où {team} joue à domicile ou à l'extérieur — ce n'est ni un tableau de forme ni une note.",
+  tmEnrichmentAbsent:
+    "Les taux de buts et de xG de l'équipe ne s'affichent que lorsqu'un enrichissement du détail des matchs existe — cette page ne les invente pas.",
+  tmRelatedTeams: "Équipes liées",
+  tmSearchLabel: "Rechercher",
+  tmSearchPlaceholder: "Nom de l'équipe",
+  tmFilterCompetition: "Compétition",
+  tmFilterCountry: "Pays",
+  tmAllCompetitions: "Toutes les compétitions",
+  tmAllCountries: "Tous les pays",
+  tmApplyFilters: "Appliquer les filtres",
+  tmFiltersEmpty: "Aucune équipe ne correspond à ces filtres.",
+  tmResetFilters: "Réinitialiser les filtres",
+  tmInternational: "International",
 
 });
 

@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { TeamDetailView } from "@/components/teams/TeamDetailView";
 import { emptyLists, getDailyMatchListsSafe, todayMatchDateStr } from "@/lib/footystats/client";
 import { locales, type Locale } from "@/lib/i18n";
+import { getDictionary } from "@/lib/dictionaries";
 import { getRequestCountryContext } from "@/lib/personalization/server";
 import { mapDailyListsToQualifiedFixtures } from "@/lib/research/qualifiedFixture";
 import {
@@ -65,6 +66,7 @@ export default async function TeamDetailPage({
       recent={recent}
       operators={operators}
       visitorCountry={countryContext.country}
+      p={getDictionary(params.locale).predictions}
     />
   );
 }

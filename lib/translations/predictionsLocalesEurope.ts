@@ -405,6 +405,37 @@ export const nl = euroPredictions({
   ssnOperatorsTitle: "Beschikbare operators",
   ssnOperatorsEmpty: "Geen operators met actieve affiliatie voor het vastgestelde bezoekersland.",
 
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "Onderzoeksteams",
+  tmIndexTitle: "Teams",
+  tmIndexLede:
+    "Canonieke teamonderzoeksknooppunten — competities, gekwalificeerde wedstrijden, markten en operators. Alleen feitelijke relaties, nooit beoordelingen.",
+  tmLeadLine:
+    "De onderzoeksset van dit team bevat {count} gekwalificeerde regels over {fixtures} wedstrijden.",
+  tmUpcomingEmpty:
+    "Geen komende gekwalificeerde wedstrijden voor dit team in de huidige onderzoeksset.",
+  tmRecentEmpty: "Geen geanalyseerde wedstrijden voor dit team in de huidige onderzoeksset.",
+  tmCompetitionsTitle: "Huidige competities",
+  tmDetailTitle: "Teamdetail",
+  tmMarketProfileTitle: "Doelpuntenmarktprofiel",
+  tmMarketProfileEmpty:
+    "Geen gekwalificeerde marktregels voor dit team in de huidige onderzoekssteekproef.",
+  tmHomeAwayNote:
+    "De tellingen weerspiegelen gekwalificeerde onderzoeksregels waarin {team} thuis of uit speelt — geen vormtabel, geen beoordeling.",
+  tmEnrichmentAbsent:
+    "Doelpunten- en xG-cijfers van het team verschijnen alleen wanneer wedstrijddetail-verrijking bestaat — deze pagina verzint ze niet.",
+  tmRelatedTeams: "Gerelateerde teams",
+  tmSearchLabel: "Zoeken",
+  tmSearchPlaceholder: "Teamnaam",
+  tmFilterCompetition: "Competitie",
+  tmFilterCountry: "Land",
+  tmAllCompetitions: "Alle competities",
+  tmAllCountries: "Alle landen",
+  tmApplyFilters: "Filters toepassen",
+  tmFiltersEmpty: "Geen teams voldoen aan deze filters.",
+  tmResetFilters: "Filters wissen",
+  tmInternational: "Internationaal",
+
 });
 
 export const pl = euroPredictions({
@@ -640,6 +671,37 @@ export const pl = euroPredictions({
   ssnOperatorsTitle: "Dostępni operatorzy",
   ssnOperatorsEmpty: "Brak operatorów z aktywną afiliacją dla ustalonego kraju odwiedzającego.",
 
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "Drużyny badawcze",
+  tmIndexTitle: "Drużyny",
+  tmIndexLede:
+    "Kanoniczne węzły badawcze drużyn — rozgrywki, zakwalifikowane mecze, rynki i operatorzy. Tylko relacje faktyczne, nigdy oceny.",
+  tmLeadLine:
+    "Zbiór badawczy tej drużyny zawiera {count} zakwalifikowanych wierszy w {fixtures} meczach.",
+  tmUpcomingEmpty:
+    "Brak nadchodzących zakwalifikowanych meczów tej drużyny w bieżącym zbiorze badawczym.",
+  tmRecentEmpty: "Brak przeanalizowanych meczów tej drużyny w bieżącym zbiorze badawczym.",
+  tmCompetitionsTitle: "Bieżące rozgrywki",
+  tmDetailTitle: "Szczegóły drużyny",
+  tmMarketProfileTitle: "Profil rynków bramkowych",
+  tmMarketProfileEmpty:
+    "Brak zakwalifikowanych wierszy rynkowych tej drużyny w bieżącej próbie badawczej.",
+  tmHomeAwayNote:
+    "Liczby odzwierciedlają zakwalifikowane wiersze badawcze, w których {team} gra u siebie lub na wyjeździe — to nie tabela formy ani ocena.",
+  tmEnrichmentAbsent:
+    "Wskaźniki goli i xG drużyny pojawiają się tylko wtedy, gdy istnieje wzbogacenie o szczegóły meczu — ta strona ich nie wymyśla.",
+  tmRelatedTeams: "Powiązane drużyny",
+  tmSearchLabel: "Szukaj",
+  tmSearchPlaceholder: "Nazwa drużyny",
+  tmFilterCompetition: "Rozgrywki",
+  tmFilterCountry: "Kraj",
+  tmAllCompetitions: "Wszystkie rozgrywki",
+  tmAllCountries: "Wszystkie kraje",
+  tmApplyFilters: "Zastosuj filtry",
+  tmFiltersEmpty: "Żadna drużyna nie pasuje do tych filtrów.",
+  tmResetFilters: "Wyczyść filtry",
+  tmInternational: "Międzynarodowe",
+
 });
 
 export const cs = euroPredictions({
@@ -872,6 +934,35 @@ export const cs = euroPredictions({
   ssnOperatorsTitle: "Dostupní operátoři",
   ssnOperatorsEmpty: "Žádní operátoři s aktivní afiliací pro zjištěnou zemi návštěvníka.",
 
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "Výzkumné týmy",
+  tmIndexTitle: "Týmy",
+  tmIndexLede:
+    "Kanonické výzkumné uzly týmů — soutěže, kvalifikované zápasy, trhy a operátoři. Pouze faktické vztahy, nikdy hodnocení.",
+  tmLeadLine:
+    "Výzkumná sada tohoto týmu obsahuje {count} kvalifikovaných řádků napříč {fixtures} zápasy.",
+  tmUpcomingEmpty: "Žádné nadcházející kvalifikované zápasy tohoto týmu v aktuální výzkumné sadě.",
+  tmRecentEmpty: "Žádné analyzované zápasy tohoto týmu v aktuální výzkumné sadě.",
+  tmCompetitionsTitle: "Aktuální soutěže",
+  tmDetailTitle: "Detail týmu",
+  tmMarketProfileTitle: "Profil gólových trhů",
+  tmMarketProfileEmpty: "Žádné kvalifikované tržní řádky tohoto týmu v aktuálním výzkumném vzorku.",
+  tmHomeAwayNote:
+    "Počty odrážejí kvalifikované výzkumné řádky, v nichž {team} hraje doma nebo venku — není to tabulka formy ani hodnocení.",
+  tmEnrichmentAbsent:
+    "Míry gólů a xG týmu se zobrazují, jen když existuje obohacení o detail zápasu — tato stránka si je nevymýšlí.",
+  tmRelatedTeams: "Související týmy",
+  tmSearchLabel: "Hledat",
+  tmSearchPlaceholder: "Název týmu",
+  tmFilterCompetition: "Soutěž",
+  tmFilterCountry: "Země",
+  tmAllCompetitions: "Všechny soutěže",
+  tmAllCountries: "Všechny země",
+  tmApplyFilters: "Použít filtry",
+  tmFiltersEmpty: "Těmto filtrům neodpovídá žádný tým.",
+  tmResetFilters: "Obnovit filtry",
+  tmInternational: "Mezinárodní",
+
 });
 
 export const da = euroPredictions({
@@ -1102,6 +1193,36 @@ export const da = euroPredictions({
   ssnOperatorsTitle: "Tilgængelige operatører",
   ssnOperatorsEmpty: "Ingen operatører med aktiv affiliering for det bestemte besøgsland.",
 
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "Forskningshold",
+  tmIndexTitle: "Hold",
+  tmIndexLede:
+    "Kanoniske holdforskningsknudepunkter — turneringer, kvalificerede kampe, markeder og operatører. Kun faktuelle relationer, aldrig vurderinger.",
+  tmLeadLine:
+    "Dette holds forskningssæt indeholder {count} kvalificerede rækker på tværs af {fixtures} kampe.",
+  tmUpcomingEmpty: "Ingen kommende kvalificerede kampe for dette hold i det aktuelle forskningssæt.",
+  tmRecentEmpty: "Ingen analyserede kampe for dette hold i det aktuelle forskningssæt.",
+  tmCompetitionsTitle: "Nuværende turneringer",
+  tmDetailTitle: "Holddetalje",
+  tmMarketProfileTitle: "Målmarkedsprofil",
+  tmMarketProfileEmpty:
+    "Ingen kvalificerede markedsrækker for dette hold i den aktuelle forskningsstikprøve.",
+  tmHomeAwayNote:
+    "Optællingerne afspejler kvalificerede forskningsrækker, hvor {team} spiller hjemme eller ude — ikke en formtabel, ikke en vurdering.",
+  tmEnrichmentAbsent:
+    "Holdets mål- og xG-rater vises kun, når kampdetalje-berigelse findes — denne side opfinder dem ikke.",
+  tmRelatedTeams: "Relaterede hold",
+  tmSearchLabel: "Søg",
+  tmSearchPlaceholder: "Holdnavn",
+  tmFilterCompetition: "Turnering",
+  tmFilterCountry: "Land",
+  tmAllCompetitions: "Alle turneringer",
+  tmAllCountries: "Alle lande",
+  tmApplyFilters: "Anvend filtre",
+  tmFiltersEmpty: "Ingen hold matcher disse filtre.",
+  tmResetFilters: "Nulstil filtre",
+  tmInternational: "International",
+
 });
 
 export const sv = euroPredictions({
@@ -1331,6 +1452,36 @@ export const sv = euroPredictions({
   ssnDetailTitle: "Säsongsdetalj",
   ssnOperatorsTitle: "Tillgängliga operatörer",
   ssnOperatorsEmpty: "Inga operatörer med aktiv affiliering för det fastställda besökarlandet.",
+
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "Forskningslag",
+  tmIndexTitle: "Lag",
+  tmIndexLede:
+    "Kanoniska lagforskningsnav — tävlingar, kvalificerade matcher, marknader och operatörer. Endast faktiska relationer, aldrig betyg.",
+  tmLeadLine:
+    "Detta lags forskningsmängd innehåller {count} kvalificerade rader över {fixtures} matcher.",
+  tmUpcomingEmpty:
+    "Inga kommande kvalificerade matcher för detta lag i den aktuella forskningsmängden.",
+  tmRecentEmpty: "Inga analyserade matcher för detta lag i den aktuella forskningsmängden.",
+  tmCompetitionsTitle: "Nuvarande tävlingar",
+  tmDetailTitle: "Lagdetalj",
+  tmMarketProfileTitle: "Målmarknadsprofil",
+  tmMarketProfileEmpty: "Inga kvalificerade marknadsrader för detta lag i det aktuella forskningsurvalet.",
+  tmHomeAwayNote:
+    "Antalen speglar kvalificerade forskningsrader där {team} spelar hemma eller borta — ingen formtabell, inget betyg.",
+  tmEnrichmentAbsent:
+    "Lagets mål- och xG-tal visas bara när matchdetalj-berikning finns — denna sida hittar inte på dem.",
+  tmRelatedTeams: "Relaterade lag",
+  tmSearchLabel: "Sök",
+  tmSearchPlaceholder: "Lagnamn",
+  tmFilterCompetition: "Tävling",
+  tmFilterCountry: "Land",
+  tmAllCompetitions: "Alla tävlingar",
+  tmAllCountries: "Alla länder",
+  tmApplyFilters: "Tillämpa filter",
+  tmFiltersEmpty: "Inga lag matchar dessa filter.",
+  tmResetFilters: "Återställ filter",
+  tmInternational: "Internationell",
 
 });
 
@@ -1563,6 +1714,37 @@ export const no = euroPredictions({
   ssnOperatorsTitle: "Tilgjengelige operatører",
   ssnOperatorsEmpty: "Ingen operatører med aktiv affiliering for det fastslåtte besøkslandet.",
 
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "Forskningslag",
+  tmIndexTitle: "Lag",
+  tmIndexLede:
+    "Kanoniske lagforskningsknutepunkter — turneringer, kvalifiserte kamper, markeder og operatører. Kun faktiske relasjoner, aldri vurderinger.",
+  tmLeadLine:
+    "Dette lagets forskningssett inneholder {count} kvalifiserte rader over {fixtures} kamper.",
+  tmUpcomingEmpty:
+    "Ingen kommende kvalifiserte kamper for dette laget i det gjeldende forskningssettet.",
+  tmRecentEmpty: "Ingen analyserte kamper for dette laget i det gjeldende forskningssettet.",
+  tmCompetitionsTitle: "Nåværende turneringer",
+  tmDetailTitle: "Lagdetalj",
+  tmMarketProfileTitle: "Målmarkedsprofil",
+  tmMarketProfileEmpty:
+    "Ingen kvalifiserte markedsrader for dette laget i det gjeldende forskningsutvalget.",
+  tmHomeAwayNote:
+    "Tallene gjenspeiler kvalifiserte forskningsrader der {team} spiller hjemme eller borte — ingen formtabell, ingen vurdering.",
+  tmEnrichmentAbsent:
+    "Lagets mål- og xG-rater vises bare når kampdetalj-berikelse finnes — denne siden finner dem ikke opp.",
+  tmRelatedTeams: "Relaterte lag",
+  tmSearchLabel: "Søk",
+  tmSearchPlaceholder: "Lagnavn",
+  tmFilterCompetition: "Turnering",
+  tmFilterCountry: "Land",
+  tmAllCompetitions: "Alle turneringer",
+  tmAllCountries: "Alle land",
+  tmApplyFilters: "Bruk filtre",
+  tmFiltersEmpty: "Ingen lag matcher disse filtrene.",
+  tmResetFilters: "Nullstill filtre",
+  tmInternational: "Internasjonal",
+
 });
 
 export const fi = euroPredictions({
@@ -1791,6 +1973,35 @@ export const fi = euroPredictions({
   ssnDetailTitle: "Kauden tiedot",
   ssnOperatorsTitle: "Saatavilla olevat operaattorit",
   ssnOperatorsEmpty: "Ei aktiivisen kumppanuuden operaattoreita todetulle kävijämaalle.",
+
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "Tutkimusjoukkueet",
+  tmIndexTitle: "Joukkueet",
+  tmIndexLede:
+    "Kanoniset joukkueiden tutkimussolmut — sarjat, karsitut ottelut, markkinat ja operaattorit. Vain faktapohjaisia suhteita, ei koskaan arvosanoja.",
+  tmLeadLine:
+    "Tämän joukkueen tutkimusjoukossa on {count} karsittua riviä {fixtures} ottelussa.",
+  tmUpcomingEmpty: "Ei tulevia karsittuja otteluita tälle joukkueelle nykyisessä tutkimusjoukossa.",
+  tmRecentEmpty: "Ei analysoituja otteluita tälle joukkueelle nykyisessä tutkimusjoukossa.",
+  tmCompetitionsTitle: "Nykyiset sarjat",
+  tmDetailTitle: "Joukkueen tiedot",
+  tmMarketProfileTitle: "Maalimarkkinaprofiili",
+  tmMarketProfileEmpty: "Ei karsittuja markkinarivejä tälle joukkueelle nykyisessä tutkimusotoksessa.",
+  tmHomeAwayNote:
+    "Luvut kuvaavat karsittuja tutkimusrivejä, joissa {team} pelaa kotona tai vieraissa — ei vireystaulukko, ei arvosana.",
+  tmEnrichmentAbsent:
+    "Joukkueen maali- ja xG-luvut näkyvät vain, kun otteludetaljien rikastus on olemassa — tämä sivu ei keksi niitä.",
+  tmRelatedTeams: "Liittyvät joukkueet",
+  tmSearchLabel: "Haku",
+  tmSearchPlaceholder: "Joukkueen nimi",
+  tmFilterCompetition: "Sarja",
+  tmFilterCountry: "Maa",
+  tmAllCompetitions: "Kaikki sarjat",
+  tmAllCountries: "Kaikki maat",
+  tmApplyFilters: "Käytä suodattimia",
+  tmFiltersEmpty: "Mikään joukkue ei vastaa näitä suodattimia.",
+  tmResetFilters: "Tyhjennä suodattimet",
+  tmInternational: "Kansainvälinen",
 
 });
 
@@ -2024,6 +2235,36 @@ export const ro = euroPredictions({
   ssnDetailTitle: "Detaliul sezonului",
   ssnOperatorsTitle: "Operatori disponibili",
   ssnOperatorsEmpty: "Niciun operator cu afiliere activă pentru țara vizitatorului determinată.",
+
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "Echipe de cercetare",
+  tmIndexTitle: "Echipe",
+  tmIndexLede:
+    "Noduri canonice de cercetare a echipelor — competiții, meciuri calificate, piețe și operatori. Doar relații factuale, niciodată evaluări.",
+  tmLeadLine:
+    "Setul de cercetare al acestei echipe conține {count} rânduri calificate în {fixtures} meciuri.",
+  tmUpcomingEmpty: "Niciun meci calificat viitor pentru această echipă în setul de cercetare curent.",
+  tmRecentEmpty: "Niciun meci analizat pentru această echipă în setul de cercetare curent.",
+  tmCompetitionsTitle: "Competiții actuale",
+  tmDetailTitle: "Detaliul echipei",
+  tmMarketProfileTitle: "Profilul piețelor de goluri",
+  tmMarketProfileEmpty:
+    "Niciun rând de piață calificat pentru această echipă în eșantionul de cercetare curent.",
+  tmHomeAwayNote:
+    "Numărătorile reflectă rânduri de cercetare calificate în care {team} joacă acasă sau în deplasare — nu este un tabel de formă, nici o evaluare.",
+  tmEnrichmentAbsent:
+    "Ratele de goluri și xG ale echipei apar doar când există îmbogățirea cu detalii de meci — această pagină nu le inventează.",
+  tmRelatedTeams: "Echipe conexe",
+  tmSearchLabel: "Căutare",
+  tmSearchPlaceholder: "Numele echipei",
+  tmFilterCompetition: "Competiție",
+  tmFilterCountry: "Țară",
+  tmAllCompetitions: "Toate competițiile",
+  tmAllCountries: "Toate țările",
+  tmApplyFilters: "Aplică filtrele",
+  tmFiltersEmpty: "Nicio echipă nu corespunde acestor filtre.",
+  tmResetFilters: "Resetează filtrele",
+  tmInternational: "Internațional",
 
 });
 
@@ -2260,6 +2501,36 @@ export const el = euroPredictions({
   ssnOperatorsTitle: "Διαθέσιμοι πάροχοι",
   ssnOperatorsEmpty: "Κανένας πάροχος με ενεργή συνεργασία για τη χώρα του επισκέπτη.",
 
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "Ομάδες έρευνας",
+  tmIndexTitle: "Ομάδες",
+  tmIndexLede:
+    "Κανονικοί κόμβοι έρευνας ομάδων — διοργανώσεις, προκριθέντες αγώνες, αγορές και πάροχοι. Μόνο πραγματικές σχέσεις, ποτέ βαθμολογίες.",
+  tmLeadLine:
+    "Το σύνολο έρευνας αυτής της ομάδας περιέχει {count} προκριθείσες γραμμές σε {fixtures} αγώνες.",
+  tmUpcomingEmpty:
+    "Κανένας επερχόμενος προκριθείς αγώνας για αυτή την ομάδα στο τρέχον σύνολο έρευνας.",
+  tmRecentEmpty: "Κανένας αναλυμένος αγώνας για αυτή την ομάδα στο τρέχον σύνολο έρευνας.",
+  tmCompetitionsTitle: "Τρέχουσες διοργανώσεις",
+  tmDetailTitle: "Λεπτομέρεια ομάδας",
+  tmMarketProfileTitle: "Προφίλ αγορών γκολ",
+  tmMarketProfileEmpty: "Καμία προκριθείσα γραμμή αγοράς για αυτή την ομάδα στο τρέχον δείγμα έρευνας.",
+  tmHomeAwayNote:
+    "Οι καταμετρήσεις αφορούν προκριθείσες γραμμές έρευνας όπου η {team} παίζει εντός ή εκτός — δεν είναι πίνακας φόρμας ούτε βαθμολογία.",
+  tmEnrichmentAbsent:
+    "Τα ποσοστά γκολ και xG της ομάδας εμφανίζονται μόνο όταν υπάρχει εμπλουτισμός λεπτομερειών αγώνα — αυτή η σελίδα δεν τα εφευρίσκει.",
+  tmRelatedTeams: "Σχετικές ομάδες",
+  tmSearchLabel: "Αναζήτηση",
+  tmSearchPlaceholder: "Όνομα ομάδας",
+  tmFilterCompetition: "Διοργάνωση",
+  tmFilterCountry: "Χώρα",
+  tmAllCompetitions: "Όλες οι διοργανώσεις",
+  tmAllCountries: "Όλες οι χώρες",
+  tmApplyFilters: "Εφαρμογή φίλτρων",
+  tmFiltersEmpty: "Καμία ομάδα δεν ταιριάζει με αυτά τα φίλτρα.",
+  tmResetFilters: "Επαναφορά φίλτρων",
+  tmInternational: "Διεθνής",
+
 });
 
 export const hu = euroPredictions({
@@ -2492,5 +2763,35 @@ export const hu = euroPredictions({
   ssnDetailTitle: "Szezon részletei",
   ssnOperatorsTitle: "Elérhető szolgáltatók",
   ssnOperatorsEmpty: "Nincs aktív partnerségű szolgáltató a megállapított látogatói országhoz.",
+
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "Kutatási csapatok",
+  tmIndexTitle: "Csapatok",
+  tmIndexLede:
+    "Kanonikus csapatkutatási csomópontok — sorozatok, kvalifikált mérkőzések, piacok és szolgáltatók. Csak tényszerű kapcsolatok, sosem értékelések.",
+  tmLeadLine:
+    "E csapat kutatási készlete {count} kvalifikált sort tartalmaz {fixtures} mérkőzésen.",
+  tmUpcomingEmpty:
+    "Nincs közelgő kvalifikált mérkőzés ehhez a csapathoz a jelenlegi kutatási készletben.",
+  tmRecentEmpty: "Nincs elemzett mérkőzés ehhez a csapathoz a jelenlegi kutatási készletben.",
+  tmCompetitionsTitle: "Jelenlegi sorozatok",
+  tmDetailTitle: "Csapat részletei",
+  tmMarketProfileTitle: "Gólpiaci profil",
+  tmMarketProfileEmpty: "Nincs kvalifikált piaci sor ehhez a csapathoz a jelenlegi kutatási mintában.",
+  tmHomeAwayNote:
+    "A számok azokat a kvalifikált kutatási sorokat tükrözik, ahol a(z) {team} hazai vagy vendég — nem formatáblázat és nem értékelés.",
+  tmEnrichmentAbsent:
+    "A csapat gól- és xG-arányai csak mérkőzésrészlet-dúsítás esetén jelennek meg — ez az oldal nem találja ki őket.",
+  tmRelatedTeams: "Kapcsolódó csapatok",
+  tmSearchLabel: "Keresés",
+  tmSearchPlaceholder: "Csapatnév",
+  tmFilterCompetition: "Sorozat",
+  tmFilterCountry: "Ország",
+  tmAllCompetitions: "Minden sorozat",
+  tmAllCountries: "Minden ország",
+  tmApplyFilters: "Szűrők alkalmazása",
+  tmFiltersEmpty: "Egy csapat sem felel meg ezeknek a szűrőknek.",
+  tmResetFilters: "Szűrők törlése",
+  tmInternational: "Nemzetközi",
 
 });

@@ -554,6 +554,36 @@ export const predictionsEn = {
   ssnOperatorsTitle: "Available operators",
   ssnOperatorsEmpty:
     "No affiliate-enabled operators for the resolved visitor country.",
+  /* Team pages — form-guide conversion (tm keys). */
+  tmIndexEyebrow: "Research teams",
+  tmIndexTitle: "Teams",
+  tmIndexLede:
+    "Canonical team research hubs — competitions, qualified fixtures, markets and operators. Factual relationships only, never ratings.",
+  tmLeadLine:
+    "This team's research set holds {count} qualified rows across {fixtures} fixtures.",
+  tmUpcomingEmpty:
+    "No upcoming qualified fixtures for this team in the current research set.",
+  tmRecentEmpty: "No analyzed fixtures for this team in the current research set.",
+  tmCompetitionsTitle: "Current competitions",
+  tmDetailTitle: "Team detail",
+  tmMarketProfileTitle: "Goal-market profile",
+  tmMarketProfileEmpty:
+    "No qualified market rows for this team in the current research sample.",
+  tmHomeAwayNote:
+    "Counts reflect qualified research rows where {team} appears home or away — not a form table, not a rating.",
+  tmEnrichmentAbsent:
+    "Team-level goal and xG rates render only when match-detail enrichment exists — this page does not invent them.",
+  tmRelatedTeams: "Related teams",
+  tmSearchLabel: "Search",
+  tmSearchPlaceholder: "Team name",
+  tmFilterCompetition: "Competition",
+  tmFilterCountry: "Country",
+  tmAllCompetitions: "All competitions",
+  tmAllCountries: "All countries",
+  tmApplyFilters: "Apply filters",
+  tmFiltersEmpty: "No teams match these filters.",
+  tmResetFilters: "Reset filters",
+  tmInternational: "International",
   navQualified: "Qualified lists",
   navLiveSignals: "Live signals",
   navMethodology: "Methodology",
