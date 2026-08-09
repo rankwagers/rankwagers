@@ -140,6 +140,40 @@ test("one side missing omits that side alone and leaves the other stated", () =>
   assert.ok(rates.league, "the baseline is independent of either side");
 });
 
+test("a zero-sample side is absent, never `0% (0/0)`", () => {
+  /*
+   * THE SHIPPED DEFECT THIS PINS: the formatter treated 0/0 as present, so "0% (0/0)" printed
+   * in the lead's flanks and in the stacked rows — a rate over zero observations, which is not
+   * a rate. The gate is at the ONE formatter, so every surface that consumes `VenueRates` —
+   * the lead (desktop and mobile alike), the supporting table's desktop cells and its stacked
+   * mobile lines, the fixture page — inherits the omission. `HeroLead` omits the whole tracks
+   * block when no venue rate resolves, and `RateCell` renders nothing for a null rate at any
+   * width; both behaviours are exercised by the render-level probes in `mobilePass.test.ts`.
+   */
+  const rates = venueRatesForMarket(
+    detailWith({ homePlayed: 0, homePct: 0, awayPlayed: 9 }),
+    "over25"
+  );
+  assert.equal(rates.home, null, "0/0 is an absence — the slot omits");
+  assert.ok(rates.away, "the observed side is untouched");
+
+  // Both sides unobserved: both omit, and the fixture page agrees (one formatter, no dialects).
+  const both = venueRatesForMarket(
+    detailWith({ homePlayed: 0, homePct: 0, awayPlayed: 0, awayPct: 0 }),
+    "over25"
+  );
+  assert.equal(both.home, null);
+  assert.equal(both.away, null);
+
+  // And no published display string can ever carry a zero denominator.
+  for (const market of ["over15", "over25", "fh", "sh"]) {
+    const r = venueRatesForMarket(detailWith({ homePlayed: 0, awayPlayed: 0 }), market);
+    for (const slot of [r.home, r.away] as const) {
+      assert.ok(!slot || !/\(0(\/0)?\)/.test(slot.display), "no zero-observation rate prints");
+    }
+  }
+});
+
 test("a league below the published sample floor yields no baseline", () => {
   // LEAGUE_MIN_SAMPLE gates this. A rate drawn from four fixtures is not something the two venue
   // records can be compared against, so it is not offered as one.

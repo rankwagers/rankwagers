@@ -45,14 +45,14 @@ export function HomepageAccaEntry({
           locale={locale}
           className="border-b-2 border-[var(--hero-ink)] font-bold text-[var(--hero-ink)]"
         >
-          {ctaLabel} →
+          {ctaLabel} <span aria-hidden className="rw-arrow">→</span>
         </SectionTrackLink>{" "}
         ·{" "}
         <Link
           href={`/${locale}/acca/builder`}
           className="border-b-2 border-[var(--hero-ink)] font-bold text-[var(--hero-ink)]"
         >
-          Auto Acca Builder →
+          Auto Acca Builder <span aria-hidden className="rw-arrow">→</span>
         </Link>
         {/*
           THE "/combo" NOTE IS GONE FROM READER COPY.

@@ -81,7 +81,7 @@ export function V2Button({
       {arrow ? (
         <span
           aria-hidden
-          className="inline-block transition-transform duration-[var(--dur-respond)] ease-[var(--ease-settle)] group-hover:translate-x-1"
+          className="rw-arrow transition-transform duration-[var(--dur-respond)] ease-[var(--ease-settle)] group-hover:translate-x-1"
         >
           →
         </span>
@@ -175,13 +175,18 @@ export function V2LeagueCell({
           className="block shrink-0 self-center outline outline-[0.5px] outline-[var(--hero-line)]"
         />
       ) : null}
-      <span className="min-w-0">
+      {/*
+        Below `sm` the cell is ONE line — flag, country, league sharing it (doc §Below sm) —
+        because a stacked row has five lines to spend and this cell was taking two of them. From
+        `sm` up it restores the map's form: the country over its competition.
+      */}
+      <span className="flex min-w-0 items-baseline gap-x-1.5 sm:block">
         {resolved ? (
-          <span className="rw-m block truncate font-bold text-[var(--hero-ink)]">
+          <span className="rw-m block max-w-[45%] truncate font-bold text-[var(--hero-ink)] sm:max-w-none">
             {resolved.name}
           </span>
         ) : null}
-        <span className="rw-m block truncate text-[var(--hero-ink-2)]">{league}</span>
+        <span className="rw-m block min-w-0 truncate text-[var(--hero-ink-2)]">{league}</span>
       </span>
     </span>
   );

@@ -770,7 +770,7 @@ export function RankWagersHome({
             locale={locale}
             className="border-b-2 border-[var(--hero-ink)] font-bold text-[var(--hero-ink)]"
           >
-            Open Acca Builder →
+            Open Acca Builder <span aria-hidden className="rw-arrow">→</span>
           </SectionTrackLink>
         </p>
       </Section>

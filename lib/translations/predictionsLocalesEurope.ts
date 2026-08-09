@@ -31,18 +31,24 @@ export const nl = euroPredictions({
   empty: "Geen wedstrijden halen de drempel voor deze markt vandaag.",
   apiError: "Kon de lijsten van vandaag niet laden. Probeer later opnieuw.",
   liveSoonTitle: "Live signalen",
+  /*
+   * VOCABULARY-SAFE, NOW. These strings sold "gratis tip per uur" — banned vocabulary that
+   * contradicted the card's own "observaties, geen tips" stance. Re-translated to the approved
+   * observation/signal vocabulary for THIS locale; the other 29 locales are fixture-pass debt,
+   * swept (not mass-edited) by `localeVocabularySweep.test.ts`.
+   */
   liveSoonBody:
-    "Realtime doelalerts via Telegram. Eén gratis tip per uur — meer via partner bookmakers of Telegram.",
+    "Realtime doelalerts via Telegram. Eén uitgelichte observatie per uur — meer via partnerbookmakers of Telegram.",
   liveSoonBodyStats:
     "Live-engine rustig — we tonen nog wedstrijden met hoog potentieel uit de lijsten van vandaag.",
-  liveFeedHourlyNote: "Gratis tip van het uur (reset op UTC-uur)",
-  liveFeaturedLabel: "Tip van het uur",
+  liveFeedHourlyNote: "Uitgelichte observatie van het uur (reset op het UTC-uur)",
+  liveFeaturedLabel: "Observatie van het uur",
   liveFeaturedMoreCta: "Tik voor meer voorspellingen",
   liveFeaturedWonBadge: "GEWONNEN",
   liveFeaturedWinPendingBadge: "DOELPUNT",
   liveFeaturedWonLine: "Voorspelling gewonnen — mooie pick",
   liveFeaturedWinPendingLine: "Doelpunt — winst wordt bevestigd",
-  liveUnlockTitle: "Deze live tip ontgrendelen",
+  liveUnlockTitle: "Deze live observatie ontgrendelen",
   liveUnlockBody:
     "Deze voorspelling is voor geverifieerde spelers. Registreer en stort bij een partner of via Telegram VIP.",
   liveUnlockAffiliate: "Partner wed sites bekijken",
@@ -50,7 +56,7 @@ export const nl = euroPredictions({
   liveUnlockTelegramChannel: "Telegram-kanaal openen",
   liveUnlockTelegramSoon: "Telegram-link niet geconfigureerd",
   liveEmpty: "Geen live signalen nu. Kom terug tijdens wedstrijden.",
-  liveEmptySoft: "Geen live tip dit uur — scroll de lijsten hieronder.",
+  liveEmptySoft: "Geen uitgelichte observatie dit uur — scroll de lijsten hieronder.",
   liveNewBadge: "Nieuw",
   liveTapUnlock: "Tik om te ontgrendelen",
   upcomingSectionLabel: "Binnenkort (2–3 u)",
@@ -96,6 +102,160 @@ export const nl = euroPredictions({
   matchDetailAiReason: "Waarom",
   matchDetailPlayedNote: "Seizoensample: {home} thuis · {away} uit",
   matchDetailError: "Kon wedstrijddetails niet laden.",
+
+  /* ======================================================================
+     THE NEW HOMEPAGE KEYS — NL ONLY, FOR NOW.
+     ----------------------------------------------------------------------
+     The rebrand's homepage keys were added to English alone, and the stated
+     interim decision (`mergePredictions`) lets an untranslated key fall
+     back to English silently — which shipped a mixed-language /nl. These
+     entries close that gap for THIS locale so /nl reads one language end
+     to end; the other locales carry the same debt and are worked off in
+     the fixture pass. Vocabulary rules apply in every language: no "tip",
+     no "confidence" — observaties, signalen, provider-potentieel.
+     ====================================================================== */
+  heroAssessed: "Beoordeeld {date}",
+  heroDisclosure:
+    "RankWagers ontvangt een commissie wanneer een lezer via een link op deze site een account opent bij een aanbieder. De criteria waarmee aanbieders worden gerangschikt zijn volledig gepubliceerd, inclusief wat ze niet beoordelen.",
+  heroSearchPlaceholder: "Zoek teams of competities in de lijsten van vandaag",
+  heroSearchSubmit: "Zoeken",
+  heroLiveCountLabel: "{count} live wedstrijden in de lijsten van vandaag",
+  heroLiveCountEmpty: "Geen live wedstrijden in de gekwalificeerde lijsten van vandaag",
+  heroStageEyebrow: "Voetbal, gelezen als bewijs",
+  heroStageUpdated: "Lijsten opgehaald {time} UTC",
+  heroStageUpdatedPending: "Ophaaltijd volgt",
+  heroStageTitle: "Het voetbal van vandaag is al onderzocht.",
+  heroStageLede: "Elke wedstrijd die vandaag begint is langs het model gelegd.",
+  heroStageLedeRest:
+    "Alleen wedstrijden die de kwalificatiedrempel halen bereiken deze pagina — vandaag {count}.",
+  heroStageLedeRestEmpty:
+    "Alleen wedstrijden die de kwalificatiedrempel halen bereiken deze pagina. Vandaag geen enkele.",
+  heroStageCta: "Bekijk het onderzoek van vandaag",
+  heroStageEmpty:
+    "Geen wedstrijd haalde de kwalificatiedrempel voor deze datum. De lijsten worden gepubliceerd zoals ze zijn — een lege dag is een resultaat, geen storing.",
+  heroFunnelTitle: "De onderzoekstrechter van vandaag",
+  heroFunnelNote: "{count} haalden de drempel",
+  heroFunnelAnalysed: "Wedstrijden",
+  heroFunnelValidated: "Gevalideerd",
+  heroFunnelInScope: "Binnen scope",
+  heroFunnelQualified: "Boven de drempel",
+  heroFunnelFeatured: "Uitgelicht",
+  heroFunnelFootnote:
+    "Boven de drempel telt wedstrijden waarvan het provider-potentieel de gepubliceerde marktdrempel van de dag haalde. Het is een filter, geen oordeel over de wedstrijd.",
+  heroLeadTitle: "Nr. 01",
+  heroLeadNote: "1 van {count} getoond",
+  heroSupportingTitle: "Ondersteunend onderzoek",
+  heroTableNo: "Nr.",
+  heroTableFixture: "Wedstrijd",
+  heroTableLeague: "Competitie",
+  heroTableKickoff: "Aftrap",
+  heroTablePotential: "Potentieel",
+  heroTableMarket: "Markt",
+  heroProviderPotentialNote:
+    "Provider-potentieel — het cijfer van FootyStats voor deze markt zoals gepubliceerd. Geen zekerheidsmaat, en zonder steekproef.",
+  mastheadEdition: "Editie {n}",
+  rankedEyebrow: "Vandaag",
+  rankedTitle: "Hoogste provider-potentieel vandaag",
+  rankedDescription:
+    "Gerangschikt op provider-potentieel binnen de gekwalificeerde markten van vandaag. Een statistische schatting, geen voorspelling van de uitslag.",
+  rankedPotentialLabel: "provider-potentieel",
+  rankedOpenMatch: "Wedstrijd openen",
+  rankedAddAcca: "Accumulator",
+  rankedWhyTitle: "Waarom {pct}%?",
+  rankedWhyHomeAll: "thuisploeg haalde deze markt in elke beoordeelde thuiswedstrijd {sample}",
+  rankedWhyHomeRate: "thuisploeg haalde deze markt in {rate} van de beoordeelde thuiswedstrijden",
+  rankedWhyAwayAll: "uitploeg haalde deze markt in elke beoordeelde uitwedstrijd {sample}",
+  rankedWhyAwayRate: "uitploeg haalde deze markt in {rate} van de beoordeelde uitwedstrijden",
+  rankedWhyBound:
+    "Een historisch percentage, geen zekerheid — een lijn van {pct}% kan nog steeds verliezen.",
+  rankedWhyMore: "Volledige steekproeven & onderbouwing:",
+  deskEyebrow: "Onderzoeksdesk",
+  deskTitle: "Recent gekwalificeerd",
+  deskDescription:
+    "Wedstrijden die de kwalificatiedrempel van het model haalden. Open een wedstrijd voor het volledige onderzoeksblad — drijvers, venue-bewijs en recente historie.",
+  deskColumnScore: "Score",
+  deskColumnResult: "Resultaat",
+  resultsTitle: "Recente resultaten — gearchiveerde uitkomsten van gekwalificeerde lijsten",
+  resultsNote: "Winst en verlies beide getoond",
+  resultsWon: "Gewonnen",
+  resultsLost: "Verloren",
+  resultsVoid: "Ongeldig",
+  resultsPending: "Lopend",
+  howRecordEyebrow: "Waarom RankWagers",
+  howRecordTitle: "Hoe het trackrecord tot stand komt",
+  howRecordDescription:
+    "Hoe deze publicatie tot stand komt — en hoe elk cijfer hierboven aan het archief kan worden getoetst in plaats van op vertrouwen te worden aangenomen.",
+  archiveEyebrow: "Historie",
+  archiveTitle: "Voorspellingsarchief",
+  archiveBody:
+    "Blader door eerdere onderzoeksdagen met de datumknop hierboven, of ga naar de methodologie terwijl het volledige doorzoekbare archief in een latere sprint verschijnt.",
+  archiveReadMethodology: "Methodologie lezen",
+  archiveUseDateControl: "Datumkeuze gebruiken",
+  clearedOfTotal: "{shown} van {total} boven de drempel†",
+  liveGoalsToSettle: "nog {n} doelpunt beslist het",
+  liveGoalsToSettlePlural: "nog {n} doelpunten beslissen het",
+  liveCleared: "gehaald",
+  livePending: "lopend",
+  liveNeedsN: "nog {n} nodig",
+  liveMoreVia: "Meer signalen via Telegram",
+  liveLatestScore: "Laatste providerscore",
+  liveUpcomingTitle: "Binnenkort — volgende picks",
+  liveUpcomingNote: "Scores verschijnen zodra de provider rapporteert",
+  liveToKickoff: "tot de aftrap",
+  liveHistoryLabel: "Historie",
+  liveHistoryButton: "Historie",
+  liveHistoryEmpty: "Nog geen live signalen gedeeld.",
+  liveHistoryModalTitle: "Historie live signalen",
+  heroVenuePotential: "potentieel",
+  heroOpenResearchCta: "Wedstrijdonderzoek openen",
+  liveDeskEyebrow: "Live desk",
+  liveDeskTitle: "Live signalen",
+  liveDeskDescription:
+    "Geautomatiseerde observaties van markt- en wedstrijdactiviteit. Live scores en events verschijnen alleen wanneer de dataprovider ze levert.",
+  heroOpenResearch: "Open onderzoek {home} v {away}",
+  heroVenueHome: "Thuis",
+  heroVenueAway: "Uit",
+  heroVenueLeague: "Competitie",
+  listResultWon: "GEWONNEN",
+  listResultLost: "VERLOREN",
+  listResultPostponed: "UITGESTELD",
+  staleArchiveNotice:
+    "Live providerdata is tijdelijk niet beschikbaar. We tonen de laatste geslaagde update van {time}.",
+  topPicksEmpty: "Geen gekwalificeerde wedstrijden beschikbaar voor deze datum.",
+  verifiedTitle: "Afgewikkeld trackrecord",
+  verifiedDescription:
+    "Alleen afgewikkelde uitkomsten uit gekwalificeerde lijstmarkten. Verliezen tellen mee. ROI blijft weg tot publicatienoteringen duurzaam gearchiveerd zijn.",
+  verifiedUnavailable: "Afgewikkelde archiefdata is voor dit venster nog niet beschikbaar.",
+  verifiedSettled: "Afgewikkeld",
+  verifiedWon: "Gewonnen",
+  verifiedLost: "Verloren",
+  verifiedWonLost: "{won} gewonnen · {lost} verloren",
+  verifiedPublished: "Gepubliceerd",
+  verifiedOpen: "Open",
+  verifiedHitRateShort: "Slagingsgraad",
+  verifiedStillOpen: "{count} nog open",
+  verifiedMethodology: "Afwikkelingsmethodologie",
+  verifiedArchive: "Archiefvermelding voorspellingen",
+  recentTitle: "Recente resultaten",
+  recentEmpty: "Nog geen recente afgewikkelde archiefregels beschikbaar.",
+  whyPublished:
+    "Voorspellingen worden vastgelegd vóór of terwijl lijsten worden gepubliceerd — niet herschreven na de aftrap.",
+  whyEvidence: "Bewijs en modelsignalen staan naast elke gekwalificeerde markt.",
+  whyLive: "Live scores en events verschijnen alleen wanneer de dataprovider ze levert.",
+  whySettlement:
+    "Afwikkeling is server-autoritatief met expliciete statussen: ongeldig, lopend, gewonnen en verloren.",
+  whyArchive:
+    "Historische lijstarchieven ondersteunen verificatie; een voller voorspellingsarchief is gepland.",
+  accaEntryTitle: "Bouw een accumulator uit het onderzoek van vandaag",
+  accaEntryBody:
+    "Voeg selecties toe vanaf de gerangschikte markten en wedstrijdpagina's, beoordeel de gecombineerde noteringen en risicoklasse, en ga daarna verder naar een ondersteunde aanbieder.",
+  accaEntryCta: "Accumulators openen",
+  trustFooterNote: "18+ · Speel bewust · Affiliate-disclosure in de footer",
+  bibleMethodologyNote:
+    "Gekwalificeerde wedstrijden worden geïdentificeerd door de RankWagers-kwalificatie-engine op basis van statistische drempels en historische wedstrijddata. Een kwalificatie is nooit een aanbeveling om een weddenschap te plaatsen.",
+  bibleMethodologyLink: "Lees de aanbiedersmethodologie →",
+  bibleOperatorsTitle: "Vergelijk vergunde bookmakers",
+  bibleOperatorsCompareLink: "Volledige aanbiedersranglijst",
 });
 
 export const pl = euroPredictions({

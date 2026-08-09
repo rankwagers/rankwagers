@@ -50,6 +50,13 @@ const TOP_PX = 18;
 /** Room under the deepest label, so the box never clips its own last line. */
 const LABEL_PX = 26;
 
+/**
+ * The staircase step below `sm` (doc §Below sm): each stage's line indents this much further
+ * than the one above it, left to right, so the vertical funnel still reads as a descent. Keyed
+ * to the stage's position — five stages put the deepest line 64px in, which holds at 360px.
+ */
+const MOBILE_STEP_PX = 16;
+
 export function FunnelLine({
   funnel,
   copy,
@@ -69,19 +76,28 @@ export function FunnelLine({
 
   return (
     <div className="rw-funnel">
+      {/*
+        BELOW sm THE DESCENT IS VERTICAL (doc §Below sm): five stages, one per line, each line
+        indented one MOBILE_STEP_PX further so the descent reads as a staircase down the page.
+        Same DOM both ways — the desktop geometry (fixed-height box, absolute levels) applies
+        from `sm:` up, and the box height rides a CSS variable because an inline `height` cannot
+        be responsive. The indent is keyed to the POSITION, not the offset: the staircase states
+        the order of the stages, and the level — the funnel's actual claim — is still the value
+        printed on the line.
+      */}
       <div
-        className="relative grid grid-cols-2 gap-x-6 sm:grid-cols-[repeat(var(--rw-funnel-cols),minmax(0,1fr))] sm:gap-x-4"
+        className="relative h-auto sm:grid sm:h-[var(--rw-funnel-h)] sm:grid-cols-[repeat(var(--rw-funnel-cols),minmax(0,1fr))] sm:gap-x-4"
         style={
           {
             "--rw-funnel-cols": String(descent.length),
-            height: TOP_PX + deepest + LABEL_PX,
+            "--rw-funnel-h": `${TOP_PX + deepest + LABEL_PX}px`,
           } as CSSProperties
         }
       >
-        {descent.map((step) => {
+        {descent.map((step, index) => {
           const cleared = step.stage === "qualified";
           return (
-            <div key={step.stage} className="rw-stage relative min-w-0">
+            <div key={step.stage} className="rw-stage relative mt-3 min-w-0 first:mt-0 sm:mt-0">
               {/*
                 The stage sits at its own level. `top` is the descent's own offset plus the shared
                 top inset — the only arithmetic here, and it adds a constant rather than deriving
@@ -93,7 +109,15 @@ export function FunnelLine({
                 neighbours are untouched because a transform costs no layout. The cleared stage's
                 accent overline is not part of the response and does not change.
               */}
-              <div className="absolute inset-x-0" style={{ top: TOP_PX + step.offset }}>
+              <div
+                className="pl-[var(--rw-stage-indent)] sm:absolute sm:inset-x-0 sm:pl-0"
+                style={
+                  {
+                    top: TOP_PX + step.offset,
+                    "--rw-stage-indent": `${index * MOBILE_STEP_PX}px`,
+                  } as CSSProperties
+                }
+              >
                 <div
                   aria-hidden
                   className={`h-[2px] w-full ${

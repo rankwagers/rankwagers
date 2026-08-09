@@ -215,7 +215,17 @@ test("the funnel is a descent: stages sit at their own levels", () => {
    */
   assert.match(s, /top: TOP_PX \+ step\.offset/, "each stage sits at its own emitted level");
   assert.match(s, /h-\[2px\] w-full/, "and carries its own 2px rule");
-  assert.match(s, /height: TOP_PX \+ deepest \+ LABEL_PX/, "the box is fixed — zero CLS");
+  /*
+   * The fixed box moved onto a CSS variable so it can be responsive (doc §Below sm): from `sm`
+   * up the box is still sized once from the deepest emitted level — zero CLS — and below `sm`
+   * the stages are static flow, which cannot shift layout either.
+   */
+  assert.match(
+    s,
+    /"--rw-funnel-h": `\$\{TOP_PX \+ deepest \+ LABEL_PX\}px`/,
+    "the box is fixed from the deepest level — zero CLS"
+  );
+  assert.match(s, /sm:h-\[var\(--rw-funnel-h\)\]/, "and the sm geometry consumes exactly that height");
 });
 
 test("the descent reads value then label", () => {

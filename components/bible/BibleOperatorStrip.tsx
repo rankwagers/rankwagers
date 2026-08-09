@@ -44,7 +44,7 @@ export function BibleOperatorStrip({
           href={`/${locale}/operators`}
           className="font-bold text-[var(--hero-ink)]"
         >
-          {p.bibleOperatorsCompareLink} →
+          {p.bibleOperatorsCompareLink} <span aria-hidden className="rw-arrow">→</span>
         </Link>
       </div>
       <p className="rw-m mt-2 normal-case tracking-[0.04em] text-[var(--hero-ink-2)]">
@@ -73,7 +73,9 @@ export function BibleOperatorStrip({
                   {operator.highlights[0] ?? "Licensed sportsbook partner"}
                 </span>
               </span>
-              <span className="rw-m text-[var(--hero-ink)]">Continue →</span>
+              <span className="rw-m text-[var(--hero-ink)]">
+                Continue <span aria-hidden className="rw-arrow">→</span>
+              </span>
             </a>
           </li>
         ))}

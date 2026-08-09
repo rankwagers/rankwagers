@@ -249,7 +249,7 @@ export function HeroLead({
             {copy.openResearchCta}
             <span
               aria-hidden
-              className="inline-block transition-transform duration-[var(--dur-respond)] ease-[var(--ease-settle)] group-hover:translate-x-1"
+              className="rw-arrow transition-transform duration-[var(--dur-respond)] ease-[var(--ease-settle)] group-hover:translate-x-1"
             >
               →
             </span>

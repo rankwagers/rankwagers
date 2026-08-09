@@ -137,26 +137,36 @@ function Row({
         {pick.kickoff}
       </span>
 
-      <RateCell rate={rates?.home ?? null} label={copy.venueHome} />
-      <RateCell rate={rates?.away ?? null} label={copy.venueAway} />
-
       {/*
-        THE PROVIDER POTENTIAL. Bold because it is the figure the row is ranked by, and marked with
-        a percent sign so it can never be read as an evidence score. It carries no sample and the
-        table's own note says so — the omission is stated, never implied.
+        THE STACKED ROW'S PAIRED LINES (doc §Below sm). Home and away share one line; the
+        potential and its market share the next — a stacked row has five lines to spend, and one
+        desktop column per line spent eight. The wrappers are `sm:contents`, so from `sm` up they
+        vanish and the cells return to being the grid's own children under their column heads.
       */}
-      <span className="mt-1.5 flex items-baseline gap-1.5 sm:mt-0 sm:block sm:text-right">
-        <span className="rw-label text-[var(--hero-ink-2)] sm:hidden">{copy.tablePotential}</span>
-        <span className="rw-tnum font-bold text-[var(--hero-ink)]">{pick.probability}%</span>
+      <span className="mt-1.5 flex flex-wrap items-baseline gap-x-5 gap-y-1 sm:contents">
+        <RateCell rate={rates?.home ?? null} label={copy.venueHome} />
+        <RateCell rate={rates?.away ?? null} label={copy.venueAway} />
       </span>
 
-      {/*
-        THE SHORT MARKET FORM. "Over 2.5 goals" becomes "Over 2.5" — the column is headed Market
-        and every row in it is a goals line, so the noun is carried by the head rather than
-        repeated eight times down the table.
-      */}
-      <span className="rw-label mt-1.5 block truncate text-[var(--hero-ink-2)] sm:mt-0 sm:text-right">
-        {shortMarket(pick.market)}
+      <span className="mt-1.5 flex flex-wrap items-baseline gap-x-5 gap-y-1 sm:contents">
+        {/*
+          THE PROVIDER POTENTIAL. Bold because it is the figure the row is ranked by, and marked
+          with a percent sign so it can never be read as an evidence score. It carries no sample
+          and the table's own note says so — the omission is stated, never implied.
+        */}
+        <span className="flex items-baseline gap-1.5 sm:block sm:text-right">
+          <span className="rw-label text-[var(--hero-ink-2)] sm:hidden">{copy.tablePotential}</span>
+          <span className="rw-tnum font-bold text-[var(--hero-ink)]">{pick.probability}%</span>
+        </span>
+
+        {/*
+          THE SHORT MARKET FORM. "Over 2.5 goals" becomes "Over 2.5" — the column is headed
+          Market and every row in it is a goals line, so the noun is carried by the head rather
+          than repeated eight times down the table.
+        */}
+        <span className="rw-label block min-w-0 truncate text-[var(--hero-ink-2)] sm:text-right">
+          {shortMarket(pick.market)}
+        </span>
       </span>
     </SectionTrackLink>
   );

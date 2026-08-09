@@ -245,7 +245,12 @@ test("the heading face is wired through next/font, never a runtime import", () =
 
 test("v2 type primitives exist at the map's ladder", () => {
   const css = src("app/globals.css");
-  assert.match(css, /\.rw-hero \.rw-lead-numeral \{[\s\S]*?font-size: 148px/);
+  /*
+   * The numeral clamps below the map's widths (doc §Below sm): the ceiling is still the
+   * ladder's 148, so the desktop step is unchanged; the floor keeps the numeral narrower than
+   * a 360px screen. A bare 148px here would be the numeral overflowing a phone again.
+   */
+  assert.match(css, /\.rw-hero \.rw-lead-numeral \{[\s\S]*?font-size: clamp\(72px, 22vw, 148px\)/);
   assert.match(css, /\.rw-hero \.rw-m \{[\s\S]*?font-size: 10\.5px/);
   assert.match(css, /\.rw-hero \.rw-h \{[\s\S]*?font-weight: 800/);
 });

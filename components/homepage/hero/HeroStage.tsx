@@ -192,7 +192,7 @@ export function HeroStage({
                     locale={locale}
                     className="rw-h inline-block border-b-2 border-[var(--hero-ink)] pb-0.5 text-[14px] tracking-[0.01em] text-[var(--hero-ink)]"
                   >
-                    {copy.cta} →
+                    {copy.cta} <span aria-hidden className="rw-arrow">→</span>
                   </SectionTrackLink>
                 </div>
               </>

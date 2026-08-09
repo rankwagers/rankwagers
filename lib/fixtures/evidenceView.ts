@@ -111,8 +111,21 @@ function venueStat(
   return { pct, played, hits: typeof stat.hits === "number" ? stat.hits : null };
 }
 
-/** Render a venue rate exactly as the model renders it: percentage, then the observations. */
-function rateDisplay(stat: { pct: number; played: number; hits: number | null }): RateWithSample {
+/**
+ * Render a venue rate exactly as the model renders it: percentage, then the observations.
+ *
+ * A ZERO SAMPLE IS AN ABSENCE, NOT A RATE. `0% (0/0)` is a claim about nothing — a rate over
+ * zero observations — and the empty-state law says an absent figure omits its slot rather than
+ * printing a placeholder (§3.8). The gate lives HERE, at the one formatter, so every surface
+ * that states a venue rate — the lead's flanks, the stacked rows, the fixture page — inherits
+ * the omission instead of each re-deciding what 0/0 means.
+ */
+function rateDisplay(stat: {
+  pct: number;
+  played: number;
+  hits: number | null;
+}): RateWithSample | null {
+  if (stat.played <= 0) return null;
   const denom = stat.hits != null && Number.isFinite(stat.hits)
     ? `${stat.hits}/${stat.played}`
     : `${stat.played}`;

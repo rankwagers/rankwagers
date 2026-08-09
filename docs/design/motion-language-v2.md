@@ -97,6 +97,38 @@ Not skeletons, not spinners, not a shrug.
 - **An empty day** keeps the funnel line and the edition line. The page still tells you what was
   looked at and when.
 
+## Below sm
+
+The map is desktop-only, so nothing here is decoded from it. These rules DERIVE from the
+language above — the ladder, the rules, the empty-state law and the CLS law all hold below `sm`;
+what changes is composition, and only where the desktop composition physically cannot hold at
+360px.
+
+- **Masthead** — one row: the wordmark left, the hamburger right. The meta line
+  (`retrieved · edition · 18+`) sits BENEATH that row at 9.5 mono, full width. ONE masthead
+  rule closes the block — the 2px ink over its 1px half-ink hairline is that one rule. No
+  floating hamburger row, no doubled rules: the hamburger never wraps to a line of its own, and
+  no second rule appears between the meta line and the page.
+- **Funnel** — the descent turns VERTICAL: five stages, one per line, value-then-label
+  unchanged. Each level indents one step further, left to right, so the descent reads as a
+  staircase down the page — the shape is still the claim, rotated. `cleared†` keeps its accent
+  overline (the budget does not move), and the † footnote is unchanged.
+- **Lead** — the numeral clamps: `clamp(72px, 22vw, 148px)`. At desktop widths the clamp
+  resolves to 148, so the ladder's top step is unchanged where the map applies. The three venue
+  tracks stay side-by-side — they fit — and obey the empty-state law: no samples, no tracks
+  block, ever.
+- **Stacked table rows** — compressed to at most FIVE lines per row: the fixture; flag and
+  league on ONE line; kick-off; AT HOME and AWAY as paired cells sharing one line; POTENTIAL
+  and the market sharing the next. A stacked row that restates every desktop column on its own
+  line is a column of labels, not a row.
+- **Buttons** — the trailing `→` MUST render. The arrow is an explicit character in its own
+  element with the sans stack as fallback (the mono stack's glyph coverage is not assumed), and
+  a bordered button never carries an overflow ellipsis — a button that truncates its own arrow
+  is pointing at nothing.
+
+Everything else inherits the desktop rules verbatim. `prefers-reduced-motion` and the CLS law
+are unchanged at every width.
+
 ## Non-negotiable
 
 - **Zero CLS.** Only `opacity`, `transform` and `filter` animate. An element occupies its final

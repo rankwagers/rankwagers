@@ -353,9 +353,13 @@ export function LiveFeedPanel({
  </div>
  ) : null}
 
- {/* The desk's close: a stated destination, in plain words. */}
+ {/*
+   The desk's close: a stated destination, in plain words. The ANCHOR IS THE WHOLE LABEL —
+   the label already names the destination ("More signals via Telegram"), and a template that
+   re-prints the word beside it shipped "VIA TELEGRAM TELEGRAM →". The template contributes
+   only the arrow, which is its property and never the label's, in every locale.
+ */}
  <p className="rw-m mt-5 text-[var(--hero-ink-2)]">
- {p.liveMoreVia}{" "}
  <a
  href={telegramUrl}
  target="_blank"
@@ -363,7 +367,7 @@ export function LiveFeedPanel({
  onClick={() => openTelegram("footer_link")}
  className="border-b-2 border-[var(--hero-ink)] font-bold text-[var(--hero-ink)]"
  >
- Telegram →
+ {p.liveMoreVia} <span aria-hidden className="rw-arrow">→</span>
  </a>
  </p>
  </div>

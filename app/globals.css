@@ -634,11 +634,17 @@ textarea,
   letter-spacing: -0.035em;
 }
 
-/** The lead numeral. One per page. */
+/**
+ * The lead numeral. One per page.
+ *
+ * The size clamps (doc §Below sm): 22vw between a 72px floor and the ladder's 148 — the clamp
+ * resolves to 148 at every width the desktop map applies to, so the top step is unchanged where
+ * the map is the law, and a 360px screen gets ~79px instead of a numeral wider than itself.
+ */
 .rw-hero .rw-lead-numeral {
   font-family: var(--font-rw-heading), ui-sans-serif, system-ui, sans-serif;
   font-weight: 800;
-  font-size: 148px;
+  font-size: clamp(72px, 22vw, 148px);
   line-height: 0.82;
   letter-spacing: -0.055em;
   font-variant-numeric: tabular-nums;
@@ -657,6 +663,18 @@ textarea,
   font-size: 10.5px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+}
+
+/*
+ * THE TRAILING ARROW (doc §Below sm). An explicit `→` character in its own element, set on the
+ * SANS stack: the mono stack's glyph coverage is not assumed — a device mono without U+2192
+ * rendered the buttons arrowless, which is a button pointing at nothing. `inline-block` so the
+ * hover translate keeps working where a call site animates it, and no arrow can ever be
+ * swallowed by an ancestor's text-overflow ellipsis mid-glyph.
+ */
+.rw-hero .rw-arrow {
+  font-family: ui-sans-serif, system-ui, sans-serif;
+  display: inline-block;
 }
 
 /** Mono labels: 9.5–11px, the only place tracking opens up. */
@@ -765,6 +783,8 @@ textarea,
   border: 0.5px solid var(--hero-line);
   color: var(--hero-ink);
   font-size: 13px;
+  /* The arrow glyph rides the sans stack — the mono stack's U+2192 coverage is not assumed. */
+  font-family: ui-sans-serif, system-ui, sans-serif;
   transition:
     background-color var(--dur-respond) var(--ease-settle),
     color var(--dur-respond) var(--ease-settle),

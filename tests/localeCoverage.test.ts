@@ -223,10 +223,16 @@ test("EVIDENCE: the unguarded surface is the translated remainder, and it is ran
    *
    * ACTION: Sprint 35's translation priority list is derived from this ordering and is now stale.
    * It should be re-derived before any further pattern-translation work is scheduled.
+   *
+   * Re-derived again after the mobile-pass sprint: `nl` moved from fifth to first because it
+   * took the new homepage keys (the mixed-language /nl fix) — it now carries the largest
+   * translated body, and with it the largest surface no English pattern can read. The Dutch
+   * live-desk strings were made vocabulary-safe in the same pass, so the top of the work list
+   * is also the locale most recently attended.
    */
   assert.deepEqual(
     top5,
-    ["fr", "es", "es-es", "ar", "nl"],
+    ["nl", "fr", "es", "es-es", "ar"],
     "if this ordering changes, Sprint 35's priority list changes with it",
   );
 

@@ -383,12 +383,24 @@ export const predictionsEn = {
     "{date} · {total} qualified fixtures · Times in your timezone · FootyStats",
   bibleFilterLabel: "Filter",
   bibleMarketsLabel: "Markets",
+  /*
+   * The banned sentence — "Confidence scores reflect model agreement, not outcome probability" —
+   * is DELETED, not reworded: "confidence" is the word the vocabulary reserves elsewhere, and the
+   * approved provider-potential qualifier (`heroProviderPotentialNote`) already bounds the figure
+   * wherever it prints. It survived the first sweep because that sweep was scoped to the hero's
+   * keys; the sweep now covers every homepage dictionary value.
+   */
   bibleMethodologyNote:
-    "Qualified fixtures are identified by the RankWagers qualification engine using statistical thresholds and historical match data. Confidence scores reflect model agreement, not outcome probability. No qualification constitutes a recommendation to place a wager.",
+    "Qualified fixtures are identified by the RankWagers qualification engine using statistical thresholds and historical match data. No qualification constitutes a recommendation to place a wager.",
   bibleMethodologyLink: "Read operator methodology →",
   bibleOperatorsEyebrow: "Operators",
   bibleOperatorsTitle: "Compare licensed bookmakers",
-  bibleOperatorsCompareLink: "Full operator rankings →",
+  /*
+   * NO ARROW IN THE LABEL. The arrow is the template's property, never the label's (the
+   * `V2Button` rule) — this label carried one and the strip appended a second, which shipped
+   * "FULL OPERATOR RANKINGS → →".
+   */
+  bibleOperatorsCompareLink: "Full operator rankings",
   navQualified: "Qualified lists",
   navLiveSignals: "Live signals",
   navMethodology: "Methodology",
