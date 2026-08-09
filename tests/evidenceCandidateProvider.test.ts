@@ -516,11 +516,24 @@ test("settlement: abandoned fixture is an eligible terminal settlement", () => {
 });
 
 test("settlement: unknown/unresolvable lifecycle is a deterministic rejection (never emits)", () => {
-  const res = buildSettlementCandidates(
+  /*
+   * The truth pass taught the lifecycle resolver to read in-play evidence: a garbage status
+   * WITH a running minute (mkRow defaults minute 90) now resolves live and DEFERS — still never
+   * emits, which is the invariant this test exists for — while a garbage status with no such
+   * evidence keeps its hard rejection. Both halves pinned.
+   */
+  const deferred = buildSettlementCandidates(
     settlementInput({ completedRows: [mkRow({ status: "??garbage??", isFinished: false })] })
   );
-  assert.equal(res.candidates.length, 0);
-  assert.equal(res.diagnostics.candidatesRejectedByReason.unsupported_outcome_state, 1);
+  assert.equal(deferred.candidates.length, 0, "in-play evidence defers — nothing false emits");
+
+  const rejected = buildSettlementCandidates(
+    settlementInput({
+      completedRows: [mkRow({ status: "??garbage??", isFinished: false, minute: null })],
+    })
+  );
+  assert.equal(rejected.candidates.length, 0);
+  assert.equal(rejected.diagnostics.candidatesRejectedByReason.unsupported_outcome_state, 1);
 });
 
 test("settlement: mixed terminal + finished + deferred, shuffled → byte-identical eligible set", () => {

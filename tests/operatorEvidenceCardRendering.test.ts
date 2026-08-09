@@ -1,5 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { readFileSync } from "node:fs";
+import path from "node:path";
 import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import {
@@ -190,11 +192,23 @@ test("every card exposes an accessible name and rank", () => {
   assert.match(html, /Rank 1: /);
 });
 
-test("the ranking score is announced, not conveyed by the bar alone", () => {
+test("the ranking score is announced when it renders — and it does not render without a price", () => {
+  /*
+   * The truth pass: this fixture set observes NO price at any operator, so every card scored an
+   * identical availability-only 67 — a row of identical meters reading as fake precision. In
+   * that state the meter is omitted whole; verification and availability carry the card, and
+   * the stated tie-break still orders the list. When a price IS observed and the meter renders,
+   * the accessibility guarantee is unchanged — the figure is announced in text, not conveyed by
+   * the bar alone — pinned at the meter's own markup, which carries the aria-label.
+   */
   const html = withFlag("true", () => renderList());
-  // §18.4 — an OPERATOR carries a ranking score; "Evidence" is reserved for the fixture verdict.
-  // The accessibility guarantee is unchanged: the figure is in text, not only in the bar.
-  assert.match(html, /aria-label="Ranking score \d+ out of \d+"/);
+  assert.equal(/aria-label="Ranking score/.test(html), false, "no price, no meter");
+  assert.match(html, /Verified|Availability/, "verification and availability carry the card");
+  const source = readFileSync(
+    path.join(process.cwd(), "components/operators/OperatorEvidenceCard.tsx"),
+    "utf8"
+  );
+  assert.match(source, /aria-label=\{`Ranking score \$\{score\} out of \$\{max\}`\}/);
   assert.equal(/aria-label="Evidence score/.test(html), false);
 });
 
