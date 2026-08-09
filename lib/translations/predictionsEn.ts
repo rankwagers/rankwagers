@@ -502,7 +502,7 @@ export const predictionsEn = {
   mktIndicatorsTitle: "Evidence indicators",
   mktIndicatorsShow: "Expand definitions",
   mktIndicatorsHide: "Hide definitions",
-  mktIndicatorsNote: "Metric definitions for this market — not live values, not confidence scores.",
+  mktIndicatorsNote: "Metric definitions for this market — not live values, not certainty scores.",
   mktIndicatorUsed: "used in research",
   mktIndicatorConceptual: "conceptual",
   /* Competition + season pages — form-guide conversion (cmp / ssn keys). */

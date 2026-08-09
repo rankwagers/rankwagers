@@ -173,10 +173,15 @@ test("EVIDENCE: most of what a non-English reader sees is English fallback", () 
   const englishSlots = nonEnglish.reduce((sum, c) => sum + c.sameAsEnglish, 0);
   const englishShare = Math.round((englishSlots * 100) / totalSlots);
 
-  // The measured figure is ~62%. Asserted as a band so the test states the finding without
-  // breaking the moment a single translation lands.
+  /*
+   * The measured figure was ~62% when this pin was written. Re-derived 2026-08-09 after the
+   * route-conversion batch (families A–D) shipped ~110 new keys translated into every locale in
+   * the same commits — the fallback share dropped to ~49%, so "most" is now "roughly half".
+   * Asserted as a band so the test states the finding without breaking the moment a single
+   * translation lands.
+   */
   assert.ok(
-    englishShare >= 50 && englishShare <= 75,
+    englishShare >= 35 && englishShare <= 60,
     `English fallback share was ${englishShare}% — outside the measured band; re-examine the ` +
       `assumption that the guard's English patterns cover the majority of non-English pages`,
   );
@@ -229,10 +234,15 @@ test("EVIDENCE: the unguarded surface is the translated remainder, and it is ran
    * translated body, and with it the largest surface no English pattern can read. The Dutch
    * live-desk strings were made vocabulary-safe in the same pass, so the top of the work list
    * is also the locale most recently attended.
+   *
+   * Re-derived again after the route-conversion batch (2026-08-09): families A–D added ~110 keys
+   * translated into every locale at once, a uniform lift that let the Spanish pair's larger
+   * pre-existing body overtake French again. `nl` stays first. Same rule as before: the
+   * translated remainder changed, so the recorded value is updated rather than the measurement.
    */
   assert.deepEqual(
     top5,
-    ["nl", "fr", "es", "es-es", "ar"],
+    ["nl", "es", "es-es", "fr", "ar"],
     "if this ordering changes, Sprint 35's priority list changes with it",
   );
 
