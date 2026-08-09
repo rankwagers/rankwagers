@@ -622,7 +622,7 @@ export const predictionsEn = {
   arcVoidLine: "{n} void",
   arcPairedRate: "{won} of {settled} ({pct}%)",
   arcOddsUnavailable:
-    "Average odds and ROI are unavailable until publication odds are durably stored — this page does not invent them.",
+    "Odds averages and ROI are unavailable until publication odds are durably stored — this page does not invent them.",
   arcLastUpdateLabel: "Last archive update",
   arcByMarketTitle: "By market",
   arcByMarketRow: "{won} won · {lost} lost · {pending} pending · {void} void",
