@@ -52,10 +52,18 @@ function RecordRow({ prediction, index }: { prediction: MatchPredictionView; ind
         </h3>
         <p className="rw-label text-[var(--hero-ink-3)]">{prediction.status}</p>
       </div>
+      {/* An after-kickoff derivation is not a publication and must not wear its labels. */}
       <dl className="mt-4 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-4">
-        <Field label="Published" value={formatStamp(prediction.publishedAt)} />
         <Field
-          label="Odds at publication"
+          label={prediction.capturedAfterKickoff ? "Observed (after kickoff)" : "Published"}
+          value={formatStamp(prediction.publishedAt)}
+        />
+        <Field
+          label={
+            prediction.capturedAfterKickoff
+              ? "Odds observed (after kickoff)"
+              : "Odds at publication"
+          }
           value={prediction.originalOdds != null ? prediction.originalOdds.toFixed(2) : "Unavailable"}
         />
         <Field label="Unit P/L" value={profit} />

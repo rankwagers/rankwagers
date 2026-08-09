@@ -310,6 +310,17 @@ export const nl = euroPredictions({
   fxOperatorsNote:
     "Het redactionele onderzoek hierboven staat los van commerciële aanbiedingen. Links gebruiken servergetekende doorverwijzingen.",
 
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "Providercijfer",
+  fxProviderOnlyRate: "providercijfer — zonder steekproef",
+  fxWhyWindowNote:
+    "Elk percentage hieronder is een seizoenspercentage op de genoemde venue — een ander venster dan de laatste-N-vormzinnen hierboven.",
+  fxRateHomeSeason: "Thuisploeg thuis — dit seizoen",
+  fxRateAwaySeason: "Uitploeg uit — dit seizoen",
+  fxRateLeagueSeason: "Competitie — dit seizoen",
+  fxRecordAfterKickoff: "Vastgelegd na de aftrap — uitgesloten van afwikkeling.",
+  fxLiveUnavailable: "live-updates niet beschikbaar voor deze competitie",
+
 });
 
 export const pl = euroPredictions({
@@ -449,6 +460,17 @@ export const pl = euroPredictions({
   fxOperatorsNote:
     "Redakcyjne badanie powyżej jest oddzielone od ofert komercyjnych. Linki używają podpisanych przekierowań serwera.",
 
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "Liczba dostawcy",
+  fxProviderOnlyRate: "liczba dostawcy — bez próby",
+  fxWhyWindowNote:
+    "Każdy wskaźnik poniżej to wskaźnik sezonowy w podanym miejscu — inne okno niż zdania o ostatniej formie powyżej.",
+  fxRateHomeSeason: "Gospodarze u siebie — ten sezon",
+  fxRateAwaySeason: "Goście na wyjeździe — ten sezon",
+  fxRateLeagueSeason: "Liga — ten sezon",
+  fxRecordAfterKickoff: "Zarejestrowane po rozpoczęciu — wyłączone z rozliczenia.",
+  fxLiveUnavailable: "aktualizacje na żywo niedostępne dla tych rozgrywek",
+
 });
 
 export const cs = euroPredictions({
@@ -586,6 +608,17 @@ export const cs = euroPredictions({
   fxOperatorsTitle: "Možnosti operátorů",
   fxOperatorsNote:
     "Redakční výzkum výše je oddělen od komerčních nabídek. Odkazy používají serverem podepsaná přesměrování.",
+
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "Číslo poskytovatele",
+  fxProviderOnlyRate: "číslo poskytovatele — bez vzorku",
+  fxWhyWindowNote:
+    "Každá míra níže je sezónní míra na uvedeném hřišti — jiné okno než věty o poslední formě výše.",
+  fxRateHomeSeason: "Domácí doma — tato sezóna",
+  fxRateAwaySeason: "Hosté venku — tato sezóna",
+  fxRateLeagueSeason: "Liga — tato sezóna",
+  fxRecordAfterKickoff: "Zachyceno po výkopu — vyloučeno z vypořádání.",
+  fxLiveUnavailable: "živé aktualizace pro tuto soutěž nejsou k dispozici",
 
 });
 
@@ -725,6 +758,17 @@ export const da = euroPredictions({
   fxOperatorsNote:
     "Den redaktionelle forskning ovenfor er adskilt fra kommercielle tilbud. Links bruger serversignerede viderestillinger.",
 
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "Udbydertal",
+  fxProviderOnlyRate: "udbydertal — uden stikprøve",
+  fxWhyWindowNote:
+    "Hver rate nedenfor er en sæsonrate på det nævnte sted — et andet vindue end seneste-N-formsætningerne ovenfor.",
+  fxRateHomeSeason: "Hjemmehold hjemme — denne sæson",
+  fxRateAwaySeason: "Udehold ude — denne sæson",
+  fxRateLeagueSeason: "Liga — denne sæson",
+  fxRecordAfterKickoff: "Indfanget efter kampstart — udelukket fra afregning.",
+  fxLiveUnavailable: "live-opdateringer er ikke tilgængelige for denne turnering",
+
 });
 
 export const sv = euroPredictions({
@@ -861,6 +905,17 @@ export const sv = euroPredictions({
   fxOperatorsTitle: "Operatörsalternativ",
   fxOperatorsNote:
     "Den redaktionella forskningen ovan är åtskild från kommersiella erbjudanden. Länkar använder serversignerade omdirigeringar.",
+
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "Leverantörssiffra",
+  fxProviderOnlyRate: "leverantörssiffra — utan urval",
+  fxWhyWindowNote:
+    "Varje andel nedan är en säsongsandel på angiven plats — ett annat fönster än senaste-N-formmeningarna ovan.",
+  fxRateHomeSeason: "Hemmalag hemma — denna säsong",
+  fxRateAwaySeason: "Bortalag borta — denna säsong",
+  fxRateLeagueSeason: "Liga — denna säsong",
+  fxRecordAfterKickoff: "Infångad efter avspark — utesluten från avräkning.",
+  fxLiveUnavailable: "liveuppdateringar är inte tillgängliga för denna tävling",
 
 });
 
@@ -999,6 +1054,17 @@ export const no = euroPredictions({
   fxOperatorsNote:
     "Den redaksjonelle forskningen over er atskilt fra kommersielle tilbud. Lenker bruker serversignerte videresendinger.",
 
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "Leverandørtall",
+  fxProviderOnlyRate: "leverandørtall — uten utvalg",
+  fxWhyWindowNote:
+    "Hver rate nedenfor er en sesongrate på nevnt sted — et annet vindu enn siste-N-formsetningene over.",
+  fxRateHomeSeason: "Hjemmelag hjemme — denne sesongen",
+  fxRateAwaySeason: "Bortelag borte — denne sesongen",
+  fxRateLeagueSeason: "Liga — denne sesongen",
+  fxRecordAfterKickoff: "Fanget etter avspark — utelukket fra oppgjør.",
+  fxLiveUnavailable: "live-oppdateringer er ikke tilgjengelige for denne turneringen",
+
 });
 
 export const fi = euroPredictions({
@@ -1135,6 +1201,17 @@ export const fi = euroPredictions({
   fxOperatorsTitle: "Operaattorivaihtoehdot",
   fxOperatorsNote:
     "Yllä oleva toimituksellinen tutkimus on erillään kaupallisista tarjouksista. Linkit käyttävät palvelimen allekirjoittamia uudelleenohjauksia.",
+
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "Tarjoajan luku",
+  fxProviderOnlyRate: "tarjoajan luku — ilman otosta",
+  fxWhyWindowNote:
+    "Jokainen osuus alla on kausiosuus mainitulla kentällä — eri ikkuna kuin viimeisen N:n vireen lauseet yllä.",
+  fxRateHomeSeason: "Kotijoukkue kotona — tämä kausi",
+  fxRateAwaySeason: "Vierasjoukkue vieraissa — tämä kausi",
+  fxRateLeagueSeason: "Sarja — tämä kausi",
+  fxRecordAfterKickoff: "Tallennettu aloituspotkun jälkeen — jätetty selvityksen ulkopuolelle.",
+  fxLiveUnavailable: "live-päivitykset eivät ole saatavilla tähän kilpailuun",
 
 });
 
@@ -1274,6 +1351,17 @@ export const ro = euroPredictions({
   fxOperatorsNote:
     "Cercetarea editorială de mai sus este separată de ofertele comerciale. Linkurile folosesc redirecționări semnate de server.",
 
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "Cifra furnizorului",
+  fxProviderOnlyRate: "cifra furnizorului — fără eșantion",
+  fxWhyWindowNote:
+    "Fiecare rată de mai jos este o rată de sezon pe terenul indicat — o fereastră diferită de frazele formei recente de mai sus.",
+  fxRateHomeSeason: "Gazdele acasă — acest sezon",
+  fxRateAwaySeason: "Oaspeții în deplasare — acest sezon",
+  fxRateLeagueSeason: "Liga — acest sezon",
+  fxRecordAfterKickoff: "Capturat după lovitura de start — exclus din decontare.",
+  fxLiveUnavailable: "actualizările live nu sunt disponibile pentru această competiție",
+
 });
 
 export const el = euroPredictions({
@@ -1412,6 +1500,17 @@ export const el = euroPredictions({
   fxOperatorsNote:
     "Η συντακτική έρευνα παραπάνω είναι χωριστή από τις εμπορικές προσφορές. Οι σύνδεσμοι χρησιμοποιούν υπογεγραμμένες ανακατευθύνσεις διακομιστή.",
 
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "Αριθμός παρόχου",
+  fxProviderOnlyRate: "αριθμός παρόχου — χωρίς δείγμα",
+  fxWhyWindowNote:
+    "Κάθε ποσοστό παρακάτω είναι ποσοστό σεζόν στη δηλωμένη έδρα — διαφορετικό παράθυρο από τις φράσεις πρόσφατης φόρμας παραπάνω.",
+  fxRateHomeSeason: "Γηπεδούχος εντός — φετινή σεζόν",
+  fxRateAwaySeason: "Φιλοξενούμενος εκτός — φετινή σεζόν",
+  fxRateLeagueSeason: "Λίγκα — φετινή σεζόν",
+  fxRecordAfterKickoff: "Καταγράφηκε μετά τη σέντρα — εξαιρείται από τον διακανονισμό.",
+  fxLiveUnavailable: "οι ζωντανές ενημερώσεις δεν είναι διαθέσιμες για αυτή τη διοργάνωση",
+
 });
 
 export const hu = euroPredictions({
@@ -1549,5 +1648,16 @@ export const hu = euroPredictions({
   fxOperatorsTitle: "Szolgáltatói lehetőségek",
   fxOperatorsNote:
     "A fenti szerkesztőségi kutatás elkülönül a kereskedelmi ajánlatoktól. A linkek szerver által aláírt átirányításokat használnak.",
+
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "Szolgáltatói szám",
+  fxProviderOnlyRate: "szolgáltatói szám — minta nélkül",
+  fxWhyWindowNote:
+    "Minden lenti arány szezonarány a megnevezett pályán — más ablak, mint a fenti utolsó-N forma-mondatok.",
+  fxRateHomeSeason: "Hazai csapat otthon — ez a szezon",
+  fxRateAwaySeason: "Vendégcsapat idegenben — ez a szezon",
+  fxRateLeagueSeason: "Liga — ez a szezon",
+  fxRecordAfterKickoff: "Kezdőrúgás után rögzítve — az elszámolásból kizárva.",
+  fxLiveUnavailable: "élő frissítések nem érhetők el ehhez a sorozathoz",
 
 });

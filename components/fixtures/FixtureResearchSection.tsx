@@ -3,6 +3,7 @@ import type {
   FixtureEvidenceMarketView,
   FixtureEvidenceView,
 } from "@/lib/fixtures/evidenceView";
+import type { PredictionStrings } from "@/lib/translations/predictionsEn";
 
 /* ============================================================================
    THE MARKET/VENUE TABLE — level 4's research detail
@@ -33,8 +34,20 @@ function FramingNote() {
   );
 }
 
-/** A rate and its sample, bound together so neither can be rendered without the other. */
-function Rate({ value, label }: { value: { display: string } | null; label: string }) {
+/**
+ * A rate and its sample, bound together so neither can be rendered without the other — and when
+ * the pairing gate stripped a mismatched sample upstream, the bare figure is LABELED a provider
+ * figure rather than passing as a measured rate.
+ */
+function Rate({
+  value,
+  label,
+  providerNote,
+}: {
+  value: { display: string } | null;
+  label: string;
+  providerNote: string;
+}) {
   const rate = value ? splitRate(value.display) : null;
   return (
     <div>
@@ -44,9 +57,9 @@ function Rate({ value, label }: { value: { display: string } | null; label: stri
           <span className="rw-display rw-tnum rw-mono text-[22px] text-[var(--hero-ink)]">
             {rate.claim}
           </span>
-          {rate.qualifier ? (
-            <span className="rw-label rw-tnum text-[var(--hero-ink-3)]">{rate.qualifier}</span>
-          ) : null}
+          <span className="rw-label rw-tnum text-[var(--hero-ink-3)]">
+            {rate.qualifier ?? providerNote}
+          </span>
         </p>
       ) : (
         <p className="mt-2 text-[15px] text-[var(--hero-ink-3)]">No history</p>
@@ -55,7 +68,15 @@ function Rate({ value, label }: { value: { display: string } | null; label: stri
   );
 }
 
-function MarketRow({ market, index }: { market: FixtureEvidenceMarketView; index: number }) {
+function MarketRow({
+  market,
+  index,
+  p,
+}: {
+  market: FixtureEvidenceMarketView;
+  index: number;
+  p: PredictionStrings;
+}) {
   return (
     <Reveal
       as="li"
@@ -68,10 +89,12 @@ function MarketRow({ market, index }: { market: FixtureEvidenceMarketView; index
         </h3>
         <p className="rw-label text-[var(--hero-ink-3)]">{market.selectionLabel}</p>
       </div>
+      {/* Every label names its WINDOW — season venue rates, a different clock from the
+          "last N" recent-form sentences at the top of the page. */}
       <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-3">
-        <Rate value={market.homeRate} label="Home side, at home" />
-        <Rate value={market.awayRate} label="Away side, away" />
-        <Rate value={market.leagueBaseline} label="League" />
+        <Rate value={market.homeRate} label={p.fxRateHomeSeason} providerNote={p.fxProviderOnlyRate} />
+        <Rate value={market.awayRate} label={p.fxRateAwaySeason} providerNote={p.fxProviderOnlyRate} />
+        <Rate value={market.leagueBaseline} label={p.fxRateLeagueSeason} providerNote={p.fxProviderOnlyRate} />
       </div>
       <p className="mt-4 text-[13px] leading-relaxed text-[var(--hero-ink-3)]">
         Occurrence rate — how often this market has happened, with the matches behind it. Not a
@@ -147,10 +170,12 @@ export function FixtureResearchSection({
   view,
   homeTeam,
   awayTeam,
+  p,
 }: {
   view: FixtureEvidenceView;
   homeTeam: string;
   awayTeam: string;
+  p: PredictionStrings;
 }) {
   if (view.state === "no_data") {
     return (
@@ -186,7 +211,7 @@ export function FixtureResearchSection({
       {markets.length ? (
         <ul className="mt-10">
           {markets.map((m, i) => (
-            <MarketRow key={m.marketKey} market={m} index={i} />
+            <MarketRow key={m.marketKey} market={m} index={i} p={p} />
           ))}
         </ul>
       ) : (

@@ -134,6 +134,17 @@ export const ar = mergePredictions({
   fxOperatorsNote:
     "البحث التحريري أعلاه منفصل عن العروض التجارية. تستخدم الروابط تحويلات موقَّعة من الخادم.",
 
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "رقم المزوِّد",
+  fxProviderOnlyRate: "رقم المزوِّد — بلا عينة",
+  fxWhyWindowNote:
+    "كل نسبة أدناه هي نسبة موسم على الأرض المذكورة — نافذة مختلفة عن جمل الأداء الأخير أعلاه.",
+  fxRateHomeSeason: "صاحب الأرض على أرضه — هذا الموسم",
+  fxRateAwaySeason: "الضيف خارج أرضه — هذا الموسم",
+  fxRateLeagueSeason: "الدوري — هذا الموسم",
+  fxRecordAfterKickoff: "التُقط بعد ضربة البداية — مستبعد من التسوية.",
+  fxLiveUnavailable: "التحديثات المباشرة غير متاحة لهذه المسابقة",
+
 });
 
 export const hi = mergePredictions({
@@ -271,6 +282,17 @@ export const hi = mergePredictions({
   fxOperatorsNote:
     "ऊपर का संपादकीय शोध व्यावसायिक प्रस्तावों से अलग है। लिंक सर्वर-हस्ताक्षरित रीडायरेक्ट उपयोग करते हैं।",
 
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "प्रदाता का अंक",
+  fxProviderOnlyRate: "प्रदाता का अंक — बिना नमूने के",
+  fxWhyWindowNote:
+    "नीचे की हर दर बताए गए मैदान पर सीज़न-दर है — ऊपर के हालिया-फ़ॉर्म वाक्यों से अलग खिड़की।",
+  fxRateHomeSeason: "घरेलू टीम घर पर — इस सीज़न",
+  fxRateAwaySeason: "बाहरी टीम बाहर — इस सीज़न",
+  fxRateLeagueSeason: "लीग — इस सीज़न",
+  fxRecordAfterKickoff: "किक-ऑफ़ के बाद दर्ज — निपटान से बाहर।",
+  fxLiveUnavailable: "इस प्रतियोगिता के लिए लाइव अपडेट उपलब्ध नहीं",
+
 });
 
 export const ja = mergePredictions({
@@ -400,6 +422,16 @@ export const ja = mergePredictions({
   fxDetailDescription: "上の各レベルの背後にある全市場・会場別の割合 — 意図的に密です。各割合は標本を伴い、欠けている割合は欠けているのであってゼロではありません。",
   fxOperatorsTitle: "オペレーターの選択肢",
   fxOperatorsNote: "上の編集調査は商業オファーと分離しています。リンクはサーバー署名付きリダイレクトを使用します。",
+
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "プロバイダーの数字",
+  fxProviderOnlyRate: "プロバイダーの数字 — 標本なし",
+  fxWhyWindowNote: "以下の割合はいずれも記載の会場での今季の割合です — 上の直近N試合の文とは別の窓です。",
+  fxRateHomeSeason: "ホームチームのホーム — 今季",
+  fxRateAwaySeason: "アウェイチームのアウェイ — 今季",
+  fxRateLeagueSeason: "リーグ — 今季",
+  fxRecordAfterKickoff: "キックオフ後に取得 — 清算から除外。",
+  fxLiveUnavailable: "この大会ではライブ更新を利用できません",
 
 });
 
@@ -531,6 +563,16 @@ export const ko = mergePredictions({
   fxDetailDescription: "위 레벨들 뒤의 모든 시장·구장 비율 — 의도적으로 밀도가 높습니다. 각 비율은 표본을 지니며, 없는 비율은 없는 것이지 0이 아닙니다.",
   fxOperatorsTitle: "운영사 옵션",
   fxOperatorsNote: "위의 편집 리서치는 상업적 제안과 분리되어 있습니다. 링크는 서버 서명 리디렉션을 사용합니다.",
+
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "공급자 수치",
+  fxProviderOnlyRate: "공급자 수치 — 표본 없음",
+  fxWhyWindowNote: "아래 모든 비율은 명시된 구장에서의 시즌 비율입니다 — 위의 최근 N경기 문장과는 다른 창입니다.",
+  fxRateHomeSeason: "홈팀 홈 — 이번 시즌",
+  fxRateAwaySeason: "원정팀 원정 — 이번 시즌",
+  fxRateLeagueSeason: "리그 — 이번 시즌",
+  fxRecordAfterKickoff: "킥오프 후 캡처 — 정산에서 제외.",
+  fxLiveUnavailable: "이 대회는 라이브 업데이트를 제공하지 않습니다",
 
 });
 
@@ -669,6 +711,17 @@ export const th = mergePredictions({
   fxOperatorsNote:
     "งานวิจัยเชิงบรรณาธิการด้านบนแยกจากข้อเสนอเชิงพาณิชย์ ลิงก์ใช้การเปลี่ยนเส้นทางที่เซิร์ฟเวอร์ลงนาม",
 
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "ตัวเลขผู้ให้บริการ",
+  fxProviderOnlyRate: "ตัวเลขผู้ให้บริการ — ไม่มีตัวอย่าง",
+  fxWhyWindowNote:
+    "อัตราด้านล่างทั้งหมดเป็นอัตราของฤดูกาลที่สนามที่ระบุ — คนละหน้าต่างกับประโยคฟอร์ม N นัดหลังสุดด้านบน",
+  fxRateHomeSeason: "เจ้าบ้านในบ้าน — ฤดูกาลนี้",
+  fxRateAwaySeason: "ทีมเยือนนอกบ้าน — ฤดูกาลนี้",
+  fxRateLeagueSeason: "ลีก — ฤดูกาลนี้",
+  fxRecordAfterKickoff: "บันทึกหลังเขี่ยบอล — ไม่นับในการชำระผล",
+  fxLiveUnavailable: "การอัปเดตสดไม่พร้อมใช้งานสำหรับรายการนี้",
+
 });
 
 export const vi = mergePredictions({
@@ -805,6 +858,17 @@ export const vi = mergePredictions({
   fxOperatorsTitle: "Lựa chọn nhà điều hành",
   fxOperatorsNote:
     "Nghiên cứu biên tập ở trên tách biệt với các ưu đãi thương mại. Liên kết dùng chuyển hướng có chữ ký máy chủ.",
+
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "Con số nhà cung cấp",
+  fxProviderOnlyRate: "con số nhà cung cấp — không kèm mẫu",
+  fxWhyWindowNote:
+    "Mọi tỷ lệ bên dưới là tỷ lệ mùa giải tại sân nêu tên — cửa sổ khác với các câu phong độ N trận gần nhất ở trên.",
+  fxRateHomeSeason: "Đội nhà trên sân nhà — mùa này",
+  fxRateAwaySeason: "Đội khách trên sân khách — mùa này",
+  fxRateLeagueSeason: "Giải đấu — mùa này",
+  fxRecordAfterKickoff: "Ghi nhận sau giờ bóng lăn — loại khỏi quyết toán.",
+  fxLiveUnavailable: "cập nhật trực tiếp không khả dụng cho giải đấu này",
 
 });
 
@@ -944,6 +1008,17 @@ export const id = mergePredictions({
   fxOperatorsNote:
     "Riset editorial di atas terpisah dari penawaran komersial. Tautan memakai pengalihan bertanda tangan server.",
 
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "Angka penyedia",
+  fxProviderOnlyRate: "angka penyedia — tanpa sampel",
+  fxWhyWindowNote:
+    "Setiap tingkat di bawah adalah tingkat musiman di venue yang disebut — jendela berbeda dari kalimat performa N-terakhir di atas.",
+  fxRateHomeSeason: "Tim kandang di kandang — musim ini",
+  fxRateAwaySeason: "Tim tandang di tandang — musim ini",
+  fxRateLeagueSeason: "Liga — musim ini",
+  fxRecordAfterKickoff: "Direkam setelah sepak mula — dikecualikan dari penyelesaian.",
+  fxLiveUnavailable: "pembaruan langsung tidak tersedia untuk kompetisi ini",
+
 });
 
 export const zh = mergePredictions({
@@ -1073,6 +1148,16 @@ export const zh = mergePredictions({
   fxOperatorsTitle: "运营商选项",
   fxOperatorsNote: "上方的编辑研究与商业优惠相互分离。链接使用服务器签名的跳转。",
 
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "供应商数字",
+  fxProviderOnlyRate: "供应商数字——无样本",
+  fxWhyWindowNote: "下方每个比率都是所述场地的赛季比率——与上方最近N场状态句属于不同窗口。",
+  fxRateHomeSeason: "主队主场——本赛季",
+  fxRateAwaySeason: "客队客场——本赛季",
+  fxRateLeagueSeason: "联赛——本赛季",
+  fxRecordAfterKickoff: "开球后采集——不计入结算。",
+  fxLiveUnavailable: "本项赛事暂无实时更新",
+
 });
 
 export const bn = mergePredictions({
@@ -1143,6 +1228,17 @@ export const bn = mergePredictions({
   fxOperatorsTitle: "অপারেটর বিকল্প",
   fxOperatorsNote:
     "উপরের সম্পাদকীয় গবেষণা বাণিজ্যিক অফার থেকে আলাদা। লিঙ্কগুলি সার্ভার-স্বাক্ষরিত রিডাইরেক্ট ব্যবহার করে।",
+
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "প্রদানকারীর সংখ্যা",
+  fxProviderOnlyRate: "প্রদানকারীর সংখ্যা — নমুনা ছাড়া",
+  fxWhyWindowNote:
+    "নিচের প্রতিটি হার উল্লিখিত মাঠে মৌসুমের হার — উপরের সাম্প্রতিক-N ফর্ম বাক্য থেকে আলাদা জানালা।",
+  fxRateHomeSeason: "স্বাগতিক দল ঘরে — এই মৌসুম",
+  fxRateAwaySeason: "সফরকারী দল বাইরে — এই মৌসুম",
+  fxRateLeagueSeason: "লিগ — এই মৌসুম",
+  fxRecordAfterKickoff: "কিক-অফের পরে ধারণ — নিষ্পত্তি থেকে বাদ।",
+  fxLiveUnavailable: "এই প্রতিযোগিতার জন্য লাইভ আপডেট নেই",
 
 });
 
@@ -1216,6 +1312,17 @@ export const ta = mergePredictions({
   fxOperatorsNote:
     "மேலுள்ள ஆசிரியர் ஆய்வு வணிகச் சலுகைகளிலிருந்து தனித்தது. இணைப்புகள் சர்வர் கையொப்பமிட்ட திருப்பிவிடல்களைப் பயன்படுத்துகின்றன.",
 
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "வழங்குநர் எண்",
+  fxProviderOnlyRate: "வழங்குநர் எண் — மாதிரி இல்லை",
+  fxWhyWindowNote:
+    "கீழுள்ள ஒவ்வொரு விகிதமும் குறிப்பிட்ட மைதானத்தில் சீசன் விகிதம் — மேலே உள்ள கடைசி-N ஃபார்ம் வாக்கியங்களிலிருந்து வேறு சாளரம்.",
+  fxRateHomeSeason: "சொந்த அணி வீட்டில் — இந்த சீசன்",
+  fxRateAwaySeason: "விருந்தினர் அணி வெளியே — இந்த சீசன்",
+  fxRateLeagueSeason: "லீக் — இந்த சீசன்",
+  fxRecordAfterKickoff: "தொடக்கத்திற்குப் பிறகு பதிவு — தீர்விலிருந்து விலக்கு.",
+  fxLiveUnavailable: "இந்தப் போட்டிக்கு நேரடி புதுப்பிப்புகள் இல்லை",
+
 });
 
 export const te = mergePredictions({
@@ -1285,6 +1392,17 @@ export const te = mergePredictions({
   fxOperatorsTitle: "ఆపరేటర్ ఎంపికలు",
   fxOperatorsNote:
     "పై సంపాదకీయ పరిశోధన వాణిజ్య ఆఫర్లకు వేరు. లింకులు సర్వర్ సంతకం చేసిన రీడైరెక్ట్‌లను వాడతాయి.",
+
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "ప్రొవైడర్ సంఖ్య",
+  fxProviderOnlyRate: "ప్రొవైడర్ సంఖ్య — నమూనా లేదు",
+  fxWhyWindowNote:
+    "కింది ప్రతి రేటు పేర్కొన్న మైదానంలో సీజన్ రేటు — పైనున్న చివరి-N ఫారమ్ వాక్యాలకు వేరే విండో.",
+  fxRateHomeSeason: "హోమ్ జట్టు ఇంట్లో — ఈ సీజన్",
+  fxRateAwaySeason: "అవే జట్టు బయట — ఈ సీజన్",
+  fxRateLeagueSeason: "లీగ్ — ఈ సీజన్",
+  fxRecordAfterKickoff: "కిక్-ఆఫ్ తర్వాత నమోదు — సెటిల్మెంట్ నుండి మినహాయింపు.",
+  fxLiveUnavailable: "ఈ పోటీకి లైవ్ అప్డేట్లు అందుబాటులో లేవు",
 
 });
 
@@ -1356,6 +1474,17 @@ export const mr = mergePredictions({
   fxOperatorsTitle: "ऑपरेटर पर्याय",
   fxOperatorsNote:
     "वरचे संपादकीय संशोधन व्यावसायिक ऑफरपासून वेगळे आहे. दुवे सर्व्हर-स्वाक्षरित पुनर्निर्देशन वापरतात.",
+
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "पुरवठादाराचा आकडा",
+  fxProviderOnlyRate: "पुरवठादाराचा आकडा — नमुन्याशिवाय",
+  fxWhyWindowNote:
+    "खालील प्रत्येक दर नमूद मैदानावरील हंगामी दर आहे — वरील अलीकडील-N फॉर्म वाक्यांपेक्षा वेगळी खिडकी.",
+  fxRateHomeSeason: "यजमान संघ घरी — हा हंगाम",
+  fxRateAwaySeason: "पाहुणा संघ बाहेर — हा हंगाम",
+  fxRateLeagueSeason: "लीग — हा हंगाम",
+  fxRecordAfterKickoff: "किक-ऑफनंतर नोंद — निपटाऱ्यातून वगळले.",
+  fxLiveUnavailable: "या स्पर्धेसाठी थेट अद्यतने उपलब्ध नाहीत",
 
 });
 
@@ -1494,5 +1623,16 @@ export const sw = mergePredictions({
   fxOperatorsTitle: "Chaguo za waendeshaji",
   fxOperatorsNote:
     "Utafiti wa kihariri hapo juu umetengwa na ofa za kibiashara. Viungo vinatumia uelekezaji uliosainiwa na seva.",
+
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "Namba ya mtoa huduma",
+  fxProviderOnlyRate: "namba ya mtoa huduma — bila sampuli",
+  fxWhyWindowNote:
+    "Kila kiwango hapa chini ni cha msimu kwenye uwanja uliotajwa — dirisha tofauti na sentensi za fomu ya N-za-mwisho hapo juu.",
+  fxRateHomeSeason: "Wenyeji nyumbani — msimu huu",
+  fxRateAwaySeason: "Wageni ugenini — msimu huu",
+  fxRateLeagueSeason: "Ligi — msimu huu",
+  fxRecordAfterKickoff: "Imenaswa baada ya kuanza mchezo — imetengwa na usuluhishi.",
+  fxLiveUnavailable: "masasisho ya moja kwa moja hayapatikani kwa shindano hili",
 
 });

@@ -461,6 +461,15 @@ export const predictionsEn = {
   fxOperatorsTitle: "Operator options",
   fxOperatorsNote:
     "Editorial research above is separate from commercial offers. Links use server-signed redirects.",
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "Provider figure",
+  fxProviderOnlyRate: "provider figure — no sample",
+  fxWhyWindowNote: "Every rate below is a season rate at the named venue — a different window from the last-N form sentences above.",
+  fxRateHomeSeason: "Home side at home — this season",
+  fxRateAwaySeason: "Away side away — this season",
+  fxRateLeagueSeason: "League — this season",
+  fxRecordAfterKickoff: "Captured after kickoff — excluded from settlement.",
+  fxLiveUnavailable: "live updates unavailable for this competition",
   navQualified: "Qualified lists",
   navLiveSignals: "Live signals",
   navMethodology: "Methodology",

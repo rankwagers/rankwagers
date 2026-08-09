@@ -12,16 +12,61 @@ import { formatDict } from "@/lib/dictionaryExtras";
    the probes hold that a signal sentence appears at exactly one level.
    ========================================================================== */
 
-const FINDING_KEY: Record<SignalMarket, { up: keyof PredictionStrings; down: keyof PredictionStrings }> = {
-  over15: { up: "fxFindingOver15Up", down: "fxFindingOver15Down" },
-  over25: { up: "fxFindingOver25Up", down: "fxFindingOver25Down" },
-  over35: { up: "fxFindingOver35Up", down: "fxFindingOver35Down" },
-  fh05: { up: "fxFindingFh05Up", down: "fxFindingFh05Down" },
-  sh05: { up: "fxFindingSh05Up", down: "fxFindingSh05Down" },
-  btts: { up: "fxFindingBttsUp", down: "fxFindingBttsDown" },
-  cleanSheets: { up: "fxFindingCleanSheetsUp", down: "fxFindingCleanSheetsDown" },
-  failedToScore: { up: "fxFindingFailedToScoreUp", down: "fxFindingFailedToScoreDown" },
+/*
+ * THE SENTENCE DIRECTION LAW. The count and percentage printed MUST count the event the
+ * sentence claims. Some down-phrasings state the SAME event as rare ("High-scoring matches are
+ * rare: 2 of 12") — the low count agrees with the claim, so the numbers print as measured. But
+ * some down-phrasings claim the COMPLEMENT event happening ("One side keeps getting shut out",
+ * "First halves start quiet") — there the underlying rate counts the event NOT claimed, and
+ * printing it produced the shipped lie: "shut out: 2 of 5 (40%)" where 2/5 counted matches both
+ * sides SCORED. `downInverts` marks exactly those templates; when it applies, count, rate and
+ * baseline all invert together (3 of 5, 60%, league 39%) so claim and numbers always agree.
+ *
+ * The flag is a property of the KEY, not the locale: every locale's translation of a key keeps
+ * the key's polarity (audited across all 30 — e.g. bttsDown is "shut out"/"ohne Tor"/"無得点"
+ * everywhere, over25Down is "rare"/"selten"/"少見" everywhere), so one flag serves them all.
+ */
+const FINDING_KEY: Record<
+  SignalMarket,
+  { up: keyof PredictionStrings; down: keyof PredictionStrings; downInverts: boolean }
+> = {
+  over15: { up: "fxFindingOver15Up", down: "fxFindingOver15Down", downInverts: false },
+  over25: { up: "fxFindingOver25Up", down: "fxFindingOver25Down", downInverts: false },
+  over35: { up: "fxFindingOver35Up", down: "fxFindingOver35Down", downInverts: false },
+  // "First halves start quiet" / "Second halves stay quiet" claim the goalless complement.
+  fh05: { up: "fxFindingFh05Up", down: "fxFindingFh05Down", downInverts: true },
+  sh05: { up: "fxFindingSh05Up", down: "fxFindingSh05Down", downInverts: true },
+  // "One side keeps getting shut out" claims the not-both-scored complement.
+  btts: { up: "fxFindingBttsUp", down: "fxFindingBttsDown", downInverts: true },
+  cleanSheets: { up: "fxFindingCleanSheetsUp", down: "fxFindingCleanSheetsDown", downInverts: false },
+  failedToScore: {
+    up: "fxFindingFailedToScoreUp",
+    down: "fxFindingFailedToScoreDown",
+    downInverts: false,
+  },
 };
+
+/** Whether this signal renders through its down-phrasing (below baseline, or an observed-rare
+ *  no-baseline rate — a rate under half phrased as "keeps coming" would be its own small lie). */
+function usesDownPhrasing(signal: FixtureSignal): boolean {
+  return signal.direction === "below_baseline" ||
+    (signal.direction === "no_baseline" && signal.rate < 0.5);
+}
+
+/** The numbers as the SENTENCE must state them: inverted when the template claims the complement. */
+export function presentedNumbers(signal: FixtureSignal): {
+  count: number;
+  rate: number;
+  baseline: number | null;
+} {
+  const inverts = usesDownPhrasing(signal) && FINDING_KEY[signal.market].downInverts;
+  if (!inverts) return { count: signal.count, rate: signal.rate, baseline: signal.baseline };
+  return {
+    count: signal.sample - signal.count,
+    rate: 1 - signal.rate,
+    baseline: signal.baseline === null ? null : 1 - signal.baseline,
+  };
+}
 
 const SCOPE_KEY: Record<SignalScope, keyof PredictionStrings> = {
   home_venue: "fxScopeHomeVenue",
@@ -49,10 +94,7 @@ function scopeTeam(scope: SignalScope, teams: SignalTeams): string {
 
 export function signalFinding(signal: FixtureSignal, p: PredictionStrings): string {
   const keys = FINDING_KEY[signal.market];
-  // A no-baseline signal still states its observed side; "up" is the observed-often phrasing.
-  const key =
-    signal.direction === "below_baseline" ? keys.down : keys.up;
-  return p[key] as string;
+  return p[usesDownPhrasing(signal) ? keys.down : keys.up] as string;
 }
 
 export function signalScopeText(
@@ -77,20 +119,21 @@ export function signalSentence(
 ): string {
   const finding = signalFinding(signal, p);
   const scope = signalScopeText(signal, teams, p);
-  const rate = String(Math.round(signal.rate * 100));
-  if (signal.baseline === null) {
+  const numbers = presentedNumbers(signal);
+  const rate = String(Math.round(numbers.rate * 100));
+  if (numbers.baseline === null) {
     return formatDict(p.fxSignalLineNoBaseline, {
       finding,
-      count: String(signal.count),
+      count: String(numbers.count),
       scope,
       rate,
     });
   }
   return formatDict(p.fxSignalLine, {
     finding,
-    count: String(signal.count),
+    count: String(numbers.count),
     scope,
     rate,
-    baseline: String(Math.round(signal.baseline * 100)),
+    baseline: String(Math.round(numbers.baseline * 100)),
   });
 }

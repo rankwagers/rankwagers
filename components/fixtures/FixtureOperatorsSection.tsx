@@ -3,7 +3,6 @@ import { buildOperatorEvidenceCards, recommendableCards } from "@/lib/operators/
 import type { Locale } from "@/lib/i18n";
 import type { OperatorCountryAvailability, Operator } from "@/lib/operators/types";
 import type { PredictionStrings } from "@/lib/translations/predictionsEn";
-import { V2ArrowLabel } from "@/components/homepage/v2Chrome";
 
 /* ============================================================================
    L5 — OPERATORS. LAST, AS ALWAYS.
@@ -17,7 +16,6 @@ import { V2ArrowLabel } from "@/components/homepage/v2Chrome";
 
 export function FixtureOperatorsSection({
   locale,
-  signedOffers,
   operators,
   visitorCountry,
   matchId,
@@ -25,7 +23,6 @@ export function FixtureOperatorsSection({
   p,
 }: {
   locale: Locale;
-  signedOffers: ReadonlyArray<{ slug: string; displayName: string; outboundPath: string }>;
   operators: ReadonlyArray<{ operator: Operator; availability: OperatorCountryAvailability }>;
   visitorCountry: string;
   matchId: number;
@@ -43,24 +40,12 @@ export function FixtureOperatorsSection({
         {p.fxOperatorsNote}
       </p>
 
-      {signedOffers.length ? (
-        <ul className="mt-3">
-          {signedOffers.slice(0, 4).map((offer) => (
-            <li key={offer.slug}>
-              <a
-                href={offer.outboundPath}
-                rel="noopener sponsored"
-                className="rw-row grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-3.5 border-b-[0.5px] border-[var(--hero-line)] py-2.5 pl-3.5"
-              >
-                <span className="rw-m truncate text-[var(--hero-ink)]">{offer.displayName}</span>
-                <span className="rw-m text-[var(--hero-ink)]">
-                  <V2ArrowLabel text="Continue" />
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      ) : null}
+      {/*
+        ONE AFFILIATE BLOCK. The signed-offers list that rendered here duplicated the evidence
+        cards below — two commercial blocks on one page, saying overlapping things with
+        different chrome. The cards carry more (verification, availability, the derivation), so
+        they are the block; the section's heading and separation note stay.
+      */}
 
       <div className="mt-8">
         <OperatorEvidenceCardList

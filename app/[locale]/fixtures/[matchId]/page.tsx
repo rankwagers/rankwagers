@@ -150,7 +150,6 @@ export default async function FixtureMatchPage({
         */}
         <FixtureOperatorsSection
           locale={params.locale}
-          signedOffers={bundle.signedOffers}
           operators={operators}
           visitorCountry={countryContext.country}
           matchId={matchId}

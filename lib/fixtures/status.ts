@@ -70,10 +70,27 @@ export function resolveMatchLifecycle(input: {
     return "scheduled";
   }
 
+  /*
+   * THE LIVE-PATH FIX. This function received `minute` and never read it, so a league whose
+   * provider reports an unmapped in-play status (FootyStats ships `incomplete` for matches in
+   * progress) fell through to "unavailable" for the full ninety minutes while the same payload
+   * carried the live minute and score — the page said "Status unavailable" until the snapshot
+   * path caught up at full-time. A running match minute IS live evidence, not an invention: when
+   * kickoff has passed and the payload reports a plausible in-play minute, the match is live.
+   * The refusal to fake live stands for payloads with NO such evidence — status unclear and no
+   * minute still reads "unavailable".
+   */
+  const minute = input.minute ?? null;
+  const kickoffPassed = kickoff != null && kickoff <= now;
+  const inPlayMinute = minute != null && minute >= 1 && minute <= 130;
+  if (kickoffPassed && inPlayMinute) {
+    return "live";
+  }
+
   if (kickoff != null) {
     if (kickoff > now + 2 * 60 * 60) return "scheduled";
     if (kickoff > now) return "pre_match";
-    // Kickoff passed but status unclear — do not fake live.
+    // Kickoff passed, status unclear, and no in-play evidence — do not fake live.
     return "unavailable";
   }
 

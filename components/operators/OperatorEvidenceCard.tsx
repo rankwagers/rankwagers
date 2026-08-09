@@ -59,7 +59,8 @@ export function OperatorEvidenceCard({
   position,
   fixtureId = null,
   market = null,
-}: OperatorEvidenceCardProps) {
+  showScore = true,
+}: OperatorEvidenceCardProps & { showScore?: boolean }) {
   const operator = getOperator(card.slug);
   if (!operator) return null;
 
@@ -130,13 +131,22 @@ export function OperatorEvidenceCard({
         </div>
 
         <dl className="mt-3 grid grid-cols-2 gap-3 text-sm sm:grid-cols-3">
-          <div>
-            {/* An operator ranking, not football evidence — §18.4 keeps the two words apart. */}
-            <dt className="text-xs text-muted-foreground">Ranking score</dt>
-            <dd className="mt-1">
-              <ScoreMeter score={card.evidenceScore} max={card.maxEvidenceScore} />
-            </dd>
-          </div>
+          {/*
+            THE SCORE METER NEEDS A PRICE TO MEAN ANYTHING. With no observed price at ANY
+            operator in the set, every card scores identically on availability alone, and a row
+            of identical 67/100 meters reads as fake precision. The meter is omitted whole in
+            that state (empty-state law); verification and availability carry the card, and the
+            order is the stated tie-break — evidence score, then slug — unchanged.
+          */}
+          {showScore ? (
+            <div>
+              {/* An operator ranking, not football evidence — §18.4 keeps the two words apart. */}
+              <dt className="text-xs text-muted-foreground">Ranking score</dt>
+              <dd className="mt-1">
+                <ScoreMeter score={card.evidenceScore} max={card.maxEvidenceScore} />
+              </dd>
+            </div>
+          ) : null}
           <div>
             <dt className="text-xs text-muted-foreground">Observed price</dt>
             <dd className="mt-1 font-mono">
@@ -251,6 +261,7 @@ export function OperatorEvidenceCardList({
   fixtureId?: number | null;
   market?: string | null;
 }) {
+  const anyPriceObserved = cards.some((card) => card.observedPriceLabel != null);
   /*
    * One gate, in the one place every surface passes through.
    *
@@ -284,6 +295,7 @@ export function OperatorEvidenceCardList({
             position={index + 1}
             fixtureId={fixtureId}
             market={market}
+            showScore={anyPriceObserved}
           />
         ))}
       </div>

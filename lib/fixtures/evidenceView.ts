@@ -120,12 +120,35 @@ function venueStat(
  * that states a venue rate — the lead's flanks, the stacked rows, the fixture page — inherits
  * the omission instead of each re-deciding what 0/0 means.
  */
+/**
+ * RATE/SAMPLE PAIRING INTEGRITY. A printed `X% (a/b)` must satisfy X = round(100·a/b) — the
+ * provider's half-market fields ship a percentage computed over one denominator (matches with
+ * recorded half scores) beside counts over another (all matches played), and printing the two
+ * as one figure was the shipped lie: "57% (4/11)" where 4/11 is 36%. When the pair disagrees
+ * beyond rounding, the row degrades to the provider's percentage ALONE — a provider figure
+ * without a sample, labeled as such by the renderer — never a hybrid.
+ *
+ * THE BOUND IS HALF AN OBSERVATION. A percentage genuinely computed from the printed fraction
+ * can differ from it by at most half a hit (integer counts) plus percent rounding, so the pair
+ * holds when |pct/100 − hits/played| ≤ 0.5/played + 0.005. The shipped defect (57% beside 4/11,
+ * a 21-point gap on eleven matches) fails it by four times the bound; a 7/9 published as 80%
+ * (the same fraction rounded the other way) passes.
+ */
+export function rateSamplePaired(pct: number, hits: number | null, played: number): boolean {
+  if (hits == null || !Number.isFinite(hits) || played <= 0) return true;
+  return Math.abs(pct / 100 - hits / played) <= 0.5 / played + 0.005;
+}
+
 function rateDisplay(stat: {
   pct: number;
   played: number;
   hits: number | null;
 }): RateWithSample | null {
   if (stat.played <= 0) return null;
+  if (!rateSamplePaired(stat.pct, stat.hits, stat.played)) {
+    // Provider figure alone — the mismatched denominator must not license it as a rate.
+    return { display: `${stat.pct}%`, sampleSize: stat.played };
+  }
   const denom = stat.hits != null && Number.isFinite(stat.hits)
     ? `${stat.hits}/${stat.played}`
     : `${stat.played}`;
@@ -175,6 +198,21 @@ export function venueRatesForMarket(
     away: away ? rateDisplay(away) : null,
     league: leagueBaseline(detail.leagueSeason, marketKey),
   };
+}
+
+/**
+ * The pairing gate over an already-formatted display string — the frozen model's `displayValue`
+ * is part of the hashed snapshot body and is never modified at source; this PROJECTION degrades
+ * an inconsistent `X% (a/b)` to `X%` on the way to the page only. `X% (n)` single-denominator
+ * forms carry no fraction to contradict and pass through whole.
+ */
+export function pairedDisplayString(display: string): string {
+  const m = /^(\d+(?:\.\d+)?)% \((\d+)\/(\d+)\)$/.exec(display);
+  if (!m) return display;
+  const [, pct, hits, played] = m;
+  return rateSamplePaired(Number(pct), Number(hits), Number(played))
+    ? display
+    : `${pct}%`;
 }
 
 /** `season_over25_home` → `over25`. Returns null for counter/unknown signal keys. */
@@ -288,7 +326,7 @@ export function buildFixtureEvidenceView(
   const signalViews: FixtureEvidenceSignalView[] = model.signals.map((s) => ({
     key: s.key,
     label: s.label,
-    display: s.displayValue,
+    display: pairedDisplayString(s.displayValue),
     direction: s.direction,
     sampleSize: s.sampleSize,
     source: s.source,

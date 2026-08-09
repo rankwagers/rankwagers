@@ -11,6 +11,8 @@ import {
   type MatchLiveContext,
 } from "@/lib/footystats/matchDetail";
 import type { Locale } from "@/lib/i18n";
+import { getDictionary } from "@/lib/dictionaries";
+import type { PredictionStrings } from "@/lib/translations/predictionsEn";
 import { liveSourceFromMatchContext } from "@/lib/live/adapter";
 import { buildLiveMatchSnapshot } from "@/lib/live/snapshot";
 import { marketForListKind } from "@/lib/research/fixturePresentation";
@@ -53,27 +55,45 @@ function stat(
   key: string,
   label: string,
   home: number | null,
-  away: number | null
+  away: number | null,
+  measured: boolean
 ): MatchStatistic {
+  /*
+   * THE EMPTY-STATE LAW FOR STATISTICS. Under a limited or unavailable live status the provider
+   * ships unmeasured fields as zeros, and a 0–0 row rendered as data claims a measurement nobody
+   * made. When the live feed is not measuring (`measured` false), a row whose values are absent
+   * OR all-zero is omitted; on a genuinely live or finished feed a real 0–0 stays, because there
+   * it IS the measurement.
+   */
   if (home == null && away == null) {
+    return { key, label, home: null, away: null, availability: "unavailable" };
+  }
+  if (!measured && (home ?? 0) === 0 && (away ?? 0) === 0) {
     return { key, label, home: null, away: null, availability: "unavailable" };
   }
   return { key, label, home, away, availability: "available" };
 }
 
 function buildStatistics(live: MatchLiveContext): MatchPageModel["sections"]["statistics"] {
+  const lifecycle = resolveMatchLifecycle({
+    status: live.status,
+    kickoffUnix: live.kickoffUnix,
+    minute: live.minute,
+  });
+  const measured = lifecycle === "live" || lifecycle === "half_time" || lifecycle === "finished";
   const items = [
-    stat("possession", "Possession %", live.possessionHome, live.possessionAway),
-    stat("shots", "Total shots", live.shotsHome, live.shotsAway),
-    stat("shots_on_target", "Shots on target", live.shotsOnTargetHome, live.shotsOnTargetAway),
-    stat("xg", "Expected goals (xG)", live.xgHome, live.xgAway),
-    stat("corners", "Corners", live.cornersHome, live.cornersAway),
-    stat("cards", "Cards", live.cardsHome, live.cardsAway),
+    stat("possession", "Possession %", live.possessionHome, live.possessionAway, measured),
+    stat("shots", "Total shots", live.shotsHome, live.shotsAway, measured),
+    stat("shots_on_target", "Shots on target", live.shotsOnTargetHome, live.shotsOnTargetAway, measured),
+    stat("xg", "Expected goals (xG)", live.xgHome, live.xgAway, measured),
+    stat("corners", "Corners", live.cornersHome, live.cornersAway, measured),
+    stat("cards", "Cards", live.cardsHome, live.cardsAway, measured),
     stat(
       "dangerous_attacks",
       "Dangerous attacks",
       live.dangerousAttacksHome,
-      live.dangerousAttacksAway
+      live.dangerousAttacksAway,
+      measured
     ),
   ];
   const available = items.filter((item) => item.availability === "available");
@@ -123,7 +143,8 @@ function currentOddsForMarket(
 function buildPredictions(
   live: MatchLiveContext,
   detail: MatchDetailPublic | null,
-  focusMarket: SettledMarketKey | null
+  focusMarket: SettledMarketKey | null,
+  p: PredictionStrings
 ): MatchPredictionView[] {
   const candidates: Array<{
     marketKey: SettledMarketKey;
@@ -173,6 +194,20 @@ function buildPredictions(
   }
 
   const publishedAt = live.fetchedAt;
+  /*
+   * PUBLICATION FREEZE AT KICKOFF. These rows are derived at page build, and `publishedAt` is
+   * the build's own fetch time — so a page built after kickoff was minting a "publication" with
+   * in-play odds and settling against it (observed live: published 19:44 against an 18:00
+   * kickoff, odds 1.09). A publication that never happened before kickoff is not a publication:
+   * when the build is at or after kickoff, the row is marked captured-after-kickoff, states so
+   * on the record and the timeline, presents its odds as an observation rather than
+   * odds-at-publication, and is EXCLUDED from settlement. Nothing stored is rewritten — nothing
+   * here is stored — the leak is stopped at the mint.
+   */
+  const kickoffMs = live.kickoffUnix != null ? live.kickoffUnix * 1000 : null;
+  const buildMs = Date.parse(live.fetchedAt);
+  const capturedAfterKickoff =
+    kickoffMs != null && Number.isFinite(buildMs) && buildMs >= kickoffMs;
   const lifecycle = resolveMatchLifecycle({
     status: live.status,
     kickoffUnix: live.kickoffUnix,
@@ -184,37 +219,46 @@ function buildPredictions(
     .filter((row) => row.confidence != null && row.confidence > 0)
     .map((row) => {
       const originalOdds = currentOddsForMarket(detail, row.marketKey);
-      const settlement = settlePrediction(
-        {
-          marketKey: row.marketKey,
-          selection: row.settlementSelection,
-          homeScore: live.homeScore,
-          awayScore: live.awayScore,
-          htHome: live.htHome,
-          htAway: live.htAway,
-          status: live.status,
-          isFinished: finished,
-          kickoffUnix: live.kickoffUnix,
-        },
-        originalOdds
-      );
+      const settlement = capturedAfterKickoff
+        ? {
+            status: "void" as const,
+            reason: p.fxRecordAfterKickoff,
+            unitProfit: null,
+          }
+        : settlePrediction(
+            {
+              marketKey: row.marketKey,
+              selection: row.settlementSelection,
+              homeScore: live.homeScore,
+              awayScore: live.awayScore,
+              htHome: live.htHome,
+              htAway: live.htAway,
+              status: live.status,
+              isFinished: finished,
+              kickoffUnix: live.kickoffUnix,
+            },
+            originalOdds
+          );
 
       const timeline: PredictionTimelineItem[] = [
         {
           id: "published",
           at: publishedAt,
-          label: "Prediction observed",
-          detail:
-            "FootyStats market potential captured at page build. A provider figure, not a " +
-            "confidence, and archived without a sample.",
+          label: capturedAfterKickoff ? "Observed after kickoff" : "Prediction observed",
+          detail: capturedAfterKickoff
+            ? p.fxRecordAfterKickoff
+            : "FootyStats market potential captured at page build. A provider figure, not a " +
+              "confidence, and archived without a sample.",
         },
         {
           id: "odds",
           at: originalOdds != null ? publishedAt : null,
-          label: "Odds snapshot",
+          label: capturedAfterKickoff ? "Odds observed after kickoff" : "Odds snapshot",
           detail:
             originalOdds != null
-              ? `Observed decimal ${originalOdds.toFixed(2)} at publication window.`
+              ? capturedAfterKickoff
+                ? `Observed decimal ${originalOdds.toFixed(2)} after kickoff — not publication odds.`
+                : `Observed decimal ${originalOdds.toFixed(2)} at publication window.`
               : "No verified operator odds were available at publication.",
         },
         {
@@ -265,6 +309,7 @@ function buildPredictions(
         settlementReason: settlement.reason,
         evidenceSummary,
         timeline,
+        capturedAfterKickoff,
       } satisfies MatchPredictionView;
     });
 
@@ -355,7 +400,8 @@ export async function loadMatchPageBundle(input: {
     lastUpdatedAt: live.fetchedAt,
   };
 
-  const predictions = buildPredictions(live, detail, focusMarket);
+  const dict = getDictionary(input.locale);
+  const predictions = buildPredictions(live, detail, focusMarket, dict.predictions);
   const indexable = Boolean(
     header.homeTeam &&
       header.awayTeam &&

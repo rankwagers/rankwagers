@@ -199,6 +199,16 @@ function isGarbageAiText(s: string): boolean {
   if (/^\d+$/.test(t)) return true;
   if (/^[\d\s.%]+$/.test(t)) return true;
   if (t.length < 25 && !/[a-zA-Z]{4,}/.test(t)) return true;
+  /*
+   * A TRUNCATED FRAGMENT IS GARBAGE. "45 to win, with Åsane at 4." shipped on a live page — the
+   * provider's text arrives mid-sentence (a decimal odds string sheared at the point: "…1.45 to
+   * win… at 4.20…"), passes every length check, and reads as nonsense. A sentence that opens
+   * with a bare digit or a lowercase Latin letter did not start where a sentence starts; a
+   * sentence a reader cannot parse must not ship, so it is dropped rather than repaired — we
+   * cannot know what the provider meant to say.
+   */
+  if (/^\d/.test(t)) return true;
+  if (/^[a-z]/.test(t)) return true;
   return false;
 }
 

@@ -14,22 +14,11 @@ import { FixtureModelWhy } from "./FixtureModelWhy";
 import { FixtureResearchSection } from "./FixtureResearchSection";
 import { FixtureRecordSection } from "./FixtureRecordSection";
 import { FixtureSignalLevels } from "./FixtureSignalLevels";
+import { LocalTime } from "./LocalTime";
 import { MatchDetailTracker } from "./MatchDetailTracker";
 import { MatchLiveRefresh } from "./MatchLiveRefresh";
 import { MatchPredictionsPanel } from "./MatchPredictionsPanel";
 import { MatchRelatedLink } from "./MatchRelatedLink";
-
-function formatKickoff(iso: string | null, locale: string): string {
-  if (!iso) return "Kickoff unavailable";
-  try {
-    return new Intl.DateTimeFormat(locale, {
-      dateStyle: "medium",
-      timeStyle: "short",
-    }).format(new Date(iso));
-  } catch {
-    return iso;
-  }
-}
 
 function scoreText(home: number | null, away: number | null): string {
   if (home == null || away == null) return "–";
@@ -217,15 +206,17 @@ export function MatchDetailView({
             />
           </div>
           <div className="text-[14px] text-[var(--hero-ink-2)] lg:max-w-xs lg:text-right">
-            <p>{formatKickoff(header.kickoffAt, locale)}</p>
+            <p>
+              <LocalTime iso={header.kickoffAt} locale={locale} />
+            </p>
             {header.venue ? <p className="mt-1">Venue: {header.venue}</p> : null}
             {header.lastUpdatedAt ? (
               <p className="rw-mono mt-2 text-[12px] text-[var(--hero-ink-3)]">
-                Updated {new Date(header.lastUpdatedAt).toLocaleString()} ·{" "}
+                Updated <LocalTime iso={header.lastUpdatedAt} locale={locale} /> ·{" "}
                 {header.dataFreshness === "live_ok"
                   ? "live refresh enabled"
                   : header.dataFreshness === "unavailable"
-                    ? "status limited"
+                    ? p.fxLiveUnavailable
                     : "snapshot"}
               </p>
             ) : null}
@@ -273,6 +264,7 @@ export function MatchDetailView({
           view={evidence}
           homeTeam={header.homeTeam}
           awayTeam={header.awayTeam}
+          p={p}
         />
       </div>
 

@@ -73,6 +73,8 @@ export type MatchPredictionView = {
   settlementReason: string;
   evidenceSummary: string[];
   timeline: PredictionTimelineItem[];
+  /** True when this row was derived at or after kickoff — labeled and excluded from settlement. */
+  capturedAfterKickoff: boolean;
 };
 
 export type PredictionTimelineItem = {

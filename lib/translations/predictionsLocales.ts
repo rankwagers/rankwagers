@@ -146,6 +146,17 @@ const pt: PredictionStrings = mergePredictions({
   fxOperatorsNote:
     "A pesquisa editorial acima é separada das ofertas comerciais. Os links usam redirecionamentos assinados no servidor.",
 
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "Número do provedor",
+  fxProviderOnlyRate: "número do provedor — sem amostra",
+  fxWhyWindowNote:
+    "Cada taxa abaixo é da temporada no mando indicado — uma janela diferente das frases de forma recente acima.",
+  fxRateHomeSeason: "Mandante em casa — esta temporada",
+  fxRateAwaySeason: "Visitante fora — esta temporada",
+  fxRateLeagueSeason: "Liga — esta temporada",
+  fxRecordAfterKickoff: "Capturado após o pontapé inicial — excluído da liquidação.",
+  fxLiveUnavailable: "atualizações ao vivo indisponíveis para esta competição",
+
 });
 
 const es: PredictionStrings = mergePredictions({
@@ -288,6 +299,17 @@ const es: PredictionStrings = mergePredictions({
   fxOperatorsTitle: "Opciones de operadores",
   fxOperatorsNote:
     "La investigación editorial de arriba está separada de las ofertas comerciales. Los enlaces usan redirecciones firmadas en el servidor.",
+
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "Cifra del proveedor",
+  fxProviderOnlyRate: "cifra del proveedor — sin muestra",
+  fxWhyWindowNote:
+    "Cada tasa de abajo es de la temporada en la sede indicada — una ventana distinta de las frases de forma reciente de arriba.",
+  fxRateHomeSeason: "Local en casa — esta temporada",
+  fxRateAwaySeason: "Visitante fuera — esta temporada",
+  fxRateLeagueSeason: "Liga — esta temporada",
+  fxRecordAfterKickoff: "Capturado tras el inicio — excluido de la liquidación.",
+  fxLiveUnavailable: "actualizaciones en vivo no disponibles para esta competición",
 
 });
 
@@ -438,6 +460,17 @@ const de: PredictionStrings = mergePredictions({
   fxOperatorsNote:
     "Die redaktionelle Recherche oben ist von kommerziellen Angeboten getrennt. Links nutzen serversignierte Weiterleitungen.",
 
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "Anbieter-Zahl",
+  fxProviderOnlyRate: "Anbieter-Zahl — ohne Stichprobe",
+  fxWhyWindowNote:
+    "Jede Quote unten ist eine Saisonquote am genannten Ort — ein anderes Fenster als die Letzte-N-Formsätze oben.",
+  fxRateHomeSeason: "Heimteam zu Hause — diese Saison",
+  fxRateAwaySeason: "Auswärtsteam auswärts — diese Saison",
+  fxRateLeagueSeason: "Liga — diese Saison",
+  fxRecordAfterKickoff: "Nach Anpfiff erfasst — von der Abrechnung ausgeschlossen.",
+  fxLiveUnavailable: "Live-Updates für diesen Wettbewerb nicht verfügbar",
+
 });
 
 const it: PredictionStrings = mergePredictions({
@@ -581,6 +614,17 @@ const it: PredictionStrings = mergePredictions({
   fxOperatorsNote:
     "La ricerca editoriale sopra è separata dalle offerte commerciali. I link usano redirect firmati lato server.",
 
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "Cifra del provider",
+  fxProviderOnlyRate: "cifra del provider — senza campione",
+  fxWhyWindowNote:
+    "Ogni tasso qui sotto è stagionale nella sede indicata — una finestra diversa dalle frasi di forma recente sopra.",
+  fxRateHomeSeason: "Squadra di casa in casa — questa stagione",
+  fxRateAwaySeason: "Squadra ospite in trasferta — questa stagione",
+  fxRateLeagueSeason: "Lega — questa stagione",
+  fxRecordAfterKickoff: "Catturato dopo il fischio d'inizio — escluso dal regolamento.",
+  fxLiveUnavailable: "aggiornamenti live non disponibili per questa competizione",
+
 });
 
 const fr: PredictionStrings = mergePredictions({
@@ -723,6 +767,17 @@ const fr: PredictionStrings = mergePredictions({
   fxOperatorsTitle: "Options d'opérateurs",
   fxOperatorsNote:
     "La recherche éditoriale ci-dessus est séparée des offres commerciales. Les liens utilisent des redirections signées côté serveur.",
+
+  /* Fixture truth pass — provider demotion, windows, freeze, live copy. */
+  fxProviderFigureTitle: "Chiffre du fournisseur",
+  fxProviderOnlyRate: "chiffre du fournisseur — sans échantillon",
+  fxWhyWindowNote:
+    "Chaque taux ci-dessous est un taux de saison au lieu indiqué — une fenêtre différente des phrases de forme récente ci-dessus.",
+  fxRateHomeSeason: "Équipe à domicile — cette saison",
+  fxRateAwaySeason: "Équipe à l'extérieur — cette saison",
+  fxRateLeagueSeason: "Ligue — cette saison",
+  fxRecordAfterKickoff: "Capturé après le coup d'envoi — exclu du règlement.",
+  fxLiveUnavailable: "mises à jour en direct indisponibles pour cette compétition",
 
 });
 
