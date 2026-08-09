@@ -514,6 +514,27 @@ export const nl = euroPredictions({
     "Historische momentopname van deze onderzoeksdag — uitkomsten worden na afwikkeling niet herschreven.",
   arcDayPredictionsTitle: "Voorspellingen van {date}",
 
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "Entiteitsontdekking",
+  srchTitle: "Zoeken",
+  srchResultsFor: "Resultaten voor \u201c{q}\u201d",
+  srchCountLine: "{n} overeenkomende entiteiten uit het gevalideerde register",
+  srchLede:
+    "Doorzoek het gevalideerde register — competities, seizoenen, teams, markten en operators per land.",
+  srchAllFilter: "Alle",
+  srchEmptyNoQueryTitle: "Zoek wedstrijden, teams, competities en operators",
+  srchEmptyNoQueryDesc:
+    "Typ de naam van een competitie, team, markt, seizoen of operator om gevalideerde onderzoeksentiteiten te vinden.",
+  srchEmptyFilteredTitle: "Geen entiteiten voldoen aan deze filters.",
+  srchEmptyFilteredDesc:
+    "Er zijn treffers, maar geen onder het huidige type- of landfilter — wis de filters of verbreed de zoekopdracht.",
+  srchEmptyLocaleTitle: "Taal niet beschikbaar",
+  srchEmptyLocaleDesc:
+    "Deze taal is niet beschikbaar voor zoeken. Schakel over naar een ondersteunde taal en probeer opnieuw.",
+  srchEmptyNoneTitle: "Geen treffers voor deze zoekopdracht.",
+  srchEmptyNoneDesc:
+    "Niets in het gevalideerde register kwam overeen met de zoekopdracht. Probeer een andere spelling, een teamalias, of blader hieronder door populair onderzoek.",
+
 });
 
 export const pl = euroPredictions({
@@ -857,6 +878,27 @@ export const pl = euroPredictions({
   arcDayLede: "Historyczna migawka tego dnia badań — wyniki nie są przepisywane po rozliczeniu.",
   arcDayPredictionsTitle: "Prognozy z {date}",
 
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "Odkrywanie encji",
+  srchTitle: "Szukaj",
+  srchResultsFor: "Wyniki dla \u201c{q}\u201d",
+  srchCountLine: "{n} pasujących encji ze zweryfikowanego rejestru",
+  srchLede:
+    "Przeszukaj zweryfikowany rejestr — rozgrywki, sezony, drużyny, rynki i operatorów według kraju.",
+  srchAllFilter: "Wszystkie",
+  srchEmptyNoQueryTitle: "Szukaj meczów, drużyn, rozgrywek i operatorów",
+  srchEmptyNoQueryDesc:
+    "Wpisz nazwę rozgrywek, drużyny, rynku, sezonu lub operatora, aby znaleźć zweryfikowane encje badawcze.",
+  srchEmptyFilteredTitle: "Żadna encja nie pasuje do tych filtrów.",
+  srchEmptyFilteredDesc:
+    "Dopasowania istnieją, ale żadne przy bieżącym filtrze typu lub kraju — wyczyść filtry albo poszerz zapytanie.",
+  srchEmptyLocaleTitle: "Język niedostępny",
+  srchEmptyLocaleDesc:
+    "Ten język nie jest dostępny dla wyszukiwania. Przełącz się na obsługiwany język i spróbuj ponownie.",
+  srchEmptyNoneTitle: "Brak wyników dla tego wyszukiwania.",
+  srchEmptyNoneDesc:
+    "Nic w zweryfikowanym rejestrze nie pasowało do zapytania. Spróbuj innej pisowni, aliasu drużyny lub przejrzyj popularne badania poniżej.",
+
 });
 
 export const cs = euroPredictions({
@@ -1194,6 +1236,27 @@ export const cs = euroPredictions({
   arcDayLede: "Historický snímek tohoto výzkumného dne — výsledky se po vypořádání nepřepisují.",
   arcDayPredictionsTitle: "Předpovědi z {date}",
 
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "Objevování entit",
+  srchTitle: "Hledání",
+  srchResultsFor: "Výsledky pro \u201c{q}\u201d",
+  srchCountLine: "{n} odpovídajících entit z ověřeného registru",
+  srchLede:
+    "Prohledejte ověřený registr — soutěže, sezóny, týmy, trhy a operátory podle země.",
+  srchAllFilter: "Vše",
+  srchEmptyNoQueryTitle: "Hledejte zápasy, týmy, soutěže a operátory",
+  srchEmptyNoQueryDesc:
+    "Zadejte název soutěže, týmu, trhu, sezóny nebo operátora a najděte ověřené výzkumné entity.",
+  srchEmptyFilteredTitle: "Žádná entita neodpovídá těmto filtrům.",
+  srchEmptyFilteredDesc:
+    "Shody existují, ale žádná při aktuálním filtru typu či země — vymažte filtry nebo rozšiřte dotaz.",
+  srchEmptyLocaleTitle: "Jazyk není k dispozici",
+  srchEmptyLocaleDesc:
+    "Tento jazyk není pro hledání dostupný. Přepněte na podporovaný jazyk a zkuste to znovu.",
+  srchEmptyNoneTitle: "Žádné shody pro toto hledání.",
+  srchEmptyNoneDesc:
+    "Nic v ověřeném registru dotazu neodpovídalo. Zkuste jiný pravopis, alias týmu nebo si níže prohlédněte oblíbený výzkum.",
+
 });
 
 export const da = euroPredictions({
@@ -1530,6 +1593,27 @@ export const da = euroPredictions({
     "Historisk øjebliksbillede af denne forskningsdag — resultater omskrives ikke efter afregning.",
   arcDayPredictionsTitle: "Forudsigelser fra {date}",
 
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "Enhedsopdagelse",
+  srchTitle: "Søg",
+  srchResultsFor: "Resultater for \u201c{q}\u201d",
+  srchCountLine: "{n} matchende enheder fra det validerede register",
+  srchLede:
+    "Søg i det validerede register — turneringer, sæsoner, hold, markeder og landespecifikke operatører.",
+  srchAllFilter: "Alle",
+  srchEmptyNoQueryTitle: "Søg kampe, hold, turneringer og operatører",
+  srchEmptyNoQueryDesc:
+    "Skriv navnet på en turnering, et hold, et marked, en sæson eller en operatør for at finde validerede forskningsenheder.",
+  srchEmptyFilteredTitle: "Ingen enheder matcher disse filtre.",
+  srchEmptyFilteredDesc:
+    "Der findes match, men ingen under det aktuelle type- eller landefilter — ryd filtrene eller udvid søgningen.",
+  srchEmptyLocaleTitle: "Sprog ikke tilgængeligt",
+  srchEmptyLocaleDesc:
+    "Dette sprog er ikke tilgængeligt for søgning. Skift til et understøttet sprog og prøv igen.",
+  srchEmptyNoneTitle: "Ingen match for denne søgning.",
+  srchEmptyNoneDesc:
+    "Intet i det validerede register matchede søgningen. Prøv en anden stavemåde, et holdalias, eller gennemse populær forskning nedenfor.",
+
 });
 
 export const sv = euroPredictions({
@@ -1865,6 +1949,27 @@ export const sv = euroPredictions({
   arcDayLede:
     "Historisk ögonblicksbild av denna forskningsdag — utfall skrivs inte om efter avräkning.",
   arcDayPredictionsTitle: "Prognoser från {date}",
+
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "Entitetsupptäckt",
+  srchTitle: "Sök",
+  srchResultsFor: "Resultat för \u201c{q}\u201d",
+  srchCountLine: "{n} matchande entiteter ur det validerade registret",
+  srchLede:
+    "Sök i det validerade registret — tävlingar, säsonger, lag, marknader och landsanpassade operatörer.",
+  srchAllFilter: "Alla",
+  srchEmptyNoQueryTitle: "Sök matcher, lag, tävlingar och operatörer",
+  srchEmptyNoQueryDesc:
+    "Skriv namnet på en tävling, ett lag, en marknad, en säsong eller en operatör för att hitta validerade forskningsentiteter.",
+  srchEmptyFilteredTitle: "Inga entiteter matchar dessa filter.",
+  srchEmptyFilteredDesc:
+    "Träffar finns, men inga under det aktuella typ- eller landsfiltret — rensa filtren eller bredda sökningen.",
+  srchEmptyLocaleTitle: "Språket är inte tillgängligt",
+  srchEmptyLocaleDesc:
+    "Detta språk är inte tillgängligt för sökning. Byt till ett språk som stöds och försök igen.",
+  srchEmptyNoneTitle: "Inga träffar för denna sökning.",
+  srchEmptyNoneDesc:
+    "Inget i det validerade registret matchade sökningen. Prova en annan stavning, ett lagalias eller bläddra i populär forskning nedan.",
 
 });
 
@@ -2204,6 +2309,27 @@ export const no = euroPredictions({
     "Historisk øyeblikksbilde av denne forskningsdagen — utfall omskrives ikke etter avregning.",
   arcDayPredictionsTitle: "Prognoser fra {date}",
 
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "Entitetsoppdagelse",
+  srchTitle: "Søk",
+  srchResultsFor: "Resultater for \u201c{q}\u201d",
+  srchCountLine: "{n} matchende entiteter fra det validerte registeret",
+  srchLede:
+    "Søk i det validerte registeret — turneringer, sesonger, lag, markeder og landstilpassede operatører.",
+  srchAllFilter: "Alle",
+  srchEmptyNoQueryTitle: "Søk kamper, lag, turneringer og operatører",
+  srchEmptyNoQueryDesc:
+    "Skriv navnet på en turnering, et lag, et marked, en sesong eller en operatør for å finne validerte forskningsentiteter.",
+  srchEmptyFilteredTitle: "Ingen entiteter matcher disse filtrene.",
+  srchEmptyFilteredDesc:
+    "Treff finnes, men ingen under gjeldende type- eller landsfilter — fjern filtrene eller utvid søket.",
+  srchEmptyLocaleTitle: "Språket er ikke tilgjengelig",
+  srchEmptyLocaleDesc:
+    "Dette språket er ikke tilgjengelig for søk. Bytt til et støttet språk og prøv igjen.",
+  srchEmptyNoneTitle: "Ingen treff for dette søket.",
+  srchEmptyNoneDesc:
+    "Ingenting i det validerte registeret matchet søket. Prøv en annen stavemåte, et lagalias, eller bla i populær forskning nedenfor.",
+
 });
 
 export const fi = euroPredictions({
@@ -2538,6 +2664,27 @@ export const fi = euroPredictions({
   arcDayLede:
     "Historiallinen tilannekuva tästä tutkimuspäivästä — tuloksia ei kirjoiteta uusiksi selvityksen jälkeen.",
   arcDayPredictionsTitle: "Ennusteet {date}",
+
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "Entiteettien löytäminen",
+  srchTitle: "Haku",
+  srchResultsFor: "Tulokset haulle \u201c{q}\u201d",
+  srchCountLine: "{n} osuvaa entiteettiä vahvistetusta rekisteristä",
+  srchLede:
+    "Hae vahvistetusta rekisteristä — sarjat, kaudet, joukkueet, markkinat ja maakohtaiset operaattorit.",
+  srchAllFilter: "Kaikki",
+  srchEmptyNoQueryTitle: "Hae otteluita, joukkueita, sarjoja ja operaattoreita",
+  srchEmptyNoQueryDesc:
+    "Kirjoita sarjan, joukkueen, markkinan, kauden tai operaattorin nimi löytääksesi vahvistettuja tutkimusentiteettejä.",
+  srchEmptyFilteredTitle: "Mikään entiteetti ei vastaa näitä suodattimia.",
+  srchEmptyFilteredDesc:
+    "Osumia on, mutta ei nykyisellä tyyppi- tai maasuodattimella — tyhjennä suodattimet tai laajenna hakua.",
+  srchEmptyLocaleTitle: "Kieli ei ole saatavilla",
+  srchEmptyLocaleDesc:
+    "Tämä kieli ei ole käytettävissä haussa. Vaihda tuettuun kieleen ja yritä uudelleen.",
+  srchEmptyNoneTitle: "Ei osumia tälle haulle.",
+  srchEmptyNoneDesc:
+    "Mikään vahvistetussa rekisterissä ei vastannut hakua. Kokeile toista kirjoitusasua tai joukkueen aliasta, tai selaa suosittua tutkimusta alta.",
 
 });
 
@@ -2879,6 +3026,27 @@ export const ro = euroPredictions({
   arcDayLede:
     "Instantaneu istoric al acestei zile de cercetare — rezultatele nu sunt rescrise după decontare.",
   arcDayPredictionsTitle: "Predicții din {date}",
+
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "Descoperirea entităților",
+  srchTitle: "Căutare",
+  srchResultsFor: "Rezultate pentru \u201c{q}\u201d",
+  srchCountLine: "{n} entități corespunzătoare din registrul validat",
+  srchLede:
+    "Caută în registrul validat — competiții, sezoane, echipe, piețe și operatori după țară.",
+  srchAllFilter: "Toate",
+  srchEmptyNoQueryTitle: "Caută meciuri, echipe, competiții și operatori",
+  srchEmptyNoQueryDesc:
+    "Tastează numele unei competiții, echipe, piețe, al unui sezon sau operator pentru a găsi entități de cercetare validate.",
+  srchEmptyFilteredTitle: "Nicio entitate nu corespunde acestor filtre.",
+  srchEmptyFilteredDesc:
+    "Există potriviri, dar niciuna sub filtrul actual de tip sau țară — șterge filtrele sau lărgește interogarea.",
+  srchEmptyLocaleTitle: "Limbă indisponibilă",
+  srchEmptyLocaleDesc:
+    "Această limbă nu este disponibilă pentru căutare. Treci la o limbă acceptată și încearcă din nou.",
+  srchEmptyNoneTitle: "Nicio potrivire pentru această căutare.",
+  srchEmptyNoneDesc:
+    "Nimic din registrul validat nu a corespuns interogării. Încearcă altă ortografie, un alias al echipei sau răsfoiește cercetarea populară de mai jos.",
 
 });
 
@@ -3224,6 +3392,27 @@ export const el = euroPredictions({
     "Ιστορικό στιγμιότυπο αυτής της ημέρας έρευνας — τα αποτελέσματα δεν ξαναγράφονται μετά τον διακανονισμό.",
   arcDayPredictionsTitle: "Προβλέψεις της {date}",
 
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "Ανακάλυψη οντοτήτων",
+  srchTitle: "Αναζήτηση",
+  srchResultsFor: "Αποτελέσματα για \u201c{q}\u201d",
+  srchCountLine: "{n} οντότητες που ταιριάζουν από το επικυρωμένο μητρώο",
+  srchLede:
+    "Αναζητήστε στο επικυρωμένο μητρώο — διοργανώσεις, σεζόν, ομάδες, αγορές και παρόχους ανά χώρα.",
+  srchAllFilter: "Όλα",
+  srchEmptyNoQueryTitle: "Αναζητήστε αγώνες, ομάδες, διοργανώσεις και παρόχους",
+  srchEmptyNoQueryDesc:
+    "Πληκτρολογήστε το όνομα διοργάνωσης, ομάδας, αγοράς, σεζόν ή παρόχου για να βρείτε επικυρωμένες οντότητες έρευνας.",
+  srchEmptyFilteredTitle: "Καμία οντότητα δεν ταιριάζει με αυτά τα φίλτρα.",
+  srchEmptyFilteredDesc:
+    "Υπάρχουν αντιστοιχίσεις, αλλά καμία με το τρέχον φίλτρο τύπου ή χώρας — καθαρίστε τα φίλτρα ή διευρύνετε το ερώτημα.",
+  srchEmptyLocaleTitle: "Η γλώσσα δεν είναι διαθέσιμη",
+  srchEmptyLocaleDesc:
+    "Αυτή η γλώσσα δεν είναι διαθέσιμη για αναζήτηση. Αλλάξτε σε υποστηριζόμενη γλώσσα και δοκιμάστε ξανά.",
+  srchEmptyNoneTitle: "Καμία αντιστοίχιση για αυτή την αναζήτηση.",
+  srchEmptyNoneDesc:
+    "Τίποτα στο επικυρωμένο μητρώο δεν ταίριαξε με το ερώτημα. Δοκιμάστε άλλη γραφή, ένα ψευδώνυμο ομάδας ή περιηγηθείτε στη δημοφιλή έρευνα παρακάτω.",
+
 });
 
 export const hu = euroPredictions({
@@ -3563,5 +3752,25 @@ export const hu = euroPredictions({
   arcDayLede:
     "E kutatási nap történeti pillanatképe — az eredmények elszámolás után nincsenek átírva.",
   arcDayPredictionsTitle: "Előrejelzések: {date}",
+
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "Entitásfelfedezés",
+  srchTitle: "Keresés",
+  srchResultsFor: "Találatok erre: \u201c{q}\u201d",
+  srchCountLine: "{n} egyező entitás az ellenőrzött nyilvántartásból",
+  srchLede:
+    "Keress az ellenőrzött nyilvántartásban — sorozatok, szezonok, csapatok, piacok és országfüggő szolgáltatók.",
+  srchAllFilter: "Mind",
+  srchEmptyNoQueryTitle: "Keress mérkőzéseket, csapatokat, sorozatokat és szolgáltatókat",
+  srchEmptyNoQueryDesc:
+    "Írd be egy sorozat, csapat, piac, szezon vagy szolgáltató nevét ellenőrzött kutatási entitások megtalálásához.",
+  srchEmptyFilteredTitle: "Egyetlen entitás sem felel meg ezeknek a szűrőknek.",
+  srchEmptyFilteredDesc:
+    "Vannak találatok, de egyik sem a jelenlegi típus- vagy országszűrő alatt — töröld a szűrőket vagy bővítsd a lekérdezést.",
+  srchEmptyLocaleTitle: "A nyelv nem érhető el",
+  srchEmptyLocaleDesc: "Ez a nyelv nem érhető el a kereséshez. Válts támogatott nyelvre és próbáld újra.",
+  srchEmptyNoneTitle: "Nincs találat erre a keresésre.",
+  srchEmptyNoneDesc:
+    "Semmi sem egyezett a lekérdezéssel az ellenőrzött nyilvántartásban. Próbálj más írásmódot, csapat-aliast, vagy böngéssz a népszerű kutatásban lent.",
 
 });

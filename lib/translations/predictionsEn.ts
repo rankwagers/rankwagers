@@ -659,6 +659,26 @@ export const predictionsEn = {
   arcDayLede:
     "Historical snapshot for this research day — outcomes are not rewritten after settlement.",
   arcDayPredictionsTitle: "Predictions on {date}",
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "Entity discovery",
+  srchTitle: "Search",
+  srchResultsFor: "Results for \u201c{q}\u201d",
+  srchCountLine: "{n} matching entities from the validated registry",
+  srchLede:
+    "Search the validated registry — competitions, seasons, teams, markets and country-aware operators.",
+  srchAllFilter: "All",
+  srchEmptyNoQueryTitle: "Search fixtures, teams, competitions and operators",
+  srchEmptyNoQueryDesc:
+    "Type a competition, team, market, season or operator name to find validated research entities.",
+  srchEmptyFilteredTitle: "No entities match these filters.",
+  srchEmptyFilteredDesc:
+    "Matches exist, but none under the current type or country filter — clear filters or broaden the query.",
+  srchEmptyLocaleTitle: "Language not available",
+  srchEmptyLocaleDesc:
+    "This locale is not available for search. Switch to a supported language and try again.",
+  srchEmptyNoneTitle: "No matches for this search.",
+  srchEmptyNoneDesc:
+    "Nothing in the validated registry matched that query. Try another spelling, a team alias, or browse popular research below.",
   navQualified: "Qualified lists",
   navLiveSignals: "Live signals",
   navMethodology: "Methodology",

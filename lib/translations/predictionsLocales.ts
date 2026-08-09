@@ -351,6 +351,27 @@ const pt: PredictionStrings = mergePredictions({
     "Instantâneo histórico deste dia de pesquisa — os resultados não são reescritos após a liquidação.",
   arcDayPredictionsTitle: "Previsões de {date}",
 
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "Descoberta de entidades",
+  srchTitle: "Pesquisa",
+  srchResultsFor: "Resultados para \u201c{q}\u201d",
+  srchCountLine: "{n} entidades correspondentes do registo validado",
+  srchLede:
+    "Pesquise no registo validado — competições, temporadas, equipas, mercados e operadores por país.",
+  srchAllFilter: "Todos",
+  srchEmptyNoQueryTitle: "Pesquise jogos, equipas, competições e operadores",
+  srchEmptyNoQueryDesc:
+    "Escreva o nome de uma competição, equipa, mercado, temporada ou operador para encontrar entidades de pesquisa validadas.",
+  srchEmptyFilteredTitle: "Nenhuma entidade corresponde a estes filtros.",
+  srchEmptyFilteredDesc:
+    "Existem correspondências, mas nenhuma com o filtro atual de tipo ou país — limpe os filtros ou amplie a consulta.",
+  srchEmptyLocaleTitle: "Idioma não disponível",
+  srchEmptyLocaleDesc:
+    "Este idioma não está disponível para pesquisa. Mude para um idioma suportado e tente novamente.",
+  srchEmptyNoneTitle: "Sem correspondências para esta pesquisa.",
+  srchEmptyNoneDesc:
+    "Nada no registo validado correspondeu à consulta. Tente outra grafia, um nome alternativo da equipa ou explore a pesquisa popular abaixo.",
+
 });
 
 const es: PredictionStrings = mergePredictions({
@@ -701,6 +722,27 @@ const es: PredictionStrings = mergePredictions({
   arcDayLede:
     "Instantánea histórica de este día de investigación — los resultados no se reescriben tras la liquidación.",
   arcDayPredictionsTitle: "Predicciones del {date}",
+
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "Descubrimiento de entidades",
+  srchTitle: "Búsqueda",
+  srchResultsFor: "Resultados para \u201c{q}\u201d",
+  srchCountLine: "{n} entidades coincidentes del registro validado",
+  srchLede:
+    "Busca en el registro validado — competiciones, temporadas, equipos, mercados y operadores por país.",
+  srchAllFilter: "Todos",
+  srchEmptyNoQueryTitle: "Busca partidos, equipos, competiciones y operadores",
+  srchEmptyNoQueryDesc:
+    "Escribe el nombre de una competición, equipo, mercado, temporada u operador para encontrar entidades de investigación validadas.",
+  srchEmptyFilteredTitle: "Ninguna entidad coincide con estos filtros.",
+  srchEmptyFilteredDesc:
+    "Hay coincidencias, pero ninguna con el filtro actual de tipo o país — limpia los filtros o amplía la consulta.",
+  srchEmptyLocaleTitle: "Idioma no disponible",
+  srchEmptyLocaleDesc:
+    "Este idioma no está disponible para la búsqueda. Cambia a un idioma compatible e inténtalo de nuevo.",
+  srchEmptyNoneTitle: "Sin coincidencias para esta búsqueda.",
+  srchEmptyNoneDesc:
+    "Nada en el registro validado coincidió con la consulta. Prueba otra grafía, un alias del equipo o explora la investigación popular abajo.",
 
 });
 
@@ -1055,6 +1097,27 @@ const de: PredictionStrings = mergePredictions({
     "Historische Momentaufnahme dieses Recherche-Tags — Ergebnisse werden nach der Abrechnung nicht umgeschrieben.",
   arcDayPredictionsTitle: "Vorhersagen vom {date}",
 
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "Entitäten-Entdeckung",
+  srchTitle: "Suche",
+  srchResultsFor: "Ergebnisse für \u201c{q}\u201d",
+  srchCountLine: "{n} passende Entitäten aus dem validierten Register",
+  srchLede:
+    "Durchsuchen Sie das validierte Register — Wettbewerbe, Saisons, Teams, Märkte und länderspezifische Anbieter.",
+  srchAllFilter: "Alle",
+  srchEmptyNoQueryTitle: "Spiele, Teams, Wettbewerbe und Anbieter suchen",
+  srchEmptyNoQueryDesc:
+    "Geben Sie den Namen eines Wettbewerbs, Teams, Marktes, einer Saison oder eines Anbieters ein, um validierte Recherche-Entitäten zu finden.",
+  srchEmptyFilteredTitle: "Keine Entitäten entsprechen diesen Filtern.",
+  srchEmptyFilteredDesc:
+    "Treffer existieren, aber keiner unter dem aktuellen Typ- oder Länderfilter — Filter löschen oder Anfrage erweitern.",
+  srchEmptyLocaleTitle: "Sprache nicht verfügbar",
+  srchEmptyLocaleDesc:
+    "Diese Sprache ist für die Suche nicht verfügbar. Wechseln Sie zu einer unterstützten Sprache und versuchen Sie es erneut.",
+  srchEmptyNoneTitle: "Keine Treffer für diese Suche.",
+  srchEmptyNoneDesc:
+    "Nichts im validierten Register entsprach der Anfrage. Versuchen Sie eine andere Schreibweise, einen Team-Alias, oder stöbern Sie unten in der beliebten Recherche.",
+
 });
 
 const it: PredictionStrings = mergePredictions({
@@ -1402,6 +1465,27 @@ const it: PredictionStrings = mergePredictions({
   arcDayLede:
     "Istantanea storica di questo giorno di ricerca — gli esiti non vengono riscritti dopo il regolamento.",
   arcDayPredictionsTitle: "Previsioni del {date}",
+
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "Scoperta di entità",
+  srchTitle: "Ricerca",
+  srchResultsFor: "Risultati per \u201c{q}\u201d",
+  srchCountLine: "{n} entità corrispondenti dal registro validato",
+  srchLede:
+    "Cerca nel registro validato — competizioni, stagioni, squadre, mercati e operatori per paese.",
+  srchAllFilter: "Tutti",
+  srchEmptyNoQueryTitle: "Cerca partite, squadre, competizioni e operatori",
+  srchEmptyNoQueryDesc:
+    "Digita il nome di una competizione, squadra, mercato, stagione o operatore per trovare entità di ricerca validate.",
+  srchEmptyFilteredTitle: "Nessuna entità corrisponde a questi filtri.",
+  srchEmptyFilteredDesc:
+    "Esistono corrispondenze, ma nessuna con il filtro attuale di tipo o paese — azzera i filtri o amplia la ricerca.",
+  srchEmptyLocaleTitle: "Lingua non disponibile",
+  srchEmptyLocaleDesc:
+    "Questa lingua non è disponibile per la ricerca. Passa a una lingua supportata e riprova.",
+  srchEmptyNoneTitle: "Nessun risultato per questa ricerca.",
+  srchEmptyNoneDesc:
+    "Nulla nel registro validato corrisponde alla ricerca. Prova un'altra grafia, un alias della squadra o esplora la ricerca popolare qui sotto.",
 
 });
 
@@ -1751,6 +1835,27 @@ const fr: PredictionStrings = mergePredictions({
   arcDayLede:
     "Instantané historique de cette journée de recherche — les résultats ne sont pas réécrits après le règlement.",
   arcDayPredictionsTitle: "Prédictions du {date}",
+
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "Découverte d'entités",
+  srchTitle: "Recherche",
+  srchResultsFor: "Résultats pour \u201c{q}\u201d",
+  srchCountLine: "{n} entités correspondantes du registre validé",
+  srchLede:
+    "Cherchez dans le registre validé — compétitions, saisons, équipes, marchés et opérateurs par pays.",
+  srchAllFilter: "Tous",
+  srchEmptyNoQueryTitle: "Cherchez matchs, équipes, compétitions et opérateurs",
+  srchEmptyNoQueryDesc:
+    "Saisissez le nom d'une compétition, d'une équipe, d'un marché, d'une saison ou d'un opérateur pour trouver des entités de recherche validées.",
+  srchEmptyFilteredTitle: "Aucune entité ne correspond à ces filtres.",
+  srchEmptyFilteredDesc:
+    "Des correspondances existent, mais aucune avec le filtre actuel de type ou de pays — effacez les filtres ou élargissez la requête.",
+  srchEmptyLocaleTitle: "Langue non disponible",
+  srchEmptyLocaleDesc:
+    "Cette langue n'est pas disponible pour la recherche. Passez à une langue prise en charge et réessayez.",
+  srchEmptyNoneTitle: "Aucun résultat pour cette recherche.",
+  srchEmptyNoneDesc:
+    "Rien dans le registre validé ne correspond à la requête. Essayez une autre orthographe, un alias d'équipe, ou parcourez la recherche populaire ci-dessous.",
 
 });
 

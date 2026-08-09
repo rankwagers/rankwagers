@@ -324,6 +324,24 @@ export const ar = mergePredictions({
   arcDayLede: "لقطة تاريخية ليوم البحث هذا — لا تُعاد كتابة النتائج بعد التسوية.",
   arcDayPredictionsTitle: "توقعات {date}",
 
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "اكتشاف الكيانات",
+  srchTitle: "بحث",
+  srchResultsFor: "نتائج \u201c{q}\u201d",
+  srchCountLine: "{n} كيانات مطابقة من السجل الموثّق",
+  srchLede: "ابحث في السجل الموثّق — بطولات ومواسم وفرق وأسواق ومشغّلون حسب الدولة.",
+  srchAllFilter: "الكل",
+  srchEmptyNoQueryTitle: "ابحث عن مباريات وفرق وبطولات ومشغّلين",
+  srchEmptyNoQueryDesc: "اكتب اسم بطولة أو فريق أو سوق أو موسم أو مشغّل للعثور على كيانات بحثية موثّقة.",
+  srchEmptyFilteredTitle: "لا توجد كيانات مطابقة لهذه المرشحات.",
+  srchEmptyFilteredDesc:
+    "توجد نتائج، لكن لا شيء ضمن مرشح النوع أو الدولة الحالي — امسح المرشحات أو وسّع الاستعلام.",
+  srchEmptyLocaleTitle: "اللغة غير متاحة",
+  srchEmptyLocaleDesc: "هذه اللغة غير متاحة للبحث. انتقل إلى لغة مدعومة وحاول مجددًا.",
+  srchEmptyNoneTitle: "لا نتائج لهذا البحث.",
+  srchEmptyNoneDesc:
+    "لا شيء في السجل الموثّق يطابق الاستعلام. جرّب تهجئة أخرى أو اسمًا بديلًا للفريق، أو تصفّح البحث الشائع أدناه.",
+
 });
 
 export const hi = mergePredictions({
@@ -654,6 +672,26 @@ export const hi = mergePredictions({
   arcDayLede: "इस शोध दिवस की ऐतिहासिक झलक — निपटान के बाद परिणाम दोबारा नहीं लिखे जाते।",
   arcDayPredictionsTitle: "{date} के पूर्वानुमान",
 
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "इकाई खोज",
+  srchTitle: "खोज",
+  srchResultsFor: "\u201c{q}\u201d के परिणाम",
+  srchCountLine: "सत्यापित रजिस्ट्री से {n} मेल खाती इकाइयाँ",
+  srchLede:
+    "सत्यापित रजिस्ट्री में खोजें — प्रतियोगिताएँ, सीज़न, टीमें, बाज़ार और देश-अनुसार ऑपरेटर।",
+  srchAllFilter: "सभी",
+  srchEmptyNoQueryTitle: "मैच, टीमें, प्रतियोगिताएँ और ऑपरेटर खोजें",
+  srchEmptyNoQueryDesc:
+    "सत्यापित शोध इकाइयाँ खोजने के लिए किसी प्रतियोगिता, टीम, बाज़ार, सीज़न या ऑपरेटर का नाम लिखें।",
+  srchEmptyFilteredTitle: "इन फ़िल्टरों से कोई इकाई मेल नहीं खाती।",
+  srchEmptyFilteredDesc:
+    "मेल मौजूद हैं, पर वर्तमान प्रकार या देश फ़िल्टर में नहीं — फ़िल्टर साफ़ करें या खोज व्यापक करें।",
+  srchEmptyLocaleTitle: "भाषा उपलब्ध नहीं",
+  srchEmptyLocaleDesc: "यह भाषा खोज के लिए उपलब्ध नहीं है। समर्थित भाषा चुनकर पुनः प्रयास करें।",
+  srchEmptyNoneTitle: "इस खोज का कोई परिणाम नहीं।",
+  srchEmptyNoneDesc:
+    "सत्यापित रजिस्ट्री में कुछ भी मेल नहीं खाया। दूसरी वर्तनी या टीम का उपनाम आज़माएँ, या नीचे लोकप्रिय शोध देखें।",
+
 });
 
 export const ja = mergePredictions({
@@ -959,6 +997,22 @@ export const ja = mergePredictions({
   arcDayEyebrow: "日次アーカイブ",
   arcDayLede: "このリサーチ日の履歴スナップショット — 清算後に結果が書き換えられることはありません。",
   arcDayPredictionsTitle: "{date}の予想",
+
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "エンティティ探索",
+  srchTitle: "検索",
+  srchResultsFor: "\u201c{q}\u201dの結果",
+  srchCountLine: "検証済みレジストリから{n}件の一致",
+  srchLede: "検証済みレジストリを検索 — 大会・シーズン・チーム・市場・国別オペレーター。",
+  srchAllFilter: "すべて",
+  srchEmptyNoQueryTitle: "試合・チーム・大会・オペレーターを検索",
+  srchEmptyNoQueryDesc: "大会、チーム、市場、シーズン、オペレーターの名前を入力して、検証済みリサーチエンティティを見つけます。",
+  srchEmptyFilteredTitle: "これらのフィルターに一致するエンティティはありません。",
+  srchEmptyFilteredDesc: "一致はありますが、現在の種類・国フィルターの下にはありません — フィルターを解除するか検索を広げてください。",
+  srchEmptyLocaleTitle: "この言語は利用できません",
+  srchEmptyLocaleDesc: "この言語では検索を利用できません。対応言語に切り替えて再試行してください。",
+  srchEmptyNoneTitle: "この検索に一致はありません。",
+  srchEmptyNoneDesc: "検証済みレジストリに一致はありませんでした。別の綴りやチームの別名を試すか、下の人気リサーチをご覧ください。",
 
 });
 
@@ -1266,6 +1320,22 @@ export const ko = mergePredictions({
   arcDayEyebrow: "일별 아카이브",
   arcDayLede: "이 리서치 일자의 역사적 스냅숏 — 정산 후 결과는 다시 쓰지 않습니다.",
   arcDayPredictionsTitle: "{date}의 예측",
+
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "엔티티 탐색",
+  srchTitle: "검색",
+  srchResultsFor: "\u201c{q}\u201d 검색 결과",
+  srchCountLine: "검증된 레지스트리에서 일치하는 엔티티 {n}건",
+  srchLede: "검증된 레지스트리를 검색하세요 — 대회, 시즌, 팀, 마켓, 국가별 운영사.",
+  srchAllFilter: "전체",
+  srchEmptyNoQueryTitle: "경기, 팀, 대회, 운영사 검색",
+  srchEmptyNoQueryDesc: "대회, 팀, 마켓, 시즌 또는 운영사 이름을 입력해 검증된 리서치 엔티티를 찾으세요.",
+  srchEmptyFilteredTitle: "이 필터와 일치하는 엔티티가 없습니다.",
+  srchEmptyFilteredDesc: "일치 항목은 있지만 현재 유형·국가 필터에는 없습니다 — 필터를 지우거나 검색을 넓히세요.",
+  srchEmptyLocaleTitle: "사용할 수 없는 언어",
+  srchEmptyLocaleDesc: "이 언어에서는 검색을 사용할 수 없습니다. 지원되는 언어로 전환한 뒤 다시 시도하세요.",
+  srchEmptyNoneTitle: "이 검색과 일치하는 항목이 없습니다.",
+  srchEmptyNoneDesc: "검증된 레지스트리에서 일치하는 항목이 없습니다. 다른 철자나 팀 별칭을 시도하거나 아래의 인기 리서치를 둘러보세요.",
 
 });
 
@@ -1596,6 +1666,26 @@ export const th = mergePredictions({
   arcDayEyebrow: "คลังรายวัน",
   arcDayLede: "ภาพรวมเชิงประวัติของวันวิจัยนี้ — ผลไม่ถูกเขียนใหม่หลังการชำระ",
   arcDayPredictionsTitle: "การคาดการณ์วันที่ {date}",
+
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "การค้นพบเอนทิตี",
+  srchTitle: "ค้นหา",
+  srchResultsFor: "ผลลัพธ์สำหรับ \u201c{q}\u201d",
+  srchCountLine: "{n} เอนทิตีที่ตรงกันจากทะเบียนที่ตรวจสอบแล้ว",
+  srchLede:
+    "ค้นหาในทะเบียนที่ตรวจสอบแล้ว — รายการแข่งขัน ฤดูกาล ทีม ตลาด และผู้ให้บริการรายประเทศ",
+  srchAllFilter: "ทั้งหมด",
+  srchEmptyNoQueryTitle: "ค้นหาแมตช์ ทีม รายการแข่งขัน และผู้ให้บริการ",
+  srchEmptyNoQueryDesc:
+    "พิมพ์ชื่อรายการแข่งขัน ทีม ตลาด ฤดูกาล หรือผู้ให้บริการเพื่อค้นหาเอนทิตีวิจัยที่ตรวจสอบแล้ว",
+  srchEmptyFilteredTitle: "ไม่มีเอนทิตีที่ตรงกับตัวกรองเหล่านี้",
+  srchEmptyFilteredDesc:
+    "มีรายการที่ตรง แต่ไม่อยู่ภายใต้ตัวกรองประเภทหรือประเทศปัจจุบัน — ล้างตัวกรองหรือขยายคำค้น",
+  srchEmptyLocaleTitle: "ภาษาไม่พร้อมใช้งาน",
+  srchEmptyLocaleDesc: "ภาษานี้ไม่พร้อมใช้สำหรับการค้นหา เปลี่ยนเป็นภาษาที่รองรับแล้วลองอีกครั้ง",
+  srchEmptyNoneTitle: "ไม่มีผลลัพธ์สำหรับการค้นหานี้",
+  srchEmptyNoneDesc:
+    "ไม่มีสิ่งใดในทะเบียนที่ตรวจสอบแล้วตรงกับคำค้น ลองสะกดแบบอื่น ชื่อเล่นของทีม หรือดูงานวิจัยยอดนิยมด้านล่าง",
 
 });
 
@@ -1932,6 +2022,27 @@ export const vi = mergePredictions({
   arcDayLede:
     "Ảnh chụp lịch sử của ngày nghiên cứu này — kết quả không bị viết lại sau quyết toán.",
   arcDayPredictionsTitle: "Dự đoán ngày {date}",
+
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "Khám phá thực thể",
+  srchTitle: "Tìm kiếm",
+  srchResultsFor: "Kết quả cho \u201c{q}\u201d",
+  srchCountLine: "{n} thực thể khớp từ sổ đăng ký đã xác thực",
+  srchLede:
+    "Tìm trong sổ đăng ký đã xác thực — giải đấu, mùa giải, đội, thị trường và nhà điều hành theo quốc gia.",
+  srchAllFilter: "Tất cả",
+  srchEmptyNoQueryTitle: "Tìm trận đấu, đội, giải đấu và nhà điều hành",
+  srchEmptyNoQueryDesc:
+    "Nhập tên giải đấu, đội, thị trường, mùa giải hoặc nhà điều hành để tìm các thực thể nghiên cứu đã xác thực.",
+  srchEmptyFilteredTitle: "Không có thực thể nào khớp với các bộ lọc này.",
+  srchEmptyFilteredDesc:
+    "Có kết quả khớp nhưng không thuộc bộ lọc loại hoặc quốc gia hiện tại — xóa bộ lọc hoặc mở rộng truy vấn.",
+  srchEmptyLocaleTitle: "Ngôn ngữ không khả dụng",
+  srchEmptyLocaleDesc:
+    "Ngôn ngữ này không khả dụng cho tìm kiếm. Chuyển sang ngôn ngữ được hỗ trợ và thử lại.",
+  srchEmptyNoneTitle: "Không có kết quả cho tìm kiếm này.",
+  srchEmptyNoneDesc:
+    "Không có gì trong sổ đăng ký đã xác thực khớp với truy vấn. Thử cách viết khác, biệt danh của đội, hoặc xem nghiên cứu phổ biến bên dưới.",
 
 });
 
@@ -2271,6 +2382,27 @@ export const id = mergePredictions({
   arcDayLede: "Potret historis hari riset ini — hasil tidak ditulis ulang setelah penyelesaian.",
   arcDayPredictionsTitle: "Prediksi tanggal {date}",
 
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "Penemuan entitas",
+  srchTitle: "Pencarian",
+  srchResultsFor: "Hasil untuk \u201c{q}\u201d",
+  srchCountLine: "{n} entitas cocok dari registri tervalidasi",
+  srchLede:
+    "Cari di registri tervalidasi — kompetisi, musim, tim, pasar, dan operator per negara.",
+  srchAllFilter: "Semua",
+  srchEmptyNoQueryTitle: "Cari pertandingan, tim, kompetisi, dan operator",
+  srchEmptyNoQueryDesc:
+    "Ketik nama kompetisi, tim, pasar, musim, atau operator untuk menemukan entitas riset tervalidasi.",
+  srchEmptyFilteredTitle: "Tidak ada entitas yang cocok dengan filter ini.",
+  srchEmptyFilteredDesc:
+    "Ada kecocokan, tetapi tidak di bawah filter jenis atau negara saat ini — hapus filter atau perluas kueri.",
+  srchEmptyLocaleTitle: "Bahasa tidak tersedia",
+  srchEmptyLocaleDesc:
+    "Bahasa ini tidak tersedia untuk pencarian. Beralih ke bahasa yang didukung dan coba lagi.",
+  srchEmptyNoneTitle: "Tidak ada kecocokan untuk pencarian ini.",
+  srchEmptyNoneDesc:
+    "Tidak ada apa pun di registri tervalidasi yang cocok dengan kueri. Coba ejaan lain, alias tim, atau jelajahi riset populer di bawah.",
+
 });
 
 export const zh = mergePredictions({
@@ -2576,6 +2708,22 @@ export const zh = mergePredictions({
   arcDayLede: "该研究日的历史快照 — 结算后结果不会被改写。",
   arcDayPredictionsTitle: "{date}的预测",
 
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "实体发现",
+  srchTitle: "搜索",
+  srchResultsFor: "\u201c{q}\u201d的结果",
+  srchCountLine: "来自已验证注册表的{n}个匹配实体",
+  srchLede: "搜索已验证注册表 — 赛事、赛季、球队、市场与按国家划分的运营商。",
+  srchAllFilter: "全部",
+  srchEmptyNoQueryTitle: "搜索比赛、球队、赛事与运营商",
+  srchEmptyNoQueryDesc: "输入赛事、球队、市场、赛季或运营商名称,查找已验证的研究实体。",
+  srchEmptyFilteredTitle: "没有实体符合这些筛选条件。",
+  srchEmptyFilteredDesc: "存在匹配项,但不在当前类型或国家筛选之下 — 清除筛选或放宽查询。",
+  srchEmptyLocaleTitle: "语言不可用",
+  srchEmptyLocaleDesc: "该语言不支持搜索。请切换到受支持的语言后重试。",
+  srchEmptyNoneTitle: "此搜索没有匹配项。",
+  srchEmptyNoneDesc: "已验证注册表中没有与查询匹配的内容。试试其他拼写、球队别名,或浏览下方的热门研究。",
+
 });
 
 export const bn = mergePredictions({
@@ -2839,6 +2987,26 @@ export const bn = mergePredictions({
   arcDayEyebrow: "দৈনিক সংরক্ষণাগার",
   arcDayLede: "এই গবেষণা দিনের ঐতিহাসিক চিত্র — নিষ্পত্তির পরে ফলাফল পুনর্লিখিত হয় না।",
   arcDayPredictionsTitle: "{date}-এর পূর্বাভাস",
+
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "সত্তা আবিষ্কার",
+  srchTitle: "খোঁজ",
+  srchResultsFor: "\u201c{q}\u201d-এর ফলাফল",
+  srchCountLine: "যাচাইকৃত রেজিস্ট্রি থেকে {n}টি মিলে যাওয়া সত্তা",
+  srchLede:
+    "যাচাইকৃত রেজিস্ট্রিতে খুঁজুন — প্রতিযোগিতা, মৌসুম, দল, বাজার ও দেশভিত্তিক অপারেটর।",
+  srchAllFilter: "সব",
+  srchEmptyNoQueryTitle: "ম্যাচ, দল, প্রতিযোগিতা ও অপারেটর খুঁজুন",
+  srchEmptyNoQueryDesc:
+    "যাচাইকৃত গবেষণা সত্তা পেতে কোনও প্রতিযোগিতা, দল, বাজার, মৌসুম বা অপারেটরের নাম লিখুন।",
+  srchEmptyFilteredTitle: "এই ফিল্টারগুলির সাথে কোনও সত্তা মেলে না।",
+  srchEmptyFilteredDesc:
+    "মিল আছে, তবে বর্তমান ধরন বা দেশের ফিল্টারে নেই — ফিল্টার মুছুন বা প্রশ্নটি বিস্তৃত করুন।",
+  srchEmptyLocaleTitle: "ভাষা উপলব্ধ নয়",
+  srchEmptyLocaleDesc: "এই ভাষায় খোঁজ উপলব্ধ নয়। সমর্থিত ভাষায় গিয়ে আবার চেষ্টা করুন।",
+  srchEmptyNoneTitle: "এই খোঁজের কোনও ফলাফল নেই।",
+  srchEmptyNoneDesc:
+    "যাচাইকৃত রেজিস্ট্রিতে কিছুই মেলেনি। অন্য বানান বা দলের ডাকনাম চেষ্টা করুন, বা নিচের জনপ্রিয় গবেষণা দেখুন।",
 
 });
 
@@ -3113,6 +3281,26 @@ export const ta = mergePredictions({
     "இந்த ஆய்வு நாளின் வரலாற்று நிழற்படம் — தீர்வுக்குப் பிறகு முடிவுகள் மாற்றி எழுதப்படா.",
   arcDayPredictionsTitle: "{date} கணிப்புகள்",
 
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "உருபடிகள் கண்டறிதல்",
+  srchTitle: "தேடல்",
+  srchResultsFor: "\u201c{q}\u201d முடிவுகள்",
+  srchCountLine: "சரிபார்க்கப்பட்ட பதிவேட்டிலிருந்து பொருந்திய {n} உருபடிகள்",
+  srchLede:
+    "சரிபார்க்கப்பட்ட பதிவேட்டில் தேடுங்கள் — தொடர்கள், சீசன்கள், அணிகள், சந்தைகள், நாடுவாரி இயக்குநர்கள்.",
+  srchAllFilter: "அனைத்தும்",
+  srchEmptyNoQueryTitle: "ஆட்டங்கள், அணிகள், தொடர்கள், இயக்குநர்களைத் தேடுங்கள்",
+  srchEmptyNoQueryDesc:
+    "சரிபார்க்கப்பட்ட ஆய்வு உருபடிகளைப் பெற ஒரு தொடர், அணி, சந்தை, சீசன் அல்லது இயக்குநரின் பெயரை உள்ளிடுங்கள்.",
+  srchEmptyFilteredTitle: "இந்த வடிப்பான்களுக்குப் பொருந்தும் உருபடிகள் இல்லை.",
+  srchEmptyFilteredDesc:
+    "பொருத்தங்கள் உள்ளன, ஆனால் தற்போதைய வகை/நாடு வடிப்பானில் இல்லை — வடிப்பான்களை அழிக்கவும் அல்லது தேடலை விரிக்கவும்.",
+  srchEmptyLocaleTitle: "மொழி கிடைக்கவில்லை",
+  srchEmptyLocaleDesc: "இந்த மொழியில் தேடல் இல்லை. ஆதரவுள்ள மொழிக்கு மாறி மீண்டும் முயலவும்.",
+  srchEmptyNoneTitle: "இந்தத் தேடலுக்குப் பொருத்தம் இல்லை.",
+  srchEmptyNoneDesc:
+    "சரிபார்க்கப்பட்ட பதிவேட்டில் எதுவும் பொருந்தவில்லை. வேறு எழுத்துக்கூட்டல் அல்லது அணியின் மாற்றுப்பெயரை முயலுங்கள், அல்லது கீழே பிரபல ஆய்வைப் பாருங்கள்.",
+
 });
 
 export const te = mergePredictions({
@@ -3376,6 +3564,26 @@ export const te = mergePredictions({
   arcDayLede: "ఈ పరిశోధన రోజు చారిత్రక చిత్రం — పరిష్కారం తర్వాత ఫలితాలు తిరగరాయబడవు.",
   arcDayPredictionsTitle: "{date} అంచనాలు",
 
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "ఎంటిటీ అన్వేషణ",
+  srchTitle: "వెతుకులాట",
+  srchResultsFor: "\u201c{q}\u201d ఫలితాలు",
+  srchCountLine: "ధృవీకరించిన రిజిస్ట్రీ నుండి సరిపోలిన {n} ఎంటిటీలు",
+  srchLede:
+    "ధృవీకరించిన రిజిస్ట్రీలో వెతకండి — పోటీలు, సీజన్లు, జట్లు, మార్కెట్లు, దేశాలవారీ ఆపరేటర్లు.",
+  srchAllFilter: "అన్నీ",
+  srchEmptyNoQueryTitle: "మ్యాచ్‌లు, జట్లు, పోటీలు, ఆపరేటర్లను వెతకండి",
+  srchEmptyNoQueryDesc:
+    "ధృవీకరించిన పరిశోధన ఎంటిటీలను కనుగొనడానికి పోటీ, జట్టు, మార్కెట్, సీజన్ లేదా ఆపరేటర్ పేరు టైప్ చేయండి.",
+  srchEmptyFilteredTitle: "ఈ ఫిల్టర్లకు సరిపోలే ఎంటిటీలు లేవు.",
+  srchEmptyFilteredDesc:
+    "సరిపోలికలు ఉన్నాయి, కానీ ప్రస్తుత రకం/దేశ ఫిల్టర్ కింద లేవు — ఫిల్టర్లు తొలగించండి లేదా ప్రశ్నను విస్తరించండి.",
+  srchEmptyLocaleTitle: "భాష అందుబాటులో లేదు",
+  srchEmptyLocaleDesc: "ఈ భాషలో వెతుకులాట అందుబాటులో లేదు. మద్దతున్న భాషకు మారి మళ్లీ ప్రయత్నించండి.",
+  srchEmptyNoneTitle: "ఈ వెతుకులాటకు సరిపోలికలు లేవు.",
+  srchEmptyNoneDesc:
+    "ధృవీకరించిన రిజిస్ట్రీలో ఏదీ సరిపోలలేదు. వేరే స్పెల్లింగ్ లేదా జట్టు మారుపేరు ప్రయత్నించండి, లేదా క్రింద ప్రసిద్ధ పరిశోధనను చూడండి.",
+
 });
 
 export const mr = mergePredictions({
@@ -3637,6 +3845,25 @@ export const mr = mergePredictions({
   arcDayEyebrow: "दैनिक संग्रह",
   arcDayLede: "या संशोधन दिवसाचे ऐतिहासिक चित्र — निपटाऱ्यानंतर परिणाम पुन्हा लिहिले जात नाहीत.",
   arcDayPredictionsTitle: "{date}चे अंदाज",
+
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "घटक शोध",
+  srchTitle: "शोध",
+  srchResultsFor: "\u201c{q}\u201d चे निकाल",
+  srchCountLine: "पडताळलेल्या नोंदणीतून {n} जुळणारे घटक",
+  srchLede: "पडताळलेल्या नोंदणीत शोधा — स्पर्धा, हंगाम, संघ, बाजार आणि देशनिहाय ऑपरेटर.",
+  srchAllFilter: "सर्व",
+  srchEmptyNoQueryTitle: "सामने, संघ, स्पर्धा आणि ऑपरेटर शोधा",
+  srchEmptyNoQueryDesc:
+    "पडताळलेले संशोधन घटक शोधण्यासाठी स्पर्धा, संघ, बाजार, हंगाम किंवा ऑपरेटरचे नाव लिहा.",
+  srchEmptyFilteredTitle: "या फिल्टरशी जुळणारे घटक नाहीत.",
+  srchEmptyFilteredDesc:
+    "जुळण्या आहेत, पण सध्याच्या प्रकार वा देश फिल्टरमध्ये नाहीत — फिल्टर साफ करा किंवा शोध विस्तृत करा.",
+  srchEmptyLocaleTitle: "भाषा उपलब्ध नाही",
+  srchEmptyLocaleDesc: "ही भाषा शोधासाठी उपलब्ध नाही. समर्थित भाषेवर जाऊन पुन्हा प्रयत्न करा.",
+  srchEmptyNoneTitle: "या शोधाला जुळणी नाही.",
+  srchEmptyNoneDesc:
+    "पडताळलेल्या नोंदणीत काहीही जुळले नाही. दुसरे शुद्धलेखन किंवा संघाचे टोपणनाव वापरून पाहा, किंवा खालील लोकप्रिय संशोधन चाळा.",
 
 });
 
@@ -3976,5 +4203,26 @@ export const sw = mergePredictions({
   arcDayLede:
     "Picha ya kihistoria ya siku hii ya utafiti — matokeo hayaandikwi upya baada ya ukamilishaji.",
   arcDayPredictionsTitle: "Utabiri wa {date}",
+
+  /* Search page — form-guide conversion (srch keys). */
+  srchEyebrow: "Ugunduzi wa vitu",
+  srchTitle: "Tafuta",
+  srchResultsFor: "Matokeo ya \u201c{q}\u201d",
+  srchCountLine: "Vitu {n} vinavyolingana kutoka rejista iliyothibitishwa",
+  srchLede:
+    "Tafuta katika rejista iliyothibitishwa — mashindano, misimu, timu, masoko na waendeshaji kwa nchi.",
+  srchAllFilter: "Zote",
+  srchEmptyNoQueryTitle: "Tafuta mechi, timu, mashindano na waendeshaji",
+  srchEmptyNoQueryDesc:
+    "Andika jina la shindano, timu, soko, msimu au mwendeshaji ili kupata vitu vya utafiti vilivyothibitishwa.",
+  srchEmptyFilteredTitle: "Hakuna kitu kinacholingana na vichujio hivi.",
+  srchEmptyFilteredDesc:
+    "Kuna vinavyolingana, lakini si chini ya kichujio cha sasa cha aina au nchi — futa vichujio au panua hoja.",
+  srchEmptyLocaleTitle: "Lugha haipatikani",
+  srchEmptyLocaleDesc:
+    "Lugha hii haipatikani kwa utafutaji. Badilisha hadi lugha inayotumika kisha ujaribu tena.",
+  srchEmptyNoneTitle: "Hakuna kinacholingana na utafutaji huu.",
+  srchEmptyNoneDesc:
+    "Hakuna chochote katika rejista iliyothibitishwa kilicholingana na hoja. Jaribu tahajia nyingine, jina mbadala la timu, au vinjari utafiti maarufu hapa chini.",
 
 });

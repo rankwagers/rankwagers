@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { EmptyState } from "@/components/ui/EmptyState";
 import { EntityDiscoverySection } from "@/components/discovery/EntityDiscoverySection";
 import { PopularResearch } from "@/components/discovery/PopularResearch";
 import { RecentlyViewed } from "@/components/discovery/RecentlyViewed";
 import { locales, type Locale } from "@/lib/i18n";
+import { getDictionary } from "@/lib/dictionaries";
+import { formatDict } from "@/lib/dictionaryExtras";
+import type { PredictionStrings } from "@/lib/translations/predictionsEn";
 import { pageMetadata } from "@/lib/seo";
 import { buildPopularResearchItems } from "@/lib/discovery";
 import {
@@ -17,6 +19,18 @@ import {
 } from "@/lib/search";
 import { SearchFilterTracker } from "@/components/search/SearchFilterTracker";
 import { getRequestCountryContext } from "@/lib/personalization/server";
+
+/* ============================================================================
+   THE SEARCH PAGE — form-guide conversion, fixture-style hierarchy
+   ----------------------------------------------------------------------------
+   LEAD      what was asked — the query as the headline, its match count
+             stated inline. No query → the honest invitation.
+   FILTERS   the type chips, bordered, active state in ink.
+   ROWS      grouped entity results as ruled rows.
+   DETAIL    discovery below — related entities or popular research.
+   LAST      nothing. Search carries no commercial block; operators appear
+             only as registry results.
+   ========================================================================== */
 
 export const dynamic = "force-dynamic";
 
@@ -56,32 +70,19 @@ function parseType(raw: string | undefined): SearchEntityType | undefined {
     : undefined;
 }
 
-function emptyCopy(reason: string | undefined): { title: string; description: string } {
+function emptyCopy(
+  reason: string | undefined,
+  p: PredictionStrings
+): { title: string; description: string } {
   switch (reason) {
     case "no_query":
-      return {
-        title: "Search fixtures, teams, competitions and operators",
-        description:
-          "Type a competition, team, market, season, or operator name to discover validated research entities.",
-      };
+      return { title: p.srchEmptyNoQueryTitle, description: p.srchEmptyNoQueryDesc };
     case "filtered_away":
-      return {
-        title: "No fixtures match these filters.",
-        description:
-          "Matches exist, but none are available with the current type or country filter. Clear filters or try a broader query.",
-      };
+      return { title: p.srchEmptyFilteredTitle, description: p.srchEmptyFilteredDesc };
     case "unsupported_locale":
-      return {
-        title: "Language not available",
-        description:
-          "This locale is not available for search. Switch to a supported language and try again.",
-      };
+      return { title: p.srchEmptyLocaleTitle, description: p.srchEmptyLocaleDesc };
     default:
-      return {
-        title: "No matches for this search.",
-        description:
-          "Nothing in the validated registry matched that query. Try another spelling, a team alias, or browse popular research below.",
-      };
+      return { title: p.srchEmptyNoneTitle, description: p.srchEmptyNoneDesc };
   }
 }
 
@@ -104,6 +105,7 @@ export default function SearchPage({
     limit: 60,
     limitPerGroup: 20,
   });
+  const p = getDictionary(locale).predictions;
 
   const popular = buildPopularResearchItems(locale, 8);
   const seed = response.results[0];
@@ -120,7 +122,7 @@ export default function SearchPage({
       ? (seed.entityType as SeedableType)
       : null;
 
-  const copy = emptyCopy(response.meta.emptyReason);
+  const copy = emptyCopy(response.meta.emptyReason, p);
   const filterHref = (type?: SearchGroupKey) => {
     const qs = new URLSearchParams();
     if (response.query) qs.set("q", response.query);
@@ -129,8 +131,15 @@ export default function SearchPage({
     return `/${locale}/search${suffix ? `?${suffix}` : ""}`;
   };
 
+  const chipClass = (active: boolean) =>
+    `rw-m inline-flex border px-3 py-1.5 transition-colors ${
+      active
+        ? "border-[var(--hero-ink)] text-[var(--hero-ink)]"
+        : "border-[var(--hero-line)] text-[var(--hero-ink-2)] hover:border-[var(--hero-ink)] hover:text-[var(--hero-ink)]"
+    }`;
+
   return (
-    <div className="mx-auto max-w-5xl px-4 py-10 sm:px-6">
+    <div className="rw-hero container-wide bg-[var(--hero-canvas)] pb-24">
       <SearchFilterTracker
         locale={locale}
         query={response.query}
@@ -138,72 +147,65 @@ export default function SearchPage({
         resultsCount={response.meta.count}
       />
 
-      <header className="border-b border-border pb-6">
-        <p className="text-metadata font-medium uppercase tracking-label text-brand">
-          Entity discovery
-        </p>
-        <h1 className="mt-2 font-display text-3xl font-semibold text-foreground">
-          {response.query ? `Results for “${response.query}”` : "Search"}
-        </h1>
-        <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
+      {/* LEAD — the query itself, count inline; without one, the invitation. */}
+      <header className="border-b border-[var(--hero-line)] pb-10 pt-10">
+        <span aria-hidden className="block h-[2px] w-10 bg-[var(--hero-ink)]" />
+        <p className="rw-m mt-3.5 text-[var(--hero-ink-2)]">{p.srchEyebrow}</p>
+        <h1 className="rw-h mt-1.5 text-[clamp(2.125rem,4.4vw,2.875rem)] text-[var(--hero-ink)]">
           {response.query
-            ? `${response.meta.count} validated ent${response.meta.count === 1 ? "ity" : "ities"} · ${response.meta.tookMs} ms`
-            : "Search the RankWagers registry — competitions, seasons, teams, markets, and country-aware operators."}
+            ? formatDict(p.srchResultsFor, { q: response.query })
+            : p.srchTitle}
+        </h1>
+        <p className="mt-2.5 max-w-[62ch] text-[15px] leading-[1.55] text-[var(--hero-ink-2)]">
+          {response.query
+            ? formatDict(p.srchCountLine, { n: String(response.meta.count) })
+            : p.srchLede}
         </p>
       </header>
 
-      <nav className="mt-6 flex flex-wrap gap-2" aria-label="Result type filters">
-        <Link
-          href={filterHref()}
-          className={`rounded-md px-3 py-1.5 text-sm ${
-            !typeFilter
-              ? "bg-accent font-medium text-brand"
-              : "text-muted-foreground hover:bg-muted hover:text-foreground"
-          }`}
-        >
-          All
+      {/* FILTERS — the type chips. */}
+      <nav className="mt-8 flex flex-wrap gap-2" aria-label={p.srchEyebrow}>
+        <Link href={filterHref()} className={chipClass(!typeFilter)}>
+          {p.srchAllFilter}
         </Link>
         {SEARCH_GROUP_ORDER.filter((key) => key !== "fixture").map((key) => (
-          <Link
-            key={key}
-            href={filterHref(key)}
-            className={`rounded-md px-3 py-1.5 text-sm ${
-              typeFilter === key
-                ? "bg-accent font-medium text-brand"
-                : "text-muted-foreground hover:bg-muted hover:text-foreground"
-            }`}
-          >
+          <Link key={key} href={filterHref(key)} className={chipClass(typeFilter === key)}>
             {SEARCH_GROUP_LABELS[key]}
           </Link>
         ))}
       </nav>
 
+      {/* ROWS — grouped entity results as ruled rows, or the honest empty. */}
       {!response.results.length ? (
-        <div className="mt-8">
-          <EmptyState title={copy.title} description={copy.description} />
+        <div className="mt-10">
+          <p className="text-[15px] font-semibold tracking-[-0.01em] text-[var(--hero-ink)]">
+            {copy.title}
+          </p>
+          <p className="mt-2 max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]">
+            {copy.description}
+          </p>
         </div>
       ) : (
-        <div className="mt-8 space-y-8">
+        <div className="mt-10 space-y-10">
           {SEARCH_GROUP_ORDER.map((groupKey) => {
             const rows = response.groups[groupKey];
             if (!rows?.length) return null;
             return (
               <section key={groupKey} aria-labelledby={`group-${groupKey}`}>
-                <h2
-                  id={`group-${groupKey}`}
-                  className="font-display text-xl font-semibold text-foreground"
-                >
+                <h2 id={`group-${groupKey}`} className="rw-m text-[var(--hero-ink-2)]">
                   {SEARCH_GROUP_LABELS[groupKey]}
                 </h2>
-                <ul className="mt-3 divide-y divide-border border-y border-border">
+                <ul className="mt-3 border-t-[1.5px] border-[var(--hero-ink)]">
                   {rows.map((result) => (
                     <li key={`${result.entityType}-${result.slug}`}>
                       <Link
                         href={result.href}
-                        className="flex items-baseline justify-between gap-3 py-2.5 text-sm text-foreground hover:text-brand"
+                        className="rw-row flex items-baseline justify-between gap-x-4 border-b border-[var(--hero-line)] py-3 pl-3.5"
                       >
-                        <span>{result.title}</span>
-                        <span className="shrink-0 text-metadata uppercase tracking-label text-muted-foreground">
+                        <span className="text-[15px] text-[var(--hero-ink)]">
+                          {result.title}
+                        </span>
+                        <span className="rw-m shrink-0 text-[var(--hero-ink-2)]">
                           {result.entityType}
                         </span>
                       </Link>
@@ -216,6 +218,7 @@ export default function SearchPage({
         </div>
       )}
 
+      {/* DETAIL — discovery below the results. */}
       {seedType && seed ? (
         <EntityDiscoverySection
           entityType={seedType}
