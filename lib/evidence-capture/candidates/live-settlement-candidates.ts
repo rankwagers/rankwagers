@@ -8,6 +8,7 @@ import {
   type SettlementPipelineDeps,
 } from "./settlement-pipeline";
 import type { SettlementProviderResult } from "./types";
+import { logWarn } from "@/lib/monitoring/logger";
 
 /* ============================================================================
    THE LIVE SETTLEMENT PRODUCER — the settlement mirror of
@@ -44,6 +45,22 @@ export async function produceLiveSettlementRequests(input: {
             input.deps?.archiveDir ? { archiveDir: input.deps.archiveDir } : undefined
           ),
           nowSec: Math.floor(evaluationMs / 1000),
+          /* Drops were silent — the replay proved a whole archive can vanish without a trace.
+             Bounded counts only, never fixture ids. */
+          onFilter: (result) => {
+            const droppedTotal = Object.values(result.dropped).reduce((a, b) => a + b, 0);
+            if (droppedTotal > 0 || result.excludedNonTerminal > 0) {
+              logWarn(
+                "settlement_source_row_filter",
+                {
+                  kept: result.rows.length,
+                  excludedNonTerminal: result.excludedNonTerminal,
+                  ...result.dropped,
+                },
+                "jobs"
+              );
+            }
+          },
         })
       : input.deps.loadCompletedRows;
 

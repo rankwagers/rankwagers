@@ -44,3 +44,35 @@ Nothing from Postgres: settlement correctness derives from FT/HT scores in the d
 odds and raw-provider archives are capture-side inputs and are not required. The replay will then run the dry-run composition against the copies with `EVIDENCE_ARCHIVE_DIR` pointed at the prodcopy directory and every result written to a scratch dry-run store — the copies are never written to.
 
 Alternatively, the go/no-go plan obtains the same correctness evidence from the production DRY-RUN period itself (5 days, real volume, zero record risk) — the dev replay is a pre-check, not a gate replacement.
+
+---
+
+## ADDENDUM — the correctness replay ran (2026-08-09, same session)
+
+**Data:** 98 real snapshots (97 fixtures, all `23B.daily-evidence.v2`, captured 2026-08-04→09,
+`competitionId`/`seasonId` null throughout — the known capture gap) + 31 real daily archives,
+both read-only prodcopies. **Replay:** the dry-run composition per capture date, real store =
+prodcopy (read-only), validations to a scratch dry-run store.
+
+| Result | Value |
+|---|---|
+| Candidates considered | **89** (uncaptured completed fixtures correctly rejected: 184 `missing_prediction_identity`) |
+| Market validations settled | **170** (won 134 · lost 36; fh 31 · over15 48 · over25 63 · sh 28) |
+| Independently recomputed vs FT/HT scores | **170/170 exact — zero mismatches** |
+| Settled without knowable HT data | 0 |
+| writeFailed / immutableViolation / torn lines / fixtureMismatch / invalidScore | **all 0** |
+| `skippedAfterKickoff` | 0 (every real capture was pre-kickoff — the guard's expectation holds on real data) |
+| Prodcopy after replay | snapshots byte-identical; no validations file ever created |
+
+**The replay earned its keep before settling anything:** the first pass produced ZERO candidates
+on every date — archived rows carry `kickoff` as the lists page's display string ("16:15"),
+which the Stage-2D completed-row filter drops as `invalid_kickoff`, silently. Two fixes landed:
+the rows projection now restates the row's own `kickoffTime` epoch as the ISO instant (a
+projection of an existing fact, never an invention — rows with neither still drop honestly), and
+the producer wires the previously-unconsumed filter-drop diagnostics into a `logWarn`, so a
+whole archive can never again vanish without a trace. Both are pinned by probes. Had DRY-RUN
+shipped without the replay, its first five days would have measured an empty pipeline.
+
+**Reading for the go/no-go:** the correctness bar (`CORRECTNESS_MIN_RATE` = 100%) is met on the
+entire real capture to date, at 3.4× the audit sample size. Nothing in this replay argues
+against proceeding to DRY-RUN.

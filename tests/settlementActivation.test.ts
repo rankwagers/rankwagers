@@ -275,6 +275,26 @@ test("the producer delivers candidates from a real archive shape when the flag i
   assert.equal(result.candidates[0].row.matchId, FIX);
 });
 
+test("REPLAY FINDING: archived display-time kickoffs are restated as instants, from the row's own epoch", () => {
+  /*
+   * The first correctness replay against real archives found every row silently dropped as
+   * invalid_kickoff: archived rows carry kickoff as the lists page's display string ("16:15"),
+   * not an instant, while kickoffTime carries the same fact as epoch seconds. The projection
+   * restates the epoch as ISO; a row with neither stays unparseable and drops honestly.
+   */
+  const displayRow = { ...row(), kickoff: "16:15" } as never;
+  const projected = projectArchiveRows({
+    date: "2026-08-08", savedAt: "x", summary: {}, fh: [displayRow], over15: [], over25: [], sh: [],
+  } as never);
+  assert.equal(projected.length, 1);
+  assert.equal(projected[0].kickoff, new Date(KICKOFF_UNIX * 1000).toISOString());
+  const noEpoch = { ...row(), kickoff: "16:15", kickoffTime: null } as never;
+  const kept = projectArchiveRows({
+    date: "2026-08-08", savedAt: "x", summary: {}, fh: [noEpoch], over15: [], over25: [], sh: [],
+  } as never);
+  assert.equal(kept[0].kickoff, "16:15", "no epoch → no invention; the filter drops it downstream");
+});
+
 test("the rows projection is one deterministic row per fixture", () => {
   const a = row();
   const b = row({ matchId: 2 });
