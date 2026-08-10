@@ -413,7 +413,8 @@ test("the accas shard is registered and the other shards are untouched", async (
   const ids = (await generateSitemaps()).map((s) => s.id);
   assert.ok(ids.includes("accas"));
   for (const existing of [
-    "static", "operators", "markets", "competitions", "teams", "seasons", "countries", "compare",
+    // `compare` left this list with the commercial conversion pass (route retired).
+    "static", "operators", "markets", "competitions", "teams", "seasons", "countries",
   ] as const) {
     assert.ok(ids.includes(existing), `${existing} shard must survive`);
   }

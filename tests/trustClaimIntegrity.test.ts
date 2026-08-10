@@ -242,61 +242,27 @@ test("the banned vocabulary covers every category the manifesto names", () => {
 
 const CRYPTO_PAGE = "app/[locale]/best-crypto-betting-sites/page.tsx";
 
-test("REGRESSION P1-09: the crypto FAQ no longer asserts an unattributed top-rated brand", () => {
+test("REGRESSION P1-09: the crypto FAQ overclaim cannot return — the page is retired", () => {
+  /*
+   * Re-pinned after the commercial conversion pass. The three original P1-09
+   * pins guarded the corrected FAQ answers on this page; the page is now a
+   * permanent redirect into /operators, so the strongest form of the fix
+   * holds: there is no user-facing copy here at all. What must never return
+   * is the page itself with claims in it.
+   */
   const src = readFileSync(path.join(root, CRYPTO_PAGE), "utf8");
-  const copy = userFacingStrings(src);
-
-  // The exact superseded claim must be gone from EXECUTABLE text. The fix's own comment quotes
-  // the old wording to explain what was wrong with it, which is documentation, not a claim.
+  assert.match(src, /permanentRedirect/);
+  assert.match(src, /RETIRED/);
+  assert.equal(/FAQPage/.test(src), false, "no structured-data claims on a redirect");
   assert.equal(
-    /Our top-rated crypto betting site this month is/.test(codeOnly(src)),
+    /Our top-rated crypto betting site this month is/.test(src),
     false,
     "the unattributed 'top-rated' assertion must not return",
   );
   assert.equal(
-    hasUnqualifiedRanking(copy),
-    false,
-    "a ranking claim on this page must state its basis",
-  );
-  // And it must state what the comparison IS based on. The disclosure is composed from the
-  // shared constant rather than pasted, so the page references the identifier and the rendered
-  // answer is the concatenation of both.
-  assert.match(src, /OPERATOR_COMPARISON_BASIS/, "the shared disclosure must be used");
-  assert.match(copy, /published criteria/);
-  assert.match(copy, /do not rank a single winner/);
-  // The shared constant itself must satisfy the ranking-basis rule it exists to provide.
-  assert.equal(hasUnqualifiedRanking(OPERATOR_COMPARISON_BASIS), false);
-  assert.match(OPERATOR_COMPARISON_BASIS, /criteria/i);
-  // The rendered answer is what a reader sees: literal copy plus the constant.
-  const rendered = `${copy}\n${OPERATOR_COMPARISON_BASIS}`;
-  assert.equal(hasUnqualifiedRanking(rendered), false);
-  assert.equal(findClaimViolations(rendered).length, 0);
-});
-
-test("REGRESSION P1-09: the safety answer states what is NOT verified", () => {
-  const copy = userFacingStrings(readFileSync(path.join(root, CRYPTO_PAGE), "utf8"));
-  // The old blanket reassurance is gone.
-  assert.equal(
-    /Licensed crypto betting sites use provably fair games and fast on-chain payouts/.test(copy),
-    false,
-    "category-wide safety reassurance must not return",
-  );
-  // The honest answer names the limits of our knowledge.
-  assert.match(copy, /not something we can verify for you/);
-  assert.match(copy, /we do not audit solvency/);
-  assert.match(copy, /Check the licence with the regulator/);
-});
-
-test("REGRESSION P1-09: the FAQ structured data carries the corrected answers", () => {
-  const src = readFileSync(path.join(root, CRYPTO_PAGE), "utf8");
-  // It is still a FAQPage — the fix corrected the answers, it did not delete the markup.
-  assert.match(src, /"@type": "FAQPage"/);
-  assert.match(src, /How does RankWagers compare crypto betting sites\?/);
-  assert.match(src, /Are crypto betting sites safe\?/);
-  assert.equal(
     findClaimViolations(userFacingStrings(src)).length,
     0,
-    "structured-data answers are user-facing and must satisfy the same rules",
+    "a redirect page carries no user-facing claims",
   );
 });
 
@@ -349,10 +315,14 @@ test("surfaces consume the shared strings rather than restating them", () => {
     readFileSync(path.join(root, LIVE_PANEL), "utf8"),
     /LIVE_SIGNALS_FRAMING/,
   );
-  assert.match(
-    readFileSync(path.join(root, CRYPTO_PAGE), "utf8"),
-    /OPERATOR_COMPARISON_BASIS/,
-  );
+  /*
+   * Re-pinned: the crypto page is retired, and the comparison-basis disclosure
+   * now lives on the one canonical commercial surface — the operators hub,
+   * which derives its basis from the shared trust module rather than pasting it.
+   */
+  const hub = readFileSync(path.join(root, "app/[locale]/operators/page.tsx"), "utf8");
+  assert.match(hub, /deriveOrderingBasis/);
+  assert.match(hub, /OrderingDisclosure/);
 });
 
 /* ================================================================== *

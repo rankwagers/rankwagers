@@ -203,7 +203,8 @@ const REGISTERED_CONSUMERS: ReadonlyArray<{ rel: string; why: string }> = [
   { rel: "lib/operators/brandListItems.ts", why: "derives the ordering basis" },
   { rel: "lib/operators/brandListTypes.ts", why: "carries the basis on each row" },
   { rel: "app/[locale]/operators/page.tsx", why: "operator index disclosure" },
-  { rel: "app/[locale]/best-crypto-betting-sites/page.tsx", why: "comparison basis in the FAQ" },
+  // best-crypto-betting-sites left this registry with the commercial conversion
+  // pass: the page is a permanent redirect and carries no trust vocabulary.
   /*
    * Registered in Sprint 33. This entry exists because the guard demanded it: the criteria page
    * was added, imported the vocabulary, and this test failed on the very next sprint until the

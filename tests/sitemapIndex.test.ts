@@ -25,7 +25,11 @@ import { listPublishedAccasForSitemap } from "../lib/acca-publication/public";
 import robots from "../app/robots";
 import { siteUrl } from "../lib/seo";
 
-/** The eight shards that are always valid + non-empty and must always appear. */
+/*
+ * The seven shards that are always valid + non-empty and must always appear.
+ * Re-derived after the commercial conversion pass: the `compare` shard is gone
+ * with its routes — /compare/* is a permanent redirect into /operators.
+ */
 const ALWAYS_INCLUDED = [
   "static",
   "operators",
@@ -34,7 +38,6 @@ const ALWAYS_INCLUDED = [
   "teams",
   "seasons",
   "countries",
-  "compare",
 ] as const;
 
 /** The full shard-ROUTE set (routes are unchanged; accas route still resolves as a valid shard). */
@@ -52,17 +55,17 @@ function shardIdFromUrl(url: string, base: string): string | null {
   return m ? m[1] : null;
 }
 
-// (10) Shard-ROUTE generation is unchanged — generateSitemaps still yields all nine ids.
-test("10: generateSitemaps still yields all nine shard-route ids (shard generation unchanged)", async () => {
+// (10) Shard-ROUTE generation matches the post-collapse set — eight ids.
+test("10: generateSitemaps yields the eight post-collapse shard-route ids", async () => {
   const ids = (await generateSitemaps()).map(({ id }) => String(id));
   assert.deepEqual(ids, [...ALL_SHARD_IDS]);
 });
 
-// (1) With zero published Accas → exactly 8 shard locations, accas excluded (pure decision).
-test("1: zero published Accas → exactly 8 index shards, accas excluded", () => {
+// (1) With zero published Accas → exactly 7 shard locations, accas excluded (pure decision).
+test("1: zero published Accas → exactly 7 index shards, accas excluded", () => {
   const ids = eligibleShardIds([...ALL_SHARD_IDS], /* hasPublishedAccas */ false);
   assert.deepEqual(ids, [...ALWAYS_INCLUDED]);
-  assert.equal(ids.length, 8);
+  assert.equal(ids.length, 7);
   assert.ok(!ids.includes("accas"));
 });
 
@@ -70,17 +73,17 @@ test("1: zero published Accas → exactly 8 index shards, accas excluded", () =>
 test("2: accas.xml absent from the index when empty", () => {
   const base = siteUrl().replace(/\/+$/, "");
   const xml = renderSitemapIndex(shardUrls(eligibleShardIds([...ALL_SHARD_IDS], false), base));
-  assert.equal(locs(xml).length, 8);
+  assert.equal(locs(xml).length, 7);
   assert.doesNotMatch(xml, /\/sitemap\/accas\.xml/);
 });
 
 // (3) With at least one published Acca → accas.xml appears exactly once (9 total).
-test("3: >=1 published Acca → accas.xml appears exactly once (9 shards)", () => {
+test("3: >=1 published Acca → accas.xml appears exactly once (8 shards)", () => {
   const base = siteUrl().replace(/\/+$/, "");
   const ids = eligibleShardIds([...ALL_SHARD_IDS], /* hasPublishedAccas */ true);
   const xml = renderSitemapIndex(shardUrls(ids, base));
   const found = locs(xml);
-  assert.equal(found.length, 9);
+  assert.equal(found.length, 8);
   const accas = found.filter((u) => u === `${base}/sitemap/accas.xml`);
   assert.equal(accas.length, 1, "accas.xml present exactly once");
 });
@@ -156,7 +159,7 @@ test("GET matches the live eligibility decision (deterministic; accas iff publis
   }
   // accas appears in GET() iff there is a published Acca — never an empty shard.
   assert.equal(a.includes(`${base}/sitemap/accas.xml`), hasPublishedAccas);
-  assert.equal(a.length, hasPublishedAccas ? 9 : 8);
+  assert.equal(a.length, hasPublishedAccas ? 8 : 7);
 });
 
 // Middleware exempts /sitemap.xml and /robots.txt from locale routing (source guard).
@@ -180,8 +183,8 @@ test("renderer escapes XML-special characters in <loc>", () => {
 });
 
 // currentIndexShardUrls never emits an empty (zero-loc) index and never a locale prefix.
-test("currentIndexShardUrls yields >=8 deterministic absolute shard urls", async () => {
+test("currentIndexShardUrls yields >=7 deterministic absolute shard urls", async () => {
   const urls = await currentIndexShardUrls();
-  assert.ok(urls.length >= 8);
+  assert.ok(urls.length >= 7);
   assert.equal(new Set(urls).size, urls.length);
 });
