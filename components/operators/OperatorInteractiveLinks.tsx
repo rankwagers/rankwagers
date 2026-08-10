@@ -13,20 +13,32 @@ export function OperatorAffiliateCta({
   operatorSlug,
   locale,
   enabled,
+  label,
 }: {
   href: string;
   operatorSlug: string;
   locale: string;
   enabled: boolean;
+  label: string;
 }) {
+  /* DATA-AS-DOOR: the Continue is a visible, chosen commercial step — bordered
+     ink action, rel=sponsored, never a disguised link. Disabled state renders
+     as a plain statement, not a dead button. */
+  if (!enabled) {
+    return (
+      <p className="max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]">
+        {label}
+      </p>
+    );
+  }
   return (
     <a
       href={href}
-      rel={enabled ? "noopener sponsored" : undefined}
+      rel="noopener sponsored"
       onClick={() => trackOperatorAffiliateCtaClick({ operatorSlug, locale })}
-      className="btn-primary"
+      className="rw-m inline-flex min-h-10 items-center border border-[var(--hero-ink)] px-5 text-[var(--hero-ink)] transition-colors hover:bg-[var(--hero-ink)] hover:text-[var(--hero-canvas)]"
     >
-      {enabled ? "Continue to sportsbook" : "Affiliate link unavailable"}
+      {label}
     </a>
   );
 }
@@ -52,7 +64,7 @@ export function OperatorRelatedLink({
       onClick={() =>
         trackOperatorRelatedClick({ operatorSlug, locale, kind, target })
       }
-      className="text-sm font-medium text-brand hover:underline"
+      className="text-[15px] text-[var(--hero-ink)] underline decoration-[var(--hero-line)] underline-offset-4 hover:decoration-[var(--hero-ink)]"
     >
       {children}
     </Link>
@@ -76,7 +88,7 @@ export function OperatorOddsPanelButton({
       onClick={() =>
         trackOperatorOddsPanelInteraction({ operatorSlug, locale, panel })
       }
-      className="text-xs font-medium text-brand hover:underline"
+      className="rw-m text-[var(--hero-ink-2)] underline decoration-[var(--hero-line)] underline-offset-4 hover:text-[var(--hero-ink)]"
     >
       {children}
     </button>

@@ -378,6 +378,41 @@ const pt: PredictionStrings = mergePredictions({
     "Este URL não faz parte do registo de pesquisa. Verifique o endereço ou continue por uma das superfícies abaixo.",
   nfHome: "Ir para o início",
 
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "Inteligência de operadores",
+  opIndexTitle: "Operadores",
+  opIndexLede:
+    "Operadores de apostas como perfis de pesquisa — cobertura de mercados, disponibilidade, verificação e histórico de odds observadas. Avaliação segundo critérios publicados, nunca recomendação.",
+  opVerified: "verificado",
+  opUnverified: "não verificado",
+  opRowMarketsCount: "{n} mercados",
+  opLeadAvailable: "{operator} consta como disponível para o seu país ({country}).",
+  opLeadUnavailable: "{operator} não consta como disponível para o seu país ({country}).",
+  opVerificationRow: "Verificação: {status}",
+  opSupportsMarketsLine: "{n} mercados suportados",
+  opSupportsCountriesLine: "{n} países listados",
+  opSamplesLine: "{n} observações de odds armazenadas",
+  opCoverageLine: "{market} — {n} observações",
+  opEvidenceNote:
+    "Todos os números abaixo vêm do conjunto de observações armazenado — nada é um preço em direto, e vazio significa não observado.",
+  opMarketsTitle: "Mercados suportados",
+  opCountriesTitle: "Países listados",
+  opCountriesNone: "Nenhuma lista de países está configurada para este operador.",
+  opRecentFixtures: "Jogos observados recentemente",
+  opFixtureN: "Jogo #{id}",
+  opTermsTitle: "Termos declarados pelo operador",
+  opTermsNote:
+    "As declarações abaixo são afirmações do próprio operador — registadas para referência, não verificadas pela RankWagers.",
+  opFoundedRow: "Fundado em {year}",
+  opHqRow: "Sede: {hq}",
+  opLicensesRow: "Licenças: {list}",
+  opContinueTitle: "Continuar para este operador",
+  opContinueBody:
+    "Se a evidência acima for útil, a ligação comercial abaixo abre a casa de apostas. A RankWagers ganha comissão por registos e não opera serviços de jogo.",
+  opContinueCta: "Continuar para {operator}",
+  opContinueUnavailable: "Nenhuma ligação comercial disponível para o seu país.",
+  opRelatedOperators: "Operadores relacionados",
+
 });
 
 const es: PredictionStrings = mergePredictions({
@@ -755,6 +790,41 @@ const es: PredictionStrings = mergePredictions({
   nfBody:
     "Esta URL no forma parte del registro de investigación. Comprueba la dirección o continúa por una de las superficies de abajo.",
   nfHome: "Ir al inicio",
+
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "Inteligencia de operadores",
+  opIndexTitle: "Operadores",
+  opIndexLede:
+    "Operadores de apuestas como perfiles de investigación — cobertura de mercados, disponibilidad, verificación e historial de cuotas observadas. Evaluación según criterios publicados, nunca recomendación.",
+  opVerified: "verificado",
+  opUnverified: "no verificado",
+  opRowMarketsCount: "{n} mercados",
+  opLeadAvailable: "{operator} figura como disponible para tu país ({country}).",
+  opLeadUnavailable: "{operator} no figura como disponible para tu país ({country}).",
+  opVerificationRow: "Verificación: {status}",
+  opSupportsMarketsLine: "{n} mercados soportados",
+  opSupportsCountriesLine: "{n} países listados",
+  opSamplesLine: "{n} observaciones de cuotas almacenadas",
+  opCoverageLine: "{market} — {n} observaciones",
+  opEvidenceNote:
+    "Todas las cifras de abajo proceden del conjunto de observaciones almacenado — nada es un precio en vivo, y vacío significa no observado.",
+  opMarketsTitle: "Mercados soportados",
+  opCountriesTitle: "Países listados",
+  opCountriesNone: "No hay lista de países configurada para este operador.",
+  opRecentFixtures: "Partidos observados recientemente",
+  opFixtureN: "Partido #{id}",
+  opTermsTitle: "Términos declarados por el operador",
+  opTermsNote:
+    "Las declaraciones de abajo son afirmaciones del propio operador — registradas como referencia, no verificadas por RankWagers.",
+  opFoundedRow: "Fundado en {year}",
+  opHqRow: "Sede: {hq}",
+  opLicensesRow: "Licencias: {list}",
+  opContinueTitle: "Continuar a este operador",
+  opContinueBody:
+    "Si la evidencia de arriba resulta útil, el enlace comercial de abajo abre la casa de apuestas. RankWagers gana comisión por registros y no opera servicios de juego.",
+  opContinueCta: "Continuar a {operator}",
+  opContinueUnavailable: "No hay enlace comercial disponible para tu país.",
+  opRelatedOperators: "Operadores relacionados",
 
 });
 
@@ -1136,6 +1206,41 @@ const de: PredictionStrings = mergePredictions({
     "Diese URL gehört nicht zum Recherche-Register. Prüfen Sie die Adresse oder fahren Sie über eine der Flächen unten fort.",
   nfHome: "Zur Startseite",
 
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "Anbieter-Intelligenz",
+  opIndexTitle: "Anbieter",
+  opIndexLede:
+    "Wettanbieter als Recherche-Profile — Marktabdeckung, Verfügbarkeit, Verifizierung und beobachtete Quotenhistorie. Bewertung nach veröffentlichten Kriterien, niemals Empfehlung.",
+  opVerified: "verifiziert",
+  opUnverified: "nicht verifiziert",
+  opRowMarketsCount: "{n} Märkte",
+  opLeadAvailable: "{operator} ist für Ihr Land ({country}) als verfügbar gelistet.",
+  opLeadUnavailable: "{operator} ist für Ihr Land ({country}) nicht als verfügbar gelistet.",
+  opVerificationRow: "Verifizierung: {status}",
+  opSupportsMarketsLine: "{n} unterstützte Märkte",
+  opSupportsCountriesLine: "{n} gelistete Länder",
+  opSamplesLine: "{n} gespeicherte Quotenbeobachtungen",
+  opCoverageLine: "{market} — {n} Beobachtungen",
+  opEvidenceNote:
+    "Alle Zahlen unten stammen aus dem gespeicherten Beobachtungssatz — nichts ist ein Live-Preis, und leer bedeutet nicht beobachtet.",
+  opMarketsTitle: "Unterstützte Märkte",
+  opCountriesTitle: "Gelistete Länder",
+  opCountriesNone: "Für diesen Anbieter ist keine Länderliste konfiguriert.",
+  opRecentFixtures: "Zuletzt beobachtete Spiele",
+  opFixtureN: "Spiel #{id}",
+  opTermsTitle: "Vom Anbieter angegebene Bedingungen",
+  opTermsNote:
+    "Die Angaben unten sind die eigenen Aussagen des Anbieters — zur Referenz erfasst, nicht von RankWagers verifiziert.",
+  opFoundedRow: "Gegründet {year}",
+  opHqRow: "Hauptsitz: {hq}",
+  opLicensesRow: "Lizenzen: {list}",
+  opContinueTitle: "Weiter zu diesem Anbieter",
+  opContinueBody:
+    "Wenn die Evidenz oben nützlich ist, öffnet der kommerzielle Link unten das Wettportal. RankWagers verdient eine Provision an Anmeldungen und betreibt keine Glücksspieldienste.",
+  opContinueCta: "Weiter zu {operator}",
+  opContinueUnavailable: "Für Ihr Land ist kein kommerzieller Link verfügbar.",
+  opRelatedOperators: "Verwandte Anbieter",
+
 });
 
 const it: PredictionStrings = mergePredictions({
@@ -1510,6 +1615,41 @@ const it: PredictionStrings = mergePredictions({
   nfBody:
     "Questo URL non fa parte del registro di ricerca. Controlla l'indirizzo o prosegui da una delle superfici qui sotto.",
   nfHome: "Vai alla home",
+
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "Intelligence degli operatori",
+  opIndexTitle: "Operatori",
+  opIndexLede:
+    "Operatori di scommesse come profili di ricerca — copertura dei mercati, disponibilità, verifica e storico delle quote osservate. Valutazione secondo criteri pubblicati, mai raccomandazione.",
+  opVerified: "verificato",
+  opUnverified: "non verificato",
+  opRowMarketsCount: "{n} mercati",
+  opLeadAvailable: "{operator} risulta disponibile per il tuo paese ({country}).",
+  opLeadUnavailable: "{operator} non risulta disponibile per il tuo paese ({country}).",
+  opVerificationRow: "Verifica: {status}",
+  opSupportsMarketsLine: "{n} mercati supportati",
+  opSupportsCountriesLine: "{n} paesi elencati",
+  opSamplesLine: "{n} osservazioni di quote archiviate",
+  opCoverageLine: "{market} — {n} osservazioni",
+  opEvidenceNote:
+    "Tutte le cifre qui sotto provengono dall'insieme di osservazioni archiviato — nulla è un prezzo live, e vuoto significa non osservato.",
+  opMarketsTitle: "Mercati supportati",
+  opCountriesTitle: "Paesi elencati",
+  opCountriesNone: "Nessuna lista di paesi configurata per questo operatore.",
+  opRecentFixtures: "Partite osservate di recente",
+  opFixtureN: "Partita #{id}",
+  opTermsTitle: "Condizioni dichiarate dall'operatore",
+  opTermsNote:
+    "Le dichiarazioni qui sotto sono affermazioni dell'operatore stesso — registrate come riferimento, non verificate da RankWagers.",
+  opFoundedRow: "Fondato nel {year}",
+  opHqRow: "Sede: {hq}",
+  opLicensesRow: "Licenze: {list}",
+  opContinueTitle: "Continua verso questo operatore",
+  opContinueBody:
+    "Se l'evidenza qui sopra è utile, il collegamento commerciale in basso apre il bookmaker. RankWagers guadagna una commissione sulle iscrizioni e non gestisce servizi di gioco.",
+  opContinueCta: "Continua verso {operator}",
+  opContinueUnavailable: "Nessun collegamento commerciale disponibile per il tuo paese.",
+  opRelatedOperators: "Operatori correlati",
 
 });
 
@@ -1886,6 +2026,41 @@ const fr: PredictionStrings = mergePredictions({
   nfBody:
     "Cette URL ne fait pas partie du registre de recherche. Vérifiez l'adresse ou poursuivez via l'une des surfaces ci-dessous.",
   nfHome: "Retour à l'accueil",
+
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "Intelligence des opérateurs",
+  opIndexTitle: "Opérateurs",
+  opIndexLede:
+    "Les opérateurs de paris comme profils de recherche — couverture des marchés, disponibilité, vérification et historique des cotes observées. Évaluation selon des critères publiés, jamais une recommandation.",
+  opVerified: "vérifié",
+  opUnverified: "non vérifié",
+  opRowMarketsCount: "{n} marchés",
+  opLeadAvailable: "{operator} est indiqué comme disponible pour votre pays ({country}).",
+  opLeadUnavailable: "{operator} n'est pas indiqué comme disponible pour votre pays ({country}).",
+  opVerificationRow: "Vérification : {status}",
+  opSupportsMarketsLine: "{n} marchés pris en charge",
+  opSupportsCountriesLine: "{n} pays listés",
+  opSamplesLine: "{n} observations de cotes stockées",
+  opCoverageLine: "{market} — {n} observations",
+  opEvidenceNote:
+    "Tous les chiffres ci-dessous proviennent de l'ensemble d'observations stocké — rien n'est un prix en direct, et vide signifie non observé.",
+  opMarketsTitle: "Marchés pris en charge",
+  opCountriesTitle: "Pays listés",
+  opCountriesNone: "Aucune liste de pays n'est configurée pour cet opérateur.",
+  opRecentFixtures: "Matchs observés récemment",
+  opFixtureN: "Match n°{id}",
+  opTermsTitle: "Conditions déclarées par l'opérateur",
+  opTermsNote:
+    "Les déclarations ci-dessous sont celles de l'opérateur lui-même — consignées pour référence, non vérifiées par RankWagers.",
+  opFoundedRow: "Fondé en {year}",
+  opHqRow: "Siège : {hq}",
+  opLicensesRow: "Licences : {list}",
+  opContinueTitle: "Continuer vers cet opérateur",
+  opContinueBody:
+    "Si les éléments ci-dessus vous sont utiles, le lien commercial ci-dessous ouvre le site de paris. RankWagers touche une commission sur les inscriptions et n'exploite aucun service de jeu.",
+  opContinueCta: "Continuer vers {operator}",
+  opContinueUnavailable: "Aucun lien commercial disponible pour votre pays.",
+  opRelatedOperators: "Opérateurs liés",
 
 });
 

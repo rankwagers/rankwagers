@@ -10,6 +10,7 @@ import {
   operatorSlugs,
 } from "@/lib/operators/registry";
 import { getRequestCountryContext } from "@/lib/personalization/server";
+import { getDictionary } from "@/lib/dictionaries";
 import { pageMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
@@ -55,6 +56,7 @@ export default async function OperatorDetailPage({
       availability={availability}
       performance={performance}
       relatedOperators={relatedOperators}
+      p={getDictionary(params.locale).predictions}
     />
   );
 }

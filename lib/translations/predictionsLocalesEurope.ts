@@ -541,6 +541,41 @@ export const nl = euroPredictions({
     "Deze URL maakt geen deel uit van het onderzoeksregister. Controleer het adres of ga verder via een van de onderstaande ingangen.",
   nfHome: "Naar de startpagina",
 
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "Operatorintelligentie",
+  opIndexTitle: "Operators",
+  opIndexLede:
+    "Wedoperators als onderzoeksprofielen — marktdekking, beschikbaarheid, verificatie en waargenomen noteringsgeschiedenis. Beoordeling volgens gepubliceerde criteria, nooit een aanbeveling.",
+  opVerified: "geverifieerd",
+  opUnverified: "niet geverifieerd",
+  opRowMarketsCount: "{n} markten",
+  opLeadAvailable: "{operator} staat vermeld als beschikbaar voor uw land ({country}).",
+  opLeadUnavailable: "{operator} staat niet vermeld als beschikbaar voor uw land ({country}).",
+  opVerificationRow: "Verificatie: {status}",
+  opSupportsMarketsLine: "{n} ondersteunde markten",
+  opSupportsCountriesLine: "{n} vermelde landen",
+  opSamplesLine: "{n} opgeslagen noteringswaarnemingen",
+  opCoverageLine: "{market} — {n} waarnemingen",
+  opEvidenceNote:
+    "Alle cijfers hieronder komen uit de opgeslagen waarnemingsset — niets is een live prijs, en leeg betekent niet waargenomen.",
+  opMarketsTitle: "Ondersteunde markten",
+  opCountriesTitle: "Vermelde landen",
+  opCountriesNone: "Voor deze operator is geen landenlijst geconfigureerd.",
+  opRecentFixtures: "Recent waargenomen wedstrijden",
+  opFixtureN: "Wedstrijd #{id}",
+  opTermsTitle: "Door de operator opgegeven voorwaarden",
+  opTermsNote:
+    "De verklaringen hieronder zijn beweringen van de operator zelf — vastgelegd ter referentie, niet door RankWagers geverifieerd.",
+  opFoundedRow: "Opgericht in {year}",
+  opHqRow: "Hoofdkantoor: {hq}",
+  opLicensesRow: "Licenties: {list}",
+  opContinueTitle: "Doorgaan naar deze operator",
+  opContinueBody:
+    "Als het bewijs hierboven nuttig is, opent de commerciële link hieronder het wedkantoor. RankWagers verdient commissie op registraties en exploiteert geen gokdiensten.",
+  opContinueCta: "Doorgaan naar {operator}",
+  opContinueUnavailable: "Geen commerciële link beschikbaar voor uw land.",
+  opRelatedOperators: "Gerelateerde operators",
+
 });
 
 export const pl = euroPredictions({
@@ -911,6 +946,41 @@ export const pl = euroPredictions({
     "Ten adres URL nie należy do rejestru badawczego. Sprawdź adres lub przejdź dalej jedną z poniższych ścieżek.",
   nfHome: "Do strony głównej",
 
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "Analiza operatorów",
+  opIndexTitle: "Operatorzy",
+  opIndexLede:
+    "Operatorzy zakładów jako profile badawcze — pokrycie rynków, dostępność, weryfikacja i historia zaobserwowanych kursów. Ocena według opublikowanych kryteriów, nigdy rekomendacja.",
+  opVerified: "zweryfikowany",
+  opUnverified: "niezweryfikowany",
+  opRowMarketsCount: "{n} rynków",
+  opLeadAvailable: "{operator} figuruje jako dostępny dla twojego kraju ({country}).",
+  opLeadUnavailable: "{operator} nie figuruje jako dostępny dla twojego kraju ({country}).",
+  opVerificationRow: "Weryfikacja: {status}",
+  opSupportsMarketsLine: "{n} obsługiwanych rynków",
+  opSupportsCountriesLine: "{n} wymienionych krajów",
+  opSamplesLine: "{n} zapisanych obserwacji kursów",
+  opCoverageLine: "{market} — {n} obserwacji",
+  opEvidenceNote:
+    "Wszystkie liczby poniżej pochodzą z zapisanego zbioru obserwacji — nic nie jest ceną na żywo, a puste znaczy niezaobserwowane.",
+  opMarketsTitle: "Obsługiwane rynki",
+  opCountriesTitle: "Wymienione kraje",
+  opCountriesNone: "Dla tego operatora nie skonfigurowano listy krajów.",
+  opRecentFixtures: "Ostatnio obserwowane mecze",
+  opFixtureN: "Mecz #{id}",
+  opTermsTitle: "Warunki deklarowane przez operatora",
+  opTermsNote:
+    "Poniższe deklaracje to twierdzenia samego operatora — zapisane dla odniesienia, niezweryfikowane przez RankWagers.",
+  opFoundedRow: "Założony w {year}",
+  opHqRow: "Siedziba: {hq}",
+  opLicensesRow: "Licencje: {list}",
+  opContinueTitle: "Przejdź do tego operatora",
+  opContinueBody:
+    "Jeśli powyższe dowody są przydatne, komercyjny link poniżej otwiera bukmachera. RankWagers zarabia prowizję od rejestracji i nie prowadzi usług hazardowych.",
+  opContinueCta: "Przejdź do {operator}",
+  opContinueUnavailable: "Brak komercyjnego linku dla twojego kraju.",
+  opRelatedOperators: "Powiązani operatorzy",
+
 });
 
 export const cs = euroPredictions({
@@ -1275,6 +1345,41 @@ export const cs = euroPredictions({
     "Tato URL není součástí výzkumného registru. Zkontrolujte adresu, nebo pokračujte jednou z cest níže.",
   nfHome: "Na úvodní stránku",
 
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "Analýza operátorů",
+  opIndexTitle: "Operátoři",
+  opIndexLede:
+    "Sázkoví operátoři jako výzkumné profily — pokrytí trhů, dostupnost, ověření a historie pozorovaných kurzů. Hodnocení podle zveřejněných kritérií, nikdy doporučení.",
+  opVerified: "ověřený",
+  opUnverified: "neověřený",
+  opRowMarketsCount: "{n} trhů",
+  opLeadAvailable: "{operator} je uveden jako dostupný pro vaši zemi ({country}).",
+  opLeadUnavailable: "{operator} není uveden jako dostupný pro vaši zemi ({country}).",
+  opVerificationRow: "Ověření: {status}",
+  opSupportsMarketsLine: "{n} podporovaných trhů",
+  opSupportsCountriesLine: "{n} uvedených zemí",
+  opSamplesLine: "{n} uložených pozorování kurzů",
+  opCoverageLine: "{market} — {n} pozorování",
+  opEvidenceNote:
+    "Všechna čísla níže pocházejí z uložené sady pozorování — nic není živá cena a prázdné znamená nepozorováno.",
+  opMarketsTitle: "Podporované trhy",
+  opCountriesTitle: "Uvedené země",
+  opCountriesNone: "Pro tohoto operátora není nakonfigurován seznam zemí.",
+  opRecentFixtures: "Nedávno pozorované zápasy",
+  opFixtureN: "Zápas #{id}",
+  opTermsTitle: "Podmínky deklarované operátorem",
+  opTermsNote:
+    "Prohlášení níže jsou tvrzení samotného operátora — zaznamenaná pro referenci, neověřená RankWagers.",
+  opFoundedRow: "Založeno {year}",
+  opHqRow: "Sídlo: {hq}",
+  opLicensesRow: "Licence: {list}",
+  opContinueTitle: "Pokračovat k tomuto operátorovi",
+  opContinueBody:
+    "Pokud jsou důkazy výše užitečné, komerční odkaz níže otevře sázkovou kancelář. RankWagers získává provizi z registrací a neprovozuje hazardní služby.",
+  opContinueCta: "Pokračovat k {operator}",
+  opContinueUnavailable: "Pro vaši zemi není k dispozici žádný komerční odkaz.",
+  opRelatedOperators: "Související operátoři",
+
 });
 
 export const da = euroPredictions({
@@ -1638,6 +1743,41 @@ export const da = euroPredictions({
     "Denne URL er ikke en del af forskningsregistret. Tjek adressen, eller fortsæt via en af fladerne nedenfor.",
   nfHome: "Til forsiden",
 
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "Operatørintelligens",
+  opIndexTitle: "Operatører",
+  opIndexLede:
+    "Væddemålsoperatører som forskningsprofiler — markedsdækning, tilgængelighed, verifikation og observeret oddshistorik. Vurdering efter offentliggjorte kriterier, aldrig anbefaling.",
+  opVerified: "verificeret",
+  opUnverified: "ikke verificeret",
+  opRowMarketsCount: "{n} markeder",
+  opLeadAvailable: "{operator} er angivet som tilgængelig for dit land ({country}).",
+  opLeadUnavailable: "{operator} er ikke angivet som tilgængelig for dit land ({country}).",
+  opVerificationRow: "Verifikation: {status}",
+  opSupportsMarketsLine: "{n} understøttede markeder",
+  opSupportsCountriesLine: "{n} angivne lande",
+  opSamplesLine: "{n} gemte oddsobservationer",
+  opCoverageLine: "{market} — {n} observationer",
+  opEvidenceNote:
+    "Alle tal nedenfor stammer fra det gemte observationssæt — intet er en live-pris, og tomt betyder ikke observeret.",
+  opMarketsTitle: "Understøttede markeder",
+  opCountriesTitle: "Angivne lande",
+  opCountriesNone: "Ingen landeliste er konfigureret for denne operatør.",
+  opRecentFixtures: "Nyligt observerede kampe",
+  opFixtureN: "Kamp #{id}",
+  opTermsTitle: "Operatørens egne vilkår",
+  opTermsNote:
+    "Udsagnene nedenfor er operatørens egne påstande — registreret til reference, ikke verificeret af RankWagers.",
+  opFoundedRow: "Grundlagt {year}",
+  opHqRow: "Hovedsæde: {hq}",
+  opLicensesRow: "Licenser: {list}",
+  opContinueTitle: "Fortsæt til denne operatør",
+  opContinueBody:
+    "Hvis evidensen ovenfor er nyttig, åbner det kommercielle link nedenfor bookmakeren. RankWagers tjener kommission på tilmeldinger og driver ingen spiltjenester.",
+  opContinueCta: "Fortsæt til {operator}",
+  opContinueUnavailable: "Intet kommercielt link tilgængeligt for dit land.",
+  opRelatedOperators: "Relaterede operatører",
+
 });
 
 export const sv = euroPredictions({
@@ -2000,6 +2140,41 @@ export const sv = euroPredictions({
   nfBody:
     "Denna URL ingår inte i forskningsregistret. Kontrollera adressen eller fortsätt via en av ytorna nedan.",
   nfHome: "Till startsidan",
+
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "Operatörsintelligens",
+  opIndexTitle: "Operatörer",
+  opIndexLede:
+    "Speloperatörer som forskningsprofiler — marknadstäckning, tillgänglighet, verifiering och observerad oddshistorik. Bedömning enligt publicerade kriterier, aldrig rekommendation.",
+  opVerified: "verifierad",
+  opUnverified: "overifierad",
+  opRowMarketsCount: "{n} marknader",
+  opLeadAvailable: "{operator} anges som tillgänglig för ditt land ({country}).",
+  opLeadUnavailable: "{operator} anges inte som tillgänglig för ditt land ({country}).",
+  opVerificationRow: "Verifiering: {status}",
+  opSupportsMarketsLine: "{n} stödda marknader",
+  opSupportsCountriesLine: "{n} listade länder",
+  opSamplesLine: "{n} lagrade oddsobservationer",
+  opCoverageLine: "{market} — {n} observationer",
+  opEvidenceNote:
+    "Alla siffror nedan kommer från den lagrade observationsmängden — inget är ett live-pris, och tomt betyder inte observerat.",
+  opMarketsTitle: "Stödda marknader",
+  opCountriesTitle: "Listade länder",
+  opCountriesNone: "Ingen landslista är konfigurerad för denna operatör.",
+  opRecentFixtures: "Nyligen observerade matcher",
+  opFixtureN: "Match #{id}",
+  opTermsTitle: "Operatörens egna villkor",
+  opTermsNote:
+    "Utsagorna nedan är operatörens egna påståenden — noterade som referens, inte verifierade av RankWagers.",
+  opFoundedRow: "Grundad {year}",
+  opHqRow: "Huvudkontor: {hq}",
+  opLicensesRow: "Licenser: {list}",
+  opContinueTitle: "Fortsätt till denna operatör",
+  opContinueBody:
+    "Om evidensen ovan är användbar öppnar den kommersiella länken nedan spelbolaget. RankWagers tjänar provision på registreringar och driver inga speltjänster.",
+  opContinueCta: "Fortsätt till {operator}",
+  opContinueUnavailable: "Ingen kommersiell länk tillgänglig för ditt land.",
+  opRelatedOperators: "Relaterade operatörer",
 
 });
 
@@ -2366,6 +2541,41 @@ export const no = euroPredictions({
     "Denne URL-en er ikke en del av forskningsregisteret. Sjekk adressen, eller fortsett via en av flatene nedenfor.",
   nfHome: "Til forsiden",
 
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "Operatørintelligens",
+  opIndexTitle: "Operatører",
+  opIndexLede:
+    "Spilloperatører som forskningsprofiler — markedsdekning, tilgjengelighet, verifisering og observert oddshistorikk. Vurdering etter publiserte kriterier, aldri anbefaling.",
+  opVerified: "verifisert",
+  opUnverified: "ikke verifisert",
+  opRowMarketsCount: "{n} markeder",
+  opLeadAvailable: "{operator} er oppført som tilgjengelig for ditt land ({country}).",
+  opLeadUnavailable: "{operator} er ikke oppført som tilgjengelig for ditt land ({country}).",
+  opVerificationRow: "Verifisering: {status}",
+  opSupportsMarketsLine: "{n} støttede markeder",
+  opSupportsCountriesLine: "{n} oppførte land",
+  opSamplesLine: "{n} lagrede oddsobservasjoner",
+  opCoverageLine: "{market} — {n} observasjoner",
+  opEvidenceNote:
+    "Alle tall nedenfor stammer fra det lagrede observasjonssettet — ingenting er en live-pris, og tomt betyr ikke observert.",
+  opMarketsTitle: "Støttede markeder",
+  opCountriesTitle: "Oppførte land",
+  opCountriesNone: "Ingen landsliste er konfigurert for denne operatøren.",
+  opRecentFixtures: "Nylig observerte kamper",
+  opFixtureN: "Kamp #{id}",
+  opTermsTitle: "Operatørens egne vilkår",
+  opTermsNote:
+    "Utsagnene nedenfor er operatørens egne påstander — registrert som referanse, ikke verifisert av RankWagers.",
+  opFoundedRow: "Grunnlagt {year}",
+  opHqRow: "Hovedkontor: {hq}",
+  opLicensesRow: "Lisenser: {list}",
+  opContinueTitle: "Fortsett til denne operatøren",
+  opContinueBody:
+    "Hvis evidensen ovenfor er nyttig, åpner den kommersielle lenken nedenfor bookmakeren. RankWagers tjener provisjon på registreringer og driver ingen pengespilltjenester.",
+  opContinueCta: "Fortsett til {operator}",
+  opContinueUnavailable: "Ingen kommersiell lenke tilgjengelig for ditt land.",
+  opRelatedOperators: "Relaterte operatører",
+
 });
 
 export const fi = euroPredictions({
@@ -2727,6 +2937,41 @@ export const fi = euroPredictions({
   nfBody:
     "Tämä URL ei kuulu tutkimusrekisteriin. Tarkista osoite tai jatka jostakin alla olevasta pinnasta.",
   nfHome: "Etusivulle",
+
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "Operaattoritietous",
+  opIndexTitle: "Operaattorit",
+  opIndexLede:
+    "Vedonlyöntioperaattorit tutkimusprofiileina — markkinakattavuus, saatavuus, todennus ja havaittu kerroinhistoria. Arviointi julkaistuin perustein, ei koskaan suositus.",
+  opVerified: "todennettu",
+  opUnverified: "todentamaton",
+  opRowMarketsCount: "{n} markkinaa",
+  opLeadAvailable: "{operator} on merkitty saatavilla olevaksi maassasi ({country}).",
+  opLeadUnavailable: "{operator} ei ole merkitty saatavilla olevaksi maassasi ({country}).",
+  opVerificationRow: "Todennus: {status}",
+  opSupportsMarketsLine: "{n} tuettua markkinaa",
+  opSupportsCountriesLine: "{n} listattua maata",
+  opSamplesLine: "{n} tallennettua kerroinhavaintoa",
+  opCoverageLine: "{market} — {n} havaintoa",
+  opEvidenceNote:
+    "Kaikki alla olevat luvut ovat tallennetusta havaintojoukosta — mikään ei ole live-hinta, ja tyhjä tarkoittaa ei havaittu.",
+  opMarketsTitle: "Tuetut markkinat",
+  opCountriesTitle: "Listatut maat",
+  opCountriesNone: "Tälle operaattorille ei ole määritetty maaluetteloa.",
+  opRecentFixtures: "Äskettäin havaitut ottelut",
+  opFixtureN: "Ottelu #{id}",
+  opTermsTitle: "Operaattorin ilmoittamat ehdot",
+  opTermsNote:
+    "Alla olevat lausumat ovat operaattorin omia väitteitä — kirjattu viitteeksi, ei RankWagersin todentamia.",
+  opFoundedRow: "Perustettu {year}",
+  opHqRow: "Päätoimipaikka: {hq}",
+  opLicensesRow: "Lisenssit: {list}",
+  opContinueTitle: "Jatka tälle operaattorille",
+  opContinueBody:
+    "Jos yllä oleva näyttö on hyödyllistä, alla oleva kaupallinen linkki avaa vedonlyöntisivuston. RankWagers ansaitsee komission rekisteröitymisistä eikä harjoita rahapelitoimintaa.",
+  opContinueCta: "Jatka: {operator}",
+  opContinueUnavailable: "Maallesi ei ole kaupallista linkkiä.",
+  opRelatedOperators: "Liittyvät operaattorit",
 
 });
 
@@ -3095,6 +3340,41 @@ export const ro = euroPredictions({
   nfBody:
     "Acest URL nu face parte din registrul de cercetare. Verifică adresa sau continuă printr-una dintre suprafețele de mai jos.",
   nfHome: "La pagina principală",
+
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "Analiza operatorilor",
+  opIndexTitle: "Operatori",
+  opIndexLede:
+    "Operatorii de pariuri ca profiluri de cercetare — acoperirea piețelor, disponibilitate, verificare și istoricul cotelor observate. Evaluare după criterii publicate, niciodată recomandare.",
+  opVerified: "verificat",
+  opUnverified: "neverificat",
+  opRowMarketsCount: "{n} piețe",
+  opLeadAvailable: "{operator} figurează ca disponibil pentru țara ta ({country}).",
+  opLeadUnavailable: "{operator} nu figurează ca disponibil pentru țara ta ({country}).",
+  opVerificationRow: "Verificare: {status}",
+  opSupportsMarketsLine: "{n} piețe acceptate",
+  opSupportsCountriesLine: "{n} țări listate",
+  opSamplesLine: "{n} observații de cote stocate",
+  opCoverageLine: "{market} — {n} observații",
+  opEvidenceNote:
+    "Toate cifrele de mai jos provin din setul de observații stocat — nimic nu este un preț live, iar gol înseamnă neobservat.",
+  opMarketsTitle: "Piețe acceptate",
+  opCountriesTitle: "Țări listate",
+  opCountriesNone: "Nu este configurată nicio listă de țări pentru acest operator.",
+  opRecentFixtures: "Meciuri observate recent",
+  opFixtureN: "Meciul #{id}",
+  opTermsTitle: "Condiții declarate de operator",
+  opTermsNote:
+    "Declarațiile de mai jos sunt afirmațiile operatorului însuși — consemnate ca referință, neverificate de RankWagers.",
+  opFoundedRow: "Fondat în {year}",
+  opHqRow: "Sediu: {hq}",
+  opLicensesRow: "Licențe: {list}",
+  opContinueTitle: "Continuă către acest operator",
+  opContinueBody:
+    "Dacă evidența de mai sus este utilă, linkul comercial de mai jos deschide casa de pariuri. RankWagers câștigă comision din înscrieri și nu operează servicii de jocuri de noroc.",
+  opContinueCta: "Continuă către {operator}",
+  opContinueUnavailable: "Niciun link comercial disponibil pentru țara ta.",
+  opRelatedOperators: "Operatori conecși",
 
 });
 
@@ -3467,6 +3747,41 @@ export const el = euroPredictions({
     "Αυτό το URL δεν ανήκει στο μητρώο έρευνας. Ελέγξτε τη διεύθυνση ή συνεχίστε από μία από τις παρακάτω επιφάνειες.",
   nfHome: "Στην αρχική",
 
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "Ευφυΐα παρόχων",
+  opIndexTitle: "Πάροχοι",
+  opIndexLede:
+    "Οι πάροχοι στοιχημάτων ως προφίλ έρευνας — κάλυψη αγορών, διαθεσιμότητα, επαλήθευση και ιστορικό παρατηρημένων αποδόσεων. Αξιολόγηση βάσει δημοσιευμένων κριτηρίων, ποτέ σύσταση.",
+  opVerified: "επαληθευμένος",
+  opUnverified: "μη επαληθευμένος",
+  opRowMarketsCount: "{n} αγορές",
+  opLeadAvailable: "Ο {operator} εμφανίζεται διαθέσιμος για τη χώρα σας ({country}).",
+  opLeadUnavailable: "Ο {operator} δεν εμφανίζεται διαθέσιμος για τη χώρα σας ({country}).",
+  opVerificationRow: "Επαλήθευση: {status}",
+  opSupportsMarketsLine: "{n} υποστηριζόμενες αγορές",
+  opSupportsCountriesLine: "{n} καταχωρισμένες χώρες",
+  opSamplesLine: "{n} αποθηκευμένες παρατηρήσεις αποδόσεων",
+  opCoverageLine: "{market} — {n} παρατηρήσεις",
+  opEvidenceNote:
+    "Όλα τα νούμερα παρακάτω προέρχονται από το αποθηκευμένο σύνολο παρατηρήσεων — τίποτα δεν είναι ζωντανή τιμή, και το κενό σημαίνει μη παρατηρημένο.",
+  opMarketsTitle: "Υποστηριζόμενες αγορές",
+  opCountriesTitle: "Καταχωρισμένες χώρες",
+  opCountriesNone: "Δεν έχει διαμορφωθεί λίστα χωρών για αυτόν τον πάροχο.",
+  opRecentFixtures: "Πρόσφατα παρατηρημένοι αγώνες",
+  opFixtureN: "Αγώνας #{id}",
+  opTermsTitle: "Όροι δηλωμένοι από τον πάροχο",
+  opTermsNote:
+    "Οι δηλώσεις παρακάτω είναι ισχυρισμοί του ίδιου του παρόχου — καταγεγραμμένοι για αναφορά, μη επαληθευμένοι από τη RankWagers.",
+  opFoundedRow: "Ιδρύθηκε το {year}",
+  opHqRow: "Έδρα: {hq}",
+  opLicensesRow: "Άδειες: {list}",
+  opContinueTitle: "Συνέχεια προς αυτόν τον πάροχο",
+  opContinueBody:
+    "Αν τα παραπάνω στοιχεία είναι χρήσιμα, ο εμπορικός σύνδεσμος παρακάτω ανοίγει το στοιχηματικό. Η RankWagers κερδίζει προμήθεια από εγγραφές και δεν λειτουργεί υπηρεσίες τυχερών παιγνίων.",
+  opContinueCta: "Συνέχεια προς {operator}",
+  opContinueUnavailable: "Δεν υπάρχει εμπορικός σύνδεσμος για τη χώρα σας.",
+  opRelatedOperators: "Σχετικοί πάροχοι",
+
 });
 
 export const hu = euroPredictions({
@@ -3832,5 +4147,40 @@ export const hu = euroPredictions({
   nfBody:
     "Ez az URL nem része a kutatási nyilvántartásnak. Ellenőrizd a címet, vagy folytasd az alábbi felületek egyikén.",
   nfHome: "A kezdőlapra",
+
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "Szolgáltatói intelligencia",
+  opIndexTitle: "Szolgáltatók",
+  opIndexLede:
+    "Fogadási szolgáltatók kutatási profilokként — piaci lefedettség, elérhetőség, ellenőrzés és megfigyelt szorzótörténet. Értékelés közzétett szempontok szerint, sosem ajánlás.",
+  opVerified: "ellenőrzött",
+  opUnverified: "nem ellenőrzött",
+  opRowMarketsCount: "{n} piac",
+  opLeadAvailable: "A(z) {operator} elérhetőként szerepel az országodhoz ({country}).",
+  opLeadUnavailable: "A(z) {operator} nem szerepel elérhetőként az országodhoz ({country}).",
+  opVerificationRow: "Ellenőrzés: {status}",
+  opSupportsMarketsLine: "{n} támogatott piac",
+  opSupportsCountriesLine: "{n} felsorolt ország",
+  opSamplesLine: "{n} tárolt szorzómegfigyelés",
+  opCoverageLine: "{market} — {n} megfigyelés",
+  opEvidenceNote:
+    "Az alábbi számok mind a tárolt megfigyelési készletből származnak — semmi sem élő ár, az üres pedig azt jelenti: nem megfigyelt.",
+  opMarketsTitle: "Támogatott piacok",
+  opCountriesTitle: "Felsorolt országok",
+  opCountriesNone: "Ehhez a szolgáltatóhoz nincs országlista beállítva.",
+  opRecentFixtures: "Nemrég megfigyelt mérkőzések",
+  opFixtureN: "Mérkőzés #{id}",
+  opTermsTitle: "A szolgáltató saját feltételei",
+  opTermsNote:
+    "Az alábbi kijelentések a szolgáltató saját állításai — referenciaként rögzítve, a RankWagers nem ellenőrizte őket.",
+  opFoundedRow: "Alapítva: {year}",
+  opHqRow: "Székhely: {hq}",
+  opLicensesRow: "Licencek: {list}",
+  opContinueTitle: "Tovább ehhez a szolgáltatóhoz",
+  opContinueBody:
+    "Ha a fenti bizonyíték hasznos, az alábbi kereskedelmi hivatkozás megnyitja a fogadóirodát. A RankWagers jutalékot kap a regisztrációk után, és nem üzemeltet szerencsejáték-szolgáltatást.",
+  opContinueCta: "Tovább: {operator}",
+  opContinueUnavailable: "Az országodhoz nincs elérhető kereskedelmi hivatkozás.",
+  opRelatedOperators: "Kapcsolódó szolgáltatók",
 
 });

@@ -348,6 +348,41 @@ export const ar = mergePredictions({
     "هذا الرابط ليس جزءًا من سجل البحث. تحقّق من العنوان أو تابع عبر إحدى الواجهات أدناه.",
   nfHome: "إلى الرئيسية",
 
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "استخبارات المشغّلين",
+  opIndexTitle: "المشغّلون",
+  opIndexLede:
+    "مشغّلو المراهنات كملفات بحثية — تغطية الأسواق والتوفر والتحقق وسجل الأرقام المرصودة. تقييم وفق معايير منشورة، وليس توصية أبدًا.",
+  opVerified: "موثّق",
+  opUnverified: "غير موثّق",
+  opRowMarketsCount: "{n} أسواق",
+  opLeadAvailable: "{operator} مدرج كمتاح لدولتك ({country}).",
+  opLeadUnavailable: "{operator} غير مدرج كمتاح لدولتك ({country}).",
+  opVerificationRow: "التحقق: {status}",
+  opSupportsMarketsLine: "{n} أسواق مدعومة",
+  opSupportsCountriesLine: "{n} دول مدرجة",
+  opSamplesLine: "{n} أرصاد أرقام مخزّنة",
+  opCoverageLine: "{market} — {n} أرصاد",
+  opEvidenceNote:
+    "كل الأرقام أدناه من مجموعة الأرصاد المخزّنة — لا شيء منها سعر مباشر، والفراغ يعني غير مرصود.",
+  opMarketsTitle: "الأسواق المدعومة",
+  opCountriesTitle: "الدول المدرجة",
+  opCountriesNone: "لا توجد قائمة دول مهيأة لهذا المشغّل.",
+  opRecentFixtures: "مباريات مرصودة حديثًا",
+  opFixtureN: "المباراة #{id}",
+  opTermsTitle: "شروط يعلنها المشغّل",
+  opTermsNote:
+    "العبارات أدناه ادعاءات المشغّل نفسه — مسجّلة للمرجعية، ولم تتحقق منها RankWagers.",
+  opFoundedRow: "تأسس عام {year}",
+  opHqRow: "المقر: {hq}",
+  opLicensesRow: "التراخيص: {list}",
+  opContinueTitle: "المتابعة إلى هذا المشغّل",
+  opContinueBody:
+    "إذا كانت الأدلة أعلاه مفيدة، فالرابط التجاري أدناه يفتح موقع المراهنات. تكسب RankWagers عمولة عن التسجيلات ولا تشغّل خدمات قمار.",
+  opContinueCta: "المتابعة إلى {operator}",
+  opContinueUnavailable: "لا يوجد رابط تجاري متاح لدولتك.",
+  opRelatedOperators: "مشغّلون ذوو صلة",
+
 });
 
 export const hi = mergePredictions({
@@ -704,6 +739,41 @@ export const hi = mergePredictions({
     "यह URL शोध रिकॉर्ड का हिस्सा नहीं है। पता जाँचें या नीचे दी गई सतहों में से किसी एक से आगे बढ़ें।",
   nfHome: "मुखपृष्ठ पर जाएँ",
 
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "ऑपरेटर इंटेलिजेंस",
+  opIndexTitle: "ऑपरेटर",
+  opIndexLede:
+    "सट्टेबाज़ी ऑपरेटर शोध प्रोफ़ाइल के रूप में — बाज़ार कवरेज, उपलब्धता, सत्यापन और दर्ज ऑड्स इतिहास। प्रकाशित मानदंडों पर आकलन, कभी सिफ़ारिश नहीं।",
+  opVerified: "सत्यापित",
+  opUnverified: "असत्यापित",
+  opRowMarketsCount: "{n} बाज़ार",
+  opLeadAvailable: "{operator} आपके देश ({country}) के लिए उपलब्ध के रूप में सूचीबद्ध है।",
+  opLeadUnavailable: "{operator} आपके देश ({country}) के लिए उपलब्ध के रूप में सूचीबद्ध नहीं है।",
+  opVerificationRow: "सत्यापन: {status}",
+  opSupportsMarketsLine: "{n} समर्थित बाज़ार",
+  opSupportsCountriesLine: "{n} सूचीबद्ध देश",
+  opSamplesLine: "{n} संग्रहीत ऑड्स अवलोकन",
+  opCoverageLine: "{market} — {n} अवलोकन",
+  opEvidenceNote:
+    "नीचे के सभी आँकड़े संग्रहीत अवलोकन सेट से हैं — कुछ भी लाइव क़ीमत नहीं, और खाली का अर्थ है अवलोकित नहीं।",
+  opMarketsTitle: "समर्थित बाज़ार",
+  opCountriesTitle: "सूचीबद्ध देश",
+  opCountriesNone: "इस ऑपरेटर के लिए कोई देश सूची कॉन्फ़िगर नहीं है।",
+  opRecentFixtures: "हाल में अवलोकित मैच",
+  opFixtureN: "मैच #{id}",
+  opTermsTitle: "ऑपरेटर द्वारा घोषित शर्तें",
+  opTermsNote:
+    "नीचे के कथन ऑपरेटर के अपने दावे हैं — संदर्भ हेतु दर्ज, RankWagers द्वारा सत्यापित नहीं।",
+  opFoundedRow: "स्थापित {year}",
+  opHqRow: "मुख्यालय: {hq}",
+  opLicensesRow: "लाइसेंस: {list}",
+  opContinueTitle: "इस ऑपरेटर पर जारी रखें",
+  opContinueBody:
+    "यदि ऊपर का प्रमाण उपयोगी है, तो नीचे का वाणिज्यिक लिंक स्पोर्ट्सबुक खोलता है। RankWagers पंजीकरण पर कमीशन कमाता है और जुआ सेवाएँ संचालित नहीं करता।",
+  opContinueCta: "{operator} पर जारी रखें",
+  opContinueUnavailable: "आपके देश के लिए कोई वाणिज्यिक लिंक उपलब्ध नहीं।",
+  opRelatedOperators: "संबंधित ऑपरेटर",
+
 });
 
 export const ja = mergePredictions({
@@ -1030,6 +1100,37 @@ export const ja = mergePredictions({
   nfTitle: "ページが見つかりません",
   nfBody: "このURLはリサーチ記録の一部ではありません。アドレスを確認するか、下のいずれかの面から続けてください。",
   nfHome: "ホームへ",
+
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "オペレーター・インテリジェンス",
+  opIndexTitle: "オペレーター",
+  opIndexLede: "ブックメーカーをリサーチプロファイルとして — 市場カバレッジ、利用可否、検証、記録済みオッズ履歴。公開基準に基づく評価であり、推奨ではありません。",
+  opVerified: "検証済み",
+  opUnverified: "未検証",
+  opRowMarketsCount: "{n}市場",
+  opLeadAvailable: "{operator}はお住まいの国({country})で利用可能として掲載されています。",
+  opLeadUnavailable: "{operator}はお住まいの国({country})で利用可能として掲載されていません。",
+  opVerificationRow: "検証:{status}",
+  opSupportsMarketsLine: "対応市場{n}件",
+  opSupportsCountriesLine: "掲載国{n}か国",
+  opSamplesLine: "保存済みオッズ観測{n}件",
+  opCoverageLine: "{market} — 観測{n}件",
+  opEvidenceNote: "以下の数値はすべて保存済み観測セットに基づきます — ライブ価格は一切なく、空欄は未観測を意味します。",
+  opMarketsTitle: "対応市場",
+  opCountriesTitle: "掲載国",
+  opCountriesNone: "このオペレーターには国リストが設定されていません。",
+  opRecentFixtures: "最近観測された試合",
+  opFixtureN: "試合 #{id}",
+  opTermsTitle: "オペレーター申告の条件",
+  opTermsNote: "以下の記述はオペレーター自身の主張です — 参照用に記録したもので、RankWagersは検証していません。",
+  opFoundedRow: "{year}年設立",
+  opHqRow: "本社:{hq}",
+  opLicensesRow: "ライセンス:{list}",
+  opContinueTitle: "このオペレーターへ進む",
+  opContinueBody: "上記の根拠が有用なら、下の商用リンクからブックメーカーを開けます。RankWagersは登録に対して手数料を得ており、賭博サービスは運営していません。",
+  opContinueCta: "{operator}へ進む",
+  opContinueUnavailable: "お住まいの国向けの商用リンクはありません。",
+  opRelatedOperators: "関連オペレーター",
 
 });
 
@@ -1358,6 +1459,39 @@ export const ko = mergePredictions({
   nfTitle: "페이지를 찾을 수 없습니다",
   nfBody: "이 URL은 리서치 기록에 속하지 않습니다. 주소를 확인하거나 아래 표면 중 하나에서 계속하세요.",
   nfHome: "홈으로",
+
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "운영사 인텔리전스",
+  opIndexTitle: "운영사",
+  opIndexLede:
+    "베팅 운영사를 리서치 프로필로 — 마켓 커버리지, 이용 가능 여부, 검증, 기록된 배당 이력. 공개된 기준에 따른 평가이며, 결코 추천이 아닙니다.",
+  opVerified: "검증됨",
+  opUnverified: "미검증",
+  opRowMarketsCount: "{n}개 마켓",
+  opLeadAvailable: "{operator}은(는) 귀하의 국가({country})에서 이용 가능으로 등재되어 있습니다.",
+  opLeadUnavailable: "{operator}은(는) 귀하의 국가({country})에서 이용 가능으로 등재되어 있지 않습니다.",
+  opVerificationRow: "검증: {status}",
+  opSupportsMarketsLine: "지원 마켓 {n}개",
+  opSupportsCountriesLine: "등재 국가 {n}개",
+  opSamplesLine: "저장된 배당 관측 {n}건",
+  opCoverageLine: "{market} — 관측 {n}건",
+  opEvidenceNote: "아래 모든 수치는 저장된 관측 세트에서 나옵니다 — 어느 것도 실시간 가격이 아니며, 빈칸은 관측되지 않음을 뜻합니다.",
+  opMarketsTitle: "지원 마켓",
+  opCountriesTitle: "등재 국가",
+  opCountriesNone: "이 운영사에는 국가 목록이 설정되어 있지 않습니다.",
+  opRecentFixtures: "최근 관측된 경기",
+  opFixtureN: "경기 #{id}",
+  opTermsTitle: "운영사가 명시한 조건",
+  opTermsNote: "아래 진술은 운영사 자신의 주장입니다 — 참고용으로 기록되었으며 RankWagers가 검증하지 않았습니다.",
+  opFoundedRow: "{year}년 설립",
+  opHqRow: "본사: {hq}",
+  opLicensesRow: "라이선스: {list}",
+  opContinueTitle: "이 운영사로 계속",
+  opContinueBody:
+    "위의 근거가 유용하다면 아래 상업 링크로 스포츠북을 열 수 있습니다. RankWagers는 가입에 대한 수수료를 받으며 도박 서비스를 운영하지 않습니다.",
+  opContinueCta: "{operator}(으)로 계속",
+  opContinueUnavailable: "귀하의 국가에서 이용 가능한 상업 링크가 없습니다.",
+  opRelatedOperators: "관련 운영사",
 
 });
 
@@ -1714,6 +1848,41 @@ export const th = mergePredictions({
   nfBody:
     "URL นี้ไม่ได้เป็นส่วนหนึ่งของบันทึกการวิจัย ตรวจสอบที่อยู่หรือไปต่อจากพื้นผิวด้านล่าง",
   nfHome: "กลับหน้าแรก",
+
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "ข้อมูลเชิงลึกผู้ให้บริการ",
+  opIndexTitle: "ผู้ให้บริการ",
+  opIndexLede:
+    "ผู้ให้บริการรับพนันในฐานะโปรไฟล์วิจัย — ความครอบคลุมตลาด ความพร้อมใช้งาน การตรวจสอบ และประวัติราคาที่บันทึกไว้ การประเมินตามเกณฑ์ที่เผยแพร่ ไม่ใช่คำแนะนำ",
+  opVerified: "ตรวจสอบแล้ว",
+  opUnverified: "ยังไม่ตรวจสอบ",
+  opRowMarketsCount: "{n} ตลาด",
+  opLeadAvailable: "{operator} ถูกระบุว่าพร้อมใช้งานสำหรับประเทศของคุณ ({country})",
+  opLeadUnavailable: "{operator} ไม่ถูกระบุว่าพร้อมใช้งานสำหรับประเทศของคุณ ({country})",
+  opVerificationRow: "การตรวจสอบ: {status}",
+  opSupportsMarketsLine: "{n} ตลาดที่รองรับ",
+  opSupportsCountriesLine: "{n} ประเทศที่ระบุ",
+  opSamplesLine: "{n} การบันทึกราคาที่จัดเก็บ",
+  opCoverageLine: "{market} — {n} การบันทึก",
+  opEvidenceNote:
+    "ตัวเลขทั้งหมดด้านล่างมาจากชุดการบันทึกที่จัดเก็บ — ไม่มีสิ่งใดเป็นราคาสด และว่างหมายถึงยังไม่บันทึก",
+  opMarketsTitle: "ตลาดที่รองรับ",
+  opCountriesTitle: "ประเทศที่ระบุ",
+  opCountriesNone: "ไม่มีรายชื่อประเทศที่กำหนดค่าสำหรับผู้ให้บริการนี้",
+  opRecentFixtures: "แมตช์ที่บันทึกล่าสุด",
+  opFixtureN: "แมตช์ #{id}",
+  opTermsTitle: "เงื่อนไขที่ผู้ให้บริการแจ้ง",
+  opTermsNote:
+    "ข้อความด้านล่างเป็นคำกล่าวอ้างของผู้ให้บริการเอง — บันทึกไว้เพื่ออ้างอิง RankWagers ไม่ได้ตรวจสอบ",
+  opFoundedRow: "ก่อตั้ง {year}",
+  opHqRow: "สำนักงานใหญ่: {hq}",
+  opLicensesRow: "ใบอนุญาต: {list}",
+  opContinueTitle: "ไปต่อยังผู้ให้บริการนี้",
+  opContinueBody:
+    "หากหลักฐานด้านบนเป็นประโยชน์ ลิงก์เชิงพาณิชย์ด้านล่างจะเปิดเว็บรับพนัน RankWagers ได้รับค่าคอมมิชชันจากการสมัครและไม่ได้ให้บริการการพนัน",
+  opContinueCta: "ไปต่อยัง {operator}",
+  opContinueUnavailable: "ไม่มีลิงก์เชิงพาณิชย์สำหรับประเทศของคุณ",
+  opRelatedOperators: "ผู้ให้บริการที่เกี่ยวข้อง",
 
 });
 
@@ -2077,6 +2246,41 @@ export const vi = mergePredictions({
   nfBody:
     "URL này không thuộc hồ sơ nghiên cứu. Kiểm tra địa chỉ hoặc tiếp tục từ một trong các bề mặt bên dưới.",
   nfHome: "Về trang chủ",
+
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "Thông tin nhà điều hành",
+  opIndexTitle: "Nhà điều hành",
+  opIndexLede:
+    "Nhà cái như hồ sơ nghiên cứu — độ phủ thị trường, tính khả dụng, xác minh và lịch sử tỷ lệ đã ghi nhận. Đánh giá theo tiêu chí công bố, không bao giờ là khuyến nghị.",
+  opVerified: "đã xác minh",
+  opUnverified: "chưa xác minh",
+  opRowMarketsCount: "{n} thị trường",
+  opLeadAvailable: "{operator} được liệt kê là khả dụng cho quốc gia của bạn ({country}).",
+  opLeadUnavailable: "{operator} không được liệt kê là khả dụng cho quốc gia của bạn ({country}).",
+  opVerificationRow: "Xác minh: {status}",
+  opSupportsMarketsLine: "{n} thị trường được hỗ trợ",
+  opSupportsCountriesLine: "{n} quốc gia được liệt kê",
+  opSamplesLine: "{n} quan sát tỷ lệ đã lưu",
+  opCoverageLine: "{market} — {n} quan sát",
+  opEvidenceNote:
+    "Mọi con số bên dưới đến từ tập quan sát đã lưu — không gì là giá trực tiếp, và trống nghĩa là chưa quan sát.",
+  opMarketsTitle: "Thị trường được hỗ trợ",
+  opCountriesTitle: "Quốc gia được liệt kê",
+  opCountriesNone: "Không có danh sách quốc gia nào được cấu hình cho nhà điều hành này.",
+  opRecentFixtures: "Trận quan sát gần đây",
+  opFixtureN: "Trận #{id}",
+  opTermsTitle: "Điều khoản do nhà điều hành công bố",
+  opTermsNote:
+    "Các tuyên bố bên dưới là khẳng định của chính nhà điều hành — ghi lại để tham chiếu, RankWagers không xác minh.",
+  opFoundedRow: "Thành lập năm {year}",
+  opHqRow: "Trụ sở: {hq}",
+  opLicensesRow: "Giấy phép: {list}",
+  opContinueTitle: "Tiếp tục đến nhà điều hành này",
+  opContinueBody:
+    "Nếu bằng chứng ở trên hữu ích, liên kết thương mại bên dưới sẽ mở nhà cái. RankWagers nhận hoa hồng từ đăng ký và không vận hành dịch vụ cờ bạc.",
+  opContinueCta: "Tiếp tục đến {operator}",
+  opContinueUnavailable: "Không có liên kết thương mại cho quốc gia của bạn.",
+  opRelatedOperators: "Nhà điều hành liên quan",
 
 });
 
@@ -2443,6 +2647,41 @@ export const id = mergePredictions({
     "URL ini bukan bagian dari catatan riset. Periksa alamatnya atau lanjutkan dari salah satu permukaan di bawah.",
   nfHome: "Ke beranda",
 
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "Intelijen operator",
+  opIndexTitle: "Operator",
+  opIndexLede:
+    "Operator taruhan sebagai profil riset — cakupan pasar, ketersediaan, verifikasi, dan riwayat odds tercatat. Penilaian menurut kriteria terpublikasi, tidak pernah rekomendasi.",
+  opVerified: "terverifikasi",
+  opUnverified: "belum terverifikasi",
+  opRowMarketsCount: "{n} pasar",
+  opLeadAvailable: "{operator} terdaftar tersedia untuk negara Anda ({country}).",
+  opLeadUnavailable: "{operator} tidak terdaftar tersedia untuk negara Anda ({country}).",
+  opVerificationRow: "Verifikasi: {status}",
+  opSupportsMarketsLine: "{n} pasar didukung",
+  opSupportsCountriesLine: "{n} negara terdaftar",
+  opSamplesLine: "{n} pengamatan odds tersimpan",
+  opCoverageLine: "{market} — {n} pengamatan",
+  opEvidenceNote:
+    "Semua angka di bawah berasal dari set pengamatan tersimpan — tidak ada yang merupakan harga langsung, dan kosong berarti tidak diamati.",
+  opMarketsTitle: "Pasar didukung",
+  opCountriesTitle: "Negara terdaftar",
+  opCountriesNone: "Tidak ada daftar negara yang dikonfigurasi untuk operator ini.",
+  opRecentFixtures: "Pertandingan teramati baru-baru ini",
+  opFixtureN: "Pertandingan #{id}",
+  opTermsTitle: "Ketentuan yang dinyatakan operator",
+  opTermsNote:
+    "Pernyataan di bawah adalah klaim operator sendiri — dicatat sebagai referensi, tidak diverifikasi RankWagers.",
+  opFoundedRow: "Didirikan {year}",
+  opHqRow: "Kantor pusat: {hq}",
+  opLicensesRow: "Lisensi: {list}",
+  opContinueTitle: "Lanjut ke operator ini",
+  opContinueBody:
+    "Jika bukti di atas berguna, tautan komersial di bawah membuka sportsbook. RankWagers memperoleh komisi dari pendaftaran dan tidak mengoperasikan layanan judi.",
+  opContinueCta: "Lanjut ke {operator}",
+  opContinueUnavailable: "Tidak ada tautan komersial untuk negara Anda.",
+  opRelatedOperators: "Operator terkait",
+
 });
 
 export const zh = mergePredictions({
@@ -2769,6 +3008,37 @@ export const zh = mergePredictions({
   nfBody: "该URL不属于研究记录。请检查地址,或从下面的入口继续。",
   nfHome: "回到首页",
 
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "运营商情报",
+  opIndexTitle: "运营商",
+  opIndexLede: "把博彩运营商作为研究档案 — 市场覆盖、可用性、验证与已记录赔率历史。依据公开标准评估,绝非推荐。",
+  opVerified: "已验证",
+  opUnverified: "未验证",
+  opRowMarketsCount: "{n}个市场",
+  opLeadAvailable: "{operator}被列为在您的国家({country})可用。",
+  opLeadUnavailable: "{operator}未被列为在您的国家({country})可用。",
+  opVerificationRow: "验证:{status}",
+  opSupportsMarketsLine: "{n}个支持的市场",
+  opSupportsCountriesLine: "{n}个列出的国家",
+  opSamplesLine: "{n}条已存储赔率观测",
+  opCoverageLine: "{market} — {n}条观测",
+  opEvidenceNote: "下方所有数字均来自已存储的观测集 — 没有任何实时价格,空白表示未观测。",
+  opMarketsTitle: "支持的市场",
+  opCountriesTitle: "列出的国家",
+  opCountriesNone: "该运营商未配置国家列表。",
+  opRecentFixtures: "近期观测的比赛",
+  opFixtureN: "比赛 #{id}",
+  opTermsTitle: "运营商自述条款",
+  opTermsNote: "以下陈述为运营商自身的说法 — 仅作记录参考,RankWagers未予验证。",
+  opFoundedRow: "成立于{year}",
+  opHqRow: "总部:{hq}",
+  opLicensesRow: "牌照:{list}",
+  opContinueTitle: "前往该运营商",
+  opContinueBody: "如果上述证据有用,下面的商业链接将打开该博彩网站。RankWagers从注册中赚取佣金,不经营赌博服务。",
+  opContinueCta: "前往{operator}",
+  opContinueUnavailable: "您的国家没有可用的商业链接。",
+  opRelatedOperators: "相关运营商",
+
 });
 
 export const bn = mergePredictions({
@@ -3058,6 +3328,41 @@ export const bn = mergePredictions({
   nfBody:
     "এই URL গবেষণা রেকর্ডের অংশ নয়। ঠিকানাটি যাচাই করুন বা নিচের কোনও একটি পৃষ্ঠ থেকে এগিয়ে যান।",
   nfHome: "হোমে যান",
+
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "অপারেটর ইন্টেলিজেন্স",
+  opIndexTitle: "অপারেটর",
+  opIndexLede:
+    "বেটিং অপারেটর গবেষণা প্রোফাইল হিসেবে — বাজার কভারেজ, উপলব্ধতা, যাচাই ও নথিভুক্ত অডস ইতিহাস। প্রকাশিত মানদণ্ডে মূল্যায়ন, কখনও সুপারিশ নয়।",
+  opVerified: "যাচাইকৃত",
+  opUnverified: "অযাচাইকৃত",
+  opRowMarketsCount: "{n}টি বাজার",
+  opLeadAvailable: "{operator} আপনার দেশের ({country}) জন্য উপলব্ধ হিসেবে তালিকাভুক্ত।",
+  opLeadUnavailable: "{operator} আপনার দেশের ({country}) জন্য উপলব্ধ হিসেবে তালিকাভুক্ত নয়।",
+  opVerificationRow: "যাচাই: {status}",
+  opSupportsMarketsLine: "{n}টি সমর্থিত বাজার",
+  opSupportsCountriesLine: "{n}টি তালিকাভুক্ত দেশ",
+  opSamplesLine: "{n}টি সংরক্ষিত অডস পর্যবেক্ষণ",
+  opCoverageLine: "{market} — {n}টি পর্যবেক্ষণ",
+  opEvidenceNote:
+    "নিচের সব সংখ্যা সংরক্ষিত পর্যবেক্ষণ সেট থেকে — কোনওটিই লাইভ দাম নয়, আর খালি মানে পর্যবেক্ষিত নয়।",
+  opMarketsTitle: "সমর্থিত বাজার",
+  opCountriesTitle: "তালিকাভুক্ত দেশ",
+  opCountriesNone: "এই অপারেটরের জন্য কোনও দেশের তালিকা কনফিগার করা নেই।",
+  opRecentFixtures: "সম্প্রতি পর্যবেক্ষিত ম্যাচ",
+  opFixtureN: "ম্যাচ #{id}",
+  opTermsTitle: "অপারেটরের ঘোষিত শর্ত",
+  opTermsNote:
+    "নিচের বক্তব্যগুলি অপারেটরের নিজস্ব দাবি — রেফারেন্সের জন্য নথিভুক্ত, RankWagers যাচাই করেনি।",
+  opFoundedRow: "প্রতিষ্ঠিত {year}",
+  opHqRow: "সদর দপ্তর: {hq}",
+  opLicensesRow: "লাইসেন্স: {list}",
+  opContinueTitle: "এই অপারেটরে এগিয়ে যান",
+  opContinueBody:
+    "উপরের প্রমাণ উপযোগী হলে নিচের বাণিজ্যিক লিঙ্কটি স্পোর্টসবুক খোলে। RankWagers নিবন্ধনে কমিশন পায় এবং জুয়া পরিষেবা চালায় না।",
+  opContinueCta: "{operator}-এ এগিয়ে যান",
+  opContinueUnavailable: "আপনার দেশের জন্য কোনও বাণিজ্যিক লিঙ্ক নেই।",
+  opRelatedOperators: "সম্পর্কিত অপারেটর",
 
 });
 
@@ -3358,6 +3663,43 @@ export const ta = mergePredictions({
     "இந்த URL ஆய்வுப் பதிவின் பகுதி அல்ல. முகவரியைச் சரிபார்க்கவும் அல்லது கீழுள்ள பரப்புகளில் ஒன்றிலிருந்து தொடரவும்.",
   nfHome: "முகப்புக்கு",
 
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "இயக்குநர் நுண்ணறிவு",
+  opIndexTitle: "இயக்குநர்கள்",
+  opIndexLede:
+    "பந்தய இயக்குநர்கள் ஆய்வுச் சுயவிவரங்களாக — சந்தை கவரேஜ், கிடைப்பு, சரிபார்ப்பு, பதிவான விகித வரலாறு. வெளியிடப்பட்ட அளவுகோல்களின்படி மதிப்பீடு, ஒருபோதும் பரிந்துரை அல்ல.",
+  opVerified: "சரிபார்க்கப்பட்டது",
+  opUnverified: "சரிபார்க்கப்படாதது",
+  opRowMarketsCount: "{n} சந்தைகள்",
+  opLeadAvailable:
+    "{operator} உங்கள் நாட்டிற்கு ({country}) கிடைக்கக்கூடியதாகப் பட்டியலிடப்பட்டுள்ளது.",
+  opLeadUnavailable:
+    "{operator} உங்கள் நாட்டிற்கு ({country}) கிடைக்கக்கூடியதாகப் பட்டியலிடப்படவில்லை.",
+  opVerificationRow: "சரிபார்ப்பு: {status}",
+  opSupportsMarketsLine: "{n} ஆதரிக்கப்படும் சந்தைகள்",
+  opSupportsCountriesLine: "{n} பட்டியலிடப்பட்ட நாடுகள்",
+  opSamplesLine: "{n} சேமித்த விகிதக் கண்காணிப்புகள்",
+  opCoverageLine: "{market} — {n} கண்காணிப்புகள்",
+  opEvidenceNote:
+    "கீழுள்ள எல்லா எண்களும் சேமித்த கண்காணிப்புத் தொகுப்பிலிருந்து — எதுவும் நேரடி விலை அல்ல, வெறுமை என்றால் கண்காணிக்கப்படவில்லை.",
+  opMarketsTitle: "ஆதரிக்கப்படும் சந்தைகள்",
+  opCountriesTitle: "பட்டியலிடப்பட்ட நாடுகள்",
+  opCountriesNone: "இந்த இயக்குநருக்கு நாடுகளின் பட்டியல் அமைக்கப்படவில்லை.",
+  opRecentFixtures: "சமீபத்தில் கண்காணித்த ஆட்டங்கள்",
+  opFixtureN: "ஆட்டம் #{id}",
+  opTermsTitle: "இயக்குநர் அறிவித்த நிபந்தனைகள்",
+  opTermsNote:
+    "கீழுள்ள கூற்றுகள் இயக்குநரின் சொந்தக் கூற்றுகள் — குறிப்பிற்காகப் பதிவு செய்யப்பட்டவை, RankWagers சரிபார்க்கவில்லை.",
+  opFoundedRow: "{year}-இல் நிறுவப்பட்டது",
+  opHqRow: "தலைமையகம்: {hq}",
+  opLicensesRow: "உரிமங்கள்: {list}",
+  opContinueTitle: "இந்த இயக்குநருக்குத் தொடரவும்",
+  opContinueBody:
+    "மேலுள்ள சான்று பயனுள்ளதாக இருந்தால், கீழுள்ள வணிக இணைப்பு பந்தயத் தளத்தைத் திறக்கும். RankWagers பதிவுகளில் கமிஷன் பெறுகிறது; சூதாட்ட சேவைகளை இயக்குவதில்லை.",
+  opContinueCta: "{operator}-க்குத் தொடரவும்",
+  opContinueUnavailable: "உங்கள் நாட்டிற்கு வணிக இணைப்பு இல்லை.",
+  opRelatedOperators: "தொடர்புடைய இயக்குநர்கள்",
+
 });
 
 export const te = mergePredictions({
@@ -3647,6 +3989,41 @@ export const te = mergePredictions({
     "ఈ URL పరిశోధన రికార్డులో భాగం కాదు. చిరునామాను తనిఖీ చేయండి లేదా క్రింది ఉపరితలాల్లో ఒకదాని నుండి కొనసాగండి.",
   nfHome: "హోమ్‌కు వెళ్లండి",
 
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "ఆపరేటర్ ఇంటెలిజెన్స్",
+  opIndexTitle: "ఆపరేటర్లు",
+  opIndexLede:
+    "బెట్టింగ్ ఆపరేటర్లను పరిశోధన ప్రొఫైల్స్‌గా — మార్కెట్ కవరేజీ, లభ్యత, ధృవీకరణ, నమోదైన ఆడ్స్ చరిత్ర. ప్రచురిత ప్రమాణాల ప్రకారం అంచనా, ఎప్పుడూ సిఫారసు కాదు.",
+  opVerified: "ధృవీకరించబడింది",
+  opUnverified: "ధృవీకరించబడలేదు",
+  opRowMarketsCount: "{n} మార్కెట్లు",
+  opLeadAvailable: "{operator} మీ దేశానికి ({country}) అందుబాటులో ఉన్నట్లుగా జాబితాలో ఉంది.",
+  opLeadUnavailable: "{operator} మీ దేశానికి ({country}) అందుబాటులో ఉన్నట్లుగా జాబితాలో లేదు.",
+  opVerificationRow: "ధృవీకరణ: {status}",
+  opSupportsMarketsLine: "{n} మద్దతిచ్చే మార్కెట్లు",
+  opSupportsCountriesLine: "{n} జాబితా దేశాలు",
+  opSamplesLine: "{n} నిల్వ చేసిన ఆడ్స్ పరిశీలనలు",
+  opCoverageLine: "{market} — {n} పరిశీలనలు",
+  opEvidenceNote:
+    "క్రింది సంఖ్యలన్నీ నిల్వ చేసిన పరిశీలన సెట్ నుండే — ఏదీ ప్రత్యక్ష ధర కాదు, ఖాళీ అంటే పరిశీలించలేదు.",
+  opMarketsTitle: "మద్దతిచ్చే మార్కెట్లు",
+  opCountriesTitle: "జాబితా దేశాలు",
+  opCountriesNone: "ఈ ఆపరేటర్‌కు దేశాల జాబితా కాన్ఫిగర్ కాలేదు.",
+  opRecentFixtures: "ఇటీవల పరిశీలించిన మ్యాచ్‌లు",
+  opFixtureN: "మ్యాచ్ #{id}",
+  opTermsTitle: "ఆపరేటర్ ప్రకటించిన షరతులు",
+  opTermsNote:
+    "క్రింది ప్రకటనలు ఆపరేటర్ సొంత వాదనలు — సూచన కోసం నమోదు చేయబడ్డాయి, RankWagers ధృవీకరించలేదు.",
+  opFoundedRow: "{year}లో స్థాపితం",
+  opHqRow: "ప్రధాన కార్యాలయం: {hq}",
+  opLicensesRow: "లైసెన్సులు: {list}",
+  opContinueTitle: "ఈ ఆపరేటర్‌కు కొనసాగండి",
+  opContinueBody:
+    "పై ఆధారం ఉపయోగకరమైతే, క్రింది వాణిజ్య లింక్ స్పోర్ట్స్‌బుక్ తెరుస్తుంది. RankWagers నమోదులపై కమిషన్ పొందుతుంది; జూద సేవలను నడపదు.",
+  opContinueCta: "{operator}కు కొనసాగండి",
+  opContinueUnavailable: "మీ దేశానికి వాణిజ్య లింక్ లేదు.",
+  opRelatedOperators: "సంబంధిత ఆపరేటర్లు",
+
 });
 
 export const mr = mergePredictions({
@@ -3933,6 +4310,41 @@ export const mr = mergePredictions({
   nfBody:
     "हे URL संशोधन नोंदीचा भाग नाही. पत्ता तपासा किंवा खालील पृष्ठांपैकी एकावरून पुढे जा.",
   nfHome: "मुख्यपृष्ठावर जा",
+
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "ऑपरेटर इंटेलिजन्स",
+  opIndexTitle: "ऑपरेटर",
+  opIndexLede:
+    "सट्टेबाजी ऑपरेटर संशोधन प्रोफाइल म्हणून — बाजार व्याप्ती, उपलब्धता, पडताळणी आणि नोंदवलेला ऑड्स इतिहास. प्रकाशित निकषांवर मूल्यांकन, कधीही शिफारस नाही.",
+  opVerified: "पडताळलेले",
+  opUnverified: "अपडताळलेले",
+  opRowMarketsCount: "{n} बाजार",
+  opLeadAvailable: "{operator} तुमच्या देशासाठी ({country}) उपलब्ध म्हणून सूचीबद्ध आहे.",
+  opLeadUnavailable: "{operator} तुमच्या देशासाठी ({country}) उपलब्ध म्हणून सूचीबद्ध नाही.",
+  opVerificationRow: "पडताळणी: {status}",
+  opSupportsMarketsLine: "{n} समर्थित बाजार",
+  opSupportsCountriesLine: "{n} सूचीबद्ध देश",
+  opSamplesLine: "{n} साठवलेली ऑड्स निरीक्षणे",
+  opCoverageLine: "{market} — {n} निरीक्षणे",
+  opEvidenceNote:
+    "खालील सर्व आकडे साठवलेल्या निरीक्षण संचातून आहेत — काहीही थेट किंमत नाही, आणि रिकामे म्हणजे निरीक्षित नाही.",
+  opMarketsTitle: "समर्थित बाजार",
+  opCountriesTitle: "सूचीबद्ध देश",
+  opCountriesNone: "या ऑपरेटरसाठी देशांची यादी कॉन्फिगर केलेली नाही.",
+  opRecentFixtures: "अलीकडे निरीक्षित सामने",
+  opFixtureN: "सामना #{id}",
+  opTermsTitle: "ऑपरेटरने घोषित केलेल्या अटी",
+  opTermsNote:
+    "खालील विधाने ऑपरेटरचेच दावे आहेत — संदर्भासाठी नोंदवलेली, RankWagers ने पडताळलेली नाहीत.",
+  opFoundedRow: "स्थापना {year}",
+  opHqRow: "मुख्यालय: {hq}",
+  opLicensesRow: "परवाने: {list}",
+  opContinueTitle: "या ऑपरेटरकडे पुढे जा",
+  opContinueBody:
+    "वरील पुरावा उपयुक्त असल्यास, खालील व्यावसायिक दुवा स्पोर्ट्सबुक उघडतो. RankWagers नोंदणीवर कमिशन मिळवते आणि जुगार सेवा चालवत नाही.",
+  opContinueCta: "{operator}कडे पुढे जा",
+  opContinueUnavailable: "तुमच्या देशासाठी व्यावसायिक दुवा उपलब्ध नाही.",
+  opRelatedOperators: "संबंधित ऑपरेटर",
 
 });
 
@@ -4299,5 +4711,40 @@ export const sw = mergePredictions({
   nfBody:
     "URL hii si sehemu ya rekodi ya utafiti. Kagua anwani au endelea kupitia mojawapo ya nyuso zilizo hapa chini.",
   nfHome: "Nenda mwanzo",
+
+  /* Operator pages — commercial conversion (op keys). */
+  opIndexEyebrow: "Uelewa wa waendeshaji",
+  opIndexTitle: "Waendeshaji",
+  opIndexLede:
+    "Waendeshaji wa kamari kama wasifu wa utafiti — ufikiaji wa masoko, upatikanaji, uthibitisho na historia ya odds zilizorekodiwa. Tathmini kwa vigezo vilivyochapishwa, kamwe si pendekezo.",
+  opVerified: "imethibitishwa",
+  opUnverified: "haijathibitishwa",
+  opRowMarketsCount: "Masoko {n}",
+  opLeadAvailable: "{operator} imeorodheshwa kuwa inapatikana kwa nchi yako ({country}).",
+  opLeadUnavailable: "{operator} haijaorodheshwa kuwa inapatikana kwa nchi yako ({country}).",
+  opVerificationRow: "Uthibitisho: {status}",
+  opSupportsMarketsLine: "Masoko {n} yanayotumika",
+  opSupportsCountriesLine: "Nchi {n} zilizoorodheshwa",
+  opSamplesLine: "Uchunguzi {n} wa odds uliohifadhiwa",
+  opCoverageLine: "{market} — uchunguzi {n}",
+  opEvidenceNote:
+    "Namba zote hapa chini zinatoka kwenye seti ya uchunguzi iliyohifadhiwa — hakuna bei ya moja kwa moja, na tupu inamaanisha haikuchunguzwa.",
+  opMarketsTitle: "Masoko yanayotumika",
+  opCountriesTitle: "Nchi zilizoorodheshwa",
+  opCountriesNone: "Hakuna orodha ya nchi iliyowekwa kwa mwendeshaji huyu.",
+  opRecentFixtures: "Mechi zilizochunguzwa hivi karibuni",
+  opFixtureN: "Mechi #{id}",
+  opTermsTitle: "Masharti yaliyotajwa na mwendeshaji",
+  opTermsNote:
+    "Kauli zilizo hapa chini ni madai ya mwendeshaji mwenyewe — zimerekodiwa kwa marejeleo, hazijathibitishwa na RankWagers.",
+  opFoundedRow: "Ilianzishwa {year}",
+  opHqRow: "Makao makuu: {hq}",
+  opLicensesRow: "Leseni: {list}",
+  opContinueTitle: "Endelea kwa mwendeshaji huyu",
+  opContinueBody:
+    "Ikiwa ushahidi hapo juu ni wa manufaa, kiungo cha kibiashara hapa chini kinafungua tovuti ya kamari. RankWagers hupata kamisheni kwa usajili na haiendeshi huduma za kamari.",
+  opContinueCta: "Endelea kwa {operator}",
+  opContinueUnavailable: "Hakuna kiungo cha kibiashara kwa nchi yako.",
+  opRelatedOperators: "Waendeshaji wanaohusiana",
 
 });

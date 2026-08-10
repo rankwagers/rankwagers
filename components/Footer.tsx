@@ -22,8 +22,6 @@ export function Footer({
     { href: `/${locale}/countries`, label: "Countries" },
     { href: `/${locale}/operators`, label: "Operators" },
     { href: `/${locale}/search`, label: "Search" },
-    { href: `/${locale}/best-betting-sites`, label: "Assessments" },
-    { href: `/${locale}/bonuses`, label: "Promotions" },
     { href: `/${locale}/acca`, label: "Accumulators" },
     { href: `/${locale}/acca/builder`, label: "Build accumulator" },
   ];

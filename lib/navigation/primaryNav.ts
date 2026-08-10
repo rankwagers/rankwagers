@@ -111,36 +111,11 @@ export function buildPrimaryNav(locale: Locale, labels: {
       label: "Operators",
       items: [
         /*
-         * Labelled with `reviews`, not `bestBetting`.
-         *
-         * `nav.bestBetting` is "Operators" in en, which is also the label of the `/operators`
-         * entry four lines below and of this group itself — so the masthead and the grouped menu
-         * both carried two adjacent, identically-labelled links to different routes. The footer
-         * already calls this route "Assessments" (`nav.reviews`), so the nav now agrees with the
-         * footer instead of inventing a third name. `nav.bestBetting` is unchanged and still used
-         * as the cross-sell CTA label in AffiliateHomeContent.
+         * Commercial conversion pass: the five commercial doors (/best-betting-sites,
+         * /best-crypto-betting-sites, /bonuses, /reviews/*, /compare/*) are permanent
+         * redirects into /operators — ONE canonical commercial surface. The nav
+         * carries the one real destination; linking a redirect is linking noise.
          */
-        {
-          href: `/${locale}/best-betting-sites`,
-          label: labels.reviews,
-        },
-        {
-          href: `/${locale}/best-crypto-betting-sites`,
-          label: labels.bestCrypto,
-        },
-        /*
-         * Bonuses is deliberately NOT `desktopPrimary`.
-         *
-         * The compact desktop row is the masthead: it states what the publication considers its
-         * own headline surfaces. Archive and Methodology now sit second and third in it, and a
-         * promotional offers page beside them reads as an equivalent claim on the reader's
-         * attention, which it is not. The page is unchanged and still one click away in this
-         * group — it loses masthead billing, not access.
-         */
-        {
-          href: `/${locale}/bonuses`,
-          label: labels.bonuses,
-        },
         {
           href: `/${locale}/operators`,
           label: "Operators",

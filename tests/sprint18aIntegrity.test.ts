@@ -13,15 +13,19 @@ import { toggleSavedFixture, type SavedFixtureRecord } from "../lib/research/sav
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
-test("best-betting-sites uses betting variant and bestBetting metadata keys", () => {
+test("best-betting-sites is a recorded permanent redirect into /operators", () => {
+  /*
+   * Re-pinned after the commercial conversion pass: the page this test guarded
+   * is RETIRED — the five commercial doors collapse into the operators hub.
+   * What must now hold is the retirement itself, not the old variant wiring.
+   */
   const src = readFileSync(
     path.join(root, "app/[locale]/best-betting-sites/page.tsx"),
     "utf8"
   );
-  assert.match(src, /variant=["']betting["']/);
-  assert.doesNotMatch(src, /variant=["']crypto["']/);
-  assert.match(src, /bestBettingTitle/);
-  assert.match(src, /bestBettingDescription/);
+  assert.match(src, /permanentRedirect/);
+  assert.match(src, /RETIRED/);
+  assert.doesNotMatch(src, /variant=/);
 });
 
 test("primary nav includes bookmaker hubs and grouped research/browse", () => {
@@ -35,8 +39,15 @@ test("primary nav includes bookmaker hubs and grouped research/browse", () => {
     groups.map((g) => g.id),
     ["research", "bookmakers", "browse"]
   );
-  assert.ok(flat.some((item) => item.href === "/en/best-betting-sites"));
-  assert.ok(flat.some((item) => item.href === "/en/bonuses"));
+  /*
+   * Re-pinned after the commercial conversion pass: the bookmakers group now
+   * carries the ONE canonical commercial surface. Retired doors must NOT be
+   * navigated to — a nav link to a redirect is a broken promise.
+   */
+  assert.ok(flat.some((item) => item.href === "/en/operators"));
+  for (const gone of ["/en/best-betting-sites", "/en/best-crypto-betting-sites", "/en/bonuses"]) {
+    assert.ok(!flat.some((item) => item.href === gone), `${gone} is retired and must leave the nav`);
+  }
 
   /*
    * This test previously required `Best Betting Sites` and `Shortlist` to hold compact-desktop
@@ -51,7 +62,7 @@ test("primary nav includes bookmaker hubs and grouped research/browse", () => {
    * grouped menu — and that menu is now visible at every width (MobileNav).
    */
   assert.ok(desktop.length <= 5, `compact desktop row must stay within budget, got ${desktop.length}`);
-  for (const href of ["/en/best-betting-sites", "/en/operators", "/en/markets", "/en#saved"]) {
+  for (const href of ["/en/operators", "/en/markets", "/en#saved"]) {
     assert.ok(
       flat.some((item) => item.href === href),
       `${href} stood down from the compact row and must remain reachable via the grouped menu`

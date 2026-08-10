@@ -1,7 +1,6 @@
 import type { MetadataRoute } from "next";
 import { locales } from "@/lib/i18n";
 import { BRANDS } from "@/lib/brands";
-import { COMPARE_INDEXABLE_SLUGS } from "@/lib/compareSlugs";
 import { listCompetitions } from "@/lib/competitions/registry";
 import { listMarkets } from "@/lib/markets/registry";
 import { listSeasons } from "@/lib/seasons/registry";
@@ -13,10 +12,13 @@ import { siteUrl, contentDate } from "@/lib/seo";
 /** Cache sitemap for an hour — crawl-friendly without force-dynamic. */
 export const revalidate = 3600;
 
+/*
+ * Commercial conversion pass: /bonuses, /best-*, /reviews/* and /compare/* are
+ * retired permanent redirects into /operators — advertising a redirect in a
+ * sitemap wastes crawl budget, so only the canonical surface is listed.
+ */
 const STATIC_PATHS = [
   "",
-  "/best-crypto-betting-sites",
-  "/best-betting-sites",
   "/operators",
   "/markets",
   "/competitions",
@@ -26,7 +28,6 @@ const STATIC_PATHS = [
   // /combo redirects to Acca Builder (noindex) — excluded from sitemap (Sprint 22)
   "/archive",
   "/methodology",
-  "/bonuses",
   "/responsible-gambling",
   "/terms",
   "/privacy",
@@ -41,7 +42,6 @@ type SitemapId =
   | "teams"
   | "seasons"
   | "countries"
-  | "compare"
   | "accas";
 
 /** Produces a sitemap index: /sitemap/static.xml, /sitemap/operators.xml, … */
@@ -54,7 +54,6 @@ export async function generateSitemaps() {
     { id: "teams" },
     { id: "seasons" },
     { id: "countries" },
-    { id: "compare" },
     { id: "accas" },
   ] satisfies Array<{ id: SitemapId }>;
 }
@@ -129,12 +128,6 @@ export default async function sitemap({
           changeFrequency: "weekly",
           priority: 0.75,
         });
-        entries.push({
-          url: `${base}/${locale}/reviews/${brand.slug}`,
-          lastModified: staticLastModified,
-          changeFrequency: "weekly",
-          priority: 0.55,
-        });
       }
     }
 
@@ -193,16 +186,6 @@ export default async function sitemap({
       }
     }
 
-    if (key === "compare") {
-      for (const slug of COMPARE_INDEXABLE_SLUGS) {
-        entries.push({
-          url: `${base}/${locale}/compare/${slug}`,
-          lastModified: staticLastModified,
-          changeFrequency: "monthly",
-          priority: 0.5,
-        });
-      }
-    }
   }
 
   return entries;
