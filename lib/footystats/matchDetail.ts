@@ -13,6 +13,17 @@ export type MarketHitStat = {
   hits: number;
   played: number;
   pct: number;
+  /*
+   * THE 100% SHUT-OUT PLAGUE — false when the provider payload carried NO figure
+   * for this market: `num(undefined)` used to coerce an absent `seasonBTTSNum_*`
+   * to 0 while `played` stayed real, and a fabricated 0-of-11 BTTS rate then
+   * inverted into a perfect "shut out: 11 of 11 (100%)" lead on live fixtures
+   * whose matches in fact saw both teams score. Missing is missing, not zero:
+   * an unmeasured stat is excluded from scoring and never rendered as a rate.
+   * Absent on hand-constructed literals ⇒ treated as measured (a written
+   * fixture IS a measurement); the provider mapper always sets it explicitly.
+   */
+  measured?: boolean;
 };
 
 export type VenueSideStats = {
@@ -119,6 +130,15 @@ function pct(v: unknown): number {
 }
 
 function marketHit(stats: RawStats, venue: "home" | "away", numKey: string, pctKey: string, played: number): MarketHitStat {
+  // Presence check BEFORE coercion. `measured` asserts the COUNT is real — the
+  // figure scoring and rate displays consume. A payload without the num field
+  // was never measured for this market (a pct-only payload would still leave
+  // `hits` a fabricated 0), so 0 must not be invented in either shape.
+  const measured =
+    stats[numKey] !== null &&
+    stats[numKey] !== undefined &&
+    stats[numKey] !== "" &&
+    Number.isFinite(Number(stats[numKey]));
   let hits = num(stats[numKey]);
   let p = played > 0 ? played : num(stats[`seasonMatchesPlayed_${venue}`]);
   if (p < 0) p = 0;
@@ -130,10 +150,10 @@ function marketHit(stats: RawStats, venue: "home" | "away", numKey: string, pctK
   if (p > 0 && pc === 0 && hits > 0) {
     pc = Math.round((hits / p) * 100);
   }
-  return { hits, played: p, pct: pc };
+  return { hits, played: p, pct: pc, measured };
 }
 
-function venueStatsFromTeam(stats: RawStats, venue: "home" | "away"): VenueSideStats {
+export function venueStatsFromTeam(stats: RawStats, venue: "home" | "away"): VenueSideStats {
   const played = num(stats[`seasonMatchesPlayed_${venue}`]);
   return {
     played,

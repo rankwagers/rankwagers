@@ -143,8 +143,11 @@ function rateDisplay(stat: {
   pct: number;
   played: number;
   hits: number | null;
+  measured?: boolean;
 }): RateWithSample | null {
   if (stat.played <= 0) return null;
+  // An unmeasured stat has no rate to display — absence renders as absence.
+  if (stat.measured === false) return null;
   if (!rateSamplePaired(stat.pct, stat.hits, stat.played)) {
     // Provider figure alone — the mismatched denominator must not license it as a rate.
     return { display: `${stat.pct}%`, sampleSize: stat.played };

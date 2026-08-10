@@ -49,6 +49,16 @@ export function isConfiguredCountryCode(code: string): boolean {
   return Boolean(COUNTRY_PROFILES[code.toUpperCase()]);
 }
 
+/*
+ * THE COUNTRY-LINK 404 — competition and team pages linked every country field
+ * to /countries/{code} unconditionally, but the [code] route only serves
+ * CONFIGURED profiles; Ligue 1's "FR" produced a live 404. A country renders
+ * as a link only when its hub actually exists — otherwise it is a plain label.
+ */
+export function countryHubHref(locale: Locale | string, code: string): string | null {
+  return isConfiguredCountryCode(code) ? countryPath(locale, code) : null;
+}
+
 let indexableCountryCache: string[] | null = null;
 
 /** Memoized list of country codes that pass the quality gate (EN assembly). */

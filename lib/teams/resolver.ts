@@ -51,6 +51,36 @@ function providerMatch(
   return undefined;
 }
 
+/*
+ * THE WRONG-TEAM BUG — the fuzzy tier used raw bidirectional substring tests, so a
+ * SHORT alias could hide inside an unrelated name: "molde ii" contains "ol" (inside
+ * "m-ol-de"), Lyon's alias, and a live fixture's "Molde II" link landed on /teams/lyon.
+ * Fuzzy now matches on WHOLE TOKENS only, and never across an identity-bearing token:
+ * "Molde II" is a different team from "Molde" — a reserve side must not inherit the
+ * first team's page, in either direction.
+ */
+const IDENTITY_TOKENS = new Set([
+  "ii", "iii", "iv", "b", "2", "u17", "u18", "u19", "u20", "u21", "u23",
+  "w", "women", "reserve", "reserves", "amateure", "academy", "youth",
+]);
+
+function fuzzyTokenMatch(a: string, b: string): boolean {
+  const ta = a.split(" ").filter(Boolean);
+  const tb = b.split(" ").filter(Boolean);
+  if (!ta.length || !tb.length) return false;
+  const [shorter, longer] = ta.length <= tb.length ? [ta, tb] : [tb, ta];
+  // every token of the shorter name must appear as a whole token of the longer —
+  // no substring bleed ("ol" never lives inside "molde").
+  if (!shorter.every((token) => longer.includes(token))) return false;
+  // the longer name must not carry an identity token the shorter lacks:
+  // "molde ii" ⊅ "molde" as the same club.
+  const shortSet = new Set(shorter);
+  if (longer.some((token) => IDENTITY_TOKENS.has(token) && !shortSet.has(token))) return false;
+  // a single very short token ("ol", "om") is not evidence of identity on its own.
+  if (shorter.length === 1 && shorter[0].length < 4) return false;
+  return true;
+}
+
 /**
  * Resolve a team from provider IDs, exact/alias names, or competition-scoped fuzzy match.
  * Ambiguous fuzzy hits are never silently accepted.
@@ -87,10 +117,7 @@ export function resolveTeam(
 
   const fuzzy = pool.filter((team) => {
     const names = [team.name, team.shortName, ...(team.aliases ?? [])].filter(Boolean) as string[];
-    return names.some((name) => {
-      const n = normalizeTeamName(name);
-      return n.includes(normalized) || normalized.includes(n);
-    });
+    return names.some((name) => fuzzyTokenMatch(normalizeTeamName(name), normalized));
   });
 
   if (fuzzy.length === 1) return { status: "matched", team: fuzzy[0], method: "fuzzy" };

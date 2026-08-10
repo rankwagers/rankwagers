@@ -679,6 +679,11 @@ export const predictionsEn = {
   srchEmptyNoneTitle: "No matches for this search.",
   srchEmptyNoneDesc:
     "Nothing in the validated registry matched that query. Try another spelling, a team alias, or browse popular research below.",
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "Page not found",
+  nfBody:
+    "This URL is not part of the research record. Check the address, or continue from one of the surfaces below.",
+  nfHome: "Go home",
   navQualified: "Qualified lists",
   navLiveSignals: "Live signals",
   navMethodology: "Methodology",

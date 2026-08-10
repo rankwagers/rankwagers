@@ -5,7 +5,7 @@ import { EvidenceSection } from "@/components/evidence-ui/EvidenceSection";
 import { EntityViewTracker } from "@/components/knowledge-graph/EntityViewTracker";
 import { GraphEntityPanel } from "@/components/knowledge-graph/GraphEntityPanel";
 import { fromTeamIntelligence } from "@/lib/evidence-ui";
-import { countryPath } from "@/lib/countries/links";
+import { countryHubHref } from "@/lib/countries/landing";
 import { countryName } from "@/lib/geoNames";
 import { graphRelatedItemListLd } from "@/lib/knowledge-graph/schema";
 import type { Locale } from "@/lib/i18n";
@@ -122,12 +122,16 @@ export function TeamDetailView({
             {team.countryCode ? (
               <>
                 {" · "}
-                <Link
-                  href={countryPath(locale, team.countryCode)}
-                  className="hover:text-[var(--hero-ink)]"
-                >
-                  {countryName(team.countryCode)}
-                </Link>
+                {countryHubHref(locale, team.countryCode) ? (
+                  <Link
+                    href={countryHubHref(locale, team.countryCode)!}
+                    className="hover:text-[var(--hero-ink)]"
+                  >
+                    {countryName(team.countryCode)}
+                  </Link>
+                ) : (
+                  countryName(team.countryCode)
+                )}
               </>
             ) : null}
           </p>

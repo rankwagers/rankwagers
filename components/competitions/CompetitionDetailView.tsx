@@ -27,7 +27,7 @@ import type {
   CompetitionResearchStats,
 } from "@/lib/competitions/types";
 import type { Locale } from "@/lib/i18n";
-import { countryPath } from "@/lib/countries/links";
+import { countryHubHref } from "@/lib/countries/landing";
 import { countryName } from "@/lib/geoNames";
 import { graphRelatedItemListLd } from "@/lib/knowledge-graph/schema";
 import { getMarket } from "@/lib/markets/registry";
@@ -147,12 +147,16 @@ export function CompetitionDetailView({
             {competition.country ? (
               <>
                 {" · "}
-                <Link
-                  href={countryPath(locale, competition.country)}
-                  className="hover:text-[var(--hero-ink)]"
-                >
-                  {countryName(competition.country)}
-                </Link>
+                {countryHubHref(locale, competition.country) ? (
+                  <Link
+                    href={countryHubHref(locale, competition.country)!}
+                    className="hover:text-[var(--hero-ink)]"
+                  >
+                    {countryName(competition.country)}
+                  </Link>
+                ) : (
+                  countryName(competition.country)
+                )}
               </>
             ) : null}
           </p>

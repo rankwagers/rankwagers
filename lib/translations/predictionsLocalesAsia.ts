@@ -342,6 +342,12 @@ export const ar = mergePredictions({
   srchEmptyNoneDesc:
     "لا شيء في السجل الموثّق يطابق الاستعلام. جرّب تهجئة أخرى أو اسمًا بديلًا للفريق، أو تصفّح البحث الشائع أدناه.",
 
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "الصفحة غير موجودة",
+  nfBody:
+    "هذا الرابط ليس جزءًا من سجل البحث. تحقّق من العنوان أو تابع عبر إحدى الواجهات أدناه.",
+  nfHome: "إلى الرئيسية",
+
 });
 
 export const hi = mergePredictions({
@@ -692,6 +698,12 @@ export const hi = mergePredictions({
   srchEmptyNoneDesc:
     "सत्यापित रजिस्ट्री में कुछ भी मेल नहीं खाया। दूसरी वर्तनी या टीम का उपनाम आज़माएँ, या नीचे लोकप्रिय शोध देखें।",
 
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "पृष्ठ नहीं मिला",
+  nfBody:
+    "यह URL शोध रिकॉर्ड का हिस्सा नहीं है। पता जाँचें या नीचे दी गई सतहों में से किसी एक से आगे बढ़ें।",
+  nfHome: "मुखपृष्ठ पर जाएँ",
+
 });
 
 export const ja = mergePredictions({
@@ -1013,6 +1025,11 @@ export const ja = mergePredictions({
   srchEmptyLocaleDesc: "この言語では検索を利用できません。対応言語に切り替えて再試行してください。",
   srchEmptyNoneTitle: "この検索に一致はありません。",
   srchEmptyNoneDesc: "検証済みレジストリに一致はありませんでした。別の綴りやチームの別名を試すか、下の人気リサーチをご覧ください。",
+
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "ページが見つかりません",
+  nfBody: "このURLはリサーチ記録の一部ではありません。アドレスを確認するか、下のいずれかの面から続けてください。",
+  nfHome: "ホームへ",
 
 });
 
@@ -1336,6 +1353,11 @@ export const ko = mergePredictions({
   srchEmptyLocaleDesc: "이 언어에서는 검색을 사용할 수 없습니다. 지원되는 언어로 전환한 뒤 다시 시도하세요.",
   srchEmptyNoneTitle: "이 검색과 일치하는 항목이 없습니다.",
   srchEmptyNoneDesc: "검증된 레지스트리에서 일치하는 항목이 없습니다. 다른 철자나 팀 별칭을 시도하거나 아래의 인기 리서치를 둘러보세요.",
+
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "페이지를 찾을 수 없습니다",
+  nfBody: "이 URL은 리서치 기록에 속하지 않습니다. 주소를 확인하거나 아래 표면 중 하나에서 계속하세요.",
+  nfHome: "홈으로",
 
 });
 
@@ -1686,6 +1708,12 @@ export const th = mergePredictions({
   srchEmptyNoneTitle: "ไม่มีผลลัพธ์สำหรับการค้นหานี้",
   srchEmptyNoneDesc:
     "ไม่มีสิ่งใดในทะเบียนที่ตรวจสอบแล้วตรงกับคำค้น ลองสะกดแบบอื่น ชื่อเล่นของทีม หรือดูงานวิจัยยอดนิยมด้านล่าง",
+
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "ไม่พบหน้า",
+  nfBody:
+    "URL นี้ไม่ได้เป็นส่วนหนึ่งของบันทึกการวิจัย ตรวจสอบที่อยู่หรือไปต่อจากพื้นผิวด้านล่าง",
+  nfHome: "กลับหน้าแรก",
 
 });
 
@@ -2043,6 +2071,12 @@ export const vi = mergePredictions({
   srchEmptyNoneTitle: "Không có kết quả cho tìm kiếm này.",
   srchEmptyNoneDesc:
     "Không có gì trong sổ đăng ký đã xác thực khớp với truy vấn. Thử cách viết khác, biệt danh của đội, hoặc xem nghiên cứu phổ biến bên dưới.",
+
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "Không tìm thấy trang",
+  nfBody:
+    "URL này không thuộc hồ sơ nghiên cứu. Kiểm tra địa chỉ hoặc tiếp tục từ một trong các bề mặt bên dưới.",
+  nfHome: "Về trang chủ",
 
 });
 
@@ -2403,6 +2437,12 @@ export const id = mergePredictions({
   srchEmptyNoneDesc:
     "Tidak ada apa pun di registri tervalidasi yang cocok dengan kueri. Coba ejaan lain, alias tim, atau jelajahi riset populer di bawah.",
 
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "Halaman tidak ditemukan",
+  nfBody:
+    "URL ini bukan bagian dari catatan riset. Periksa alamatnya atau lanjutkan dari salah satu permukaan di bawah.",
+  nfHome: "Ke beranda",
+
 });
 
 export const zh = mergePredictions({
@@ -2724,6 +2764,11 @@ export const zh = mergePredictions({
   srchEmptyNoneTitle: "此搜索没有匹配项。",
   srchEmptyNoneDesc: "已验证注册表中没有与查询匹配的内容。试试其他拼写、球队别名,或浏览下方的热门研究。",
 
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "未找到页面",
+  nfBody: "该URL不属于研究记录。请检查地址,或从下面的入口继续。",
+  nfHome: "回到首页",
+
 });
 
 export const bn = mergePredictions({
@@ -3007,6 +3052,12 @@ export const bn = mergePredictions({
   srchEmptyNoneTitle: "এই খোঁজের কোনও ফলাফল নেই।",
   srchEmptyNoneDesc:
     "যাচাইকৃত রেজিস্ট্রিতে কিছুই মেলেনি। অন্য বানান বা দলের ডাকনাম চেষ্টা করুন, বা নিচের জনপ্রিয় গবেষণা দেখুন।",
+
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "পৃষ্ঠা পাওয়া যায়নি",
+  nfBody:
+    "এই URL গবেষণা রেকর্ডের অংশ নয়। ঠিকানাটি যাচাই করুন বা নিচের কোনও একটি পৃষ্ঠ থেকে এগিয়ে যান।",
+  nfHome: "হোমে যান",
 
 });
 
@@ -3301,6 +3352,12 @@ export const ta = mergePredictions({
   srchEmptyNoneDesc:
     "சரிபார்க்கப்பட்ட பதிவேட்டில் எதுவும் பொருந்தவில்லை. வேறு எழுத்துக்கூட்டல் அல்லது அணியின் மாற்றுப்பெயரை முயலுங்கள், அல்லது கீழே பிரபல ஆய்வைப் பாருங்கள்.",
 
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "பக்கம் கிடைக்கவில்லை",
+  nfBody:
+    "இந்த URL ஆய்வுப் பதிவின் பகுதி அல்ல. முகவரியைச் சரிபார்க்கவும் அல்லது கீழுள்ள பரப்புகளில் ஒன்றிலிருந்து தொடரவும்.",
+  nfHome: "முகப்புக்கு",
+
 });
 
 export const te = mergePredictions({
@@ -3584,6 +3641,12 @@ export const te = mergePredictions({
   srchEmptyNoneDesc:
     "ధృవీకరించిన రిజిస్ట్రీలో ఏదీ సరిపోలలేదు. వేరే స్పెల్లింగ్ లేదా జట్టు మారుపేరు ప్రయత్నించండి, లేదా క్రింద ప్రసిద్ధ పరిశోధనను చూడండి.",
 
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "పేజీ కనబడలేదు",
+  nfBody:
+    "ఈ URL పరిశోధన రికార్డులో భాగం కాదు. చిరునామాను తనిఖీ చేయండి లేదా క్రింది ఉపరితలాల్లో ఒకదాని నుండి కొనసాగండి.",
+  nfHome: "హోమ్‌కు వెళ్లండి",
+
 });
 
 export const mr = mergePredictions({
@@ -3864,6 +3927,12 @@ export const mr = mergePredictions({
   srchEmptyNoneTitle: "या शोधाला जुळणी नाही.",
   srchEmptyNoneDesc:
     "पडताळलेल्या नोंदणीत काहीही जुळले नाही. दुसरे शुद्धलेखन किंवा संघाचे टोपणनाव वापरून पाहा, किंवा खालील लोकप्रिय संशोधन चाळा.",
+
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "पान सापडले नाही",
+  nfBody:
+    "हे URL संशोधन नोंदीचा भाग नाही. पत्ता तपासा किंवा खालील पृष्ठांपैकी एकावरून पुढे जा.",
+  nfHome: "मुख्यपृष्ठावर जा",
 
 });
 
@@ -4224,5 +4293,11 @@ export const sw = mergePredictions({
   srchEmptyNoneTitle: "Hakuna kinacholingana na utafutaji huu.",
   srchEmptyNoneDesc:
     "Hakuna chochote katika rejista iliyothibitishwa kilicholingana na hoja. Jaribu tahajia nyingine, jina mbadala la timu, au vinjari utafiti maarufu hapa chini.",
+
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "Ukurasa haukupatikana",
+  nfBody:
+    "URL hii si sehemu ya rekodi ya utafiti. Kagua anwani au endelea kupitia mojawapo ya nyuso zilizo hapa chini.",
+  nfHome: "Nenda mwanzo",
 
 });

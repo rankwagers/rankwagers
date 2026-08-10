@@ -535,6 +535,12 @@ export const nl = euroPredictions({
   srchEmptyNoneDesc:
     "Niets in het gevalideerde register kwam overeen met de zoekopdracht. Probeer een andere spelling, een teamalias, of blader hieronder door populair onderzoek.",
 
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "Pagina niet gevonden",
+  nfBody:
+    "Deze URL maakt geen deel uit van het onderzoeksregister. Controleer het adres of ga verder via een van de onderstaande ingangen.",
+  nfHome: "Naar de startpagina",
+
 });
 
 export const pl = euroPredictions({
@@ -899,6 +905,12 @@ export const pl = euroPredictions({
   srchEmptyNoneDesc:
     "Nic w zweryfikowanym rejestrze nie pasowało do zapytania. Spróbuj innej pisowni, aliasu drużyny lub przejrzyj popularne badania poniżej.",
 
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "Nie znaleziono strony",
+  nfBody:
+    "Ten adres URL nie należy do rejestru badawczego. Sprawdź adres lub przejdź dalej jedną z poniższych ścieżek.",
+  nfHome: "Do strony głównej",
+
 });
 
 export const cs = euroPredictions({
@@ -1257,6 +1269,12 @@ export const cs = euroPredictions({
   srchEmptyNoneDesc:
     "Nic v ověřeném registru dotazu neodpovídalo. Zkuste jiný pravopis, alias týmu nebo si níže prohlédněte oblíbený výzkum.",
 
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "Stránka nenalezena",
+  nfBody:
+    "Tato URL není součástí výzkumného registru. Zkontrolujte adresu, nebo pokračujte jednou z cest níže.",
+  nfHome: "Na úvodní stránku",
+
 });
 
 export const da = euroPredictions({
@@ -1614,6 +1632,12 @@ export const da = euroPredictions({
   srchEmptyNoneDesc:
     "Intet i det validerede register matchede søgningen. Prøv en anden stavemåde, et holdalias, eller gennemse populær forskning nedenfor.",
 
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "Siden blev ikke fundet",
+  nfBody:
+    "Denne URL er ikke en del af forskningsregistret. Tjek adressen, eller fortsæt via en af fladerne nedenfor.",
+  nfHome: "Til forsiden",
+
 });
 
 export const sv = euroPredictions({
@@ -1970,6 +1994,12 @@ export const sv = euroPredictions({
   srchEmptyNoneTitle: "Inga träffar för denna sökning.",
   srchEmptyNoneDesc:
     "Inget i det validerade registret matchade sökningen. Prova en annan stavning, ett lagalias eller bläddra i populär forskning nedan.",
+
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "Sidan hittades inte",
+  nfBody:
+    "Denna URL ingår inte i forskningsregistret. Kontrollera adressen eller fortsätt via en av ytorna nedan.",
+  nfHome: "Till startsidan",
 
 });
 
@@ -2330,6 +2360,12 @@ export const no = euroPredictions({
   srchEmptyNoneDesc:
     "Ingenting i det validerte registeret matchet søket. Prøv en annen stavemåte, et lagalias, eller bla i populær forskning nedenfor.",
 
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "Siden ble ikke funnet",
+  nfBody:
+    "Denne URL-en er ikke en del av forskningsregisteret. Sjekk adressen, eller fortsett via en av flatene nedenfor.",
+  nfHome: "Til forsiden",
+
 });
 
 export const fi = euroPredictions({
@@ -2685,6 +2721,12 @@ export const fi = euroPredictions({
   srchEmptyNoneTitle: "Ei osumia tälle haulle.",
   srchEmptyNoneDesc:
     "Mikään vahvistetussa rekisterissä ei vastannut hakua. Kokeile toista kirjoitusasua tai joukkueen aliasta, tai selaa suosittua tutkimusta alta.",
+
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "Sivua ei löytynyt",
+  nfBody:
+    "Tämä URL ei kuulu tutkimusrekisteriin. Tarkista osoite tai jatka jostakin alla olevasta pinnasta.",
+  nfHome: "Etusivulle",
 
 });
 
@@ -3047,6 +3089,12 @@ export const ro = euroPredictions({
   srchEmptyNoneTitle: "Nicio potrivire pentru această căutare.",
   srchEmptyNoneDesc:
     "Nimic din registrul validat nu a corespuns interogării. Încearcă altă ortografie, un alias al echipei sau răsfoiește cercetarea populară de mai jos.",
+
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "Pagina nu a fost găsită",
+  nfBody:
+    "Acest URL nu face parte din registrul de cercetare. Verifică adresa sau continuă printr-una dintre suprafețele de mai jos.",
+  nfHome: "La pagina principală",
 
 });
 
@@ -3413,6 +3461,12 @@ export const el = euroPredictions({
   srchEmptyNoneDesc:
     "Τίποτα στο επικυρωμένο μητρώο δεν ταίριαξε με το ερώτημα. Δοκιμάστε άλλη γραφή, ένα ψευδώνυμο ομάδας ή περιηγηθείτε στη δημοφιλή έρευνα παρακάτω.",
 
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "Η σελίδα δεν βρέθηκε",
+  nfBody:
+    "Αυτό το URL δεν ανήκει στο μητρώο έρευνας. Ελέγξτε τη διεύθυνση ή συνεχίστε από μία από τις παρακάτω επιφάνειες.",
+  nfHome: "Στην αρχική",
+
 });
 
 export const hu = euroPredictions({
@@ -3772,5 +3826,11 @@ export const hu = euroPredictions({
   srchEmptyNoneTitle: "Nincs találat erre a keresésre.",
   srchEmptyNoneDesc:
     "Semmi sem egyezett a lekérdezéssel az ellenőrzött nyilvántartásban. Próbálj más írásmódot, csapat-aliast, vagy böngéssz a népszerű kutatásban lent.",
+
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "Az oldal nem található",
+  nfBody:
+    "Ez az URL nem része a kutatási nyilvántartásnak. Ellenőrizd a címet, vagy folytasd az alábbi felületek egyikén.",
+  nfHome: "A kezdőlapra",
 
 });

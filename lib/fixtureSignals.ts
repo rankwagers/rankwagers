@@ -177,6 +177,10 @@ function seasonSignals(
   for (const market of markets) {
     const stat = side[market as "over15"];
     if (!stat) continue;
+    /* Missing is missing, not zero: a stat the provider never measured must not
+       become a signal in either direction — a fabricated 0-rate once inverted
+       into a perfect 100% "shut out" lead on live fixtures. */
+    if (stat.measured === false) continue;
     const signal = makeSignal({
       market,
       count: stat.hits,

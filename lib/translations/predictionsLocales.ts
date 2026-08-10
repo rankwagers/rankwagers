@@ -372,6 +372,12 @@ const pt: PredictionStrings = mergePredictions({
   srchEmptyNoneDesc:
     "Nada no registo validado correspondeu à consulta. Tente outra grafia, um nome alternativo da equipa ou explore a pesquisa popular abaixo.",
 
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "Página não encontrada",
+  nfBody:
+    "Este URL não faz parte do registo de pesquisa. Verifique o endereço ou continue por uma das superfícies abaixo.",
+  nfHome: "Ir para o início",
+
 });
 
 const es: PredictionStrings = mergePredictions({
@@ -743,6 +749,12 @@ const es: PredictionStrings = mergePredictions({
   srchEmptyNoneTitle: "Sin coincidencias para esta búsqueda.",
   srchEmptyNoneDesc:
     "Nada en el registro validado coincidió con la consulta. Prueba otra grafía, un alias del equipo o explora la investigación popular abajo.",
+
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "Página no encontrada",
+  nfBody:
+    "Esta URL no forma parte del registro de investigación. Comprueba la dirección o continúa por una de las superficies de abajo.",
+  nfHome: "Ir al inicio",
 
 });
 
@@ -1118,6 +1130,12 @@ const de: PredictionStrings = mergePredictions({
   srchEmptyNoneDesc:
     "Nichts im validierten Register entsprach der Anfrage. Versuchen Sie eine andere Schreibweise, einen Team-Alias, oder stöbern Sie unten in der beliebten Recherche.",
 
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "Seite nicht gefunden",
+  nfBody:
+    "Diese URL gehört nicht zum Recherche-Register. Prüfen Sie die Adresse oder fahren Sie über eine der Flächen unten fort.",
+  nfHome: "Zur Startseite",
+
 });
 
 const it: PredictionStrings = mergePredictions({
@@ -1486,6 +1504,12 @@ const it: PredictionStrings = mergePredictions({
   srchEmptyNoneTitle: "Nessun risultato per questa ricerca.",
   srchEmptyNoneDesc:
     "Nulla nel registro validato corrisponde alla ricerca. Prova un'altra grafia, un alias della squadra o esplora la ricerca popolare qui sotto.",
+
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "Pagina non trovata",
+  nfBody:
+    "Questo URL non fa parte del registro di ricerca. Controlla l'indirizzo o prosegui da una delle superfici qui sotto.",
+  nfHome: "Vai alla home",
 
 });
 
@@ -1856,6 +1880,12 @@ const fr: PredictionStrings = mergePredictions({
   srchEmptyNoneTitle: "Aucun résultat pour cette recherche.",
   srchEmptyNoneDesc:
     "Rien dans le registre validé ne correspond à la requête. Essayez une autre orthographe, un alias d'équipe, ou parcourez la recherche populaire ci-dessous.",
+
+  /* Global 404 — form-guide conversion (nf keys). */
+  nfTitle: "Page introuvable",
+  nfBody:
+    "Cette URL ne fait pas partie du registre de recherche. Vérifiez l'adresse ou poursuivez via l'une des surfaces ci-dessous.",
+  nfHome: "Retour à l'accueil",
 
 });
 
