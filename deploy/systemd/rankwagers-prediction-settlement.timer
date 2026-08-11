@@ -1,0 +1,28 @@
+# Prediction settlement — every 30 minutes, offset from capture.
+#
+# INTERVAL, AND WHY :15,:45 (production-confirmed values)
+# -------------------------------------------------------
+# Settlement is RETROSPECTIVE: a fixture becomes settleable once its final score exists and
+# stays settleable until it is settled — nothing is lost to a missed fire, unlike capture's
+# closing pre-kickoff window. The 30-minute cadence bounds settlement latency (a result waits
+# at most ~32 minutes), and the :15,:45 offset de-synchronises from the capture timer's :00,:30
+# so the two jobs never contend for the shared store or the provider budget in the same minute.
+#
+# Persistent=true, unlike the capture timer — and for the mirrored reason: a missed settlement
+# fire SHOULD be caught up, because the work it would have done is still there waiting. A boot
+# after downtime settles the backlog immediately instead of waiting for the next slot.
+#
+# RECONSTRUCTED (commercial pass, Phase D): OnCalendar=*:15,45 and Persistent=true are the
+# production-stated values; RandomizedDelaySec=120 is assumed from the capture timer's pattern.
+# If the live unit differs, replace this file with its exact content.
+[Unit]
+Description=RankWagers prediction settlement every 30 minutes (offset)
+
+[Timer]
+OnCalendar=*:15,45
+RandomizedDelaySec=120
+Persistent=true
+Unit=rankwagers-prediction-settlement.service
+
+[Install]
+WantedBy=timers.target

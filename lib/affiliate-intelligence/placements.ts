@@ -5,6 +5,62 @@ import type { PlacementRecord } from "./contracts";
  * Competition/team/market/season link to operator pages (not /go) — documented.
  */
 export const AFFILIATE_PLACEMENTS: readonly PlacementRecord[] = [
+  /*
+   * Commercial conversion pass (Phase D): every conversion point emits its
+   * placement, so admin/affiliate/funnels can answer "which points convert".
+   * price_panel and the per-surface operator cards sign through buildGoPath
+   * and appear in redirect events under these ids; the post-L2 bridge is a
+   * same-page anchor (no redirect) and is measured by its data-placement
+   * attribute at the click layer.
+   */
+  {
+    placementId: "price_panel",
+    pageType: "fixture",
+    componentPath: "components/odds/PricePanel.tsx",
+    userIntentStage: "conversion",
+    operatorSelection: "buildPricePanelData (frozen publication odds, availability→verified→price)",
+    attributionSchema: ["operator", "placement", "fixture", "market", "locale", "country"],
+    signingMethod: "buildPricePanelData → buildGoPath",
+    availabilityRule: "resolveOperatorAvailability + affiliateEnabled (Continue gated)",
+    fallbackBehavior: "no observation → no affordance, no panel",
+    eventNames: ["operator_click", "affiliate_redirect_created"],
+    duplicateCtaRisk: "low",
+    prominence: "secondary",
+    qualityStatus: "ok",
+    notes: ["Also rendered on market-page fixture rows for the page's market."],
+  },
+  {
+    placementId: "operator_card_fixture",
+    pageType: "fixture",
+    componentPath: "components/operators/OperatorEvidenceCard.tsx",
+    userIntentStage: "conversion",
+    operatorSelection: "recommendableCards(buildOperatorEvidenceCards)",
+    attributionSchema: ["operator", "placement", "locale", "country"],
+    signingMethod: "operatorAffiliateHref(placement=operator_card_fixture) → buildGoPath",
+    availabilityRule: "affiliateEnabled; internal profile fallback otherwise",
+    fallbackBehavior: "internal operator page (never an outbound link)",
+    eventNames: ["operator_card_impression", "operator_card_primary_click", "affiliate_redirect_created"],
+    duplicateCtaRisk: "low",
+    prominence: "primary",
+    qualityStatus: "ok",
+    notes: ["operator_card_competition and operator_card_market are the same site on their surfaces."],
+  },
+  {
+    placementId: "post_l2_bridge",
+    pageType: "fixture",
+    componentPath: "components/fixtures/FixtureSignalLevels.tsx",
+    userIntentStage: "research",
+    operatorSelection: "none — same-page anchor to the L5 operators level",
+    attributionSchema: ["placement", "locale"],
+    signingMethod: "none (no redirect; data-placement attribute only)",
+    availabilityRule: "renders whenever L2 renders",
+    fallbackBehavior: "absent with the supports level",
+    eventNames: [],
+    duplicateCtaRisk: "low",
+    prominence: "tertiary",
+    qualityStatus: "ok",
+    notes: ["A bridge, not a CTA: it converts attention to L5, not clicks to operators."],
+  },
   {
     placementId: "homepage_operator",
     pageType: "home",
@@ -85,22 +141,12 @@ export const AFFILIATE_PLACEMENTS: readonly PlacementRecord[] = [
     qualityStatus: "ok",
     notes: [],
   },
-  {
-    placementId: "brand_list",
-    pageType: "affiliate_hub",
-    componentPath: "components/BrandList.tsx via prepareBrandListItems",
-    userIntentStage: "discovery",
-    operatorSelection: "brand list for bonuses/hubs",
-    attributionSchema: ["operator", "placement"],
-    signingMethod: "prepareBrandListItems → buildGoPath",
-    availabilityRule: "isAffiliateConfigured",
-    fallbackBehavior: "unsigned skip / no href",
-    eventNames: ["go_redirect"],
-    duplicateCtaRisk: "high",
-    prominence: "secondary",
-    qualityStatus: "review",
-    notes: ["Duplicate-CTA risk if hub + homepage both dense"],
-  },
+  /*
+   * brand_list RETIRED (commercial conversion): BrandList and its host pages
+   * (bonuses / best-* hubs) are deleted; the doors are permanent redirects
+   * into /operators. The record is removed rather than kept as a ghost — a
+   * funnel row for a component that cannot render is a false signal.
+   */
   {
     placementId: "acca_studio",
     pageType: "acca_studio",

@@ -121,7 +121,8 @@ test("the compare page is a head-to-head and makes no ordering claim", () => {
  * these two answers deliberately, rather than inheriting silence by default.
  */
 const SURFACE_TREATMENT: ReadonlyArray<{ rel: string; discloses: boolean; why: string }> = [
-  { rel: "components/BrandListSection.tsx", discloses: true, why: "ranked commercial list" },
+  // BrandListSection deleted with the commercial conversion; the surviving
+  // ranked commercial list is the operators hub, registered above.
   { rel: "app/[locale]/operators/page.tsx", discloses: true, why: "same order as the brand list" },
   { rel: "app/[locale]/compare/[slug]/page.tsx", discloses: false, why: "head-to-head, no ordering" },
   { rel: "app/[locale]/reviews/[brand]/page.tsx", discloses: false, why: "single operator, no ordering" },

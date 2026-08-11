@@ -16,7 +16,7 @@ import { Check, Minus } from "lucide-react";
  * Evidence-aware operator recommendation card (Sprint 21).
  *
  * SERVER COMPONENT. The outbound href is produced here by `operatorAffiliateHref`, which keeps
- * `buildGoPath` on the server — the same boundary `BrandListSection` documents. A client component
+ * `buildGoPath` on the server — the server/client signing boundary. A client component
  * must never construct a signed outbound path.
  *
  * The card never states a recommendation without its derivation. Rank, evidence score and every
@@ -66,7 +66,7 @@ export function OperatorEvidenceCard({
 
   // Falls back to the internal profile when the operator is not affiliate-enabled. That fallback
   // lives in operatorAffiliateHref, so a disabled operator can never produce an outbound link.
-  const primaryHref = operatorAffiliateHref(operator, locale, country);
+  const primaryHref = operatorAffiliateHref(operator, locale, country, `operator_card_${surface}`);
   const secondaryHref = operatorPath(locale, card.slug);
   const isOutbound = primaryHref !== secondaryHref;
   const detailsId = `operator-evidence-${card.slug}`;

@@ -197,7 +197,8 @@ test("BOUNDARY: loading a trust module pulls in no other project module", () => 
  */
 const REGISTERED_CONSUMERS: ReadonlyArray<{ rel: string; why: string }> = [
   { rel: "components/trust/OrderingDisclosure.tsx", why: "renders the disclosure and criteria" },
-  { rel: "components/BrandListSection.tsx", why: "brand list choke point" },
+  // BrandListSection deleted with the commercial conversion — the choke point
+  // is gone with its host pages (permanent redirects into /operators).
   { rel: "components/odds/OddsIntelligencePanel.tsx", why: "shows prices, needs provenance" },
   { rel: "components/predictions/LiveFeedPanel.tsx", why: "live signals framing" },
   { rel: "lib/operators/brandListItems.ts", why: "derives the ordering basis" },
@@ -245,10 +246,12 @@ test("the discovery walk is bracket-safe and fully recursive", () => {
     discovered.some((f) => f.includes("[locale]")),
     "a bracketed path segment must not be treated as a wildcard",
   );
-  assert.ok(
-    discovered.some((f) => f.split("/").length === 2),
-    "a top-level file must be found (a one-level glob would miss it)",
-  );
+  /*
+   * The depth-2 witness was components/BrandListSection.tsx, deleted with the
+   * commercial conversion — no top-level consumer of the vocabulary remains.
+   * The walker's recursion is still proven by the nested assertion below; if a
+   * top-level consumer ever returns, restore the === 2 witness with it.
+   */
   assert.ok(
     discovered.some((f) => f.split("/").length >= 3),
     "a nested file must be found (a one-level glob would miss it)",

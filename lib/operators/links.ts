@@ -58,12 +58,19 @@ export function operatorOddsIntelligenceHref(locale: Locale): string {
   return `/${locale}#fixtures`;
 }
 
-export function operatorAffiliateHref(operator: Operator, locale: Locale, country: string): string {
+export function operatorAffiliateHref(
+  operator: Operator,
+  locale: Locale,
+  country: string,
+  /* Phase D: every conversion point names itself. Callers that ARE the operator
+     page keep the default; the L5 evidence cards pass operator_card_{surface}. */
+  placement: string = "operator_page"
+): string {
   if (!operator.affiliateEnabled) return operatorPath(locale, operator.slug);
   const subid = `operator_${operator.slug}_${locale}_${country || "xx"}`.toLowerCase();
   return buildGoPath({
     slug: operator.slug,
-    placement: "operator_page",
+    placement,
     subid,
     locale,
     country: country || undefined,

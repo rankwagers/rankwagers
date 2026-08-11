@@ -1,0 +1,39 @@
+# Prediction settlement. Oneshot; scheduled by the paired .timer.
+#
+# Settles pending validations against final scores through the composed settlement job
+# (OFF / DRY-RUN / CANARY per EVIDENCE_SETTLEMENT_ENABLED + EVIDENCE_SETTLEMENT_MODE).
+# Writes are append-only ValidationRecord rows in the frozen evidence archive, identity-deduped,
+# under the durable prediction_settlement lock — a repeated fire over the same fixture records
+# `already_settled` rather than a second row.
+#
+# GATED TWICE. This unit only issues the request; the flags inside the job decide whether any
+# work happens. Unsetting EVIDENCE_SETTLEMENT_ENABLED stops settlement without touching the timer.
+#
+# RECONSTRUCTED (commercial pass, Phase D) from the capture unit's pattern to mirror the LIVE
+# production unit — assumptions, stated: same root/EnvironmentFile/localhost-curl shape as
+# capture; --max-time 90 above the route's own maxDuration; -f so a non-2xx fails the unit.
+# If the live unit differs, replace this file with its exact content — the mirror must follow
+# production, never lead it.
+#
+# Install (as root):
+#   cp deploy/systemd/rankwagers-prediction-settlement.* /etc/systemd/system/
+#   systemctl daemon-reload && systemctl enable --now rankwagers-prediction-settlement.timer
+#
+# CRON_SECRET is read from the shared env file; the route rejects an unauthenticated POST.
+[Unit]
+Description=RankWagers prediction settlement (post-final validation append)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+# Root for the same reason as the capture unit: keeps CRON_SECRET out of a rankdev-readable
+# process environment. The unit only curls localhost.
+Type=oneshot
+WorkingDirectory=/var/www/rankwagers
+EnvironmentFile=-/opt/rankwagers/shared/.env
+Environment=BASE_URL=http://127.0.0.1:3000
+ExecStart=/usr/bin/curl -fsS --max-time 90 -X POST \
+  -H "x-cron-secret: ${CRON_SECRET}" \
+  ${BASE_URL}/api/internal/cron/prediction-settlement
+Nice=10
+IOSchedulingClass=idle
