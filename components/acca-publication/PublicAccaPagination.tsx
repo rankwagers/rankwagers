@@ -41,7 +41,7 @@ export function PublicAccaPagination({
           ← Previous
         </Link>
       ) : (
-        <span className="rounded-lg border border-border px-3 py-2 text-sm text-muted-foreground">
+        <span className="rounded-lg border border-border px-3 py-2 text-sm text-[var(--hero-ink-2)]">
           ← Previous
         </span>
       )}
@@ -60,7 +60,7 @@ export function PublicAccaPagination({
           Next →
         </Link>
       ) : (
-        <span className="rounded-lg border border-border px-3 py-2 text-sm text-muted-foreground">
+        <span className="rounded-lg border border-border px-3 py-2 text-sm text-[var(--hero-ink-2)]">
           Next →
         </span>
       )}

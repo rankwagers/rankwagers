@@ -25,7 +25,7 @@ import {
  */
 
 const LINK_CLASS = "rounded-full border px-3 py-1 text-xs focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400";
-const SELECTED_CLASS = "border-[var(--green-primary)] bg-[var(--green-surface)] text-brand";
+const SELECTED_CLASS = "border-[var(--green-primary)] bg-[var(--green-surface)] text-[var(--hero-ink)]";
 const UNSELECTED_CLASS = "border-border text-[var(--ink-secondary)] hover:text-foreground";
 
 function FacetRow({
@@ -43,7 +43,7 @@ function FacetRow({
  if (options.length === 0) return null;
  return (
  <div className="flex flex-wrap items-center gap-2">
- <span className="text-xs uppercase tracking-label text-muted-foreground">{label}</span>
+ <span className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{label}</span>
  <Link
  href={hrefFor(null)}
  aria-current={activeValue === null ? "true" : undefined}
@@ -60,7 +60,7 @@ function FacetRow({
  aria-current={selected ? "true" : undefined}
  className={`${LINK_CLASS} ${selected ? SELECTED_CLASS : UNSELECTED_CLASS}`}
  >
- {option.label} <span className="tabular-nums text-muted-foreground">({option.count})</span>
+ {option.label} <span className="tabular-nums text-[var(--hero-ink-2)]">({option.count})</span>
  </Link>
  );
  })}

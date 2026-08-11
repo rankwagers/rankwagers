@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { getDictionary } from "@/lib/dictionaries";
 import { AccaBuilderView } from "@/components/acca-builder/AccaBuilderView";
 import { locales, type Locale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
@@ -48,57 +49,41 @@ export default function AccaBuilderPage({
   const targetMin = parseTarget(searchParams?.targetMin) ?? target;
   const targetMax = parseTarget(searchParams?.targetMax) ?? null;
 
+  const p = getDictionary(params.locale).predictions;
   return (
-    <div className="container-wide pb-20">
-      <nav aria-label="Breadcrumb" className="mb-6 text-xs text-muted-foreground">
-        <ol className="flex flex-wrap gap-1">
-          <li>
-            <Link href={`/${params.locale}`} className="hover:text-brand">
-              Home
-            </Link>
-          </li>
-          <li aria-hidden>/</li>
-          <li>
-            <Link href={`/${params.locale}/acca`} className="hover:text-brand">
-              Acca Studio
-            </Link>
-          </li>
-          <li aria-hidden>/</li>
-          <li className="text-foreground" aria-current="page">
-            Acca Builder
-          </li>
-        </ol>
+    <div className="rw-hero container-wide bg-[var(--hero-canvas)] pb-24">
+      <nav aria-label="Breadcrumb" className="rw-m pt-5 text-[var(--hero-ink-2)]">
+        <Link href={`/${params.locale}`} className="hover:text-[var(--hero-ink)]">
+          Home
+        </Link>
+        <span className="mx-1.5" aria-hidden>
+          /
+        </span>
+        <Link href={`/${params.locale}/acca`} className="hover:text-[var(--hero-ink)]">
+          {p.acStudioTitle}
+        </Link>
+        <span className="mx-1.5" aria-hidden>
+          /
+        </span>
+        <span className="text-[var(--hero-ink)]">{p.acBuilderTitle}</span>
       </nav>
 
-      <header className="max-w-3xl">
-        <p className="text-metadata font-medium uppercase tracking-label text-brand">
-          Automatic builder
-        </p>
-        <h1 className="mt-2 font-display text-3xl font-semibold text-foreground">
-          Evidence-Based Acca Builder
+      <header className="mt-6 border-b border-[var(--hero-line)] pb-10">
+        <span aria-hidden className="block h-[2px] w-10 bg-[var(--hero-ink)]" />
+        <p className="rw-m mt-3.5 text-[var(--hero-ink-2)]">{p.acStudioEyebrow}</p>
+        <h1 className="rw-h mt-1.5 text-[clamp(2.125rem,4.4vw,2.875rem)] text-[var(--hero-ink)]">
+          {p.acBuilderTitle}
         </h1>
-        <p className="mt-3 text-sm leading-relaxed text-[var(--ink-secondary)]">
-          Searches today&apos;s published list predictions, applies confidence,
-          freshness, conflict and evidence gates, then ranks accumulator
-          combinations you can transfer into Acca Studio. This is not tipster
-          certainty and not a bookmaker slip.
+        <p className="mt-2.5 max-w-[62ch] text-[15px] leading-[1.55] text-[var(--hero-ink-2)]">
+          {p.acBuilderLede}
         </p>
-        <p className="mt-2 text-xs text-muted-foreground">
-          Manual workspace stays at{" "}
-          <Link
-            href={`/${params.locale}/acca`}
-            className="text-brand hover:underline"
-          >
-            Acca Studio
-          </Link>
-          . Methodology:{" "}
+        <p className="mt-3">
           <Link
             href={`/${params.locale}/methodology`}
-            className="text-brand hover:underline"
+            className="rw-m text-[var(--hero-ink-2)] underline decoration-[var(--hero-line)] underline-offset-4 hover:text-[var(--hero-ink)]"
           >
-            how predictions work
+            {p.cmpMethodologyLink}
           </Link>
-          .
         </p>
       </header>
 

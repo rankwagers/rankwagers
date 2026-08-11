@@ -128,7 +128,7 @@ export function AccaLifecycleActions({
  setError(null);
  setConfirming(true);
  }}
- className="inline-flex min-h-10 items-center rounded-md border border-[var(--green-primary)] bg-[var(--green-surface)] px-4 text-sm font-medium text-brand hover:bg-[var(--green-surface)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="inline-flex min-h-10 items-center rounded-md border border-[var(--green-primary)] bg-[var(--green-surface)] px-4 text-sm font-medium text-[var(--hero-ink)] hover:bg-[var(--green-surface)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  {copy.button}
  </button>
@@ -141,7 +141,7 @@ export function AccaLifecycleActions({
  type="button"
  onClick={submit}
  disabled={pending}
- className="inline-flex min-h-10 items-center rounded-md border border-[var(--green-primary)] bg-[var(--green-surface)] px-4 text-sm font-medium text-brand hover:bg-[var(--green-surface)] disabled:cursor-not-allowed disabled:opacity-[var(--opacity-disabled)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="inline-flex min-h-10 items-center rounded-md border border-[var(--green-primary)] bg-[var(--green-surface)] px-4 text-sm font-medium text-[var(--hero-ink)] hover:bg-[var(--green-surface)] disabled:cursor-not-allowed disabled:opacity-[var(--opacity-disabled)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  {pending ? copy.pending : copy.confirm}
  </button>

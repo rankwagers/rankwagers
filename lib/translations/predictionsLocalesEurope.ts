@@ -576,6 +576,26 @@ export const nl = euroPredictions({
   opContinueUnavailable: "Geen commerciële link beschikbaar voor uw land.",
   opRelatedOperators: "Gerelateerde operators",
 
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "Onderzoekswerkruimte",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "Combineer gepubliceerde onderzoeksselecties, bekijk gecombineerde noteringen en een uitlegbare risicoklasse, en kies daarna een operator via een zichtbare, servergetekende commerciële stap. Een onderzoekswerkruimte — nooit een wedbriefje.",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede:
+    "Gerangschikte combinaties uit gepubliceerde lijstvoorspellingen — bewijs en waargenomen noteringen waar opgeslagen, daarna overdracht naar de Studio. Alleen onderzoek.",
+  acPublishedTitle: "Gepubliceerde acca's",
+  acPublishedLede:
+    "Redactioneel gepubliceerde combinaties met hun bewijs en afgerekende uitkomsten — winst en verlies, nooit herschreven.",
+  acOperatorsTitle: "Kies een operator",
+  acOperatorsNote:
+    "Geordend op beschikbaarheid voor uw land, daarna op verificatie. RankWagers plaatst nooit weddenschappen — Doorgaan opent de operator via een zichtbare, servergetekende commerciële doorverwijzing.",
+  acOperatorsLoading: "Operators laden…",
+  acOperatorsError: "Operatoraanbiedingen zijn momenteel niet beschikbaar.",
+  acAvailable: "beschikbaar voor uw land",
+  acUnavailable: "niet vermeld voor uw land",
+  acDetailLink: "Operatorpagina",
+
 });
 
 export const pl = euroPredictions({
@@ -981,6 +1001,26 @@ export const pl = euroPredictions({
   opContinueUnavailable: "Brak komercyjnego linku dla twojego kraju.",
   opRelatedOperators: "Powiązani operatorzy",
 
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "Przestrzeń badawcza",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "Łącz opublikowane selekcje badawcze, przeglądaj łączone kursy i wyjaśnialną klasę ryzyka, a następnie wybierz operatora przez widoczny, podpisany serwerowo krok komercyjny. Przestrzeń badawcza — nigdy kupon bukmacherski.",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede:
+    "Uszeregowane kombinacje z opublikowanych prognoz — dowody i zaobserwowane kursy tam, gdzie zapisane, potem transfer do Studia. Tylko badania.",
+  acPublishedTitle: "Opublikowane accas",
+  acPublishedLede:
+    "Redakcyjnie opublikowane kombinacje z dowodami i rozliczonymi wynikami — wygrane i przegrane, nigdy nie przepisywane.",
+  acOperatorsTitle: "Wybierz operatora",
+  acOperatorsNote:
+    "Uporządkowane według dostępności dla twojego kraju, potem według weryfikacji. RankWagers nigdy nie stawia zakładów — Przejdź otwiera operatora przez widoczne, podpisane serwerowo przekierowanie komercyjne.",
+  acOperatorsLoading: "Ładowanie operatorów…",
+  acOperatorsError: "Oferty operatorów są teraz niedostępne.",
+  acAvailable: "dostępny dla twojego kraju",
+  acUnavailable: "niewymieniony dla twojego kraju",
+  acDetailLink: "Strona operatora",
+
 });
 
 export const cs = euroPredictions({
@@ -1380,6 +1420,26 @@ export const cs = euroPredictions({
   opContinueUnavailable: "Pro vaši zemi není k dispozici žádný komerční odkaz.",
   opRelatedOperators: "Související operátoři",
 
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "Výzkumný prostor",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "Kombinujte zveřejněné výzkumné výběry, prohlédněte si kombinované kurzy a vysvětlitelnou třídu rizika, poté zvolte operátora přes viditelný, serverem podepsaný komerční krok. Výzkumný prostor — nikdy sázkový tiket.",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede:
+    "Seřazené kombinace ze zveřejněných předpovědí — důkazy a pozorované kurzy tam, kde jsou uloženy, poté přenos do Studia. Pouze výzkum.",
+  acPublishedTitle: "Zveřejněné accy",
+  acPublishedLede:
+    "Redakčně zveřejněné kombinace s důkazy a vypořádanými výsledky — výhry i prohry, nikdy nepřepisované.",
+  acOperatorsTitle: "Vyberte operátora",
+  acOperatorsNote:
+    "Řazeno podle dostupnosti pro vaši zemi, poté podle ověření. RankWagers nikdy nesází — Pokračovat otevře operátora přes viditelné, serverem podepsané komerční přesměrování.",
+  acOperatorsLoading: "Načítání operátorů…",
+  acOperatorsError: "Nabídky operátorů nejsou momentálně dostupné.",
+  acAvailable: "dostupný pro vaši zemi",
+  acUnavailable: "neuveden pro vaši zemi",
+  acDetailLink: "Stránka operátora",
+
 });
 
 export const da = euroPredictions({
@@ -1778,6 +1838,26 @@ export const da = euroPredictions({
   opContinueUnavailable: "Intet kommercielt link tilgængeligt for dit land.",
   opRelatedOperators: "Relaterede operatører",
 
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "Forskningsarbejdsområde",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "Kombinér offentliggjorte forskningsvalg, gennemgå kombinerede odds og en forklarlig risikoklasse, og vælg derefter en operatør via et synligt, serversigneret kommercielt trin. Et forskningsområde — aldrig en væddemålskupon.",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede:
+    "Rangerede kombinationer genereret fra offentliggjorte listeforudsigelser — evidens og observerede odds hvor gemt, derefter overførsel til Studio. Kun forskning.",
+  acPublishedTitle: "Offentliggjorte accaer",
+  acPublishedLede:
+    "Redaktionelt offentliggjorte kombinationer med deres evidens og afregnede resultater — sejre og nederlag, aldrig omskrevet.",
+  acOperatorsTitle: "Vælg en operatør",
+  acOperatorsNote:
+    "Ordnet efter tilgængelighed for dit land, derefter efter verifikation. RankWagers placerer aldrig væddemål — Fortsæt åbner operatøren via en synlig, serversigneret kommerciel omdirigering.",
+  acOperatorsLoading: "Indlæser operatører…",
+  acOperatorsError: "Operatørtilbud er ikke tilgængelige lige nu.",
+  acAvailable: "tilgængelig for dit land",
+  acUnavailable: "ikke angivet for dit land",
+  acDetailLink: "Operatørside",
+
 });
 
 export const sv = euroPredictions({
@@ -2175,6 +2255,26 @@ export const sv = euroPredictions({
   opContinueCta: "Fortsätt till {operator}",
   opContinueUnavailable: "Ingen kommersiell länk tillgänglig för ditt land.",
   opRelatedOperators: "Relaterade operatörer",
+
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "Forskningsarbetsyta",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "Kombinera publicerade forskningsval, granska kombinerade odds och en förklarbar riskklass, och välj sedan en operatör genom ett synligt, serversignerat kommersiellt steg. En forskningsyta — aldrig en spelkupong.",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede:
+    "Rankade kombinationer ur publicerade listprognoser — evidens och observerade odds där lagrade, sedan överföring till Studion. Endast forskning.",
+  acPublishedTitle: "Publicerade accor",
+  acPublishedLede:
+    "Redaktionellt publicerade kombinationer med sin evidens och avräknade utfall — vinster och förluster, aldrig omskrivna.",
+  acOperatorsTitle: "Välj en operatör",
+  acOperatorsNote:
+    "Ordnat efter tillgänglighet för ditt land, sedan efter verifiering. RankWagers lägger aldrig spel — Fortsätt öppnar operatören via en synlig, serversignerad kommersiell omdirigering.",
+  acOperatorsLoading: "Laddar operatörer…",
+  acOperatorsError: "Operatörserbjudanden är otillgängliga just nu.",
+  acAvailable: "tillgänglig för ditt land",
+  acUnavailable: "inte listad för ditt land",
+  acDetailLink: "Operatörssida",
 
 });
 
@@ -2576,6 +2676,26 @@ export const no = euroPredictions({
   opContinueUnavailable: "Ingen kommersiell lenke tilgjengelig for ditt land.",
   opRelatedOperators: "Relaterte operatører",
 
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "Forskningsarbeidsområde",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "Kombiner publiserte forskningsvalg, se kombinerte odds og en forklarlig risikoklasse, og velg deretter en operatør via et synlig, serversignert kommersielt steg. Et forskningsområde — aldri en spillekupong.",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede:
+    "Rangerte kombinasjoner generert fra publiserte listeprognoser — evidens og observerte odds der lagret, deretter overføring til Studio. Kun forskning.",
+  acPublishedTitle: "Publiserte accaer",
+  acPublishedLede:
+    "Redaksjonelt publiserte kombinasjoner med sin evidens og avregnede utfall — seire og tap, aldri omskrevet.",
+  acOperatorsTitle: "Velg en operatør",
+  acOperatorsNote:
+    "Ordnet etter tilgjengelighet for ditt land, deretter etter verifisering. RankWagers plasserer aldri veddemål — Fortsett åpner operatøren via en synlig, serversignert kommersiell omdirigering.",
+  acOperatorsLoading: "Laster operatører…",
+  acOperatorsError: "Operatørtilbud er utilgjengelige akkurat nå.",
+  acAvailable: "tilgjengelig for ditt land",
+  acUnavailable: "ikke oppført for ditt land",
+  acDetailLink: "Operatørside",
+
 });
 
 export const fi = euroPredictions({
@@ -2972,6 +3092,26 @@ export const fi = euroPredictions({
   opContinueCta: "Jatka: {operator}",
   opContinueUnavailable: "Maallesi ei ole kaupallista linkkiä.",
   opRelatedOperators: "Liittyvät operaattorit",
+
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "Tutkimustyötila",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "Yhdistä julkaistuja tutkimusvalintoja, tarkastele yhdistettyjä kertoimia ja selitettävää riskiluokkaa, ja valitse sitten operaattori näkyvän, palvelimen allekirjoittaman kaupallisen askeleen kautta. Tutkimustyötila — ei koskaan vetokuponki.",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede:
+    "Järjestettyjä yhdistelmiä julkaistuista listaennusteista — näyttö ja havaitut kertoimet missä tallennettu, sitten siirto Studioon. Vain tutkimusta.",
+  acPublishedTitle: "Julkaistut accat",
+  acPublishedLede:
+    "Toimituksellisesti julkaistut yhdistelmät näyttöineen ja selvitettyine tuloksineen — voitot ja tappiot, ei koskaan uudelleenkirjoitettuja.",
+  acOperatorsTitle: "Valitse operaattori",
+  acOperatorsNote:
+    "Järjestetty maasi saatavuuden ja sitten todennuksen mukaan. RankWagers ei koskaan lyö vetoa — Jatka avaa operaattorin näkyvän, palvelimen allekirjoittaman kaupallisen uudelleenohjauksen kautta.",
+  acOperatorsLoading: "Ladataan operaattoreita…",
+  acOperatorsError: "Operaattoritarjoukset eivät ole juuri nyt saatavilla.",
+  acAvailable: "saatavilla maassasi",
+  acUnavailable: "ei listattu maallesi",
+  acDetailLink: "Operaattorisivu",
 
 });
 
@@ -3375,6 +3515,26 @@ export const ro = euroPredictions({
   opContinueCta: "Continuă către {operator}",
   opContinueUnavailable: "Niciun link comercial disponibil pentru țara ta.",
   opRelatedOperators: "Operatori conecși",
+
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "Spațiu de cercetare",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "Combină selecții de cercetare publicate, examinează cotele combinate și o clasă de risc explicabilă, apoi alege un operator printr-un pas comercial vizibil, semnat de server. Un spațiu de cercetare — niciodată un bilet de pariuri.",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede:
+    "Combinații ordonate generate din predicțiile publicate — evidență și cote observate unde sunt stocate, apoi transfer în Studio. Doar cercetare.",
+  acPublishedTitle: "Acca publicate",
+  acPublishedLede:
+    "Combinații publicate editorial cu evidența lor și rezultatele decontate — victorii și înfrângeri, niciodată rescrise.",
+  acOperatorsTitle: "Alege un operator",
+  acOperatorsNote:
+    "Ordonat după disponibilitatea pentru țara ta, apoi după verificare. RankWagers nu plasează niciodată pariuri — Continuă deschide operatorul printr-o redirecționare comercială vizibilă, semnată de server.",
+  acOperatorsLoading: "Se încarcă operatorii…",
+  acOperatorsError: "Ofertele operatorilor sunt indisponibile momentan.",
+  acAvailable: "disponibil pentru țara ta",
+  acUnavailable: "nelistat pentru țara ta",
+  acDetailLink: "Pagina operatorului",
 
 });
 
@@ -3782,6 +3942,26 @@ export const el = euroPredictions({
   opContinueUnavailable: "Δεν υπάρχει εμπορικός σύνδεσμος για τη χώρα σας.",
   opRelatedOperators: "Σχετικοί πάροχοι",
 
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "Χώρος έρευνας",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "Συνδυάστε δημοσιευμένες ερευνητικές επιλογές, δείτε συνδυασμένες αποδόσεις και μια εξηγήσιμη κατηγορία κινδύνου, και επιλέξτε πάροχο μέσω ενός ορατού, υπογεγραμμένου από τον διακομιστή εμπορικού βήματος. Χώρος έρευνας — ποτέ δελτίο στοιχήματος.",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede:
+    "Κατατεταγμένοι συνδυασμοί από δημοσιευμένες προβλέψεις — στοιχεία και παρατηρημένες αποδόσεις όπου αποθηκεύονται, έπειτα μεταφορά στο Studio. Μόνο έρευνα.",
+  acPublishedTitle: "Δημοσιευμένα acca",
+  acPublishedLede:
+    "Συντακτικά δημοσιευμένοι συνδυασμοί με τα στοιχεία τους και τα διακανονισμένα αποτελέσματα — νίκες και ήττες, ποτέ ξαναγραμμένα.",
+  acOperatorsTitle: "Επιλέξτε πάροχο",
+  acOperatorsNote:
+    "Ταξινομημένο κατά διαθεσιμότητα για τη χώρα σας και έπειτα κατά επαλήθευση. Η RankWagers δεν τοποθετεί ποτέ στοιχήματα — το Συνέχεια ανοίγει τον πάροχο μέσω ορατής, υπογεγραμμένης από τον διακομιστή εμπορικής ανακατεύθυνσης.",
+  acOperatorsLoading: "Φόρτωση παρόχων…",
+  acOperatorsError: "Οι προσφορές παρόχων δεν είναι διαθέσιμες αυτή τη στιγμή.",
+  acAvailable: "διαθέσιμος για τη χώρα σας",
+  acUnavailable: "μη καταχωρισμένος για τη χώρα σας",
+  acDetailLink: "Σελίδα παρόχου",
+
 });
 
 export const hu = euroPredictions({
@@ -4182,5 +4362,25 @@ export const hu = euroPredictions({
   opContinueCta: "Tovább: {operator}",
   opContinueUnavailable: "Az országodhoz nincs elérhető kereskedelmi hivatkozás.",
   opRelatedOperators: "Kapcsolódó szolgáltatók",
+
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "Kutatási munkaterület",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "Kombináld a közzétett kutatási kiválasztásokat, nézd át az összesített szorzókat és a magyarázható kockázati osztályt, majd válassz szolgáltatót egy látható, szerver által aláírt kereskedelmi lépésen át. Kutatási munkaterület — sosem fogadószelvény.",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede:
+    "Rangsorolt kombinációk a közzétett listaelőrejelzésekből — bizonyíték és megfigyelt szorzók, ahol tárolva vannak, majd átvitel a Studióba. Csak kutatás.",
+  acPublishedTitle: "Közzétett accák",
+  acPublishedLede:
+    "Szerkesztőségileg közzétett kombinációk a bizonyítékukkal és elszámolt eredményeikkel — győzelmek és vereségek, soha nem átírva.",
+  acOperatorsTitle: "Válassz szolgáltatót",
+  acOperatorsNote:
+    "Az országodra vonatkozó elérhetőség, majd az ellenőrzés szerint rendezve. A RankWagers sosem köt fogadást — a Tovább egy látható, szerver által aláírt kereskedelmi átirányításon át nyitja meg a szolgáltatót.",
+  acOperatorsLoading: "Szolgáltatók betöltése…",
+  acOperatorsError: "A szolgáltatói ajánlatok jelenleg nem érhetők el.",
+  acAvailable: "elérhető az országodban",
+  acUnavailable: "nem szerepel az országodhoz",
+  acDetailLink: "Szolgáltatói oldal",
 
 });

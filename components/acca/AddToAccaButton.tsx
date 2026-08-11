@@ -37,8 +37,8 @@ export function AddToAccaButton({
   const base =
     className ??
     (compact
-      ? "inline-flex min-h-9 items-center rounded-md border border-brand/30 bg-[var(--green-surface)] px-2.5 text-xs font-semibold text-brand transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
-      : "inline-flex min-h-10 items-center rounded-md border border-brand/35 bg-[var(--green-surface)] px-3 text-sm font-semibold text-brand transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand");
+      ? "inline-flex min-h-9 items-center rounded-md border border-brand/30 bg-[var(--green-surface)] px-2.5 text-xs font-semibold text-[var(--hero-ink)] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+      : "inline-flex min-h-10 items-center rounded-md border border-brand/35 bg-[var(--green-surface)] px-3 text-sm font-semibold text-[var(--hero-ink)] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand");
 
   if (exact) {
     return (

@@ -151,7 +151,7 @@ export async function AccaListView({
  aria-current={!parsed.filters.status ? "page" : undefined}
  className={`inline-flex min-h-10 items-center rounded-md px-3 text-sm font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400 ${
  !parsed.filters.status
- ?"bg-[var(--green-surface)] text-brand"
+ ?"bg-[var(--green-surface)] text-[var(--hero-ink)]"
  :"border border-border text-[var(--ink-secondary)] hover:bg-card"
  }`}
  >
@@ -164,7 +164,7 @@ export async function AccaListView({
  aria-current={parsed.filters.status === status ? "page" : undefined}
  className={`inline-flex min-h-10 items-center rounded-md px-3 text-sm font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400 ${
  parsed.filters.status === status
- ?"bg-[var(--green-surface)] text-brand"
+ ?"bg-[var(--green-surface)] text-[var(--hero-ink)]"
  :"border border-border text-[var(--ink-secondary)] hover:bg-card"
  }`}
  >
@@ -179,7 +179,7 @@ export async function AccaListView({
  No Accas match this view. Accas are created from an approved candidate in{""}
  <Link
  href="/admin/builder-approval"
- className="text-brand underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  Builder approval
  </Link>
@@ -189,7 +189,7 @@ export async function AccaListView({
  <div className="overflow-x-auto rounded-lg border border-border">
  <table className="w-full text-sm">
  <caption className="sr-only">Accas, newest first</caption>
- <thead className="bg-card text-xs uppercase text-muted-foreground">
+ <thead className="bg-card text-xs uppercase text-[var(--hero-ink-2)]">
  <tr>
  <th scope="col" className="px-3 py-2 text-left">Title</th>
  <th scope="col" className="px-3 py-2 text-left">Status</th>
@@ -209,11 +209,11 @@ export async function AccaListView({
  <td className="px-3 py-2">
  <Link
  href={`${PATH}/${acca.accaId}`}
- className="text-brand underline underline-offset-2 hover:text-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="text-[var(--hero-ink)] underline underline-offset-2 hover:text-[var(--hero-ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  {acca.title}
  </Link>
- <span className="mt-0.5 block font-mono text-metadata text-muted-foreground">
+ <span className="mt-0.5 block font-mono text-metadata text-[var(--hero-ink-2)]">
  {acca.slug}
  </span>
  </td>
@@ -242,7 +242,7 @@ export async function AccaListView({
  )}
  </section>
 
- <p className="mt-3 text-xs text-muted-foreground">{CAPTURED_ODDS_NOTE}</p>
+ <p className="mt-3 text-xs text-[var(--hero-ink-2)]">{CAPTURED_ODDS_NOTE}</p>
 
  <nav aria-label="Pagination" className="mt-4 flex flex-wrap items-center gap-3 text-sm">
  <span className="text-[var(--ink-secondary)]">

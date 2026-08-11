@@ -9,12 +9,15 @@ import { trackAccaEvent } from "@/lib/acca/analytics";
 import { accaSharePath, encodeSharePayload } from "@/lib/acca/share";
 import { RISK_TONE_CLASS } from "@/lib/ui/tokens";
 import { X } from "lucide-react";
+import type { PredictionStrings } from "@/lib/translations/predictionsEn";
 
 export function AccaPanelBody({
   locale,
+  p,
   onClose,
 }: {
   locale: string;
+  p: PredictionStrings;
   onClose?: () => void;
 }) {
   const {
@@ -46,13 +49,13 @@ export function AccaPanelBody({
     <div className="flex h-full flex-col">
       <header className="flex items-start justify-between gap-3 border-b border-border pb-3">
         <div>
-          <p className="text-metadata font-medium uppercase tracking-label text-brand">
+          <p className="text-metadata font-medium uppercase tracking-label text-[var(--hero-ink)]">
             Accumulators
           </p>
-          <h2 id="acca-panel-title" className="font-display text-lg font-semibold text-foreground">
+          <h2 id="acca-panel-title" className="rw-display text-lg font-semibold text-foreground">
             Your Acca
           </h2>
-          <p className="mt-1 text-xs text-muted-foreground">
+          <p className="mt-1 text-xs text-[var(--hero-ink-2)]">
             {slip.selections.length} selection{slip.selections.length === 1 ? "" : "s"} · research
             slip only
           </p>
@@ -114,7 +117,7 @@ export function AccaPanelBody({
         </button>
         <Link
           href={`/${locale}/acca`}
-          className="inline-flex min-h-9 items-center rounded-md border border-brand/30 px-2.5 text-xs font-semibold text-brand"
+          className="inline-flex min-h-9 items-center rounded-md border border-brand/30 px-2.5 text-xs font-semibold text-[var(--hero-ink)]"
           onClick={onClose}
         >
           Open studio
@@ -130,7 +133,7 @@ export function AccaPanelBody({
 
       <ul className="mt-4 flex-1 space-y-2 overflow-auto pr-1">
         {!slip.selections.length ? (
-          <li className="rounded-md border border-dashed border-border px-3 py-6 text-sm text-muted-foreground">
+          <li className="rounded-md border border-dashed border-border px-3 py-6 text-sm text-[var(--hero-ink-2)]">
             Add selections from match pages, ranked markets, or the fixture explorer. Only
             settlement-supported markets are available.
           </li>
@@ -145,7 +148,7 @@ export function AccaPanelBody({
                   <p className="text-sm font-semibold text-foreground">
                     {s.homeTeam} vs {s.awayTeam}
                   </p>
-                  <p className="mt-0.5 text-xs text-muted-foreground">
+                  <p className="mt-0.5 text-xs text-[var(--hero-ink-2)]">
                     {s.marketLabel} · {s.selectionLabel}
                     {s.odds != null ? ` · @ ${s.odds.toFixed(2)}` : " · odds unavailable"}
                     {/*
@@ -157,7 +160,7 @@ export function AccaPanelBody({
                       ? ` · provider potential ${s.confidence}% (no sample)`
                       : ""}
                   </p>
-                  <p className="mt-0.5 text-metadata text-muted-foreground">
+                  <p className="mt-0.5 text-metadata text-[var(--hero-ink-2)]">
                     {s.competition}
                     {s.status !== "pending" && s.status !== "unknown"
                       ? ` · ${s.status}`
@@ -170,7 +173,7 @@ export function AccaPanelBody({
                   ) : null}
                   <Link
                     href={s.matchHref}
-                    className="mt-1 inline-block text-metadata font-medium text-brand hover:underline"
+                    className="mt-1 inline-block text-metadata font-medium text-[var(--hero-ink)] hover:underline"
                     onClick={onClose}
                   >
                     Match detail
@@ -178,7 +181,7 @@ export function AccaPanelBody({
                 </div>
                 <button
                   type="button"
-                  className="text-xs text-muted-foreground hover:text-foreground"
+                  className="text-xs text-[var(--hero-ink-2)] hover:text-foreground"
                   aria-label={`Remove ${s.homeTeam} vs ${s.awayTeam}`}
                   onClick={() => remove(s.id)}
                 >
@@ -193,20 +196,20 @@ export function AccaPanelBody({
       <section className="mt-4 space-y-3 border-t border-border pt-4" aria-label="Acca summary">
         <dl className="grid grid-cols-2 gap-2 text-sm">
           <div>
-            <dt className="text-metadata uppercase tracking-label text-muted-foreground">
+            <dt className="text-metadata uppercase tracking-label text-[var(--hero-ink-2)]">
               Combined odds
             </dt>
             <dd className="font-mono font-semibold">
               {stake.combinedOdds != null ? stake.combinedOdds.toFixed(2) : "—"}
               {!stake.oddsComplete && stake.missingOddsCount > 0 ? (
-                <span className="ml-1 text-metadata font-normal text-muted-foreground">
+                <span className="ml-1 text-metadata font-normal text-[var(--hero-ink-2)]">
                   incomplete
                 </span>
               ) : null}
             </dd>
           </div>
           <div>
-            <dt className="text-metadata uppercase tracking-label text-muted-foreground">
+            <dt className="text-metadata uppercase tracking-label text-[var(--hero-ink-2)]">
               Risk class
             </dt>
             <dd>
@@ -218,14 +221,14 @@ export function AccaPanelBody({
             </dd>
           </div>
         </dl>
-        <ul className="list-disc space-y-0.5 pl-4 text-metadata text-muted-foreground">
+        <ul className="list-disc space-y-0.5 pl-4 text-metadata text-[var(--hero-ink-2)]">
           {risk.reasons.slice(0, 3).map((r) => (
             <li key={r}>{r}</li>
           ))}
         </ul>
 
         <label className="block text-sm">
-          <span className="text-metadata uppercase tracking-label text-muted-foreground">
+          <span className="text-metadata uppercase tracking-label text-[var(--hero-ink-2)]">
             Stake (units)
           </span>
           <input
@@ -239,7 +242,7 @@ export function AccaPanelBody({
         </label>
         <dl className="grid grid-cols-2 gap-2 text-sm">
           <div>
-            <dt className="text-metadata uppercase tracking-label text-muted-foreground">
+            <dt className="text-metadata uppercase tracking-label text-[var(--hero-ink-2)]">
               Potential return
             </dt>
             <dd className="font-mono">
@@ -247,7 +250,7 @@ export function AccaPanelBody({
             </dd>
           </div>
           <div>
-            <dt className="text-metadata uppercase tracking-label text-muted-foreground">
+            <dt className="text-metadata uppercase tracking-label text-[var(--hero-ink-2)]">
               Potential profit
             </dt>
             <dd className="font-mono">
@@ -255,16 +258,16 @@ export function AccaPanelBody({
             </dd>
           </div>
         </dl>
-        <p className="text-metadata text-muted-foreground">
+        <p className="text-metadata text-[var(--hero-ink-2)]">
           Units are currency-neutral research figures — not a wallet and not a placed bet.
         </p>
       </section>
 
-      <AccaOperators locale={locale} />
+      <AccaOperators locale={locale} p={p} />
 
       <section className="mt-5 space-y-2 border-t border-border pt-4" aria-label="Save and share">
         <label className="block text-sm">
-          <span className="text-metadata uppercase tracking-label text-muted-foreground">
+          <span className="text-metadata uppercase tracking-label text-[var(--hero-ink-2)]">
             Name this Acca
           </span>
           <input
@@ -342,7 +345,7 @@ export function AccaPanelBody({
         </div>
         {named.length ? (
           <div className="mt-2">
-            <p className="text-metadata uppercase tracking-label text-muted-foreground">
+            <p className="text-metadata uppercase tracking-label text-[var(--hero-ink-2)]">
               Saved Accas
             </p>
             <ul className="mt-1 space-y-1">
@@ -350,14 +353,14 @@ export function AccaPanelBody({
                 <li key={n.id} className="flex items-center justify-between gap-2 text-xs">
                   <button
                     type="button"
-                    className="text-left font-medium text-brand hover:underline"
+                    className="text-left font-medium text-[var(--hero-ink)] hover:underline"
                     onClick={() => loadNamed(n.id)}
                   >
                     {n.name}
                   </button>
                   <button
                     type="button"
-                    className="text-muted-foreground"
+                    className="text-[var(--hero-ink-2)]"
                     aria-label={`Delete ${n.name}`}
                     onClick={() => deleteNamed(n.id)}
                   >

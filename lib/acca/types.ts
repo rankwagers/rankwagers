@@ -138,9 +138,14 @@ export type AccaOperatorOffer = {
   slug: string;
   name: string;
   rank: number;
+  /** Availability is a precondition: no signedHref without it. */
+  available: boolean;
+  verified: boolean;
+  /** Stored publication odds for the slip's fixtures — empty means not observed. */
+  observedOdds: Array<{ market: string; decimal: number; observedAt: string }>;
   signedHref: string | null;
-  reviewHref: string;
-  availabilityNote: string;
+  /** The canonical operator page (the reviews route is retired). */
+  detailHref: string;
 };
 
 export const ACCA_STORAGE_EVENT = "rankwagers:acca-changed";

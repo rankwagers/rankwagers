@@ -24,7 +24,7 @@ export default function LocaleLayout({
   const dict = getDictionary(locale);
 
   return (
-    <AccaWorkspace locale={locale}>
+    <AccaWorkspace locale={locale} p={getDictionary(locale).predictions}>
       <div className="flex min-h-screen flex-col overflow-x-hidden bg-background text-foreground">
         <Tracker />
         <SiteTopChrome dict={dict} locale={locale} />

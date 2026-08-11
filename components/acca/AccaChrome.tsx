@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { AccaProvider, useAcca } from "./AccaProvider";
 import { AccaPanelBody } from "./AccaPanelBody";
+import type { PredictionStrings } from "@/lib/translations/predictionsEn";
 import { BottomSheet } from "@/components/ui/BottomSheet";
 
 /**
@@ -102,7 +103,7 @@ function AccaLauncher() {
   * shown. `pointer-events-none` plus `aria-hidden`/`tabIndex=-1` take it out of pointer, screen
   * reader and keyboard reach together, so nothing invisible stays focusable.
   */
- className={`btn-primary fixed bottom-4 right-4 z-40 min-h-12 rounded-full shadow-elevated transition-opacity duration-fast lg:bottom-6 lg:right-6 ${
+ className={`rw-hero fixed bottom-4 right-4 z-40 inline-flex min-h-12 items-center justify-center gap-1.5 rounded-full border border-[var(--hero-ink)] bg-[var(--hero-canvas)] px-4 text-sm font-semibold text-[var(--hero-ink)] shadow-elevated transition-opacity duration-fast hover:bg-[var(--hero-ink)] hover:text-[var(--hero-canvas)] lg:bottom-6 lg:right-6 ${
  coversProofBand ? "pointer-events-none opacity-0" : ""
  }`}
  aria-hidden={coversProofBand || undefined}
@@ -114,7 +115,7 @@ function AccaLauncher() {
  >
  Acca
  <span
- className="inline-flex min-h-6 min-w-6 items-center justify-center rounded-full bg-card px-1.5 font-mono text-xs"
+ className="inline-flex min-h-6 min-w-6 items-center justify-center rounded-full border border-[var(--hero-line)] px-1.5 font-mono text-xs"
  aria-label={`${count} selections`}
  >
  {count}
@@ -123,22 +124,22 @@ function AccaLauncher() {
  );
 }
 
-function AccaDesktopPanel({ locale }: { locale: string }) {
+function AccaDesktopPanel({ locale, p }: { locale: string; p: PredictionStrings }) {
  const { panelOpen, setPanelOpen } = useAcca();
  if (!panelOpen) return null;
  return (
  <aside
  id="acca-workspace"
- className="panel-enter fixed bottom-0 right-0 top-14 z-40 hidden w-[min(100vw,380px)] border-l border-border bg-[var(--canvas-secondary)] p-4 shadow-elevated lg:block"
+ className="rw-hero panel-enter fixed bottom-0 right-0 top-14 z-40 hidden w-[min(100vw,380px)] overflow-y-auto border-l border-[var(--hero-line)] bg-[var(--hero-canvas)] p-4 shadow-elevated lg:block"
  aria-labelledby="acca-panel-title"
  role="complementary"
  >
- <AccaPanelBody locale={locale} onClose={() => setPanelOpen(false)} />
+ <AccaPanelBody locale={locale} p={p} onClose={() => setPanelOpen(false)} />
  </aside>
  );
 }
 
-function AccaMobileSheet({ locale }: { locale: string }) {
+function AccaMobileSheet({ locale, p }: { locale: string; p: PredictionStrings }) {
  const { panelOpen, setPanelOpen } = useAcca();
  return (
  <BottomSheet
@@ -146,20 +147,28 @@ function AccaMobileSheet({ locale }: { locale: string }) {
  titleId="acca-panel-title"
  onClose={() => setPanelOpen(false)}
  >
- <div id="acca-workspace">
- <AccaPanelBody locale={locale} onClose={() => setPanelOpen(false)} />
+ <div id="acca-workspace" className="rw-hero">
+ <AccaPanelBody locale={locale} p={p} onClose={() => setPanelOpen(false)} />
  </div>
  </BottomSheet>
  );
 }
 
-function AccaShell({ locale, children }: { locale: string; children: ReactNode }) {
+function AccaShell({
+ locale,
+ p,
+ children,
+}: {
+ locale: string;
+ p: PredictionStrings;
+ children: ReactNode;
+}) {
  return (
  <>
  {children}
  <AccaLauncher />
- <AccaDesktopPanel locale={locale} />
- <AccaMobileSheet locale={locale} />
+ <AccaDesktopPanel locale={locale} p={p} />
+ <AccaMobileSheet locale={locale} p={p} />
  </>
  );
 }
@@ -167,14 +176,16 @@ function AccaShell({ locale, children }: { locale: string; children: ReactNode }
 /** Wraps locale tree so Add-to-Acca works on every page. */
 export function AccaWorkspace({
  locale,
+ p,
  children,
 }: {
  locale: string;
+ p: PredictionStrings;
  children: ReactNode;
 }) {
  return (
  <AccaProvider locale={locale}>
- <AccaShell locale={locale}>{children}</AccaShell>
+ <AccaShell locale={locale} p={p}>{children}</AccaShell>
  </AccaProvider>
  );
 }

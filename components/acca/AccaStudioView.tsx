@@ -2,15 +2,16 @@
 
 import Link from "next/link";
 import { AccaPanelBody } from "./AccaPanelBody";
+import type { PredictionStrings } from "@/lib/translations/predictionsEn";
 import { useAcca } from "./AccaProvider";
 
-export function AccaStudioView({ locale }: { locale: string }) {
+export function AccaStudioView({ locale, p }: { locale: string; p: PredictionStrings }) {
  const { setPanelOpen } = useAcca();
 
  return (
  <div className="mt-8 grid gap-8 lg:grid-cols-[minmax(0,1fr)_400px]">
  <section aria-labelledby="acca-how-heading" className="space-y-4">
- <h2 id="acca-how-heading" className="font-display text-xl font-semibold">
+ <h2 id="acca-how-heading" className="rw-display text-xl font-semibold">
  How to build
  </h2>
  <ol className="list-decimal space-y-2 pl-5 text-sm text-[var(--ink-secondary)]">
@@ -19,7 +20,7 @@ export function AccaStudioView({ locale }: { locale: string }) {
  Or generate ranked combinations in the{" "}
  <Link
  href={`/${locale}/acca/builder`}
- className="text-brand hover:underline"
+ className="text-[var(--hero-ink)] hover:underline"
  >
  Acca Builder
  </Link>
@@ -40,13 +41,13 @@ export function AccaStudioView({ locale }: { locale: string }) {
  <div className="flex flex-wrap gap-2">
  <Link
  href={`/${locale}/acca/builder`}
- className="inline-flex min-h-11 items-center rounded-md border border-brand/35 bg-[var(--green-surface)] px-4 text-sm font-semibold text-brand"
+ className="inline-flex min-h-11 items-center rounded-md border border-brand/35 bg-[var(--green-surface)] px-4 text-sm font-semibold text-[var(--hero-ink)]"
  >
  Open Acca Builder
  </Link>
  <button
  type="button"
- className="btn-primary min-h-11 lg:hidden"
+ className="rw-m inline-flex items-center justify-center border border-[var(--hero-ink)] px-4 text-[var(--hero-ink)] transition-colors hover:bg-[var(--hero-ink)] hover:text-[var(--hero-canvas)] min-h-11 lg:hidden"
  onClick={() => setPanelOpen(true)}
  >
  Open Acca panel
@@ -55,7 +56,7 @@ export function AccaStudioView({ locale }: { locale: string }) {
  </section>
 
  <div className="rounded-xl border border-border bg-[var(--canvas)] p-4 shadow-card">
- <AccaPanelBody locale={locale} />
+ <AccaPanelBody locale={locale} p={p} />
  </div>
  </div>
  );

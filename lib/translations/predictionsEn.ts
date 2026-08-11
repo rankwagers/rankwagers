@@ -718,6 +718,25 @@ export const predictionsEn = {
   opContinueCta: "Continue to {operator}",
   opContinueUnavailable: "No commercial link is available for your country.",
   opRelatedOperators: "Related operators",
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "Research workspace",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "Combine published research selections, review combined odds and an explainable risk class, then choose an operator through a visible, server-signed commercial step. A research workspace — never a bookmaker bet slip.",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede:
+    "Ranked combinations generated from published list predictions — evidence and observed odds where stored, then a transfer into the Studio. Research only.",
+  acPublishedTitle: "Published accas",
+  acPublishedLede:
+    "Editorially published combinations with their evidence and settled outcomes — wins and losses alike, never rewritten.",
+  acOperatorsTitle: "Choose an operator",
+  acOperatorsNote:
+    "Ordered by availability for your country, then verification. RankWagers never places bets — Continue opens the operator through a visible, server-signed commercial redirect.",
+  acOperatorsLoading: "Loading operators…",
+  acOperatorsError: "Operator offers are unavailable right now.",
+  acAvailable: "available for your country",
+  acUnavailable: "not listed for your country",
+  acDetailLink: "Operator page",
   navQualified: "Qualified lists",
   navLiveSignals: "Live signals",
   navMethodology: "Methodology",

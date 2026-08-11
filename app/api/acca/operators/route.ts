@@ -15,6 +15,7 @@ type Body = {
     matchId?: number;
     marketKey?: string;
     odds?: number | null;
+    kickoffAt?: string | null;
   }>;
 };
 
@@ -50,7 +51,7 @@ export async function POST(request: Request) {
       competition: "",
       competitionSlug: null,
       countryCode: null,
-      kickoffAt: null,
+      kickoffAt: typeof s.kickoffAt === "string" ? s.kickoffAt : null,
       marketKey: s.marketKey,
       marketLabel: s.marketKey,
       selectionLabel: "",
@@ -71,7 +72,7 @@ export async function POST(request: Request) {
   }
 
   const countryContext = getRequestCountryContext(body.country);
-  const operators = buildAccaOperatorOffers({
+  const operators = await buildAccaOperatorOffers({
     slip: {
       id: typeof body.slipId === "string" ? body.slipId : "acca_anon",
       locale,

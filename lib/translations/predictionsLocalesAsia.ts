@@ -383,6 +383,26 @@ export const ar = mergePredictions({
   opContinueUnavailable: "لا يوجد رابط تجاري متاح لدولتك.",
   opRelatedOperators: "مشغّلون ذوو صلة",
 
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "مساحة البحث",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "اجمع اختيارات بحثية منشورة، وراجع الأرقام المجمّعة وفئة مخاطر قابلة للتفسير، ثم اختر مشغّلًا عبر خطوة تجارية مرئية موقّعة من الخادم. مساحة بحث — وليست قسيمة رهان أبدًا.",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede:
+    "توليفات مرتّبة من التوقعات المنشورة — أدلة وأرقام مرصودة حيث خُزّنت، ثم نقل إلى الاستوديو. بحث فقط.",
+  acPublishedTitle: "التوليفات المنشورة",
+  acPublishedLede:
+    "توليفات منشورة تحريريًا مع أدلتها ونتائجها المسوّاة — مكاسب وخسائر، لا تُعاد كتابتها أبدًا.",
+  acOperatorsTitle: "اختر مشغّلًا",
+  acOperatorsNote:
+    "مرتّب حسب التوفر لدولتك ثم حسب التحقق. RankWagers لا تضع رهانات أبدًا — «متابعة» يفتح المشغّل عبر تحويل تجاري مرئي موقّع من الخادم.",
+  acOperatorsLoading: "جارٍ تحميل المشغّلين…",
+  acOperatorsError: "عروض المشغّلين غير متاحة الآن.",
+  acAvailable: "متاح لدولتك",
+  acUnavailable: "غير مدرج لدولتك",
+  acDetailLink: "صفحة المشغّل",
+
 });
 
 export const hi = mergePredictions({
@@ -774,6 +794,26 @@ export const hi = mergePredictions({
   opContinueUnavailable: "आपके देश के लिए कोई वाणिज्यिक लिंक उपलब्ध नहीं।",
   opRelatedOperators: "संबंधित ऑपरेटर",
 
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "शोध कार्यक्षेत्र",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "प्रकाशित शोध चयनों को जोड़ें, संयुक्त ऑड्स और समझाने योग्य जोखिम वर्ग देखें, फिर सर्वर-हस्ताक्षरित दृश्य वाणिज्यिक चरण से ऑपरेटर चुनें। यह शोध कार्यक्षेत्र है — कभी सट्टा पर्ची नहीं।",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede:
+    "प्रकाशित सूची पूर्वानुमानों से क्रमबद्ध संयोजन — जहाँ संग्रहीत हों वहाँ प्रमाण और दर्ज ऑड्स, फिर Studio में स्थानांतरण। केवल शोध।",
+  acPublishedTitle: "प्रकाशित एक्का",
+  acPublishedLede:
+    "संपादकीय रूप से प्रकाशित संयोजन, उनके प्रमाण और निपटाए परिणामों सहित — जीत और हार, कभी दोबारा नहीं लिखे जाते।",
+  acOperatorsTitle: "ऑपरेटर चुनें",
+  acOperatorsNote:
+    "आपके देश की उपलब्धता, फिर सत्यापन के क्रम में। RankWagers कभी दाँव नहीं लगाता — जारी रखें एक दृश्य, सर्वर-हस्ताक्षरित वाणिज्यिक रीडायरेक्ट से ऑपरेटर खोलता है।",
+  acOperatorsLoading: "ऑपरेटर लोड हो रहे हैं…",
+  acOperatorsError: "ऑपरेटर पेशकश अभी अनुपलब्ध हैं।",
+  acAvailable: "आपके देश के लिए उपलब्ध",
+  acUnavailable: "आपके देश के लिए सूचीबद्ध नहीं",
+  acDetailLink: "ऑपरेटर पृष्ठ",
+
 });
 
 export const ja = mergePredictions({
@@ -1131,6 +1171,24 @@ export const ja = mergePredictions({
   opContinueCta: "{operator}へ進む",
   opContinueUnavailable: "お住まいの国向けの商用リンクはありません。",
   opRelatedOperators: "関連オペレーター",
+
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "リサーチ・ワークスペース",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "公開済みリサーチの選択を組み合わせ、合成オッズと説明可能なリスク区分を確認し、サーバー署名付きの明示的な商用ステップでオペレーターを選びます。リサーチの作業場であり、決してベットスリップではありません。",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede: "公開リスト予想から生成されたランク付き組み合わせ — 保存されている場合は根拠と記録済みオッズを表示し、Studioへ転送します。リサーチ専用。",
+  acPublishedTitle: "公開アッカ",
+  acPublishedLede: "編集部が公開した組み合わせと、その根拠・清算結果 — 勝ちも負けも、決して書き換えません。",
+  acOperatorsTitle: "オペレーターを選ぶ",
+  acOperatorsNote:
+    "お住まいの国での利用可否、次に検証状況の順。RankWagersが賭けを行うことはありません — 「進む」はサーバー署名付きの明示的な商用リダイレクトでオペレーターを開きます。",
+  acOperatorsLoading: "オペレーターを読み込み中…",
+  acOperatorsError: "現在オペレーターの提案を利用できません。",
+  acAvailable: "お住まいの国で利用可能",
+  acUnavailable: "お住まいの国では未掲載",
+  acDetailLink: "オペレーターページ",
 
 });
 
@@ -1492,6 +1550,24 @@ export const ko = mergePredictions({
   opContinueCta: "{operator}(으)로 계속",
   opContinueUnavailable: "귀하의 국가에서 이용 가능한 상업 링크가 없습니다.",
   opRelatedOperators: "관련 운영사",
+
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "리서치 워크스페이스",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "공개된 리서치 선택을 조합하고, 합산 배당과 설명 가능한 위험 등급을 검토한 뒤, 서버 서명된 가시적 상업 단계로 운영사를 선택하세요. 리서치 작업 공간이며, 결코 베팅 슬립이 아닙니다.",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede: "공개 목록 예측에서 생성된 순위별 조합 — 저장된 경우 근거와 기록된 배당을 보여주고 Studio로 전송합니다. 리서치 전용.",
+  acPublishedTitle: "공개된 아카",
+  acPublishedLede: "편집부가 공개한 조합과 그 근거·정산 결과 — 승패 모두, 결코 다시 쓰지 않습니다.",
+  acOperatorsTitle: "운영사 선택",
+  acOperatorsNote:
+    "귀하의 국가 이용 가능 여부, 그다음 검증 순으로 정렬됩니다. RankWagers는 결코 베팅하지 않습니다 — 계속을 누르면 서버 서명된 가시적 상업 리디렉션으로 운영사가 열립니다.",
+  acOperatorsLoading: "운영사 불러오는 중…",
+  acOperatorsError: "현재 운영사 제안을 이용할 수 없습니다.",
+  acAvailable: "귀하의 국가에서 이용 가능",
+  acUnavailable: "귀하의 국가에 미등재",
+  acDetailLink: "운영사 페이지",
 
 });
 
@@ -1883,6 +1959,26 @@ export const th = mergePredictions({
   opContinueCta: "ไปต่อยัง {operator}",
   opContinueUnavailable: "ไม่มีลิงก์เชิงพาณิชย์สำหรับประเทศของคุณ",
   opRelatedOperators: "ผู้ให้บริการที่เกี่ยวข้อง",
+
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "พื้นที่ทำงานวิจัย",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "รวมการเลือกจากงานวิจัยที่เผยแพร่ ตรวจสอบราคารวมและระดับความเสี่ยงที่อธิบายได้ แล้วเลือกผู้ให้บริการผ่านขั้นตอนเชิงพาณิชย์ที่มองเห็นได้และลงนามฝั่งเซิร์ฟเวอร์ นี่คือพื้นที่วิจัย — ไม่ใช่สลิปเดิมพันเด็ดขาด",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede:
+    "ชุดค่าผสมที่จัดอันดับจากการคาดการณ์ที่เผยแพร่ — หลักฐานและราคาที่บันทึกไว้เมื่อมีการจัดเก็บ แล้วโอนเข้า Studio เพื่อการวิจัยเท่านั้น",
+  acPublishedTitle: "แอคคาที่เผยแพร่",
+  acPublishedLede:
+    "ชุดค่าผสมที่เผยแพร่โดยกองบรรณาธิการพร้อมหลักฐานและผลการชำระ — ทั้งชนะและแพ้ ไม่มีการเขียนใหม่",
+  acOperatorsTitle: "เลือกผู้ให้บริการ",
+  acOperatorsNote:
+    "เรียงตามความพร้อมใช้งานสำหรับประเทศของคุณ แล้วตามการตรวจสอบ RankWagers ไม่เคยวางเดิมพัน — ไปต่อจะเปิดผู้ให้บริการผ่านการเปลี่ยนเส้นทางเชิงพาณิชย์ที่มองเห็นได้และลงนามฝั่งเซิร์ฟเวอร์",
+  acOperatorsLoading: "กำลังโหลดผู้ให้บริการ…",
+  acOperatorsError: "ข้อเสนอผู้ให้บริการไม่พร้อมใช้งานขณะนี้",
+  acAvailable: "พร้อมใช้งานสำหรับประเทศของคุณ",
+  acUnavailable: "ไม่อยู่ในรายการสำหรับประเทศของคุณ",
+  acDetailLink: "หน้าผู้ให้บริการ",
 
 });
 
@@ -2281,6 +2377,26 @@ export const vi = mergePredictions({
   opContinueCta: "Tiếp tục đến {operator}",
   opContinueUnavailable: "Không có liên kết thương mại cho quốc gia của bạn.",
   opRelatedOperators: "Nhà điều hành liên quan",
+
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "Không gian nghiên cứu",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "Kết hợp các lựa chọn nghiên cứu đã công bố, xem tỷ lệ gộp và hạng rủi ro có thể giải thích, rồi chọn nhà điều hành qua một bước thương mại hữu hình được máy chủ ký. Không gian nghiên cứu — không bao giờ là phiếu cược.",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede:
+    "Các tổ hợp xếp hạng từ dự đoán đã công bố — bằng chứng và tỷ lệ đã ghi nhận khi được lưu, sau đó chuyển vào Studio. Chỉ nghiên cứu.",
+  acPublishedTitle: "Acca đã công bố",
+  acPublishedLede:
+    "Các tổ hợp do ban biên tập công bố cùng bằng chứng và kết quả đã quyết toán — thắng thua đều có, không bao giờ viết lại.",
+  acOperatorsTitle: "Chọn nhà điều hành",
+  acOperatorsNote:
+    "Xếp theo tính khả dụng cho quốc gia của bạn, rồi theo xác minh. RankWagers không bao giờ đặt cược — Tiếp tục mở nhà điều hành qua chuyển hướng thương mại hữu hình được máy chủ ký.",
+  acOperatorsLoading: "Đang tải nhà điều hành…",
+  acOperatorsError: "Ưu đãi nhà điều hành hiện không khả dụng.",
+  acAvailable: "khả dụng cho quốc gia của bạn",
+  acUnavailable: "không được liệt kê cho quốc gia của bạn",
+  acDetailLink: "Trang nhà điều hành",
 
 });
 
@@ -2682,6 +2798,26 @@ export const id = mergePredictions({
   opContinueUnavailable: "Tidak ada tautan komersial untuk negara Anda.",
   opRelatedOperators: "Operator terkait",
 
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "Ruang kerja riset",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "Gabungkan pilihan riset terpublikasi, tinjau odds gabungan dan kelas risiko yang dapat dijelaskan, lalu pilih operator melalui langkah komersial yang terlihat dan ditandatangani server. Ruang kerja riset — tidak pernah slip taruhan.",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede:
+    "Kombinasi terperingkat dari prediksi daftar terpublikasi — bukti dan odds tercatat bila tersimpan, lalu transfer ke Studio. Hanya riset.",
+  acPublishedTitle: "Acca terpublikasi",
+  acPublishedLede:
+    "Kombinasi yang dipublikasikan redaksi beserta bukti dan hasil terselesaikan — menang dan kalah, tidak pernah ditulis ulang.",
+  acOperatorsTitle: "Pilih operator",
+  acOperatorsNote:
+    "Diurutkan menurut ketersediaan untuk negara Anda, lalu verifikasi. RankWagers tidak pernah memasang taruhan — Lanjut membuka operator lewat pengalihan komersial yang terlihat dan ditandatangani server.",
+  acOperatorsLoading: "Memuat operator…",
+  acOperatorsError: "Penawaran operator sedang tidak tersedia.",
+  acAvailable: "tersedia untuk negara Anda",
+  acUnavailable: "tidak terdaftar untuk negara Anda",
+  acDetailLink: "Halaman operator",
+
 });
 
 export const zh = mergePredictions({
@@ -3039,6 +3175,22 @@ export const zh = mergePredictions({
   opContinueUnavailable: "您的国家没有可用的商业链接。",
   opRelatedOperators: "相关运营商",
 
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "研究工作区",
+  acStudioTitle: "Acca Studio",
+  acStudioLede: "组合已发布的研究选择,查看合并赔率与可解释的风险级别,然后通过可见的、服务器签名的商业步骤选择运营商。这是研究工作区 — 绝非投注单。",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede: "由已发布名单预测生成的排序组合 — 有存储时显示证据与已记录赔率,然后转入 Studio。仅供研究。",
+  acPublishedTitle: "已发布串关",
+  acPublishedLede: "编辑部发布的组合及其证据与结算结果 — 有胜有负,绝不改写。",
+  acOperatorsTitle: "选择运营商",
+  acOperatorsNote: "按您所在国家的可用性排序,其次按验证状态。RankWagers 绝不代为投注 — 「继续」通过可见的、服务器签名的商业跳转打开运营商。",
+  acOperatorsLoading: "正在加载运营商…",
+  acOperatorsError: "运营商报价当前不可用。",
+  acAvailable: "在您的国家可用",
+  acUnavailable: "未列入您的国家",
+  acDetailLink: "运营商页面",
+
 });
 
 export const bn = mergePredictions({
@@ -3363,6 +3515,26 @@ export const bn = mergePredictions({
   opContinueCta: "{operator}-এ এগিয়ে যান",
   opContinueUnavailable: "আপনার দেশের জন্য কোনও বাণিজ্যিক লিঙ্ক নেই।",
   opRelatedOperators: "সম্পর্কিত অপারেটর",
+
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "গবেষণা কর্মক্ষেত্র",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "প্রকাশিত গবেষণা নির্বাচন একত্র করুন, সম্মিলিত অডস ও ব্যাখ্যাযোগ্য ঝুঁকি শ্রেণি দেখুন, তারপর দৃশ্যমান, সার্ভার-স্বাক্ষরিত বাণিজ্যিক ধাপে অপারেটর বেছে নিন। এটি গবেষণার জায়গা — কখনও বেটিং স্লিপ নয়।",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede:
+    "প্রকাশিত তালিকা-পূর্বাভাস থেকে ক্রমায়িত সংমিশ্রণ — সংরক্ষিত থাকলে প্রমাণ ও নথিভুক্ত অডস, তারপর Studio-তে স্থানান্তর। কেবল গবেষণা।",
+  acPublishedTitle: "প্রকাশিত আক্কা",
+  acPublishedLede:
+    "সম্পাদকীয়ভাবে প্রকাশিত সংমিশ্রণ, প্রমাণ ও নিষ্পত্তিকৃত ফলাফলসহ — জয়-পরাজয় উভয়ই, কখনও পুনর্লিখিত নয়।",
+  acOperatorsTitle: "অপারেটর বেছে নিন",
+  acOperatorsNote:
+    "আপনার দেশের উপলব্ধতা, তারপর যাচাই অনুযায়ী সাজানো। RankWagers কখনও বাজি ধরে না — চালিয়ে যান একটি দৃশ্যমান, সার্ভার-স্বাক্ষরিত বাণিজ্যিক রিডাইরেক্টে অপারেটর খোলে।",
+  acOperatorsLoading: "অপারেটর লোড হচ্ছে…",
+  acOperatorsError: "অপারেটরের প্রস্তাব এখন অনুপলব্ধ।",
+  acAvailable: "আপনার দেশের জন্য উপলব্ধ",
+  acUnavailable: "আপনার দেশের জন্য তালিকাভুক্ত নয়",
+  acDetailLink: "অপারেটর পাতা",
 
 });
 
@@ -3700,6 +3872,26 @@ export const ta = mergePredictions({
   opContinueUnavailable: "உங்கள் நாட்டிற்கு வணிக இணைப்பு இல்லை.",
   opRelatedOperators: "தொடர்புடைய இயக்குநர்கள்",
 
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "ஆய்வு பணியிடம்",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "வெளியிடப்பட்ட ஆய்வுத் தேர்வுகளை இணைத்து, கூட்டு விகிதங்களையும் விளக்கக்கூடிய இடர் வகையையும் பார்த்து, பின்னர் சர்வர்-கையொப்பமிட்ட வெளிப்படையான வணிகப் படியில் இயக்குநரைத் தேர்வு செய்யுங்கள். இது ஆய்வுப் பணியிடம் — ஒருபோதும் பந்தயச் சீட்டு அல்ல.",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede:
+    "வெளியிடப்பட்ட பட்டியல் கணிப்புகளிலிருந்து தரவரிசைப்படுத்தப்பட்ட சேர்க்கைகள் — சேமிக்கப்பட்டிருந்தால் சான்றும் பதிவான விகிதங்களும், பிறகு Studio-க்கு மாற்றம். ஆய்வு மட்டுமே.",
+  acPublishedTitle: "வெளியிடப்பட்ட அக்காக்கள்",
+  acPublishedLede:
+    "ஆசிரியக் குழு வெளியிட்ட சேர்க்கைகள், அவற்றின் சான்று மற்றும் தீர்வு முடிவுகளுடன் — வெற்றியும் தோல்வியும், ஒருபோதும் மாற்றி எழுதப்படா.",
+  acOperatorsTitle: "இயக்குநரைத் தேர்ந்தெடுக்கவும்",
+  acOperatorsNote:
+    "உங்கள் நாட்டுக்கான கிடைப்பு, பின்னர் சரிபார்ப்பு வரிசையில். RankWagers ஒருபோதும் பந்தயம் கட்டாது — தொடர்க என்பது சர்வர்-கையொப்பமிட்ட வெளிப்படையான வணிக வழிமாற்றில் இயக்குநரைத் திறக்கும்.",
+  acOperatorsLoading: "இயக்குநர்கள் ஏற்றப்படுகிறார்கள்…",
+  acOperatorsError: "இயக்குநர் சலுகைகள் இப்போது கிடைக்கவில்லை.",
+  acAvailable: "உங்கள் நாட்டிற்குக் கிடைக்கிறது",
+  acUnavailable: "உங்கள் நாட்டிற்குப் பட்டியலிடப்படவில்லை",
+  acDetailLink: "இயக்குநர் பக்கம்",
+
 });
 
 export const te = mergePredictions({
@@ -4024,6 +4216,26 @@ export const te = mergePredictions({
   opContinueUnavailable: "మీ దేశానికి వాణిజ్య లింక్ లేదు.",
   opRelatedOperators: "సంబంధిత ఆపరేటర్లు",
 
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "పరిశోధన కార్యస్థలం",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "ప్రచురిత పరిశోధన ఎంపికలను కలిపి, సమ్మిళిత ఆడ్స్ మరియు వివరించదగిన రిస్క్ తరగతిని సమీక్షించి, ఆపై సర్వర్-సంతకం చేసిన కనిపించే వాణిజ్య దశలో ఆపరేటర్‌ను ఎంచుకోండి. ఇది పరిశోధన స్థలం — ఎప్పుడూ బెట్టింగ్ స్లిప్ కాదు.",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede:
+    "ప్రచురిత జాబితా అంచనాల నుండి ర్యాంక్ చేసిన కలయికలు — నిల్వ ఉన్నచోట ఆధారం మరియు నమోదైన ఆడ్స్, ఆపై Studio-కి బదిలీ. పరిశోధన మాత్రమే.",
+  acPublishedTitle: "ప్రచురిత అక్కాలు",
+  acPublishedLede:
+    "సంపాదకీయంగా ప్రచురించిన కలయికలు, వాటి ఆధారం మరియు పరిష్కృత ఫలితాలతో — గెలుపు ఓటమి రెండూ, ఎప్పుడూ తిరగరాయబడవు.",
+  acOperatorsTitle: "ఆపరేటర్‌ను ఎంచుకోండి",
+  acOperatorsNote:
+    "మీ దేశ లభ్యత ప్రకారం, ఆపై ధృవీకరణ ప్రకారం క్రమబద్ధం. RankWagers ఎప్పుడూ పందెం వేయదు — కొనసాగించు ఒక కనిపించే, సర్వర్-సంతకం చేసిన వాణిజ్య రీడైరెక్ట్‌లో ఆపరేటర్‌ను తెరుస్తుంది.",
+  acOperatorsLoading: "ఆపరేటర్లు లోడ్ అవుతున్నారు…",
+  acOperatorsError: "ఆపరేటర్ ఆఫర్లు ప్రస్తుతం అందుబాటులో లేవు.",
+  acAvailable: "మీ దేశానికి అందుబాటులో ఉంది",
+  acUnavailable: "మీ దేశానికి జాబితాలో లేదు",
+  acDetailLink: "ఆపరేటర్ పేజీ",
+
 });
 
 export const mr = mergePredictions({
@@ -4345,6 +4557,26 @@ export const mr = mergePredictions({
   opContinueCta: "{operator}कडे पुढे जा",
   opContinueUnavailable: "तुमच्या देशासाठी व्यावसायिक दुवा उपलब्ध नाही.",
   opRelatedOperators: "संबंधित ऑपरेटर",
+
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "संशोधन कार्यक्षेत्र",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "प्रकाशित संशोधन निवडी एकत्र करा, एकत्रित ऑड्स आणि स्पष्ट करता येणारा जोखीम वर्ग पाहा, मग सर्व्हर-स्वाक्षरित दृश्य व्यावसायिक पायरीने ऑपरेटर निवडा. हे संशोधन कार्यक्षेत्र आहे — कधीही बेटिंग स्लिप नाही.",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede:
+    "प्रकाशित यादी अंदाजांमधून क्रमवारीत संयोजने — साठवले असल्यास पुरावा व नोंदवलेले ऑड्स, मग Studio मध्ये हस्तांतरण. केवळ संशोधन.",
+  acPublishedTitle: "प्रकाशित अक्का",
+  acPublishedLede:
+    "संपादकीय प्रकाशित संयोजने, त्यांच्या पुराव्यासह आणि निकाली निकालांसह — जय-पराजय दोन्ही, कधीही पुन्हा लिहिले जात नाहीत.",
+  acOperatorsTitle: "ऑपरेटर निवडा",
+  acOperatorsNote:
+    "तुमच्या देशासाठी उपलब्धता, मग पडताळणीनुसार क्रमवारी. RankWagers कधीही पैज लावत नाही — पुढे जा हे दृश्य, सर्व्हर-स्वाक्षरित व्यावसायिक पुनर्निर्देशनाने ऑपरेटर उघडते.",
+  acOperatorsLoading: "ऑपरेटर लोड होत आहेत…",
+  acOperatorsError: "ऑपरेटर ऑफर सध्या अनुपलब्ध आहेत.",
+  acAvailable: "तुमच्या देशासाठी उपलब्ध",
+  acUnavailable: "तुमच्या देशासाठी सूचीबद्ध नाही",
+  acDetailLink: "ऑपरेटर पान",
 
 });
 
@@ -4746,5 +4978,25 @@ export const sw = mergePredictions({
   opContinueCta: "Endelea kwa {operator}",
   opContinueUnavailable: "Hakuna kiungo cha kibiashara kwa nchi yako.",
   opRelatedOperators: "Waendeshaji wanaohusiana",
+
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "Eneo la kazi la utafiti",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "Unganisha chaguo za utafiti zilizochapishwa, kagua odds zilizounganishwa na daraja la hatari linaloelezeka, kisha uchague mwendeshaji kupitia hatua ya kibiashara inayoonekana iliyosainiwa na seva. Eneo la utafiti — kamwe si karatasi ya kubashiri.",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede:
+    "Miunganiko iliyopangwa kutoka utabiri wa orodha uliochapishwa — ushahidi na odds zilizorekodiwa pale zilipohifadhiwa, kisha uhamisho kwenda Studio. Utafiti pekee.",
+  acPublishedTitle: "Acca zilizochapishwa",
+  acPublishedLede:
+    "Miunganiko iliyochapishwa kihariri pamoja na ushahidi wake na matokeo yaliyokamilishwa — ushindi na kushindwa, kamwe hayaandikwi upya.",
+  acOperatorsTitle: "Chagua mwendeshaji",
+  acOperatorsNote:
+    "Imepangwa kwa upatikanaji kwa nchi yako, kisha kwa uthibitisho. RankWagers haiweki dau kamwe — Endelea hufungua mwendeshaji kupitia uelekezaji wa kibiashara unaoonekana uliosainiwa na seva.",
+  acOperatorsLoading: "Inapakia waendeshaji…",
+  acOperatorsError: "Ofa za waendeshaji hazipatikani kwa sasa.",
+  acAvailable: "inapatikana kwa nchi yako",
+  acUnavailable: "haijaorodheshwa kwa nchi yako",
+  acDetailLink: "Ukurasa wa mwendeshaji",
 
 });

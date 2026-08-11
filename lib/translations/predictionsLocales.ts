@@ -413,6 +413,26 @@ const pt: PredictionStrings = mergePredictions({
   opContinueUnavailable: "Nenhuma ligação comercial disponível para o seu país.",
   opRelatedOperators: "Operadores relacionados",
 
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "Espaço de pesquisa",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "Combine seleções de pesquisa publicadas, reveja as odds combinadas e uma classe de risco explicável, depois escolha um operador através de um passo comercial visível e assinado no servidor. Um espaço de pesquisa — nunca um boletim de apostas.",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede:
+    "Combinações ordenadas geradas a partir de previsões publicadas — evidência e odds observadas quando armazenadas, depois transferência para o Studio. Apenas pesquisa.",
+  acPublishedTitle: "Accas publicadas",
+  acPublishedLede:
+    "Combinações publicadas editorialmente com a sua evidência e resultados liquidados — vitórias e derrotas, nunca reescritas.",
+  acOperatorsTitle: "Escolher um operador",
+  acOperatorsNote:
+    "Ordenado por disponibilidade para o seu país e depois por verificação. A RankWagers nunca faz apostas — Continuar abre o operador através de um redirecionamento comercial visível e assinado no servidor.",
+  acOperatorsLoading: "A carregar operadores…",
+  acOperatorsError: "As ofertas de operadores estão indisponíveis neste momento.",
+  acAvailable: "disponível para o seu país",
+  acUnavailable: "não listado para o seu país",
+  acDetailLink: "Página do operador",
+
 });
 
 const es: PredictionStrings = mergePredictions({
@@ -825,6 +845,26 @@ const es: PredictionStrings = mergePredictions({
   opContinueCta: "Continuar a {operator}",
   opContinueUnavailable: "No hay enlace comercial disponible para tu país.",
   opRelatedOperators: "Operadores relacionados",
+
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "Espacio de investigación",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "Combina selecciones de investigación publicadas, revisa las cuotas combinadas y una clase de riesgo explicable, y elige un operador mediante un paso comercial visible y firmado en el servidor. Un espacio de investigación — nunca un boleto de apuestas.",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede:
+    "Combinaciones ordenadas generadas a partir de predicciones publicadas — evidencia y cuotas observadas cuando están almacenadas, y luego transferencia al Studio. Solo investigación.",
+  acPublishedTitle: "Accas publicadas",
+  acPublishedLede:
+    "Combinaciones publicadas editorialmente con su evidencia y resultados liquidados — victorias y derrotas, nunca reescritas.",
+  acOperatorsTitle: "Elegir un operador",
+  acOperatorsNote:
+    "Ordenado por disponibilidad para tu país y luego por verificación. RankWagers nunca realiza apuestas — Continuar abre el operador mediante una redirección comercial visible y firmada en el servidor.",
+  acOperatorsLoading: "Cargando operadores…",
+  acOperatorsError: "Las ofertas de operadores no están disponibles ahora mismo.",
+  acAvailable: "disponible para tu país",
+  acUnavailable: "no listado para tu país",
+  acDetailLink: "Página del operador",
 
 });
 
@@ -1241,6 +1281,26 @@ const de: PredictionStrings = mergePredictions({
   opContinueUnavailable: "Für Ihr Land ist kein kommerzieller Link verfügbar.",
   opRelatedOperators: "Verwandte Anbieter",
 
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "Recherche-Arbeitsbereich",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "Kombinieren Sie veröffentlichte Recherche-Auswahlen, prüfen Sie kombinierte Quoten und eine erklärbare Risikoklasse, und wählen Sie dann einen Anbieter über einen sichtbaren, serversignierten kommerziellen Schritt. Ein Recherche-Arbeitsbereich — niemals ein Wettschein.",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede:
+    "Geordnete Kombinationen aus veröffentlichten Listen-Vorhersagen — Evidenz und beobachtete Quoten, wo gespeichert, dann Übergabe ins Studio. Nur Recherche.",
+  acPublishedTitle: "Veröffentlichte Accas",
+  acPublishedLede:
+    "Redaktionell veröffentlichte Kombinationen mit ihrer Evidenz und abgerechneten Ergebnissen — Siege wie Niederlagen, nie umgeschrieben.",
+  acOperatorsTitle: "Anbieter wählen",
+  acOperatorsNote:
+    "Geordnet nach Verfügbarkeit für Ihr Land, dann nach Verifizierung. RankWagers platziert niemals Wetten — Weiter öffnet den Anbieter über eine sichtbare, serversignierte kommerzielle Weiterleitung.",
+  acOperatorsLoading: "Anbieter werden geladen…",
+  acOperatorsError: "Anbieter-Angebote sind derzeit nicht verfügbar.",
+  acAvailable: "für Ihr Land verfügbar",
+  acUnavailable: "für Ihr Land nicht gelistet",
+  acDetailLink: "Anbieterseite",
+
 });
 
 const it: PredictionStrings = mergePredictions({
@@ -1650,6 +1710,26 @@ const it: PredictionStrings = mergePredictions({
   opContinueCta: "Continua verso {operator}",
   opContinueUnavailable: "Nessun collegamento commerciale disponibile per il tuo paese.",
   opRelatedOperators: "Operatori correlati",
+
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "Spazio di ricerca",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "Combina selezioni di ricerca pubblicate, esamina le quote combinate e una classe di rischio spiegabile, poi scegli un operatore tramite un passaggio commerciale visibile e firmato dal server. Uno spazio di ricerca — mai una schedina.",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede:
+    "Combinazioni ordinate generate dalle previsioni pubblicate — evidenza e quote osservate dove archiviate, poi trasferimento nello Studio. Solo ricerca.",
+  acPublishedTitle: "Acca pubblicate",
+  acPublishedLede:
+    "Combinazioni pubblicate editorialmente con la loro evidenza e gli esiti regolati — vittorie e sconfitte, mai riscritte.",
+  acOperatorsTitle: "Scegli un operatore",
+  acOperatorsNote:
+    "Ordinato per disponibilità nel tuo paese, poi per verifica. RankWagers non piazza mai scommesse — Continua apre l'operatore tramite un reindirizzamento commerciale visibile e firmato dal server.",
+  acOperatorsLoading: "Caricamento operatori…",
+  acOperatorsError: "Le offerte degli operatori non sono disponibili al momento.",
+  acAvailable: "disponibile per il tuo paese",
+  acUnavailable: "non elencato per il tuo paese",
+  acDetailLink: "Pagina dell'operatore",
 
 });
 
@@ -2061,6 +2141,26 @@ const fr: PredictionStrings = mergePredictions({
   opContinueCta: "Continuer vers {operator}",
   opContinueUnavailable: "Aucun lien commercial disponible pour votre pays.",
   opRelatedOperators: "Opérateurs liés",
+
+  /* Acca family — commercial conversion (ac keys). */
+  acStudioEyebrow: "Espace de recherche",
+  acStudioTitle: "Acca Studio",
+  acStudioLede:
+    "Combinez des sélections de recherche publiées, examinez les cotes combinées et une classe de risque explicable, puis choisissez un opérateur via une étape commerciale visible et signée côté serveur. Un espace de recherche — jamais un coupon de paris.",
+  acBuilderTitle: "Acca Builder",
+  acBuilderLede:
+    "Des combinaisons classées générées à partir des prédictions publiées — preuves et cotes observées lorsqu'elles sont stockées, puis transfert vers le Studio. Recherche uniquement.",
+  acPublishedTitle: "Accas publiés",
+  acPublishedLede:
+    "Des combinaisons publiées éditorialement avec leurs preuves et leurs résultats réglés — victoires et défaites, jamais réécrites.",
+  acOperatorsTitle: "Choisir un opérateur",
+  acOperatorsNote:
+    "Classé par disponibilité pour votre pays, puis par vérification. RankWagers ne place jamais de paris — Continuer ouvre l'opérateur via une redirection commerciale visible et signée côté serveur.",
+  acOperatorsLoading: "Chargement des opérateurs…",
+  acOperatorsError: "Les offres d'opérateurs sont indisponibles pour le moment.",
+  acAvailable: "disponible pour votre pays",
+  acUnavailable: "non listé pour votre pays",
+  acDetailLink: "Page de l'opérateur",
 
 });
 

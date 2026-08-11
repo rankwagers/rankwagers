@@ -54,23 +54,23 @@ export function PublicAccaCard({
 
  <dl className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm">
  <div>
- <dt className="text-xs uppercase tracking-label text-muted-foreground">Selections</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">Selections</dt>
  <dd className="tabular-nums">{view.legCount}</dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-muted-foreground">Combined odds</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">Combined odds</dt>
  <dd className="tabular-nums">{view.combinedOdds.display}</dd>
  </div>
  {earliest ? (
  <div>
- <dt className="text-xs uppercase tracking-label text-muted-foreground">First kick-off</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">First kick-off</dt>
  <dd>
  <time dateTime={earliest}>{`${earliest.slice(0, 10)} ${earliest.slice(11, 16)} UTC`}</time>
  </dd>
  </div>
  ) : null}
  <div>
- <dt className="text-xs uppercase tracking-label text-muted-foreground">State</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">State</dt>
  <dd>{availability.label}</dd>
  </div>
  </dl>

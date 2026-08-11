@@ -97,7 +97,7 @@ export function PublicAccaIndexView({
  <li>
  <Link
  href={`/${locale}`}
- className="text-brand underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  Today&apos;s qualified fixtures
  </Link>{""}
@@ -107,7 +107,7 @@ export function PublicAccaIndexView({
  <li data-acca-builder-entry="">
  <Link
  href={`/${locale}/acca/builder`}
- className="text-brand underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  Acca Builder
  </Link>{""}
@@ -117,7 +117,7 @@ export function PublicAccaIndexView({
  <li>
  <Link
  href={`/${locale}/archive`}
- className="text-brand underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  Prediction archive
  </Link>{""}
@@ -154,7 +154,7 @@ export function PublicAccaIndexView({
  predictions are in the{""}
  <Link
  href={`/${locale}/archive`}
- className="text-brand underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  archive
  </Link>
@@ -181,13 +181,13 @@ export function PublicAccaIndexView({
  ) : null}
 
  {page?.truncated ? (
- <p className="mt-4 max-w-2xl text-xs text-muted-foreground">
+ <p className="mt-4 max-w-2xl text-xs text-[var(--hero-ink-2)]">
  This listing examines the most recent {PUBLIC_ACCA_MAX_SCAN} published Accas for
  this language. Older ones exist in storage and are not shown here.
  </p>
  ) : null}
 
- <p className="mt-6 max-w-2xl text-xs text-muted-foreground">
+ <p className="mt-6 max-w-2xl text-xs text-[var(--hero-ink-2)]">
  {CAPTURED_ODDS_NOTE} A page marks its prices as older once more than{""}
  {ACCA_ODDS_STALE_AFTER_HOURS} hours have passed since they were captured.
  </p>
@@ -197,7 +197,7 @@ export function PublicAccaIndexView({
  <p className="mt-6 text-sm">
  <Link
  href={`/${locale}/methodology`}
- className="text-brand underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  How these are built
  </Link>
@@ -207,7 +207,7 @@ export function PublicAccaIndexView({
  <p className="mt-2 text-sm" data-acca-builder-entry="">
  <Link
  href={`/${locale}/acca/builder`}
- className="text-brand underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  Build your own from the same qualified lists
  </Link>

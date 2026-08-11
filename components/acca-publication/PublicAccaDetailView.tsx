@@ -60,7 +60,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  <nav aria-label="Breadcrumb" className="pt-8 text-sm">
  <Link
  href={publicAccaIndexPath(view.locale)}
- className="text-brand underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  ← Published Accas
  </Link>
@@ -72,7 +72,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  <p className="mt-2 max-w-2xl text-sm text-[var(--ink-secondary)]">{view.summary}</p>
  ) : null}
  {view.publishedAt.machine ? (
- <p className="mt-2 text-xs text-muted-foreground">
+ <p className="mt-2 text-xs text-[var(--hero-ink-2)]">
  Published{""}
  <time dateTime={view.publishedAt.machine}>{view.publishedAt.display}</time>
  </p>
@@ -93,22 +93,22 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  </h2>
  <dl className="mt-3 grid gap-x-6 gap-y-4 text-sm sm:grid-cols-3">
  <div>
- <dt className="text-xs uppercase tracking-label text-muted-foreground">Combined odds</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">Combined odds</dt>
  <dd className="text-base font-semibold tabular-nums">
  {view.combinedOdds.display}
  </dd>
- <dd className="text-xs text-muted-foreground">{oddsBandLabel(view.oddsBand)}</dd>
+ <dd className="text-xs text-[var(--hero-ink-2)]">{oddsBandLabel(view.oddsBand)}</dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-muted-foreground">Selections</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">Selections</dt>
  <dd className="text-base font-semibold tabular-nums">{view.legCount}</dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-muted-foreground">Builder profile</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">Builder profile</dt>
  <dd>{view.profile ?? ABSENT.notProvided}</dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-muted-foreground">Generated</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">Generated</dt>
  <dd>
  {view.generatedAt.machine ? (
  <time dateTime={view.generatedAt.machine}>{view.generatedAt.display}</time>
@@ -118,7 +118,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  </dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-muted-foreground">Published</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">Published</dt>
  <dd>
  {view.publishedAt.machine ? (
  <time dateTime={view.publishedAt.machine}>{view.publishedAt.display}</time>
@@ -128,7 +128,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  </dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-muted-foreground">State</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">State</dt>
  <dd>{availability.label}</dd>
  </div>
  </dl>
@@ -146,7 +146,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  <caption className="sr-only">
  Selections in this Acca, with the odds captured at publication
  </caption>
- <thead className="bg-card text-xs uppercase text-muted-foreground">
+ <thead className="bg-card text-xs uppercase text-[var(--hero-ink-2)]">
  <tr>
  <th scope="col" className="px-3 py-2 text-left">Fixture</th>
  <th scope="col" className="px-3 py-2 text-left">Competition</th>
@@ -167,7 +167,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  <td className="px-3 py-2">
  {leg.market}
  {leg.selection !== ABSENT.notProvided ? (
- <span className="block text-xs text-muted-foreground">{leg.selection}</span>
+ <span className="block text-xs text-[var(--hero-ink-2)]">{leg.selection}</span>
  ) : null}
  </td>
  <td className="px-3 py-2 whitespace-nowrap text-[var(--ink-secondary)]">
@@ -190,7 +190,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  </tbody>
  <tfoot>
  <tr className="border-t border-border bg-card">
- <td className="px-3 py-2 text-xs uppercase tracking-label text-muted-foreground" colSpan={6}>
+ <td className="px-3 py-2 text-xs uppercase tracking-label text-[var(--hero-ink-2)]" colSpan={6}>
  Combined odds
  </td>
  <td className="px-3 py-2 text-right font-semibold tabular-nums">
@@ -200,7 +200,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  </tfoot>
  </table>
  </div>
- <p className="mt-2 text-xs text-muted-foreground">
+ <p className="mt-2 text-xs text-[var(--hero-ink-2)]">
  Combined odds are the product of the individual prices above, calculated exactly and
  rounded once. They are not a probability and not a return estimate.
  </p>
@@ -231,7 +231,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  >
  <summary className="cursor-pointer px-4 py-3 text-sm font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400">
  {leg.position}. {leg.fixture} — {leg.market}{""}
- <span className="font-normal text-muted-foreground">({strength.label})</span>
+ <span className="font-normal text-[var(--hero-ink-2)]">({strength.label})</span>
  </summary>
  <div className="border-t border-border px-4 py-3 text-sm">
  <p className="text-[var(--ink-secondary)]">{strength.detail}</p>
@@ -244,7 +244,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  ) : null}
  <dl className="mt-3 grid gap-x-6 gap-y-2 text-xs sm:grid-cols-2">
  <div>
- <dt className="uppercase tracking-label text-muted-foreground">Qualification</dt>
+ <dt className="uppercase tracking-label text-[var(--hero-ink-2)]">Qualification</dt>
  <dd>
  {leg.qualified
  ? "Passed the Builder's confidence, freshness, conflict and evidence gates when the combination was generated."
@@ -252,15 +252,15 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  </dd>
  </div>
  <div>
- <dt className="uppercase tracking-label text-muted-foreground">Provider potential</dt>
+ <dt className="uppercase tracking-label text-[var(--hero-ink-2)]">Provider potential</dt>
  <dd className="tabular-nums">{leg.confidence}</dd>
  </div>
  <div>
- <dt className="uppercase tracking-label text-muted-foreground">Price recorded</dt>
+ <dt className="uppercase tracking-label text-[var(--hero-ink-2)]">Price recorded</dt>
  <dd className="tabular-nums">{leg.capturedOdds}</dd>
  </div>
  <div>
- <dt className="uppercase tracking-label text-muted-foreground">Provenance</dt>
+ <dt className="uppercase tracking-label text-[var(--hero-ink-2)]">Provenance</dt>
  <dd>{leg.provenance.basis}</dd>
  </div>
  </dl>
@@ -293,7 +293,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
 
  <dl className="mt-4 grid gap-x-6 gap-y-3 text-sm sm:grid-cols-3">
  <div>
- <dt className="text-xs uppercase tracking-label text-muted-foreground">
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">
  Selections with a provider potential
  </dt>
  <dd className="tabular-nums">
@@ -301,13 +301,13 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  </dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-muted-foreground">Average provider potential</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">Average provider potential</dt>
  <dd className="tabular-nums">
  {view.evidence.averageConfidence ?? ABSENT.notProvided}
  </dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-muted-foreground">Evidence completeness</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">Evidence completeness</dt>
  <dd className="tabular-nums">
  {view.evidence.completeness ?? ABSENT.notProvided}
  </dd>
@@ -324,7 +324,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  <div className="border-t border-border px-4 py-3">
  <dl className="grid gap-x-6 gap-y-3 text-sm sm:grid-cols-2">
  <div>
- <dt className="text-xs uppercase tracking-label text-muted-foreground">
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">
  Selections with written reasons
  </dt>
  <dd className="tabular-nums">
@@ -332,15 +332,15 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  </dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-muted-foreground">Odds captured</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">Odds captured</dt>
  <dd>{view.generatedAt.display}</dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-muted-foreground">Price age</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">Price age</dt>
  <dd>{oddsAge.label}</dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-muted-foreground">
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">
  Publication format
  </dt>
  <dd className="font-mono text-xs">{view.publicationFormatVersion}</dd>
@@ -353,7 +353,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  stated here rather than guessed — the rules in force are described on the{""}
  <Link
  href={`/${view.locale}/methodology`}
- className="text-brand underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  methodology page
  </Link>
@@ -503,7 +503,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  <li>
  <Link
  href={`/${view.locale}/methodology`}
- className="text-brand underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  How selections qualify
  </Link>{""}
@@ -512,7 +512,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  <li>
  <Link
  href={`/${view.locale}/archive`}
- className="text-brand underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  Settled prediction archive
  </Link>{""}
@@ -521,7 +521,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  <li>
  <Link
  href={publicAccaIndexPath(view.locale)}
- className="text-brand underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  Every published Acca
  </Link>{""}
@@ -530,7 +530,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  <li data-acca-builder-entry="">
  <Link
  href={`/${view.locale}/acca/builder`}
- className="text-brand underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  Build your own
  </Link>{""}

@@ -232,7 +232,7 @@ export function AccaBuilderView({
  className="rounded-xl border border-border bg-[var(--canvas)] p-4 sm:p-5"
  >
  <fieldset className="space-y-4">
- <legend className="font-display text-lg font-semibold text-foreground">
+ <legend className="rw-display text-lg font-semibold text-foreground">
  Builder configuration
  </legend>
  <p className="text-sm text-[var(--ink-secondary)]">
@@ -241,7 +241,7 @@ export function AccaBuilderView({
  </p>
 
  <div>
- <p className="text-xs font-semibold uppercase tracking-label text-muted-foreground">
+ <p className="text-xs font-semibold uppercase tracking-label text-[var(--hero-ink-2)]">
  Risk mode
  </p>
  <div
@@ -273,12 +273,12 @@ export function AccaBuilderView({
  }}
  className={`min-h-11 rounded-md border px-3 py-2 text-left text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
  selected
- ? "border-brand bg-[var(--green-surface)] font-semibold text-brand"
+ ? "border-brand bg-[var(--green-surface)] font-semibold text-[var(--hero-ink)]"
  : "border-border bg-[var(--canvas-secondary)]"
  }`}
  >
  <span className="capitalize">{mode}</span>
- <span className="mt-1 block text-xs font-normal text-muted-foreground">
+ <span className="mt-1 block text-xs font-normal text-[var(--hero-ink-2)]">
  min {rules.minConfidence}% · max {rules.maxLegs} legs
  </span>
  </button>
@@ -454,7 +454,7 @@ export function AccaBuilderView({
  <button
  type="submit"
  disabled={uiState === "loading"}
- className="btn-primary min-h-11"
+ className="rw-m inline-flex items-center justify-center border border-[var(--hero-ink)] px-4 text-[var(--hero-ink)] transition-colors hover:bg-[var(--hero-ink)] hover:text-[var(--hero-canvas)] min-h-11"
  >
  {uiState === "loading" ? "Generating…" : "Generate Acca"}
  </button>
@@ -481,7 +481,7 @@ export function AccaBuilderView({
  <p className="text-[var(--amber-primary)]">{errorMessage}</p>
  )}
  {requestId ? (
- <p className="mt-1 font-mono text-xs text-muted-foreground">
+ <p className="mt-1 font-mono text-xs text-[var(--hero-ink-2)]">
  requestId: {requestId}
  </p>
  ) : null}
@@ -494,7 +494,7 @@ export function AccaBuilderView({
  <div>
  <h2
  id="builder-results-heading"
- className="font-display text-xl font-semibold"
+ className="rw-display text-xl font-semibold"
  >
  Ranked combinations
  </h2>
@@ -507,7 +507,7 @@ export function AccaBuilderView({
  </div>
 
  {!result.combinations.length ? (
- <div className="rounded-lg border border-dashed border-border px-4 py-8 text-sm text-muted-foreground">
+ <div className="rounded-lg border border-dashed border-border px-4 py-8 text-sm text-[var(--hero-ink-2)]">
  No valid combination for this configuration. Relax confidence,
  markets, or leg count — quality gates are not lowered automatically.
  </div>
@@ -565,7 +565,7 @@ export function AccaBuilderView({
  ) : null}
 
  {requestId ? (
- <p className="font-mono text-xs text-muted-foreground">
+ <p className="font-mono text-xs text-[var(--hero-ink-2)]">
  Diagnostic requestId: {requestId} · snapshot: {result.snapshotId}
  </p>
  ) : null}
@@ -581,7 +581,7 @@ export function AccaBuilderView({
  ref={transferDialogRef}
  >
  <div className="w-full max-w-md rounded-xl border border-border bg-[var(--canvas)] p-5 shadow-card">
- <h3 id="transfer-title" className="font-display text-lg font-semibold">
+ <h3 id="transfer-title" className="rw-display text-lg font-semibold">
  Add to accumulators
  </h3>
  <p className="mt-2 text-sm text-[var(--ink-secondary)]">
@@ -592,7 +592,7 @@ export function AccaBuilderView({
  <div className="mt-4 flex flex-wrap gap-2">
  <button
  type="button"
- className="btn-primary min-h-11"
+ className="rw-m inline-flex items-center justify-center border border-[var(--hero-ink)] px-4 text-[var(--hero-ink)] transition-colors hover:bg-[var(--hero-ink)] hover:text-[var(--hero-canvas)] min-h-11"
  onClick={() => confirmTransfer("merge")}
  >
  Merge
@@ -630,7 +630,7 @@ function ProviderStatus({ result }: { result: AccaBuilderResult }) {
  {items.map(([label, value]) => (
  <li
  key={label}
- className="rounded border border-border px-2 py-1 text-muted-foreground"
+ className="rounded border border-border px-2 py-1 text-[var(--hero-ink-2)]"
  >
  <span className="font-medium text-foreground">{label}</span>: {value}
  </li>
@@ -661,7 +661,7 @@ function CombinationCard({
  <li className="rounded-xl border border-border bg-[var(--canvas)] p-4">
  <div className="flex flex-wrap items-start justify-between gap-3">
  <div>
- <p className="text-metadata font-medium uppercase tracking-label text-brand">
+ <p className="text-metadata font-medium uppercase tracking-label text-[var(--hero-ink)]">
  {label}
  </p>
  <p className="mt-1 text-sm text-[var(--ink-secondary)]">
@@ -671,17 +671,17 @@ function CombinationCard({
  : ""}
  {` · evidence ${combo.evidenceCompleteness}%`}
  </p>
- <p className="mt-2 font-display text-2xl font-semibold tabular-nums">
+ <p className="mt-2 rw-display text-2xl font-semibold tabular-nums">
  {combo.combinedOdds != null && combo.oddsComplete
  ? combo.combinedOdds.toFixed(2)
  : "Odds unavailable"}
  </p>
- <p className="text-xs text-muted-foreground">{combo.freshnessSummary}</p>
+ <p className="text-xs text-[var(--hero-ink-2)]">{combo.freshnessSummary}</p>
  </div>
  <button
  type="button"
  onClick={onAdd}
- className="btn-primary min-h-11"
+ className="rw-m inline-flex items-center justify-center border border-[var(--hero-ink)] px-4 text-[var(--hero-ink)] transition-colors hover:bg-[var(--hero-ink)] hover:text-[var(--hero-canvas)] min-h-11"
  >
  Add entire Acca to Studio
  </button>
@@ -697,7 +697,7 @@ function CombinationCard({
  <p className="text-sm font-semibold">
  {idx + 1}. {leg.homeTeam} vs {leg.awayTeam}
  </p>
- <p className="text-xs tabular-nums text-muted-foreground">
+ <p className="text-xs tabular-nums text-[var(--hero-ink-2)]">
  {leg.odds != null ? `@ ${leg.odds.toFixed(2)}` : "odds n/a"} ·{" "}
  {leg.confidence}%
  </p>
@@ -711,10 +711,10 @@ function CombinationCard({
  if ((e.target as HTMLDetailsElement).open) onEvidence();
  }}
  >
- <summary className="cursor-pointer font-medium text-brand">
+ <summary className="cursor-pointer font-medium text-[var(--hero-ink)]">
  Why this leg
  </summary>
- <ul className="mt-1 list-disc space-y-0.5 pl-4 text-muted-foreground">
+ <ul className="mt-1 list-disc space-y-0.5 pl-4 text-[var(--hero-ink-2)]">
  {leg.evidenceSummary.map((line) => (
  <li key={line}>{line}</li>
  ))}
@@ -729,7 +729,7 @@ function CombinationCard({
  </details>
  <Link
  href={leg.matchHref || `/${locale}/fixtures/${leg.matchId}`}
- className="mt-1 inline-block text-xs font-medium text-brand hover:underline"
+ className="mt-1 inline-block text-xs font-medium text-[var(--hero-ink)] hover:underline"
  >
  Match detail
  </Link>
@@ -739,7 +739,7 @@ function CombinationCard({
 
  {(combo.correlationWarnings.length > 0 ||
  combo.limitations.length > 0) && (
- <ul className="mt-3 list-disc space-y-1 pl-4 text-xs text-muted-foreground">
+ <ul className="mt-3 list-disc space-y-1 pl-4 text-xs text-[var(--hero-ink-2)]">
  {[...combo.correlationWarnings, ...combo.limitations].map((w) => (
  <li key={w}>{w}</li>
  ))}

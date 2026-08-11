@@ -127,7 +127,7 @@ export function AccaShareControls({
         ) : null}
       </div>
 
-      <label htmlFor={inputId} className="mt-3 block text-xs uppercase tracking-label text-muted-foreground">
+      <label htmlFor={inputId} className="mt-3 block text-xs uppercase tracking-label text-[var(--hero-ink-2)]">
         Link to this page
       </label>
       <input
