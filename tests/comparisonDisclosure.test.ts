@@ -98,29 +98,25 @@ test("the disclosure is accessible and passes the site-wide claim guard", () => 
  * 2. It is wired into the single choke point, above the list
  * ================================================================== */
 
-test("REGRESSION: every brand list renders the disclosure", () => {
-  const src = codeOnly(read("components/BrandListSection.tsx"));
-  assert.match(src, /<OrderingDisclosure/, "the choke point must render it");
-  assert.match(src, /items\[0\]\?\.orderingBasis/, "the basis must come from the rendered items");
+test("REGRESSION: the surviving commercial list renders the disclosure", () => {
+  /*
+   * Re-pinned after the commercial conversion: BrandListSection (the old choke
+   * point) is DELETED with its host pages — the one canonical commercial list
+   * is the operators hub, and the law transfers there whole: the disclosure
+   * renders, its basis is derived from the ordered data, and it precedes the
+   * first operator.
+   */
+  const src = codeOnly(read("app/[locale]/operators/page.tsx"));
+  assert.match(src, /<OrderingDisclosure/, "the hub must render it");
+  assert.match(src, /deriveOrderingBasis\(BRANDS\)/, "the basis must come from the ordered data");
 });
 
-test("REGRESSION: the disclosure precedes both the filter and the operators", () => {
-  const src = read("components/BrandListSection.tsx");
+test("REGRESSION: the disclosure precedes the operators", () => {
+  const src = read("app/[locale]/operators/page.tsx");
   const disclosureAt = src.indexOf("<OrderingDisclosure");
-  const filterAt = src.indexOf("hideCryptoFilter &&");
-  const listAt = src.indexOf("<BrandList ");
+  const listAt = src.indexOf("operators.map");
   assert.ok(disclosureAt > 0, "the disclosure must be rendered");
-  assert.ok(
-    disclosureAt < filterAt,
-    "a reader must meet the disclosure before the filter controls",
-  );
-  assert.ok(disclosureAt < listAt, "and before the first operator");
-});
-
-test("an empty list claims nothing", () => {
-  // No operators means no ordering to describe; asserting one would be a claim about nothing.
-  const src = codeOnly(read("components/BrandListSection.tsx"));
-  assert.match(src, /basis \? <OrderingDisclosure/, "must be conditional on having a basis");
+  assert.ok(disclosureAt < listAt, "a reader must meet the disclosure before the first operator");
 });
 
 /* ================================================================== *

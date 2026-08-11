@@ -133,12 +133,9 @@ test("the disclosure still renders correctly without a locale", () => {
   assert.match(markup, /published criteria/i);
 });
 
-test("REGRESSION: both disclosure call sites supply the locale", () => {
-  assert.match(
-    codeOnly(read("components/BrandListSection.tsx")),
-    /<OrderingDisclosure[^>]*locale=\{locale\}/,
-    "the brand list choke point must link the criteria page",
-  );
+test("REGRESSION: the disclosure call site supplies the locale", () => {
+  // BrandListSection deleted with the commercial conversion — the surviving
+  // disclosure call site is the operators hub, asserted below.
   assert.match(
     codeOnly(read("app/[locale]/operators/page.tsx")),
     /locale=\{params\.locale\}/,

@@ -109,22 +109,24 @@ function walk(dir: string, out: string[] = []): string[] {
  * ordering — a glob would silently absorb a new page and prove nothing about it.
  */
 const COMPARISON_SURFACES = [
+  /*
+   * Post-collapse: the retired door pages remain listed (they exist as
+   * permanent redirects and must stay claim-free); the deleted legacy
+   * components leave the list with the commercial conversion.
+   */
   "app/[locale]/best-betting-sites/page.tsx",
   "app/[locale]/best-crypto-betting-sites/page.tsx",
   "app/[locale]/bonuses/page.tsx",
   "app/[locale]/operators/page.tsx",
   "app/[locale]/compare/[slug]/page.tsx",
   "app/[locale]/reviews/[brand]/page.tsx",
-  "components/BrandList.tsx",
-  "components/BrandListSection.tsx",
-  "components/AffiliateHomeContent.tsx",
 ];
 
 test("every comparison surface exists and is covered by this check", () => {
   for (const rel of COMPARISON_SURFACES) {
     assert.doesNotThrow(() => read(rel), `${rel} must exist — update the list if a page moved`);
   }
-  assert.ok(COMPARISON_SURFACES.length >= 9);
+  assert.ok(COMPARISON_SURFACES.length >= 6);
 });
 
 test("no comparison surface asserts an unqualified ranking", () => {

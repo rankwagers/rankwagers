@@ -70,20 +70,16 @@ test("prepareBrandListItems signs server-side; items are serializable strings", 
   }
 });
 
-test("BrandListSection client source only consumes BrandListItem types", () => {
-  const src = readFileSync(
-    path.join(root, "components/BrandListSection.tsx"),
-    "utf8"
-  );
-  assert.match(src, /use client/);
-  assert.match(src, /brandListTypes/);
-  const importLines = src
-    .split(/\r?\n/)
-    .filter((line) => /^\s*import\b/.test(line))
-    .join("\n");
-  assert.doesNotMatch(
-    importLines,
-    /buildGoPath|redirect-token|brandListItems/
+test("the BrandListSection boundary is closed by deletion", () => {
+  /*
+   * Re-pinned after the commercial conversion: the component this boundary
+   * guarded is DELETED with its host pages. The strongest form of the
+   * boundary holds — no client source exists to leak server types.
+   */
+  assert.equal(
+    existsSync(path.join(root, "components/BrandListSection.tsx")),
+    false,
+    "the deleted boundary must not silently return"
   );
 });
 

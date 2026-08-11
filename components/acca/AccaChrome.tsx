@@ -103,7 +103,7 @@ function AccaLauncher() {
   * shown. `pointer-events-none` plus `aria-hidden`/`tabIndex=-1` take it out of pointer, screen
   * reader and keyboard reach together, so nothing invisible stays focusable.
   */
- className={`rw-hero fixed bottom-4 right-4 z-40 inline-flex min-h-12 items-center justify-center gap-1.5 rounded-full border border-[var(--hero-ink)] bg-[var(--hero-canvas)] px-4 text-sm font-semibold text-[var(--hero-ink)] shadow-elevated transition-opacity duration-fast hover:bg-[var(--hero-ink)] hover:text-[var(--hero-canvas)] lg:bottom-6 lg:right-6 ${
+ className={`rw-hero fixed bottom-4 right-4 z-40 inline-flex min-h-12 items-center justify-center gap-1.5 rounded-full border border-[var(--hero-ink)] bg-[var(--hero-canvas)] px-4 text-sm font-semibold text-[var(--hero-ink)] shadow-elevated transition-opacity duration-fast hover:bg-[var(--hero-ink)] hover:text-[var(--hero-canvas)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--hero-ink)] lg:bottom-6 lg:right-6 ${
  coversProofBand ? "pointer-events-none opacity-0" : ""
  }`}
  aria-hidden={coversProofBand || undefined}
