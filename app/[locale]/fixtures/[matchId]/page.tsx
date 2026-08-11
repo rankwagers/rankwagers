@@ -6,6 +6,7 @@ import { MatchDetailView } from "@/components/fixtures/MatchDetailView";
 import { getEvidenceHistoryView } from "@/lib/archive/evidence";
 import { getDictionary } from "@/lib/dictionaries";
 import { loadMatchPageBundle } from "@/lib/fixtures/loadMatchPage.server";
+import { buildPricePanelData } from "@/lib/operators/pricePanel.server";
 import { parseFixtureMatchId } from "@/lib/fixtures/paths";
 import { locales, type Locale } from "@/lib/i18n";
 import { getRequestCountryContext } from "@/lib/personalization/server";
@@ -122,6 +123,15 @@ export default async function FixtureMatchPage({
   const dict = getDictionary(params.locale);
   const evidenceHistory = await getEvidenceHistoryView(matchId, { locale: params.locale });
 
+  /* Phase C — observed publication prices, frozen at this fixture's kickoff.
+     An empty map renders nothing anywhere: no affordance, no panel. */
+  const prices = await buildPricePanelData({
+    fixtureId: matchId,
+    kickoffIso: bundle.model.header.kickoffAt,
+    locale: params.locale,
+    country: countryContext.country,
+  });
+
   return (
     <>
       <MatchDetailView
@@ -130,6 +140,7 @@ export default async function FixtureMatchPage({
         source={searchParams?.source ?? null}
         latestSnapshot={evidenceHistory.latest}
         p={dict.predictions}
+        prices={prices}
       />
       {/*
         Sprint 23 — Evidence History. Rendered as a sibling of the match view rather than

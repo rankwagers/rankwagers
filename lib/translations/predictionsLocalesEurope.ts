@@ -596,6 +596,11 @@ export const nl = euroPredictions({
   acUnavailable: "niet vermeld voor uw land",
   acDetailLink: "Operatorpagina",
 
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "Waargenomen prijzen",
+  ppAria: "Waargenomen prijzen openen",
+  fxBridgeOperators: "Operators voor deze wedstrijd",
+
 });
 
 export const pl = euroPredictions({
@@ -1021,6 +1026,11 @@ export const pl = euroPredictions({
   acUnavailable: "niewymieniony dla twojego kraju",
   acDetailLink: "Strona operatora",
 
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "Zaobserwowane ceny",
+  ppAria: "Otwórz zaobserwowane ceny",
+  fxBridgeOperators: "Operatorzy dla tego meczu",
+
 });
 
 export const cs = euroPredictions({
@@ -1440,6 +1450,11 @@ export const cs = euroPredictions({
   acUnavailable: "neuveden pro vaši zemi",
   acDetailLink: "Stránka operátora",
 
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "Pozorované ceny",
+  ppAria: "Otevřít pozorované ceny",
+  fxBridgeOperators: "Operátoři pro tento zápas",
+
 });
 
 export const da = euroPredictions({
@@ -1858,6 +1873,11 @@ export const da = euroPredictions({
   acUnavailable: "ikke angivet for dit land",
   acDetailLink: "Operatørside",
 
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "Observerede priser",
+  ppAria: "Åbn observerede priser",
+  fxBridgeOperators: "Operatører til denne kamp",
+
 });
 
 export const sv = euroPredictions({
@@ -2275,6 +2295,11 @@ export const sv = euroPredictions({
   acAvailable: "tillgänglig för ditt land",
   acUnavailable: "inte listad för ditt land",
   acDetailLink: "Operatörssida",
+
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "Observerade priser",
+  ppAria: "Öppna observerade priser",
+  fxBridgeOperators: "Operatörer för denna match",
 
 });
 
@@ -2696,6 +2721,11 @@ export const no = euroPredictions({
   acUnavailable: "ikke oppført for ditt land",
   acDetailLink: "Operatørside",
 
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "Observerte priser",
+  ppAria: "Åpne observerte priser",
+  fxBridgeOperators: "Operatører for denne kampen",
+
 });
 
 export const fi = euroPredictions({
@@ -3112,6 +3142,11 @@ export const fi = euroPredictions({
   acAvailable: "saatavilla maassasi",
   acUnavailable: "ei listattu maallesi",
   acDetailLink: "Operaattorisivu",
+
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "Havaitut hinnat",
+  ppAria: "Avaa havaitut hinnat",
+  fxBridgeOperators: "Operaattorit tälle ottelulle",
 
 });
 
@@ -3535,6 +3570,11 @@ export const ro = euroPredictions({
   acAvailable: "disponibil pentru țara ta",
   acUnavailable: "nelistat pentru țara ta",
   acDetailLink: "Pagina operatorului",
+
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "Prețuri observate",
+  ppAria: "Deschide prețurile observate",
+  fxBridgeOperators: "Operatori pentru acest meci",
 
 });
 
@@ -3962,6 +4002,11 @@ export const el = euroPredictions({
   acUnavailable: "μη καταχωρισμένος για τη χώρα σας",
   acDetailLink: "Σελίδα παρόχου",
 
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "Παρατηρημένες τιμές",
+  ppAria: "Άνοιγμα παρατηρημένων τιμών",
+  fxBridgeOperators: "Πάροχοι για αυτόν τον αγώνα",
+
 });
 
 export const hu = euroPredictions({
@@ -4382,5 +4427,10 @@ export const hu = euroPredictions({
   acAvailable: "elérhető az országodban",
   acUnavailable: "nem szerepel az országodhoz",
   acDetailLink: "Szolgáltatói oldal",
+
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "Megfigyelt árak",
+  ppAria: "Megfigyelt árak megnyitása",
+  fxBridgeOperators: "Szolgáltatók ehhez a mérkőzéshez",
 
 });

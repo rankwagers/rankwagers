@@ -403,6 +403,11 @@ export const ar = mergePredictions({
   acUnavailable: "غير مدرج لدولتك",
   acDetailLink: "صفحة المشغّل",
 
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "الأسعار المرصودة",
+  ppAria: "فتح الأسعار المرصودة",
+  fxBridgeOperators: "المشغّلون لهذه المباراة",
+
 });
 
 export const hi = mergePredictions({
@@ -814,6 +819,11 @@ export const hi = mergePredictions({
   acUnavailable: "आपके देश के लिए सूचीबद्ध नहीं",
   acDetailLink: "ऑपरेटर पृष्ठ",
 
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "दर्ज क़ीमतें",
+  ppAria: "दर्ज क़ीमतें खोलें",
+  fxBridgeOperators: "इस मैच के लिए ऑपरेटर",
+
 });
 
 export const ja = mergePredictions({
@@ -1189,6 +1199,11 @@ export const ja = mergePredictions({
   acAvailable: "お住まいの国で利用可能",
   acUnavailable: "お住まいの国では未掲載",
   acDetailLink: "オペレーターページ",
+
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "記録済み価格",
+  ppAria: "記録済み価格を開く",
+  fxBridgeOperators: "この試合のオペレーター",
 
 });
 
@@ -1568,6 +1583,11 @@ export const ko = mergePredictions({
   acAvailable: "귀하의 국가에서 이용 가능",
   acUnavailable: "귀하의 국가에 미등재",
   acDetailLink: "운영사 페이지",
+
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "기록된 가격",
+  ppAria: "기록된 가격 열기",
+  fxBridgeOperators: "이 경기의 운영사",
 
 });
 
@@ -1979,6 +1999,11 @@ export const th = mergePredictions({
   acAvailable: "พร้อมใช้งานสำหรับประเทศของคุณ",
   acUnavailable: "ไม่อยู่ในรายการสำหรับประเทศของคุณ",
   acDetailLink: "หน้าผู้ให้บริการ",
+
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "ราคาที่บันทึกไว้",
+  ppAria: "เปิดราคาที่บันทึกไว้",
+  fxBridgeOperators: "ผู้ให้บริการสำหรับแมตช์นี้",
 
 });
 
@@ -2397,6 +2422,11 @@ export const vi = mergePredictions({
   acAvailable: "khả dụng cho quốc gia của bạn",
   acUnavailable: "không được liệt kê cho quốc gia của bạn",
   acDetailLink: "Trang nhà điều hành",
+
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "Giá đã ghi nhận",
+  ppAria: "Mở giá đã ghi nhận",
+  fxBridgeOperators: "Nhà điều hành cho trận này",
 
 });
 
@@ -2818,6 +2848,11 @@ export const id = mergePredictions({
   acUnavailable: "tidak terdaftar untuk negara Anda",
   acDetailLink: "Halaman operator",
 
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "Harga tercatat",
+  ppAria: "Buka harga tercatat",
+  fxBridgeOperators: "Operator untuk pertandingan ini",
+
 });
 
 export const zh = mergePredictions({
@@ -3191,6 +3226,11 @@ export const zh = mergePredictions({
   acUnavailable: "未列入您的国家",
   acDetailLink: "运营商页面",
 
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "已记录价格",
+  ppAria: "打开已记录价格",
+  fxBridgeOperators: "本场比赛的运营商",
+
 });
 
 export const bn = mergePredictions({
@@ -3535,6 +3575,11 @@ export const bn = mergePredictions({
   acAvailable: "আপনার দেশের জন্য উপলব্ধ",
   acUnavailable: "আপনার দেশের জন্য তালিকাভুক্ত নয়",
   acDetailLink: "অপারেটর পাতা",
+
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "নথিভুক্ত দাম",
+  ppAria: "নথিভুক্ত দাম খুলুন",
+  fxBridgeOperators: "এই ম্যাচের অপারেটর",
 
 });
 
@@ -3892,6 +3937,11 @@ export const ta = mergePredictions({
   acUnavailable: "உங்கள் நாட்டிற்குப் பட்டியலிடப்படவில்லை",
   acDetailLink: "இயக்குநர் பக்கம்",
 
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "பதிவான விலைகள்",
+  ppAria: "பதிவான விலைகளைத் திற",
+  fxBridgeOperators: "இந்த ஆட்டத்திற்கான இயக்குநர்கள்",
+
 });
 
 export const te = mergePredictions({
@@ -4236,6 +4286,11 @@ export const te = mergePredictions({
   acUnavailable: "మీ దేశానికి జాబితాలో లేదు",
   acDetailLink: "ఆపరేటర్ పేజీ",
 
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "నమోదైన ధరలు",
+  ppAria: "నమోదైన ధరలు తెరవండి",
+  fxBridgeOperators: "ఈ మ్యాచ్‌కు ఆపరేటర్లు",
+
 });
 
 export const mr = mergePredictions({
@@ -4577,6 +4632,11 @@ export const mr = mergePredictions({
   acAvailable: "तुमच्या देशासाठी उपलब्ध",
   acUnavailable: "तुमच्या देशासाठी सूचीबद्ध नाही",
   acDetailLink: "ऑपरेटर पान",
+
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "नोंदवलेल्या किमती",
+  ppAria: "नोंदवलेल्या किमती उघडा",
+  fxBridgeOperators: "या सामन्यासाठी ऑपरेटर",
 
 });
 
@@ -4998,5 +5058,10 @@ export const sw = mergePredictions({
   acAvailable: "inapatikana kwa nchi yako",
   acUnavailable: "haijaorodheshwa kwa nchi yako",
   acDetailLink: "Ukurasa wa mwendeshaji",
+
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "Bei zilizorekodiwa",
+  ppAria: "Fungua bei zilizorekodiwa",
+  fxBridgeOperators: "Waendeshaji kwa mechi hii",
 
 });

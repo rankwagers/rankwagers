@@ -11,6 +11,10 @@ import { getRequestCountryContext } from "@/lib/personalization/server";
 import { mapDailyListsToQualifiedFixtures } from "@/lib/research/qualifiedFixture";
 import { pageMetadata } from "@/lib/seo";
 import { getDictionary } from "@/lib/dictionaries";
+import {
+  buildPricePanelData,
+  type PricePanelRow,
+} from "@/lib/operators/pricePanel.server";
 
 export function generateStaticParams() {
   return locales.flatMap((locale) =>
@@ -56,6 +60,29 @@ export default async function MarketDetailPage({
   const odds = await getMarketOddsSummary(market);
   const operators = operatorsForMarket(market, countryContext.country);
 
+  /* Phase C — the page's market, priced per listed fixture from the frozen
+     history. Slugs outside the observed market set simply produce no chips. */
+  const HISTORY_KEY_BY_MARKET_SLUG: Record<string, string> = {
+    "over-1-5": "over15",
+    "over-2-5": "over25",
+    "first-half-goals": "fh",
+    "second-half-goals": "sh",
+  };
+  const historyKey = HISTORY_KEY_BY_MARKET_SLUG[market.slug];
+  const pricesByFixture: Record<number, PricePanelRow[]> = {};
+  if (historyKey) {
+    for (const fixture of upcoming) {
+      const panel = await buildPricePanelData({
+        fixtureId: fixture.matchId,
+        kickoffIso: fixture.kickoffDateTime,
+        locale: params.locale,
+        country: countryContext.country,
+      });
+      const rows = panel[historyKey];
+      if (rows?.length) pricesByFixture[fixture.matchId] = rows;
+    }
+  }
+
   return (
     <MarketDetailView
       market={market}
@@ -66,6 +93,7 @@ export default async function MarketDetailPage({
       operators={operators}
       visitorCountry={countryContext.country}
         p={getDictionary(params.locale).predictions}
+      pricesByFixture={pricesByFixture}
     />
   );
 }

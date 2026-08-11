@@ -433,6 +433,11 @@ const pt: PredictionStrings = mergePredictions({
   acUnavailable: "não listado para o seu país",
   acDetailLink: "Página do operador",
 
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "Preços observados",
+  ppAria: "Abrir preços observados",
+  fxBridgeOperators: "Operadores para este jogo",
+
 });
 
 const es: PredictionStrings = mergePredictions({
@@ -865,6 +870,11 @@ const es: PredictionStrings = mergePredictions({
   acAvailable: "disponible para tu país",
   acUnavailable: "no listado para tu país",
   acDetailLink: "Página del operador",
+
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "Precios observados",
+  ppAria: "Abrir precios observados",
+  fxBridgeOperators: "Operadores para este partido",
 
 });
 
@@ -1301,6 +1311,11 @@ const de: PredictionStrings = mergePredictions({
   acUnavailable: "für Ihr Land nicht gelistet",
   acDetailLink: "Anbieterseite",
 
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "Beobachtete Preise",
+  ppAria: "Beobachtete Preise öffnen",
+  fxBridgeOperators: "Anbieter für dieses Spiel",
+
 });
 
 const it: PredictionStrings = mergePredictions({
@@ -1730,6 +1745,11 @@ const it: PredictionStrings = mergePredictions({
   acAvailable: "disponibile per il tuo paese",
   acUnavailable: "non elencato per il tuo paese",
   acDetailLink: "Pagina dell'operatore",
+
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "Prezzi osservati",
+  ppAria: "Apri i prezzi osservati",
+  fxBridgeOperators: "Operatori per questa partita",
 
 });
 
@@ -2161,6 +2181,11 @@ const fr: PredictionStrings = mergePredictions({
   acAvailable: "disponible pour votre pays",
   acUnavailable: "non listé pour votre pays",
   acDetailLink: "Page de l'opérateur",
+
+  /* Price panel + post-L2 bridge (pp / bridge keys). */
+  ppTitle: "Prix observés",
+  ppAria: "Ouvrir les prix observés",
+  fxBridgeOperators: "Opérateurs pour ce match",
 
 });
 

@@ -737,6 +737,10 @@ export const predictionsEn = {
   acAvailable: "available for your country",
   acUnavailable: "not listed for your country",
   acDetailLink: "Operator page",
+  /* Price panel + post-L2 bridge — commercial conversion (pp / bridge keys). */
+  ppTitle: "Observed prices",
+  ppAria: "Open observed prices",
+  fxBridgeOperators: "Operators for this match",
   navQualified: "Qualified lists",
   navLiveSignals: "Live signals",
   navMethodology: "Methodology",

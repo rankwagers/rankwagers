@@ -31,6 +31,7 @@ export function MatchDetailView({
   source,
   latestSnapshot,
   p,
+  prices,
 }: {
   locale: Locale;
   bundle: MatchPageBundle;
@@ -38,6 +39,8 @@ export function MatchDetailView({
   /** The newest archived evidence snapshot for this fixture, or null — L3's provenance line. */
   latestSnapshot: EvidenceSnapshotView | null;
   p: PredictionStrings;
+  /** Observed publication prices for this fixture's markets (Phase C price panel). */
+  prices?: import("@/lib/operators/pricePanel.server").PricePanelData;
 }) {
   const { model, focusMarket, detail } = bundle;
   const { header } = model;
@@ -229,7 +232,7 @@ export function MatchDetailView({
         the reader meets the strongest real signal first, or meets the model directly.
       */}
       <div className="mt-14 lg:mt-20">
-        <FixtureSignalLevels report={signalReport} teams={teams} p={p} />
+        <FixtureSignalLevels report={signalReport} teams={teams} p={p} prices={prices} locale={locale} />
       </div>
 
       {/*

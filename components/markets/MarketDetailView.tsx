@@ -32,6 +32,8 @@ import type { QualifiedFixture } from "@/lib/research/qualifiedFixture";
 import { siteUrl } from "@/lib/seo";
 import { formatDict } from "@/lib/dictionaryExtras";
 import { MarketFixtureLink } from "./MarketInteractive";
+import { PricePanel } from "@/components/odds/PricePanel";
+import type { PricePanelRow } from "@/lib/operators/pricePanel.server";
 import { MarketEvidenceSection } from "./MarketEvidenceSection";
 import { MarketOddsSection } from "./MarketOddsSection";
 import { MarketPageTracker } from "./MarketPageTracker";
@@ -69,6 +71,7 @@ export function MarketDetailView({
   operators,
   visitorCountry,
   p,
+  pricesByFixture,
 }: {
   market: MarketDefinition;
   locale: Locale;
@@ -78,6 +81,8 @@ export function MarketDetailView({
   operators: MarketOperatorRow[];
   visitorCountry: string;
   p: PredictionStrings;
+  /** Observed publication prices for THIS market, per listed fixture (Phase C). */
+  pricesByFixture?: Record<number, PricePanelRow[]>;
 }) {
   const nowIso = new Date().toISOString();
   const relatedMarkets = getRelatedMarkets(market.slug);
@@ -223,6 +228,13 @@ export function MarketDetailView({
                       <p className="rw-m mt-1 text-[var(--hero-ink-2)]">
                         {fixture.league} · {fixture.kickoff}
                       </p>
+                      {pricesByFixture?.[fixture.matchId]?.length ? (
+                        <PricePanel
+                          rows={pricesByFixture[fixture.matchId]}
+                          locale={locale}
+                          p={p}
+                        />
+                      ) : null}
                     </div>
                     <p className="shrink-0 text-right">
                       <span className="rw-tnum text-[15px] font-bold text-[var(--hero-ink)]">
