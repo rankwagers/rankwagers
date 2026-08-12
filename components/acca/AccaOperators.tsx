@@ -5,7 +5,7 @@ import { useAcca } from "./AccaProvider";
 import { trackAccaEvent } from "@/lib/acca/analytics";
 import type { AccaOperatorOffer } from "@/lib/acca/types";
 import type { PredictionStrings } from "@/lib/translations/predictionsEn";
-import { formatDict } from "@/lib/dictionaryExtras";
+import { formatDict } from "@/lib/formatDict";
 
 /*
  * THE SLIP-COMPLETE OPERATOR CHOICE — the hottest intent moment, kept calm.

@@ -4,7 +4,7 @@ import { useId, useState } from "react";
 import type { PricePanelRow } from "@/lib/operators/pricePanel.server";
 import type { PredictionStrings } from "@/lib/translations/predictionsEn";
 import { LocalTime } from "@/components/fixtures/LocalTime";
-import { formatDict } from "@/lib/dictionaryExtras";
+import { formatDict } from "@/lib/formatDict";
 import { trackOperatorAffiliateCtaClick } from "@/lib/analytics/operatorPages";
 
 /*

@@ -749,12 +749,7 @@ export function getDictionaryExtras(locale: Locale): DictionaryExtras {
   return { ...hit, predictions };
 }
 
-export function formatDict(
-  template: string,
-  vars: Record<string, string>
-): string {
-  return Object.entries(vars).reduce(
-    (s, [k, v]) => s.replaceAll(`{${k}}`, v),
-    template
-  );
-}
+/* Moved to lib/formatDict.ts (pure, dependency-free) so client components can
+   use it WITHOUT dragging this module's 30-locale dictionary graph into the
+   client bundle. Re-exported here for the existing server-side callers. */
+export { formatDict } from "./formatDict";
