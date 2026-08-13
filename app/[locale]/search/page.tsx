@@ -10,13 +10,13 @@ import type { PredictionStrings } from "@/lib/translations/predictionsEn";
 import { pageMetadata } from "@/lib/seo";
 import { buildPopularResearchItems } from "@/lib/discovery";
 import {
-  SEARCH_GROUP_LABELS,
   SEARCH_GROUP_ORDER,
   normalizeSearchQuery,
   searchEntities,
   type SearchEntityType,
   type SearchGroupKey,
 } from "@/lib/search";
+import { searchGroupLabels } from "@/lib/search/labels";
 import { SearchFilterTracker } from "@/components/search/SearchFilterTracker";
 import { getRequestCountryContext } from "@/lib/personalization/server";
 
@@ -106,6 +106,7 @@ export default function SearchPage({
     limitPerGroup: 20,
   });
   const p = getDictionary(locale).predictions;
+  const groupLabels = searchGroupLabels(p);
 
   const popular = buildPopularResearchItems(locale, 8);
   const seed = response.results[0];
@@ -170,7 +171,7 @@ export default function SearchPage({
         </Link>
         {SEARCH_GROUP_ORDER.filter((key) => key !== "fixture").map((key) => (
           <Link key={key} href={filterHref(key)} className={chipClass(typeFilter === key)}>
-            {SEARCH_GROUP_LABELS[key]}
+            {groupLabels[key]}
           </Link>
         ))}
       </nav>
@@ -193,7 +194,7 @@ export default function SearchPage({
             return (
               <section key={groupKey} aria-labelledby={`group-${groupKey}`}>
                 <h2 id={`group-${groupKey}`} className="rw-m text-[var(--hero-ink-2)]">
-                  {SEARCH_GROUP_LABELS[groupKey]}
+                  {groupLabels[groupKey]}
                 </h2>
                 <ul className="mt-3 border-t-[1.5px] border-[var(--hero-ink)]">
                   {rows.map((result) => (

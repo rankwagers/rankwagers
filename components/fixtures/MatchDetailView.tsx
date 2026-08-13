@@ -103,7 +103,7 @@ export function MatchDetailView({
         <ol className="flex flex-wrap items-center gap-1">
           <li>
             <Link href={model.related.homeHref} className="hover:text-[var(--hero-ink)]">
-              Home
+              {p.nvHome}
             </Link>
           </li>
           <li aria-hidden>/</li>

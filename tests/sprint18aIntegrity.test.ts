@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 import path from "node:path";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
+import { predictionsEn } from "../lib/translations/predictionsEn";
 import { buildPrimaryNav } from "../lib/navigation/primaryNav";
 import {
   homepageFixtureExplorerHref,
@@ -29,12 +30,8 @@ test("best-betting-sites is a recorded permanent redirect into /operators", () =
 });
 
 test("primary nav includes bookmaker hubs and grouped research/browse", () => {
-  const { groups, desktop, flat } = buildPrimaryNav("en", {
-    bestBetting: "Best Betting Sites",
-    bestCrypto: "Best Crypto",
-    bonuses: "Bonuses",
-    reviews: "Assessments",
-  });
+  // Language sweep: buildPrimaryNav now takes the dictionary; labels are born there.
+  const { groups, desktop, flat } = buildPrimaryNav("en", predictionsEn);
   assert.deepEqual(
     groups.map((g) => g.id),
     ["research", "bookmakers", "browse"]

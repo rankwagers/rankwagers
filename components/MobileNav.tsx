@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { searchGroupLabels } from "@/lib/search/labels";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import type { FullDictionary } from "@/lib/dictionaries";
@@ -15,6 +16,7 @@ import { trapTabKey } from "@/lib/ui/focusTrap";
 import { X } from "lucide-react";
 
 export function MobileNav({
+ dict,
  locale,
  groups,
 }: {
@@ -87,6 +89,7 @@ export function MobileNav({
  <div className="mb-3">
  <GlobalSearch
  locale={locale}
+ groupLabels={searchGroupLabels(dict.predictions)}
  variant="mobile"
  onNavigate={() => setOpen(false)}
  />

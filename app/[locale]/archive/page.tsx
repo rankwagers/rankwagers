@@ -93,7 +93,7 @@ export default async function ArchiveHubPage({
 
       <nav aria-label="Breadcrumb" className="rw-m pt-5 text-[var(--hero-ink-2)]">
         <Link href={`/${params.locale}`} className="hover:text-[var(--hero-ink)]">
-          Home
+          {p.nvHome}
         </Link>
         <span className="mx-1.5" aria-hidden>
           /

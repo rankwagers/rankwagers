@@ -408,6 +408,23 @@ export const ar = mergePredictions({
   ppAria: "فتح الأسعار المرصودة",
   fxBridgeOperators: "المشغّلون لهذه المباراة",
 
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "الرئيسية",
+  nvGroupResearch: "البحث",
+  nvGroupReference: "المرجع",
+  nvToday: "مباريات اليوم",
+  nvArchive: "الأرشيف",
+  nvAccas: "المراكمات",
+  nvAccasPublished: "المراكمات المنشورة",
+  nvAccaBuild: "إنشاء مراكمة",
+  nvQualifiedFixtures: "المباريات المؤهّلة",
+  nvLiveMatches: "المباريات المباشرة",
+  nvShortlist: "القائمة المحفوظة",
+  nvMarkets: "الأسواق",
+  nvCountries: "الدول",
+  nvFixtures: "المباريات",
+  nvSettledRecord: "السجل المسوّى",
+
 });
 
 export const hi = mergePredictions({
@@ -824,6 +841,23 @@ export const hi = mergePredictions({
   ppAria: "दर्ज क़ीमतें खोलें",
   fxBridgeOperators: "इस मैच के लिए ऑपरेटर",
 
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "मुखपृष्ठ",
+  nvGroupResearch: "शोध",
+  nvGroupReference: "संदर्भ",
+  nvToday: "आज के मैच",
+  nvArchive: "संग्रह",
+  nvAccas: "संचयी दाँव",
+  nvAccasPublished: "प्रकाशित संचयी",
+  nvAccaBuild: "संचयी बनाएँ",
+  nvQualifiedFixtures: "योग्य मैच",
+  nvLiveMatches: "लाइव मैच",
+  nvShortlist: "सहेजी सूची",
+  nvMarkets: "बाज़ार",
+  nvCountries: "देश",
+  nvFixtures: "मैच",
+  nvSettledRecord: "निपटाया अभिलेख",
+
 });
 
 export const ja = mergePredictions({
@@ -1204,6 +1238,23 @@ export const ja = mergePredictions({
   ppTitle: "記録済み価格",
   ppAria: "記録済み価格を開く",
   fxBridgeOperators: "この試合のオペレーター",
+
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "ホーム",
+  nvGroupResearch: "リサーチ",
+  nvGroupReference: "リファレンス",
+  nvToday: "今日の試合",
+  nvArchive: "アーカイブ",
+  nvAccas: "アキュムレーター",
+  nvAccasPublished: "公開アキュムレーター",
+  nvAccaBuild: "アキュムレーター作成",
+  nvQualifiedFixtures: "適格試合",
+  nvLiveMatches: "ライブ試合",
+  nvShortlist: "保存リスト",
+  nvMarkets: "市場",
+  nvCountries: "国",
+  nvFixtures: "試合",
+  nvSettledRecord: "清算済み記録",
 
 });
 
@@ -1588,6 +1639,23 @@ export const ko = mergePredictions({
   ppTitle: "기록된 가격",
   ppAria: "기록된 가격 열기",
   fxBridgeOperators: "이 경기의 운영사",
+
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "홈",
+  nvGroupResearch: "리서치",
+  nvGroupReference: "참조",
+  nvToday: "오늘의 경기",
+  nvArchive: "아카이브",
+  nvAccas: "누적 베팅",
+  nvAccasPublished: "공개된 누적",
+  nvAccaBuild: "누적 만들기",
+  nvQualifiedFixtures: "적격 경기",
+  nvLiveMatches: "라이브 경기",
+  nvShortlist: "저장 목록",
+  nvMarkets: "마켓",
+  nvCountries: "국가",
+  nvFixtures: "경기",
+  nvSettledRecord: "정산된 기록",
 
 });
 
@@ -2004,6 +2072,23 @@ export const th = mergePredictions({
   ppTitle: "ราคาที่บันทึกไว้",
   ppAria: "เปิดราคาที่บันทึกไว้",
   fxBridgeOperators: "ผู้ให้บริการสำหรับแมตช์นี้",
+
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "หน้าแรก",
+  nvGroupResearch: "งานวิจัย",
+  nvGroupReference: "อ้างอิง",
+  nvToday: "แมตช์วันนี้",
+  nvArchive: "คลัง",
+  nvAccas: "สเต็ป",
+  nvAccasPublished: "สเต็ปที่เผยแพร่",
+  nvAccaBuild: "สร้างสเต็ป",
+  nvQualifiedFixtures: "แมตช์ที่ผ่านเกณฑ์",
+  nvLiveMatches: "แมตช์สด",
+  nvShortlist: "รายการที่บันทึก",
+  nvMarkets: "ตลาด",
+  nvCountries: "ประเทศ",
+  nvFixtures: "แมตช์",
+  nvSettledRecord: "บันทึกที่ชำระแล้ว",
 
 });
 
@@ -2427,6 +2512,23 @@ export const vi = mergePredictions({
   ppTitle: "Giá đã ghi nhận",
   ppAria: "Mở giá đã ghi nhận",
   fxBridgeOperators: "Nhà điều hành cho trận này",
+
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "Trang chủ",
+  nvGroupResearch: "Nghiên cứu",
+  nvGroupReference: "Tham chiếu",
+  nvToday: "Trận hôm nay",
+  nvArchive: "Lưu trữ",
+  nvAccas: "Cược xâu",
+  nvAccasPublished: "Cược xâu đã công bố",
+  nvAccaBuild: "Tạo cược xâu",
+  nvQualifiedFixtures: "Trận đủ điều kiện",
+  nvLiveMatches: "Trận trực tiếp",
+  nvShortlist: "Danh sách đã lưu",
+  nvMarkets: "Thị trường",
+  nvCountries: "Quốc gia",
+  nvFixtures: "Trận đấu",
+  nvSettledRecord: "Sổ đã quyết toán",
 
 });
 
@@ -2853,6 +2955,23 @@ export const id = mergePredictions({
   ppAria: "Buka harga tercatat",
   fxBridgeOperators: "Operator untuk pertandingan ini",
 
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "Beranda",
+  nvGroupResearch: "Riset",
+  nvGroupReference: "Referensi",
+  nvToday: "Pertandingan hari ini",
+  nvArchive: "Arsip",
+  nvAccas: "Akumulator",
+  nvAccasPublished: "Akumulator terpublikasi",
+  nvAccaBuild: "Buat akumulator",
+  nvQualifiedFixtures: "Pertandingan terkualifikasi",
+  nvLiveMatches: "Pertandingan langsung",
+  nvShortlist: "Daftar tersimpan",
+  nvMarkets: "Pasar",
+  nvCountries: "Negara",
+  nvFixtures: "Pertandingan",
+  nvSettledRecord: "Catatan terselesaikan",
+
 });
 
 export const zh = mergePredictions({
@@ -3231,6 +3350,23 @@ export const zh = mergePredictions({
   ppAria: "打开已记录价格",
   fxBridgeOperators: "本场比赛的运营商",
 
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "首页",
+  nvGroupResearch: "研究",
+  nvGroupReference: "参考",
+  nvToday: "今日比赛",
+  nvArchive: "档案",
+  nvAccas: "串关",
+  nvAccasPublished: "已发布串关",
+  nvAccaBuild: "创建串关",
+  nvQualifiedFixtures: "合格比赛",
+  nvLiveMatches: "直播比赛",
+  nvShortlist: "已存清单",
+  nvMarkets: "市场",
+  nvCountries: "国家",
+  nvFixtures: "比赛",
+  nvSettledRecord: "已结算记录",
+
 });
 
 export const bn = mergePredictions({
@@ -3580,6 +3716,23 @@ export const bn = mergePredictions({
   ppTitle: "নথিভুক্ত দাম",
   ppAria: "নথিভুক্ত দাম খুলুন",
   fxBridgeOperators: "এই ম্যাচের অপারেটর",
+
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "হোম",
+  nvGroupResearch: "গবেষণা",
+  nvGroupReference: "তথ্যসূত্র",
+  nvToday: "আজকের ম্যাচ",
+  nvArchive: "সংরক্ষণাগার",
+  nvAccas: "অ্যাকুমুলেটর",
+  nvAccasPublished: "প্রকাশিত অ্যাকুমুলেটর",
+  nvAccaBuild: "অ্যাকুমুলেটর তৈরি",
+  nvQualifiedFixtures: "যোগ্য ম্যাচ",
+  nvLiveMatches: "লাইভ ম্যাচ",
+  nvShortlist: "সংরক্ষিত তালিকা",
+  nvMarkets: "বাজার",
+  nvCountries: "দেশ",
+  nvFixtures: "ম্যাচ",
+  nvSettledRecord: "নিষ্পত্তিকৃত নথি",
 
 });
 
@@ -3942,6 +4095,23 @@ export const ta = mergePredictions({
   ppAria: "பதிவான விலைகளைத் திற",
   fxBridgeOperators: "இந்த ஆட்டத்திற்கான இயக்குநர்கள்",
 
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "முகப்பு",
+  nvGroupResearch: "ஆய்வு",
+  nvGroupReference: "குறிப்பு",
+  nvToday: "இன்றைய ஆட்டங்கள்",
+  nvArchive: "காப்பகம்",
+  nvAccas: "திரள் பந்தயங்கள்",
+  nvAccasPublished: "வெளியிட்ட திரள்கள்",
+  nvAccaBuild: "திரள் உருவாக்கு",
+  nvQualifiedFixtures: "தகுதியான ஆட்டங்கள்",
+  nvLiveMatches: "நேரடி ஆட்டங்கள்",
+  nvShortlist: "சேமித்த பட்டியல்",
+  nvMarkets: "சந்தைகள்",
+  nvCountries: "நாடுகள்",
+  nvFixtures: "ஆட்டங்கள்",
+  nvSettledRecord: "தீர்வான பதிவு",
+
 });
 
 export const te = mergePredictions({
@@ -4291,6 +4461,23 @@ export const te = mergePredictions({
   ppAria: "నమోదైన ధరలు తెరవండి",
   fxBridgeOperators: "ఈ మ్యాచ్‌కు ఆపరేటర్లు",
 
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "హోమ్",
+  nvGroupResearch: "పరిశోధన",
+  nvGroupReference: "సూచన",
+  nvToday: "నేటి మ్యాచ్‌లు",
+  nvArchive: "ఆర్కైవ్",
+  nvAccas: "అక్యుములేటర్లు",
+  nvAccasPublished: "ప్రచురిత అక్యుములేటర్లు",
+  nvAccaBuild: "అక్యుములేటర్ సృష్టించండి",
+  nvQualifiedFixtures: "అర్హత మ్యాచ్‌లు",
+  nvLiveMatches: "లైవ్ మ్యాచ్‌లు",
+  nvShortlist: "సేవ్ చేసిన జాబితా",
+  nvMarkets: "మార్కెట్లు",
+  nvCountries: "దేశాలు",
+  nvFixtures: "మ్యాచ్‌లు",
+  nvSettledRecord: "పరిష్కృత రికార్డు",
+
 });
 
 export const mr = mergePredictions({
@@ -4637,6 +4824,23 @@ export const mr = mergePredictions({
   ppTitle: "नोंदवलेल्या किमती",
   ppAria: "नोंदवलेल्या किमती उघडा",
   fxBridgeOperators: "या सामन्यासाठी ऑपरेटर",
+
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "मुख्यपृष्ठ",
+  nvGroupResearch: "संशोधन",
+  nvGroupReference: "संदर्भ",
+  nvToday: "आजचे सामने",
+  nvArchive: "संग्रह",
+  nvAccas: "संचयी पैजा",
+  nvAccasPublished: "प्रकाशित संचयी",
+  nvAccaBuild: "संचयी तयार करा",
+  nvQualifiedFixtures: "पात्र सामने",
+  nvLiveMatches: "थेट सामने",
+  nvShortlist: "जतन केलेली यादी",
+  nvMarkets: "बाजार",
+  nvCountries: "देश",
+  nvFixtures: "सामने",
+  nvSettledRecord: "निकाली नोंद",
 
 });
 
@@ -5063,5 +5267,22 @@ export const sw = mergePredictions({
   ppTitle: "Bei zilizorekodiwa",
   ppAria: "Fungua bei zilizorekodiwa",
   fxBridgeOperators: "Waendeshaji kwa mechi hii",
+
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "Mwanzo",
+  nvGroupResearch: "Utafiti",
+  nvGroupReference: "Marejeleo",
+  nvToday: "Mechi za leo",
+  nvArchive: "Kumbukumbu",
+  nvAccas: "Akumulesheni",
+  nvAccasPublished: "Akumulesheni zilizochapishwa",
+  nvAccaBuild: "Unda akumulesheni",
+  nvQualifiedFixtures: "Mechi zilizofuzu",
+  nvLiveMatches: "Mechi za moja kwa moja",
+  nvShortlist: "Orodha iliyohifadhiwa",
+  nvMarkets: "Masoko",
+  nvCountries: "Nchi",
+  nvFixtures: "Mechi",
+  nvSettledRecord: "Rekodi iliyokamilishwa",
 
 });

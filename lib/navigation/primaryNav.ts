@@ -1,4 +1,5 @@
 import type { Locale } from "@/lib/i18n";
+import type { PredictionStrings } from "@/lib/translations/predictionsEn";
 import type { HomepageDestination } from "@/lib/analytics/homepage";
 import { liveSignalsHref } from "@/lib/search/homeSearchRoutes";
 
@@ -34,20 +35,20 @@ export type NavGroup = {
  * surfaces that answer "should I believe this?" hold the masthead, commercial billing yields
  * first, and the remaining stand-down is an on-page anchor rather than a distinct page.
  */
-export function buildPrimaryNav(locale: Locale, labels: {
-  bestBetting: string;
-  bestCrypto: string;
-  bonuses: string;
-  reviews: string;
-}): { groups: NavGroup[]; flat: NavItem[]; desktop: NavItem[] } {
+export function buildPrimaryNav(
+  locale: Locale,
+  /* Language sweep: every label is dictionary-born. The old labels object
+     carried only the retired commercial doors and is gone with them. */
+  p: PredictionStrings
+): { groups: NavGroup[]; flat: NavItem[]; desktop: NavItem[] } {
   const groups: NavGroup[] = [
     {
       id: "research",
-      label: "Research",
+      label: p.nvGroupResearch,
       items: [
         {
           href: `/${locale}`,
-          label: "Today's fixtures",
+          label: p.nvToday,
           analyticsDestination: "todays_matches",
           desktopPrimary: true,
         },
@@ -66,21 +67,21 @@ export function buildPrimaryNav(locale: Locale, labels: {
          * accumulator`, which keeps its slot; `Qualified fixtures` is an on-page anchor reachable
          * by scrolling the page it points into. Neither leaves the grouped mobile navigation.
          */
-        { href: `/${locale}/archive`, label: "Archive", desktopPrimary: true },
+        { href: `/${locale}/archive`, label: p.nvArchive, desktopPrimary: true },
         {
           href: `/${locale}/methodology`,
-          label: "Methodology",
+          label: p.navMethodology,
           desktopPrimary: true,
         },
-        { href: `/${locale}/acca`, label: "Accumulators" },
+        { href: `/${locale}/acca`, label: p.nvAccas },
         // Sprint 20B-B stage B5. Sits inside Research, next to the Studio and Builder, because
         // a published Acca is research output — not a promotion. It is deliberately NOT
         // `desktopPrimary`: the compact desktop row is already full, and pushing a qualified
         // fixtures or Live Signals entry out to surface combinations would invert the journey.
-        { href: `/${locale}/accas`, label: "Published accumulators" },
+        { href: `/${locale}/accas`, label: p.nvAccasPublished },
         {
           href: `/${locale}/acca/builder`,
-          label: "Build accumulator",
+          label: p.nvAccaBuild,
           desktopPrimary: true,
         },
         // `/combo` remains a live route and still redirects to the Builder; it is no longer
@@ -88,12 +89,12 @@ export function buildPrimaryNav(locale: Locale, labels: {
         // internal refactoring note ("→ Builder") into user-facing UI.
         {
           href: `/${locale}#fixtures`,
-          label: "Qualified fixtures",
+          label: p.nvQualifiedFixtures,
           analyticsDestination: "qualified_markets",
         },
         {
           href: liveSignalsHref(locale),
-          label: "Live matches",
+          label: p.nvLiveMatches,
           analyticsDestination: "live_signals",
           desktopPrimary: true,
         },
@@ -103,12 +104,12 @@ export function buildPrimaryNav(locale: Locale, labels: {
          * into. The three commercial stand-downs alone did not bring the row inside its budget —
          * this is the lowest-priority remaining entry and the only one whose target is not a page.
          */
-        { href: `/${locale}#saved`, label: "Shortlist" },
+        { href: `/${locale}#saved`, label: p.nvShortlist },
       ],
     },
     {
       id: "bookmakers",
-      label: "Operators",
+      label: p.opIndexTitle,
       items: [
         /*
          * Commercial conversion pass: the five commercial doors (/best-betting-sites,
@@ -118,36 +119,36 @@ export function buildPrimaryNav(locale: Locale, labels: {
          */
         {
           href: `/${locale}/operators`,
-          label: "Operators",
+          label: p.opIndexTitle,
           analyticsDestination: "operators",
         },
       ],
     },
     {
       id: "browse",
-      label: "Reference",
+      label: p.nvGroupReference,
       items: [
         {
           href: `/${locale}/markets`,
-          label: "Markets",
+          label: p.nvMarkets,
           analyticsDestination: "markets",
         },
         {
           href: `/${locale}/competitions`,
-          label: "Competitions",
+          label: p.cmpIndexTitle,
           analyticsDestination: "competitions",
         },
         {
           href: `/${locale}/teams`,
-          label: "Teams",
+          label: p.tmIndexTitle,
           analyticsDestination: "teams",
         },
         {
           href: `/${locale}/seasons`,
-          label: "Seasons",
+          label: p.cmpSeasonsTitle,
           analyticsDestination: "seasons",
         },
-        { href: `/${locale}/search`, label: "Search" },
+        { href: `/${locale}/search`, label: p.srchTitle },
       ],
     },
   ];

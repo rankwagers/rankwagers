@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { searchGroupLabels } from "@/lib/search/labels";
 import { usePathname } from "next/navigation";
 import type { FullDictionary } from "@/lib/dictionaries";
 import type { Locale } from "@/lib/i18n";
@@ -64,12 +65,7 @@ export function Header({
   embedded?: boolean;
 }) {
   const pathname = usePathname() ?? "";
-  const { groups, desktop } = buildPrimaryNav(locale, {
-    bestBetting: dict.nav.bestBetting,
-    bestCrypto: dict.nav.bestCrypto,
-    bonuses: dict.nav.bonuses,
-    reviews: dict.nav.reviews,
-  });
+  const { groups, desktop } = buildPrimaryNav(locale, dict.predictions);
 
   return (
     <header className={embedded ? "" : "border-b border-[var(--hero-line)] bg-[var(--hero-canvas)]"}>

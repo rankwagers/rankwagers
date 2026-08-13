@@ -601,6 +601,23 @@ export const nl = euroPredictions({
   ppAria: "Waargenomen prijzen openen",
   fxBridgeOperators: "Operators voor deze wedstrijd",
 
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "Home",
+  nvGroupResearch: "Onderzoek",
+  nvGroupReference: "Referentie",
+  nvToday: "Wedstrijden van vandaag",
+  nvArchive: "Archief",
+  nvAccas: "Combinaties",
+  nvAccasPublished: "Gepubliceerde combinaties",
+  nvAccaBuild: "Combinatie bouwen",
+  nvQualifiedFixtures: "Gekwalificeerde wedstrijden",
+  nvLiveMatches: "Livewedstrijden",
+  nvShortlist: "Bewaarde lijst",
+  nvMarkets: "Markten",
+  nvCountries: "Landen",
+  nvFixtures: "Wedstrijden",
+  nvSettledRecord: "Afgerekend register",
+
 });
 
 export const pl = euroPredictions({
@@ -1031,6 +1048,23 @@ export const pl = euroPredictions({
   ppAria: "Otwórz zaobserwowane ceny",
   fxBridgeOperators: "Operatorzy dla tego meczu",
 
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "Strona główna",
+  nvGroupResearch: "Badania",
+  nvGroupReference: "Odniesienia",
+  nvToday: "Dzisiejsze mecze",
+  nvArchive: "Archiwum",
+  nvAccas: "Akumulatory",
+  nvAccasPublished: "Opublikowane akumulatory",
+  nvAccaBuild: "Zbuduj akumulator",
+  nvQualifiedFixtures: "Zakwalifikowane mecze",
+  nvLiveMatches: "Mecze na żywo",
+  nvShortlist: "Zapisana lista",
+  nvMarkets: "Rynki",
+  nvCountries: "Kraje",
+  nvFixtures: "Mecze",
+  nvSettledRecord: "Rozliczony rejestr",
+
 });
 
 export const cs = euroPredictions({
@@ -1455,6 +1489,23 @@ export const cs = euroPredictions({
   ppAria: "Otevřít pozorované ceny",
   fxBridgeOperators: "Operátoři pro tento zápas",
 
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "Domů",
+  nvGroupResearch: "Výzkum",
+  nvGroupReference: "Reference",
+  nvToday: "Dnešní zápasy",
+  nvArchive: "Archiv",
+  nvAccas: "Akumulátory",
+  nvAccasPublished: "Zveřejněné akumulátory",
+  nvAccaBuild: "Sestavit akumulátor",
+  nvQualifiedFixtures: "Kvalifikované zápasy",
+  nvLiveMatches: "Živé zápasy",
+  nvShortlist: "Uložený seznam",
+  nvMarkets: "Trhy",
+  nvCountries: "Země",
+  nvFixtures: "Zápasy",
+  nvSettledRecord: "Vypořádaný rejstřík",
+
 });
 
 export const da = euroPredictions({
@@ -1878,6 +1929,23 @@ export const da = euroPredictions({
   ppAria: "Åbn observerede priser",
   fxBridgeOperators: "Operatører til denne kamp",
 
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "Forside",
+  nvGroupResearch: "Forskning",
+  nvGroupReference: "Reference",
+  nvToday: "Dagens kampe",
+  nvArchive: "Arkiv",
+  nvAccas: "Akkumulatorer",
+  nvAccasPublished: "Offentliggjorte akkumulatorer",
+  nvAccaBuild: "Byg akkumulator",
+  nvQualifiedFixtures: "Kvalificerede kampe",
+  nvLiveMatches: "Live-kampe",
+  nvShortlist: "Gemt liste",
+  nvMarkets: "Markeder",
+  nvCountries: "Lande",
+  nvFixtures: "Kampe",
+  nvSettledRecord: "Afregnet register",
+
 });
 
 export const sv = euroPredictions({
@@ -2300,6 +2368,23 @@ export const sv = euroPredictions({
   ppTitle: "Observerade priser",
   ppAria: "Öppna observerade priser",
   fxBridgeOperators: "Operatörer för denna match",
+
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "Hem",
+  nvGroupResearch: "Forskning",
+  nvGroupReference: "Referens",
+  nvToday: "Dagens matcher",
+  nvArchive: "Arkiv",
+  nvAccas: "Ackumulatorer",
+  nvAccasPublished: "Publicerade ackumulatorer",
+  nvAccaBuild: "Bygg ackumulator",
+  nvQualifiedFixtures: "Kvalificerade matcher",
+  nvLiveMatches: "Livematcher",
+  nvShortlist: "Sparad lista",
+  nvMarkets: "Marknader",
+  nvCountries: "Länder",
+  nvFixtures: "Matcher",
+  nvSettledRecord: "Avräknat register",
 
 });
 
@@ -2726,6 +2811,23 @@ export const no = euroPredictions({
   ppAria: "Åpne observerte priser",
   fxBridgeOperators: "Operatører for denne kampen",
 
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "Hjem",
+  nvGroupResearch: "Forskning",
+  nvGroupReference: "Referanse",
+  nvToday: "Dagens kamper",
+  nvArchive: "Arkiv",
+  nvAccas: "Akkumulatorer",
+  nvAccasPublished: "Publiserte akkumulatorer",
+  nvAccaBuild: "Bygg akkumulator",
+  nvQualifiedFixtures: "Kvalifiserte kamper",
+  nvLiveMatches: "Live-kamper",
+  nvShortlist: "Lagret liste",
+  nvMarkets: "Markeder",
+  nvCountries: "Land",
+  nvFixtures: "Kamper",
+  nvSettledRecord: "Avregnet register",
+
 });
 
 export const fi = euroPredictions({
@@ -3147,6 +3249,23 @@ export const fi = euroPredictions({
   ppTitle: "Havaitut hinnat",
   ppAria: "Avaa havaitut hinnat",
   fxBridgeOperators: "Operaattorit tälle ottelulle",
+
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "Etusivu",
+  nvGroupResearch: "Tutkimus",
+  nvGroupReference: "Viitteet",
+  nvToday: "Päivän ottelut",
+  nvArchive: "Arkisto",
+  nvAccas: "Kertoimet yhdistelmänä",
+  nvAccasPublished: "Julkaistut yhdistelmät",
+  nvAccaBuild: "Rakenna yhdistelmä",
+  nvQualifiedFixtures: "Karsitut ottelut",
+  nvLiveMatches: "Live-ottelut",
+  nvShortlist: "Tallennettu lista",
+  nvMarkets: "Markkinat",
+  nvCountries: "Maat",
+  nvFixtures: "Ottelut",
+  nvSettledRecord: "Selvitetty rekisteri",
 
 });
 
@@ -3575,6 +3694,23 @@ export const ro = euroPredictions({
   ppTitle: "Prețuri observate",
   ppAria: "Deschide prețurile observate",
   fxBridgeOperators: "Operatori pentru acest meci",
+
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "Acasă",
+  nvGroupResearch: "Cercetare",
+  nvGroupReference: "Referință",
+  nvToday: "Meciurile de azi",
+  nvArchive: "Arhivă",
+  nvAccas: "Acumulatoare",
+  nvAccasPublished: "Acumulatoare publicate",
+  nvAccaBuild: "Construiește acumulator",
+  nvQualifiedFixtures: "Meciuri calificate",
+  nvLiveMatches: "Meciuri live",
+  nvShortlist: "Listă salvată",
+  nvMarkets: "Piețe",
+  nvCountries: "Țări",
+  nvFixtures: "Meciuri",
+  nvSettledRecord: "Registru decontat",
 
 });
 
@@ -4007,6 +4143,23 @@ export const el = euroPredictions({
   ppAria: "Άνοιγμα παρατηρημένων τιμών",
   fxBridgeOperators: "Πάροχοι για αυτόν τον αγώνα",
 
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "Αρχική",
+  nvGroupResearch: "Έρευνα",
+  nvGroupReference: "Αναφορά",
+  nvToday: "Σημερινοί αγώνες",
+  nvArchive: "Αρχείο",
+  nvAccas: "Παρολί",
+  nvAccasPublished: "Δημοσιευμένα παρολί",
+  nvAccaBuild: "Δημιουργία παρολί",
+  nvQualifiedFixtures: "Προκριθέντες αγώνες",
+  nvLiveMatches: "Ζωντανοί αγώνες",
+  nvShortlist: "Αποθηκευμένη λίστα",
+  nvMarkets: "Αγορές",
+  nvCountries: "Χώρες",
+  nvFixtures: "Αγώνες",
+  nvSettledRecord: "Διακανονισμένο μητρώο",
+
 });
 
 export const hu = euroPredictions({
@@ -4432,5 +4585,22 @@ export const hu = euroPredictions({
   ppTitle: "Megfigyelt árak",
   ppAria: "Megfigyelt árak megnyitása",
   fxBridgeOperators: "Szolgáltatók ehhez a mérkőzéshez",
+
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "Kezdőlap",
+  nvGroupResearch: "Kutatás",
+  nvGroupReference: "Referencia",
+  nvToday: "Mai mérkőzések",
+  nvArchive: "Archívum",
+  nvAccas: "Kötések",
+  nvAccasPublished: "Közzétett kötések",
+  nvAccaBuild: "Kötés összeállítása",
+  nvQualifiedFixtures: "Kvalifikált mérkőzések",
+  nvLiveMatches: "Élő mérkőzések",
+  nvShortlist: "Mentett lista",
+  nvMarkets: "Piacok",
+  nvCountries: "Országok",
+  nvFixtures: "Mérkőzések",
+  nvSettledRecord: "Elszámolt nyilvántartás",
 
 });

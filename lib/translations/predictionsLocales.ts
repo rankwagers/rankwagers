@@ -438,6 +438,23 @@ const pt: PredictionStrings = mergePredictions({
   ppAria: "Abrir preços observados",
   fxBridgeOperators: "Operadores para este jogo",
 
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "Início",
+  nvGroupResearch: "Pesquisa",
+  nvGroupReference: "Referência",
+  nvToday: "Jogos de hoje",
+  nvArchive: "Arquivo",
+  nvAccas: "Acumuladoras",
+  nvAccasPublished: "Acumuladoras publicadas",
+  nvAccaBuild: "Criar acumuladora",
+  nvQualifiedFixtures: "Jogos qualificados",
+  nvLiveMatches: "Jogos ao vivo",
+  nvShortlist: "Lista guardada",
+  nvMarkets: "Mercados",
+  nvCountries: "Países",
+  nvFixtures: "Jogos",
+  nvSettledRecord: "Registo liquidado",
+
 });
 
 const es: PredictionStrings = mergePredictions({
@@ -875,6 +892,23 @@ const es: PredictionStrings = mergePredictions({
   ppTitle: "Precios observados",
   ppAria: "Abrir precios observados",
   fxBridgeOperators: "Operadores para este partido",
+
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "Inicio",
+  nvGroupResearch: "Investigación",
+  nvGroupReference: "Referencia",
+  nvToday: "Partidos de hoy",
+  nvArchive: "Archivo",
+  nvAccas: "Acumuladas",
+  nvAccasPublished: "Acumuladas publicadas",
+  nvAccaBuild: "Crear acumulada",
+  nvQualifiedFixtures: "Partidos calificados",
+  nvLiveMatches: "Partidos en vivo",
+  nvShortlist: "Lista guardada",
+  nvMarkets: "Mercados",
+  nvCountries: "Países",
+  nvFixtures: "Partidos",
+  nvSettledRecord: "Registro liquidado",
 
 });
 
@@ -1316,6 +1350,23 @@ const de: PredictionStrings = mergePredictions({
   ppAria: "Beobachtete Preise öffnen",
   fxBridgeOperators: "Anbieter für dieses Spiel",
 
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "Startseite",
+  nvGroupResearch: "Recherche",
+  nvGroupReference: "Referenz",
+  nvToday: "Heutige Spiele",
+  nvArchive: "Archiv",
+  nvAccas: "Kombiwetten",
+  nvAccasPublished: "Veröffentlichte Kombis",
+  nvAccaBuild: "Kombi erstellen",
+  nvQualifiedFixtures: "Qualifizierte Spiele",
+  nvLiveMatches: "Live-Spiele",
+  nvShortlist: "Merkliste",
+  nvMarkets: "Märkte",
+  nvCountries: "Länder",
+  nvFixtures: "Spiele",
+  nvSettledRecord: "Abgerechnetes Register",
+
 });
 
 const it: PredictionStrings = mergePredictions({
@@ -1750,6 +1801,23 @@ const it: PredictionStrings = mergePredictions({
   ppTitle: "Prezzi osservati",
   ppAria: "Apri i prezzi osservati",
   fxBridgeOperators: "Operatori per questa partita",
+
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "Home",
+  nvGroupResearch: "Ricerca",
+  nvGroupReference: "Riferimento",
+  nvToday: "Partite di oggi",
+  nvArchive: "Archivio",
+  nvAccas: "Multiple",
+  nvAccasPublished: "Multiple pubblicate",
+  nvAccaBuild: "Crea multipla",
+  nvQualifiedFixtures: "Partite qualificate",
+  nvLiveMatches: "Partite live",
+  nvShortlist: "Lista salvata",
+  nvMarkets: "Mercati",
+  nvCountries: "Paesi",
+  nvFixtures: "Partite",
+  nvSettledRecord: "Registro regolato",
 
 });
 
@@ -2186,6 +2254,23 @@ const fr: PredictionStrings = mergePredictions({
   ppTitle: "Prix observés",
   ppAria: "Ouvrir les prix observés",
   fxBridgeOperators: "Opérateurs pour ce match",
+
+  /* Nav + chrome strings — language sweep (nv keys). */
+  nvHome: "Accueil",
+  nvGroupResearch: "Recherche",
+  nvGroupReference: "Référence",
+  nvToday: "Matchs du jour",
+  nvArchive: "Archive",
+  nvAccas: "Combinés",
+  nvAccasPublished: "Combinés publiés",
+  nvAccaBuild: "Créer un combiné",
+  nvQualifiedFixtures: "Matchs qualifiés",
+  nvLiveMatches: "Matchs en direct",
+  nvShortlist: "Sélection enregistrée",
+  nvMarkets: "Marchés",
+  nvCountries: "Pays",
+  nvFixtures: "Matchs",
+  nvSettledRecord: "Registre réglé",
 
 });
 

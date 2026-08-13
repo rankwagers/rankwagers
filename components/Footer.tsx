@@ -14,21 +14,22 @@ export function Footer({
   locale: Locale;
 }) {
   const year = new Date().getFullYear().toString();
+  const p = dict.predictions;
   const explore = [
-    { href: `/${locale}`, label: "Today's fixtures" },
-    { href: `/${locale}/competitions`, label: "Competitions" },
-    { href: `/${locale}/markets`, label: "Markets" },
-    { href: `/${locale}/teams`, label: "Teams" },
-    { href: `/${locale}/countries`, label: "Countries" },
-    { href: `/${locale}/operators`, label: "Operators" },
-    { href: `/${locale}/search`, label: "Search" },
-    { href: `/${locale}/acca`, label: "Accumulators" },
-    { href: `/${locale}/acca/builder`, label: "Build accumulator" },
+    { href: `/${locale}`, label: p.nvToday },
+    { href: `/${locale}/competitions`, label: p.cmpIndexTitle },
+    { href: `/${locale}/markets`, label: p.nvMarkets },
+    { href: `/${locale}/teams`, label: p.tmIndexTitle },
+    { href: `/${locale}/countries`, label: p.nvCountries },
+    { href: `/${locale}/operators`, label: p.opIndexTitle },
+    { href: `/${locale}/search`, label: p.srchTitle },
+    { href: `/${locale}/acca`, label: p.nvAccas },
+    { href: `/${locale}/acca/builder`, label: p.nvAccaBuild },
   ];
   const trust = [
-    { href: `/${locale}/methodology`, label: "Methodology" },
-    { href: `/${locale}/archive`, label: "Archive" },
-    { href: `/${locale}#verified-performance`, label: "Settled record" },
+    { href: `/${locale}/methodology`, label: p.navMethodology },
+    { href: `/${locale}/archive`, label: p.nvArchive },
+    { href: `/${locale}#verified-performance`, label: p.nvSettledRecord },
     { href: `/${locale}/responsible-gambling`, label: dict.footer.responsible },
     { href: `/${locale}/terms`, label: dict.footer.terms },
     { href: `/${locale}/privacy`, label: dict.footer.privacy },

@@ -15,7 +15,6 @@ import {
 import type { Locale } from "@/lib/i18n";
 import { trackAnalyticsEvent } from "@/lib/analytics/client";
 import {
- SEARCH_GROUP_LABELS,
  SEARCH_GROUP_ORDER,
  type SearchGroupKey,
  type SearchResult,
@@ -39,10 +38,13 @@ const DEBOUNCE_MS = 220;
 
 export function GlobalSearch({
  locale,
+ groupLabels,
  variant = "header",
  onNavigate,
 }: {
  locale: Locale;
+ /** Localized group labels, prepared server/parent-side (bundle boundary). */
+ groupLabels: Record<SearchGroupKey, string>;
  variant?: "header" | "mobile";
  onNavigate?: () => void;
 }) {
@@ -345,9 +347,9 @@ export function GlobalSearch({
  </p>
  ) : groupedEntries.length ? (
  groupedEntries.map(({ groupKey, rows }) => (
- <div key={groupKey} role="group" aria-label={SEARCH_GROUP_LABELS[groupKey]}>
+ <div key={groupKey} role="group" aria-label={groupLabels[groupKey]}>
  <p className="sticky top-0 bg-[var(--canvas-secondary)] px-3 py-1.5 text-metadata font-medium uppercase tracking-label text-muted-foreground">
- {SEARCH_GROUP_LABELS[groupKey]}
+ {groupLabels[groupKey]}
  </p>
  {rows.map(({ result, index }) => {
  const active = index === activeIndex;
@@ -370,7 +372,7 @@ export function GlobalSearch({
  >
  <HighlightMatch text={result.title} query={query} />
  <span className="mt-0.5 block text-metadata text-muted-foreground">
- {SEARCH_GROUP_LABELS[groupKey]}
+ {groupLabels[groupKey]}
  </span>
  </Link>
  );
