@@ -49,6 +49,9 @@ export type VenueSideStats = {
 
 export type MatchDetailPublic = {
   matchId: number;
+  /** The provider's season identifier (FootyStats `competition_id`), when present.
+      Additive — threaded into capture provenance; never invented. */
+  providerSeasonId?: number;
   homeTeam: string;
   awayTeam: string;
   homeAtHome: VenueSideStats;
@@ -475,6 +478,7 @@ async function fetchMatchDetailCore(matchId: number): Promise<MatchDetailCore | 
 
   const detail: Omit<MatchDetailCore, "leagueSeason"> = {
     matchId,
+    providerSeasonId: seasonId,
     kickoffAt: new Date(kickoff * 1000).toISOString(),
     gptSource: gptSourceFrom(m),
     homeTeam: String(m.home_name ?? ""),

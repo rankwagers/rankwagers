@@ -176,7 +176,8 @@ export function CompetitionDetailView({
               id="cmp-lead-heading"
               className="rw-h mt-2.5 max-w-[30ch] text-[clamp(1.6rem,3.6vw,2.4rem)] text-[var(--hero-ink)]"
             >
-              {formatDict(p.cmpLeadLine, {
+              {/* <25% is a largest share, not a concentration — the neutral phrasing renders. */}
+              {formatDict(leadPct >= 25 ? p.cmpLeadLine : p.cmpLeadLineNeutral, {
                 market: topMarket.market,
                 count: String(topMarket.count),
                 total: String(total),

@@ -102,8 +102,19 @@ export function signalScopeText(
   teams: SignalTeams,
   p: PredictionStrings
 ): string {
-  return formatDict(p[SCOPE_KEY[signal.scope]] as string, {
-    team: scopeTeam(signal.scope, teams),
+  /*
+   * ENGLISH POSSESSIVE OF S-ENDING NAMES — "Brisbane Knights's" shipped live.
+   * The rule applies to the literal `{team}'s` pattern, which exists only in
+   * the EN templates (audited: zero occurrences in the locale files), so no
+   * locale grammar is touched: a name ending in s takes the bare apostrophe.
+   */
+  const team = scopeTeam(signal.scope, teams);
+  const template = p[SCOPE_KEY[signal.scope]] as string;
+  const fixedTemplate = /s$/i.test(team)
+    ? template.replace("{team}'s", "{team}'")
+    : template;
+  return formatDict(fixedTemplate, {
+    team,
     n: String(signal.sample),
   });
 }

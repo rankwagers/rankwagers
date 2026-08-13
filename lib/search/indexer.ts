@@ -15,6 +15,7 @@ import { getKnowledgeGraph } from "@/lib/knowledge-graph/graph";
 import { getPopularityWeight } from "./analytics";
 import { getCachedSearchIndex, setCachedSearchIndex } from "./cache";
 import { buildFixtureSearchDocuments } from "./fixtureDocuments";
+import { buildResearchTeamDocuments } from "./researchTeamDocuments";
 import { normalizeSearchQuery, normalizeSlugKey } from "./normalizer";
 import type {
   IndexedEntityType,
@@ -243,6 +244,15 @@ export function buildSearchIndex(): SearchIndexSnapshot {
     seen.add(fixtureDoc.id);
     documents.push(fixtureDoc);
     counts.fixture += 1;
+  }
+
+  /* The Levadia backlog: names the research set has actually listed, deduped
+     against the registry, typed as research team entries. */
+  for (const researchTeam of buildResearchTeamDocuments()) {
+    if (seen.has(researchTeam.id)) continue;
+    seen.add(researchTeam.id);
+    documents.push(researchTeam);
+    counts.team += 1;
   }
 
   return {

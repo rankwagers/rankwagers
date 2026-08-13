@@ -618,6 +618,12 @@ export const nl = euroPredictions({
   nvFixtures: "Wedstrijden",
   nvSettledRecord: "Afgerekend register",
 
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral:
+    "Het grootste deel van de dekking ligt in {league}: {count} van {total} gekwalificeerde wedstrijden ({pct}%).",
+  cmpLeadLineNeutral:
+    "Het grootste deel van de dekking van vandaag ligt op {market}: {count} van {total} gekwalificeerde regels ({pct}%).",
+
 });
 
 export const pl = euroPredictions({
@@ -1065,6 +1071,12 @@ export const pl = euroPredictions({
   nvFixtures: "Mecze",
   nvSettledRecord: "Rozliczony rejestr",
 
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral:
+    "Największa część pokrycia przypada na {league}: {count} z {total} zakwalifikowanych meczów ({pct}%).",
+  cmpLeadLineNeutral:
+    "Największa część dzisiejszego pokrycia przypada na {market}: {count} z {total} zakwalifikowanych wierszy ({pct}%).",
+
 });
 
 export const cs = euroPredictions({
@@ -1506,6 +1518,12 @@ export const cs = euroPredictions({
   nvFixtures: "Zápasy",
   nvSettledRecord: "Vypořádaný rejstřík",
 
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral:
+    "Největší podíl pokrytí připadá na {league}: {count} z {total} kvalifikovaných zápasů ({pct}%).",
+  cmpLeadLineNeutral:
+    "Největší podíl dnešního pokrytí připadá na {market}: {count} z {total} kvalifikovaných řádků ({pct}%).",
+
 });
 
 export const da = euroPredictions({
@@ -1946,6 +1964,12 @@ export const da = euroPredictions({
   nvFixtures: "Kampe",
   nvSettledRecord: "Afregnet register",
 
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral:
+    "Den største andel af dækningen ligger i {league}: {count} af {total} kvalificerede kampe ({pct}%).",
+  cmpLeadLineNeutral:
+    "Den største andel af dagens dækning ligger på {market}: {count} af {total} kvalificerede rækker ({pct}%).",
+
 });
 
 export const sv = euroPredictions({
@@ -2385,6 +2409,12 @@ export const sv = euroPredictions({
   nvCountries: "Länder",
   nvFixtures: "Matcher",
   nvSettledRecord: "Avräknat register",
+
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral:
+    "Den största andelen av täckningen ligger i {league}: {count} av {total} kvalificerade matcher ({pct}%).",
+  cmpLeadLineNeutral:
+    "Den största andelen av dagens täckning ligger på {market}: {count} av {total} kvalificerade rader ({pct}%).",
 
 });
 
@@ -2828,6 +2858,12 @@ export const no = euroPredictions({
   nvFixtures: "Kamper",
   nvSettledRecord: "Avregnet register",
 
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral:
+    "Den største andelen av dekningen ligger i {league}: {count} av {total} kvalifiserte kamper ({pct}%).",
+  cmpLeadLineNeutral:
+    "Den største andelen av dagens dekning ligger på {market}: {count} av {total} kvalifiserte rader ({pct}%).",
+
 });
 
 export const fi = euroPredictions({
@@ -3266,6 +3302,12 @@ export const fi = euroPredictions({
   nvCountries: "Maat",
   nvFixtures: "Ottelut",
   nvSettledRecord: "Selvitetty rekisteri",
+
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral:
+    "Suurin osuus kattavuudesta on sarjassa {league}: {count}/{total} karsittua ottelua ({pct}%).",
+  cmpLeadLineNeutral:
+    "Suurin osuus päivän kattavuudesta on markkinassa {market}: {count}/{total} karsittua riviä ({pct}%).",
 
 });
 
@@ -3711,6 +3753,12 @@ export const ro = euroPredictions({
   nvCountries: "Țări",
   nvFixtures: "Meciuri",
   nvSettledRecord: "Registru decontat",
+
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral:
+    "Cea mai mare parte a acoperirii este în {league}: {count} din {total} meciuri calificate ({pct}%).",
+  cmpLeadLineNeutral:
+    "Cea mai mare parte a acoperirii de azi este pe {market}: {count} din {total} rânduri calificate ({pct}%).",
 
 });
 
@@ -4160,6 +4208,12 @@ export const el = euroPredictions({
   nvFixtures: "Αγώνες",
   nvSettledRecord: "Διακανονισμένο μητρώο",
 
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral:
+    "Το μεγαλύτερο μερίδιο της κάλυψης βρίσκεται στη {league}: {count} από {total} προκριθέντες αγώνες ({pct}%).",
+  cmpLeadLineNeutral:
+    "Το μεγαλύτερο μερίδιο της σημερινής κάλυψης βρίσκεται στην αγορά {market}: {count} από {total} προκριθείσες γραμμές ({pct}%).",
+
 });
 
 export const hu = euroPredictions({
@@ -4602,5 +4656,11 @@ export const hu = euroPredictions({
   nvCountries: "Országok",
   nvFixtures: "Mérkőzések",
   nvSettledRecord: "Elszámolt nyilvántartás",
+
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral:
+    "A lefedettség legnagyobb része a(z) {league} sorozatban van: {count} a(z) {total} kvalifikált mérkőzésből ({pct}%).",
+  cmpLeadLineNeutral:
+    "A mai lefedettség legnagyobb része a(z) {market} piacon van: {count} a(z) {total} kvalifikált sorból ({pct}%).",
 
 });

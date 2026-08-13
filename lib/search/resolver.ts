@@ -35,6 +35,12 @@ export function resolveDocumentHref(document: SearchDocument, locale: Locale): s
     case "operator":
       return operatorPath(locale, document.slug);
     case "team":
+      /* Research team entries (research-team:* ids) have no canonical team
+         page — their document carries the honest destination (the latest
+         fixture the name appeared in). Registry teams keep their page. */
+      if (document.id.startsWith("research-team:") && document.pathTemplate) {
+        return `/${locale}${document.pathTemplate}`;
+      }
       return teamPath(locale, document.slug);
     case "season": {
       const competitionSlug = document.competitionSlug ?? "";

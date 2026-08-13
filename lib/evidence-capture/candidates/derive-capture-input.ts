@@ -194,6 +194,19 @@ export function createDeriveCaptureInput(
         // The provider re-derives the model itself; the outcome here reports that scorable
         // input exists. `qualified` is promoted by the caller once the model has run.
         outcome: "derived",
+        /*
+         * THE CAPTURE GAP (fixture truth pass Q&A, closed forward-only here):
+         * snapshots carried competitionId/seasonId as null although both facts
+         * were in hand — the request's daily-list league code and the source's
+         * provider season id. Populated from what is PRESENT, never invented:
+         * a detail without a provider season id leaves seasonId unset, and
+         * historical nulls stay untouched under append-only.
+         */
+        competitionId: request.leagueCode || null,
+        seasonId:
+          typeof detail.providerSeasonId === "number" && detail.providerSeasonId > 0
+            ? String(detail.providerSeasonId)
+            : null,
       };
     } catch {
       return { ok: false, reason: "derivation_error", outcome: "error" };

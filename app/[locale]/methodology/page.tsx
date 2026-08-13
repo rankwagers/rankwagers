@@ -170,6 +170,16 @@ export default function MethodologyPage({
             >
               Prediction archive
             </Link>
+            {" · "}
+            {/* The commercial counterpart, deliberately a SEPARATE page:
+                /methodology explains predictions, /how-we-rank explains
+                operator ordering — both canonical (language sweep decision). */}
+            <Link
+              href={`/${params.locale}/how-we-rank`}
+              className="font-semibold text-brand hover:underline"
+            >
+              How we rank operators
+            </Link>
           </p>
         </section>
       </article>

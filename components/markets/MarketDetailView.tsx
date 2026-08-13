@@ -152,7 +152,8 @@ export function MarketDetailView({
               id="mkt-lead-heading"
               className="rw-h mt-2.5 max-w-[28ch] text-[clamp(1.6rem,3.6vw,2.4rem)] text-[var(--hero-ink)]"
             >
-              {formatDict(p.mktLeadLine, {
+              {/* <25% is a largest share, not a concentration — the neutral phrasing renders. */}
+              {formatDict(leadPct >= 25 ? p.mktLeadLine : p.mktLeadLineNeutral, {
                 league: topLeague.league,
                 count: String(topLeague.count),
                 total: String(total),

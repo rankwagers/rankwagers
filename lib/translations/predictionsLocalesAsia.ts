@@ -425,6 +425,11 @@ export const ar = mergePredictions({
   nvFixtures: "المباريات",
   nvSettledRecord: "السجل المسوّى",
 
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral: "الحصة الأكبر من التغطية في {league}: {count} من {total} مباراة مؤهّلة ({pct}%).",
+  cmpLeadLineNeutral:
+    "الحصة الأكبر من تغطية اليوم في {market}: {count} من {total} صفًا مؤهّلًا ({pct}%).",
+
 });
 
 export const hi = mergePredictions({
@@ -858,6 +863,12 @@ export const hi = mergePredictions({
   nvFixtures: "मैच",
   nvSettledRecord: "निपटाया अभिलेख",
 
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral:
+    "कवरेज का सबसे बड़ा हिस्सा {league} में है: {total} योग्य मैचों में से {count} ({pct}%)।",
+  cmpLeadLineNeutral:
+    "आज की कवरेज का सबसे बड़ा हिस्सा {market} में है: {total} योग्य पंक्तियों में से {count} ({pct}%)।",
+
 });
 
 export const ja = mergePredictions({
@@ -1255,6 +1266,10 @@ export const ja = mergePredictions({
   nvCountries: "国",
   nvFixtures: "試合",
   nvSettledRecord: "清算済み記録",
+
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral: "カバレッジの最大シェアは{league}にあります:適格{total}試合中{count}試合({pct}%)。",
+  cmpLeadLineNeutral: "本日のカバレッジの最大シェアは{market}にあります:適格{total}行中{count}行({pct}%)。",
 
 });
 
@@ -1656,6 +1671,10 @@ export const ko = mergePredictions({
   nvCountries: "국가",
   nvFixtures: "경기",
   nvSettledRecord: "정산된 기록",
+
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral: "커버리지의 최대 비중은 {league}에 있습니다: 적격 {total}경기 중 {count}경기({pct}%).",
+  cmpLeadLineNeutral: "오늘 커버리지의 최대 비중은 {market}에 있습니다: 적격 {total}행 중 {count}행({pct}%).",
 
 });
 
@@ -2089,6 +2108,12 @@ export const th = mergePredictions({
   nvCountries: "ประเทศ",
   nvFixtures: "แมตช์",
   nvSettledRecord: "บันทึกที่ชำระแล้ว",
+
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral:
+    "ส่วนแบ่งใหญ่ที่สุดของความครอบคลุมอยู่ที่ {league}: {count} จาก {total} แมตช์ที่ผ่านเกณฑ์ ({pct}%)",
+  cmpLeadLineNeutral:
+    "ส่วนแบ่งใหญ่ที่สุดของความครอบคลุมวันนี้อยู่ที่ {market}: {count} จาก {total} แถวที่ผ่านเกณฑ์ ({pct}%)",
 
 });
 
@@ -2529,6 +2554,12 @@ export const vi = mergePredictions({
   nvCountries: "Quốc gia",
   nvFixtures: "Trận đấu",
   nvSettledRecord: "Sổ đã quyết toán",
+
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral:
+    "Phần lớn nhất của độ phủ nằm ở {league}: {count} trong {total} trận đủ điều kiện ({pct}%).",
+  cmpLeadLineNeutral:
+    "Phần lớn nhất của độ phủ hôm nay nằm ở {market}: {count} trong {total} dòng đủ điều kiện ({pct}%).",
 
 });
 
@@ -2972,6 +3003,12 @@ export const id = mergePredictions({
   nvFixtures: "Pertandingan",
   nvSettledRecord: "Catatan terselesaikan",
 
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral:
+    "Porsi terbesar cakupan ada di {league}: {count} dari {total} pertandingan terkualifikasi ({pct}%).",
+  cmpLeadLineNeutral:
+    "Porsi terbesar cakupan hari ini ada di {market}: {count} dari {total} baris terkualifikasi ({pct}%).",
+
 });
 
 export const zh = mergePredictions({
@@ -3367,6 +3404,10 @@ export const zh = mergePredictions({
   nvFixtures: "比赛",
   nvSettledRecord: "已结算记录",
 
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral: "覆盖的最大份额在{league}:{total}场合格比赛中的{count}场({pct}%)。",
+  cmpLeadLineNeutral: "今日覆盖的最大份额在{market}:{total}条合格行中的{count}条({pct}%)。",
+
 });
 
 export const bn = mergePredictions({
@@ -3733,6 +3774,12 @@ export const bn = mergePredictions({
   nvCountries: "দেশ",
   nvFixtures: "ম্যাচ",
   nvSettledRecord: "নিষ্পত্তিকৃত নথি",
+
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral:
+    "কভারেজের বৃহত্তম অংশ {league}-এ: {total}টি যোগ্য ম্যাচের মধ্যে {count}টি ({pct}%)।",
+  cmpLeadLineNeutral:
+    "আজকের কভারেজের বৃহত্তম অংশ {market}-এ: {total}টি যোগ্য সারির মধ্যে {count}টি ({pct}%)।",
 
 });
 
@@ -4112,6 +4159,12 @@ export const ta = mergePredictions({
   nvFixtures: "ஆட்டங்கள்",
   nvSettledRecord: "தீர்வான பதிவு",
 
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral:
+    "கவரேஜின் மிகப்பெரிய பங்கு {league}-இல் உள்ளது: தகுதியான {total} ஆட்டங்களில் {count} ({pct}%).",
+  cmpLeadLineNeutral:
+    "இன்றைய கவரேஜின் மிகப்பெரிய பங்கு {market}-இல் உள்ளது: தகுதியான {total} வரிசைகளில் {count} ({pct}%).",
+
 });
 
 export const te = mergePredictions({
@@ -4478,6 +4531,12 @@ export const te = mergePredictions({
   nvFixtures: "మ్యాచ్‌లు",
   nvSettledRecord: "పరిష్కృత రికార్డు",
 
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral:
+    "కవరేజీలో అతిపెద్ద వాటా {league}లో ఉంది: అర్హత {total} మ్యాచ్‌లలో {count} ({pct}%).",
+  cmpLeadLineNeutral:
+    "నేటి కవరేజీలో అతిపెద్ద వాటా {market}లో ఉంది: అర్హత {total} వరుసలలో {count} ({pct}%).",
+
 });
 
 export const mr = mergePredictions({
@@ -4841,6 +4900,12 @@ export const mr = mergePredictions({
   nvCountries: "देश",
   nvFixtures: "सामने",
   nvSettledRecord: "निकाली नोंद",
+
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral:
+    "कव्हरेजचा सर्वात मोठा वाटा {league}मध्ये आहे: पात्र {total} सामन्यांपैकी {count} ({pct}%).",
+  cmpLeadLineNeutral:
+    "आजच्या कव्हरेजचा सर्वात मोठा वाटा {market}मध्ये आहे: पात्र {total} ओळींपैकी {count} ({pct}%).",
 
 });
 
@@ -5284,5 +5349,11 @@ export const sw = mergePredictions({
   nvCountries: "Nchi",
   nvFixtures: "Mechi",
   nvSettledRecord: "Rekodi iliyokamilishwa",
+
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral:
+    "Sehemu kubwa zaidi ya ufikiaji iko katika {league}: {count} kati ya {total} mechi zilizofuzu ({pct}%).",
+  cmpLeadLineNeutral:
+    "Sehemu kubwa zaidi ya ufikiaji wa leo iko kwenye {market}: safu {count} kati ya {total} zilizofuzu ({pct}%).",
 
 });

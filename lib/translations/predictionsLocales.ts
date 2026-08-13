@@ -455,6 +455,12 @@ const pt: PredictionStrings = mergePredictions({
   nvFixtures: "Jogos",
   nvSettledRecord: "Registo liquidado",
 
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral:
+    "A maior fatia da cobertura está em {league}: {count} de {total} jogos qualificados ({pct}%).",
+  cmpLeadLineNeutral:
+    "A maior fatia da cobertura de hoje está em {market}: {count} de {total} linhas qualificadas ({pct}%).",
+
 });
 
 const es: PredictionStrings = mergePredictions({
@@ -909,6 +915,12 @@ const es: PredictionStrings = mergePredictions({
   nvCountries: "Países",
   nvFixtures: "Partidos",
   nvSettledRecord: "Registro liquidado",
+
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral:
+    "La mayor parte de la cobertura está en {league}: {count} de {total} partidos calificados ({pct}%).",
+  cmpLeadLineNeutral:
+    "La mayor parte de la cobertura de hoy está en {market}: {count} de {total} filas calificadas ({pct}%).",
 
 });
 
@@ -1367,6 +1379,12 @@ const de: PredictionStrings = mergePredictions({
   nvFixtures: "Spiele",
   nvSettledRecord: "Abgerechnetes Register",
 
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral:
+    "Der größte Anteil der Abdeckung liegt in {league}: {count} von {total} qualifizierten Spielen ({pct}%).",
+  cmpLeadLineNeutral:
+    "Der größte Anteil der heutigen Abdeckung liegt auf {market}: {count} von {total} qualifizierten Zeilen ({pct}%).",
+
 });
 
 const it: PredictionStrings = mergePredictions({
@@ -1818,6 +1836,12 @@ const it: PredictionStrings = mergePredictions({
   nvCountries: "Paesi",
   nvFixtures: "Partite",
   nvSettledRecord: "Registro regolato",
+
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral:
+    "La quota maggiore della copertura è in {league}: {count} su {total} partite qualificate ({pct}%).",
+  cmpLeadLineNeutral:
+    "La quota maggiore della copertura di oggi è su {market}: {count} su {total} righe qualificate ({pct}%).",
 
 });
 
@@ -2271,6 +2295,12 @@ const fr: PredictionStrings = mergePredictions({
   nvCountries: "Pays",
   nvFixtures: "Matchs",
   nvSettledRecord: "Registre réglé",
+
+  /* Neutral lead phrasings — language sweep. */
+  mktLeadLineNeutral:
+    "La plus grande part de la couverture se trouve en {league} : {count} sur {total} matchs qualifiés ({pct}%).",
+  cmpLeadLineNeutral:
+    "La plus grande part de la couverture du jour se trouve sur {market} : {count} sur {total} lignes qualifiées ({pct}%).",
 
 });
 

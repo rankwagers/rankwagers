@@ -14,6 +14,11 @@ import {
 /**
  * How we rank operators (Sprint 33).
  *
+ * DECIDED (language sweep, 2026-08-13): this page and /methodology are BOTH
+ * canonical — they are different subjects, not duplicates, and the fold that
+ * was considered is declined for the reason below. Recorded in
+ * docs/route-inventory.md; do not re-open without new evidence.
+ *
  * WHY THIS PAGE EXISTS SEPARATELY FROM /methodology
  *
  * `/methodology` explains how PREDICTIONS are qualified, scored and settled. This explains how

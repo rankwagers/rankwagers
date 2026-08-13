@@ -477,6 +477,8 @@ export const predictionsEn = {
   mktLeadEyebrow: "Coverage lead",
   mktLeadLine:
     "Coverage concentrates in {league}: {count} of {total} qualified fixtures ({pct}%).",
+  mktLeadLineNeutral:
+    "The largest share of coverage sits in {league}: {count} of {total} qualified fixtures ({pct}%).",
   mktSupportsTitle: "Coverage signals",
   mktSupportsNote:
     "Counts from the current research set — today's qualified lists. Coverage counts, not occurrence rates.",
@@ -512,6 +514,10 @@ export const predictionsEn = {
     "Competitions as research hubs — qualified fixtures, markets, operators and observed odds. Research structure, never tips.",
   cmpLeadLine:
     "Today's coverage concentrates in {market}: {count} of {total} qualified rows ({pct}%).",
+  /* Below the concentration threshold the neutral phrasing renders instead —
+     a 20% share is a largest share, not a concentration. */
+  cmpLeadLineNeutral:
+    "The largest share of today's coverage sits in {market}: {count} of {total} qualified rows ({pct}%).",
   cmpQualifiedRowsLine: "{n} qualified market rows in the current research set",
   cmpUniqueFixturesLine: "{n} unique fixtures",
   cmpMarketRow: "{market} — {count} of {total} ({pct}%)",
