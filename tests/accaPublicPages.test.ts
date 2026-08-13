@@ -15,6 +15,7 @@ import {
 } from "../lib/acca-publication/public";
 import { toPublicAccaView } from "../lib/acca-publication/publicView";
 import { accaBreadcrumbLd, accaDetailLd, accaIndexLd } from "../lib/acca-publication/schema";
+import { predictionsEn } from "../lib/translations/predictionsEn";
 import { buildPrimaryNav } from "../lib/navigation/primaryNav";
 import { installTestEnv, postRequest, read, resetAll, seedApproved, url } from "./accaApiFixtures";
 import * as createAccaRoute from "../app/api/admin/builder-approval/candidates/[candidateId]/create-acca/route";
@@ -356,7 +357,8 @@ test("the homepage integration is additive and placed after the research surface
  * ================================================================== */
 
 test("navigation gains exactly one Research entry and no existing entry changes", () => {
-  const nav = buildPrimaryNav("en", { bestBetting: "A", bestCrypto: "B", bonuses: "C" });
+  // Language sweep: buildPrimaryNav now takes the dictionary.
+  const nav = buildPrimaryNav("en", predictionsEn);
   const research = nav.groups.find((g) => g.id === "research");
   assert.ok(research);
   const hrefs = research.items.map((i) => i.href);
@@ -366,7 +368,7 @@ test("navigation gains exactly one Research entry and no existing entry changes"
   // It must not displace an existing compact-desktop entry.
   const entry = research.items.find((i) => i.href === "/en/accas");
   assert.equal(entry?.desktopPrimary, undefined, "must not claim a compact desktop slot");
-  assert.equal(entry?.label, "Published accumulators");
+  assert.equal(entry?.label, predictionsEn.nvAccasPublished);
 
   // Every pre-existing Research href still present.
   for (const href of ["/en", "/en/acca", "/en/acca/builder", "/en/archive", "/en/methodology"]) {

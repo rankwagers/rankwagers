@@ -216,8 +216,8 @@ test("the fixture potential is provider-labelled, never a confidence", () => {
 
 const MKT_KEYS = Object.keys(predictionsEn).filter((k) => k.startsWith("mkt"));
 
-test("the mkt* key set is the full 29", () => {
-  assert.equal(MKT_KEYS.length, 29, `expected 29 mkt* keys, found ${MKT_KEYS.length}`);
+test("the mkt* key set is the full 30", () => {
+  assert.equal(MKT_KEYS.length, 30, `expected 30 mkt* keys, found ${MKT_KEYS.length}`);
 });
 
 test("every mkt* key exists in every locale set with its placeholders intact", () => {

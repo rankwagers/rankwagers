@@ -274,8 +274,8 @@ const B_KEYS = Object.keys(predictionsEn).filter(
   (k) => k.startsWith("cmp") || k.startsWith("ssn")
 );
 
-test("the cmp*/ssn* key set is the full 37", () => {
-  assert.equal(B_KEYS.length, 37, `expected 37 keys, found ${B_KEYS.length}`);
+test("the cmp*/ssn* key set is the full 38", () => {
+  assert.equal(B_KEYS.length, 38, `expected 38 keys, found ${B_KEYS.length}`);
 });
 
 test("every cmp*/ssn* key exists in every locale set with placeholders intact", () => {
