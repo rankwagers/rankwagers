@@ -89,6 +89,7 @@ export default function AccaBuilderPage({
 
       <AccaBuilderView
         locale={params.locale}
+        p={p}
         initialTargetMin={targetMin}
         initialTargetMax={targetMax}
       />

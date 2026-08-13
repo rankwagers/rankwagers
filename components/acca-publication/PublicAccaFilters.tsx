@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { AccaAvailabilityState } from "@/lib/acca-publication/freshness";
+import type { PredictionStrings } from "@/lib/translations/predictionsEn";
 import {
  publicAccaIndexHref,
  type PublicAccaFacetOption,
@@ -72,7 +73,9 @@ export function PublicAccaFilters({
  locale,
  facets,
  query,
+ p,
 }: {
+ p: PredictionStrings;
  locale: string;
  facets: PublicAccaFacets;
  query: PublicAccaIndexQuery;
@@ -86,7 +89,7 @@ export function PublicAccaFilters({
  return (
  <nav aria-label="Filter published Accas" className="mt-6 space-y-2">
  <FacetRow
- label="State"
+ label={p.apxFilterState}
  options={facets.states}
  activeValue={query.state ? query.state.toLowerCase() : null}
  hrefFor={(value) =>
@@ -98,13 +101,13 @@ export function PublicAccaFilters({
  }
  />
  <FacetRow
- label="Profile"
+ label={p.apxFilterProfile}
  options={facets.profiles}
  activeValue={query.profile}
  hrefFor={(value) => publicAccaIndexHref(locale, { ...query, profile: value, page: 1 })}
  />
  <FacetRow
- label="Competition"
+ label={p.apxFilterCompetition}
  options={facets.competitions}
  activeValue={query.competition}
  hrefFor={(value) => publicAccaIndexHref(locale, { ...query, competition: value, page: 1 })}

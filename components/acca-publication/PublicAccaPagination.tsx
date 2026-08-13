@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { formatDict } from "@/lib/formatDict";
+import type { PredictionStrings } from "@/lib/translations/predictionsEn";
 import {
   publicAccaIndexHref,
   type PublicAccaIndexPage,
@@ -20,7 +22,9 @@ export function PublicAccaPagination({
   locale,
   page,
   query,
+  p,
 }: {
+  p: PredictionStrings;
   locale: string;
   page: PublicAccaIndexPage;
   query: PublicAccaIndexQuery;
@@ -31,24 +35,23 @@ export function PublicAccaPagination({
     "rounded-lg border border-border px-3 py-2 text-sm hover:bg-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400";
 
   return (
-    <nav aria-label="Published Acca pages" className="mt-8 flex items-center gap-3">
+    <nav aria-label={p.apxPagesAria} className="mt-8 flex items-center gap-3">
       {page.hasPrev ? (
         <Link
           href={publicAccaIndexHref(locale, { ...query, page: page.page - 1 })}
           rel="prev"
           className={linkClass}
         >
-          ← Previous
+          ← {p.arcPrev}
         </Link>
       ) : (
         <span className="rounded-lg border border-border px-3 py-2 text-sm text-[var(--hero-ink-2)]">
-          ← Previous
+          ← {p.arcPrev}
         </span>
       )}
 
       <p className="text-sm text-[var(--ink-secondary)]" aria-current="page">
-        Page <span className="tabular-nums">{page.page}</span> of{" "}
-        <span className="tabular-nums">{page.totalPages}</span>
+        {formatDict(p.arcPageOf, { page: String(page.page), total: String(page.totalPages) })}
       </p>
 
       {page.hasNext ? (
@@ -57,11 +60,11 @@ export function PublicAccaPagination({
           rel="next"
           className={linkClass}
         >
-          Next →
+          {p.arcNext} →
         </Link>
       ) : (
         <span className="rounded-lg border border-border px-3 py-2 text-sm text-[var(--hero-ink-2)]">
-          Next →
+          {p.arcNext} →
         </span>
       )}
     </nav>

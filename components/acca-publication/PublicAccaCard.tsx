@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { formatDict } from "@/lib/formatDict";
+import type { PredictionStrings } from "@/lib/translations/predictionsEn";
 import { publicAccaPath } from "@/lib/acca-publication/paths";
 import { availabilityLabel } from "@/lib/acca-publication/freshness";
 import type { PublicAccaView } from "@/lib/acca-publication/publicView";
@@ -21,7 +23,9 @@ import type { PublicAccaView } from "@/lib/acca-publication/publicView";
 export function PublicAccaCard({
  view,
  position,
+ p,
 }: {
+ p: PredictionStrings;
  view: PublicAccaView;
  /** 1-based position in the list, carried into impression and click events. */
  position?: number;
@@ -54,31 +58,30 @@ export function PublicAccaCard({
 
  <dl className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm">
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">Selections</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdSelections}</dt>
  <dd className="tabular-nums">{view.legCount}</dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">Combined odds</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.appCombinedOdds}</dt>
  <dd className="tabular-nums">{view.combinedOdds.display}</dd>
  </div>
  {earliest ? (
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">First kick-off</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.apxFirstKickoff}</dt>
  <dd>
  <time dateTime={earliest}>{`${earliest.slice(0, 10)} ${earliest.slice(11, 16)} UTC`}</time>
  </dd>
  </div>
  ) : null}
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">State</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdState}</dt>
  <dd>{availability.label}</dd>
  </div>
  </dl>
 
  {warningCount > 0 ? (
  <p className="mt-3 text-xs text-[var(--amber-primary)]">
- {warningCount === 1 ? "1 limitation noted" : `${warningCount} limitations noted`} — see
- the full breakdown.
+ {formatDict(p.apxLimitationsNoted, { n: String(warningCount) })}
  </p>
  ) : null}
  </article>

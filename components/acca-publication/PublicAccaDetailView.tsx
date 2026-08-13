@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { getDictionary } from "@/lib/dictionaries";
+import { formatDict } from "@/lib/formatDict";
+import type { Locale } from "@/lib/i18n";
 import { AccaDetailAnalytics } from "@/components/acca-publication/AccaDetailAnalytics";
 import { AccaShareControls } from "@/components/acca-publication/AccaShareControls";
 import {
@@ -38,6 +41,8 @@ import {
  * are native `<details>` elements that work with scripting disabled.
  */
 export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
+ // Server component: the dictionary read stays out of the client graph.
+ const p = getDictionary(view.locale as Locale).predictions;
  const { freshness } = view;
  const availability = availabilityLabel(freshness.availability);
  const oddsAge = oddsFreshnessLabel(freshness.oddsFreshness, freshness.oddsAgeHours);
@@ -89,26 +94,26 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  * ---------------------------------------------------------------- */}
  <section className="mt-8" aria-labelledby="summary">
  <h2 id="summary" className="text-lg font-semibold">
- At a glance
+ {p.apdAtAGlance}
  </h2>
  <dl className="mt-3 grid gap-x-6 gap-y-4 text-sm sm:grid-cols-3">
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">Combined odds</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.appCombinedOdds}</dt>
  <dd className="text-base font-semibold tabular-nums">
  {view.combinedOdds.display}
  </dd>
  <dd className="text-xs text-[var(--hero-ink-2)]">{oddsBandLabel(view.oddsBand)}</dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">Selections</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdSelections}</dt>
  <dd className="text-base font-semibold tabular-nums">{view.legCount}</dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">Builder profile</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdBuilderProfile}</dt>
  <dd>{view.profile ?? ABSENT.notProvided}</dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">Generated</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdGenerated}</dt>
  <dd>
  {view.generatedAt.machine ? (
  <time dateTime={view.generatedAt.machine}>{view.generatedAt.display}</time>
@@ -118,7 +123,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  </dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">Published</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdPublished}</dt>
  <dd>
  {view.publishedAt.machine ? (
  <time dateTime={view.publishedAt.machine}>{view.publishedAt.display}</time>
@@ -128,7 +133,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  </dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">State</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdState}</dt>
  <dd>{availability.label}</dd>
  </div>
  </dl>
@@ -139,22 +144,20 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  * ---------------------------------------------------------------- */}
  <section className="mt-8" aria-labelledby="selections">
  <h2 id="selections" className="text-lg font-semibold">
- The {view.legCount} selections
+ {formatDict(p.apdSelectionsTitle, { n: String(view.legCount) })}
  </h2>
  <div className="mt-3 overflow-x-auto rounded-lg border border-border">
  <table className="w-full text-sm">
- <caption className="sr-only">
- Selections in this Acca, with the odds captured at publication
- </caption>
+ <caption className="sr-only">{p.apdTableCaption}</caption>
  <thead className="bg-card text-xs uppercase text-[var(--hero-ink-2)]">
  <tr>
- <th scope="col" className="px-3 py-2 text-left">Fixture</th>
- <th scope="col" className="px-3 py-2 text-left">Competition</th>
- <th scope="col" className="px-3 py-2 text-left">Market</th>
- <th scope="col" className="px-3 py-2 text-left">Kick-off (UTC)</th>
- <th scope="col" className="px-3 py-2 text-left">Evidence</th>
- <th scope="col" className="px-3 py-2 text-right">Provider potential</th>
- <th scope="col" className="px-3 py-2 text-right">Odds at publication</th>
+ <th scope="col" className="px-3 py-2 text-left">{p.apdColFixture}</th>
+ <th scope="col" className="px-3 py-2 text-left">{p.apxFilterCompetition}</th>
+ <th scope="col" className="px-3 py-2 text-left">{p.arcTableMarket}</th>
+ <th scope="col" className="px-3 py-2 text-left">{p.apdColKickoff}</th>
+ <th scope="col" className="px-3 py-2 text-left">{p.apdColEvidence}</th>
+ <th scope="col" className="px-3 py-2 text-right">{p.apdColPotential}</th>
+ <th scope="col" className="px-3 py-2 text-right">{p.apdColOddsAtPub}</th>
  </tr>
  </thead>
  <tbody>
@@ -191,7 +194,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  <tfoot>
  <tr className="border-t border-border bg-card">
  <td className="px-3 py-2 text-xs uppercase tracking-label text-[var(--hero-ink-2)]" colSpan={6}>
- Combined odds
+ {p.appCombinedOdds}
  </td>
  <td className="px-3 py-2 text-right font-semibold tabular-nums">
  {view.combinedOdds.display}
@@ -201,8 +204,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  </table>
  </div>
  <p className="mt-2 text-xs text-[var(--hero-ink-2)]">
- Combined odds are the product of the individual prices above, calculated exactly and
- rounded once. They are not a probability and not a return estimate.
+ {p.apdCombinedNote}
  </p>
  </section>
 
@@ -211,13 +213,10 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  * ---------------------------------------------------------------- */}
  <section className="mt-8" aria-labelledby="why">
  <h2 id="why" className="text-lg font-semibold">
- Why these selections
+ {p.apdWhyTitle}
  </h2>
  <p className="mt-2 max-w-2xl text-sm text-[var(--ink-secondary)]">
- Every selection below already qualified for our published fixture lists before the
- Builder combined it. Expand one to see exactly what was recorded for it at the time. A
- selection with nothing recorded says so — an empty panel is a gap in the record, not a
- silent endorsement.
+ {p.apdWhyNote}
  </p>
  <div className="mt-4 space-y-2">
  {view.legs.map((leg) => {
@@ -244,23 +243,23 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  ) : null}
  <dl className="mt-3 grid gap-x-6 gap-y-2 text-xs sm:grid-cols-2">
  <div>
- <dt className="uppercase tracking-label text-[var(--hero-ink-2)]">Qualification</dt>
+ <dt className="uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdQualification}</dt>
  <dd>
  {leg.qualified
- ? "Passed the Builder's confidence, freshness, conflict and evidence gates when the combination was generated."
+ ? p.apdQualifiedLine
  : ABSENT.unknown}
  </dd>
  </div>
  <div>
- <dt className="uppercase tracking-label text-[var(--hero-ink-2)]">Provider potential</dt>
+ <dt className="uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdColPotential}</dt>
  <dd className="tabular-nums">{leg.confidence}</dd>
  </div>
  <div>
- <dt className="uppercase tracking-label text-[var(--hero-ink-2)]">Price recorded</dt>
+ <dt className="uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdPriceRecorded}</dt>
  <dd className="tabular-nums">{leg.capturedOdds}</dd>
  </div>
  <div>
- <dt className="uppercase tracking-label text-[var(--hero-ink-2)]">Provenance</dt>
+ <dt className="uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdProvenance}</dt>
  <dd>{leg.provenance.basis}</dd>
  </div>
  </dl>
@@ -276,7 +275,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  * ---------------------------------------------------------------- */}
  <section className="mt-8" aria-labelledby="evidence">
  <h2 id="evidence" className="text-lg font-semibold">
- What this was built on
+ {p.apdBuiltOn}
  </h2>
 
  {view.evidence.summary.length > 0 ? (
@@ -287,27 +286,27 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  </ul>
  ) : (
  <p className="mt-3 text-sm text-[var(--ink-secondary)]">
- No aggregate evidence notes were recorded for this combination.
+ {p.apdNoAggregateNotes}
  </p>
  )}
 
  <dl className="mt-4 grid gap-x-6 gap-y-3 text-sm sm:grid-cols-3">
  <div>
  <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">
- Selections with a provider potential
+ {p.apdWithPotential}
  </dt>
  <dd className="tabular-nums">
- {withConfidence} of {view.legCount}
+ {formatDict(p.apdOfCount, { a: String(withConfidence), b: String(view.legCount) })}
  </dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">Average provider potential</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdAvgPotential}</dt>
  <dd className="tabular-nums">
  {view.evidence.averageConfidence ?? ABSENT.notProvided}
  </dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">Evidence completeness</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdCompleteness}</dt>
  <dd className="tabular-nums">
  {view.evidence.completeness ?? ABSENT.notProvided}
  </dd>
@@ -319,29 +318,29 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  className="mt-4 card"
  >
  <summary className="cursor-pointer px-4 py-3 text-sm font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400">
- Provenance and data freshness
+ {p.apdProvenanceTitle}
  </summary>
  <div className="border-t border-border px-4 py-3">
  <dl className="grid gap-x-6 gap-y-3 text-sm sm:grid-cols-2">
  <div>
  <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">
- Selections with written reasons
+ {p.apdWithReasons}
  </dt>
  <dd className="tabular-nums">
- {view.evidence.legsWithReasons} of {view.legCount}
+ {formatDict(p.apdOfCount, { a: String(view.evidence.legsWithReasons), b: String(view.legCount) })}
  </dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">Odds captured</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdOddsCaptured}</dt>
  <dd>{view.generatedAt.display}</dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">Price age</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdPriceAge}</dt>
  <dd>{oddsAge.label}</dd>
  </div>
  <div>
  <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">
- Publication format
+ {p.apdPublicationFormat}
  </dt>
  <dd className="font-mono text-xs">{view.publicationFormatVersion}</dd>
  </div>
@@ -479,6 +478,11 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  account, and carries no tracking parameters.
  </p>
  <AccaShareControls
+ strings={{
+ linkCopied: p.apsLinkCopied,
+ clipboardManual: p.apsClipboardManual,
+ shareSheetOpened: p.apsShareSheetOpened,
+ }}
  url={view.shareUrl}
  title={view.title}
  context={{

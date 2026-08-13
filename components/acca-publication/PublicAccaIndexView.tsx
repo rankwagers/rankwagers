@@ -1,4 +1,7 @@
 import Link from "next/link";
+import { getDictionary } from "@/lib/dictionaries";
+import { formatDict } from "@/lib/formatDict";
+import type { Locale } from "@/lib/i18n";
 import { AccaIndexAnalytics } from "@/components/acca-publication/AccaIndexAnalytics";
 import { PublicAccaCard } from "@/components/acca-publication/PublicAccaCard";
 import { PublicAccaFilters } from "@/components/acca-publication/PublicAccaFilters";
@@ -52,6 +55,8 @@ export function PublicAccaIndexView({
  /** Whether the Builder is being offered at all. Follows the existing combo route flag. */
  builderEntryEnabled?: boolean;
 }) {
+ // Server component: the dictionary read stays out of the client graph.
+ const p = getDictionary(locale as Locale).predictions;
  const ahead = views.filter((view) => AHEAD.has(view.freshness.availability));
  const closed = views.filter((view) => !AHEAD.has(view.freshness.availability));
  const filtered = Boolean(query && (query.profile || query.competition || query.state));
@@ -66,32 +71,28 @@ export function PublicAccaIndexView({
  />
 
  <header className="pt-8">
- <h1 className="text-2xl font-semibold">Published accumulators</h1>
+ <h1 className="text-2xl font-semibold">{p.nvAccasPublished}</h1>
  <p className="mt-2 max-w-2xl text-sm text-[var(--ink-secondary)]">
- Multi-selection combinations assembled from our qualified fixture lists, published with
- the evidence they were built on and the price recorded at the time. {NOT_ADVICE_NOTE}
+ {p.apxLede} {NOT_ADVICE_NOTE}
  </p>
  <p className="mt-2 max-w-2xl text-sm text-[var(--ink-secondary)]">
- Each one is a deterministic combination of selections that already qualified for our
- published lists — never a hand-picked selection, and never re-scored after the fact. Its
- page states which selections it contains, what was recorded in support of each, when it
- was generated and published, and whether its fixtures have kicked off.
+ {p.apxLede2}
  </p>
  </header>
 
  {facets && query ? (
- <PublicAccaFilters locale={locale} facets={facets} query={query} />
+ <PublicAccaFilters locale={locale} facets={facets} query={query} p={p} />
  ) : null}
 
  {views.length === 0 ? (
  <section className="mt-8 card p-6">
  <h2 className="text-base font-semibold">
- {filtered ? "Nothing matches that filter" : "Nothing published yet"}
+ {filtered ? p.apxNothingFilter : p.apxNothingYet}
  </h2>
  <p className="mt-2 max-w-2xl text-sm text-[var(--ink-secondary)]">
  {filtered
- ? "No published Acca matches the filters you selected. Clear them to see everything published for this language."
- : "No Accas have been published for this language. Rather than fill this page with placeholder content, it stays empty until there is something real to show."}
+ ? p.apxNothingFilterDesc
+ : p.apxNothingYetDesc}
  </p>
  <ul className="mt-4 space-y-2 text-sm">
  <li>
@@ -99,9 +100,9 @@ export function PublicAccaIndexView({
  href={`/${locale}`}
  className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
- Today&apos;s qualified fixtures
- </Link>{""}
- — the lists these are built from.
+ {p.nvToday}
+ </Link>{" "}
+ {p.apxTodaysListsNote}
  </li>
  {builderEntryEnabled ? (
  <li data-acca-builder-entry="">
@@ -109,9 +110,9 @@ export function PublicAccaIndexView({
  href={`/${locale}/acca/builder`}
  className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
- Acca Builder
- </Link>{""}
- — assemble your own from the same evidence.
+ {p.acBuilderTitle}
+ </Link>{" "}
+ {p.apxBuilderNote}
  </li>
  ) : null}
  <li>
@@ -119,9 +120,9 @@ export function PublicAccaIndexView({
  href={`/${locale}/archive`}
  className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
- Prediction archive
- </Link>{""}
- — settled results, wins and losses alike.
+ {p.arcIndexTitle}
+ </Link>{" "}
+ {p.apxArchiveNote}
  </li>
  </ul>
  </section>
@@ -130,14 +131,14 @@ export function PublicAccaIndexView({
  {ahead.length > 0 ? (
  <section className="mt-8" aria-labelledby="accas-ahead">
  <h2 id="accas-ahead" className="text-lg font-semibold">
- Still ahead
+ {p.apxStillAhead}
  </h2>
  <p className="mt-1 text-sm text-[var(--ink-secondary)]">
- Newest first. At least one fixture in each of these has not kicked off.
+ {p.apxStillAheadNote}
  </p>
  <div className="mt-4 grid gap-4 sm:grid-cols-2">
  {ahead.map((view, index) => (
- <PublicAccaCard key={view.publicId} view={view} position={index + 1} />
+ <PublicAccaCard key={view.publicId} view={view} position={index + 1} p={p} />
  ))}
  </div>
  </section>
@@ -146,19 +147,16 @@ export function PublicAccaIndexView({
  {closed.length > 0 ? (
  <section className="mt-10" aria-labelledby="accas-closed">
  <h2 id="accas-closed" className="text-lg font-semibold">
- Closed
+ {p.apxClosed}
  </h2>
  <p className="mt-1 text-sm text-[var(--ink-secondary)]">
- Every fixture in these has kicked off. They stay published as a record of what was
- said beforehand. Outcomes are not recorded on an Acca page — settled single
- predictions are in the{""}
+ {p.apxSettledNote}{" "}
  <Link
  href={`/${locale}/archive`}
  className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
- archive
+ {p.nvArchive} →
  </Link>
- .
  </p>
  <div className="mt-4 grid gap-4 sm:grid-cols-2">
  {closed.map((view, index) => (
@@ -166,6 +164,7 @@ export function PublicAccaIndexView({
  key={view.publicId}
  view={view}
  position={ahead.length + index + 1}
+ p={p}
  />
  ))}
  </div>
@@ -177,13 +176,13 @@ export function PublicAccaIndexView({
  locale={locale}
  page={page}
  query={query ?? EMPTY_INDEX_QUERY}
+ p={p}
  />
  ) : null}
 
  {page?.truncated ? (
  <p className="mt-4 max-w-2xl text-xs text-[var(--hero-ink-2)]">
- This listing examines the most recent {PUBLIC_ACCA_MAX_SCAN} published Accas for
- this language. Older ones exist in storage and are not shown here.
+ {formatDict(p.apxOlderNote, { n: String(PUBLIC_ACCA_MAX_SCAN) })}
  </p>
  ) : null}
 
@@ -199,7 +198,7 @@ export function PublicAccaIndexView({
  href={`/${locale}/methodology`}
  className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
- How these are built
+ {p.apxHowBuilt}
  </Link>
  </p>
 

@@ -1,5 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
+import { predictionsEn } from "../lib/translations/predictionsEn";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 
@@ -513,17 +514,24 @@ test("the provider potential is never called a confidence on any reader surface"
 });
 
 test("every surface that renders the potential names it and states the missing sample", () => {
-  for (const file of [
-    "components/fixtures/MatchPredictionsPanel.tsx",
-    "components/acca/AccaPanelBody.tsx",
-    "components/acca-publication/PublicAccaDetailView.tsx",
-  ]) {
-    const src = SRC(file).replace(/\s+/g, " ");
-    assert.match(src, /[Pp]rovider potential/, `${file} does not name the figure`);
-    assert.match(
-      src,
-      /no sample|carries no sample/,
-      `${file} implies a denominator it does not have`
-    );
+  /*
+   * Re-pinned after language sweep block 3: the naming moved into the
+   * dictionary. The LAW is unchanged — the figure is named and the missing
+   * sample stated — proven once on the English string, and each surface is
+   * pinned to render THROUGH that key rather than around it.
+   */
+  assert.match(predictionsEn.appProviderPotential, /provider potential/);
+  assert.match(predictionsEn.appProviderPotential, /no sample/);
+  for (const [file, marker] of [
+    ["components/fixtures/MatchPredictionsPanel.tsx", /[Pp]rovider potential/],
+    ["components/acca/AccaPanelBody.tsx", /appProviderPotential/],
+    ["components/acca-publication/PublicAccaDetailView.tsx", /apdColPotential/],
+  ] as const) {
+    assert.match(SRC(file).replace(/\s+/g, " "), marker, `${file} does not name the figure`);
   }
+  assert.match(
+    SRC("components/fixtures/MatchPredictionsPanel.tsx").replace(/\s+/g, " "),
+    /no sample|carries no sample/,
+    "the fixture panel still states the missing denominator"
+  );
 });

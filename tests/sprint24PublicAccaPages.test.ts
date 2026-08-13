@@ -90,6 +90,7 @@ const readSource = (rel: string) => readFileSync(path.join(root, rel), "utf8");
 const html = (tree: unknown): string => renderToStaticMarkup(tree as never);
 
 /* eslint-disable @typescript-eslint/no-var-requires */
+const { predictionsEn } = require("../lib/translations/predictionsEn") as typeof import("../lib/translations/predictionsEn");
 const { PublicAccaIndexView } = require("../components/acca-publication/PublicAccaIndexView") as typeof import("../components/acca-publication/PublicAccaIndexView");
 const { PublicAccaDetailView } = require("../components/acca-publication/PublicAccaDetailView") as typeof import("../components/acca-publication/PublicAccaDetailView");
 const { PublicAccaCard } = require("../components/acca-publication/PublicAccaCard") as typeof import("../components/acca-publication/PublicAccaCard");
@@ -506,7 +507,7 @@ test("BOUNDARY: rendered public markup contains no internal identifier", async (
   const surfaces = [
     html(PublicAccaDetailView({ view })),
     html(PublicAccaIndexView({ locale: "en", views: [view] })),
-    html(PublicAccaCard({ view, position: 1 })),
+    html(PublicAccaCard({ view, position: 1, p: predictionsEn })),
   ];
   for (const markup of surfaces) {
     assert.equal(markup.includes(acca.accaId), false);
@@ -825,7 +826,7 @@ test("RENDER: pagination and filters are real links, not scripted controls", () 
     query: EMPTY_QUERY,
     truncated: false,
   });
-  const markup = html(PublicAccaPagination({ locale: "en", page, query: EMPTY_QUERY }));
+  const markup = html(PublicAccaPagination({ locale: "en", page, query: EMPTY_QUERY, p: predictionsEn }));
   assert.match(markup, /<a[^>]+href="\/en\/accas\?page=2"/);
   assert.match(markup, /rel="next"/);
   assert.equal(/onclick/i.test(markup), false);
@@ -834,7 +835,7 @@ test("RENDER: pagination and filters are real links, not scripted controls", () 
     syntheticView({ slug: "a", qualificationSnapshot: { legCount: 2, oddsComplete: true, riskMode: "balanced" } }),
     syntheticView({ slug: "b", qualificationSnapshot: { legCount: 2, oddsComplete: true, riskMode: "aggressive" } }),
   ]);
-  const filterMarkup = html(PublicAccaFilters({ locale: "en", facets, query: EMPTY_QUERY }));
+  const filterMarkup = html(PublicAccaFilters({ locale: "en", facets, query: EMPTY_QUERY, p: predictionsEn }));
   assert.match(filterMarkup, /<a[^>]+href="\/en\/accas\?profile=balanced"/);
   assert.equal(/<form/.test(filterMarkup), false, "filtering must not need a form or a script");
 });
@@ -844,7 +845,7 @@ test("RENDER: no public Acca surface carries an affiliate handoff", () => {
   for (const markup of [
     html(PublicAccaDetailView({ view })),
     html(PublicAccaIndexView({ locale: "en", views: [view] })),
-    html(PublicAccaCard({ view, position: 1 })),
+    html(PublicAccaCard({ view, position: 1, p: predictionsEn })),
   ]) {
     for (const pattern of [/\/go\//, /bet now/i, /claim bonus/i, /deposit/i, /rel="sponsored"/]) {
       assert.equal(pattern.test(markup), false, `affiliate handoff belongs to a later sprint (${pattern})`);
@@ -1299,7 +1300,7 @@ test("A11Y: navigation landmarks on the index are named", () => {
     syntheticView({ slug: "b", qualificationSnapshot: { legCount: 2, oddsComplete: true, riskMode: "aggressive" } }),
   ]);
   assert.match(
-    html(PublicAccaFilters({ locale: "en", facets, query: EMPTY_QUERY })),
+    html(PublicAccaFilters({ locale: "en", facets, query: EMPTY_QUERY, p: predictionsEn })),
     /aria-label="Filter published Accas"/,
   );
   const page = buildPublicAccaIndexPage({
@@ -1308,13 +1309,13 @@ test("A11Y: navigation landmarks on the index are named", () => {
     truncated: false,
   });
   assert.match(
-    html(PublicAccaPagination({ locale: "en", page, query: EMPTY_QUERY })),
+    html(PublicAccaPagination({ locale: "en", page, query: EMPTY_QUERY, p: predictionsEn })),
     /aria-label="Published Acca pages"/,
   );
 });
 
 test("A11Y: no state is communicated by colour alone", () => {
-  const markup = html(PublicAccaCard({ view: syntheticView({}, NOW_CLOSED), position: 1 }));
+  const markup = html(PublicAccaCard({ view: syntheticView({}, NOW_CLOSED), position: 1, p: predictionsEn }));
   assert.match(markup, /State/);
   assert.match(markup, /Closed/);
 });

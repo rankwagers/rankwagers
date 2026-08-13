@@ -8,6 +8,7 @@ import {
  type FormEvent,
 } from "react";
 import Link from "next/link";
+import type { PredictionStrings } from "@/lib/translations/predictionsEn";
 import {
  BUILDER_LIST_MARKETS,
  RISK_MODE_RULES,
@@ -61,9 +62,11 @@ function classifyResult(result: AccaBuilderResult): UiState {
 
 export function AccaBuilderView({
  locale,
+ p,
  initialTargetMin,
  initialTargetMax,
 }: {
+ p: PredictionStrings;
  locale: string;
  initialTargetMin?: number | null;
  initialTargetMax?: number | null;
@@ -154,7 +157,7 @@ export function AccaBuilderView({
 
  if (!res.ok && payload.status !== "no_candidates" && payload.status !== "no_combination") {
  setUiState("error");
- setErrorMessage(payload.message ?? "Generation failed.");
+ setErrorMessage(payload.message ?? p.apbGenerationFailed);
  setRequestId(payload.requestId ?? headerId);
  trackAccaBuilderEvent("acca_builder_generation_failed", {
  locale,
@@ -188,10 +191,10 @@ export function AccaBuilderView({
  } catch (err) {
  if (err instanceof DOMException && err.name === "AbortError") {
  setUiState("timeout");
- setErrorMessage("Provider request timed out. Try again.");
+ setErrorMessage(p.apbTimeout);
  } else {
  setUiState("error");
- setErrorMessage("Network failure. Check localhost connectivity.");
+ setErrorMessage(p.apbNetworkFail);
  }
  trackAccaBuilderEvent("acca_builder_generation_failed", {
  locale,
@@ -212,7 +215,7 @@ export function AccaBuilderView({
 
  const announce =
  uiState === "loading"
- ? "Generating accumulator suggestions…"
+ ? p.apbGeneratingLong
  : result?.diagnostics.message ?? errorMessage ?? "";
 
  return (
@@ -233,7 +236,7 @@ export function AccaBuilderView({
  >
  <fieldset className="space-y-4">
  <legend className="rw-display text-lg font-semibold text-foreground">
- Builder configuration
+ {p.apbConfigTitle}
  </legend>
  <p className="text-sm text-[var(--ink-secondary)]">
  Uses today&apos;s published FootyStats list markets and bounded odds
@@ -242,11 +245,11 @@ export function AccaBuilderView({
 
  <div>
  <p className="text-xs font-semibold uppercase tracking-label text-[var(--hero-ink-2)]">
- Risk mode
+ {p.apbRiskMode}
  </p>
  <div
  role="radiogroup"
- aria-label="Risk mode"
+ aria-label={p.apbRiskMode}
  className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-3"
  >
  {(Object.keys(RISK_MODE_RULES) as AccaBuilderRiskMode[]).map(
@@ -320,7 +323,7 @@ export function AccaBuilderView({
  </div>
 
  <fieldset>
- <legend className="text-sm font-medium">Allowed markets</legend>
+ <legend className="text-sm font-medium">{p.apbAllowedMarkets}</legend>
  <div className="mt-2 flex flex-wrap gap-2">
  {BUILDER_LIST_MARKETS.map((m) => {
  const checked = config.markets.includes(m);
@@ -348,7 +351,7 @@ export function AccaBuilderView({
 
  <div className="grid gap-3 sm:grid-cols-2">
  <label className="block text-sm">
- <span className="font-medium">Target odds min (optional)</span>
+ <span className="font-medium">{p.apbTargetMin}</span>
  <input
  type="number"
  min={1.01}
@@ -368,7 +371,7 @@ export function AccaBuilderView({
  />
  </label>
  <label className="block text-sm">
- <span className="font-medium">Target odds max (optional)</span>
+ <span className="font-medium">{p.apbTargetMax}</span>
  <input
  type="number"
  min={1.01}
@@ -386,7 +389,7 @@ export function AccaBuilderView({
  </div>
 
  <label className="block text-sm">
- <span className="font-medium">Exclude teams (comma-separated)</span>
+ <span className="font-medium">{p.apbExcludeTeams}</span>
  <input
  type="text"
  value={config.excludedTeams.join(", ")}
@@ -405,7 +408,7 @@ export function AccaBuilderView({
 
  <label className="block text-sm">
  <span className="font-medium">
- Competition filter (comma-separated, optional)
+ {p.apbCompetitionFilter}
  </span>
  <input
  type="text"
@@ -432,7 +435,7 @@ export function AccaBuilderView({
  patchConfig({ oneSelectionPerFixture: e.target.checked })
  }
  />
- One selection per fixture
+ {p.apbOnePerFixture}
  </label>
  <label className="inline-flex items-center gap-2">
  <input
@@ -445,7 +448,7 @@ export function AccaBuilderView({
  })
  }
  />
- Pre-match only
+ {p.apbPrematchOnly}
  </label>
  </div>
  </fieldset>
@@ -456,13 +459,13 @@ export function AccaBuilderView({
  disabled={uiState === "loading"}
  className="rw-m inline-flex items-center justify-center border border-[var(--hero-ink)] px-4 text-[var(--hero-ink)] transition-colors hover:bg-[var(--hero-ink)] hover:text-[var(--hero-canvas)] min-h-11"
  >
- {uiState === "loading" ? "Generating…" : "Generate Acca"}
+ {uiState === "loading" ? p.apbGenerating : p.apbGenerate}
  </button>
  <Link
  href={`/${locale}/acca`}
  className="inline-flex min-h-11 items-center rounded-md border border-border px-4 text-sm font-medium"
  >
- Open accumulators
+ {p.apbOpenAccas}
  </Link>
  </div>
  </form>
@@ -473,10 +476,7 @@ export function AccaBuilderView({
  role="status"
  >
  {uiState === "initial" && !errorMessage ? (
- <p>
- Configure filters, then generate. Combinations use real published
- list predictions — never invented fixtures or odds.
- </p>
+ <p>{p.apbIdleNote}</p>
  ) : (
  <p className="text-[var(--amber-primary)]">{errorMessage}</p>
  )}
@@ -496,7 +496,7 @@ export function AccaBuilderView({
  id="builder-results-heading"
  className="rw-display text-xl font-semibold"
  >
- Ranked combinations
+ {p.apbRanked}
  </h2>
  <p className="mt-1 text-sm text-[var(--ink-secondary)]">
  {result.diagnostics.message} · {result.eligibleCount} eligible /{" "}
@@ -508,8 +508,7 @@ export function AccaBuilderView({
 
  {!result.combinations.length ? (
  <div className="rounded-lg border border-dashed border-border px-4 py-8 text-sm text-[var(--hero-ink-2)]">
- No valid combination for this configuration. Relax confidence,
- markets, or leg count — quality gates are not lowered automatically.
+ {p.apbNoCombo}
  </div>
  ) : (
  <ul className="space-y-4">
@@ -518,15 +517,14 @@ export function AccaBuilderView({
  key={combo.id}
  combo={combo}
  locale={locale}
+ p={p}
  onAdd={() => {
  trackAccaBuilderEvent("acca_builder_combination_viewed", {
  locale,
  properties: { label: combo.label, legs: combo.legCount },
  });
  if (!acca) {
- setErrorMessage(
- "Accumulators are unavailable in this view. Open accumulators first."
- );
+ setErrorMessage(p.apbAccasUnavailable);
  return;
  }
  if (acca.slip.selections.length > 0) {
@@ -554,7 +552,7 @@ export function AccaBuilderView({
  {result.warnings.length ? (
  <aside
  className="rounded-md border border-[var(--amber-border)] bg-[var(--amber-surface)] px-3 py-2 text-xs text-[var(--amber-primary)]"
- aria-label="Warnings"
+ aria-label={p.apbWarningsAria}
  >
  <ul className="list-disc space-y-1 pl-4">
  {result.warnings.map((w) => (
@@ -582,7 +580,7 @@ export function AccaBuilderView({
  >
  <div className="w-full max-w-md rounded-xl border border-border bg-[var(--canvas)] p-5 shadow-card">
  <h3 id="transfer-title" className="rw-display text-lg font-semibold">
- Add to accumulators
+ {p.apbAddOne}
  </h3>
  <p className="mt-2 text-sm text-[var(--ink-secondary)]">
  Your Studio already has {acca.slip.selections.length} selection
@@ -602,14 +600,14 @@ export function AccaBuilderView({
  className="inline-flex min-h-11 items-center rounded-md border border-border px-3 text-sm font-semibold"
  onClick={() => confirmTransfer("replace")}
  >
- Replace
+ {p.apbReplace}
  </button>
  <button
  type="button"
  className="inline-flex min-h-11 items-center rounded-md px-3 text-sm"
  onClick={() => setTransferCombo(null)}
  >
- Cancel
+ {p.apbCancel}
  </button>
  </div>
  </div>
@@ -642,20 +640,22 @@ function ProviderStatus({ result }: { result: AccaBuilderResult }) {
 function CombinationCard({
  combo,
  locale,
+ p,
  onAdd,
  onEvidence,
 }: {
  combo: AccaBuilderCombination;
  locale: string;
+ p: PredictionStrings;
  onAdd: () => void;
  onEvidence: () => void;
 }) {
  const label =
  combo.label === "recommended"
- ? "Recommended"
+ ? p.apbRecommended
  : combo.label === "safer"
- ? "Safer alternative"
- : "Higher-risk alternative";
+ ? p.apbSafer
+ : p.apbHigherRisk;
 
  return (
  <li className="rounded-xl border border-border bg-[var(--canvas)] p-4">
@@ -674,7 +674,7 @@ function CombinationCard({
  <p className="mt-2 rw-display text-2xl font-semibold tabular-nums">
  {combo.combinedOdds != null && combo.oddsComplete
  ? combo.combinedOdds.toFixed(2)
- : "Odds unavailable"}
+ : p.apbOddsUnavailable}
  </p>
  <p className="text-xs text-[var(--hero-ink-2)]">{combo.freshnessSummary}</p>
  </div>
@@ -683,7 +683,7 @@ function CombinationCard({
  onClick={onAdd}
  className="rw-m inline-flex items-center justify-center border border-[var(--hero-ink)] px-4 text-[var(--hero-ink)] transition-colors hover:bg-[var(--hero-ink)] hover:text-[var(--hero-canvas)] min-h-11"
  >
- Add entire Acca to Studio
+ {p.apbAddAll}
  </button>
  </div>
 
@@ -712,7 +712,7 @@ function CombinationCard({
  }}
  >
  <summary className="cursor-pointer font-medium text-[var(--hero-ink)]">
- Why this leg
+ {p.apbWhyLeg}
  </summary>
  <ul className="mt-1 list-disc space-y-0.5 pl-4 text-[var(--hero-ink-2)]">
  {leg.evidenceSummary.map((line) => (
@@ -731,7 +731,7 @@ function CombinationCard({
  href={leg.matchHref || `/${locale}/fixtures/${leg.matchId}`}
  className="mt-1 inline-block text-xs font-medium text-[var(--hero-ink)] hover:underline"
  >
- Match detail
+ {p.appMatchDetail}
  </Link>
  </li>
  ))}

@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { PublicAccaCard } from "@/components/acca-publication/PublicAccaCard";
+import { getDictionary } from "@/lib/dictionaries";
+import type { Locale } from "@/lib/i18n";
 import { listPublicAccaViews, publicAccaIndexPath } from "@/lib/acca-publication/public";
 
 /**
@@ -45,7 +47,7 @@ export async function HomepagePublishedAccas({ locale }: { locale: string }) {
  </p>
  <div className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
  {scan.views.slice(0, HOMEPAGE_ACCA_LIMIT).map((view, index) => (
- <PublicAccaCard key={view.publicId} view={view} position={index + 1} />
+ <PublicAccaCard key={view.publicId} view={view} position={index + 1} p={getDictionary(locale as Locale).predictions} />
  ))}
  </div>
  </section>

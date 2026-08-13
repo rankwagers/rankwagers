@@ -240,9 +240,15 @@ test("EVIDENCE: the unguarded surface is the translated remainder, and it is ran
    * pre-existing body overtake French again. `nl` stays first. Same rule as before: the
    * translated remainder changed, so the recorded value is updated rather than the measurement.
    */
+  /*
+   * Re-derived after language sweep block 3 (2026-08-13): the Spanish pair
+   * took the 121 acca-interior keys first and moved ahead of nl. Same rule
+   * as every re-derivation before: the translated remainder changed, so the
+   * recorded value updates — never the measurement.
+   */
   assert.deepEqual(
     top5,
-    ["nl", "es", "es-es", "fr", "ar"],
+    ["es", "es-es", "nl", "fr", "ar"],
     "if this ordering changes, Sprint 35's priority list changes with it",
   );
 

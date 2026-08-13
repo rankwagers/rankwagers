@@ -45,12 +45,15 @@ export function AccaShareControls({
   url,
   title,
   context,
+  strings,
 }: {
   /** Absolute canonical URL. */
   url: string;
   /** Acca title, used as the native share sheet's subject. */
   title: string;
   context: AccaShareContext;
+  /** Localized status lines, prepared server-side (bundle boundary). */
+  strings: { linkCopied: string; clipboardManual: string; shareSheetOpened: string };
 }) {
   const [nativeShareAvailable, setNativeShareAvailable] = useState(false);
   const [status, setStatus] = useState("");
@@ -81,13 +84,13 @@ export function AccaShareControls({
     track("acca_share_open", "clipboard");
     try {
       await navigator.clipboard.writeText(url);
-      setStatus("Link copied to the clipboard.");
+      setStatus(strings.linkCopied);
       track("acca_share_copy", "clipboard");
     } catch {
       // Clipboard access is refused in plenty of ordinary situations — an insecure origin, a
       // permissions policy, a browser that never implemented it. Say so and hand over a path
       // that always works rather than failing silently.
-      setStatus("The clipboard is not available here. The link is selected — copy it manually.");
+      setStatus(strings.clipboardManual);
       selectManually();
       track("acca_share_copy", "manual");
     }
@@ -97,7 +100,7 @@ export function AccaShareControls({
     track("acca_share_open", "native");
     try {
       await navigator.share({ title, url });
-      setStatus("Share sheet opened.");
+      setStatus(strings.shareSheetOpened);
       track("acca_share_native", "native");
     } catch {
       // A dismissed share sheet rejects exactly like a failure. Neither is an error worth
