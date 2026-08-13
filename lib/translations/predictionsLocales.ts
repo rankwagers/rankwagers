@@ -464,17 +464,17 @@ const es: PredictionStrings = mergePredictions({
   apiError: "No se pudieron cargar las listas de hoy. Inténtalo más tarde.",
   liveSoonTitle: "Señales en vivo",
   liveSoonBody:
-    "Alertas de goles en tiempo real desde Telegram. Un tip gratis cada hora — desbloquea más con casas asociadas o Telegram.",
+    "Alertas de goles en tiempo real desde Telegram. Una observación destacada cada hora — más con casas asociadas o Telegram.",
   liveSoonBodyStats:
     "Motor en vivo en silencio — seguimos mostrando partidos de alto potencial de las listas de hoy. Alertas completas vuelven en Telegram en horas pico.",
-  liveFeedHourlyNote: "Tip gratis de la hora (se reinicia a la hora UTC)",
-  liveFeaturedLabel: "Tip de la hora",
+  liveFeedHourlyNote: "Observación destacada de la hora (se reinicia a la hora UTC)",
+  liveFeaturedLabel: "Observación de la hora",
   liveFeaturedMoreCta: "Toca para más pronósticos",
   liveFeaturedWonBadge: "GANADO",
   liveFeaturedWinPendingBadge: "¡GOL",
   liveFeaturedWonLine: "Pronóstico acertado — buen pick",
   liveFeaturedWinPendingLine: "Gol marcado — confirmando el acierto",
-  liveUnlockTitle: "Desbloquear este tip en vivo",
+  liveUnlockTitle: "Desbloquear esta observación en vivo",
   liveUnlockBody:
     "Este pronóstico es para jugadores verificados. Regístrate y deposita con una casa asociada o entra al flujo VIP de Telegram para el enlace del grupo privado.",
   liveUnlockAffiliate: "Ver casas de apuestas asociadas",
@@ -483,7 +483,7 @@ const es: PredictionStrings = mergePredictions({
   liveUnlockTelegramSoon: "Enlace de Telegram no configurado",
   liveEmpty: "Sin señales en vivo ahora. Vuelve en horario de partidos.",
   liveEmptySoft:
-    "Sin tip destacado esta hora — revisa las listas de hoy abajo o los próximos partidos.",
+    "Sin observación destacada esta hora — revisa las listas de hoy abajo o los próximos partidos.",
   liveNewBadge: "Nuevo",
   liveTapUnlock: "Toca para desbloquear",
   upcomingSectionLabel: "Próximos (2–3 h)",
@@ -1342,17 +1342,17 @@ const it: PredictionStrings = mergePredictions({
   apiError: "Impossibile caricare le liste di oggi. Riprova più tardi.",
   liveSoonTitle: "Segnali live",
   liveSoonBody:
-    "Avvisi gol in tempo reale dal nostro engine Telegram. Un tip gratis ogni ora — altro con bookmaker partner o Telegram.",
+    "Avvisi gol in tempo reale dal nostro engine Telegram. Un'osservazione in evidenza ogni ora — altro con bookmaker partner o Telegram.",
   liveSoonBodyStats:
     "Engine live fermo — mostriamo ancora partite ad alto potenziale dalle liste di oggi. Alert completi su Telegram nelle ore di punta.",
-  liveFeedHourlyNote: "Tip gratis dell'ora (reset all'ora UTC)",
-  liveFeaturedLabel: "Tip dell'ora",
+  liveFeedHourlyNote: "Osservazione in evidenza dell'ora (reset all'ora UTC)",
+  liveFeaturedLabel: "Osservazione dell'ora",
   liveFeaturedMoreCta: "Tocca per più pronostici",
   liveFeaturedWonBadge: "VINTO",
   liveFeaturedWinPendingBadge: "GOL",
   liveFeaturedWonLine: "Pronostico vincente — ottimo pick",
   liveFeaturedWinPendingLine: "Gol segnato — vittoria in arrivo",
-  liveUnlockTitle: "Sblocca questo tip live",
+  liveUnlockTitle: "Sblocca questa osservazione live",
   liveUnlockBody:
     "Questo pronostico è per giocatori verificati. Registrati e deposita con un partner o entra nel flusso VIP Telegram.",
   liveUnlockAffiliate: "Vedi siti partner",
@@ -1361,7 +1361,7 @@ const it: PredictionStrings = mergePredictions({
   liveUnlockTelegramSoon: "Link Telegram non configurato",
   liveEmpty: "Nessun segnale live ora. Torna nelle ore di partita.",
   liveEmptySoft:
-    "Nessun tip live quest'ora — scorri le liste di oggi o i prossimi match.",
+    "Nessuna osservazione in evidenza quest'ora — scorri le liste di oggi o i prossimi match.",
   liveNewBadge: "Nuovo",
   liveTapUnlock: "Tocca per sbloccare",
   upcomingSectionLabel: "Prossimi (2–3 h)",
@@ -1777,17 +1777,17 @@ const fr: PredictionStrings = mergePredictions({
   apiError: "Impossible de charger les listes du jour. Réessayez plus tard.",
   liveSoonTitle: "Signaux en direct",
   liveSoonBody:
-    "Alertes buts en temps réel via Telegram. Un tip gratuit par heure — débloquez plus via bookmakers partenaires ou Telegram.",
+    "Alertes buts en temps réel via Telegram. Une observation mise en avant chaque heure — davantage via les bookmakers partenaires ou Telegram.",
   liveSoonBodyStats:
     "Moteur live calme — nous affichons encore les matchs à fort potentiel des listes du jour. Alertes complètes sur Telegram aux heures de pointe.",
-  liveFeedHourlyNote: "Tip gratuit de l'heure (reset à l'heure UTC)",
-  liveFeaturedLabel: "Tip de l'heure",
+  liveFeedHourlyNote: "Observation mise en avant de l'heure (réinitialisée à l'heure UTC)",
+  liveFeaturedLabel: "Observation de l'heure",
   liveFeaturedMoreCta: "Touchez pour plus de pronostics",
   liveFeaturedWonBadge: "GAGNÉ",
   liveFeaturedWinPendingBadge: "BUT ",
   liveFeaturedWonLine: "Pronostic gagnant — bon choix",
   liveFeaturedWinPendingLine: "But marqué — victoire en cours",
-  liveUnlockTitle: "Débloquer ce tip live",
+  liveUnlockTitle: "Débloquer cette observation en direct",
   liveUnlockBody:
     "Ce pronostic est pour joueurs vérifiés. Inscrivez-vous et déposez avec un partenaire, ou rejoignez le flux VIP Telegram pour le lien du groupe privé.",
   liveUnlockAffiliate: "Voir les sites partenaires",
@@ -1796,7 +1796,7 @@ const fr: PredictionStrings = mergePredictions({
   liveUnlockTelegramSoon: "Lien Telegram non configuré",
   liveEmpty: "Pas de signaux live pour l'instant. Revenez aux heures de match.",
   liveEmptySoft:
-    "Pas de tip live cette heure — parcourez les listes du jour ou les matchs à venir.",
+    "Pas d'observation mise en avant cette heure — parcourez les listes du jour ou les matchs à venir.",
   liveNewBadge: "Nouveau",
   liveTapUnlock: "Touchez pour débloquer",
   upcomingSectionLabel: "À venir (2–3 h)",

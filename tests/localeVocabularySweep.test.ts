@@ -20,15 +20,14 @@ import { predictionsByLocale } from "../lib/translations/predictionsLocales";
 /** Word-boundary "tip"/"tips" across scripts: a letter on either side does not count. */
 const TIP = /(^|[^\p{L}])tips?([^\p{L}]|$)/iu;
 
-/** The sweep's findings, frozen. locale → the live/ranked keys still carrying the word. */
-const TIP_DEBT: Record<string, readonly string[]> = {
-  es: ["liveSoonBody", "liveFeedHourlyNote", "liveFeaturedLabel", "liveUnlockTitle", "liveEmptySoft"],
-  "es-es": ["liveSoonBody", "liveFeedHourlyNote", "liveFeaturedLabel", "liveUnlockTitle", "liveEmptySoft"],
-  fr: ["liveSoonBody", "liveFeedHourlyNote", "liveFeaturedLabel", "liveUnlockTitle", "liveEmptySoft"],
-  it: ["liveSoonBody", "liveFeedHourlyNote", "liveFeaturedLabel", "liveUnlockTitle", "liveEmptySoft"],
-  vi: ["liveSoonBody", "liveFeedHourlyNote", "liveFeaturedLabel", "liveUnlockTitle", "liveEmptySoft"],
-  id: ["liveSoonBody", "liveFeedHourlyNote", "liveFeaturedLabel", "liveUnlockTitle", "liveEmptySoft"],
-};
+/*
+ * ZERO, AND PINNED THERE (language sweep, 2026-08-13). The final six locales
+ * (es, es-es, fr, it, vi, id — five live-desk keys each) moved to the
+ * observation register, and this ceiling now works like SOURCE_CLAIM and
+ * KNOWN_CLAIM before it: any entry appearing here again is banned vocabulary
+ * entering a dictionary — fix the copy, never extend the register.
+ */
+const TIP_DEBT: Record<string, readonly string[]> = {};
 
 function sweep(): Map<string, string[]> {
   const hits = new Map<string, string[]>();
