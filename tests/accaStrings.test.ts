@@ -9,10 +9,11 @@ import test from "node:test";
  * STATE, honestly: the embedded EN strings are fully EXTRACTED (121 keys) and
  * threaded — AccaPanelBody, AccaBuilderView, AccaShareControls, and all five
  * publication views render from the dictionary; no literal survives at the
- * swept sites. Translation authoring: EN + es complete; the remaining 27
- * locale sets resolve through mergePredictions EN fallback and are RECORDED
- * DEBT, not silent — the translated-locale list below grows as sets land,
- * and the counting test fails if a set is authored without joining it.
+ * swept sites. Translation authoring: EN + es complete, plus locale batch 1
+ * (pt/fr/de/it/nl/pl/cs/da/sv, 2026-08-14); the remaining 18 locale sets
+ * resolve through mergePredictions EN fallback and are RECORDED DEBT, not
+ * silent — the translated-locale list below grows as sets land, and the
+ * counting test fails if a set is authored without joining it.
  */
 
 /* eslint-disable @typescript-eslint/no-var-requires */
@@ -29,7 +30,11 @@ const BLOCK3_KEYS = Object.keys(predictionsEn).filter((k) =>
 );
 
 /** Locales whose block-3 sets are AUTHORED (not EN fallback). Grows to 29. */
-const AUTHORED = ["es", "es-es"]; // es-es spreads es
+const AUTHORED = [
+  "es", "es-es", // es-es spreads es
+  "pt", "fr", "de", "it", // locale batch 1, predictionsLocales.ts
+  "nl", "pl", "cs", "da", "sv", // locale batch 1, predictionsLocalesEurope.ts
+];
 
 test("the block-3 key set is the full 121 and resolves in every locale", () => {
   assert.equal(BLOCK3_KEYS.length, 121, `expected 121 keys, found ${BLOCK3_KEYS.length}`);

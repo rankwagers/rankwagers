@@ -245,10 +245,17 @@ test("EVIDENCE: the unguarded surface is the translated remainder, and it is ran
    * took the 121 acca-interior keys first and moved ahead of nl. Same rule
    * as every re-derivation before: the translated remainder changed, so the
    * recorded value updates — never the measurement.
+   *
+   * Re-derived after acca locale batch 1 (2026-08-14): pt/fr/de/it/nl/pl/cs/
+   * da/sv each gained the 121 acca-interior keys. nl retook first (largest
+   * pre-existing body plus the new block) and pl entered the top five,
+   * displacing ar — the first re-derivation where a locale outside the old
+   * top five overtook one inside it. ar is now the largest UNBATCHED body;
+   * it heads the Asia-batch priority list this ordering exists to feed.
    */
   assert.deepEqual(
     top5,
-    ["es", "es-es", "nl", "fr", "ar"],
+    ["nl", "es", "es-es", "fr", "pl"],
     "if this ordering changes, Sprint 35's priority list changes with it",
   );
 
