@@ -10,10 +10,12 @@ import test from "node:test";
  * threaded — AccaPanelBody, AccaBuilderView, AccaShareControls, and all five
  * publication views render from the dictionary; no literal survives at the
  * swept sites. Translation authoring: EN + es complete, plus locale batch 1
- * (pt/fr/de/it/nl/pl/cs/da/sv, 2026-08-14); the remaining 18 locale sets
- * resolve through mergePredictions EN fallback and are RECORDED DEBT, not
- * silent — the translated-locale list below grows as sets land, and the
- * counting test fails if a set is authored without joining it.
+ * (pt/fr/de/it/nl/pl/cs/da/sv, 2026-08-14) and batch 2 (fi/no/ro/el/hu/ar/
+ * hi/bn/ta, 2026-08-15, with te/mr inheriting hi through their ...hi
+ * spread); the remaining 7 locale sets resolve through mergePredictions
+ * EN fallback and are RECORDED DEBT, not silent — the
+ * translated-locale list below grows as sets land, and the counting test
+ * fails if a set is authored without joining it.
  */
 
 /* eslint-disable @typescript-eslint/no-var-requires */
@@ -34,6 +36,13 @@ const AUTHORED = [
   "es", "es-es", // es-es spreads es
   "pt", "fr", "de", "it", // locale batch 1, predictionsLocales.ts
   "nl", "pl", "cs", "da", "sv", // locale batch 1, predictionsLocalesEurope.ts
+  "fi", "no", "ro", "el", "hu", // locale batch 2, predictionsLocalesEurope.ts
+  "ar", "hi", "bn", "ta", // locale batch 2, predictionsLocalesAsia.ts
+  // te and mr spread ...hi as their regional base (the Asia file's own
+  // design, same rule as es-es spreading es): authoring hi gave them its
+  // block-3 set by inheritance. They read as Hindi, not English, until a
+  // genuine te/mr set lands — recorded here so the register states reality.
+  "te", "mr",
 ];
 
 test("the block-3 key set is the full 121 and resolves in every locale", () => {

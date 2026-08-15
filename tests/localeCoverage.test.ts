@@ -252,10 +252,15 @@ test("EVIDENCE: the unguarded surface is the translated remainder, and it is ran
    * displacing ar — the first re-derivation where a locale outside the old
    * top five overtook one inside it. ar is now the largest UNBATCHED body;
    * it heads the Asia-batch priority list this ordering exists to feed.
+   *
+   * Re-derived after acca locale batch 2 (2026-08-15): fi/no/ro/el/hu/ar/hi/
+   * bn/ta gained the block, and ar re-entered exactly as batch 1's note
+   * predicted, displacing pl back out. The top four are unchanged — batch 2
+   * lifted the mid-table without reordering the head.
    */
   assert.deepEqual(
     top5,
-    ["nl", "es", "es-es", "fr", "pl"],
+    ["nl", "es", "es-es", "fr", "ar"],
     "if this ordering changes, Sprint 35's priority list changes with it",
   );
 
