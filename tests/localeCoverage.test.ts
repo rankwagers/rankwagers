@@ -179,9 +179,16 @@ test("EVIDENCE: most of what a non-English reader sees is English fallback", () 
    * the same commits — the fallback share dropped to ~49%, so "most" is now "roughly half".
    * Asserted as a band so the test states the finding without breaking the moment a single
    * translation lands.
+   *
+   * Re-derived 2026-08-17 after acca locale batch 3 closed the block-3 register (all 29 non-EN
+   * locales carry the 121 acca keys): measured 34%, one point under the old floor. The original
+   * finding has now fully inverted — MOST of what a non-English reader sees is translated copy,
+   * which is exactly the surface the English pattern guard cannot read. The band moves down with
+   * the measurement; the pattern-translation work this suite exists to prioritise is now the
+   * majority surface, not the remainder.
    */
   assert.ok(
-    englishShare >= 35 && englishShare <= 60,
+    englishShare >= 25 && englishShare <= 45,
     `English fallback share was ${englishShare}% — outside the measured band; re-examine the ` +
       `assumption that the guard's English patterns cover the majority of non-English pages`,
   );

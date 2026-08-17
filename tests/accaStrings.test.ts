@@ -9,13 +9,13 @@ import test from "node:test";
  * STATE, honestly: the embedded EN strings are fully EXTRACTED (121 keys) and
  * threaded — AccaPanelBody, AccaBuilderView, AccaShareControls, and all five
  * publication views render from the dictionary; no literal survives at the
- * swept sites. Translation authoring: EN + es complete, plus locale batch 1
- * (pt/fr/de/it/nl/pl/cs/da/sv, 2026-08-14) and batch 2 (fi/no/ro/el/hu/ar/
- * hi/bn/ta, 2026-08-15, with te/mr inheriting hi through their ...hi
- * spread); the remaining 7 locale sets resolve through mergePredictions
- * EN fallback and are RECORDED DEBT, not silent — the
- * translated-locale list below grows as sets land, and the counting test
- * fails if a set is authored without joining it.
+ * swept sites. Translation authoring: COMPLETE. Batch 1 (pt/fr/de/it/nl/pl/
+ * cs/da/sv, 2026-08-14), batch 2 (fi/no/ro/el/hu/ar/hi/bn/ta, 2026-08-15),
+ * batch 3 (te/mr/ja/th/ko/vi/id/zh/sw, 2026-08-17) closed the register:
+ * every non-EN locale carries a genuine block-3 set (es-es spreads es by
+ * design). The register below is now a CLOSED SET — the closing pin fails
+ * if a dictionary locale ever exists outside it, so a future 31st locale
+ * must be authored (or deliberately registered) the day it is born.
  */
 
 /* eslint-disable @typescript-eslint/no-var-requires */
@@ -31,18 +31,17 @@ const BLOCK3_KEYS = Object.keys(predictionsEn).filter((k) =>
   /^(app|apb|apx|apd|aps)[A-Z]/.test(k)
 );
 
-/** Locales whose block-3 sets are AUTHORED (not EN fallback). Grows to 29. */
+/** Locales whose block-3 sets are AUTHORED (not EN fallback). Complete at 29. */
 const AUTHORED = [
   "es", "es-es", // es-es spreads es
   "pt", "fr", "de", "it", // locale batch 1, predictionsLocales.ts
   "nl", "pl", "cs", "da", "sv", // locale batch 1, predictionsLocalesEurope.ts
   "fi", "no", "ro", "el", "hu", // locale batch 2, predictionsLocalesEurope.ts
   "ar", "hi", "bn", "ta", // locale batch 2, predictionsLocalesAsia.ts
-  // te and mr spread ...hi as their regional base (the Asia file's own
-  // design, same rule as es-es spreading es): authoring hi gave them its
-  // block-3 set by inheritance. They read as Hindi, not English, until a
-  // genuine te/mr set lands — recorded here so the register states reality.
-  "te", "mr",
+  // Batch 2 registered te/mr as hi-inheritance through their ...hi spread;
+  // batch 3 replaced that with genuine Telugu/Marathi sets (literal keys
+  // override the spread), alongside the final seven standalone locales.
+  "te", "mr", "ja", "th", "ko", "vi", "id", "zh", "sw", // locale batch 3
 ];
 
 test("the block-3 key set is the full 121 and resolves in every locale", () => {
@@ -78,6 +77,27 @@ test("authored locales are genuinely translated; the register tracks reality", (
         : `${locale} is registered as authored but still carries EN fallback`
     );
   }
+});
+
+test("CLOSING PIN: every dictionary locale is in the register — the debt is zero", () => {
+  /*
+   * Until 2026-08-17 the register grew as sets landed and unauthored locales
+   * were legal recorded debt. With batch 3 the debt hit zero, so the register
+   * flips from a growing list to a closed set: a locale existing in the
+   * dictionary but missing from AUTHORED now FAILS. Adding a 31st locale
+   * therefore forces a decision at birth — author its block-3 set, or
+   * register it deliberately (as es-es and the te/mr inheritance were).
+   */
+  const nonEnglish = Object.keys(predictionsByLocale).filter((l) => l !== "en");
+  const unregistered = nonEnglish.filter((l) => !AUTHORED.includes(l));
+  assert.deepEqual(
+    unregistered,
+    [],
+    "a dictionary locale exists outside the AUTHORED register — author or register it"
+  );
+  const phantom = AUTHORED.filter((l) => !nonEnglish.includes(l));
+  assert.deepEqual(phantom, [], "the register names a locale the dictionary does not have");
+  assert.equal(nonEnglish.length, 29, "the closed set is the full 29 non-EN locales");
 });
 
 test("no swept literal survives in the interior components", () => {
