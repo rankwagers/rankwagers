@@ -45,22 +45,19 @@ export const BANNED_CLAIMS: readonly BannedClaim[] = [
   { pattern: /\bfixed\s+match/i, reason: "implies match fixing" },
   { pattern: /\binsider\s+(tip|info|information)/i, reason: "implies privileged information" },
   { pattern: /\bAI\s+(says|predicts|guarantees|knows)/i, reason: "attributes authority to a model" },
-  { pattern: /\bour\s+(tip|tips|prediction)\s+(for|of)\s+today\b/i, reason: "positions the product as a tipster" },
   { pattern: /\bbanker\b/i, reason: "tipster slang asserting near-certainty" },
-  { pattern: /\bbetting\s+tips\b/i, reason: "positions the product as a tipster" },
   /*
-   * Sprint 35 — "tip" as a thing the product SUPPLIES.
-   *
-   * `betting tips` alone was too narrow and missed live copy: the Live Signals feature offered
-   * "One free tip each hour" while the panel above it said "Not tips, not predictions, and not
-   * advice". The product contradicted itself on one feature, and the guard caught neither side.
-   *
-   * The word is not banned outright — the honest denial "not tips" is exactly the phrasing the
-   * manifesto wants, and `NEGATED_CONTEXT` protects it. What is banned is offering one.
+   * DECIDED (v3 reskin, session 1, 2026-09-09): the Sprint 35 tip-as-product
+   * patterns are RETIRED. Bible V3 repositions the product as an
+   * affiliate-first predictions site whose primary nav says "Betting Tips" —
+   * tips, free bets, bonuses and offers are allowed vocabulary. What stays
+   * banned is everything above and below this comment: certainty, guaranteed
+   * outcomes, impossible precision, privileged information ("insider tip"
+   * remains banned — that is a claim about the information's source, not the
+   * word "tip"), effortless profit. The vocabulary changed; the honesty laws
+   * did not. Recorded in docs/route-inventory.md; do not re-open without a
+   * positioning change as explicit as the one that closed it.
    */
-  { pattern: /\b(free|daily|exclusive|live|featured|hourly)\s+tips?\b/i, reason: "offers a tip as a product" },
-  { pattern: /\btips?\s+(each|every|per)\s+(hour|day|week|match)\b/i, reason: "offers a tip as a product" },
-  { pattern: /\bunlock\s+(more\s+)?tips?\b/i, reason: "offers a tip as a product" },
   { pattern: /\beasy\s+money\b/i, reason: "implies effortless profit" },
   { pattern: /\bdouble\s+your\s+money\b/i, reason: "promises a return" },
 ];

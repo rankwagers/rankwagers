@@ -1170,6 +1170,238 @@ textarea,
     color var(--dur-respond) var(--ease-respond);
 }
 
+/* ============================================================================
+ * V3 — the rw3 scope. Bible V3 (docs/design/bible-v3.md) is the law here;
+ * design/v3/karakter.html is the measured truth. Everything below applies
+ * only under `.rw3`, so v2 surfaces keep their own language until each
+ * family converts. Token names match the mock verbatim (--bg, --line, …):
+ * scoped custom properties, no leakage into :root.
+ * ========================================================================== */
+
+.rw3 {
+  color-scheme: dark;
+  --bg: #161616;
+  --surface: #1d1d1d;
+  --hover: #242424;
+  --pctbg: #242424;
+  --line: #2a2a2a;
+  --text: #ececec;
+  --muted: #8c8c8c;
+  --accent: #22c55e;
+  --accent-ink: #06170c;
+  --win: #22c55e;
+  --loss: rgba(214, 69, 69, 0.7);
+  --rw3-radius: 6px;
+
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-size: 13px;
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* No shadows, ever (Bible V3). A v3 surface that needs separation gets a
+ * line, not an elevation. */
+.rw3 * {
+  box-shadow: none !important;
+  text-shadow: none !important;
+}
+
+/* ---- type scale (hard cap 18px — probed) ---------------------------------- */
+.rw3 .rw3-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.rw3 .rw3-meta {
+  font-size: 12px;
+  color: var(--muted);
+}
+.rw3 .rw3-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+/* ---- pills ---------------------------------------------------------------- */
+.rw3 .rw3-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 6px;
+  border: 1px solid var(--line);
+  border-radius: var(--rw3-radius);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text);
+  white-space: nowrap;
+}
+.rw3 .rw3-pct {
+  display: inline-block;
+  padding: 1px 6px;
+  background: var(--pctbg);
+  border-radius: var(--rw3-radius);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* ---- CTA tiers ------------------------------------------------------------ */
+/* GHOST: line border + text + arrow icon. Fills green on hover; pressed one
+ * step darker; 120ms. Used for table odds, rail Devam/Continue, secondary
+ * actions. */
+.rw3 .rw3-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  border: 1px solid var(--line);
+  border-radius: var(--rw3-radius);
+  background: transparent;
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background 120ms ease-out, border-color 120ms ease-out,
+    color 120ms ease-out;
+}
+.rw3 .rw3-ghost:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+}
+.rw3 .rw3-ghost:active {
+  background: #1da34e;
+  border-color: #1da34e;
+  color: var(--accent-ink);
+  transition-duration: 60ms;
+}
+
+/* FILLED: curated only — editor band cards and the offer of the day. Max 5
+ * per page (probed). */
+.rw3 .rw3-filled {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  border: 1px solid var(--accent);
+  border-radius: var(--rw3-radius);
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: background 120ms ease-out, border-color 120ms ease-out;
+}
+.rw3 .rw3-filled:hover {
+  background: #1da34e;
+  border-color: #1da34e;
+}
+.rw3 .rw3-filled:active {
+  background: #188a42;
+  border-color: #188a42;
+  transition-duration: 60ms;
+}
+
+/* ---- interaction law ------------------------------------------------------ */
+/* Every clickable surface: hover -> --hover at 120ms, pressed one step
+ * darker at 60ms. Rows/list items/cards share one class. */
+.rw3 .rw3-hoverable {
+  transition: background 120ms ease-out;
+}
+.rw3 .rw3-hoverable:hover {
+  background: var(--hover);
+}
+.rw3 .rw3-hoverable:active {
+  background: var(--surface);
+  transition-duration: 60ms;
+}
+
+/* Keyboard focus: 2px ring in --text, no transition (Bible V3). */
+.rw3 :focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 1px;
+  transition: none;
+}
+
+/* ---- motion --------------------------------------------------------------- */
+/* Four movements, all under 250ms, ease-out. Motion explains a state change;
+ * decorative motion does not exist. Table rows and numbers never animate. */
+@keyframes rw3-dot {
+  from {
+    opacity: 0;
+    transform: translateX(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes rw3-card {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes rw3-tick {
+  from {
+    stroke-dashoffset: 14;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Form dots: per-dot 120ms, 20ms stagger L→R via --rw3-i, once per viewport
+ * entry (the FormDots island sets .is-in). */
+.rw3 .rw3-dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  flex: none;
+}
+.rw3 .rw3-dots[data-animate] .rw3-dot {
+  opacity: 0;
+}
+.rw3 .rw3-dots[data-animate].is-in .rw3-dot {
+  animation: rw3-dot 120ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  animation-delay: calc(var(--rw3-i, 0) * 20ms);
+}
+
+/* Editor band cards: 160ms rise, 60ms stagger via --rw3-i (last of 4 starts
+ * at 180ms). Page-load trigger, once. */
+.rw3 .rw3-band-card {
+  animation: rw3-card 160ms ease-out both;
+  animation-delay: calc(var(--rw3-i, 0) * 60ms);
+}
+
+/* Verified pct lock tick: 240ms stroke draw, once, on card load. The ring is
+ * static; the number never animates. */
+.rw3 .rw3-tick-path {
+  stroke-dasharray: 14;
+  animation: rw3-tick 240ms ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rw3 *,
+  .rw3 *::before,
+  .rw3 *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  .rw3 .rw3-dots[data-animate] .rw3-dot {
+    opacity: 1;
+  }
+}
+/* ==== end of the rw3 scope ==== */
+
+
 /*
  * The global reduce block above already neutralises duration and iteration count. These two rules
  * cover what it cannot: a `.rw-reveal` whose observer never fires must still be readable, and the
@@ -1236,6 +1468,3 @@ textarea,
     --focus: 0px;
   }
 }
-
-
-

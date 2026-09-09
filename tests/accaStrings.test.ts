@@ -141,7 +141,9 @@ test("the bundle boundary holds: no dictionary tree in the client graph", () => 
 });
 
 test("no gambling instruction enters through the block-3 strings", () => {
-  const banned = [/\bbet now\b/i, /guaranteed/i, /sure win/i, /can't lose/i, /\btip\b/i];
+  /* /\btip\b/ left this list with the v3 vocabulary decision (DECIDED note in
+   * lib/trust/claims.ts): tips are allowed vocabulary; certainty claims stay banned. */
+  const banned = [/\bbet now\b/i, /guaranteed/i, /sure win/i, /can't lose/i];
   for (const locale of Object.keys(predictionsByLocale)) {
     const dict = predictionsByLocale[locale as keyof typeof predictionsByLocale] as Record<
       string,

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+  <script src="rw3-icons.js"></script>
+</helmet>
+<div style="display:flex; gap:40px; align-items:flex-start; font-family:'Inter', system-ui, sans-serif; color:var(--text); font-size:13px; line-height:1.4; font-variant-numeric:tabular-nums;">
+<div style="width:1440px; flex:none; background:var(--bg); border:1px solid var(--line);">
+  <dc-import name="RW3 Header" active="{{ 0 }}" hint-size="100%,52px"></dc-import>
+  <div style="display:grid; grid-template-columns:minmax(0,1fr) 300px;">
+    <div style="border-right:1px solid var(--line);">
+      <div style="padding:14px 20px 0; display:flex; gap:6px; font-size:12px; color:var(--muted);"><span>Tahminler</span><span>›</span><span>Premier League</span><span>›</span><span style="color:var(--text);">Liverpool – Brighton</span></div>
+      <!-- L1 -->
+      <div style="padding:14px 20px 16px; border-bottom:1px solid var(--line); display:flex; flex-direction:column; gap:12px;">
+        <div style="display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); align-items:center; gap:20px; padding:12px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+          <div style="display:flex; align-items:center; gap:10px; justify-content:flex-end;"><span style="font-weight:600; font-size:16px;">Liverpool</span><span style="width:28px; height:28px; border-radius:50%; background:var(--pctbg); border:1px solid var(--line);"></span></div>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:2px;"><span style="font-weight:600; font-size:16px;">17:30</span><span style="font-size:11px; color:var(--muted);">Cmt 12 Eyl · Anfield · Premier League</span></div>
+          <div style="display:flex; align-items:center; gap:10px;"><span style="width:28px; height:28px; border-radius:50%; background:var(--pctbg); border:1px solid var(--line);"></span><span style="font-weight:600; font-size:16px;">Brighton</span></div>
+        </div>
+        <p style="margin:0; max-width:760px; font-size:14px; line-height:1.5; font-weight:400; text-wrap:pretty;">Liverpool Anfield’da son 11 maçın 10’unda 1.5 üstü geçti — lig ortalaması 61%. Brighton deplasmanda ilk yarıda gol yemeye eğilimli.</p>
+        <div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap; padding:10px 12px; border:1px solid var(--line); border-radius:6px; max-width:760px;">
+          <span style="display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:500; padding:2px 7px; border:1px solid var(--line); border-radius:6px;"><span style="color:var(--muted); display:inline-flex;">{{ ic.over }}</span>1.5 Üst</span>
+          <span style="font-weight:600; padding:2px 6px; background:var(--pctbg); border-radius:6px;">91%</span><span style="font-size:11px; color:var(--muted);">10/11 son iç saha</span>
+          <span style="width:1px; height:18px; background:var(--line);"></span>
+          <span style="font-weight:500;">Bu marketi oyna:</span>
+          <span style="font-size:12px; font-weight:600; color:var(--text); background:transparent; border:1px solid var(--line); padding:3px 9px; border-radius:6px; display:inline-flex; align-items:center; gap:4px;" style-hover="color:var(--accent-ink); background:var(--accent); border-color:var(--accent);">1x 1.29 {{ ic.arrow12 }}</span>
+          <span style="font-size:12px; font-weight:600; color:var(--text); background:transparent; border:1px solid var(--line); padding:3px 9px; border-radius:6px; display:inline-flex; align-items:center; gap:4px;" style-hover="color:var(--accent-ink); background:var(--accent); border-color:var(--accent);">M 1.28 {{ ic.arrow12 }}</span>
+          <span style="font-size:12px; font-weight:600; color:var(--text); background:transparent; border:1px solid var(--line); padding:3px 9px; border-radius:6px; display:inline-flex; align-items:center; gap:4px;" style-hover="color:var(--accent-ink); background:var(--accent); border-color:var(--accent);">B&Y 1.27 {{ ic.arrow12 }}</span>
+          <span style="width:100%; font-size:10px; color:var(--muted);">Oranlar 09:40 itibarıyla · Sponsorlu · 18+ · Şartlar geçerli</span>
+        </div>
+        <div style="max-width:760px; display:flex; flex-direction:column; gap:3px; padding:10px 12px; background:var(--surface); border-radius:6px;">
+          <span style="display:inline-flex; align-items:center; gap:4px; font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);">{{ ic.editor }}Editör notu</span>
+          <span style="font-size:13px; line-height:1.45; text-wrap:pretty;">Slot’un sakatlığı sonrası orta saha daha erken presleyecek; Brighton’ın kalecisi son üç deplasmanda ilk 20 dakikada gol yedi. 1.5 üstü sonuçtan bağımsız okuyoruz.</span>
+        </div>
+      </div>
+      <!-- L2 -->
+      <div style="padding:14px 20px 6px; font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);">Destekleyici sinyaller</div>
+      <sc-for list="{{ signals }}" as="s" hint-placeholder-count="4">
+        <div style="display:grid; grid-template-columns:minmax(0,1fr) 60px 52px 110px 72px; gap:0 12px; align-items:center; padding:9px 20px; border-top:1px solid var(--line); background:{{ s.bg }};" style-hover="background:var(--hover);">
+          <span>{{ s.text }}</span>
+          <span style="font-size:11px; color:var(--muted);">{{ s.sample }}</span>
+          <span style="font-weight:600; padding:1px 6px; background:var(--pctbg); border-radius:6px; justify-self:start;">{{ s.pct }}%</span>
+          <span style="font-size:11px; color:var(--muted);">lig ort. {{ s.avg }}%</span>
+          <div style="display:flex; gap:3px;"><sc-for list="{{ s.form }}" as="f" hint-placeholder-count="10"><span style="width:5px; height:5px; border-radius:50%; background:{{ f }};"></span></sc-for></div>
+        </div>
+      </sc-for>
+      <!-- L3 -->
+      <sc-if value="{{ noSnapshot }}" hint-placeholder-val="{{ false }}">
+        <div style="margin-top:8px; border-top:1px solid var(--line); border-bottom:1px solid var(--line); padding:18px 20px; display:flex; align-items:center; gap:20px;">
+          <svg width="120" height="90" viewBox="0 0 120 90" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M22 30h14l8-10h32l8 10h14v46H22z"></path><circle cx="60" cy="52" r="14"></circle><path d="M60 44v8l5 3"></path><circle cx="88" cy="38" r="2.5" fill="var(--accent)" stroke="none"></circle></svg>
+          <div style="display:flex; flex-direction:column; gap:3px;"><span style="font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);">Modelin görüşü</span><span style="font-weight:500;">Henüz snapshot yok</span><span style="font-size:12px; color:var(--muted);">Model 05:45’te çalışır; o zamana kadar rakam vermiyoruz. Destekleyici sinyaller ham veriden gelir ve şimdiden geçerli.</span></div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ hasSnapshot }}" hint-placeholder-val="{{ true }}">
+      <div style="margin-top:8px; border-top:1px solid var(--line); display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr);">
+        <div style="padding:14px 20px; border-right:1px solid var(--line); display:flex; flex-direction:column; gap:6px;">
+          <span style="font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);">Modelin görüşü</span>
+          <span style="font-weight:600;">1.5 Üst — yüksek güven</span>
+          <span style="color:var(--muted); text-wrap:pretty;">Model bu marketi 91% ile sınıflandırıyor; lig ortalamasının 17 puan üzerinde. Sonuç marketlerinde güven orta (ev sahibi 68%).</span>
+        </div>
+        <div style="padding:14px 20px; display:flex; flex-direction:column; gap:6px;">
+          <span style="font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);">Neden</span>
+          <span style="color:var(--muted); text-wrap:pretty;">İç saha gol ortalaması 2.4; Brighton deplasman gol yeme 1.6; her iki takım son 5 maçın 4’ünde ilk yarıda gol gördü. Sakat/cezalı listesi 12 Eyl 09:40 snapshot’ında değişmedi.</span>
+        </div>
+        <div style="grid-column:1 / -1; padding:8px 20px; border-top:1px solid var(--line); font-size:11px; color:var(--muted); display:flex; gap:14px; align-items:center;"><span style="display:inline-flex; align-items:center; gap:4px;">{{ ic.snapshot }}Snapshot 9 Ağu 05:45</span><span>Model 23B.v2</span><span style="display:inline-flex; align-items:center; gap:4px;">{{ ic.locked }}1 doğrulama</span><span style="margin-left:auto; color:var(--text);">Kaydı gör →</span></div>
+      </div>
+      </sc-if>
+      <!-- L4 -->
+      <div style="border-top:1px solid var(--line); display:grid; grid-template-columns:minmax(0,1fr) 340px;">
+        <div style="border-right:1px solid var(--line);">
+          <div style="padding:14px 20px 6px; font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);">Tam istatistik</div>
+          <div style="display:grid; grid-template-columns:minmax(0,1fr) 100px 100px 60px 70px; gap:0 12px; padding:5px 20px; font-size:11px; color:var(--muted); border-bottom:1px solid var(--line);"><span>Market</span><span>Ev · N/M</span><span>Dep · N/M</span><span>Toplam</span><span>Lig ort.</span></div>
+          <sc-for list="{{ stats }}" as="s" hint-placeholder-count="6">
+            <div style="display:grid; grid-template-columns:minmax(0,1fr) 100px 100px 60px 70px; gap:0 12px; padding:8px 20px; border-bottom:1px solid var(--line); align-items:center;">
+              <span style="font-weight:500;">{{ s.m }}</span>
+              <span style="display:flex; align-items:center; gap:5px;"><span style="font-weight:600; padding:1px 6px; background:var(--pctbg); border-radius:6px;">{{ s.h }}%</span><span style="font-size:11px; color:var(--muted);">{{ s.hn }}</span></span>
+              <span style="display:flex; align-items:center; gap:5px;"><span style="font-weight:600; padding:1px 6px; background:var(--pctbg); border-radius:6px;">{{ s.a }}%</span><span style="font-size:11px; color:var(--muted);">{{ s.an }}</span></span>
+              <span style="font-size:11px; color:var(--muted);">{{ s.n }}</span>
+              <span style="font-size:11px; color:var(--muted);">{{ s.l }}%</span>
+            </div>
+          </sc-for>
+        </div>
+        <div>
+          <div style="padding:14px 20px 6px; font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);">Form · son 5</div>
+          <sc-for list="{{ formRows }}" as="r" hint-placeholder-count="2">
+            <div style="display:flex; align-items:center; gap:10px; padding:8px 20px; border-top:1px solid var(--line);"><span style="font-weight:500; width:80px;">{{ r.team }}</span><div style="display:flex; gap:4px;"><sc-for list="{{ r.f }}" as="f" hint-placeholder-count="5"><span style="width:20px; height:20px; border-radius:6px; display:grid; place-items:center; font-size:10px; font-weight:600; background:var(--pctbg); color:{{ f.c }};">{{ f.t }}</span></sc-for></div></div>
+          </sc-for>
+          <div style="padding:14px 20px 6px; font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);">H2H · son 4</div>
+          <sc-for list="{{ h2h }}" as="h" hint-placeholder-count="4">
+            <div style="display:flex; gap:10px; padding:7px 20px; border-top:1px solid var(--line); font-size:12px;"><span style="color:var(--muted); width:64px;">{{ h.d }}</span><span style="flex:1;">{{ h.t }}</span><span style="font-weight:600;">{{ h.s }}</span></div>
+          </sc-for>
+        </div>
+      </div>
+      <!-- L5 -->
+      <div style="border-top:1px solid var(--line);">
+        <div style="padding:14px 20px 6px; display:flex; justify-content:space-between; font-size:11px; color:var(--muted);"><span style="font-weight:600; letter-spacing:.06em; text-transform:uppercase;">Operatörler · bu maçın marketleri</span><span style="display:inline-flex; align-items:center; gap:3px;">{{ ic.sponsored }}Sponsorlu · 18+ · Şartlar geçerli</span></div>
+        <div style="display:grid; grid-template-columns:minmax(0,1fr) 90px 90px 90px 90px 110px; gap:0 12px; padding:5px 20px; font-size:11px; color:var(--muted); border-bottom:1px solid var(--line);"><span>Operatör</span><span>1.5 Üst</span><span>2.5 Üst</span><span>KG Var</span><span>Ev sahibi</span><span></span></div>
+        <sc-for list="{{ opsRows }}" as="o" hint-placeholder-count="4">
+          <div style="display:grid; grid-template-columns:minmax(0,1fr) 90px 90px 90px 90px 110px; gap:0 12px; align-items:center; padding:8px 20px; border-bottom:1px solid var(--line);" style-hover="background:var(--hover);">
+            <div style="display:flex; align-items:center; gap:8px;"><span style="width:22px; height:22px; display:grid; place-items:center; font-size:8px; font-weight:600; background:var(--pctbg); border:1px solid var(--line); border-radius:6px;">{{ o.mark }}</span><span style="font-weight:500;">{{ o.name }}</span><sc-if value="{{ o.best }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex; align-items:center; gap:3px; font-size:10px; color:var(--muted); border:1px solid var(--line); padding:0 4px; border-radius:4px;">{{ ic.best10 }}Best</span></sc-if></div>
+            <span style="font-size:12px; font-weight:600; color:var(--text); background:transparent; border:1px solid var(--line); padding:3px 8px; border-radius:6px; justify-self:start; display:inline-flex; align-items:center; gap:3px;" style-hover="color:var(--accent-ink); background:var(--accent); border-color:var(--accent);">{{ o.o1 }} {{ ic.arrow10 }}</span><span style="font-size:12px; font-weight:600; color:var(--text); background:transparent; border:1px solid var(--line); padding:3px 8px; border-radius:6px; justify-self:start; display:inline-flex; align-items:center; gap:3px;" style-hover="color:var(--accent-ink); background:var(--accent); border-color:var(--accent);">{{ o.o2 }} {{ ic.arrow10 }}</span><span style="font-size:12px; font-weight:600; color:var(--text); background:transparent; border:1px solid var(--line); padding:3px 8px; border-radius:6px; justify-self:start; display:inline-flex; align-items:center; gap:3px;" style-hover="color:var(--accent-ink); background:var(--accent); border-color:var(--accent);">{{ o.o3 }} {{ ic.arrow10 }}</span><span style="font-size:12px; font-weight:600; color:var(--text); background:transparent; border:1px solid var(--line); padding:3px 8px; border-radius:6px; justify-self:start; display:inline-flex; align-items:center; gap:3px;" style-hover="color:var(--accent-ink); background:var(--accent); border-color:var(--accent);">{{ o.o4 }} {{ ic.arrow10 }}</span>
+            <span style="font-size:11px; font-weight:600; color:var(--text); background:transparent; border:1px solid var(--line); padding:3px 10px; border-radius:6px; justify-self:start; display:inline-flex; align-items:center; gap:4px;" style-hover="color:var(--accent-ink); background:var(--accent); border-color:var(--accent);">Continue {{ ic.arrow10 }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+    <aside style="padding:14px 16px;">
+      <div style="font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); padding-bottom:6px;">Bu maçta diğer marketler</div>
+      <sc-for list="{{ stats }}" as="s" hint-placeholder-count="6">
+        <div style="display:grid; grid-template-columns:minmax(0,1fr) auto; gap:3px 10px; padding:8px 0; border-top:1px solid var(--line); align-items:center;"><span style="font-weight:500;">{{ s.m }}</span><span style="display:flex; align-items:center; gap:5px;"><span style="font-weight:600; padding:1px 6px; background:var(--pctbg); border-radius:6px;">{{ s.h }}%</span><span style="font-size:11px; color:var(--muted);">{{ s.hn }}</span></span><span style="font-size:11px; color:var(--muted);">ev · lig ort. {{ s.l }}%</span><div style="display:flex; gap:3px; justify-self:end;"><sc-for list="{{ s.f }}" as="f" hint-placeholder-count="10"><span style="width:5px; height:5px; border-radius:50%; background:{{ f }};"></span></sc-for></div></div>
+      </sc-for>
+      <div style="margin-top:14px; padding:12px; border:1px solid var(--line); border-radius:6px; display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; justify-content:space-between; font-size:11px; color:var(--muted);"><span style="font-weight:600; letter-spacing:.06em; text-transform:uppercase;">Günün teklifi</span><span style="display:inline-flex; align-items:center; gap:3px;">{{ ic.sponsored }}Sponsorlu · 18+</span></div>
+        <div style="display:flex; align-items:center; gap:8px;"><span style="width:28px; height:28px; display:grid; place-items:center; font-size:9px; font-weight:600; background:var(--pctbg); border:1px solid var(--line); border-radius:6px;">1x</span><div style="display:flex; flex-direction:column;"><span style="font-weight:600;">1xBet</span><span style="font-size:12px; color:var(--muted);">İlk yatırıma %100 — 130 €’ya kadar</span></div></div>
+        <span style="align-self:flex-start; font-size:12px; font-weight:600; color:var(--accent-ink); background:var(--accent); padding:6px 12px; border-radius:6px;">Devam →</span>
+        <span style="font-size:10px; color:var(--muted); line-height:1.4;">Yeni üyeler. Min. yatırım 1 €. 5x çevrim. Şartlar geçerli.</span>
+      </div>
+    </aside>
+  </div>
+  <div style="padding:10px 20px; border-top:1px solid var(--line); font-size:11px; color:var(--muted);">18+ · Sorumlu oyna · BeGambleAware.org · Teklifler sponsorludur; komisyon tahminleri etkilemez.</div>
+</div>
+
+<!-- MOBILE -->
+<div style="width:390px; flex:none; background:var(--bg); border:1px solid var(--line); display:flex; flex-direction:column;">
+  <dc-import name="RW3 Header" active="{{ 0 }}" mobile="{{ true }}" hint-size="100%,84px"></dc-import>
+  <div style="padding:12px 14px; border-bottom:1px solid var(--line); display:flex; flex-direction:column; gap:10px;">
+    <div style="display:grid; grid-template-columns:minmax(0,1fr) auto minmax(0,1fr); align-items:center; gap:10px;">
+      <div style="display:flex; align-items:center; gap:8px; justify-content:flex-end;"><span style="font-weight:600; font-size:14px;">Liverpool</span><span style="width:22px; height:22px; border-radius:50%; background:var(--pctbg); border:1px solid var(--line);"></span></div>
+      <div style="display:flex; flex-direction:column; align-items:center;"><span style="font-weight:600; font-size:14px;">17:30</span><span style="font-size:10px; color:var(--muted);">Cmt · PL</span></div>
+      <div style="display:flex; align-items:center; gap:8px;"><span style="width:22px; height:22px; border-radius:50%; background:var(--pctbg); border:1px solid var(--line);"></span><span style="font-weight:600; font-size:14px;">Brighton</span></div>
+    </div>
+    <p style="margin:0; font-size:14px; line-height:1.5; text-wrap:pretty;">Liverpool Anfield’da son 11 iç saha maçının 10’unda 1.5 golü geçti; Brighton deplasmanda ilk yarıda gol yemeye eğilimli.</p>
+    <div style="display:flex; flex-wrap:wrap; align-items:center; gap:8px; padding:8px 10px; border:1px solid var(--line); border-radius:6px;">
+      <span style="font-size:11px; font-weight:500; padding:1px 6px; border:1px solid var(--line); border-radius:5px;">1.5 Üst</span><span style="font-weight:600; padding:1px 6px; background:var(--pctbg); border-radius:6px;">91%</span><span style="font-size:11px; color:var(--muted);">10/11</span>
+      <span style="width:100%; display:flex; align-items:center; gap:6px; font-size:11px;"><span style="font-weight:500;">Oyna:</span><span style="font-weight:600; color:var(--text); background:transparent; border:1px solid var(--line); padding:2px 7px; border-radius:5px;">1x 1.29 →</span><span style="font-weight:600; color:var(--text); background:transparent; border:1px solid var(--line); padding:2px 7px; border-radius:5px;">M 1.28 →</span><span style="font-weight:600; color:var(--text); background:transparent; border:1px solid var(--line); padding:2px 7px; border-radius:5px;">B&Y 1.27 →</span></span>
+      <span style="width:100%; font-size:10px; color:var(--muted);">Oranlar 09:40 · Sponsorlu · 18+</span>
+    </div>
+  </div>
+  <div style="padding:12px 14px 4px; font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);">Destekleyici sinyaller</div>
+  <sc-for list="{{ signals }}" as="s" hint-placeholder-count="4">
+    <div style="display:grid; grid-template-columns:minmax(0,1fr) auto; gap:2px 10px; padding:8px 14px; border-top:1px solid var(--line);">
+      <span style="font-size:12px;">{{ s.text }}</span>
+      <span style="font-weight:600; padding:1px 6px; background:var(--pctbg); border-radius:6px; font-size:12px;">{{ s.pct }}%</span>
+      <span style="font-size:11px; color:var(--muted);">{{ s.sample }} · lig ort. {{ s.avg }}%</span>
+      <div style="display:flex; gap:2px; justify-self:end;"><sc-for list="{{ s.form }}" as="f" hint-placeholder-count="10"><span style="width:4px; height:4px; border-radius:50%; background:{{ f }};"></span></sc-for></div>
+    </div>
+  </sc-for>
+  <div style="padding:12px 14px; border-top:1px solid var(--line); display:flex; flex-direction:column; gap:6px;">
+    <span style="font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);">Modelin görüşü</span>
+    <span style="font-weight:600;">1.5 Üst — yüksek güven</span>
+    <span style="font-size:12px; color:var(--muted);">Lig ortalamasının 17 puan üzerinde. İç saha gol ort. 2.4; Brighton deplasman gol yeme 1.6.</span>
+    <span style="font-size:10px; color:var(--muted);">Snapshot 12 Eyl 09:40 · Model v3.2.1 · 2 565 doğrulama</span>
+  </div>
+  <div style="padding:12px 14px 4px; border-top:1px solid var(--line); display:flex; justify-content:space-between; font-size:11px; color:var(--muted);"><span style="font-weight:600; letter-spacing:.06em; text-transform:uppercase;">Operatörler</span><span>Sponsorlu · 18+</span></div>
+  <sc-for list="{{ opsRows }}" as="o" hint-placeholder-count="4">
+    <div style="display:flex; align-items:center; gap:8px; padding:8px 14px; border-top:1px solid var(--line);"><span style="width:20px; height:20px; display:grid; place-items:center; font-size:7px; font-weight:600; background:var(--pctbg); border:1px solid var(--line); border-radius:5px;">{{ o.mark }}</span><span style="font-weight:500; font-size:12px;">{{ o.name }}</span><span style="font-size:11px; color:var(--muted);">1.5Ü {{ o.o1 }} · KG {{ o.o3 }}</span><span style="margin-left:auto; font-size:11px; font-weight:600; color:var(--text); background:transparent; border:1px solid var(--line); padding:2px 7px; border-radius:5px;">Devam →</span></div>
+  </sc-for>
+  <div style="padding:10px 14px; border-top:1px solid var(--line); font-size:10px; color:var(--muted); line-height:1.4;">18+ · Sorumlu oyna · BeGambleAware.org · Teklifler sponsorludur; komisyon tahminleri etkilemez.</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const W = 'var(--win)', L = 'var(--loss)';
+    const I = window.RW3Icon || (() => null);
+    const ic = { over: I('over', 12), arrow12: I('arrow', 12), arrow10: I('arrow', 10), editor: I('editor', 11), snapshot: I('snapshot', 12), locked: I('locked', 12), best10: I('best', 10), sponsored: I('sponsored', 11) };
+    const noSnapshot = this.props.noSnapshot ?? false;
+    const f = (s) => [...s].map(c => c === 'W' ? W : L);
+    return {
+      ic, noSnapshot, hasSnapshot: !noSnapshot,
+      signals: [
+        { text: 'Liverpool iç sahada 1.5 üst', sample: '10/11', pct: 91, avg: 61, form: f('WWWWLWWWWW'), bg: 'var(--hover)' },
+        { text: 'Brighton deplasmanda ilk yarıda gol yedi', sample: '8/10', pct: 80, avg: 55, form: f('WLWWWWLWWW'), bg: 'transparent' },
+        { text: 'İki takım da son 5’te ilk yarı gol', sample: '4/5', pct: 80, avg: 58, form: f('WWLWW'), bg: 'transparent' },
+        { text: 'Karşılıklı gol · son karşılaşmalar', sample: '6/8', pct: 75, avg: 52, form: f('WWLWWWLW'), bg: 'transparent' },
+      ],
+      stats: [
+        ['1.5 Üst', 10, 11, 7, 10, 61, 'WWWWLWWWWW'], ['2.5 Üst', 8, 11, 6, 10, 55, 'WWLWWWWLWW'], ['KG Var', 7, 11, 7, 10, 52, 'WLWWWWLWWL'],
+        ['Ev sahibi', 7, 11, 3, 10, 44, 'WWLWWLWWWL'], ['İlk yarı 0.5 Üst', 9, 11, 8, 10, 66, 'WWWLWWWWWL'], ['8.5 Korner Üst', 6, 11, 5, 10, 49, 'LWWLWWLWWL'],
+      ].map(s => ({ m: s[0], h: Math.round(s[1] / s[2] * 100), hn: s[1] + '/' + s[2], a: Math.round(s[3] / s[4] * 100), an: s[3] + '/' + s[4], n: (s[1] + s[3]) + '/' + (s[2] + s[4]), l: s[5], f: f(s[6]) })),
+      formRows: [
+        { team: 'Liverpool', f: [['G', W], ['G', W], ['B', 'var(--muted)'], ['G', W], ['G', W]].map(x => ({ t: x[0], c: x[1] })) },
+        { team: 'Brighton', f: [['M', L], ['G', W], ['B', 'var(--muted)'], ['M', L], ['G', W]].map(x => ({ t: x[0], c: x[1] })) },
+      ],
+      h2h: [{ d: 'Mar 26', t: 'Brighton – Liverpool', s: '1–2' }, { d: 'Kas 25', t: 'Liverpool – Brighton', s: '3–1' }, { d: 'Mar 25', t: 'Liverpool – Brighton', s: '2–2' }, { d: 'Eki 24', t: 'Brighton – Liverpool', s: '0–1' }],
+      opsRows: [
+        { name: '1xBet', mark: '1x', o1: '1.29', o2: '1.85', o3: '1.72', o4: '1.55', best: true }, { name: 'Melbet', mark: 'M', o1: '1.28', o2: '1.83', o3: '1.70', o4: '1.55', best: false },
+        { name: 'Bet and You', mark: 'B&Y', o1: '1.27', o2: '1.80', o3: '1.75', o4: '1.52', best: false }, { name: '888Starz', mark: '888', o1: '1.30', o2: '1.82', o3: '1.68', o4: '1.57', best: false },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

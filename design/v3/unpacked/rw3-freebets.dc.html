@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+  <script src="rw3-icons.js"></script>
+</helmet>
+<div style="display:flex; gap:40px; align-items:flex-start; font-family:'Inter', system-ui, sans-serif; color:var(--text); font-size:13px; line-height:1.4; font-variant-numeric:tabular-nums;">
+<div style="width:1440px; flex:none; background:var(--bg); border:1px solid var(--line);">
+  <dc-import name="RW3 Header" active="{{ 3 }}" hint-size="100%,52px"></dc-import>
+  <div style="padding:14px 20px; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:14px;">
+    <div style="display:flex; flex-direction:column; gap:2px;"><span style="font-weight:600; font-size:16px;">Bedava bahis ve teklifler</span><span style="font-size:12px; color:var(--muted); display:inline-flex; align-items:center; gap:4px;">{{ countLabel }} · {{ ic.sponsored }}Sponsorlu · 18+ · Her teklifin tam şartları operatörde</span></div>
+    <div style="margin-left:auto; display:flex; gap:6px;">
+      <span style="font-size:12px; padding:4px 8px; border:1px solid var(--line); border-radius:6px; color:var(--muted);">Ülke: Türkiye ▾</span>
+      <span style="font-size:12px; padding:4px 8px; border:1px solid var(--text); border-radius:6px;">Tümü</span><span style="font-size:12px; padding:4px 8px; border:1px solid var(--line); border-radius:6px; color:var(--muted);">Hoş geldin</span><span style="font-size:12px; padding:4px 8px; border:1px solid var(--line); border-radius:6px; color:var(--muted);">Bedava bahis</span><span style="font-size:12px; padding:4px 8px; border:1px solid var(--line); border-radius:6px; color:var(--muted);">İade</span><span style="font-size:12px; padding:4px 8px; border:1px solid var(--line); border-radius:6px; color:var(--muted);">Oran artışı</span>
+    </div>
+  </div>
+  <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:40px 20px 48px; display:flex; align-items:center; gap:24px; border-bottom:1px solid var(--line);">
+      <svg width="120" height="90" viewBox="0 0 120 90" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="flex:none;"><path d="M40 10l38 0 22 22-38 38-38-38V10z" stroke-dasharray="4 4"></path><path d="M50 22h.01"></path><path d="M78 62c0 8-8 16-8 16s-8-8-8-16a8 8 0 0 1 16 0z"></path><circle cx="70" cy="62" r="2.5" fill="var(--accent)" stroke="none"></circle></svg>
+      <div style="display:flex; flex-direction:column; gap:6px; max-width:520px;">
+        <span style="font-weight:500;">Ülkende teklif yok</span>
+        <span style="font-size:12px; color:var(--muted); line-height:1.5;">Burada henüz bir şey yok; tahminler herkese açık. Ülke seçimini değiştirirsen diğer bölgelerin tekliflerini görebilirsin — ama oralarda kayıt olamayabilirsin.</span>
+        <div style="display:flex; gap:8px; margin-top:4px;"><span style="font-size:12px; font-weight:600; color:var(--text); background:transparent; border:1px solid var(--line); padding:4px 11px; border-radius:6px;">Bugünün tahminlerine dön</span><span style="font-size:12px; padding:4px 11px; border:1px solid var(--line); border-radius:6px; color:var(--muted);">Ülke: Türkiye ▾</span></div>
+      </div>
+    </div>
+  </sc-if>
+  <sc-if value="{{ hasOffers }}" hint-placeholder-val="{{ true }}">
+  <div style="display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:12px; padding:16px 20px;">
+    <sc-for list="{{ offers }}" as="o" hint-placeholder-count="8">
+      <div style="display:flex; flex-direction:column; gap:10px; padding:14px; border:1px solid var(--line); border-radius:6px; background:{{ o.bg }}; min-width:0;" style-hover="background:var(--hover);">
+        <div style="display:flex; align-items:center; gap:8px;"><span style="width:26px; height:26px; display:grid; place-items:center; font-size:8px; font-weight:600; background:var(--pctbg); border:1px solid var(--line); border-radius:6px;">{{ o.mark }}</span><span style="font-weight:600;">{{ o.name }}</span><sc-if value="{{ o.best }}" hint-placeholder-val="{{ false }}"><span style="display:inline-flex; align-items:center; gap:3px; font-size:10px; color:var(--muted); border:1px solid var(--line); padding:0 4px; border-radius:4px;">{{ ic.best10 }}Best</span></sc-if><span style="margin-left:auto; font-size:10px; padding:1px 5px; border:1px solid var(--line); border-radius:4px; color:var(--muted);">{{ o.type }}</span></div>
+        <span style="font-weight:500; font-size:14px; line-height:1.35;">{{ o.offer }}</span>
+        <span style="font-size:11px; color:var(--muted); line-height:1.4;">{{ o.terms }}</span>
+        <div style="margin-top:auto; display:flex; align-items:center; gap:8px;"><span style="font-size:12px; font-weight:600; padding:4px 11px; border-radius:6px; {{ o.btn }}" style-hover="color:var(--accent-ink); background:var(--accent); border-color:var(--accent);">Devam →</span><span style="font-size:10px; color:var(--muted); display:inline-flex; align-items:center; gap:3px;">{{ ic.sponsored10 }}Sponsorlu · 18+</span><span style="margin-left:auto; font-size:10px; color:var(--muted);">{{ o.exp }}</span></div>
+      </div>
+    </sc-for>
+  </div>
+  </sc-if>
+  <div style="padding:10px 20px; border-top:1px solid var(--line); font-size:11px; color:var(--muted);">18+ · Sorumlu oyna · BeGambleAware.org · Teklifler sponsorludur; komisyon tahminleri etkilemez.</div>
+</div>
+<div style="width:390px; flex:none; background:var(--bg); border:1px solid var(--line); display:flex; flex-direction:column;">
+  <dc-import name="RW3 Header" active="{{ 3 }}" mobile="{{ true }}" hint-size="100%,84px"></dc-import>
+  <div style="padding:12px 14px 8px; display:flex; flex-direction:column; gap:4px;"><span style="font-weight:600; font-size:14px;">Bedava bahis ve teklifler</span><span style="font-size:11px; color:var(--muted);">8 aktif · Sponsorlu · 18+</span></div>
+  <div style="display:flex; gap:6px; padding:0 14px 10px; border-bottom:1px solid var(--line); overflow:hidden; white-space:nowrap;"><span style="font-size:11px; padding:3px 7px; border:1px solid var(--line); border-radius:6px; color:var(--muted);">Türkiye ▾</span><span style="font-size:11px; padding:3px 7px; border:1px solid var(--text); border-radius:6px;">Tümü</span><span style="font-size:11px; padding:3px 7px; border:1px solid var(--line); border-radius:6px; color:var(--muted);">Hoş geldin</span><span style="font-size:11px; padding:3px 7px; border:1px solid var(--line); border-radius:6px; color:var(--muted);">Bedava bahis</span><span style="font-size:11px; padding:3px 7px; border:1px solid var(--line); border-radius:6px; color:var(--muted);">İade</span></div>
+  <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ false }}">
+    <div style="padding:28px 14px 32px; display:flex; flex-direction:column; align-items:flex-start; gap:10px; border-bottom:1px solid var(--line);">
+      <svg width="120" height="90" viewBox="0 0 120 90" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M40 10l38 0 22 22-38 38-38-38V10z" stroke-dasharray="4 4"></path><path d="M50 22h.01"></path><path d="M78 62c0 8-8 16-8 16s-8-8-8-16a8 8 0 0 1 16 0z"></path><circle cx="70" cy="62" r="2.5" fill="var(--accent)" stroke="none"></circle></svg>
+      <span style="font-weight:500;">Ülkende teklif yok</span>
+      <span style="font-size:12px; color:var(--muted); line-height:1.5;">Burada henüz bir şey yok; tahminler herkese açık.</span>
+      <span style="font-size:12px; font-weight:600; border:1px solid var(--line); padding:4px 11px; border-radius:6px;">Bugünün tahminlerine dön</span>
+    </div>
+  </sc-if>
+  <sc-for list="{{ offersM }}" as="o" hint-placeholder-count="5">
+    <div style="display:flex; flex-direction:column; gap:6px; padding:12px 14px; border-bottom:1px solid var(--line);">
+      <div style="display:flex; align-items:center; gap:8px;"><span style="width:24px; height:24px; display:grid; place-items:center; font-size:8px; font-weight:600; background:var(--pctbg); border:1px solid var(--line); border-radius:6px;">{{ o.mark }}</span><span style="font-weight:600;">{{ o.name }}</span><span style="margin-left:auto; font-size:10px; padding:1px 5px; border:1px solid var(--line); border-radius:4px; color:var(--muted);">{{ o.type }}</span></div>
+      <span style="font-weight:500; line-height:1.35;">{{ o.offer }}</span>
+      <span style="font-size:11px; color:var(--muted); line-height:1.4;">{{ o.terms }}</span>
+      <div style="display:flex; align-items:center; gap:8px;"><span style="font-size:11px; font-weight:600; padding:3px 9px; border-radius:5px; {{ o.btn }}">Devam →</span><span style="font-size:10px; color:var(--muted);">Sponsorlu · 18+ · {{ o.exp }}</span></div>
+    </div>
+  </sc-for>
+  <div style="padding:10px 14px; border-top:1px solid var(--line); font-size:10px; color:var(--muted); line-height:1.4;">18+ · Sorumlu oyna · BeGambleAware.org · Teklifler sponsorludur; komisyon tahminleri etkilemez.</div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const offers = [
+      ['1xBet', '1x', 'Hoş geldin', 'İlk yatırıma %100 — 130 €’ya kadar', 'Yeni üyeler, min. yatırım 1 €. Bonus 5x çevrim, min. oran 1.40, 30 gün içinde. Çekim öncesi kimlik doğrulaması gerekir.', '30 Eyl’e kadar'],
+      ['Melbet', 'M', 'Hoş geldin', 'RANK koduyla 100 €’ya kadar bonus', 'Kayıtta kod gerekli. 5x çevrim, 30 gün.', 'Süresiz'],
+      ['Bet and You', 'B&Y', 'Bedava bahis', '10 € yatır, 30 € bedava bahis al', 'Min. oran 1.75. Bedava bahis 7 günde biter.', '15 Eyl’e kadar'],
+      ['888Starz', '888', 'İade', 'İlk bahis kaybederse 40 € iade', 'Min. oran 1.40. Bonus 24 saatte yüklenir, 1x çevrim.', 'Süresiz'],
+      ['1xBet', '1x', 'Oran artışı', 'Liverpool – Brighton 1.5 Üst: 1.29 → 1.40', 'Yeni ve mevcut üyeler. Max. bahis 20 €. Cmt 17:30’a kadar.', 'Cmt 17:30'],
+      ['Melbet', 'M', 'Bedava bahis', 'Hafta sonu kuponuna 10 € bedava bahis', '3+ maçlı kupon, min. toplam oran 3.0. Cmt–Paz.', 'Pazar'],
+      ['Bet and You', 'B&Y', 'İade', 'Şampiyonlar Ligi gecesi: kaybeden kupona 15 € iade', 'Max. 1 iade / kullanıcı. Min. oran 1.50.', '16–17 Eyl'],
+      ['888Starz', '888', 'Oran artışı', 'Galatasaray galibiyeti 1.55 → 1.70', 'Max. bahis 25 €. Yalnız ön maç. Şartlar operatörde.', 'Cmt 19:00'],
+    ].map((o, i) => ({ name: o[0], mark: o[1], type: o[2], offer: o[3], terms: o[4], exp: o[5], best: i === 0, btn: i === 0 ? 'color:var(--accent-ink); background:var(--accent); border:1px solid var(--accent);' : 'color:var(--text); background:transparent; border:1px solid var(--line);', bg: i === 1 ? 'var(--hover)' : 'var(--surface)' }));
+    const I = window.RW3Icon || (() => null);
+    const empty = this.props.empty ?? false;
+    return { offers: empty ? [] : offers, offersM: empty ? [] : offers.slice(0, 5), isEmpty: empty, hasOffers: !empty, countLabel: empty ? '0 aktif teklif' : '8 aktif teklif', ic: { sponsored: I('sponsored', 11), sponsored10: I('sponsored', 10), best10: I('best', 10) } };
+  }
+}
+</script>
+</body>
+</html>

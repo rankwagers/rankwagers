@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap">
+  <script src="rw3-icons.js"></script>
+  <style>
+    @keyframes rw3-dot { from { opacity:0; transform:translateX(-4px); } to { opacity:1; transform:none; } }
+    @keyframes rw3-card { from { opacity:0; transform:translateY(4px); } to { opacity:1; transform:none; } }
+    @keyframes rw3-tick { from { stroke-dashoffset:14; } to { stroke-dashoffset:0; } }
+    @media (prefers-reduced-motion: reduce) { .rw3-anim * { animation:none !important; transition:none !important; } }
+  </style>
+</helmet>
+<div style="display:flex; flex-direction:column; gap:40px; font-family:'Inter', system-ui, sans-serif; color:var(--text); font-size:13px; line-height:1.4;">
+
+  <!-- ICON SHEET -->
+  <div style="width:1440px; background:var(--bg); border:1px solid var(--line);">
+    <div style="padding:14px 20px; border-bottom:1px solid var(--line); display:flex; align-items:baseline; gap:14px;"><span style="font-weight:600; font-size:16px;">İkon seti</span><span style="font-size:12px; color:var(--muted);">24 birim ızgara · 1.5px tek çizgi · yuvarlak uçlar · 16px ve 20px · renk metinden miras (#8c8c8c / #ececec), yeşil yalnız durum vurgusunda</span></div>
+    <sc-for list="{{ groups }}" as="g" hint-placeholder-count="4">
+      <div style="display:grid; grid-template-columns:140px minmax(0,1fr); border-bottom:1px solid var(--line);">
+        <div style="padding:14px 20px; border-right:1px solid var(--line); font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);">{{ g.name }}</div>
+        <div style="display:grid; grid-template-columns:repeat(5, minmax(0,1fr));">
+          <sc-for list="{{ g.items }}" as="i" hint-placeholder-count="5">
+            <div style="display:flex; align-items:center; gap:12px; padding:12px 16px; border-right:1px solid var(--line); border-bottom:1px solid var(--line);">
+              <span style="display:flex; align-items:center; gap:10px; color:var(--muted);">{{ i.s16 }}{{ i.s20 }}</span>
+              <span style="display:flex; flex-direction:column;"><span style="font-weight:500;">{{ i.label }}</span><span style="font-size:11px; color:var(--muted);">{{ i.key }}</span></span>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+    <div style="padding:12px 20px; display:flex; gap:24px; align-items:center; font-size:12px; color:var(--muted);">
+      <span>Yerinde kullanım:</span>
+      <span style="display:flex; align-items:center; gap:5px; font-size:11px; font-weight:500; color:var(--text); padding:2px 7px; border:1px solid var(--line); border-radius:6px;">{{ ex.over }}1.5 Üst</span>
+      <span style="display:flex; align-items:center; gap:5px; font-weight:600; color:var(--text);"><span style="color:var(--win);">{{ ex.verified }}</span>Doğrulanmış isabet</span>
+      <span style="display:flex; align-items:center; gap:5px; font-weight:600; color:var(--loss);">{{ ex.live }}<span style="color:var(--text);">Canlı · 3</span></span>
+      <span style="display:flex; align-items:center; gap:5px; font-size:12px; font-weight:600; color:var(--text); padding:3px 9px; border:1px solid var(--line); border-radius:6px;">1x 1.29 {{ ex.arrow }}</span>
+      <span style="display:flex; align-items:center; gap:4px; font-size:10px;">{{ ex.sponsored }}Sponsorlu · 18+</span>
+      <span style="display:flex; align-items:center; gap:4px; font-size:11px;">{{ ex.editor }}Editör seçkisi</span>
+    </div>
+  </div>
+
+  <!-- EMPTY STATES -->
+  <div style="width:1440px; background:var(--bg); border:1px solid var(--line);">
+    <div style="padding:14px 20px; border-bottom:1px solid var(--line); display:flex; align-items:baseline; gap:14px;"><span style="font-weight:600; font-size:16px;">Boş-durum illüstrasyonları</span><span style="font-size:12px; color:var(--muted);">120×90 · tek renk gri #8c8c8c · tek yeşil vurgu · aynı 1.5px çizgi dili · altında bir satır mikro-metin</span></div>
+    <div style="display:grid; grid-template-columns:repeat(5, minmax(0,1fr));">
+      <div style="padding:24px 20px; border-right:1px solid var(--line); display:flex; flex-direction:column; align-items:flex-start; gap:12px;">
+        <svg width="120" height="90" viewBox="0 0 120 90" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="15" width="100" height="60" rx="2"></rect><path d="M60 15v60"></path><circle cx="60" cy="45" r="10"></circle><path d="M10 33h14v24H10M110 33H96v24h14"></path><circle cx="100" cy="82" r="4" stroke="var(--accent)"></circle></svg>
+        <div style="display:flex; flex-direction:column; gap:2px;"><span style="font-weight:500;">Bugün maç yok</span><span style="font-size:12px; color:var(--muted);">Saha boş. Yarın 31 maç var — ilk düdük 15:00.</span></div>
+      </div>
+      <div style="padding:24px 20px; border-right:1px solid var(--line); display:flex; flex-direction:column; align-items:flex-start; gap:12px;">
+        <svg width="120" height="90" viewBox="0 0 120 90" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M40 10l38 0 22 22-38 38-38-38V10z" stroke-dasharray="4 4"></path><path d="M50 22h.01"></path><path d="M78 62c0 8-8 16-8 16s-8-8-8-16a8 8 0 0 1 16 0z"></path><circle cx="70" cy="62" r="2.5" fill="var(--accent)" stroke="none"></circle></svg>
+        <div style="display:flex; flex-direction:column; gap:2px;"><span style="font-weight:500;">Ülkende teklif yok</span><span style="font-size:12px; color:var(--muted);">Burada henüz bir şey yok; tahminler herkese açık.</span></div>
+      </div>
+      <div style="padding:24px 20px; border-right:1px solid var(--line); display:flex; flex-direction:column; align-items:flex-start; gap:12px;">
+        <svg width="120" height="90" viewBox="0 0 120 90" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 30h14l8-10h32l8 10h14v46H22z"></path><circle cx="60" cy="52" r="14"></circle><path d="M60 44v8l5 3"></path><circle cx="88" cy="38" r="2.5" fill="var(--accent)" stroke="none"></circle></svg>
+        <div style="display:flex; flex-direction:column; gap:2px;"><span style="font-weight:500;">Henüz snapshot yok</span><span style="font-size:12px; color:var(--muted);">Model 05:45’te çalışır; o zamana kadar rakam vermiyoruz.</span></div>
+      </div>
+      <div style="padding:24px 20px; border-right:1px solid var(--line); display:flex; flex-direction:column; align-items:flex-start; gap:12px;">
+        <svg width="120" height="90" viewBox="0 0 120 90" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="20" width="24" height="50" rx="2" stroke-dasharray="4 4"></rect><rect x="34" y="20" width="24" height="50" rx="2" stroke-dasharray="4 4"></rect><rect x="62" y="20" width="24" height="50" rx="2" stroke-dasharray="4 4"></rect><rect x="90" y="20" width="24" height="50" rx="2" stroke-dasharray="4 4"></rect><path d="M12 30h12M12 36h8" stroke="var(--accent)"></path></svg>
+        <div style="display:flex; flex-direction:column; gap:2px;"><span style="font-weight:500;">Editör seçkisi boş</span><span style="font-size:12px; color:var(--muted);">Bant otomatik dolar — en güçlü 4 sinyal şu an yayında.</span></div>
+      </div>
+      <div style="padding:24px 20px; display:flex; flex-direction:column; align-items:flex-start; gap:12px;">
+        <svg width="120" height="90" viewBox="0 0 120 90" fill="none" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 75h70V20"></path><path d="M62 75a18 18 0 0 1 18-18"></path><circle cx="98" cy="80" r="6"></circle><path d="M84 64l6 6" stroke-dasharray="2 3"></path><text x="14" y="52" font-family="Inter, system-ui, sans-serif" font-size="16" font-weight="600" fill="var(--muted)" stroke="none">404</text><circle cx="98" cy="80" r="1.5" fill="var(--accent)" stroke="none"></circle></svg>
+        <div style="display:flex; flex-direction:column; gap:2px;"><span style="font-weight:500;">404</span><span style="font-size:12px; color:var(--muted);">Top saha dışına çıktı. Anasayfaya dönelim.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOTION SPEC -->
+  <div class="rw3-anim" style="width:1440px; background:var(--bg); border:1px solid var(--line);">
+    <div style="padding:14px 20px; border-bottom:1px solid var(--line); display:flex; align-items:baseline; gap:14px;"><span style="font-weight:600; font-size:16px;">Mikro-hareket</span><span style="font-size:12px; color:var(--muted);">Dört hareket, hepsi 250ms altı · ease-out · prefers-reduced-motion: reduce → tümü kapalı, son kare gösterilir</span></div>
+    <div style="display:grid; grid-template-columns:repeat(4, minmax(0,1fr));">
+      <div style="padding:18px 20px; border-right:1px solid var(--line); display:flex; flex-direction:column; gap:12px;">
+        <span style="font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);">Form noktaları</span>
+        <div style="display:flex; gap:3px; height:20px; align-items:center;">{{ motion.dots }}</div>
+        <div style="display:flex; flex-direction:column; gap:2px; font-size:12px;"><span>Süre 200ms toplam · nokta başı 20ms gecikme, soldan sağa</span><span style="color:var(--muted);">opacity 0→1 · translateX −4px→0 · cubic-bezier(.2,.7,.2,1)</span><span style="color:var(--muted);">Tetik: satır viewport’a girince, bir kez.</span></div>
+      </div>
+      <div style="padding:18px 20px; border-right:1px solid var(--line); display:flex; flex-direction:column; gap:12px;">
+        <span style="font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);">Doğrulanmış yüzde · kilit tik’i</span>
+        <div style="display:flex; align-items:center; gap:8px; height:20px;"><span style="font-size:14px; font-weight:600; padding:2px 8px; background:var(--pctbg); border-radius:6px;">80%</span>{{ motion.tick }}<span style="font-size:11px; color:var(--muted);">2058/2565</span></div>
+        <div style="display:flex; flex-direction:column; gap:2px; font-size:12px;"><span>Süre 240ms · tik çizgisi stroke-dashoffset ile çizilir</span><span style="color:var(--muted);">Halka statik; yalnız tik animasyonlu · renk var(--win)</span><span style="color:var(--muted);">Tetik: isabet kartı yüklenince, bir kez. Sayı animasyonu yok.</span></div>
+      </div>
+      <div style="padding:18px 20px; border-right:1px solid var(--line); display:flex; flex-direction:column; gap:12px;">
+        <span style="font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);">Hover geçişleri</span>
+        <div style="display:flex; gap:8px; align-items:center; height:20px;"><span style="font-size:12px; font-weight:600; padding:3px 9px; border-radius:6px; border:1px solid var(--line);">1x 1.29 →</span><span style="font-size:11px; color:var(--muted);">→</span><span style="font-size:12px; font-weight:600; padding:3px 9px; border-radius:6px; color:var(--accent-ink); background:var(--accent); border:1px solid var(--accent);">1x 1.29 →</span></div>
+        <div style="display:flex; flex-direction:column; gap:2px; font-size:12px;"><span>120ms · background, border-color, color</span><span style="color:var(--muted);">Satır zemini #161616→#242424 aynı 120ms · basılı hal 60ms, #1d1d1d</span><span style="color:var(--muted);">Klavye odağı: 2px halka var(--text), geçişsiz.</span></div>
+      </div>
+      <div style="padding:18px 20px; display:flex; flex-direction:column; gap:12px;">
+        <span style="font-size:11px; font-weight:600; letter-spacing:.06em; text-transform:uppercase; color:var(--muted);">Editör bandı · kademeli giriş</span>
+        <div style="display:flex; gap:6px; height:20px; align-items:center;">{{ motion.cards }}</div>
+        <div style="display:flex; flex-direction:column; gap:2px; font-size:12px;"><span>Kart başı 60ms gecikme · 4 kart = 180ms sonuncu başlar</span><span style="color:var(--muted);">opacity 0→1 · translateY 4px→0 · 160ms · ease-out</span><span style="color:var(--muted);">Tetik: sayfa yüklenince. Tablo satırları animasyonsuz — yalnız bant.</span></div>
+      </div>
+    </div>
+    <div style="padding:12px 20px; border-top:1px solid var(--line); font-size:12px; color:var(--muted); display:flex; gap:24px;"><span>Kural: hareket yalnız durum değişimini açıklar; dekor için hareket yok.</span><span>@media (prefers-reduced-motion: reduce) → animation: none; transition: none; son kare.</span><span>Skor/sayı sayaçları asla animasyonlu değil.</span></div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() { this._t = setInterval(() => this.setState({ k: (this.state.k || 0) + 1 }), 2600); }
+  componentWillUnmount() { clearInterval(this._t); }
+  renderVals() {
+    const I = window.RW3Icon, L = window.RW3_ICON_LABELS || {};
+    if (!I) { if (!this._p) { this._p = setInterval(() => { if (window.RW3Icon) { clearInterval(this._p); this.forceUpdate(); } }, 50); } return { groups: [], ex: {}, motion: {} }; }
+    const mk = (keys) => keys.map(k => ({ key: k, label: L[k], s16: I(k, 16), s20: I(k, 20) }));
+    const groups = [
+      { name: 'Market', items: mk(['over', 'under', 'btts', 'bttsNo', 'home', 'away', 'corner', 'h1', 'h2', 'dnb']) },
+      { name: 'Durum', items: mk(['live', 'verified', 'locked', 'sponsored', 'best', 'editor', 'snapshot']) },
+      { name: 'Aksiyon', items: mk(['search', 'filter', 'sort', 'follow', 'arrow', 'external', 'close', 'drag']) },
+      { name: 'Nav · mobil alt çubuk', items: mk(['navPred', 'navSites', 'navFree', 'navRecord']) },
+    ];
+    const ex = { over: I('over', 14), verified: I('verified', 14), live: I('live', 14), arrow: I('arrow', 12), sponsored: I('sponsored', 12), editor: I('editor', 12) };
+    const R = React, k = this.state.k || 0;
+    const seq = 'WWWLWWWWLW';
+    const dots = R.createElement('span', { key: 'd' + k, style: { display: 'flex', gap: 3 } }, [...seq].map((c, i) => R.createElement('span', { key: i, style: { width: 5, height: 5, borderRadius: '50%', background: c === 'W' ? 'var(--win)' : 'var(--loss)', animation: 'rw3-dot 120ms cubic-bezier(.2,.7,.2,1) both', animationDelay: (i * 20) + 'ms' } })));
+    const tick = R.createElement('svg', { key: 't' + k, width: 16, height: 16, viewBox: '0 0 24 24', fill: 'none', stroke: 'var(--win)', strokeWidth: 1.5, strokeLinecap: 'round', strokeLinejoin: 'round' }, [
+      R.createElement('path', { key: 'c', d: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z' }),
+      R.createElement('path', { key: 'k', d: 'M8 12l3 3 5-6', strokeDasharray: 14, style: { animation: 'rw3-tick 240ms ease-out both' } }),
+    ]);
+    const cards = R.createElement('span', { key: 'c' + k, style: { display: 'flex', gap: 6 } }, [0, 1, 2, 3].map(i => R.createElement('span', { key: i, style: { width: 44, height: 20, border: '1px solid var(--line)', borderRadius: 4, background: 'var(--surface)', animation: 'rw3-card 160ms ease-out both', animationDelay: (i * 60) + 'ms' } })));
+    return { groups, ex, motion: { dots, tick, cards } };
+  }
+}
+</script>
+</body>
+</html>

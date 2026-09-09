@@ -195,7 +195,6 @@ test("the detector is real: it catches the phrasings the manifesto names", () =>
     "Insider tip from our sources",
     "AI predicts a home victory",
     "Today's banker",
-    "Free betting tips daily",
     "Double your money tonight",
   ];
   for (const phrase of mustCatch) {
@@ -226,11 +225,13 @@ test("honest denials are not flagged as their opposite", () => {
 
 test("the banned vocabulary covers every category the manifesto names", () => {
   const reasons = new Set(BANNED_CLAIMS.map((c) => c.reason));
+  /* "positions the product as a tipster" left this list with the v3
+   * vocabulary decision (see the DECIDED note in lib/trust/claims.ts) —
+   * tips are allowed product vocabulary now; the honesty categories stay. */
   for (const required of [
     "promises an outcome",
     "asserts certainty",
     "attributes authority to a model",
-    "positions the product as a tipster",
   ]) {
     assert.ok(reasons.has(required), `missing banned-claim category: ${required}`);
   }
