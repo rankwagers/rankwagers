@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "node scripts/prepare-dev.mjs && node -e \"try{require('fs').rmSync('.next',{recursive:true,force:true})}catch(e){}\" && next dev -p 3000",
     "dev:9000": "node scripts/prepare-dev.mjs && node -e \"try{require('fs').rmSync('.next',{recursive:true,force:true})}catch(e){}\" && next dev -p 9000",
+  "dev:3100": "node scripts/prepare-dev.mjs && node -e \"try{require('fs').rmSync('.next',{recursive:true,force:true})}catch(e){}\" && next dev -p 3100",
     "dev:clean": "npm run dev",
     "dev:fresh": "node scripts/kill-dev-port.mjs && npm run dev",
     "build": "node scripts/prepare-dev.mjs && node -e \"try{require('fs').rmSync('.next',{recursive:true,force:true})}catch(e){}\" && next build",

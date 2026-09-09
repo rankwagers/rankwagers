@@ -152,7 +152,12 @@ test("v3 motion law: durations stay under 250ms and rows/numbers never animate",
  * class must be listed with a why, and a listed file must still use it.
  * The ≤5-per-page count is asserted where the page composition renders
  * (homepage DOM probe). */
-const FILLED_CTA_REGISTER: Array<{ file: string; why: string }> = [];
+const FILLED_CTA_REGISTER: Array<{ file: string; why: string }> = [
+  {
+    file: "components/v3/rails/RightRail.tsx",
+    why: "offer of the day — the curated commercial slot; renders once per page",
+  },
+];
 
 test("rw3-filled appears only in the curated register", () => {
   const using = v3Files()

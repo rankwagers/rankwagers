@@ -556,17 +556,22 @@ test("the cream band above the hero is gone", () => {
     "utf8"
   );
   /*
-   * `main` sets `py-6 lg:py-8` on the site's cream ground, so a strip of the OLD palette sat
-   * between the header and the hero. The page cancels exactly that padding. If the layout's
-   * value ever changes, this fails — which is the point: the two numbers have to agree.
+   * `main` used to set `py-6 lg:py-8` on the cream ground and the page cancelled exactly that
+   * padding; the two numbers had to agree. The V3 shell (feat/v3-reskin) dissolved the
+   * contract from the other side: main is unpadded — v3 surfaces run edge-to-edge — so the
+   * invariant is now that main states NO vertical padding. If padding returns, this fails and
+   * the pairing question is live again; re-pin both halves together, never one.
    */
-  const mainPad = /<main[^>]*className="[^"]*\bpy-(\d+)\b[^"]*lg:py-(\d+)/.exec(layout);
-  assert.ok(mainPad, "main still states the padding this cancels");
-  assert.match(
-    home,
-    new RegExp(`rw-hero -mt-${mainPad[1]}[^"]*lg:-mt-${mainPad[2]}`),
-    `the page cancels main's py-${mainPad[1]}/lg:py-${mainPad[2]} exactly`
-  );
+  const mainPad = /<main[^>]*className="[^"]*\bpy-(\d+)\b/.exec(layout);
+  if (mainPad) {
+    assert.match(
+      home,
+      new RegExp(`rw-hero -mt-${mainPad[1]}`),
+      `main regained py-${mainPad[1]} — the page must cancel it exactly (v2 contract)`
+    );
+  } else {
+    assert.match(layout, /className="rw3-main/, "the unpadded main is the v3 shell's");
+  }
 });
 
 test("reduced motion strips the entrances by name, not only by duration", () => {

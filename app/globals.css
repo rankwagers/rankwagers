@@ -1399,6 +1399,27 @@ textarea,
     opacity: 1;
   }
 }
+
+/* ---- chrome responsiveness ------------------------------------------------ */
+/* Below lg: the header collapses (48px, scrollable destination row), the
+ * bottom tab bar appears, and the page body clears it. */
+@media (max-width: 1023.98px) {
+  .rw3 .rw3-desktop-nav,
+  .rw3 .rw3-search-entry,
+  .rw3 .rw3-signin {
+    display: none !important;
+  }
+  .rw3 .rw3-mobile-navrow {
+    display: flex !important;
+  }
+  .rw3 .rw3-bottom-tabs {
+    display: grid !important;
+  }
+  .rw3 .rw3-main {
+    padding-bottom: 64px;
+  }
+}
+
 /* ==== end of the rw3 scope ==== */
 
 
