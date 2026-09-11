@@ -340,15 +340,17 @@ test("the homepage section appears once an Acca is published, bounded to three",
 });
 
 test("the homepage integration is additive and placed after the research surfaces", () => {
+  // V3 reconciliation: the home component is HomeV3 now (Bible V3 block C).
+  // The pinned journey is unchanged — research first, combinations second —
+  // and the accas section still arrives without threading into the home tree.
   const src = readSource("app/[locale]/page.tsx");
-  const homeAt = src.indexOf("<RankWagersHome");
+  const homeAt = src.indexOf("<HomeV3");
   const accasAt = src.indexOf("<HomepagePublishedAccas");
   assert.ok(homeAt > 0 && accasAt > homeAt, "research first, combinations second");
-  // The large existing home component was not modified to accommodate this.
   assert.equal(
-    /RankWagersHome[\s\S]{0,400}accas/i.test(src.slice(homeAt, homeAt + 400)),
+    /accas/i.test(src.slice(homeAt, accasAt)),
     false,
-    "no prop threading into RankWagersHome",
+    "no prop threading into HomeV3",
   );
 });
 

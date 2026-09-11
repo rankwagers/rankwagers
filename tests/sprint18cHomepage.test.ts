@@ -149,10 +149,13 @@ test("hero never ships a synthetic reading", () => {
 });
 
 test("homepage page loads trust model server-side", () => {
+  // V3 reconciliation: the trust model still builds server-side, but the v3
+  // page passes its verified pair down as `verified` (null omits the card —
+  // the empty-state law) instead of threading the whole model as a prop.
   const page = readFileSync(path.join(root, "app/[locale]/page.tsx"), "utf8");
   assert.match(page, /buildHomepageTrustModel/);
   assert.match(page, /pageMetadata/);
-  assert.match(page, /trust=\{trust\}/);
+  assert.match(page, /verified=\{verified\}/);
 });
 
 test("footer exposes explore + trust internal links", () => {

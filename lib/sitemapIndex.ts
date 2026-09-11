@@ -5,7 +5,8 @@ import { siteUrl } from "@/lib/seo";
 /**
  * Sitemap INDEX logic — SEO routing fix (Sprint 23B).
  *
- * These helpers back the `/sitemap.xml` Route Handler (`app/sitemap.xml/route.ts`). They live in a
+ * These helpers back the sitemap index Route Handler (`app/sitemap-index.xml/route.ts`, served
+ * publicly at `/sitemap.xml` via a middleware rewrite). They live in a
  * plain module rather than the route file because a Next.js App Router route may only export the
  * known route fields (`GET`, `revalidate`, …); an arbitrary named export there fails the build's
  * route-type check. Keeping the pure, testable logic here lets the route stay minimal and lets the

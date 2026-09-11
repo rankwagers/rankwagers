@@ -2,17 +2,29 @@ import type { Metadata } from "next";
 import { getDictionary } from "@/lib/dictionaries";
 import { type Locale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
-import { getDailyMatchListsSafe, emptyLists, todayMatchDateStr } from "@/lib/footystats/client";
-import { backfillCountryCodes } from "@/lib/footystats/countryBackfill";
-import { mapDailyListsToQualifiedFixtures, topRankedFixtures } from "@/lib/research/qualifiedFixture";
-import { getMatchDetails } from "@/lib/footystats/matchDetail";
-import { venueRatesForMarket, type VenueRates } from "@/lib/fixtures/evidenceView";
-import { formatKickoff } from "@/lib/dates";
-import { PredictionsPageJsonLd } from "@/components/predictions/PredictionsPageJsonLd";
-import { RankWagersHome } from "@/components/bible/RankWagersHome";
+import { todayMatchDateStr } from "@/lib/footystats/client";
+import type { MatchListKind } from "@/lib/footystats/types";
 import { getRequestCountryContext } from "@/lib/personalization/server";
 import { buildHomepageTrustModel } from "@/lib/homepage/trustPerformance";
+import { PredictionsPageJsonLd } from "@/components/predictions/PredictionsPageJsonLd";
 import { HomepagePublishedAccas } from "@/components/homepage/HomepagePublishedAccas";
+import { HomeV3, type HomeV3Strings } from "@/components/v3/home/HomeV3";
+import {
+  buildLiveStrip,
+  buildTableRows,
+  countDistinctMatches,
+  loadListsForDay,
+  parseDayParam,
+  type DayKey,
+} from "@/lib/v3/homeTable.server";
+import {
+  buildHighPotentialToday,
+  buildOfferOfTheDay,
+  buildPopularLeagues,
+  buildRailSites,
+} from "@/lib/v3/homeRails.server";
+import { buildAutoFillPicks } from "@/lib/v3/editorPicks.server";
+import { formatDict } from "@/lib/formatDict";
 
 export function generateMetadata({
   params,
@@ -29,119 +41,226 @@ export function generateMetadata({
   });
 }
 
+const VISIBLE_ROWS = 16;
+
+function parseMarket(raw: string | undefined): MatchListKind | null {
+  return raw === "fh" || raw === "over15" || raw === "over25" || raw === "sh" ? raw : null;
+}
+
+/* THE V3 HOMEPAGE (Bible V3, block C). One clock: the selected tab's lists
+   are the page's only fixture source. The editor band and live strip always
+   speak about TODAY — the band is today's editorial, the strip today's
+   play — whichever tab the table shows. */
 export default async function LocaleHomePage({
   params,
   searchParams,
 }: {
   params: { locale: Locale };
   searchParams?: {
-    date?: string;
-    country?: string;
-    fixture?: string;
+    day?: string;
     market?: string;
+    sort?: string;
+    all?: string;
+    country?: string;
   };
 }) {
-  const dict = getDictionary(params.locale);
+  const locale = params.locale;
+  const dict = getDictionary(locale);
+  const p = dict.predictions as unknown as Record<string, string>;
   const countryContext = getRequestCountryContext(searchParams?.country);
   const today = todayMatchDateStr();
-  const rawDate = searchParams?.date?.trim();
-  const selectedDate =
-    rawDate && /^\d{4}-\d{2}-\d{2}$/.test(rawDate) ? rawDate : today;
-  const result = await getDailyMatchListsSafe(selectedDate);
-  /*
-   * Country gaps filled from the board's own rows (same league, same day) before ANY consumer
-   * reads them — hero, ranked section and research desk all see the same filled rows. See
-   * `countryBackfill.ts` for why this is an inference from the payload, not a table.
-   */
-  const lists = backfillCountryCodes("error" in result ? emptyLists() : result);
-  const apiError = "error" in result ? result.error : null;
-  /*
-   * Venue rates for the ranked six — the ⓘ explainer's facts. Same derivation the component
-   * renders (`topRankedFixtures`, shared), same cached provider-detail helper the hero uses, so
-   * this is one cache-warm pass over at most six fixtures. A fixture whose detail does not
-   * resolve simply has no rates, and its explainer omits the venue sentence.
-   */
-  const ranked = topRankedFixtures(mapDailyListsToQualifiedFixtures(lists));
-  const rankedDetails = await getMatchDetails(
-    ranked.map((fixture) => fixture.matchId),
-    params.locale
-  );
-  const rankedVenueRates: Record<number, VenueRates> = {};
-  for (const fixture of ranked) {
-    rankedVenueRates[fixture.matchId] = venueRatesForMarket(
-      rankedDetails.get(fixture.matchId),
-      fixture.marketKind
-    );
+
+  const day = parseDayParam(searchParams?.day);
+  const market = parseMarket(searchParams?.market);
+  const sort: "rate" | "time" = searchParams?.sort === "time" ? "time" : "rate";
+  const showAll = searchParams?.all === "1";
+
+  const [todayData, tomorrowData, weekendData] = await Promise.all([
+    loadListsForDay("today"),
+    loadListsForDay("tomorrow"),
+    loadListsForDay("weekend"),
+  ]);
+  const byDay: Record<DayKey, typeof todayData> = {
+    today: todayData,
+    tomorrow: tomorrowData,
+    weekend: weekendData,
+  };
+  const selected = byDay[day];
+  const counts: Record<DayKey, number> = {
+    today: countDistinctMatches(todayData.lists),
+    tomorrow: countDistinctMatches(tomorrowData.lists),
+    weekend: countDistinctMatches(weekendData.lists),
+  };
+
+  const [{ rows, totalRows }, picks, highPotential, trust] = await Promise.all([
+    buildTableRows({
+      lists: selected.lists,
+      locale,
+      country: countryContext.country ?? null,
+      marketFilter: market,
+      sort,
+      limit: showAll ? Number.MAX_SAFE_INTEGER : VISIBLE_ROWS,
+    }),
+    buildAutoFillPicks({
+      lists: todayData.lists,
+      locale,
+      country: countryContext.country ?? null,
+      p: dict.predictions,
+    }),
+    buildHighPotentialToday(todayData.lists),
+    buildHomepageTrustModel({
+      locale,
+      today,
+      selectedDate: today,
+      lists: todayData.lists,
+      countryContext,
+    }),
+  ]);
+
+  const { leagues, totalMatches } = buildPopularLeagues(selected.lists);
+  const sites = buildRailSites(countryContext, locale);
+  const offer = buildOfferOfTheDay(countryContext, locale);
+  const live = buildLiveStrip(todayData.lists);
+
+  const verified =
+    trust.verified.hitRatePct !== null
+      ? {
+          hitRatePct: trust.verified.hitRatePct,
+          won: trust.verified.won,
+          lost: trust.verified.lost,
+          windowLabel: trust.verified.windowLabel,
+        }
+      : null;
+
+  /* When today is empty, tomorrow's real count and first kickoff make the
+     one-line microcopy — real data or the generic line, never invented. */
+  let emptyTomorrowLine: string | null = null;
+  if (totalRows === 0 && day === "today" && counts.tomorrow > 0) {
+    const tomorrowRows = [
+      ...tomorrowData.lists.fh,
+      ...tomorrowData.lists.over15,
+      ...tomorrowData.lists.over25,
+      ...tomorrowData.lists.sh,
+    ];
+    const firstKickoff = Math.min(...tomorrowRows.map((r) => r.kickoffTime));
+    const time = new Intl.DateTimeFormat("en-GB", {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+      timeZone: "UTC",
+    }).format(new Date(firstKickoff * 1000));
+    emptyTomorrowLine = formatDict(p.v3EmptyMatchesTomorrow, {
+      n: String(counts.tomorrow),
+      time,
+    });
   }
 
-  const allRows = [...lists.fh, ...lists.over15, ...lists.over25, ...lists.sh];
-  const matchCount = new Set(allRows.map((row) => row.matchId)).size;
-  const fetchedAt = new Date(lists.fetchedAt);
-  const updateTime = Number.isNaN(fetchedAt.getTime())
-    ? "Update time pending"
-    : new Intl.DateTimeFormat("en-GB", {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false,
-        timeZone: "UTC",
-      }).format(fetchedAt);
-  const displayDate = formatKickoff(`${selectedDate}T12:00:00.000Z`, {
-    locale: "en-GB",
-    timeZone: "UTC",
-  }).replace(/ · \d{2}:\d{2}$/, "");
-  // Fixture count and freshness only. The model-version string and the detected country code were
-  // engineering facts occupying reader-facing space; neither is something a reader can act on or
-  // check, and the version was a claim the page could not evidence.
-  const modelMeta = `${displayDate} · ${matchCount} qualified fixtures · Updated ${updateTime} UTC`;
-  const trust = await buildHomepageTrustModel({
-    locale: params.locale,
-    today,
-    selectedDate,
-    lists,
-    countryContext,
-  });
+  const marketLabels: Record<MatchListKind, string> = {
+    fh: p.tabFh,
+    over15: p.tabOver15,
+    over25: p.tabOver25,
+    sh: p.tabSh,
+  };
+
+  const strings: HomeV3Strings = {
+    leftRail: {
+      popularLeagues: p.v3PopularLeagues,
+      allMatches: p.v3AllMatches,
+      bettingSites: p.v3NavBettingSites,
+      sponsored: p.v3Sponsored18,
+      best: p.v3Best,
+      continue: p.v3Continue,
+      commission: p.v3CommissionLine,
+    },
+    rightRail: {
+      verifiedHitRate: p.v3VerifiedHitRate,
+      lockLine: p.v3LockLine,
+      seeRecord: p.v3SeeRecord,
+      highPotential: p.v3HighPotentialToday,
+      nPredictions: p.v3NPredictions,
+      offerOfTheDay: p.v3OfferOfTheDay,
+      sponsored: p.v3Sponsored18,
+      continue: p.v3Continue,
+      terms: dict.footer.disclaimer,
+    },
+    band: { editorPick: p.v3EditorPick, more: p.v3More },
+    tabs: {
+      today: p.v3Today,
+      tomorrow: p.v3Tomorrow,
+      weekend: p.v3Weekend,
+      allMarkets: p.v3AllMarkets,
+      sortByRate: p.v3SortByRate,
+      colTime: p.v3ColTime,
+      marketLabels,
+    },
+    table: {
+      colTime: p.v3ColTime,
+      colMatch: p.v3ColMatch,
+      colLeague: p.v3ColLeague,
+      colMarket: p.v3ColMarket,
+      colRate: p.v3ColRate,
+      colSample: p.v3ColSample,
+      colForm: p.v3ColForm,
+      colBestOdds: p.v3ColBestOdds,
+      nMoreMatches: p.v3NMoreMatches,
+      sponsoredLinks: p.v3SponsoredLinks,
+    },
+    live: p.v3Live,
+    seeRecord: p.v3SeeRecord,
+    verifiedShort: p.v3VerifiedHitRate,
+    emptyTitle: p.v3EmptyMatchesTitle,
+    emptyLine: p.v3EmptyMatchesLine,
+    emptyTomorrowLine,
+  };
+
+  const moreParams = new URLSearchParams();
+  if (day !== "today") moreParams.set("day", day);
+  if (market) moreParams.set("market", market);
+  if (sort !== "rate") moreParams.set("sort", sort);
+  moreParams.set("all", "1");
 
   return (
     <>
       <PredictionsPageJsonLd
-        locale={params.locale}
+        locale={locale}
         title={dict.predictions.metaTitle}
         description={dict.predictions.metaDescription}
       />
-      {apiError && (
-        <div className="container-wide pt-5">
-          <div
-            className="rounded-lg border border-[var(--amber-border)] bg-[var(--amber-surface)] px-4 py-3 text-sm text-[var(--amber-primary)]"
-            role="alert"
-          >
-            <p className="font-semibold">{dict.predictions.apiError}</p>
-            <p className="mt-1 text-xs opacity-90">
-              Qualified fixtures may be incomplete. Try refreshing in a moment.
-            </p>
-            {process.env.NODE_ENV === "development" && (
-              <span className="mt-1 block font-mono text-metadata opacity-70">{apiError}</span>
-            )}
-          </div>
+      {selected.error ? (
+        <div
+          role="alert"
+          style={{
+            margin: "12px 20px 0",
+            padding: "10px 12px",
+            border: "1px solid var(--line)",
+            borderRadius: 6,
+            fontSize: 12,
+            color: "var(--muted)",
+          }}
+        >
+          {dict.predictions.apiError}
         </div>
-      )}
-      <RankWagersHome
-        rankedVenueRates={rankedVenueRates}
-        lists={lists}
-        dict={dict}
-        locale={params.locale}
-        displayDate={displayDate}
-        modelMeta={modelMeta}
-        countryContext={countryContext}
-        selectedDate={selectedDate}
-        today={today}
-        trust={trust}
+      ) : null}
+      <HomeV3
+        locale={locale}
+        strings={strings}
+        live={live}
+        picks={picks}
+        day={day}
+        counts={counts}
+        market={market}
+        sort={sort}
+        rows={rows}
+        totalRows={totalRows}
+        moreHref={showAll ? null : `/${locale}?${moreParams.toString()}`}
+        leagues={leagues}
+        totalMatches={totalMatches}
+        sites={sites}
+        verified={verified}
+        highPotential={highPotential}
+        offer={offer}
       />
-      {/*
-        Sprint 20B-B stage B5. Placed AFTER the research surfaces, deliberately: the journey is
-        research first, combinations second. The component renders nothing when no Acca is
-        published, so the homepage is byte-identical to its previous output in that state.
-      */}
-      <HomepagePublishedAccas locale={params.locale} />
+      <HomepagePublishedAccas locale={locale} />
     </>
   );
 }

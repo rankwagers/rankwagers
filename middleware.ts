@@ -155,6 +155,38 @@ export function middleware(req: NextRequest) {
         requestId
       );
     }
+    if (pathname === "/sitemap.xml") {
+      /*
+       * Next 14.2's dev server registers the metadata sitemap as an optional
+       * catch-all at /sitemap.xml, so the index handler cannot live at that
+       * literal path (`next dev` refuses to boot on the route conflict). The
+       * public URL stays /sitemap.xml — this rewrite serves it from the
+       * handler at /sitemap-index.xml. See app/sitemap-index.xml/route.ts.
+       */
+      const rewritten = NextResponse.rewrite(
+        new URL("/sitemap-index.xml", req.url),
+        {
+          request: {
+            headers: withRequestHeaders(
+              req,
+              null,
+              country.country,
+              country.source,
+              requestId
+            ),
+          },
+        }
+      );
+      return withRequestId(
+        applyCountryCookies(
+          rewritten,
+          country.country,
+          country.source,
+          country.persist
+        ),
+        requestId
+      );
+    }
     const res = NextResponse.next({
       request: {
         headers: withRequestHeaders(

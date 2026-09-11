@@ -157,7 +157,170 @@ const FILLED_CTA_REGISTER: Array<{ file: string; why: string }> = [
     file: "components/v3/rails/RightRail.tsx",
     why: "offer of the day — the curated commercial slot; renders once per page",
   },
+  {
+    file: "components/v3/home/EditorBand.tsx",
+    why: "editor band card CTAs — the other curated tier home; ≤4 cards per page",
+  },
 ];
+
+/* ── DOM probes: the composed homepage ────────────────────────────────── */
+
+/* Classic-runtime setup per mobilePass/heroAssembly: React global first. */
+/* eslint-disable @typescript-eslint/no-var-requires */
+(globalThis as { React?: unknown }).React = require("react");
+const React = require("react") as typeof import("react");
+const { renderToStaticMarkup } =
+  require("react-dom/server") as typeof import("react-dom/server");
+const { HomeV3 } =
+  require("../components/v3/home/HomeV3") as typeof import("../components/v3/home/HomeV3");
+
+function homeMarkup(withOffer: boolean): string {
+  const pick = (matchId: number) => ({
+    matchId,
+    home: "Alpha",
+    away: "Beta",
+    homeImage: null,
+    awayImage: null,
+    league: "Test League",
+    countryCode: null,
+    timeLabel: "17:30",
+    marketKind: "over15" as const,
+    marketLabel: "Over 1.5",
+    ratePct: 82,
+    sample: "9/11",
+    sentence: "Nine of the last eleven home matches cleared 1.5 goals.",
+    hasLongNote: false,
+    isManual: false,
+    bestOdds: {
+      operatorSlug: "op",
+      mark: "OP",
+      decimal: "1.29",
+      continueHref: "/go/op?ctx=x",
+    },
+  });
+  const row = {
+    ...pick(9),
+    kickoffTime: 0,
+    form: [true, false, true],
+    isLive: false,
+  };
+  const strings = {
+    leftRail: {
+      popularLeagues: "Popular leagues",
+      allMatches: "All matches",
+      bettingSites: "Betting sites",
+      sponsored: "Sponsored · 18+",
+      best: "Best",
+      continue: "Continue",
+      commission: "Commission line.",
+    },
+    rightRail: {
+      verifiedHitRate: "Verified hit rate",
+      lockLine: "Every prediction locks at the final score.",
+      seeRecord: "See the record",
+      highPotential: "High potential · today",
+      nPredictions: "{n} predictions",
+      offerOfTheDay: "Offer of the day",
+      sponsored: "Sponsored · 18+",
+      continue: "Continue",
+      terms: "Terms.",
+    },
+    band: { editorPick: "Editor's pick", more: "more" },
+    tabs: {
+      today: "Today",
+      tomorrow: "Tomorrow",
+      weekend: "Weekend",
+      allMarkets: "All markets",
+      sortByRate: "By rate",
+      colTime: "Time",
+      marketLabels: { fh: "1H", over15: "O1.5", over25: "O2.5", sh: "2H" },
+    },
+    table: {
+      colTime: "Time",
+      colMatch: "Match",
+      colLeague: "League",
+      colMarket: "Market",
+      colRate: "Rate",
+      colSample: "Sample",
+      colForm: "Form",
+      colBestOdds: "Best odds",
+      nMoreMatches: "{n} more matches",
+      sponsoredLinks: "Sponsored links · 18+",
+    },
+    live: "Live",
+    seeRecord: "See the record",
+    verifiedShort: "Verified",
+    emptyTitle: "No matches today",
+    emptyLine: "The pitch is empty today.",
+    emptyTomorrowLine: null,
+  };
+  return renderToStaticMarkup(
+    React.createElement(HomeV3, {
+      locale: "en",
+      strings,
+      live: [],
+      picks: [pick(1), pick(2), pick(3), pick(4)],
+      day: "today",
+      counts: { today: 5, tomorrow: 3, weekend: 8 },
+      market: null,
+      sort: "rate",
+      rows: [row],
+      totalRows: 5,
+      moreHref: "/en?all=1",
+      leagues: [{ name: "Test League", countryCode: null, leagueImage: null, count: 3 }],
+      totalMatches: 5,
+      sites: [
+        {
+          slug: "op",
+          name: "Op",
+          mark: "OP",
+          offer: "Offer text",
+          best: true,
+          continueHref: "/go/op?ctx=y",
+        },
+      ],
+      verified: { hitRatePct: 80, won: 2058, lost: 507, windowLabel: "window" },
+      highPotential: [],
+      offer: withOffer
+        ? {
+            slug: "op",
+            name: "Op",
+            mark: "OP",
+            offer: "Offer text",
+            continueHref: "/go/op?ctx=z",
+          }
+        : null,
+    } as Parameters<typeof HomeV3>[0])
+  );
+}
+
+test("accent budget: at most 5 filled-green CTAs on the composed homepage", () => {
+  const withOffer = homeMarkup(true);
+  const filled = withOffer.match(/rw3-filled/g) ?? [];
+  assert.ok(filled.length <= 5, `found ${filled.length} filled CTAs — the cap is 5`);
+  assert.equal(filled.length, 5, "4 band cards + the offer of the day = exactly 5 here");
+});
+
+test("the offer of the day appears exactly once per page", () => {
+  const withOffer = homeMarkup(true);
+  assert.equal(
+    (withOffer.match(/data-offer-of-the-day/g) ?? []).length,
+    1,
+    "one curated offer slot, no more, no less"
+  );
+  const withoutOffer = homeMarkup(false);
+  assert.equal(
+    (withoutOffer.match(/data-offer-of-the-day/g) ?? []).length,
+    0,
+    "no qualifying partner → the slot is omitted, not placeholdered"
+  );
+});
+
+test("no Play column and no ellipsis mechanism in the rendered homepage", () => {
+  const markup = homeMarkup(true);
+  assert.ok(!/>\s*Play\s*</.test(markup), "a Play column is banned (Bible V3)");
+  assert.ok(!/text-overflow|ellipsis/.test(markup), "no ellipsis in rendered output");
+});
 
 test("rw3-filled appears only in the curated register", () => {
   const using = v3Files()

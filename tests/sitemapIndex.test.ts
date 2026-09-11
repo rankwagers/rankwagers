@@ -13,7 +13,7 @@ import test from "node:test";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 
-import { GET } from "../app/sitemap.xml/route";
+import { GET } from "../app/sitemap-index.xml/route";
 import {
   currentIndexShardUrls,
   eligibleShardIds,
@@ -169,10 +169,22 @@ test("middleware exempts /sitemap.xml and /robots.txt from locale routing", () =
   assert.match(mw, /pathname === "\/robots\.txt"/);
 });
 
-// A dedicated route handler owns /sitemap.xml (not the [locale] catch-all).
-test("dedicated app/sitemap.xml route handler exists", () => {
-  const src = readFileSync(path.join(root, "app/sitemap.xml/route.ts"), "utf8");
+/*
+ * A dedicated route handler owns the index (not the [locale] catch-all).
+ * V3 reconciliation: the handler moved to /sitemap-index.xml because Next
+ * 14.2's DEV server registers the metadata sitemap as an optional catch-all
+ * at /sitemap.xml and refuses to boot next to a literal handler there.
+ * Middleware rewrites /sitemap.xml → /sitemap-index.xml, so the public URL
+ * robots.txt advertises is unchanged; both pins below guard that pairing.
+ */
+test("dedicated sitemap index route handler exists", () => {
+  const src = readFileSync(path.join(root, "app/sitemap-index.xml/route.ts"), "utf8");
   assert.match(src, /export async function GET/);
+});
+
+test("middleware rewrites /sitemap.xml to the index handler", () => {
+  const mw = readFileSync(path.join(root, "middleware.ts"), "utf8");
+  assert.match(mw, /NextResponse\.rewrite\(\s*new URL\("\/sitemap-index\.xml"/);
 });
 
 // Renderer is XML-safe.
