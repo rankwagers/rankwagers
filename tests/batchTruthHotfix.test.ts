@@ -238,11 +238,17 @@ test("a genuinely measured zero is still a finding — the guard blocks absence,
 
 /* ── 4 · the global 404 ─────────────────────────────────────────────────── */
 
-test("both 404 pages stand on the form-guide ground with dictionary strings", () => {
+test("both 404 pages stand on the rw3 ground with dictionary strings", () => {
+  // V3 reconciliation: the form-guide register (rw-hero) is retired here —
+  // the 404 is Bible V3's fifth empty state: the illustration, the v3
+  // microcopy pair, and a ghost door back to the predictions. The law being
+  // pinned is unchanged: dictionary strings only, no promises, no legacy
+  // component classes.
   for (const file of ["app/not-found.tsx", "app/[locale]/not-found.tsx"]) {
     const src = SRC(file);
-    assert.match(src, /rw-hero/, `${file} stands on the form-guide ground`);
-    for (const key of ["nfTitle", "nfBody", "nfHome"]) {
+    assert.match(src, /Illustration404/, `${file} renders the fifth illustration`);
+    assert.match(src, /EmptyStateV3/, `${file} uses the shared empty-state frame`);
+    for (const key of ["v3NotFoundTitle", "v3NotFoundLine", "v3BackToPredictions"]) {
       assert.ok(src.includes(`p.${key}`), `${file} wires ${key}`);
     }
     for (const marker of [

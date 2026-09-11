@@ -2,6 +2,8 @@ import type { FixtureEvidenceView } from "@/lib/fixtures/evidenceView";
 import type { FixtureSignal } from "@/lib/fixtureSignals";
 import type { PredictionStrings } from "@/lib/translations/predictionsEn";
 import type { EvidenceSnapshotView } from "@/types/evidence";
+import { EmptyStateV3, IllustrationNoSnapshot } from "@/components/v3/illustrations";
+import { DEFAULT_CAPTURE_LEAD_MINUTES } from "@/lib/evidence-capture/config";
 import { formatDict } from "@/lib/dictionaryExtras";
 import { signalFinding, type SignalTeams } from "@/lib/fixtures/signalPresentation";
 
@@ -25,6 +27,7 @@ export function FixtureModelWhy({
   latest,
   teams,
   p,
+  kickoffAt,
 }: {
   view: FixtureEvidenceView;
   /** The page market's provider potential, already resolved by the loader. */
@@ -33,7 +36,50 @@ export function FixtureModelWhy({
   latest: EvidenceSnapshotView | null;
   teams: SignalTeams;
   p: PredictionStrings;
+  /** The fixture's kickoff — the honest source for when a snapshot CAN exist. */
+  kickoffAt?: string | null;
 }) {
+  /*
+   * THE NO-SNAPSHOT EMPTY STATE (Bible V3, illustration 3). When the archive
+   * holds nothing AND the live derivation has nothing to stand on AND no
+   * provider potential resolved, this section has nothing to say — so it
+   * says so, with the illustration and ONE line. The line's time is real:
+   * capture opens at kickoff − DEFAULT_CAPTURE_LEAD_MINUTES (the systemd
+   * timer's own constant). A fixture whose window already opened (or whose
+   * kickoff is unknown) gets the honest archive-absence sentence instead —
+   * never a promised run time that cannot come true.
+   */
+  if (view.state === "no_data" && !latest && !potential) {
+    const kickoff = kickoffAt ? new Date(kickoffAt) : null;
+    const windowOpens =
+      kickoff && !Number.isNaN(kickoff.getTime())
+        ? new Date(kickoff.getTime() - DEFAULT_CAPTURE_LEAD_MINUTES * 60_000)
+        : null;
+    const line =
+      windowOpens && windowOpens.getTime() > Date.now()
+        ? formatDict(p.v3EmptySnapshotLine, {
+            time: `${new Intl.DateTimeFormat("en-GB", {
+              hour: "2-digit",
+              minute: "2-digit",
+              hour12: false,
+              timeZone: "UTC",
+            }).format(windowOpens)} UTC`,
+          })
+        : p.fxWhyArchiveNone;
+    return (
+      <section aria-labelledby="fx-model-heading" className="scroll-mt-24">
+        <h2 id="fx-model-heading" className="rw3-label">
+          {p.fxModelTitle}
+        </h2>
+        <EmptyStateV3
+          illustration={<IllustrationNoSnapshot />}
+          title={p.v3EmptySnapshotTitle}
+          line={line}
+        />
+      </section>
+    );
+  }
+
   const model = view.state === "no_data" ? null : view.model;
   /*
    * ONE COUNT, ONE LAYER. When the archive holds a snapshot for this fixture, every counting

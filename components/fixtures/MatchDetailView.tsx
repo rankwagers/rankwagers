@@ -256,6 +256,7 @@ export function MatchDetailView({
           latest={latestSnapshot}
           teams={teams}
           p={p}
+          kickoffAt={header.kickoffAt}
         />
       </div>
 

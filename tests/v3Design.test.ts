@@ -326,6 +326,46 @@ test("no Play column and no ellipsis mechanism in the rendered homepage", () => 
   assert.ok(!/text-overflow|ellipsis/.test(markup), "no ellipsis in rendered output");
 });
 
+/* ── DOM probes: the empty states (Bible V3, empty-state law) ─────────── */
+
+const illustrations =
+  require("../components/v3/illustrations") as typeof import("../components/v3/illustrations");
+
+test("each of the five illustrations is 120×90 with exactly one accent detail", () => {
+  const five = [
+    illustrations.IllustrationNoMatches,
+    illustrations.IllustrationNoOffers,
+    illustrations.IllustrationNoSnapshot,
+    illustrations.IllustrationEditorEmpty,
+    illustrations.Illustration404,
+  ];
+  for (const Illustration of five) {
+    const markup = renderToStaticMarkup(React.createElement(Illustration));
+    assert.match(markup, /width="120" height="90"/, `${Illustration.name} keeps the frame`);
+    assert.match(markup, /stroke="var\(--muted\)"/, `${Illustration.name} strokes in --muted`);
+    assert.equal(
+      (markup.match(/var\(--accent\)/g) ?? []).length,
+      1,
+      `${Illustration.name} carries EXACTLY one accent detail`
+    );
+  }
+});
+
+test("an empty day renders the illustration + one line — never a placeholder table", () => {
+  const markup = renderToStaticMarkup(
+    React.createElement(illustrations.EmptyStateV3, {
+      illustration: React.createElement(illustrations.IllustrationNoMatches),
+      title: "No matches today",
+      line: "The pitch is empty today.",
+    })
+  );
+  assert.match(markup, /<svg/, "the illustration renders");
+  assert.match(markup, /No matches today/, "the title renders");
+  assert.match(markup, /The pitch is empty today\./, "exactly one line of microcopy");
+  assert.doesNotMatch(markup, /rw3-table-row/, "no fake rows");
+  assert.doesNotMatch(markup, /spinner|loading/i, "no spinner");
+});
+
 test("rw3-filled appears only in the curated register", () => {
   const using = v3Files()
     .filter(({ text }) => /rw3-filled/.test(text))
