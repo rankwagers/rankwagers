@@ -34,44 +34,51 @@ export default function CountriesIndexPage({
   const p = getDictionary(params.locale).predictions;
 
   return (
-    <div className="rw-hero container-wide bg-[var(--hero-canvas)] pb-24">
-      <header className="border-b border-[var(--hero-line)] pb-10 pt-10">
-        <span aria-hidden className="block h-[2px] w-10 bg-[var(--hero-ink)]" />
-        <p className="rw-m mt-3.5 text-[var(--hero-ink-2)]">{p.ctIndexEyebrow}</p>
-        <h1 className="rw-h mt-1.5 text-[clamp(2.125rem,4.4vw,2.875rem)] text-[var(--hero-ink)]">
+    <div className="pb-16">
+      <header style={{ padding: "14px 20px", borderBottom: "1px solid var(--line)" }}>
+        <p className="rw3-label" style={{ margin: 0 }}>
+          {p.ctIndexEyebrow}
+        </p>
+        <h1 className="rw3-title" style={{ margin: "2px 0 0" }}>
           {p.ctIndexTitle}
         </h1>
-        <p className="mt-2.5 max-w-[62ch] text-[15px] leading-[1.55] text-[var(--hero-ink-2)]">
+        <p className="rw3-meta" style={{ margin: "2px 0 0", maxWidth: "62ch" }}>
           {p.ctIndexLede}
         </p>
       </header>
 
       {codes.length ? (
-        <ul className="mt-10 border-t-[1.5px] border-[var(--hero-ink)]">
+        <ul style={{ margin: 0, padding: 0 }}>
           {codes.map((code) => (
-            <li key={code}>
+            <li key={code} style={{ listStyle: "none" }}>
               <Link
                 href={countryPath(params.locale, code)}
-                className="rw-row flex items-baseline justify-between gap-x-4 border-b border-[var(--hero-line)] py-4 pl-3.5"
+                className="rw3-hoverable flex items-baseline justify-between gap-x-4"
+                style={{ padding: "10px 20px", borderBottom: "1px solid var(--line)" }}
               >
-                <span className="flex items-center gap-2.5 text-[15px] font-semibold tracking-[-0.01em] text-[var(--hero-ink)]">
+                <span className="flex items-center gap-2.5 text-[13px] font-semibold">
                   <CountryFlagIcon code={code} />
                   {countryName(code)}
                 </span>
-                <span className="rw-m text-[var(--hero-ink-2)]">{code}</span>
+                <span className="rw3-meta">{code}</span>
               </Link>
             </li>
           ))}
         </ul>
       ) : (
         <p
-          className="mt-10 max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]"
+          className="max-w-[52ch] pl-4 text-[13px] leading-relaxed"
+          style={{
+            margin: "16px 20px 0",
+            borderLeft: "2px solid var(--line)",
+            color: "var(--muted)",
+          }}
           role="status"
         >
           {p.ctIndexEmpty}
         </p>
       )}
-      <p className="rw-m mt-8 normal-case tracking-[0.04em] text-[var(--hero-ink-2)]">
+      <p className="rw3-meta" style={{ padding: "10px 20px", margin: 0 }}>
         {countriesIndexPath(params.locale)}
       </p>
     </div>

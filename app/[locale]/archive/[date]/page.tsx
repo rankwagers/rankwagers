@@ -94,7 +94,7 @@ export default async function ArchiveDayPage({
   };
 
   return (
-    <div className="rw-hero container-wide bg-[var(--hero-canvas)] pb-24">
+    <div style={{ paddingBottom: 48 }}>
       <ArchiveViewTracker locale={params.locale} kind="day" date={params.date} />
       <JsonLd
         data={archiveDayWebPageLd({
@@ -111,44 +111,43 @@ export default async function ArchiveDayPage({
       />
       <JsonLd data={archiveDayBreadcrumbLd(params.locale, params.date)} />
 
-      <nav aria-label="Breadcrumb" className="rw-m pt-5 text-[var(--hero-ink-2)]">
-        <Link href={`/${params.locale}`} className="hover:text-[var(--hero-ink)]">
+      <nav aria-label="Breadcrumb" className="rw3-meta" style={{ padding: "12px 20px 0" }}>
+        <Link href={`/${params.locale}`} className="hover:text-[var(--text)]">
           {p.nvHome}
         </Link>
         <span className="mx-1.5" aria-hidden>
           /
         </span>
-        <Link href={archiveIndexPath(params.locale)} className="hover:text-[var(--hero-ink)]">
+        <Link href={archiveIndexPath(params.locale)} className="hover:text-[var(--text)]">
           {p.arcIndexTitle}
         </Link>
         <span className="mx-1.5" aria-hidden>
           /
         </span>
-        <span className="text-[var(--hero-ink)]">{params.date}</span>
+        <span style={{ color: "var(--text)" }}>{params.date}</span>
       </nav>
 
-      <header className="mt-6 border-b border-[var(--hero-line)] pb-10">
-        <span aria-hidden className="block h-[2px] w-10 bg-[var(--hero-ink)]" />
-        <p className="rw-m mt-3.5 text-[var(--hero-ink-2)]">{p.arcDayEyebrow}</p>
-        <h1 className="rw-h mt-1.5 text-[clamp(2.125rem,4.4vw,2.875rem)] text-[var(--hero-ink)]">
+      <header style={{ padding: "14px 20px", borderBottom: "1px solid var(--line)" }}>
+        <p className="rw3-label">{p.arcDayEyebrow}</p>
+        <h1 className="rw3-title" style={{ margin: "2px 0 0" }}>
           {title}
         </h1>
-        <p className="mt-2.5 max-w-[62ch] text-[15px] leading-[1.55] text-[var(--hero-ink-2)]">
+        <p className="rw3-meta" style={{ margin: "2px 0 0", maxWidth: "62ch" }}>
           {p.arcDayLede}
         </p>
       </header>
 
       {/* LEAD + SUPPORTS — the day's verified record, rates paired by construction. */}
-      <div className="mt-14">
+      <div style={{ padding: "20px 20px 0" }}>
         <TransparencyDashboard metrics={metrics} locale={params.locale} p={p} />
       </div>
 
       {/* ROWS — the day's predictions. */}
       <section
-        className="mt-16 border-t border-[var(--hero-line)] pt-12"
         aria-labelledby="day-results-heading"
+        style={{ margin: "32px 0 0", borderTop: "1px solid var(--line)", padding: "20px 20px 0" }}
       >
-        <h2 id="day-results-heading" className="rw-m text-[var(--hero-ink-2)]">
+        <h2 id="day-results-heading" className="rw3-label">
           {formatDict(p.arcDayPredictionsTitle, { date: params.date })}
         </h2>
         <div className="mt-5">

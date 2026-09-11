@@ -135,7 +135,10 @@ test("team: honest absences — enrichment, operators, and no rating language", 
 test("team: the provider average stays in the label register", () => {
   const src = SRC("components/teams/TeamDetailView.tsx");
   const site = src.slice(src.indexOf("averageModelProbability !== null"));
-  assert.match(site.slice(0, 400), /rw-m/);
+  // V3 reconciliation: the law is unchanged — the provider figure renders in
+  // the small muted register, never as a headline number. The v2 marker was
+  // `rw-m`; under Bible V3 that register is `rw3-meta` (12px, var(--muted)).
+  assert.match(site.slice(0, 400), /rw3-meta/);
 });
 
 /* ── dictionary: EN + all 29 locale sets in the same commit ─────────────── */

@@ -967,6 +967,13 @@ export const predictionsEn = {
   v3NActiveOffers: "{n} active offers",
   v3TermsAtOperator: "Each offer's full terms live at the operator.",
   v3OtherMarkets: "Other markets in this match",
+  /* V3 reskin — block H (list families: league rates, team form/H2H, archive period). */
+  v3LeagueRates: "League rates · season to date",
+  v3NMatches: "{n} matches",
+  v3FormLast5: "Form · last 5",
+  v3H2hLast: "Head-to-head · last {n}",
+  v3From: "From",
+  v3To: "To",
 };
 
 export type PredictionStrings = typeof predictionsEn;

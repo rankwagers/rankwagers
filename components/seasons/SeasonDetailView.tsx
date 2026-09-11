@@ -35,7 +35,7 @@ import {
 } from "./SeasonInteractive";
 
 /* ============================================================================
-   THE SEASON PAGE — form-guide conversion, fixture-style hierarchy
+   THE SEASON PAGE — rw3 conversion, fixture-style hierarchy
    ----------------------------------------------------------------------------
    Top-down:
 
@@ -98,9 +98,9 @@ export function SeasonDetailView({
       <JsonLd data={seasonBreadcrumbLd({ season, locale })} />
       {relatedItemList && <JsonLd data={relatedItemList} />}
 
-      <div className="rw-hero container-wide bg-[var(--hero-canvas)] pb-24">
-        <nav aria-label="Breadcrumb" className="rw-m pt-5 text-[var(--hero-ink-2)]">
-          <Link href={`/${locale}`} className="hover:text-[var(--hero-ink)]">
+      <div className="pb-16">
+        <nav aria-label="Breadcrumb" className="rw3-meta px-5 pt-3">
+          <Link href={`/${locale}`} className="hover:text-[var(--text)]">
             {p.nvHome}
           </Link>
           <span className="mx-1.5" aria-hidden>
@@ -108,44 +108,40 @@ export function SeasonDetailView({
           </span>
           <Link
             href={seasonCompetitionHref(locale, season.competitionSlug)}
-            className="hover:text-[var(--hero-ink)]"
+            className="hover:text-[var(--text)]"
           >
             {competition?.name ?? season.competitionSlug}
           </Link>
           <span className="mx-1.5" aria-hidden>
             /
           </span>
-          <Link href={seasonsIndexPath(locale)} className="hover:text-[var(--hero-ink)]">
+          <Link href={seasonsIndexPath(locale)} className="hover:text-[var(--text)]">
             {p.cmpSeasonsTitle}
           </Link>
           <span className="mx-1.5" aria-hidden>
             /
           </span>
-          <span className="text-[var(--hero-ink)]">{season.yearLabel}</span>
+          <span style={{ color: "var(--text)" }}>{season.yearLabel}</span>
         </nav>
 
-        <header className="mt-6 border-b border-[var(--hero-line)] pb-10">
-          <span aria-hidden className="block h-[2px] w-10 bg-[var(--hero-ink)]" />
-          <p className="rw-m mt-3.5 text-[var(--hero-ink-2)]">
+        <header style={{ padding: "14px 20px", borderBottom: "1px solid var(--line)" }}>
+          <p className="rw3-label" style={{ margin: 0 }}>
             {p.ssnEyebrow} · {season.active ? p.ssnCurrent : p.ssnArchived}
             {season.countryCode ? ` · ${countryName(season.countryCode)}` : ""}
           </p>
-          <h1 className="rw-h mt-1.5 text-[clamp(2.125rem,4.4vw,2.875rem)] text-[var(--hero-ink)]">
+          <h1 className="rw3-title" style={{ margin: "2px 0 0" }}>
             {season.displayName}
           </h1>
-          <p className="rw-m mt-3 text-[var(--hero-ink-2)]">
+          <p className="rw3-meta" style={{ margin: "2px 0 0" }}>
             {formatDict(p.ssnWindowLine, { start: season.startDate, end: season.endDate })}
           </p>
         </header>
 
         {/* LEAD — omitted whole on an empty research set (the empty-state law). */}
         {total > 0 ? (
-          <section aria-labelledby="ssn-lead-heading" className="mt-14">
-            <p className="rw-m text-[var(--hero-ink-2)]">{p.mktLeadEyebrow}</p>
-            <h2
-              id="ssn-lead-heading"
-              className="rw-h mt-2.5 max-w-[30ch] text-[clamp(1.6rem,3.6vw,2.4rem)] text-[var(--hero-ink)]"
-            >
+          <section aria-labelledby="ssn-lead-heading" className="mt-8 px-5">
+            <p className="rw3-label">{p.mktLeadEyebrow}</p>
+            <h2 id="ssn-lead-heading" className="mt-2 max-w-[44ch] text-[14px] font-semibold">
               {formatDict(p.ssnLeadLine, {
                 count: String(total),
                 fixtures: String(intelligence.uniqueMatchCount),
@@ -156,33 +152,31 @@ export function SeasonDetailView({
 
         {/* SUPPORTS — the sample's shape, counts only, provider figure demoted. */}
         {total > 0 ? (
-          <section aria-labelledby="ssn-supports-heading" className="mt-12">
-            <h2 id="ssn-supports-heading" className="rw-m text-[var(--hero-ink-2)]">
+          <section aria-labelledby="ssn-supports-heading" className="mt-8 px-5">
+            <h2 id="ssn-supports-heading" className="rw3-label">
               {p.mktSupportsTitle}
             </h2>
-            <p className="mt-1.5 max-w-[52ch] text-[13px] leading-relaxed text-[var(--hero-ink-2)]">
-              {p.mktSupportsNote}
-            </p>
-            <ul className="mt-5 border-t-[1.5px] border-[var(--hero-ink)]">
+            <p className="rw3-meta mt-1.5 max-w-[52ch]">{p.mktSupportsNote}</p>
+            <ul className="mt-4 border-t border-[var(--line)]">
               {intelligence.participatingTeamCount > 0 ? (
-                <li className="rw-row border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] text-[var(--hero-ink)]">
+                <li className="border-b border-[var(--line)] py-2.5 text-[13px]">
                   {formatDict(p.ssnTeamsCountLine, {
                     n: String(intelligence.participatingTeamCount),
                   })}
                 </li>
               ) : null}
               {intelligence.upcomingCount > 0 ? (
-                <li className="rw-row border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] text-[var(--hero-ink)]">
+                <li className="border-b border-[var(--line)] py-2.5 text-[13px]">
                   {formatDict(p.ssnUpcomingRowsLine, { n: String(intelligence.upcomingCount) })}
                 </li>
               ) : null}
               {intelligence.completedCount > 0 ? (
-                <li className="rw-row border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] text-[var(--hero-ink)]">
+                <li className="border-b border-[var(--line)] py-2.5 text-[13px]">
                   {formatDict(p.ssnCompletedRowsLine, { n: String(intelligence.completedCount) })}
                 </li>
               ) : null}
               {intelligence.homeRows + intelligence.awayRows > 0 ? (
-                <li className="rw-row border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] text-[var(--hero-ink)]">
+                <li className="border-b border-[var(--line)] py-2.5 text-[13px]">
                   {formatDict(p.ssnHomeAwayLine, {
                     home: String(intelligence.homeRows),
                     away: String(intelligence.awayRows),
@@ -191,7 +185,7 @@ export function SeasonDetailView({
               ) : null}
             </ul>
             {intelligence.averageModelProbability !== null ? (
-              <p className="rw-m mt-4 normal-case tracking-[0.04em] text-[var(--hero-ink-2)]">
+              <p className="rw3-meta mt-3">
                 {formatDict(p.mktProviderAvgLine, {
                   pct: String(Math.round(intelligence.averageModelProbability)),
                 })}
@@ -203,9 +197,9 @@ export function SeasonDetailView({
         {/* FIXTURES — upcoming, then recent. Honest empties. */}
         <section
           aria-labelledby="ssn-upcoming-heading"
-          className="mt-16 border-t border-[var(--hero-line)] pt-12"
+          className="mt-10 border-t border-[var(--line)] px-5 pt-6"
         >
-          <h2 id="ssn-upcoming-heading" className="rw-m text-[var(--hero-ink-2)]">
+          <h2 id="ssn-upcoming-heading" className="rw3-label">
             {p.cmpUpcomingTitle}
           </h2>
           <FixtureRows
@@ -217,13 +211,11 @@ export function SeasonDetailView({
           />
         </section>
 
-        <section aria-labelledby="ssn-recent-heading" className="mt-12">
-          <h2 id="ssn-recent-heading" className="rw-m text-[var(--hero-ink-2)]">
+        <section aria-labelledby="ssn-recent-heading" className="mt-8 px-5">
+          <h2 id="ssn-recent-heading" className="rw3-label">
             {p.cmpRecentTitle}
           </h2>
-          <p className="mt-1.5 max-w-[52ch] text-[13px] leading-relaxed text-[var(--hero-ink-2)]">
-            {p.cmpRecentNote}
-          </p>
+          <p className="rw3-meta mt-1.5 max-w-[52ch]">{p.cmpRecentNote}</p>
           <FixtureRows
             fixtures={recent}
             season={season}
@@ -236,16 +228,19 @@ export function SeasonDetailView({
         {/* DETAIL — teams, market activity, evidence, honest enrichment absence. */}
         <section
           aria-labelledby="ssn-detail-heading"
-          className="mt-16 border-t border-[var(--hero-line)] pt-12"
+          className="mt-10 border-t border-[var(--line)] px-5 pt-6"
         >
-          <h2 id="ssn-detail-heading" className="rw-m text-[var(--hero-ink-2)]">
+          <h2 id="ssn-detail-heading" className="rw3-label">
             {p.ssnDetailTitle}
           </h2>
 
-          <div className="mt-6">
-            <h3 className="rw-label text-[var(--hero-ink-2)]">{p.ssnTeamsTitle}</h3>
+          <div className="mt-5">
+            <h3 className="rw3-label">{p.ssnTeamsTitle}</h3>
             {teams.length === 0 ? (
-              <p className="mt-2.5 max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]">
+              <p
+                className="mt-2.5 max-w-[52ch] border-l-2 border-[var(--line)] py-1 pl-4 text-[13px] leading-relaxed"
+                style={{ color: "var(--muted)" }}
+              >
                 {p.ssnTeamsEmpty}
               </p>
             ) : (
@@ -258,7 +253,7 @@ export function SeasonDetailView({
                       competitionSlug={season.competitionSlug}
                       teamSlug={team.slug}
                       locale={locale}
-                      className="rw-m inline-flex border border-[var(--hero-line)] px-2.5 py-1 text-[var(--hero-ink)] transition-colors hover:border-[var(--hero-ink)]"
+                      className="rw3-pill hover:border-[var(--text)]"
                     >
                       {team.name}
                     </SeasonTeamLink>
@@ -268,18 +263,21 @@ export function SeasonDetailView({
             )}
           </div>
 
-          <div className="mt-8">
-            <h3 className="rw-label text-[var(--hero-ink-2)]">{p.cmpMarketActivityTitle}</h3>
+          <div className="mt-6">
+            <h3 className="rw3-label">{p.cmpMarketActivityTitle}</h3>
             {intelligence.marketProfile.length === 0 ? (
-              <p className="mt-2.5 max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]">
+              <p
+                className="mt-2.5 max-w-[52ch] border-l-2 border-[var(--line)] py-1 pl-4 text-[13px] leading-relaxed"
+                style={{ color: "var(--muted)" }}
+              >
                 {p.cmpMarketActivityEmpty}
               </p>
             ) : (
-              <ul className="mt-2.5 border-t border-[var(--hero-line)]">
+              <ul className="mt-2.5 border-t border-[var(--line)]">
                 {intelligence.marketProfile.map((row) => (
                   <li
                     key={row.marketSlug}
-                    className="rw-row flex flex-wrap items-baseline justify-between gap-x-4 border-b border-[var(--hero-line)] py-2.5 pl-3.5"
+                    className="rw3-hoverable flex flex-wrap items-baseline justify-between gap-x-4 border-b border-[var(--line)] py-2.5"
                   >
                     <SeasonMarketLink
                       href={seasonMarketHref(locale, row.marketSlug)}
@@ -287,11 +285,11 @@ export function SeasonDetailView({
                       competitionSlug={season.competitionSlug}
                       marketSlug={row.marketSlug}
                       locale={locale}
-                      className="text-[15px] text-[var(--hero-ink)] underline decoration-[var(--hero-line)] underline-offset-4 hover:decoration-[var(--hero-ink)]"
+                      className="text-[13px] underline decoration-[var(--line)] underline-offset-4 hover:decoration-[var(--text)]"
                     >
                       {row.marketLabel}
                     </SeasonMarketLink>
-                    <span className="rw-m text-[var(--hero-ink-2)]">
+                    <span className="rw3-meta">
                       {row.averageModelProbability !== null
                         ? formatDict(p.cmpRowsProviderMeta, {
                             n: String(row.qualifiedCount),
@@ -305,16 +303,19 @@ export function SeasonDetailView({
             )}
           </div>
 
-          <div className="mt-8">
+          <div className="mt-6">
             <EvidenceSection bundle={evidenceBundle} locale={locale} country={visitorCountry} />
           </div>
 
           {!intelligence.hasGoalEnrichment ? (
-            <p className="mt-8 max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]">
+            <p
+              className="mt-6 max-w-[52ch] border-l-2 border-[var(--line)] py-1 pl-4 text-[13px] leading-relaxed"
+              style={{ color: "var(--muted)" }}
+            >
               {p.ssnEnrichmentAbsent}{" "}
               <Link
                 href={seasonEvidenceHref(locale)}
-                className="underline decoration-[var(--hero-line)] underline-offset-4 hover:decoration-[var(--hero-ink)]"
+                className="underline decoration-[var(--line)] underline-offset-4 hover:decoration-[var(--text)]"
               >
                 {p.cmpMethodologyLink}
               </Link>
@@ -334,21 +335,24 @@ export function SeasonDetailView({
         {/* LAST — the single commercial block. */}
         <section
           aria-labelledby="ssn-operators-heading"
-          className="mt-16 border-t border-[var(--hero-line)] pt-12"
+          className="mt-10 border-t border-[var(--line)] px-5 pt-6"
         >
-          <h2 id="ssn-operators-heading" className="rw-m text-[var(--hero-ink-2)]">
+          <h2 id="ssn-operators-heading" className="rw3-label">
             {p.ssnOperatorsTitle}
           </h2>
           {operators.length === 0 ? (
-            <p className="mt-4 max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]">
+            <p
+              className="mt-3 max-w-[52ch] border-l-2 border-[var(--line)] py-1 pl-4 text-[13px] leading-relaxed"
+              style={{ color: "var(--muted)" }}
+            >
               {p.ssnOperatorsEmpty}
             </p>
           ) : (
-            <ul className="mt-5 border-t border-[var(--hero-line)]">
+            <ul className="mt-3 border-t border-[var(--line)]">
               {operators.slice(0, 8).map(({ operator, availability }) => (
                 <li
                   key={operator.slug}
-                  className="rw-row flex flex-wrap items-baseline justify-between gap-x-4 border-b border-[var(--hero-line)] py-2.5 pl-3.5"
+                  className="rw3-hoverable flex flex-wrap items-baseline justify-between gap-x-4 border-b border-[var(--line)] py-2.5"
                 >
                   <SeasonOperatorLink
                     href={seasonOperatorHref(locale, operator.slug)}
@@ -356,18 +360,16 @@ export function SeasonDetailView({
                     competitionSlug={season.competitionSlug}
                     operatorSlug={operator.slug}
                     locale={locale}
-                    className="text-[15px] text-[var(--hero-ink)] underline decoration-[var(--hero-line)] underline-offset-4 hover:decoration-[var(--hero-ink)]"
+                    className="text-[13px] underline decoration-[var(--line)] underline-offset-4 hover:decoration-[var(--text)]"
                   >
                     {operator.name}
                   </SeasonOperatorLink>
-                  <span className="rw-m text-[var(--hero-ink-2)]">{availability.label}</span>
+                  <span className="rw3-meta">{availability.label}</span>
                 </li>
               ))}
             </ul>
           )}
-          <p className="rw-m mt-3 normal-case tracking-[0.04em] text-[var(--hero-ink-2)]">
-            {p.fxOperatorsNote}
-          </p>
+          <p className="rw3-meta mt-3">{p.fxOperatorsNote}</p>
         </section>
       </div>
     </>
@@ -389,16 +391,19 @@ function FixtureRows({
 }) {
   if (!fixtures.length) {
     return (
-      <p className="mt-4 max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]">
+      <p
+        className="mt-3 max-w-[52ch] border-l-2 border-[var(--line)] py-1 pl-4 text-[13px] leading-relaxed"
+        style={{ color: "var(--muted)" }}
+      >
         {empty}
       </p>
     );
   }
   return (
-    <ul className="mt-5 border-t-[1.5px] border-[var(--hero-ink)]">
+    <ul className="mt-3 border-t border-[var(--line)]">
       {fixtures.map((fixture) => (
         <li key={fixture.id}>
-          <div className="rw-row grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-4 border-b border-[var(--hero-line)] py-3 pl-3.5">
+          <div className="rw3-hoverable grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-4 border-b border-[var(--line)] py-3">
             <div className="min-w-0">
               <SeasonFixtureLink
                 href={seasonFixtureHref(locale)}
@@ -406,21 +411,21 @@ function FixtureRows({
                 competitionSlug={season.competitionSlug}
                 fixtureId={fixture.matchId}
                 locale={locale}
-                className="text-[var(--hero-ink)] underline decoration-[var(--hero-line)] underline-offset-4 hover:decoration-[var(--hero-ink)]"
+                className="underline decoration-[var(--line)] underline-offset-4 hover:decoration-[var(--text)]"
               >
-                <span className="text-[14px] font-semibold tracking-[-0.01em]">
+                <span className="text-[14px] font-semibold">
                   {fixture.home} v {fixture.away}
                 </span>
               </SeasonFixtureLink>
-              <p className="rw-m mt-1 text-[var(--hero-ink-2)]">
+              <p className="rw3-meta mt-1">
                 {fixture.league} · {fixture.market} · {fixture.kickoff}
               </p>
             </div>
             <p className="shrink-0 text-right">
-              <span className="rw-tnum text-[15px] font-bold text-[var(--hero-ink)]">
-                {fixture.modelProbability}%
+              <span className="rw3-pct">{fixture.modelProbability}%</span>
+              <span className="block" style={{ fontSize: 11, color: "var(--muted)" }}>
+                {potentialLabel}
               </span>
-              <span className="rw-m block text-[var(--hero-ink-2)]">{potentialLabel}</span>
             </p>
           </div>
         </li>

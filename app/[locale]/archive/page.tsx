@@ -21,7 +21,7 @@ import { formatDict } from "@/lib/dictionaryExtras";
 import { pageMetadata } from "@/lib/seo";
 
 /* ============================================================================
-   THE ARCHIVE HUB — form-guide conversion, fixture-style hierarchy
+   THE ARCHIVE HUB — rw3 conversion, fixture-style hierarchy
    ----------------------------------------------------------------------------
    LEAD      the verified record itself — of the settled predictions, how many
              won and lost, the percentage computed from that printed fraction.
@@ -80,7 +80,7 @@ export default async function ArchiveHubPage({
   };
 
   return (
-    <div className="rw-hero container-wide bg-[var(--hero-canvas)] pb-24">
+    <div style={{ paddingBottom: 48 }}>
       <ArchiveViewTracker locale={params.locale} kind="hub" />
       <JsonLd
         data={archiveHubWebPageLd({
@@ -91,38 +91,37 @@ export default async function ArchiveHubPage({
       />
       <JsonLd data={archiveHubBreadcrumbLd(params.locale)} />
 
-      <nav aria-label="Breadcrumb" className="rw-m pt-5 text-[var(--hero-ink-2)]">
-        <Link href={`/${params.locale}`} className="hover:text-[var(--hero-ink)]">
+      <nav aria-label="Breadcrumb" className="rw3-meta" style={{ padding: "12px 20px 0" }}>
+        <Link href={`/${params.locale}`} className="hover:text-[var(--text)]">
           {p.nvHome}
         </Link>
         <span className="mx-1.5" aria-hidden>
           /
         </span>
-        <span className="text-[var(--hero-ink)]">{p.arcIndexTitle}</span>
+        <span style={{ color: "var(--text)" }}>{p.arcIndexTitle}</span>
       </nav>
 
-      <header className="mt-6 border-b border-[var(--hero-line)] pb-10">
-        <span aria-hidden className="block h-[2px] w-10 bg-[var(--hero-ink)]" />
-        <p className="rw-m mt-3.5 text-[var(--hero-ink-2)]">{p.arcIndexEyebrow}</p>
-        <h1 className="rw-h mt-1.5 text-[clamp(2.125rem,4.4vw,2.875rem)] text-[var(--hero-ink)]">
+      <header style={{ padding: "14px 20px", borderBottom: "1px solid var(--line)" }}>
+        <p className="rw3-label">{p.arcIndexEyebrow}</p>
+        <h1 className="rw3-title" style={{ margin: "2px 0 0" }}>
           {p.arcIndexTitle}
         </h1>
-        <p className="mt-2.5 max-w-[62ch] text-[15px] leading-[1.55] text-[var(--hero-ink-2)]">
+        <p className="rw3-meta" style={{ margin: "2px 0 0", maxWidth: "62ch" }}>
           {p.arcIndexLede}
         </p>
       </header>
 
       {/* LEAD + SUPPORTS — the verified record, rates paired by construction. */}
-      <div className="mt-14">
+      <div style={{ padding: "20px 20px 0" }}>
         <TransparencyDashboard metrics={metrics} locale={params.locale} p={p} />
       </div>
 
       {/* ROWS — the predictions themselves. */}
       <section
-        className="mt-16 border-t border-[var(--hero-line)] pt-12"
         aria-labelledby="archive-results-heading"
+        style={{ margin: "32px 0 0", borderTop: "1px solid var(--line)", padding: "20px 20px 0" }}
       >
-        <h2 id="archive-results-heading" className="rw-m text-[var(--hero-ink-2)]">
+        <h2 id="archive-results-heading" className="rw3-label">
           {p.arcBrowseTitle}
         </h2>
         <div className="mt-5">
@@ -133,7 +132,7 @@ export default async function ArchiveHubPage({
             p={p}
           />
         </div>
-        <p className="rw-m mt-4 text-[var(--hero-ink-2)]" role="status">
+        <p className="rw3-meta mt-4" role="status">
           {formatDict(p.arcShowingLine, {
             shown: String(page.records.length),
             total: String(page.total),
@@ -159,27 +158,27 @@ export default async function ArchiveHubPage({
 
       {/* DETAIL — the day chips. */}
       <section
-        className="mt-16 border-t border-[var(--hero-line)] pt-12"
         aria-labelledby="archive-days-heading"
+        style={{ margin: "32px 0 0", borderTop: "1px solid var(--line)", padding: "20px 20px 0" }}
       >
-        <h2 id="archive-days-heading" className="rw-m text-[var(--hero-ink-2)]">
+        <h2 id="archive-days-heading" className="rw3-label">
           {p.arcDaysTitle}
         </h2>
         {dates.length ? (
           <ul className="mt-4 flex flex-wrap gap-2">
             {dates.slice(0, 24).map((date) => (
               <li key={date}>
-                <Link
-                  href={archiveDayPath(params.locale, date)}
-                  className="rw-m inline-flex min-h-9 items-center border border-[var(--hero-line)] px-3 text-[var(--hero-ink)] transition-colors hover:border-[var(--hero-ink)]"
-                >
+                <Link href={archiveDayPath(params.locale, date)} className="rw3-ghost">
                   {date}
                 </Link>
               </li>
             ))}
           </ul>
         ) : (
-          <p className="mt-4 max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]">
+          <p
+            className="mt-4 max-w-[52ch] py-1 pl-5 text-[13px]"
+            style={{ borderLeft: "2px solid var(--line)", color: "var(--muted)" }}
+          >
             {p.arcDaysEmpty}
           </p>
         )}

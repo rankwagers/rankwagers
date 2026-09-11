@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Search } from "lucide-react";
+import { Icon } from "@/components/v3/Icon";
 import {
  FormEvent,
  KeyboardEvent,
@@ -302,10 +302,13 @@ export function GlobalSearch({
  <label htmlFor={inputId} className="sr-only">
  Search fixtures, teams, competitions, markets, countries, and bookmakers
  </label>
- <Search
- className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground"
+ <span
+ className="pointer-events-none absolute left-2.5 top-1/2 -translate-y-1/2"
+ style={{ color: "var(--muted)", lineHeight: 0 }}
  aria-hidden
- />
+ >
+ <Icon name="search" size={14} />
+ </span>
  <input
  id={inputId}
  type="search"
@@ -327,7 +330,13 @@ export function GlobalSearch({
  }}
  onFocus={trackOpen}
  onKeyDown={handleKeyDown}
- className={`${widthClass} min-h-10 rounded-md border border-border bg-muted py-1.5 pl-8 pr-3 text-sm text-foreground transition-colors placeholder:text-muted-foreground focus:border-brand focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand`}
+ className={`${widthClass} min-h-10 py-1.5 pl-8 pr-3 text-[13px] transition-colors placeholder:text-[var(--muted)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--text)]`}
+ style={{
+ background: "var(--surface)",
+ border: "1px solid var(--line)",
+ borderRadius: 6,
+ color: "var(--text)",
+ }}
  placeholder="Search entities"
  aria-label="Search fixtures, teams, competitions, markets, countries, and bookmakers"
  />
@@ -339,16 +348,21 @@ export function GlobalSearch({
  id={listboxId}
  role="listbox"
  aria-label="Search results"
- className={`absolute ${variant === "mobile" ? "left-0 right-0" : "right-0"} top-full z-50 mt-2 max-h-96 w-full min-w-[20rem] overflow-auto rounded-md border border-border bg-[var(--canvas-secondary)] shadow-elevated`}
+ className={`absolute ${variant === "mobile" ? "left-0 right-0" : "right-0"} top-full z-50 mt-2 max-h-96 w-full min-w-[20rem] overflow-auto`}
+ style={{
+ background: "var(--surface)",
+ border: "1px solid var(--line)",
+ borderRadius: 6,
+ }}
  >
  {loading && !flatResults.length ? (
- <p className="px-3 py-3 text-sm text-muted-foreground" role="status">
+ <p className="px-3 py-3 text-[13px]" style={{ color: "var(--muted)" }} role="status">
  Searching…
  </p>
  ) : groupedEntries.length ? (
  groupedEntries.map(({ groupKey, rows }) => (
  <div key={groupKey} role="group" aria-label={groupLabels[groupKey]}>
- <p className="sticky top-0 bg-[var(--canvas-secondary)] px-3 py-1.5 text-metadata font-medium uppercase tracking-label text-muted-foreground">
+ <p className="rw3-label sticky top-0 px-3 py-1.5" style={{ background: "var(--surface)" }}>
  {groupLabels[groupKey]}
  </p>
  {rows.map(({ result, index }) => {
@@ -364,14 +378,12 @@ export function GlobalSearch({
  event.preventDefault();
  selectResult(result, index);
  }}
- className={`block border-b border-border px-3 py-2 text-sm last:border-0 ${
- active
- ? "bg-[var(--green-surface)] text-foreground"
- : "text-foreground hover:bg-[var(--green-surface)]"
+ className={`block border-b border-[var(--line)] px-3 py-2 text-[13px] text-[var(--text)] last:border-0 ${
+ active ? "bg-[var(--hover)]" : "hover:bg-[var(--hover)]"
  }`}
  >
  <HighlightMatch text={result.title} query={query} />
- <span className="mt-0.5 block text-metadata text-muted-foreground">
+ <span className="rw3-meta mt-0.5 block">
  {groupLabels[groupKey]}
  </span>
  </Link>
@@ -380,17 +392,18 @@ export function GlobalSearch({
  </div>
  ))
  ) : (
- <div className="px-3 py-3 text-sm text-muted-foreground">
+ <div className="px-3 py-3 text-[13px]" style={{ color: "var(--muted)" }}>
  <p role="status">No matching entities for “{query.trim()}”.</p>
  {recentQueries.length ? (
  <div className="mt-3">
- <p className="text-metadata font-medium uppercase tracking-label">Recent searches</p>
+ <p className="rw3-label">Recent searches</p>
  <ul className="mt-1 space-y-1">
  {recentQueries.slice(0, 5).map((recent) => (
  <li key={recent}>
  <button
  type="button"
- className="text-left text-brand underline-offset-2 hover:underline"
+ className="text-left underline-offset-2 hover:underline"
+ style={{ color: "var(--accent)" }}
  onClick={() => {
  setQuery(recent);
  runSearch(recent);
@@ -405,7 +418,8 @@ export function GlobalSearch({
  ) : null}
  <button
  type="button"
- className="mt-3 text-brand underline-offset-2 hover:underline"
+ className="mt-3 underline-offset-2 hover:underline"
+ style={{ color: "var(--accent)" }}
  onClick={() => goToSearchPage(query)}
  >
  Open full search

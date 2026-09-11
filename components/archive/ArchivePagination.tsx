@@ -30,28 +30,20 @@ export function ArchivePagination({
 
   return (
     <nav
-      className="mt-5 flex flex-wrap items-baseline justify-between gap-3 text-sm"
+      className="mt-5 flex flex-wrap items-baseline justify-between gap-3 text-[13px]"
       aria-label={p.arcIndexTitle}
     >
-      <p className="rw-m text-[var(--hero-ink-2)]">
+      <p className="rw3-meta">
         {formatDict(p.arcPageOf, { page: String(page), total: String(pageCount) })}
       </p>
       <div className="flex gap-2">
         {page > 1 ? (
-          <Link
-            href={hrefFor(page - 1)}
-            className="rw-m inline-flex min-h-10 items-center border border-[var(--hero-line)] px-3.5 text-[var(--hero-ink)] transition-colors hover:border-[var(--hero-ink)]"
-            rel="prev"
-          >
+          <Link href={hrefFor(page - 1)} className="rw3-ghost" rel="prev">
             {p.arcPrev}
           </Link>
         ) : null}
         {page < pageCount ? (
-          <Link
-            href={hrefFor(page + 1)}
-            className="rw-m inline-flex min-h-10 items-center border border-[var(--hero-line)] px-3.5 text-[var(--hero-ink)] transition-colors hover:border-[var(--hero-ink)]"
-            rel="next"
-          >
+          <Link href={hrefFor(page + 1)} className="rw3-ghost" rel="next">
             {p.arcNext}
           </Link>
         ) : null}

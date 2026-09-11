@@ -76,6 +76,9 @@ export type ArchiveFilters = {
   competition?: string;
   team?: string;
   q?: string;
+  /** Period picker (Bible V3 block H): inclusive YYYY-MM-DD bounds on the record's date. */
+  from?: string;
+  to?: string;
 };
 
 export type ArchivePageResult = {

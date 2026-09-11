@@ -19,10 +19,11 @@ import { predictionsByLocale } from "../lib/translations/predictionsLocales";
 
 const V3_KEYS = Object.keys(predictionsEn).filter((k) => /^v3[A-Z]/.test(k));
 
-test("the v3 family is exactly 59 keys", () => {
-  // 55 born with the shell (block B) + 4 born with block D (free bets
-  // surface title/count/terms + the match aside's other-markets label).
-  assert.equal(V3_KEYS.length, 59, "the family changed size — re-derive this pin deliberately");
+test("the v3 family is exactly 65 keys", () => {
+  // 55 born with the shell (block B) + 4 with block D (free bets surface,
+  // match aside) + 6 with block H (league rates, team form/H2H labels,
+  // the archive period picker's From/To).
+  assert.equal(V3_KEYS.length, 65, "the family changed size — re-derive this pin deliberately");
 });
 
 test("all 30 locales resolve every v3 key non-empty", () => {
@@ -49,6 +50,8 @@ const PLACEHOLDERS: Record<string, string[]> = {
   v3EmptyMatchesTomorrow: ["{n}", "{time}"],
   v3EmptySnapshotLine: ["{time}"],
   v3NActiveOffers: ["{n}"],
+  v3NMatches: ["{n}"],
+  v3H2hLast: ["{n}"],
 };
 
 test("every locale preserves the family's placeholders", () => {

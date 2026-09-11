@@ -12,6 +12,7 @@ import {
   upcomingTeamFixtures,
 } from "@/lib/teams/intelligence";
 import { operatorsForTeam } from "@/lib/teams/operators";
+import { buildTeamResearch } from "@/lib/v3/teamResearch.server";
 import { assertPublicEntity } from "@/lib/data-quality/pipeline";
 import { getTeam, teamSlugs } from "@/lib/teams/registry";
 import { teamMetadata } from "@/lib/teams/seo";
@@ -56,6 +57,8 @@ export default async function TeamDetailPage({
   const upcoming = upcomingTeamFixtures(team, fixtures, 8);
   const recent = recentTeamFixtures(team, fixtures, 6);
   const operators = operatorsForTeam(team, countryContext.country);
+  /* Block H: venue form + H2H from the team's own board fixture (null omits). */
+  const research = await buildTeamResearch(team, fixtures, params.locale);
 
   return (
     <TeamDetailView
@@ -67,6 +70,7 @@ export default async function TeamDetailPage({
       operators={operators}
       visitorCountry={countryContext.country}
       p={getDictionary(params.locale).predictions}
+      research={research}
     />
   );
 }

@@ -3,7 +3,7 @@ import type { QualifiedFixture } from "@/lib/research/qualifiedFixture";
 import { normalizeTeamName, resolveTeam } from "./resolver";
 import type { TeamEntity, TeamIntelligence, TeamMarketProfileRow } from "./types";
 
-function sideMatchesTeam(team: TeamEntity, sideName: string): boolean {
+export function sideMatchesTeam(team: TeamEntity, sideName: string): boolean {
   const result = resolveTeam([team], { name: sideName });
   if (result.status === "matched") return true;
   const normalized = normalizeTeamName(sideName);

@@ -29,6 +29,16 @@ export function generateMetadata({
   });
 }
 
+const FIELD_STYLE = {
+  background: "var(--bg)",
+  border: "1px solid var(--line)",
+  borderRadius: 6,
+  color: "var(--text)",
+  fontSize: 13,
+  padding: "6px 8px",
+  width: "100%",
+} as const;
+
 export default function SeasonsIndexPage({
   params,
   searchParams,
@@ -64,124 +74,127 @@ export default function SeasonsIndexPage({
   return (
     <>
       <JsonLd data={seasonsIndexLd({ locale: params.locale, seasons: all })} />
-      <div className="container-wide pb-16 pt-5">
-        <section className="border-b border-[var(--border-subtle)] pb-8">
-          <p className="text-metadata font-medium uppercase tracking-label text-brand">
-            Season intelligence
-          </p>
-          <h1 className="mt-3 font-display text-3xl font-semibold tracking-display text-foreground md:text-4xl">
-            Seasons
-          </h1>
-          <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--ink-secondary)] md:text-base">
-            Canonical season research hubs connecting competitions, teams, fixtures, markets, and
-            operators. Factual relationships only — no standings or tipster content.
-          </p>
-        </section>
+      <header style={{ padding: "14px 20px", borderBottom: "1px solid var(--line)" }}>
+        <p className="rw3-label">Season intelligence</p>
+        <h1 className="rw3-title" style={{ margin: "2px 0 0" }}>
+          Seasons
+        </h1>
+        <p className="rw3-meta" style={{ margin: "2px 0 0", maxWidth: "62ch" }}>
+          Canonical season research hubs connecting competitions, teams, fixtures, markets, and
+          operators. Factual relationships only — no standings or tipster content.
+        </p>
+      </header>
 
-        <form
-          className="mt-8 grid gap-3 border-b border-[var(--border-subtle)] pb-8 md:grid-cols-3"
-          action={seasonsIndexPath(params.locale)}
-          method="get"
-          role="search"
-          aria-label="Filter seasons"
-        >
-          <label className="block text-sm">
-            <span className="text-metadata font-semibold uppercase tracking-label text-muted-foreground">
-              Search
-            </span>
-            <input
-              type="search"
-              name="q"
-              defaultValue={searchParams?.q ?? ""}
-              placeholder="Competition or season"
-              className="mt-1.5 w-full rounded-md border border-border bg-[var(--canvas-secondary)] px-3 py-2 text-sm text-foreground"
-            />
-          </label>
-          <label className="block text-sm">
-            <span className="text-metadata font-semibold uppercase tracking-label text-muted-foreground">
-              Competition
-            </span>
-            <select
-              name="competition"
-              defaultValue={competitionFilter}
-              className="mt-1.5 w-full rounded-md border border-border bg-[var(--canvas-secondary)] px-3 py-2 text-sm text-foreground"
-            >
-              <option value="">All competitions</option>
-              {competitions.map((slug) => (
-                <option key={slug} value={slug}>
-                  {getCompetition(slug)?.name ?? slug}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="block text-sm">
-            <span className="text-metadata font-semibold uppercase tracking-label text-muted-foreground">
-              Country
-            </span>
-            <select
-              name="country"
-              defaultValue={countryFilter}
-              className="mt-1.5 w-full rounded-md border border-border bg-[var(--canvas-secondary)] px-3 py-2 text-sm text-foreground"
-            >
-              <option value="">All countries</option>
-              {countries.map((code) => (
-                <option key={code} value={code}>
-                  {countryName(code)}
-                </option>
-              ))}
-            </select>
-          </label>
-          <div className="md:col-span-3">
-            <button type="submit" className="btn-primary">
-              Apply filters
-            </button>
-          </div>
-        </form>
-
-        {seasons.length === 0 ? (
-          <div className="mt-8">
-            <EmptyState
-              title="No seasons match these filters"
-              description="Clear search or filters to browse the full canonical season registry."
-              action={
-                <Link href={seasonsIndexPath(params.locale)} className="btn-ghost">
-                  Reset filters
-                </Link>
-              }
-            />
-          </div>
-        ) : (
-          <ul className="mt-8 divide-y divide-[var(--border-subtle)] border-y border-[var(--border-subtle)]">
-            {seasons.map((season) => (
-              <li key={season.id}>
-                <Link
-                  href={seasonPath(params.locale, season.competitionSlug, season.slug)}
-                  className="block py-4 transition-colors hover:bg-[var(--canvas-secondary)]"
-                >
-                  <div className="flex flex-wrap items-baseline justify-between gap-2">
-                    <p className="font-semibold text-foreground">{season.displayName}</p>
-                    <span className="flex items-center gap-1.5 text-metadata uppercase tracking-label text-muted-foreground">
-                      {season.active ? "Current" : "Archived"}
-                      {season.countryCode ? (
-                        <>
-                          {" · "}
-                          <CountryFlagIcon code={season.countryCode} />
-                          {countryName(season.countryCode)}
-                        </>
-                      ) : null}
-                    </span>
-                  </div>
-                  <p className="mt-1 text-sm text-[var(--ink-secondary)]">
-                    {getCompetition(season.competitionSlug)?.name ?? season.competitionSlug}
-                    {" · "}
-                    {season.startDate} → {season.endDate}
-                  </p>
-                </Link>
-              </li>
+      <form
+        className="grid gap-3 md:grid-cols-3"
+        style={{ padding: "12px 20px", borderBottom: "1px solid var(--line)" }}
+        action={seasonsIndexPath(params.locale)}
+        method="get"
+        role="search"
+        aria-label="Filter seasons"
+      >
+        <label className="block">
+          <span className="rw3-label">Search</span>
+          <input
+            type="search"
+            name="q"
+            defaultValue={searchParams?.q ?? ""}
+            placeholder="Competition or season"
+            style={{ ...FIELD_STYLE, marginTop: 4 }}
+          />
+        </label>
+        <label className="block">
+          <span className="rw3-label">Competition</span>
+          <select
+            name="competition"
+            defaultValue={competitionFilter}
+            style={{ ...FIELD_STYLE, marginTop: 4 }}
+          >
+            <option value="">All competitions</option>
+            {competitions.map((slug) => (
+              <option key={slug} value={slug}>
+                {getCompetition(slug)?.name ?? slug}
+              </option>
             ))}
-          </ul>
-        )}
-      </div>
+          </select>
+        </label>
+        <label className="block">
+          <span className="rw3-label">Country</span>
+          <select
+            name="country"
+            defaultValue={countryFilter}
+            style={{ ...FIELD_STYLE, marginTop: 4 }}
+          >
+            <option value="">All countries</option>
+            {countries.map((code) => (
+              <option key={code} value={code}>
+                {countryName(code)}
+              </option>
+            ))}
+          </select>
+        </label>
+        <div className="md:col-span-3">
+          <button type="submit" className="rw3-ghost" style={{ fontSize: 12, padding: "4px 11px" }}>
+            Apply filters
+          </button>
+        </div>
+      </form>
+
+      {seasons.length === 0 ? (
+        <div style={{ padding: "12px 20px" }}>
+          <EmptyState
+            title="No seasons match these filters"
+            description="Clear search or filters to browse the full canonical season registry."
+            action={
+              <Link
+                href={seasonsIndexPath(params.locale)}
+                className="rw3-ghost"
+                style={{ fontSize: 12, padding: "4px 11px" }}
+              >
+                Reset filters
+              </Link>
+            }
+          />
+        </div>
+      ) : (
+        <ul style={{ margin: 0, padding: 0 }}>
+          {seasons.map((season) => (
+            <li key={season.id} style={{ listStyle: "none" }}>
+              <Link
+                href={seasonPath(params.locale, season.competitionSlug, season.slug)}
+                className="rw3-hoverable"
+                style={{
+                  display: "block",
+                  padding: "10px 20px",
+                  borderBottom: "1px solid var(--line)",
+                }}
+              >
+                <div className="flex flex-wrap items-baseline justify-between gap-2">
+                  <p style={{ margin: 0, fontWeight: 600, fontSize: 13 }}>{season.displayName}</p>
+                  <span
+                    className="rw3-label"
+                    style={{ display: "inline-flex", alignItems: "center", gap: 6 }}
+                  >
+                    {season.active ? "Current" : "Archived"}
+                    {season.countryCode ? (
+                      <>
+                        {" · "}
+                        <CountryFlagIcon code={season.countryCode} />
+                        {countryName(season.countryCode)}
+                      </>
+                    ) : null}
+                  </span>
+                </div>
+                <p className="rw3-meta" style={{ margin: "2px 0 0" }}>
+                  {getCompetition(season.competitionSlug)?.name ?? season.competitionSlug}
+                  {" · "}
+                  {season.startDate} → {season.endDate}
+                </p>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
     </>
   );
 }

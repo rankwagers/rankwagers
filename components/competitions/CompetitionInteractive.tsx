@@ -43,7 +43,7 @@ export function CompetitionFixtureLink({
       onClick={() =>
         trackCompetitionFixtureClick({ competitionSlug, fixtureId, locale })
       }
-      className="text-[var(--hero-ink)] underline decoration-[var(--hero-line)] underline-offset-4 hover:decoration-[var(--hero-ink)]"
+      className="underline decoration-[var(--line)] underline-offset-4 hover:decoration-[var(--text)]"
     >
       {children}
     </Link>
@@ -69,7 +69,7 @@ export function CompetitionMarketLink({
       onClick={() =>
         trackCompetitionMarketClick({ competitionSlug, marketSlug, locale })
       }
-      className="text-[var(--hero-ink)] underline decoration-[var(--hero-line)] underline-offset-4 hover:decoration-[var(--hero-ink)]"
+      className="underline decoration-[var(--line)] underline-offset-4 hover:decoration-[var(--text)]"
     >
       {children}
     </Link>
@@ -95,7 +95,7 @@ export function CompetitionOperatorLink({
       onClick={() =>
         trackCompetitionOperatorClick({ competitionSlug, operatorSlug, locale })
       }
-      className="text-[var(--hero-ink)] underline decoration-[var(--hero-line)] underline-offset-4 hover:decoration-[var(--hero-ink)]"
+      className="underline decoration-[var(--line)] underline-offset-4 hover:decoration-[var(--text)]"
     >
       {children}
     </Link>
@@ -148,29 +148,32 @@ export function CompetitionOddsSection({
   }
 
   return (
-    <section ref={ref} className="mt-8" aria-labelledby="cmp-odds-heading">
-      <h3 id="cmp-odds-heading" className="rw-label text-[var(--hero-ink-2)]">
+    <section ref={ref} className="mt-6" aria-labelledby="cmp-odds-heading">
+      <h3 id="cmp-odds-heading" className="rw3-label">
         {p.mktOddsTitle}
       </h3>
       {rows.length ? (
         <>
-          <dl className="mt-2.5 border-t border-[var(--hero-line)]">
+          <dl className="mt-2.5 border-t border-[var(--line)]">
             {rows.map((row) => (
               <div
                 key={row.label}
-                className="rw-row flex items-baseline justify-between gap-x-4 border-b border-[var(--hero-line)] py-2.5 pl-3.5"
+                className="flex items-baseline justify-between gap-x-4 border-b border-[var(--line)] py-2.5"
               >
-                <dt className="rw-m text-[var(--hero-ink-2)]">{row.label}</dt>
-                <dd className="rw-tnum text-[15px] font-bold text-[var(--hero-ink)]">{row.value}</dd>
+                <dt className="text-[13px]" style={{ color: "var(--muted)" }}>
+                  {row.label}
+                </dt>
+                <dd className="text-[13px] font-semibold">{row.value}</dd>
               </div>
             ))}
           </dl>
-          <p className="rw-m mt-3 normal-case tracking-[0.04em] text-[var(--hero-ink-2)]">
-            {p.mktOddsWindowNote}
-          </p>
+          <p className="rw3-meta mt-3">{p.mktOddsWindowNote}</p>
         </>
       ) : (
-        <p className="mt-2.5 max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]">
+        <p
+          className="mt-2.5 max-w-[52ch] border-l-2 border-[var(--line)] py-1 pl-4 text-[13px] leading-relaxed"
+          style={{ color: "var(--muted)" }}
+        >
           {p.mktOddsEmpty}
         </p>
       )}

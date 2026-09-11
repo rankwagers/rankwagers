@@ -27,7 +27,7 @@ export function MarketFixtureLink({
       onClick={() =>
         trackMarketRelatedFixtureClick({ marketSlug, fixtureId, locale })
       }
-      className="text-[var(--hero-ink)] underline decoration-[var(--hero-line)] underline-offset-4 hover:decoration-[var(--hero-ink)]"
+      className="underline decoration-[var(--line)] underline-offset-4 hover:decoration-[var(--text)]"
     >
       {children}
     </Link>
@@ -53,7 +53,7 @@ export function MarketOperatorLink({
       onClick={() =>
         trackMarketRelatedOperatorClick({ marketSlug, operatorSlug, locale })
       }
-      className="text-[var(--hero-ink)] underline decoration-[var(--hero-line)] underline-offset-4 hover:decoration-[var(--hero-ink)]"
+      className="underline decoration-[var(--line)] underline-offset-4 hover:decoration-[var(--text)]"
     >
       {children}
     </Link>
@@ -77,7 +77,7 @@ export function MarketCtaLink({
     <Link
       href={href}
       onClick={() => trackMarketCtaInteraction({ marketSlug, locale, target })}
-      className="text-[var(--hero-ink)] underline decoration-[var(--hero-line)] underline-offset-4 hover:decoration-[var(--hero-ink)]"
+      className="underline decoration-[var(--line)] underline-offset-4 hover:decoration-[var(--text)]"
     >
       {children}
     </Link>

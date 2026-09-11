@@ -19,6 +19,7 @@ import { locales, type Locale } from "@/lib/i18n";
 import { getDictionary } from "@/lib/dictionaries";
 import { getRequestCountryContext } from "@/lib/personalization/server";
 import { mapDailyListsToQualifiedFixtures } from "@/lib/research/qualifiedFixture";
+import { buildLeagueRates } from "@/lib/v3/leagueRates.server";
 import { pageMetadata } from "@/lib/seo";
 
 export function generateStaticParams() {
@@ -67,6 +68,8 @@ export default async function CompetitionDetailPage({
   const teams = relatedTeamsFromFixtures(competition, fixtures, 8);
   const odds = await getCompetitionOddsSummary(matched);
   const operators = operatorsForCompetition(competition, countryContext.country);
+  /* Block H: season-to-date league rates from a board fixture's own context. */
+  const leagueRates = (await buildLeagueRates(matched, params.locale))?.rows ?? null;
 
   return (
     <CompetitionDetailView
@@ -80,6 +83,7 @@ export default async function CompetitionDetailPage({
       operators={operators}
       visitorCountry={countryContext.country}
       p={getDictionary(params.locale).predictions}
+      leagueRates={leagueRates}
     />
   );
 }

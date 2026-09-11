@@ -38,48 +38,52 @@ export default function CompetitionsIndexPage({
   return (
     <>
       <JsonLd data={competitionsIndexLd({ locale: params.locale, competitions })} />
-      <div className="rw-hero container-wide bg-[var(--hero-canvas)] pb-24">
-        <header className="border-b border-[var(--hero-line)] pb-10 pt-10">
-          <span aria-hidden className="block h-[2px] w-10 bg-[var(--hero-ink)]" />
-          <p className="rw-m mt-3.5 text-[var(--hero-ink-2)]">{p.cmpIndexEyebrow}</p>
-          <h1 className="rw-h mt-1.5 text-[clamp(2.125rem,4.4vw,2.875rem)] text-[var(--hero-ink)]">
-            {p.cmpIndexTitle}
-          </h1>
-          <p className="mt-2.5 max-w-[62ch] text-[15px] leading-[1.55] text-[var(--hero-ink-2)]">
-            {p.cmpIndexLede}
-          </p>
-        </header>
+      <header style={{ padding: "14px 20px", borderBottom: "1px solid var(--line)" }}>
+        <p className="rw3-label" style={{ margin: 0 }}>
+          {p.cmpIndexEyebrow}
+        </p>
+        <h1 className="rw3-title" style={{ margin: "2px 0 0" }}>
+          {p.cmpIndexTitle}
+        </h1>
+        <p className="rw3-meta" style={{ margin: "2px 0 0", maxWidth: "62ch" }}>
+          {p.cmpIndexLede}
+        </p>
+      </header>
 
-        <ul className="mt-10 border-t-[1.5px] border-[var(--hero-ink)]">
-          {competitions.map((competition) => (
-            <li key={competition.slug}>
-              <Link
-                href={competitionPath(params.locale, competition.slug)}
-                className="rw-row block border-b border-[var(--hero-line)] py-4 pl-3.5"
-              >
-                <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-                  <p className="text-[15px] font-semibold tracking-[-0.01em] text-[var(--hero-ink)]">
-                    {competition.name}
-                  </p>
-                  <span className="rw-m flex items-center gap-1.5 text-[var(--hero-ink-2)]">
-                    {competition.confederation}
-                    {competition.country ? (
-                      <>
-                        {" · "}
-                        <CountryFlagIcon code={competition.country} />
-                        {countryName(competition.country)}
-                      </>
-                    ) : null}
-                  </span>
-                </div>
-                <p className="mt-1 max-w-[70ch] text-sm leading-relaxed text-[var(--hero-ink-2)]">
-                  {competition.description}
+      <ul style={{ margin: 0, padding: 0 }}>
+        {competitions.map((competition) => (
+          <li key={competition.slug} style={{ listStyle: "none" }}>
+            <Link
+              href={competitionPath(params.locale, competition.slug)}
+              className="rw3-hoverable"
+              style={{
+                display: "block",
+                padding: "10px 20px",
+                borderBottom: "1px solid var(--line)",
+              }}
+            >
+              <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+                <p className="text-[14px] font-semibold" style={{ margin: 0 }}>
+                  {competition.name}
                 </p>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
+                <span className="rw3-meta flex items-center gap-1.5">
+                  {competition.confederation}
+                  {competition.country ? (
+                    <>
+                      {" · "}
+                      <CountryFlagIcon code={competition.country} />
+                      {countryName(competition.country)}
+                    </>
+                  ) : null}
+                </span>
+              </div>
+              <p className="rw3-meta" style={{ margin: "2px 0 0", maxWidth: "70ch" }}>
+                {competition.description}
+              </p>
+            </Link>
+          </li>
+        ))}
+      </ul>
     </>
   );
 }

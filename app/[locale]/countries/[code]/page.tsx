@@ -77,45 +77,41 @@ export default function CountryLandingPage({
   // Thin / doorway hubs stay reachable for personalization but are noindex;
   // still render useful content when partially available.
   return (
-    <div className="rw-hero container-wide bg-[var(--hero-canvas)] pb-24">
+    <div className="px-5 pb-16">
       <JsonLd data={countryLandingBreadcrumbLd({ locale: params.locale, model })} />
       {model.indexability.indexable ? (
         <JsonLd data={countryLandingWebPageLd({ locale: params.locale, model })} />
       ) : null}
 
-      <nav aria-label="Breadcrumb" className="rw-m pt-5 text-[var(--hero-ink-2)]">
-        <Link href={`/${params.locale}`} className="hover:text-[var(--hero-ink)]">
-          {p.nvHome}
-        </Link>
+      <nav
+        aria-label="Breadcrumb"
+        className="pt-3.5 text-[12px]"
+        style={{ color: "var(--muted)" }}
+      >
+        <Link href={`/${params.locale}`}>{p.nvHome}</Link>
         <span className="mx-1.5" aria-hidden>
           /
         </span>
-        <Link
-          href={countriesIndexPath(params.locale)}
-          className="hover:text-[var(--hero-ink)]"
-        >
-          {p.ctIndexTitle}
-        </Link>
+        <Link href={countriesIndexPath(params.locale)}>{p.ctIndexTitle}</Link>
         <span className="mx-1.5" aria-hidden>
           /
         </span>
-        <span className="text-[var(--hero-ink)]">{countryName(model.code)}</span>
+        <span style={{ color: "var(--text)" }}>{countryName(model.code)}</span>
       </nav>
 
-      <header id="overview" className="mt-6 border-b border-[var(--hero-line)] pb-10">
-        <span aria-hidden className="block h-[2px] w-10 bg-[var(--hero-ink)]" />
-        <p className="rw-m mt-3.5 text-[var(--hero-ink-2)]">
+      <header id="overview" className="mt-4 pb-3.5" style={{ borderBottom: "1px solid var(--line)" }}>
+        <p className="rw3-label" style={{ margin: 0 }}>
           {p.ctEyebrow} · {model.code}
         </p>
-        <h1 className="rw-h mt-1.5 flex items-center gap-3 text-[clamp(2.125rem,4.4vw,2.875rem)] text-[var(--hero-ink)]">
+        <h1 className="rw3-title flex items-center gap-3" style={{ margin: "2px 0 0" }}>
           <CountryFlagIcon code={model.code} />
           {model.title}
         </h1>
-        <p className="mt-2.5 max-w-[62ch] text-[15px] leading-[1.55] text-[var(--hero-ink-2)]">
+        <p className="rw3-meta" style={{ margin: "4px 0 0", maxWidth: "62ch" }}>
           {model.summary}
         </p>
         {!model.indexability.indexable ? (
-          <p className="rw-m mt-3 normal-case tracking-[0.04em] text-[var(--hero-ink-2)]" role="status">
+          <p className="rw3-meta mt-3" role="status">
             {formatDict(p.ctNoindexNote, {
               reason: model.indexability.reason.replaceAll("_", " "),
             })}
@@ -125,31 +121,28 @@ export default function CountryLandingPage({
 
       {/* LEAD — omitted whole when the hub holds nothing (the empty-state law). */}
       {total > 0 ? (
-        <section aria-labelledby="ct-lead-heading" className="mt-14">
-          <p className="rw-m text-[var(--hero-ink-2)]">{p.mktLeadEyebrow}</p>
-          <h2
-            id="ct-lead-heading"
-            className="rw-h mt-2.5 max-w-[30ch] text-[clamp(1.6rem,3.6vw,2.4rem)] text-[var(--hero-ink)]"
-          >
+        <section aria-labelledby="ct-lead-heading" className="mt-8">
+          <p className="rw3-label">{p.mktLeadEyebrow}</p>
+          <h2 id="ct-lead-heading" className="mt-1.5 max-w-[52ch] text-[14px] font-semibold">
             {formatDict(p.ctLeadLine, {
               competitions: String(model.competitions.length),
               operators: String(model.operators.length),
               fixtures: String(model.fixtureSamples.length),
             })}
           </h2>
-          <ul className="mt-8 border-t-[1.5px] border-[var(--hero-ink)]">
+          <ul className="mt-5" style={{ borderTop: "1px solid var(--line)" }}>
             {model.competitions.length > 0 ? (
-              <li className="rw-row border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] text-[var(--hero-ink)]">
+              <li className="py-3 text-[13px]" style={{ borderBottom: "1px solid var(--line)" }}>
                 {formatDict(p.ctCompetitionsCount, { n: String(model.competitions.length) })}
               </li>
             ) : null}
             {model.operators.length > 0 ? (
-              <li className="rw-row border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] text-[var(--hero-ink)]">
+              <li className="py-3 text-[13px]" style={{ borderBottom: "1px solid var(--line)" }}>
                 {formatDict(p.ctOperatorsCount, { n: String(model.operators.length) })}
               </li>
             ) : null}
             {model.fixtureSamples.length > 0 ? (
-              <li className="rw-row border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] text-[var(--hero-ink)]">
+              <li className="py-3 text-[13px]" style={{ borderBottom: "1px solid var(--line)" }}>
                 {formatDict(p.ctFixturesCount, { n: String(model.fixtureSamples.length) })}
               </li>
             ) : null}
@@ -160,18 +153,20 @@ export default function CountryLandingPage({
       <section
         id="competitions"
         aria-labelledby="ct-competitions-heading"
-        className="mt-16 border-t border-[var(--hero-line)] pt-12"
+        className="mt-10 pt-8"
+        style={{ borderTop: "1px solid var(--line)" }}
       >
-        <h2 id="ct-competitions-heading" className="rw-m text-[var(--hero-ink-2)]">
+        <h2 id="ct-competitions-heading" className="rw3-label">
           {p.ctCompetitionsTitle}
         </h2>
         {model.competitions.length ? (
-          <ul className="mt-5 border-t border-[var(--hero-line)]">
+          <ul className="mt-4" style={{ borderTop: "1px solid var(--line)" }}>
             {model.competitions.map((row) => (
               <li key={row.slug}>
                 <Link
                   href={row.href}
-                  className="rw-row block border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] font-semibold tracking-[-0.01em] text-[var(--hero-ink)]"
+                  className="rw3-hoverable block py-3 text-[13px] font-semibold"
+                  style={{ borderBottom: "1px solid var(--line)" }}
                 >
                   {row.name}
                 </Link>
@@ -179,7 +174,10 @@ export default function CountryLandingPage({
             ))}
           </ul>
         ) : (
-          <p className="mt-4 max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]">
+          <p
+            className="mt-4 max-w-[52ch] pl-4 text-[13px] leading-relaxed"
+            style={{ borderLeft: "2px solid var(--line)", color: "var(--muted)" }}
+          >
             {p.ctCompetitionsEmpty}
           </p>
         )}
@@ -188,18 +186,19 @@ export default function CountryLandingPage({
       <section
         id="related"
         aria-labelledby="ct-fixtures-heading"
-        className="mt-12"
+        className="mt-8"
       >
-        <h2 id="ct-fixtures-heading" className="rw-m text-[var(--hero-ink-2)]">
+        <h2 id="ct-fixtures-heading" className="rw3-label">
           {p.ctFixturesTitle}
         </h2>
         {model.fixtureSamples.length ? (
-          <ul className="mt-5 border-t border-[var(--hero-line)]">
+          <ul className="mt-4" style={{ borderTop: "1px solid var(--line)" }}>
             {model.fixtureSamples.map((row) => (
               <li key={row.slug}>
                 <Link
                   href={row.href}
-                  className="rw-row block border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] text-[var(--hero-ink)]"
+                  className="rw3-hoverable block py-3 text-[13px]"
+                  style={{ borderBottom: "1px solid var(--line)" }}
                 >
                   {row.title}
                 </Link>
@@ -207,7 +206,10 @@ export default function CountryLandingPage({
             ))}
           </ul>
         ) : (
-          <p className="mt-4 max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]">
+          <p
+            className="mt-4 max-w-[52ch] pl-4 text-[13px] leading-relaxed"
+            style={{ borderLeft: "2px solid var(--line)", color: "var(--muted)" }}
+          >
             {p.ctFixturesEmpty}
           </p>
         )}
@@ -216,12 +218,13 @@ export default function CountryLandingPage({
       <section
         id="continue"
         aria-labelledby="ct-continue-heading"
-        className="mt-16 border-t border-[var(--hero-line)] pt-12"
+        className="mt-10 pt-8"
+        style={{ borderTop: "1px solid var(--line)" }}
       >
-        <h2 id="ct-continue-heading" className="rw-m text-[var(--hero-ink-2)]">
+        <h2 id="ct-continue-heading" className="rw3-label">
           {p.ctContinueTitle}
         </h2>
-        <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-2">
+        <ul className="mt-4 flex flex-wrap gap-x-3 gap-y-2">
           {[
             { href: model.marketsHref, label: p.ctLinkMarkets },
             { href: `/${params.locale}/competitions`, label: p.ctLinkCompetitions },
@@ -230,10 +233,7 @@ export default function CountryLandingPage({
             { href: `/${params.locale}#verified-performance`, label: p.ctLinkPerformance },
           ].map((link) => (
             <li key={link.label}>
-              <Link
-                href={link.href}
-                className="text-[15px] text-[var(--hero-ink)] underline decoration-[var(--hero-line)] underline-offset-4 hover:decoration-[var(--hero-ink)]"
-              >
+              <Link href={link.href} className="rw3-ghost">
                 {link.label}
               </Link>
             </li>
@@ -245,19 +245,21 @@ export default function CountryLandingPage({
       <section
         id="operators"
         aria-labelledby="ct-operators-heading"
-        className="mt-16 border-t border-[var(--hero-line)] pt-12"
+        className="mt-10 pt-8"
+        style={{ borderTop: "1px solid var(--line)" }}
       >
-        <h2 id="ct-operators-heading" className="rw-m text-[var(--hero-ink-2)]">
+        <h2 id="ct-operators-heading" className="rw3-label">
           {p.ctOperatorsTitle}
         </h2>
         {model.operators.length ? (
-          <ul className="mt-5 border-t border-[var(--hero-line)]">
+          <ul className="mt-4" style={{ borderTop: "1px solid var(--line)" }}>
             {model.operators.map((row) => (
               <li key={row.slug}>
                 <Link
                   href={row.href}
                   rel="noopener"
-                  className="rw-row block border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] text-[var(--hero-ink)]"
+                  className="rw3-hoverable block py-3 text-[13px]"
+                  style={{ borderBottom: "1px solid var(--line)" }}
                 >
                   {row.name}
                 </Link>
@@ -265,13 +267,14 @@ export default function CountryLandingPage({
             ))}
           </ul>
         ) : (
-          <p className="mt-4 max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]">
+          <p
+            className="mt-4 max-w-[52ch] pl-4 text-[13px] leading-relaxed"
+            style={{ borderLeft: "2px solid var(--line)", color: "var(--muted)" }}
+          >
             {p.ctOperatorsEmpty}
           </p>
         )}
-        <p className="rw-m mt-3 normal-case tracking-[0.04em] text-[var(--hero-ink-2)]">
-          {p.fxOperatorsNote}
-        </p>
+        <p className="rw3-meta mt-3">{p.fxOperatorsNote}</p>
       </section>
     </div>
   );

@@ -6,7 +6,7 @@ import type { MarketOddsSummary } from "@/lib/markets/types";
 import type { PredictionStrings } from "@/lib/translations/predictionsEn";
 
 /*
- * OBSERVED ODDS — form-guide conversion. A figure renders only when observed: a null CLV, a
+ * OBSERVED ODDS — rw3 conversion. A figure renders only when observed: a null CLV, a
  * null price or a zero sample OMITS its row rather than printing a dash (the empty-state law —
  * the old view rendered "—" placeholders as data). Window named: everything here is the stored
  * observation set, and the section says so.
@@ -59,28 +59,31 @@ export function MarketOddsSection({
 
   return (
     <section ref={ref} aria-labelledby="mkt-odds-heading">
-      <h3 id="mkt-odds-heading" className="rw-m text-[var(--hero-ink-2)]">
+      <h3 id="mkt-odds-heading" className="rw3-label">
         {p.mktOddsTitle}
       </h3>
       {rows.length ? (
         <>
-          <dl className="mt-3 max-w-[38rem] border-t border-[var(--hero-line)]">
+          <dl className="mt-3 max-w-[38rem] border-t border-[var(--line)]">
             {rows.map((row) => (
               <div
                 key={row.label}
-                className="flex items-baseline justify-between gap-x-6 border-b border-[var(--hero-line)] py-2.5"
+                className="flex items-baseline justify-between gap-x-6 border-b border-[var(--line)] py-2.5"
               >
-                <dt className="text-[13px] text-[var(--hero-ink-2)]">{row.label}</dt>
-                <dd className="rw-m rw-tnum text-[var(--hero-ink)]">{row.value}</dd>
+                <dt className="text-[13px]" style={{ color: "var(--muted)" }}>
+                  {row.label}
+                </dt>
+                <dd className="text-[13px] font-semibold">{row.value}</dd>
               </div>
             ))}
           </dl>
-          <p className="rw-m mt-2.5 normal-case tracking-[0.04em] text-[var(--hero-ink-2)]">
-            {p.mktOddsWindowNote}
-          </p>
+          <p className="rw3-meta mt-2.5">{p.mktOddsWindowNote}</p>
         </>
       ) : (
-        <p className="mt-3 max-w-[52ch] text-[13px] leading-relaxed text-[var(--hero-ink-2)]">
+        <p
+          className="mt-3 max-w-[52ch] text-[13px] leading-relaxed"
+          style={{ color: "var(--muted)" }}
+        >
           {p.mktOddsEmpty}
         </p>
       )}

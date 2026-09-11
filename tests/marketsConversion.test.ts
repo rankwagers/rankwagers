@@ -194,7 +194,10 @@ test("unobserved odds omit their rows; the empty store is stated, never dashed",
 test("the provider average is demoted: label register, named as a provider figure", () => {
   const src = SRC("components/markets/MarketDetailView.tsx");
   const site = src.slice(src.indexOf("averageModelProbability !== null"));
-  assert.match(site.slice(0, 400), /rw-m/, "the provider figure renders in the label register");
+  // V3 reconciliation: the label register is now rw3-meta (12px muted) — the
+  // form-guide's rw-m is retired with the reskin. The law is unchanged: the
+  // provider figure renders small and muted, never in the display register.
+  assert.match(site.slice(0, 400), /rw3-meta/, "the provider figure renders in the label register");
   assert.match(
     predictionsEn.mktProviderAvgLine,
     /provider figure, not a measured rate/,

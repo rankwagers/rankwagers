@@ -173,6 +173,18 @@ test("archive filters and pagination", () => {
   assert.equal(parsed.q, "Alpha");
 });
 
+test("archive period picker: inclusive date bounds, malformed dates are no filter (block H)", () => {
+  const rows = projectDailyArchive(sampleArchive(), "en"); // every row dated 2026-07-20
+  assert.equal(filterArchiveRecords(rows, { from: "2026-07-20" }).length, rows.length);
+  assert.equal(filterArchiveRecords(rows, { to: "2026-07-20" }).length, rows.length);
+  assert.equal(filterArchiveRecords(rows, { from: "2026-07-21" }).length, 0);
+  assert.equal(filterArchiveRecords(rows, { to: "2026-07-19" }).length, 0);
+
+  const parsed = parseArchiveFilters({ from: "2026-07-01", to: "not-a-date" });
+  assert.equal(parsed.from, "2026-07-01");
+  assert.equal(parsed.to, undefined, "a malformed bound filters nothing rather than erroring");
+});
+
 test("archive and methodology routes + schemas exist", () => {
   const required = [
     "app/[locale]/archive/page.tsx",

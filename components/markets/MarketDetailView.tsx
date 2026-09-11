@@ -39,7 +39,7 @@ import { MarketOddsSection } from "./MarketOddsSection";
 import { MarketPageTracker } from "./MarketPageTracker";
 
 /* ============================================================================
-   THE MARKET PAGE — form-guide conversion, fixture-style hierarchy
+   THE MARKET PAGE — rw3 conversion, fixture-style hierarchy
    ----------------------------------------------------------------------------
    A reader opening a market page wants to know WHERE this market lives before
    what it is defined as. Top-down:
@@ -54,7 +54,7 @@ import { MarketPageTracker } from "./MarketPageTracker";
                where pct is computed from the printed fraction — pairing by
                construction. The provider-potential average renders text-size
                under the provider label, never in the display register.
-     FIXTURES  today's qualified fixtures as rw-rows, potential provider-
+     FIXTURES  today's qualified fixtures as ruled rows, potential provider-
                labeled.
      DETAIL    definition, indicators, evidence bundle, observed odds — dense,
                for the reader who chose to go deep.
@@ -116,42 +116,40 @@ export function MarketDetailView({
       {faqLd && <JsonLd data={faqLd} />}
       {relatedItemList && <JsonLd data={relatedItemList} />}
 
-      <div className="rw-hero container-wide bg-[var(--hero-canvas)] pb-24">
-        <nav aria-label="Breadcrumb" className="rw-m pt-5 text-[var(--hero-ink-2)]">
-          <Link href={`/${locale}`} className="hover:text-[var(--hero-ink)]">
+      <div className="pb-16">
+        <nav aria-label="Breadcrumb" className="rw3-meta px-5 pt-3">
+          <Link href={`/${locale}`} className="hover:text-[var(--text)]">
             {p.nvHome}
           </Link>
           <span className="mx-1.5" aria-hidden>
             /
           </span>
-          <Link href={marketsIndexPath(locale)} className="hover:text-[var(--hero-ink)]">
+          <Link href={marketsIndexPath(locale)} className="hover:text-[var(--text)]">
             {p.mktIndexEyebrow}
           </Link>
           <span className="mx-1.5" aria-hidden>
             /
           </span>
-          <span className="text-[var(--hero-ink)]">{market.name}</span>
+          <span style={{ color: "var(--text)" }}>{market.name}</span>
         </nav>
 
-        <header className="mt-6 border-b border-[var(--hero-line)] pb-10">
-          <span aria-hidden className="block h-[2px] w-10 bg-[var(--hero-ink)]" />
-          <p className="rw-m mt-3.5 text-[var(--hero-ink-2)]">{market.category}</p>
-          <h1 className="rw-h mt-1.5 text-[clamp(2.125rem,4.4vw,2.875rem)] text-[var(--hero-ink)]">
+        <header style={{ padding: "14px 20px", borderBottom: "1px solid var(--line)" }}>
+          <p className="rw3-label" style={{ margin: 0 }}>
+            {market.category}
+          </p>
+          <h1 className="rw3-title" style={{ margin: "2px 0 0" }}>
             {market.name}
           </h1>
-          <p className="mt-2.5 max-w-[62ch] text-[15px] leading-[1.55] text-[var(--hero-ink-2)]">
+          <p className="rw3-meta" style={{ margin: "2px 0 0", maxWidth: "62ch" }}>
             {market.shortDescription}
           </p>
         </header>
 
         {/* LEAD — omitted whole on an empty research set (the empty-state law). */}
         {topLeague ? (
-          <section aria-labelledby="mkt-lead-heading" className="mt-14">
-            <p className="rw-m text-[var(--hero-ink-2)]">{p.mktLeadEyebrow}</p>
-            <h2
-              id="mkt-lead-heading"
-              className="rw-h mt-2.5 max-w-[28ch] text-[clamp(1.6rem,3.6vw,2.4rem)] text-[var(--hero-ink)]"
-            >
+          <section aria-labelledby="mkt-lead-heading" className="mt-8 px-5">
+            <p className="rw3-label">{p.mktLeadEyebrow}</p>
+            <h2 id="mkt-lead-heading" className="mt-2 max-w-[44ch] text-[14px] font-semibold">
               {/* <25% is a largest share, not a concentration — the neutral phrasing renders. */}
               {formatDict(leadPct >= 25 ? p.mktLeadLine : p.mktLeadLineNeutral, {
                 league: topLeague.league,
@@ -165,27 +163,22 @@ export function MarketDetailView({
 
         {/* SUPPORTS — the coverage signals, windows named, provider figure demoted. */}
         {total > 0 ? (
-          <section aria-labelledby="mkt-supports-heading" className="mt-12">
-            <h2 id="mkt-supports-heading" className="rw-m text-[var(--hero-ink-2)]">
+          <section aria-labelledby="mkt-supports-heading" className="mt-8 px-5">
+            <h2 id="mkt-supports-heading" className="rw3-label">
               {p.mktSupportsTitle}
             </h2>
-            <p className="mt-1.5 max-w-[52ch] text-[13px] leading-relaxed text-[var(--hero-ink-2)]">
-              {p.mktSupportsNote}
-            </p>
-            <ul className="mt-5 border-t-[1.5px] border-[var(--hero-ink)]">
-              <li className="rw-row border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] text-[var(--hero-ink)]">
+            <p className="rw3-meta mt-1.5 max-w-[52ch]">{p.mktSupportsNote}</p>
+            <ul className="mt-4 border-t border-[var(--line)]">
+              <li className="border-b border-[var(--line)] py-2.5 text-[13px]">
                 {formatDict(p.mktQualifiedLine, { n: String(total) })}
               </li>
               {stats.leagueCoverage > 0 ? (
-                <li className="rw-row border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] text-[var(--hero-ink)]">
+                <li className="border-b border-[var(--line)] py-2.5 text-[13px]">
                   {formatDict(p.mktLeagueCoverageLine, { n: String(stats.leagueCoverage) })}
                 </li>
               ) : null}
               {stats.topLeagues.slice(0, 5).map((row) => (
-                <li
-                  key={row.league}
-                  className="rw-row border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] text-[var(--hero-ink)]"
-                >
+                <li key={row.league} className="border-b border-[var(--line)] py-2.5 text-[13px]">
                   {formatDict(p.mktTopLeagueRow, {
                     league: row.league,
                     count: String(row.count),
@@ -196,7 +189,7 @@ export function MarketDetailView({
               ))}
             </ul>
             {stats.averageModelProbability !== null ? (
-              <p className="rw-m mt-4 normal-case tracking-[0.04em] text-[var(--hero-ink-2)]">
+              <p className="rw3-meta mt-3">
                 {formatDict(p.mktProviderAvgLine, {
                   pct: String(Math.round(stats.averageModelProbability)),
                 })}
@@ -206,15 +199,18 @@ export function MarketDetailView({
         ) : null}
 
         {/* FIXTURES — today's qualified set as ruled rows; potential provider-labeled. */}
-        <section aria-labelledby="mkt-fixtures-heading" className="mt-16 border-t border-[var(--hero-line)] pt-12">
-          <h2 id="mkt-fixtures-heading" className="rw-m text-[var(--hero-ink-2)]">
+        <section
+          aria-labelledby="mkt-fixtures-heading"
+          className="mt-10 border-t border-[var(--line)] px-5 pt-6"
+        >
+          <h2 id="mkt-fixtures-heading" className="rw3-label">
             {p.mktFixturesTitle}
           </h2>
           {fixtures.length ? (
-            <ul className="mt-5 border-t-[1.5px] border-[var(--hero-ink)]">
+            <ul className="mt-3 border-t border-[var(--line)]">
               {fixtures.map((fixture) => (
                 <li key={fixture.id}>
-                  <div className="rw-row grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-4 border-b border-[var(--hero-line)] py-3 pl-3.5">
+                  <div className="rw3-hoverable grid grid-cols-[minmax(0,1fr)_auto] items-baseline gap-x-4 border-b border-[var(--line)] py-3">
                     <div className="min-w-0">
                       <MarketFixtureLink
                         href={marketFixtureHref(locale)}
@@ -222,11 +218,11 @@ export function MarketDetailView({
                         fixtureId={fixture.matchId}
                         locale={locale}
                       >
-                        <span className="text-[14px] font-semibold tracking-[-0.01em] text-[var(--hero-ink)]">
+                        <span className="text-[14px] font-semibold">
                           {fixture.home} v {fixture.away}
                         </span>
                       </MarketFixtureLink>
-                      <p className="rw-m mt-1 text-[var(--hero-ink-2)]">
+                      <p className="rw3-meta mt-1">
                         {fixture.league} · {fixture.kickoff}
                       </p>
                       {pricesByFixture?.[fixture.matchId]?.length ? (
@@ -238,10 +234,8 @@ export function MarketDetailView({
                       ) : null}
                     </div>
                     <p className="shrink-0 text-right">
-                      <span className="rw-tnum text-[15px] font-bold text-[var(--hero-ink)]">
-                        {fixture.modelProbability}%
-                      </span>
-                      <span className="rw-m block text-[var(--hero-ink-2)]">
+                      <span className="rw3-pct">{fixture.modelProbability}%</span>
+                      <span className="block" style={{ fontSize: 11, color: "var(--muted)" }}>
                         {p.rankedPotentialLabel}
                       </span>
                     </p>
@@ -250,28 +244,38 @@ export function MarketDetailView({
               ))}
             </ul>
           ) : (
-            <p className="mt-4 max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]">
+            <p
+              className="mt-3 max-w-[52ch] border-l-2 border-[var(--line)] py-1 pl-4 text-[13px] leading-relaxed"
+              style={{ color: "var(--muted)" }}
+            >
               {p.mktFixturesEmpty}
             </p>
           )}
         </section>
 
         {/* DETAIL — definition, indicators, evidence bundle, observed odds. Dense on purpose. */}
-        <section aria-labelledby="mkt-detail-heading" className="mt-16 border-t border-[var(--hero-line)] pt-12">
-          <h2 id="mkt-detail-heading" className="rw-m text-[var(--hero-ink-2)]">
+        <section
+          aria-labelledby="mkt-detail-heading"
+          className="mt-10 border-t border-[var(--line)] px-5 pt-6"
+        >
+          <h2 id="mkt-detail-heading" className="rw3-label">
             {p.mktDetailTitle}
           </h2>
-          <div className="mt-5 max-w-[62ch] space-y-4 text-[15px] leading-[1.7] text-[var(--hero-ink-2)]">
+          <div
+            className="mt-4 max-w-[62ch] space-y-4 text-[13px] leading-relaxed"
+            style={{ color: "var(--muted)" }}
+          >
             <p>{market.longDescription}</p>
           </div>
           {market.howItWorks.length ? (
-            <ol className="mt-6 max-w-[62ch] border-t border-[var(--hero-line)]">
+            <ol className="mt-5 max-w-[62ch] border-t border-[var(--line)]">
               {market.howItWorks.map((step, index) => (
                 <li
                   key={step}
-                  className="flex gap-4 border-b border-[var(--hero-line)] py-3 text-[15px] leading-[1.6] text-[var(--hero-ink-2)]"
+                  className="flex gap-4 border-b border-[var(--line)] py-2.5 text-[13px] leading-relaxed"
+                  style={{ color: "var(--muted)" }}
                 >
-                  <span className="rw-m rw-tnum shrink-0 pt-0.5 text-[var(--hero-ink)]">
+                  <span className="rw3-label shrink-0 pt-0.5">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   {step}
@@ -280,13 +284,16 @@ export function MarketDetailView({
             </ol>
           ) : null}
           {market.seo.faqs.length ? (
-            <div className="mt-8 max-w-[62ch]">
-              <h3 className="rw-m text-[var(--hero-ink-2)]">{p.mktFaqTitle}</h3>
-              <dl className="mt-3 border-t border-[var(--hero-line)]">
+            <div className="mt-6 max-w-[62ch]">
+              <h3 className="rw3-label">{p.mktFaqTitle}</h3>
+              <dl className="mt-2.5 border-t border-[var(--line)]">
                 {market.seo.faqs.map((faq) => (
-                  <div key={faq.question} className="border-b border-[var(--hero-line)] py-4">
-                    <dt className="text-[15px] font-semibold text-[var(--hero-ink)]">{faq.question}</dt>
-                    <dd className="mt-1.5 text-[14px] leading-[1.65] text-[var(--hero-ink-2)]">
+                  <div key={faq.question} className="border-b border-[var(--line)] py-3">
+                    <dt className="text-[14px] font-semibold">{faq.question}</dt>
+                    <dd
+                      className="mt-1.5 text-[13px] leading-relaxed"
+                      style={{ color: "var(--muted)" }}
+                    >
                       {faq.answer}
                     </dd>
                   </div>
@@ -295,7 +302,7 @@ export function MarketDetailView({
             </div>
           ) : null}
 
-          <div className="mt-10">
+          <div className="mt-8">
             <MarketEvidenceSection
               marketSlug={market.slug}
               locale={locale}
@@ -306,24 +313,21 @@ export function MarketDetailView({
 
           {/* Shared research panels, demoted to detail depth. Their interiors belong to the
               shared-primitive conversion pass and are deliberately untouched here. */}
-          <div className="mt-10">
+          <div className="mt-8">
             <EvidenceSection bundle={evidenceBundle} locale={locale} country={visitorCountry} />
           </div>
 
-          <div className="mt-10">
+          <div className="mt-8">
             <MarketOddsSection marketSlug={market.slug} locale={locale} odds={odds} p={p} />
           </div>
 
           {relatedMarkets.length ? (
-            <div className="mt-10">
-              <h3 className="rw-m text-[var(--hero-ink-2)]">{p.mktRelatedTitle}</h3>
-              <ul className="mt-3 flex flex-wrap gap-2.5">
+            <div className="mt-8">
+              <h3 className="rw3-label">{p.mktRelatedTitle}</h3>
+              <ul className="mt-2.5 flex flex-wrap gap-2">
                 {relatedMarkets.map((related) => (
                   <li key={related.slug}>
-                    <Link
-                      href={marketPath(locale, related.slug)}
-                      className="rw-m inline-flex items-baseline border border-[var(--hero-line)] px-3 py-2 tracking-[0.1em] text-[var(--hero-ink)] transition-colors duration-[var(--dur-respond)] ease-[var(--ease-settle)] hover:border-[var(--hero-ink)] active:border-[var(--hero-ink)]"
-                    >
+                    <Link href={marketPath(locale, related.slug)} className="rw3-ghost">
                       {related.name}
                     </Link>
                   </li>
@@ -332,19 +336,20 @@ export function MarketDetailView({
             </div>
           ) : null}
 
-          <div className="mt-10">
+          <div className="mt-8">
             <GraphEntityPanel entityType="market" entitySlug={market.slug} locale={locale} />
           </div>
-          <div className="mt-10">
+          <div className="mt-8">
             <EntityDiscoverySection entityType="market" entitySlug={market.slug} locale={locale} />
           </div>
         </section>
 
         {/* LAST — one commercial block, after every content level. */}
-        <section aria-labelledby="operator-recommendations" className="mt-16 border-t border-[var(--hero-line)] pt-12">
-          <p className="rw-m normal-case tracking-[0.04em] text-[var(--hero-ink-2)]">
-            {p.fxOperatorsNote}
-          </p>
+        <section
+          aria-labelledby="operator-recommendations"
+          className="mt-10 border-t border-[var(--line)] px-5 pt-6"
+        >
+          <p className="rw3-meta">{p.fxOperatorsNote}</p>
           <div className="mt-4">
             <OperatorEvidenceCardList
               cards={recommendableCards(
