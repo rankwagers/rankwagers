@@ -118,6 +118,8 @@ const COMPARISON_SURFACES = [
   "app/[locale]/best-crypto-betting-sites/page.tsx",
   "app/[locale]/bonuses/page.tsx",
   "app/[locale]/operators/page.tsx",
+  // Block G: the offers grid moved to its own page — registered deliberately.
+  "app/[locale]/free-bets/page.tsx",
   "app/[locale]/compare/[slug]/page.tsx",
   "app/[locale]/reviews/[brand]/page.tsx",
 ];

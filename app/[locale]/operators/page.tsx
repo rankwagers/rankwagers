@@ -1,31 +1,24 @@
 import type { Metadata } from "next";
+import Image from "next/image";
+import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { OrderingDisclosure } from "@/components/trust/OrderingDisclosure";
-import { OfferCard, OffersEmpty, type OffersHubStrings } from "@/components/v3/offers/OffersHub";
-import { SponsoredLabel } from "@/components/v3/SponsoredLabel";
-import { BRANDS, getBrand } from "@/lib/brands";
-import { bonusForLocale } from "@/lib/bonusForLocale";
+import { BRANDS } from "@/lib/brands";
 import { deriveOrderingBasis } from "@/lib/trust/rankingCriteria";
 import { type Locale } from "@/lib/i18n";
 import { getDictionary } from "@/lib/dictionaries";
-import { formatDict } from "@/lib/formatDict";
+import { formatDict } from "@/lib/dictionaryExtras";
 import { listOperators } from "@/lib/operators/registry";
-import { resolveOperatorAvailability } from "@/lib/operators/availability";
-import { buildGoPath } from "@/lib/operators/go-path";
 import { operatorPath } from "@/lib/operators/links";
 import { operatorsIndexLd } from "@/lib/operators/schema";
-import { getRequestCountryContext } from "@/lib/personalization/server";
 import { pageMetadata } from "@/lib/seo";
 
 /* ============================================================================
-   THE OPERATORS HUB — the ONE canonical commercial surface (reviews, compare,
-   bonuses and best-* are permanent redirects here), reskinned as the v3
-   free-bets door (Bible V3 block D, rw3-freebets mock). Hierarchy is
-   unchanged in law: disclosed ordering → the ordered cards. What changed is
-   the card: the brand's own localized offer sentence and a visible Continue
-   (placement offers_hub), beside the editorial link to the operator's page.
-   Zero eligible operators in the reader's country → the no-offers empty
-   state, never placeholder cards.
+   THE OPERATORS HUB — the sites page (Bible V3 block G returns it to this
+   role; the offer cards live on /free-bets now). Hierarchy unchanged in
+   law: disclosed ordering → the operator list as ruled rows (verification
+   + market count as the row meta). No prices, no Continue here — evidence
+   lives on each operator's page, commerce lives behind the free-bets door.
    ========================================================================== */
 
 export function generateMetadata({
@@ -42,106 +35,86 @@ export function generateMetadata({
   });
 }
 
-function markFor(name: string): string {
-  const words = name.split(/\s+/).filter(Boolean);
-  if (words.length >= 2) return (words[0][0] + words[1][0]).toUpperCase();
-  return name.slice(0, 2).toUpperCase();
-}
-
 export default function OperatorsIndexPage({
   params,
-  searchParams,
 }: {
   params: { locale: Locale };
-  searchParams?: { country?: string };
 }) {
-  const dict = getDictionary(params.locale);
-  const p = dict.predictions;
-  const countryContext = getRequestCountryContext(searchParams?.country);
-
-  /*
-   * Membership: available + affiliate-configured operators, in REGISTRY
-   * ORDER — the same order the disclosure below describes, filtered but
-   * never re-ranked, so the disclosed basis stays true for the subset.
-   */
-  const operators = listOperators().flatMap((operator, index) => {
-    const availability = resolveOperatorAvailability(operator, countryContext.country);
-    if (!availability.available || !operator.affiliateEnabled) return [];
-    const brand = getBrand(operator.slug);
-    if (!brand) return [];
-    return [
-      {
-        slug: operator.slug,
-        name: operator.name,
-        mark: markFor(operator.name),
-        offer: bonusForLocale(brand, params.locale),
-        operatorHref: operatorPath(params.locale, operator.slug),
-        continueHref: buildGoPath({
-          slug: operator.slug,
-          placement: "offers_hub",
-          subid: `offers-hub_${index + 1}`,
-          locale: String(params.locale),
-          country: countryContext.country ?? undefined,
-          availability: "full",
-          deeplinkType: "homepage",
-          operatorRank: index + 1,
-        }),
-        best: false,
-      },
-    ];
-  });
-  if (operators.length) operators[0] = { ...operators[0], best: true };
-
-  const strings: OffersHubStrings = {
-    sponsored: p.v3Sponsored18,
-    best: p.v3Best,
-    continue: p.v3Continue,
-    terms: p.v3TermsAtOperator,
-    emptyTitle: p.v3EmptyOffersTitle,
-    emptyLine: p.v3EmptyOffersLine,
-    backToPredictions: p.v3BackToPredictions,
-  };
-
+  const operators = listOperators();
+  const p = getDictionary(params.locale).predictions;
   return (
     <>
-      <JsonLd data={operatorsIndexLd({ locale: params.locale, operators: listOperators() })} />
-      <header
-        style={{
-          padding: "14px 20px",
-          borderBottom: "1px solid var(--line)",
-          display: "flex",
-          flexWrap: "wrap",
-          alignItems: "baseline",
-          gap: "2px 14px",
-        }}
-      >
+      <JsonLd data={operatorsIndexLd({ locale: params.locale, operators })} />
+      <header style={{ padding: "14px 20px", borderBottom: "1px solid var(--line)" }}>
         <h1 className="rw3-title" style={{ margin: 0 }}>
-          {p.v3FreeBetsTitle}
+          {p.opIndexTitle}
         </h1>
-        <span
-          className="rw3-meta"
-          style={{ display: "inline-flex", alignItems: "center", gap: 6 }}
-        >
-          {formatDict(p.v3NActiveOffers, { n: String(operators.length) })} ·{" "}
-          <SponsoredLabel text={p.v3Sponsored18} size={11} /> · {p.v3TermsAtOperator}
-        </span>
+        <p className="rw3-meta" style={{ margin: "2px 0 0", maxWidth: "62ch" }}>
+          {p.opIndexLede}
+        </p>
       </header>
 
       {/* The ordering disclosure leads: the reader learns what the order
-          means before reading the ordered cards (Sprint 31's law, kept). */}
+          means before reading the ordered list (Sprint 31's law, kept). */}
       <div style={{ padding: "12px 20px 0" }}>
         <OrderingDisclosure basis={deriveOrderingBasis(BRANDS)} locale={params.locale} />
       </div>
 
-      {operators.length === 0 ? (
-        <OffersEmpty locale={params.locale} strings={strings} />
-      ) : (
-        <div className="rw3-offers-grid">
-          {operators.map((card) => (
-            <OfferCard key={card.slug} card={card} strings={strings} />
-          ))}
-        </div>
-      )}
+      <ul style={{ margin: "12px 0 0", padding: 0 }}>
+        {operators.map((operator) => (
+          <li key={operator.slug} style={{ listStyle: "none" }}>
+            <Link
+              href={operatorPath(params.locale, operator.slug)}
+              className="rw3-hoverable"
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 12,
+                padding: "10px 20px",
+                borderBottom: "1px solid var(--line)",
+              }}
+            >
+              {operator.logo ? (
+                <Image
+                  src={operator.logo}
+                  alt=""
+                  width={28}
+                  height={28}
+                  className="h-7 w-7 object-contain"
+                  style={{ border: "1px solid var(--line)", borderRadius: 6 }}
+                />
+              ) : (
+                <span
+                  aria-hidden
+                  style={{
+                    width: 28,
+                    height: 28,
+                    display: "grid",
+                    placeItems: "center",
+                    fontSize: 9,
+                    fontWeight: 600,
+                    background: "var(--pctbg)",
+                    border: "1px solid var(--line)",
+                    borderRadius: 6,
+                  }}
+                >
+                  {operator.name.slice(0, 2).toUpperCase()}
+                </span>
+              )}
+              <span style={{ minWidth: 0, display: "flex", flexDirection: "column" }}>
+                <span style={{ fontWeight: 600, fontSize: 13 }}>{operator.name}</span>
+                <span className="rw3-meta">
+                  {operator.verificationStatus === "verified" ? p.opVerified : p.opUnverified}
+                  {" · "}
+                  {formatDict(p.opRowMarketsCount, {
+                    n: String(operator.supportedMarkets.length),
+                  })}
+                </span>
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ul>
       <p className="rw3-meta" style={{ padding: "10px 20px", margin: 0 }}>
         {p.fxOperatorsNote}
       </p>

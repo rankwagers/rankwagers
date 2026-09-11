@@ -20,6 +20,7 @@ export const revalidate = 3600;
 const STATIC_PATHS = [
   "",
   "/operators",
+  "/free-bets",
   "/markets",
   "/competitions",
   "/teams",

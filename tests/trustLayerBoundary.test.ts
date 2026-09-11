@@ -213,6 +213,8 @@ const REGISTERED_CONSUMERS: ReadonlyArray<{ rel: string; why: string }> = [
    * reason registration is explicit rather than globbed.
    */
   { rel: "app/[locale]/how-we-rank/page.tsx", why: "canonical criteria page" },
+  // Block G: the offers grid took the disclosure with it to its own page.
+  { rel: "app/[locale]/free-bets/page.tsx", why: "free-bets grid ordering disclosure" },
   /*
    * Registered with Bible V3 block F. The editor-picks validator runs the
    * banned-claim scan over admin-authored sentences and notes BEFORE they

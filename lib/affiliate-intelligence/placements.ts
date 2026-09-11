@@ -310,7 +310,7 @@ export const AFFILIATE_PLACEMENTS: readonly PlacementRecord[] = [
   },
   {
     placementId: "offers_hub",
-    pageType: "operators",
+    pageType: "free_bets",
     componentPath: "components/v3/offers/OffersHub.tsx",
     userIntentStage: "conversion",
     operatorSelection: "registry order (disclosed basis) filtered by visitor country",
@@ -323,7 +323,7 @@ export const AFFILIATE_PLACEMENTS: readonly PlacementRecord[] = [
     prominence: "primary",
     qualityStatus: "ok",
     notes: [
-      "The free-bets door (Bible V3 block D). Top-ranked card carries the page's one FILLED CTA; the rest are ghost.",
+      "The free-bets door (blocks D→G: born on /operators, moved to its own /free-bets page). Top-ranked card carries the page's one FILLED CTA; the rest are ghost.",
     ],
   },
   {

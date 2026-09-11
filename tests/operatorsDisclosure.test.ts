@@ -124,6 +124,9 @@ const SURFACE_TREATMENT: ReadonlyArray<{ rel: string; discloses: boolean; why: s
   // BrandListSection deleted with the commercial conversion; the surviving
   // ranked commercial list is the operators hub, registered above.
   { rel: "app/[locale]/operators/page.tsx", discloses: true, why: "same order as the brand list" },
+  // Block G: the free-bets grid presents the same registry order commercially —
+  // the disclosure travels with the ordered list, not with the URL it left.
+  { rel: "app/[locale]/free-bets/page.tsx", discloses: true, why: "ordered offer cards, same basis" },
   { rel: "app/[locale]/compare/[slug]/page.tsx", discloses: false, why: "head-to-head, no ordering" },
   { rel: "app/[locale]/reviews/[brand]/page.tsx", discloses: false, why: "single operator, no ordering" },
 ];

@@ -29,7 +29,7 @@ export function HeaderV3({ locale, strings }: { locale: Locale; strings: HeaderV
     { href: `/${locale}`, label: strings.predictions, exact: true },
     { href: `/${locale}/markets`, label: strings.bettingTips, exact: false },
     { href: `/${locale}/best-betting-sites`, label: strings.bettingSites, exact: false },
-    { href: `/${locale}/operators`, label: strings.freeBets, exact: false },
+    { href: `/${locale}/free-bets`, label: strings.freeBets, exact: false },
   ];
   const isActive = (item: { href: string; exact: boolean }) =>
     item.exact ? pathname === item.href : pathname.startsWith(item.href);
