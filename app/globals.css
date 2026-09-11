@@ -1513,6 +1513,43 @@ textarea,
   .rw3 .rw3-c-league { display: none; }
 }
 
+/* Free-bets hub (block D): three offer cards per row at desktop, one below
+ * lg — the mock's grid, gap 12, page gutter 20/14. */
+.rw3 .rw3-offers-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  padding: 16px 20px;
+}
+
+@media (max-width: 1199.98px) {
+  .rw3 .rw3-offers-grid {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 12px 14px;
+  }
+}
+
+/* Match page (block D): fluid center · 300px aside at desktop; the aside
+ * folds under the center below lg — the rw3-match mock's frame. */
+.rw3 .rw3-match-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+}
+
+.rw3 .rw3-match-center {
+  border-right: 1px solid var(--line);
+  min-width: 0;
+}
+
+@media (max-width: 1199.98px) {
+  .rw3 .rw3-match-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .rw3 .rw3-match-center {
+    border-right: none;
+  }
+}
+
 /* ==== end of the rw3 scope ==== */
 
 

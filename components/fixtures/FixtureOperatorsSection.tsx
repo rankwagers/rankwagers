@@ -31,12 +31,15 @@ export function FixtureOperatorsSection({
 }) {
   return (
     <section aria-labelledby="fx-operators-heading" className="mt-20">
-      <div className="rw-m flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b-[0.5px] border-[var(--hero-ink-2)] pb-2 text-[var(--hero-ink-2)]">
-        <h2 id="fx-operators-heading" className="uppercase tracking-[0.14em]">
+      <div
+        className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 pb-2"
+        style={{ borderBottom: "1px solid var(--line)" }}
+      >
+        <h2 id="fx-operators-heading" className="rw3-label">
           {p.fxOperatorsTitle}
         </h2>
       </div>
-      <p className="rw-m mt-2 normal-case tracking-[0.04em] text-[var(--hero-ink-2)]">
+      <p className="rw3-meta mt-2">
         {p.fxOperatorsNote}
       </p>
 

@@ -12,18 +12,20 @@ import { EmptyState } from "@/components/ui/EmptyState";
 import { fixturePath } from "@/lib/fixtures/paths";
 import { resolveAccaMarketKey } from "@/lib/acca/markets";
 
+/* Settlement coloring in the rw3 grammar: won/lost carry --win/--loss, the
+   unscored states are muted, pending is plain text. */
 function statusTone(status: MatchPredictionView["status"]): string {
   switch (status) {
     case "won":
-      return "bg-[var(--status-won-bg)] text-[var(--status-won-fg)]";
+      return "var(--win)";
     case "lost":
-      return "bg-[var(--status-lost-bg)] text-[var(--status-lost-fg)]";
+      return "var(--loss)";
     case "void":
     case "push":
     case "cancelled":
-      return "bg-[var(--status-void-bg)] text-[var(--status-void-fg)]";
+      return "var(--muted)";
     default:
-      return "bg-[var(--status-pending-bg)] text-[var(--status-pending-fg)]";
+      return "var(--text)";
   }
 }
 
@@ -70,11 +72,15 @@ export function MatchPredictionsPanel({
         return (
           <article
             key={prediction.id}
-            className="rounded-lg border border-border bg-[var(--canvas-secondary)]"
+            style={{
+              border: "1px solid var(--line)",
+              borderRadius: 6,
+              background: "var(--surface)",
+            }}
           >
             <button
               type="button"
-              className="flex w-full items-start justify-between gap-3 px-4 py-3 text-left"
+              className="rw3-hoverable flex w-full items-start justify-between gap-3 px-4 py-3 text-left"
               aria-expanded={open}
               onClick={() => {
                 const next = open ? null : prediction.id;
@@ -94,10 +100,10 @@ export function MatchPredictionsPanel({
               }}
             >
               <div>
-                <p className="text-sm font-semibold text-foreground">
+                <p style={{ fontSize: 14, fontWeight: 600 }}>
                   {prediction.marketLabel}
                 </p>
-                <p className="mt-0.5 text-xs text-[var(--hero-ink-3)]">
+                <p className="rw3-meta mt-0.5">
                   Selection: {prediction.selection}
                 </p>
                 {/*
@@ -108,8 +114,8 @@ export function MatchPredictionsPanel({
                   had is not.
                 */}
                 {prediction.confidence != null ? (
-                  <p className="mt-1.5 text-xs text-[var(--hero-ink-3)]">
-                    <span className="rw-mono rw-tnum">
+                  <p className="rw3-meta mt-1.5">
+                    <span style={{ color: "var(--text)", fontWeight: 600 }}>
                       Provider potential {prediction.confidence}%
                     </span>{" "}
                     — FootyStats&apos; figure as published. Not a confidence, and the archived
@@ -118,39 +124,48 @@ export function MatchPredictionsPanel({
                 ) : null}
               </div>
               <span
-                className={`shrink-0 rounded-md px-2 py-1 text-metadata font-semibold uppercase tracking-label ${statusTone(prediction.status)}`}
+                className="rw3-pill shrink-0"
+                style={{
+                  color: statusTone(prediction.status),
+                  fontWeight: 600,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.06em",
+                }}
               >
                 {prediction.status}
               </span>
             </button>
             {open ? (
-              <div className="border-t border-[var(--border-subtle)] px-4 py-4 text-sm">
+              <div
+                className="px-4 py-4"
+                style={{ borderTop: "1px solid var(--line)", fontSize: 13 }}
+              >
                 <dl className="grid gap-2 sm:grid-cols-2">
                   <div>
-                    <dt className="text-metadata uppercase tracking-label text-muted-foreground">
+                    <dt className="rw3-label">
                       Published
                     </dt>
-                    <dd className="font-mono text-xs">
+                    <dd style={{ fontSize: 12 }}>
                       {prediction.publishedAt
                         ? new Date(prediction.publishedAt).toLocaleString()
                         : "—"}
                     </dd>
                   </div>
                   <div>
-                    <dt className="text-metadata uppercase tracking-label text-muted-foreground">
+                    <dt className="rw3-label">
                       Odds at publication
                     </dt>
-                    <dd className="font-mono text-xs">
+                    <dd style={{ fontSize: 12 }}>
                       {prediction.originalOdds != null
                         ? prediction.originalOdds.toFixed(2)
                         : "Unavailable"}
                     </dd>
                   </div>
                   <div>
-                    <dt className="text-metadata uppercase tracking-label text-muted-foreground">
+                    <dt className="rw3-label">
                       Unit P/L
                     </dt>
-                    <dd className="font-mono text-xs">
+                    <dd style={{ fontSize: 12 }}>
                       {prediction.unitProfit == null
                         ? "—"
                         : prediction.unitProfit > 0
@@ -159,10 +174,10 @@ export function MatchPredictionsPanel({
                     </dd>
                   </div>
                   <div>
-                    <dt className="text-metadata uppercase tracking-label text-muted-foreground">
+                    <dt className="rw3-label">
                       Settlement
                     </dt>
-                    <dd className="text-xs text-[var(--ink-secondary)]">
+                    <dd className="rw3-meta">
                       {prediction.settlementReason}
                     </dd>
                   </div>
@@ -170,10 +185,10 @@ export function MatchPredictionsPanel({
 
                 {prediction.evidenceSummary.length ? (
                   <div className="mt-4">
-                    <h3 className="text-metadata font-semibold uppercase tracking-label text-muted-foreground">
+                    <h3 className="rw3-label">
                       Evidence at publication
                     </h3>
-                    <ul className="mt-2 list-disc space-y-1 pl-5 text-xs text-[var(--ink-secondary)]">
+                    <ul className="rw3-meta mt-2 list-disc space-y-1 pl-5">
                       {prediction.evidenceSummary.map((line) => (
                         <li key={line}>{line}</li>
                       ))}
@@ -214,7 +229,8 @@ export function MatchPredictionsPanel({
                     />
                     <Link
                       href={`/${locale}/acca/builder`}
-                      className="text-xs font-semibold text-brand hover:underline"
+                      className="hover:underline"
+                      style={{ fontSize: 12, fontWeight: 600, color: "var(--accent)" }}
                     >
                       Build Acca automatically
                     </Link>
@@ -222,25 +238,25 @@ export function MatchPredictionsPanel({
                 ) : null}
 
                 <div className="mt-4">
-                  <h3 className="text-metadata font-semibold uppercase tracking-label text-muted-foreground">
+                  <h3 className="rw3-label">
                     Prediction timeline
                   </h3>
-                  <ol className="mt-2 space-y-2 border-l border-border pl-4">
+                  <ol
+                    className="mt-2 space-y-2 pl-4"
+                    style={{ borderLeft: "1px solid var(--line)" }}
+                  >
                     {prediction.timeline.map((item) => (
-                      <li key={item.id} className="text-xs">
-                        <p className="font-medium text-foreground">{item.label}</p>
+                      <li key={item.id} style={{ fontSize: 12 }}>
+                        <p className="font-medium">{item.label}</p>
                         {item.at ? (
-                          <time
-                            dateTime={item.at}
-                            className="font-mono text-metadata text-muted-foreground"
-                          >
+                          <time dateTime={item.at} className="rw3-meta">
                             {new Date(item.at).toLocaleString()}
                           </time>
                         ) : (
-                          <p className="text-metadata text-muted-foreground">Time unavailable</p>
+                          <p className="rw3-meta">Time unavailable</p>
                         )}
                         {item.detail ? (
-                          <p className="mt-0.5 text-[var(--ink-secondary)]">{item.detail}</p>
+                          <p className="rw3-meta mt-0.5">{item.detail}</p>
                         ) : null}
                       </li>
                     ))}

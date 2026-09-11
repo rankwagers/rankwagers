@@ -84,7 +84,9 @@ function renderLevels(report: ReturnType<typeof scoreFixtureSignals>): string {
 test("a strong report leads in the lead register; rendering is deterministic", () => {
   const html = renderLevels(strongReport());
   assert.match(html, /Lead finding/, "the eyebrow states the level");
-  assert.match(html, /rw-h/, "the sentence takes the display face");
+  // V3 reconciliation: the display face is rw3-title now (16px/600 — Bible V3
+  // caps type at 18px; the lead keeps the page's largest register).
+  assert.match(html, /rw3-title/, "the sentence takes the display face");
   assert.match(html, /league average 50%/, "the grammar carries the baseline");
   assert.equal(html, renderLevels(strongReport()), "same inputs, same markup");
 });

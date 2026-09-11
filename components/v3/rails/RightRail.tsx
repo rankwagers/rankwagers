@@ -137,68 +137,98 @@ export function RightRail({
       ) : null}
 
       {offer ? (
-        <div
-          data-offer-of-the-day=""
-          style={{
-            margin: "14px 16px",
-            padding: 12,
-            border: "1px solid var(--line)",
-            borderRadius: 6,
-            display: "flex",
-            flexDirection: "column",
-            gap: 8,
+        <OfferOfTheDayCard
+          offer={offer}
+          strings={{
+            offerOfTheDay: strings.offerOfTheDay,
+            sponsored: strings.sponsored,
+            continue: strings.continue,
+            terms: strings.terms,
           }}
-        >
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "baseline",
-              gap: 8,
-            }}
-          >
-            <span className="rw3-label">{strings.offerOfTheDay}</span>
-            <SponsoredLabel text={strings.sponsored} size={11} />
-          </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <span
-              aria-hidden
-              style={{
-                width: 28,
-                height: 28,
-                display: "grid",
-                placeItems: "center",
-                fontSize: 9,
-                fontWeight: 600,
-                background: "var(--pctbg)",
-                color: "var(--text)",
-                border: "1px solid var(--line)",
-                borderRadius: 6,
-                flex: "none",
-              }}
-            >
-              {offer.mark}
-            </span>
-            <div style={{ display: "flex", flexDirection: "column", minWidth: 0 }}>
-              <span style={{ fontWeight: 600 }}>{offer.name}</span>
-              <span style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.35 }}>
-                {offer.offer}
-              </span>
-            </div>
-          </div>
-          <a
-            href={offer.continueHref}
-            rel="nofollow sponsored noopener"
-            className="rw3-filled"
-            style={{ alignSelf: "flex-start", padding: "6px 12px" }}
-          >
-            {strings.continue}
-          </a>
-          <span style={{ fontSize: 10, color: "var(--muted)", lineHeight: 1.4 }}>
-            {strings.terms}
-          </span>
-        </div>
+        />
       ) : null}
     </aside>
+  );
+}
+
+/* The one curated commercial card — the home rail's slot and, since block D,
+   the match aside's (placement offer_of_the_day_fixture there). It stays in
+   this file so the FILLED register keeps one address for the class. */
+export type OfferCardStrings = {
+  offerOfTheDay: string;
+  sponsored: string;
+  continue: string;
+  terms: string;
+};
+
+export function OfferOfTheDayCard({
+  offer,
+  strings,
+}: {
+  offer: OfferOfTheDay;
+  strings: OfferCardStrings;
+}) {
+  return (
+    <div
+      data-offer-of-the-day=""
+      style={{
+        margin: "14px 16px",
+        padding: 12,
+        border: "1px solid var(--line)",
+        borderRadius: 6,
+        display: "flex",
+        flexDirection: "column",
+        gap: 8,
+      }}
+    >
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "baseline",
+          gap: 8,
+        }}
+      >
+        <span className="rw3-label">{strings.offerOfTheDay}</span>
+        <SponsoredLabel text={strings.sponsored} size={11} />
+      </div>
+      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <span
+          aria-hidden
+          style={{
+            width: 28,
+            height: 28,
+            display: "grid",
+            placeItems: "center",
+            fontSize: 9,
+            fontWeight: 600,
+            background: "var(--pctbg)",
+            color: "var(--text)",
+            border: "1px solid var(--line)",
+            borderRadius: 6,
+            flex: "none",
+          }}
+        >
+          {offer.mark}
+        </span>
+        <div style={{ display: "flex", flexDirection: "column", minWidth: 0 }}>
+          <span style={{ fontWeight: 600 }}>{offer.name}</span>
+          <span style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.35 }}>
+            {offer.offer}
+          </span>
+        </div>
+      </div>
+      <a
+        href={offer.continueHref}
+        rel="nofollow sponsored noopener"
+        className="rw3-filled"
+        style={{ alignSelf: "flex-start", padding: "6px 12px" }}
+      >
+        {strings.continue}
+      </a>
+      <span style={{ fontSize: 10, color: "var(--muted)", lineHeight: 1.4 }}>
+        {strings.terms}
+      </span>
+    </div>
   );
 }

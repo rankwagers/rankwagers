@@ -134,7 +134,9 @@ export type OfferOfTheDay = {
 export function buildOfferOfTheDay(
   countryContext: CountryContext,
   locale: Locale,
-  pinnedSlug?: string | null
+  pinnedSlug?: string | null,
+  /** Attribution slot — defaults to the home rail; the match aside passes its own. */
+  slot?: { placement: string; subid: string }
 ): OfferOfTheDay | null {
   const configured = affiliatePartners.filter(
     (partner) =>
@@ -157,8 +159,8 @@ export function buildOfferOfTheDay(
     offer: bonusForLocale(brand, locale),
     continueHref: buildGoPath({
       slug: partner.slug,
-      placement: "offer_of_the_day",
-      subid: "offer-of-the-day",
+      placement: slot?.placement ?? "offer_of_the_day",
+      subid: slot?.subid ?? "offer-of-the-day",
       availability: "unknown",
       deeplinkType: "homepage",
       operatorRank: 1,

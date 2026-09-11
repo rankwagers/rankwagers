@@ -962,6 +962,11 @@ export const predictionsEn = {
   v3NotFoundLine: "The ball went out of play. Back to the homepage.",
   v3BackToPredictions: "Back to today's predictions",
   v3PlayResponsibly: "Play responsibly",
+  /* V3 reskin — block D (free bets surface + match aside). */
+  v3FreeBetsTitle: "Free bets and offers",
+  v3NActiveOffers: "{n} active offers",
+  v3TermsAtOperator: "Each offer's full terms live at the operator.",
+  v3OtherMarkets: "Other markets in this match",
 };
 
 export type PredictionStrings = typeof predictionsEn;

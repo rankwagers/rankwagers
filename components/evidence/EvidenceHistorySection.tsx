@@ -4,7 +4,6 @@ import {
   evidenceHistoryDatasetLd,
   getEvidenceHistoryView,
 } from "@/lib/archive/evidence";
-import { evidenceArchiveTokens } from "@/lib/evidence/presentation";
 import type { EvidenceHistoryEmptyReason, EvidenceHistoryView } from "@/types/evidence";
 import { EvidenceHistoryTable } from "./EvidenceHistoryTable";
 import { EvidenceHistoryTracker } from "./EvidenceHistoryTracker";
@@ -37,6 +36,16 @@ const EMPTY_COPY: Record<EvidenceHistoryEmptyReason, { title: string; body: stri
   },
 };
 
+/* The muted stat card and its value in the rw3 grammar: a line, a surface,
+   6px radius, 14px/600 numerals — no elevation. */
+const rw3Card = {
+  border: "1px solid var(--line)",
+  borderRadius: 6,
+  background: "var(--surface)",
+  padding: "10px 12px",
+} as const;
+const rw3Value = { marginTop: 4, fontSize: 14, fontWeight: 600 } as const;
+
 export async function EvidenceHistorySection({
   fixtureId,
   locale,
@@ -63,19 +72,17 @@ export async function EvidenceHistorySection({
     <section
       id={EVIDENCE_HISTORY_ANCHOR}
       aria-labelledby={`${EVIDENCE_HISTORY_ANCHOR}-heading`}
-      className={evidenceArchiveTokens.section}
+      className="pt-8"
+      style={{ borderTop: "1px solid var(--line)" }}
       data-evidence-history="true"
       data-available={view.available ? "true" : "false"}
     >
       {datasetLd ? <JsonLd data={datasetLd} /> : null}
 
-      <h2
-        id={`${EVIDENCE_HISTORY_ANCHOR}-heading`}
-        className="rw-display text-[28px] text-[var(--hero-ink)] sm:text-[34px]"
-      >
+      <h2 id={`${EVIDENCE_HISTORY_ANCHOR}-heading`} className="rw3-title">
         Evidence history
       </h2>
-      <p className={`mt-1 max-w-2xl ${evidenceArchiveTokens.note}`}>
+      <p className="rw3-meta mt-1 max-w-2xl">
         A permanent, append-only record of what the evidence looked like at each capture
         and how each prediction settled. Entries are never edited; corrections are
         appended as new revisions and both versions stay visible.
@@ -92,21 +99,21 @@ export async function EvidenceHistorySection({
           />
 
           <dl className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <div className={evidenceArchiveTokens.cardMuted}>
-              <dt className={evidenceArchiveTokens.label}>Snapshots</dt>
-              <dd className={evidenceArchiveTokens.value}>{view.totalSnapshots}</dd>
+            <div style={rw3Card}>
+              <dt className="rw3-label">Snapshots</dt>
+              <dd style={rw3Value}>{view.totalSnapshots}</dd>
             </div>
-            <div className={evidenceArchiveTokens.cardMuted}>
-              <dt className={evidenceArchiveTokens.label}>Validations</dt>
-              <dd className={evidenceArchiveTokens.value}>{view.totalValidations}</dd>
+            <div style={rw3Card}>
+              <dt className="rw3-label">Validations</dt>
+              <dd style={rw3Value}>{view.totalValidations}</dd>
             </div>
-            <div className={evidenceArchiveTokens.cardMuted}>
-              <dt className={evidenceArchiveTokens.label}>Corrections</dt>
-              <dd className={evidenceArchiveTokens.value}>{view.correctedValidations}</dd>
+            <div style={rw3Card}>
+              <dt className="rw3-label">Corrections</dt>
+              <dd style={rw3Value}>{view.correctedValidations}</dd>
             </div>
-            <div className={evidenceArchiveTokens.cardMuted}>
-              <dt className={evidenceArchiveTokens.label}>Model versions</dt>
-              <dd className="mt-1 font-mono text-caption text-foreground">
+            <div style={rw3Card}>
+              <dt className="rw3-label">Model versions</dt>
+              <dd className="mt-1" style={{ fontSize: 12 }}>
                 {view.modelVersions.join(", ")}
               </dd>
             </div>
@@ -115,7 +122,13 @@ export async function EvidenceHistorySection({
           {view.integrityVerified ? null : (
             <p
               role="status"
-              className="mt-3 rounded-md border border-[var(--red-primary)]/25 bg-[var(--red-surface)] px-3 py-2 text-caption text-[var(--red-primary)]"
+              className="mt-3 px-3 py-2"
+              style={{
+                border: "1px solid var(--line)",
+                borderRadius: 6,
+                fontSize: 12,
+                color: "var(--loss)",
+              }}
             >
               One or more archived snapshots failed their content-hash check. The rows
               below are shown as stored, unmodified, and should be treated as unverified.
@@ -124,7 +137,7 @@ export async function EvidenceHistorySection({
 
           {view.latest ? (
             <div className="mt-5">
-              <h3 className={evidenceArchiveTokens.label}>Current snapshot</h3>
+              <h3 className="rw3-label">Current snapshot</h3>
               <div className="mt-2">
                 <EvidenceSnapshotCard
                   snapshot={view.latest}
@@ -137,7 +150,7 @@ export async function EvidenceHistorySection({
           ) : null}
 
           <div className="mt-6">
-            <h3 className={evidenceArchiveTokens.label}>Full timeline</h3>
+            <h3 className="rw3-label">Full timeline</h3>
             <div className="mt-2">
               <EvidenceHistoryTable
                 snapshots={view.snapshots}
@@ -148,11 +161,11 @@ export async function EvidenceHistorySection({
           </div>
         </>
       ) : (
-        <div className={`mt-4 ${evidenceArchiveTokens.cardMuted}`} role="status">
-          <p className="text-body-sm font-medium text-foreground">
+        <div className="mt-4" style={rw3Card} role="status">
+          <p style={{ fontSize: 13, fontWeight: 500 }}>
             {EMPTY_COPY[view.emptyReason ?? "no_snapshots"].title}
           </p>
-          <p className={`mt-1 ${evidenceArchiveTokens.note}`}>
+          <p className="rw3-meta mt-1">
             {EMPTY_COPY[view.emptyReason ?? "no_snapshots"].body}
           </p>
         </div>

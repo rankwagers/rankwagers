@@ -1,4 +1,3 @@
-import { Reveal } from "@/components/motion/Reveal";
 import type { FixtureEvidenceView } from "@/lib/fixtures/evidenceView";
 import type { FixtureSignal } from "@/lib/fixtureSignals";
 import type { PredictionStrings } from "@/lib/translations/predictionsEn";
@@ -92,34 +91,43 @@ export function FixtureModelWhy({
         so no page renders that state.
       */}
       {potential ? (
-        <Reveal index={0}>
-          <h2 id="fx-provider-heading" className="rw-m text-[var(--hero-ink-2)]">
+        <>
+          <h2 id="fx-provider-heading" className="rw3-label">
             {p.fxProviderFigureTitle}
           </h2>
-          <p className="mt-2 text-[15px] text-[var(--hero-ink)]">
-            <span className="rw-tnum font-semibold">{potential.pct}%</span>{" "}
-            <span className="text-[var(--hero-ink-2)]">{potential.marketLabel}</span>
+          <p className="mt-2 flex flex-wrap items-baseline gap-x-2 text-[13px]">
+            <span className="rw3-pct">{potential.pct}%</span>{" "}
+            <span style={{ color: "var(--muted)" }}>{potential.marketLabel}</span>
           </p>
-          <p className="mt-2 max-w-[52ch] text-[13px] leading-relaxed text-[var(--hero-ink-2)]">
+          <p
+            className="mt-2 max-w-[52ch] text-[12px] leading-relaxed"
+            style={{ color: "var(--muted)" }}
+          >
             {formatDict(p.fxModelPotentialLine, {
               pct: String(potential.pct),
               market: potential.marketLabel,
             })}
           </p>
-        </Reveal>
+        </>
       ) : null}
 
-      <div className={potential ? "mt-10" : ""}>
-        <h2 id="fx-model-heading" className="rw-m text-[var(--hero-ink-2)]">
+      <div className={potential ? "mt-8" : ""}>
+        <h2 id="fx-model-heading" className="rw3-label">
           {p.fxModelTitle}
         </h2>
-        <h3 className="rw-h mt-3 text-[20px] text-[var(--hero-ink)]">{p.fxWhyTitle}</h3>
-        <p className="mt-2 max-w-[52ch] text-[13px] leading-relaxed text-[var(--hero-ink-2)]">
+        <h3 className="mt-3 text-[14px] font-semibold">{p.fxWhyTitle}</h3>
+        <p
+          className="mt-2 max-w-[52ch] text-[12px] leading-relaxed"
+          style={{ color: "var(--muted)" }}
+        >
           {p.fxWhyIntro}
         </p>
 
         {reconcile ? (
-          <p className="mt-5 max-w-[62ch] border-l-2 border-[var(--hero-ink)] pl-4 text-[15px] leading-relaxed text-[var(--hero-ink)]">
+          <p
+            className="mt-4 max-w-[62ch] pl-4 text-[13px] leading-relaxed"
+            style={{ borderLeft: "2px solid var(--line)" }}
+          >
             {reconcile}
           </p>
         ) : null}
@@ -129,26 +137,30 @@ export function FixtureModelWhy({
             {/* THE WINDOW, NAMED. Every rate below is a season venue rate — a different window
                 from the "last N" recent-form sentences above, and the copy says so, so the two
                 can no longer read as one contradictory clock. */}
-            <p className="rw-m mt-6 normal-case tracking-[0.04em] text-[var(--hero-ink-2)]">
+            <p className="rw3-meta mt-5">
               {p.fxWhyWindowNote}
             </p>
-            <ul className="mt-2 border-t border-[var(--hero-line)]">
+            <ul className="mt-2" style={{ borderTop: "1px solid var(--line)" }}>
               {view.signals.map((signal) => (
                 <li
                   key={signal.key}
-                  className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 border-b border-[var(--hero-line)] py-2.5"
+                  className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1 py-2"
+                  style={{ borderBottom: "1px solid var(--line)" }}
                 >
-                  <span className="min-w-0 text-[13px] text-[var(--hero-ink-2)]">
+                  <span className="min-w-0 text-[13px]" style={{ color: "var(--muted)" }}>
                     {signal.label}
                   </span>
-                  <span className="rw-m rw-tnum shrink-0 text-[var(--hero-ink)]">
+                  <span className="shrink-0 text-[12px] font-semibold">
                     {signal.display}
                     {/* A display without its sample is a provider figure, and says so. */}
                     {signal.display.includes("(") ? null : (
-                      <span className="text-[var(--hero-ink-2)]"> · {p.fxProviderOnlyRate}</span>
+                      <span style={{ color: "var(--muted)", fontWeight: 400 }}>
+                        {" "}
+                        · {p.fxProviderOnlyRate}
+                      </span>
                     )}
                     {signal.leagueBaseline ? (
-                      <span className="text-[var(--hero-ink-2)]">
+                      <span style={{ color: "var(--muted)", fontWeight: 400 }}>
                         {" "}
                         · {signal.leagueBaseline.display}
                       </span>
@@ -161,7 +173,7 @@ export function FixtureModelWhy({
         ) : null}
 
         {/* The archive line: what was actually captured, or the honest absence of a capture. */}
-        <p className="rw-m mt-6 normal-case tracking-[0.04em] text-[var(--hero-ink-2)]">
+        <p className="rw3-meta mt-5">
           {latest
             ? formatDict(p.fxWhyArchiveLine, {
                 seq: String(latest.sequence),

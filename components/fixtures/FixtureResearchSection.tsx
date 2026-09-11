@@ -1,4 +1,3 @@
-import { Reveal } from "@/components/motion/Reveal";
 import type {
   FixtureEvidenceMarketView,
   FixtureEvidenceView,
@@ -22,8 +21,8 @@ import type { PredictionStrings } from "@/lib/translations/predictionsEn";
 /** The product's framing. Mechanism only — never a figure, because none has been observed. */
 function FramingNote() {
   return (
-    <div className="rw-frame border-l-2 border-[var(--hero-line)] pl-5">
-      <p className="max-w-[62ch] text-[16px] leading-8 text-[var(--hero-ink-2)]">
+    <div className="pl-4" style={{ borderLeft: "2px solid var(--line)" }}>
+      <p className="max-w-[62ch] text-[13px] leading-relaxed" style={{ color: "var(--muted)" }}>
         RankWagers measures how often a goal market occurs, not what it is priced at. A
         high-probability market is priced low before kickoff. The same market prices differently in
         play, while the score is still goalless. Where and when to take that price is the
@@ -51,18 +50,18 @@ function Rate({
   const rate = value ? splitRate(value.display) : null;
   return (
     <div>
-      <p className="rw-label text-[var(--hero-ink-3)]">{label}</p>
+      <p className="rw3-label">{label}</p>
       {rate ? (
-        <p className="mt-2 flex flex-wrap items-baseline gap-x-2">
-          <span className="rw-display rw-tnum rw-mono text-[22px] text-[var(--hero-ink)]">
-            {rate.claim}
-          </span>
-          <span className="rw-label rw-tnum text-[var(--hero-ink-3)]">
+        <p className="mt-1.5 flex flex-wrap items-baseline gap-x-2">
+          <span className="rw3-pct">{rate.claim}</span>
+          <span style={{ fontSize: 11, color: "var(--muted)" }}>
             {rate.qualifier ?? providerNote}
           </span>
         </p>
       ) : (
-        <p className="mt-2 text-[15px] text-[var(--hero-ink-3)]">No history</p>
+        <p className="mt-1.5 text-[13px]" style={{ color: "var(--muted)" }}>
+          No history
+        </p>
       )}
     </div>
   );
@@ -70,37 +69,29 @@ function Rate({
 
 function MarketRow({
   market,
-  index,
   p,
 }: {
   market: FixtureEvidenceMarketView;
-  index: number;
   p: PredictionStrings;
 }) {
   return (
-    <Reveal
-      as="li"
-      index={index}
-      className="border-t border-[var(--hero-line-2)] py-7 first:border-t-0 first:pt-0"
-    >
+    <li className="border-t border-[var(--line)] py-4 first:border-t-0 first:pt-0">
       <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-        <h3 className="text-[17px] font-semibold tracking-[-0.01em] text-[var(--hero-ink)]">
-          {market.marketLabel}
-        </h3>
-        <p className="rw-label text-[var(--hero-ink-3)]">{market.selectionLabel}</p>
+        <h3 className="text-[14px] font-semibold">{market.marketLabel}</h3>
+        <p className="rw3-label">{market.selectionLabel}</p>
       </div>
       {/* Every label names its WINDOW — season venue rates, a different clock from the
           "last N" recent-form sentences at the top of the page. */}
-      <div className="mt-4 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-3">
+      <div className="mt-3 grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-3">
         <Rate value={market.homeRate} label={p.fxRateHomeSeason} providerNote={p.fxProviderOnlyRate} />
         <Rate value={market.awayRate} label={p.fxRateAwaySeason} providerNote={p.fxProviderOnlyRate} />
         <Rate value={market.leagueBaseline} label={p.fxRateLeagueSeason} providerNote={p.fxProviderOnlyRate} />
       </div>
-      <p className="mt-4 text-[13px] leading-relaxed text-[var(--hero-ink-3)]">
+      <p className="mt-3 text-[12px] leading-relaxed" style={{ color: "var(--muted)" }}>
         Occurrence rate — how often this market has happened, with the matches behind it. Not a
         price, and not a forecast.
       </p>
-    </Reveal>
+    </li>
   );
 }
 
@@ -108,10 +99,9 @@ function MarketRow({
  * Split a model rate string into its claim and its qualifier.
  *
  * `82% (9/11)` is one string doing two jobs. The percentage is the claim; the denominator is what
- * licenses it. Rendering both at one weight made eight rows read as a spreadsheet — the prototype's
- * .display/.label relationship is the model, so the rate takes display weight and the sample drops
- * to label weight beside it. The string is SPLIT, never rebuilt: the model's own text is preserved
- * on both sides of the parenthesis.
+ * licenses it. Rendering both at one weight made eight rows read as a spreadsheet — the pct chip
+ * carries the claim and the sample drops to 11px muted text beside it. The string is SPLIT, never
+ * rebuilt: the model's own text is preserved on both sides of the parenthesis.
  */
 function splitRate(display: string): { claim: string; qualifier: string | null } {
   const m = /^(.*?)\s*\(([^)]*)\)\s*$/.exec(display);
@@ -138,27 +128,32 @@ function NoDataState({
   return (
     <div
       data-evidence-state="no_data"
-      className="border-l-2 border-[var(--hero-line)] bg-[var(--hero-surface)] px-6 py-7"
+      className="px-5 py-4"
+      style={{
+        borderLeft: "2px solid var(--line)",
+        background: "var(--surface)",
+        borderRadius: 6,
+      }}
     >
-      <p className="rw-label text-[var(--hero-ink-3)]">No data</p>
-      <p className="mt-3 max-w-[58ch] text-[15px] leading-[1.7] text-[var(--hero-ink-2)]">
+      <p className="rw3-label">No data</p>
+      <p className="mt-2 max-w-[58ch] text-[13px] leading-relaxed" style={{ color: "var(--muted)" }}>
         {sentence}
       </p>
-      <dl className="mt-5 grid max-w-md grid-cols-2 gap-x-6 gap-y-3">
+      <dl className="mt-4 grid max-w-md grid-cols-2 gap-x-6 gap-y-3">
         <div>
-          <dt className="rw-label text-[var(--hero-ink-3)]">{homeTeam}, at home</dt>
-          <dd className="rw-mono rw-tnum mt-1 text-[15px]">
+          <dt className="rw3-label">{homeTeam}, at home</dt>
+          <dd className="mt-1 text-[13px]">
             {view.homePlayed != null ? `${view.homePlayed} matches` : "No record"}
           </dd>
         </div>
         <div>
-          <dt className="rw-label text-[var(--hero-ink-3)]">{awayTeam}, away</dt>
-          <dd className="rw-mono rw-tnum mt-1 text-[15px]">
+          <dt className="rw3-label">{awayTeam}, away</dt>
+          <dd className="mt-1 text-[13px]">
             {view.awayPlayed != null ? `${view.awayPlayed} matches` : "No record"}
           </dd>
         </div>
       </dl>
-      <p className="mt-5 max-w-[58ch] text-[13px] leading-relaxed text-[var(--hero-ink-3)]">
+      <p className="mt-4 max-w-[58ch] text-[12px] leading-relaxed" style={{ color: "var(--muted)" }}>
         We publish the board and state the sample behind each fixture. We do not lower the bar to
         fill the page.
       </p>
@@ -180,13 +175,13 @@ export function FixtureResearchSection({
   if (view.state === "no_data") {
     return (
       <section aria-labelledby="research-heading" className="scroll-mt-24">
-        <h3 id="research-heading" className="rw-display text-[22px] text-[var(--hero-ink)] sm:text-[26px]">
+        <h3 id="research-heading" className="rw3-title">
           Market rates
         </h3>
-        <div className="mt-6">
+        <div className="mt-4">
           <FramingNote />
         </div>
-        <div className="mt-10">
+        <div className="mt-6">
           <NoDataState view={view} homeTeam={homeTeam} awayTeam={awayTeam} />
         </div>
       </section>
@@ -201,21 +196,21 @@ export function FixtureResearchSection({
       data-evidence-state={view.state}
       className="scroll-mt-24"
     >
-      <h3 id="research-heading" className="rw-display text-[22px] text-[var(--hero-ink)] sm:text-[26px]">
+      <h3 id="research-heading" className="rw3-title">
         Market rates
       </h3>
-      <div className="mt-6">
+      <div className="mt-4">
         <FramingNote />
       </div>
 
       {markets.length ? (
-        <ul className="mt-10">
-          {markets.map((m, i) => (
-            <MarketRow key={m.marketKey} market={m} index={i} p={p} />
+        <ul className="mt-6">
+          {markets.map((m) => (
+            <MarketRow key={m.marketKey} market={m} p={p} />
           ))}
         </ul>
       ) : (
-        <p className="mt-6 text-[15px] text-[var(--hero-ink-2)]">
+        <p className="mt-4 text-[13px]" style={{ color: "var(--muted)" }}>
           No market cleared the threshold on this fixture.
         </p>
       )}

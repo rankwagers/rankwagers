@@ -6,6 +6,7 @@ import { MatchDetailView } from "@/components/fixtures/MatchDetailView";
 import { getEvidenceHistoryView } from "@/lib/archive/evidence";
 import { getDictionary } from "@/lib/dictionaries";
 import { loadMatchPageBundle } from "@/lib/fixtures/loadMatchPage.server";
+import { buildOfferOfTheDay } from "@/lib/v3/homeRails.server";
 import { buildPricePanelData } from "@/lib/operators/pricePanel.server";
 import { parseFixtureMatchId } from "@/lib/fixtures/paths";
 import { locales, type Locale } from "@/lib/i18n";
@@ -132,6 +133,13 @@ export default async function FixtureMatchPage({
     country: countryContext.country,
   });
 
+  /* The aside's curated slot (Bible V3 block D) — its own placement so the
+     funnel can tell the match aside from the home rail. Null omits the card. */
+  const offer = buildOfferOfTheDay(countryContext, params.locale, null, {
+    placement: "offer_of_the_day_fixture",
+    subid: `offer-of-the-day_fx_${matchId}`,
+  });
+
   return (
     <>
       <MatchDetailView
@@ -141,6 +149,8 @@ export default async function FixtureMatchPage({
         latestSnapshot={evidenceHistory.latest}
         p={dict.predictions}
         prices={prices}
+        offer={offer}
+        offerTerms={dict.footer.disclaimer}
       />
       {/*
         Sprint 23 — Evidence History. Rendered as a sibling of the match view rather than
@@ -148,7 +158,7 @@ export default async function FixtureMatchPage({
         it out of MatchDetailView means neither has to know about the other. Container
         class matches the view's own wrapper so the section lines up with the page grid.
       */}
-      <div className="rw-hero container-wide bg-[var(--hero-canvas)] pb-16">
+      <div className="px-5 pb-16">
         <EvidenceHistorySection
           fixtureId={matchId}
           locale={params.locale}

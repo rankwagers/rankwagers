@@ -1,4 +1,3 @@
-import { Reveal } from "@/components/motion/Reveal";
 import type { MatchPredictionView } from "@/lib/fixtures/types";
 
 /* ============================================================================
@@ -26,13 +25,13 @@ function formatStamp(iso: string | null): string {
 function Field({ label, value }: { label: string; value: string }) {
   return (
     <div>
-      <dt className="rw-label text-[var(--hero-ink-3)]">{label}</dt>
-      <dd className="rw-mono rw-tnum mt-1.5 text-[14px] text-[var(--hero-ink)]">{value}</dd>
+      <dt className="rw3-label">{label}</dt>
+      <dd className="mt-1 text-[13px]">{value}</dd>
     </div>
   );
 }
 
-function RecordRow({ prediction, index }: { prediction: MatchPredictionView; index: number }) {
+function RecordRow({ prediction }: { prediction: MatchPredictionView }) {
   const profit =
     prediction.unitProfit == null
       ? "—"
@@ -41,19 +40,13 @@ function RecordRow({ prediction, index }: { prediction: MatchPredictionView; ind
         : `${prediction.unitProfit.toFixed(2)}u`;
 
   return (
-    <Reveal
-      as="li"
-      index={index}
-      className="border-t border-[var(--hero-line-2)] py-6 first:border-t-0 first:pt-0"
-    >
+    <li className="border-t border-[var(--line)] py-4 first:border-t-0 first:pt-0">
       <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">
-        <h3 className="text-[16px] font-semibold text-[var(--hero-ink)]">
-          {prediction.marketLabel}
-        </h3>
-        <p className="rw-label text-[var(--hero-ink-3)]">{prediction.status}</p>
+        <h3 className="text-[14px] font-semibold">{prediction.marketLabel}</h3>
+        <p className="rw3-label">{prediction.status}</p>
       </div>
       {/* An after-kickoff derivation is not a publication and must not wear its labels. */}
-      <dl className="mt-4 grid grid-cols-2 gap-x-6 gap-y-4 sm:grid-cols-4">
+      <dl className="mt-3 grid grid-cols-2 gap-x-6 gap-y-3 sm:grid-cols-4">
         <Field
           label={prediction.capturedAfterKickoff ? "Observed (after kickoff)" : "Published"}
           value={formatStamp(prediction.publishedAt)}
@@ -70,11 +63,11 @@ function RecordRow({ prediction, index }: { prediction: MatchPredictionView; ind
         <Field label="Selection" value={prediction.selection} />
       </dl>
       {prediction.settlementReason ? (
-        <p className="mt-4 max-w-[62ch] text-[13px] leading-relaxed text-[var(--hero-ink-3)]">
+        <p className="mt-3 max-w-[62ch] text-[12px] leading-relaxed" style={{ color: "var(--muted)" }}>
           {prediction.settlementReason}
         </p>
       ) : null}
-    </Reveal>
+    </li>
   );
 }
 
@@ -85,24 +78,24 @@ export function FixtureRecordSection({
 }) {
   return (
     <section aria-labelledby="record-heading" className="scroll-mt-24">
-      <h2
-        id="record-heading"
-        className="rw-display text-[clamp(1.5rem,2.4vw,1.9rem)] text-[var(--hero-ink-2)]"
-      >
+      <h2 id="record-heading" className="rw3-title">
         The record
       </h2>
-      <p className="mt-4 max-w-[62ch] text-[15px] leading-[1.7] text-[var(--hero-ink-3)]">
+      <p className="mt-3 max-w-[62ch] text-[13px] leading-relaxed" style={{ color: "var(--muted)" }}>
         What was published for this fixture, when, and what happened afterwards. Nothing here is
         removed once written, and corrections are added rather than substituted.
       </p>
       {predictions.length ? (
-        <ul className="mt-8">
-          {predictions.map((p, i) => (
-            <RecordRow key={p.id} prediction={p} index={i} />
+        <ul className="mt-6">
+          {predictions.map((p) => (
+            <RecordRow key={p.id} prediction={p} />
           ))}
         </ul>
       ) : (
-        <p className="mt-8 border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]">
+        <p
+          className="mt-6 py-1 pl-4 text-[13px]"
+          style={{ borderLeft: "2px solid var(--line)", color: "var(--muted)" }}
+        >
           Nothing has been published for this fixture, so there is no record yet.
         </p>
       )}

@@ -16,8 +16,8 @@ import { trackOperatorAffiliateCtaClick } from "@/lib/analytics/operatorPages";
  * component; there is no empty-panel state in here by construction, rows.length
  * is asserted > 0). Routing to an operator happens only via the visible
  * Continue on a row — server-signed, rel=sponsored, placement `price_panel`.
- * Hover affects the chip only where hover exists (the hover gate); the tap
- * target is a real button everywhere.
+ * The chip and each Continue are rw3 ghost buttons (they fill green on
+ * hover); the tap target is a real button everywhere.
  */
 export function PricePanel({
   rows,
@@ -41,33 +41,34 @@ export function PricePanel({
         aria-controls={panelId}
         aria-label={p.ppAria}
         onClick={() => setOpen((v) => !v)}
-        className="rw-m inline-flex min-h-8 items-center gap-1.5 border border-[var(--hero-line)] px-2.5 text-[var(--hero-ink-2)] transition-colors [@media(hover:hover)]:hover:border-[var(--hero-ink)] [@media(hover:hover)]:hover:text-[var(--hero-ink)] active:border-[var(--hero-ink)]"
+        className="rw3-ghost min-h-8"
       >
-        <span className="rw-tnum font-bold text-[var(--hero-ink)]">
-          {best.decimal.toFixed(2)}
-        </span>
+        <span>{best.decimal.toFixed(2)}</span>
         <span aria-hidden>{open ? "×" : "→"}</span>
       </button>
       {open ? (
-        <div id={panelId} className="mt-2 border-t border-[var(--hero-line)]">
-          <p className="rw-m mt-2 text-[var(--hero-ink-2)]">{p.ppTitle}</p>
+        <div id={panelId} className="mt-2" style={{ borderTop: "1px solid var(--line)" }}>
+          <p className="rw3-label mt-2">{p.ppTitle}</p>
           <ul className="mt-1.5">
             {rows.map((row) => (
               <li
                 key={`${row.operatorSlug}:${row.observedAt}`}
-                className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 border-b border-[var(--hero-line)] py-2"
+                className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1 py-2"
+                style={{ borderBottom: "1px solid var(--line)" }}
               >
-                <span className="min-w-0 text-sm text-[var(--hero-ink)]">
+                <span className="min-w-0" style={{ fontSize: 13, fontWeight: 500 }}>
                   {row.operatorName}
                   {row.verified ? (
-                    <span className="rw-m ml-1.5 text-[var(--hero-ink-2)]">{p.opVerified}</span>
+                    <span className="ml-1.5" style={{ fontSize: 11, color: "var(--muted)" }}>
+                      {p.opVerified}
+                    </span>
                   ) : null}
                 </span>
                 <span className="flex shrink-0 items-baseline gap-3">
-                  <span className="rw-m text-[var(--hero-ink-2)]">
+                  <span className="rw3-meta">
                     <LocalTime iso={row.observedAt} locale={locale} />
                   </span>
-                  <span className="rw-tnum text-[15px] font-bold text-[var(--hero-ink)]">
+                  <span style={{ fontSize: 14, fontWeight: 600 }}>
                     {row.decimal.toFixed(2)}
                   </span>
                   {row.continueHref ? (
@@ -80,7 +81,7 @@ export function PricePanel({
                           locale,
                         })
                       }
-                      className="rw-m inline-flex min-h-8 items-center border border-[var(--hero-ink)] px-2.5 text-[var(--hero-ink)] transition-colors [@media(hover:hover)]:hover:bg-[var(--hero-ink)] [@media(hover:hover)]:hover:text-[var(--hero-canvas)] active:bg-[var(--hero-ink)] active:text-[var(--hero-canvas)]"
+                      className="rw3-ghost min-h-8"
                     >
                       {formatDict(p.opContinueCta, { operator: row.operatorName })}
                     </a>
@@ -89,7 +90,7 @@ export function PricePanel({
               </li>
             ))}
           </ul>
-          <p className="rw-m mt-2 normal-case tracking-[0.04em] text-[var(--hero-ink-2)]">
+          <p className="rw3-meta mt-2">
             {p.mktOddsWindowNote} {p.fxOperatorsNote}
           </p>
         </div>

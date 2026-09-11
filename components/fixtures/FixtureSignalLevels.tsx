@@ -1,4 +1,3 @@
-import { Reveal } from "@/components/motion/Reveal";
 import type { FixtureSignalReport } from "@/lib/fixtureSignals";
 import type { PredictionStrings } from "@/lib/translations/predictionsEn";
 import {
@@ -48,15 +47,15 @@ export function FixtureSignalLevels({
   return (
     <section aria-labelledby="fx-signals-heading" className="scroll-mt-24">
       {lead ? (
-        <Reveal index={0}>
-          <p className="rw-m text-[var(--hero-ink-2)]">{p.fxLeadEyebrow}</p>
+        <>
+          <p className="rw3-label">{p.fxLeadEyebrow}</p>
           <h2
             id="fx-signals-heading"
-            className="rw-h mt-2.5 max-w-[26ch] text-[clamp(1.75rem,4vw,2.875rem)] text-[var(--hero-ink)]"
+            className="rw3-title mt-2.5 max-w-[52ch]"
           >
             {signalSentence(lead, teams, p)}
           </h2>
-        </Reveal>
+        </>
       ) : (
         <h2 id="fx-signals-heading" className="sr-only">
           {p.fxSupportsTitle}
@@ -64,38 +63,40 @@ export function FixtureSignalLevels({
       )}
 
       {supports.length > 0 ? (
-        <div className={lead ? "mt-12" : ""}>
+        <div className={lead ? "mt-8" : ""}>
           <div className="flex flex-wrap items-start justify-between gap-x-8 gap-y-3">
             <div>
-              <h3 className="rw-m text-[var(--hero-ink-2)]">{p.fxSupportsTitle}</h3>
-              <p className="mt-1.5 max-w-[52ch] text-[13px] leading-relaxed text-[var(--hero-ink-2)]">
+              <h3 className="rw3-label">{p.fxSupportsTitle}</h3>
+              <p
+                className="mt-1.5 max-w-[52ch] text-[12px] leading-relaxed"
+                style={{ color: "var(--muted)" }}
+              >
                 {p.fxSupportsDescription}
               </p>
             </div>
             <FixtureSignalsExplainer label={p.fxExplainerLabel} body={p.fxExplainerBody} />
           </div>
-          <ul className="mt-5 border-t-[1.5px] border-[var(--hero-ink)]">
-            {supports.map((signal, index) => (
-              <Reveal
-                as="li"
+          <ul className="mt-4" style={{ borderTop: "1px solid var(--line)" }}>
+            {supports.map((signal) => (
+              <li
                 key={`${signal.scope}-${signal.market}-${signal.window}`}
-                index={index}
-                className="rw-row border-b border-[var(--hero-line)] py-3.5 pl-3.5"
+                className="py-2.5 pl-3.5"
+                style={{ borderBottom: "1px solid var(--line)" }}
               >
-                <p className="text-[15px] leading-relaxed text-[var(--hero-ink)]">
+                <p className="text-[13px] leading-relaxed">
                   {signalSentence(signal, teams, p)}
                 </p>
                 {rowsFor(signal.market) && locale ? (
                   <PricePanel rows={rowsFor(signal.market)!} locale={locale} p={p} />
                 ) : null}
-              </Reveal>
+              </li>
             ))}
           </ul>
           {/* THE POST-L2 BRIDGE — one quiet rule-line to L5, an anchor, never a redirect. */}
-          <p className="mt-5 border-t border-[var(--hero-line)] pt-3">
+          <p className="mt-4 pt-3" style={{ borderTop: "1px solid var(--line)" }}>
             <a
               href="#fx-operators-heading"
-              className="rw-m text-[var(--hero-ink-2)] underline decoration-[var(--hero-line)] underline-offset-4 transition-colors [@media(hover:hover)]:hover:text-[var(--hero-ink)]"
+              className="rw3-ghost"
               data-placement="post_l2_bridge"
             >
               {p.fxBridgeOperators} →

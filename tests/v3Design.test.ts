@@ -161,6 +161,10 @@ const FILLED_CTA_REGISTER: Array<{ file: string; why: string }> = [
     file: "components/v3/home/EditorBand.tsx",
     why: "editor band card CTAs — the other curated tier home; ≤4 cards per page",
   },
+  {
+    file: "components/v3/offers/OffersHub.tsx",
+    why: "free-bets hub best card — the top-ranked offer's Continue; one per page",
+  },
 ];
 
 /* ── DOM probes: the composed homepage ────────────────────────────────── */

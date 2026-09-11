@@ -46,10 +46,10 @@ export function LiveMatchSection({
       className={`space-y-4 ${className}`.trim()}
     >
       <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h2 id={headingId} className="rw-display text-[22px] text-[var(--hero-ink)] sm:text-[26px]">
+        <h2 id={headingId} className="rw3-title">
           Live match
         </h2>
-        <p className="text-xs text-muted-foreground">
+        <p className="rw3-meta">
           In-play observations from the match feed. Momentum is derived by RankWagers and
           labelled as such.
         </p>
@@ -75,10 +75,7 @@ export function LiveMatchSection({
 
         <div className="grid gap-6 lg:grid-cols-2">
           <div className="space-y-3 lg:col-span-2">
-            <h3
-              id={timelineHeadingId}
-              className="text-sm font-semibold uppercase tracking-label text-[var(--ink-secondary)]"
-            >
+            <h3 id={timelineHeadingId} className="rw3-label">
               Timeline
             </h3>
             <LiveTimelineCard
@@ -93,10 +90,7 @@ export function LiveMatchSection({
           </div>
 
           <div className="space-y-3">
-            <h3
-              id={momentumHeadingId}
-              className="text-sm font-semibold uppercase tracking-label text-[var(--ink-secondary)]"
-            >
+            <h3 id={momentumHeadingId} className="rw3-label">
               Momentum
             </h3>
             <LiveMomentumGraph
@@ -110,10 +104,7 @@ export function LiveMatchSection({
           </div>
 
           <div className="space-y-3">
-            <h3
-              id={statisticsHeadingId}
-              className="text-sm font-semibold uppercase tracking-label text-[var(--ink-secondary)]"
-            >
+            <h3 id={statisticsHeadingId} className="rw3-label">
               In-play statistics
             </h3>
             <LiveStatisticsTable
