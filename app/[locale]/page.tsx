@@ -23,7 +23,8 @@ import {
   buildPopularLeagues,
   buildRailSites,
 } from "@/lib/v3/homeRails.server";
-import { buildAutoFillPicks } from "@/lib/v3/editorPicks.server";
+import { buildEditorBandPicks } from "@/lib/v3/editorPicks.server";
+import { readEditorPicksDocument } from "@/lib/editor-picks/store";
 import { formatDict } from "@/lib/formatDict";
 
 export function generateMetadata({
@@ -101,7 +102,7 @@ export default async function LocaleHomePage({
       sort,
       limit: showAll ? Number.MAX_SAFE_INTEGER : VISIBLE_ROWS,
     }),
-    buildAutoFillPicks({
+    buildEditorBandPicks({
       lists: todayData.lists,
       locale,
       country: countryContext.country ?? null,
@@ -119,7 +120,11 @@ export default async function LocaleHomePage({
 
   const { leagues, totalMatches } = buildPopularLeagues(selected.lists);
   const sites = buildRailSites(countryContext, locale);
-  const offer = buildOfferOfTheDay(countryContext, locale);
+  /* The admin pin (block F) selects the offer of the day when set; the
+     ranked default otherwise. An unconfigured pin falls through inside the
+     builder — the card is never fabricated for a pin that cannot pay out. */
+  const { pinnedOperatorSlug } = await readEditorPicksDocument();
+  const offer = buildOfferOfTheDay(countryContext, locale, pinnedOperatorSlug);
   const live = buildLiveStrip(todayData.lists);
 
   const verified =

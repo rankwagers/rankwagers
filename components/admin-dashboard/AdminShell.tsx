@@ -5,6 +5,7 @@ import { getFeatureFlags } from "@/lib/config/featureFlags";
 const NAV = [
  { href: "/admin/dashboard", label: "Overview" },
  { href: "/admin/predictions", label: "Predictions" },
+ { href: "/admin/featured", label: "Featured picks" },
  { href: "/admin/markets", label: "Markets" },
  { href: "/admin/leagues", label: "Leagues" },
  { href: "/admin/builder", label: "Builder" },

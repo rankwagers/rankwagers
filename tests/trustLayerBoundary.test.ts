@@ -213,6 +213,13 @@ const REGISTERED_CONSUMERS: ReadonlyArray<{ rel: string; why: string }> = [
    * reason registration is explicit rather than globbed.
    */
   { rel: "app/[locale]/how-we-rank/page.tsx", why: "canonical criteria page" },
+  /*
+   * Registered with Bible V3 block F. The editor-picks validator runs the
+   * banned-claim scan over admin-authored sentences and notes BEFORE they
+   * reach storage — the treatment decided: a violation blocks the save
+   * (422), it is never stored-then-hidden. Enforced by tests/editorPicks.
+   */
+  { rel: "lib/editor-picks/contracts.ts", why: "editor sentences pass the claim scan at save" },
 ];
 
 /** Production consumers discovered by walking, excluding tests and forensic checkpoints. */

@@ -2,6 +2,8 @@ import "server-only";
 
 import type { DailyMatchLists, FootyMatchRow, MatchListKind } from "@/lib/footystats/types";
 import { getMatchDetails } from "@/lib/footystats/matchDetail";
+import { activeManualPicks, type EditorPickRecord } from "@/lib/editor-picks/contracts";
+import { readEditorPicksDocument } from "@/lib/editor-picks/store";
 import {
   mapDailyListsToQualifiedFixtures,
   topRankedFixtures,
@@ -14,17 +16,17 @@ import { bestPriceForRow, type TableRow } from "@/lib/v3/homeTable.server";
 import type { Locale } from "@/lib/i18n";
 
 /* ============================================================================
-   THE EDITOR BAND'S PICKS (Bible V3, block C/D).
+   THE EDITOR BAND'S PICKS (Bible V3, blocks C + F).
 
-   Two sources, one shape. Manual picks come from admin/featured (block D);
-   when the admin selection is empty the band FILLS ITSELF from the signal
-   engine — top 4 by lead-signal score — per the empty-state law's editor
-   band rule: the reader never sees a placeholder band.
-
-   Every number a card shows is sample-backed: the pct/sample pair comes from
-   the lead signal (rate over its own sample). A fixture whose signals do not
-   clear the lead bar carries no editorial sentence to fabricate, so it
-   simply does not qualify for auto-fill.
+   Two sources, one shape. Manual picks come from admin/featured (block F):
+   they lead the band in the admin's drag order, carry the admin's sentence,
+   and STILL take every number from the signal engine — an editor authors
+   words, never rates, so a manual pick whose fixture yields no lead signal
+   has no honest pct/sample to show and is SKIPPED (the compliance panel
+   names it; the reader never sees a numberless card). When the admin
+   selection is empty — or shorter than four — the band fills itself from
+   the engine, top-ranked first, per the empty-state law's editor band rule:
+   the reader never sees a placeholder band.
    ========================================================================== */
 
 /** The signal's market key → the list-kind pill it renders as. */
@@ -71,6 +73,145 @@ function rowFor(lists: DailyMatchLists, matchId: number): FootyMatchRow | undefi
   return [...lists.fh, ...lists.over15, ...lists.over25, ...lists.sh].find(
     (row) => row.matchId === matchId
   );
+}
+
+/** The strongest signal whose market is a list kind — the card's one market. */
+function leadForFixture(
+  detail: Parameters<typeof scoreFixtureSignals>[0]
+): FixtureSignal | null {
+  const report = scoreFixtureSignals(detail);
+  return (
+    [report.lead, ...report.supports].find(
+      (signal): signal is FixtureSignal =>
+        signal !== null && SIGNAL_TO_KIND[signal.market] !== undefined
+    ) ?? null
+  );
+}
+
+/**
+ * Manual picks first (admin order, admin sentence, engine numbers), then
+ * engine auto-fill to four. The block C entry point below is unchanged and
+ * still tested on its own.
+ */
+export async function buildEditorBandPicks(input: {
+  lists: DailyMatchLists;
+  locale: Locale;
+  country: string | null;
+  p: PredictionStrings;
+  now?: number;
+}): Promise<EditorPickView[]> {
+  const { lists, locale, country, p } = input;
+  const now = input.now ?? Date.now();
+  const doc = await readEditorPicksDocument();
+  const manual = activeManualPicks(doc, now);
+
+  const manualViews: EditorPickView[] = [];
+  if (manual.length) {
+    const details = await getMatchDetails(
+      manual.map((pick) => pick.matchId),
+      locale
+    );
+    for (const pick of manual.slice(0, 4)) {
+      const row = rowFor(lists, pick.matchId);
+      const detail = row ? details.get(pick.matchId) : undefined;
+      if (!row || !detail) continue; // off the board → invisible, never a stale card
+      const lead = leadForFixture({
+        homeAtHome: detail.homeAtHome,
+        awayAtAway: detail.awayAtAway,
+        leagueSeason: detail.leagueSeason,
+        history: detail.history,
+      });
+      if (!lead) continue; // no sample-backed number → no card (no fake precision)
+      const kind = SIGNAL_TO_KIND[lead.market] as MatchListKind;
+      manualViews.push({
+        matchId: pick.matchId,
+        home: row.homeTeam,
+        away: row.awayTeam,
+        homeImage: row.homeImage ?? null,
+        awayImage: row.awayImage ?? null,
+        league: row.competition,
+        countryCode: row.countryCode ?? null,
+        timeLabel: timeLabelFor(row),
+        marketKind: kind,
+        marketLabel: marketForListKind(kind).label,
+        ratePct: Math.round(lead.rate * 100),
+        sample: `${lead.count}/${lead.sample}`,
+        sentence: pick.sentence,
+        hasLongNote: Boolean(pick.longNote?.trim()),
+        isManual: true,
+        bestOdds: await bestPriceForRow(row, kind, locale, country),
+      });
+    }
+  }
+
+  if (manualViews.length >= 4) return manualViews.slice(0, 4);
+  const taken = new Set(manualViews.map((view) => view.matchId));
+  const auto = await buildAutoFillPicks({ lists, locale, country, p, limit: 4 + taken.size });
+  return [
+    ...manualViews,
+    ...auto.filter((view) => !taken.has(view.matchId)).slice(0, 4 - manualViews.length),
+  ];
+}
+
+/* ── admin previews (block F) ──────────────────────────────────────────── */
+
+export type PickCardPreview =
+  | ({ matchId: number; ok: true } & Omit<
+      EditorPickView,
+      "sentence" | "hasLongNote" | "isManual" | "bestOdds"
+    >)
+  | { matchId: number; ok: false; reason: "off_board" | "no_lead" };
+
+/**
+ * The engine-derived half of a manual pick's card, for the admin's live band
+ * preview and its compliance panel. No odds are signed here — the admin
+ * surface previews editorial content, it does not mint commercial links.
+ */
+export async function buildPickCardPreviews(input: {
+  matchIds: number[];
+  lists: DailyMatchLists;
+  locale: Locale;
+}): Promise<PickCardPreview[]> {
+  const { matchIds, lists, locale } = input;
+  if (!matchIds.length) return [];
+  const details = await getMatchDetails(matchIds, locale);
+  return matchIds.map((matchId) => {
+    const row = rowFor(lists, matchId);
+    const detail = details.get(matchId);
+    if (!row || !detail) return { matchId, ok: false as const, reason: "off_board" as const };
+    const lead = leadForFixture({
+      homeAtHome: detail.homeAtHome,
+      awayAtAway: detail.awayAtAway,
+      leagueSeason: detail.leagueSeason,
+      history: detail.history,
+    });
+    if (!lead) return { matchId, ok: false as const, reason: "no_lead" as const };
+    const kind = SIGNAL_TO_KIND[lead.market] as MatchListKind;
+    return {
+      matchId,
+      ok: true as const,
+      home: row.homeTeam,
+      away: row.awayTeam,
+      homeImage: row.homeImage ?? null,
+      awayImage: row.awayImage ?? null,
+      league: row.competition,
+      countryCode: row.countryCode ?? null,
+      timeLabel: timeLabelFor(row),
+      marketKind: kind,
+      marketLabel: marketForListKind(kind).label,
+      ratePct: Math.round(lead.rate * 100),
+      sample: `${lead.count}/${lead.sample}`,
+    };
+  });
+}
+
+/** The active manual pick for one fixture — the fixture page's editor note. */
+export async function activeEditorPickForMatch(
+  matchId: number,
+  now = Date.now()
+): Promise<EditorPickRecord | null> {
+  const doc = await readEditorPicksDocument();
+  return activeManualPicks(doc, now).find((pick) => pick.matchId === matchId) ?? null;
 }
 
 export async function buildAutoFillPicks(input: {

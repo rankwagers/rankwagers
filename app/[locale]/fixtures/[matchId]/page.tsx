@@ -6,6 +6,8 @@ import { MatchDetailView } from "@/components/fixtures/MatchDetailView";
 import { getEvidenceHistoryView } from "@/lib/archive/evidence";
 import { getDictionary } from "@/lib/dictionaries";
 import { loadMatchPageBundle } from "@/lib/fixtures/loadMatchPage.server";
+import { activeEditorPickForMatch } from "@/lib/v3/editorPicks.server";
+import { readEditorPicksDocument } from "@/lib/editor-picks/store";
 import { buildOfferOfTheDay } from "@/lib/v3/homeRails.server";
 import { buildPricePanelData } from "@/lib/operators/pricePanel.server";
 import { parseFixtureMatchId } from "@/lib/fixtures/paths";
@@ -134,11 +136,17 @@ export default async function FixtureMatchPage({
   });
 
   /* The aside's curated slot (Bible V3 block D) — its own placement so the
-     funnel can tell the match aside from the home rail. Null omits the card. */
-  const offer = buildOfferOfTheDay(countryContext, params.locale, null, {
+     funnel can tell the match aside from the home rail. Null omits the card.
+     Block F: the admin pin selects here too — one offer of the day, one pin. */
+  const editorPicks = await readEditorPicksDocument();
+  const offer = buildOfferOfTheDay(countryContext, params.locale, editorPicks.pinnedOperatorSlug, {
     placement: "offer_of_the_day_fixture",
     subid: `offer-of-the-day_fx_${matchId}`,
   });
+
+  /* Block F: an active manual pick's long note renders as the editor-note
+     block under L1. No pick or no note → nothing (never an empty frame). */
+  const editorNote = (await activeEditorPickForMatch(matchId))?.longNote ?? null;
 
   return (
     <>
@@ -151,6 +159,7 @@ export default async function FixtureMatchPage({
         prices={prices}
         offer={offer}
         offerTerms={dict.footer.disclaimer}
+        editorNote={editorNote}
       />
       {/*
         Sprint 23 — Evidence History. Rendered as a sibling of the match view rather than

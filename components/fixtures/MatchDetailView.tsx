@@ -19,6 +19,7 @@ import { MatchDetailTracker } from "./MatchDetailTracker";
 import { MatchLiveRefresh } from "./MatchLiveRefresh";
 import { MatchPredictionsPanel } from "./MatchPredictionsPanel";
 import { MatchRelatedLink } from "./MatchRelatedLink";
+import { Icon } from "@/components/v3/Icon";
 import { OfferOfTheDayCard } from "@/components/v3/rails/RightRail";
 
 function scoreText(home: number | null, away: number | null): string {
@@ -35,6 +36,7 @@ export function MatchDetailView({
   prices,
   offer,
   offerTerms,
+  editorNote,
 }: {
   locale: Locale;
   bundle: MatchPageBundle;
@@ -48,6 +50,8 @@ export function MatchDetailView({
   offer?: import("@/lib/v3/homeRails.server").OfferOfTheDay | null;
   /** The offer card's terms line (the footer disclaimer, localized). */
   offerTerms?: string;
+  /** Block F: the active manual pick's long note — the editor-note block under L1. */
+  editorNote?: string | null;
 }) {
   const { model, focusMarket, detail } = bundle;
   const { header } = model;
@@ -243,6 +247,34 @@ export function MatchDetailView({
       <div className="mt-8">
         <FixtureSignalLevels report={signalReport} teams={teams} p={p} prices={prices} locale={locale} />
       </div>
+
+      {/*
+        THE EDITOR NOTE (block F, rw3-match mock's Editör notu). Rendered
+        only while an admin pick for this fixture is active AND carries a
+        note — human words under the machine's L1, clearly labelled as the
+        editor's. The note passed the banned-claim scan at save time.
+      */}
+      {editorNote?.trim() ? (
+        <div
+          className="mt-4 max-w-[760px]"
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 3,
+            padding: "10px 12px",
+            background: "var(--surface)",
+            borderRadius: 6,
+          }}
+        >
+          <span className="rw3-label" style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
+            <Icon name="editor" size={11} />
+            {p.v3EditorNote}
+          </span>
+          <span className="text-[13px]" style={{ lineHeight: 1.45 }}>
+            {editorNote}
+          </span>
+        </div>
+      ) : null}
 
       {/*
         L3 — THE MODEL'S VIEW AND WHY. The potential for the page's market, the model's scored
