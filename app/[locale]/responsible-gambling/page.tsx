@@ -22,15 +22,15 @@ export default function Page({ params }: { params: { locale: Locale } }) {
   const dict = getDictionary(params.locale);
   return (
     <article className="prose prose-invert max-w-3xl">
-      <h1 className="text-3xl font-semibold text-foreground">
+      <h1 className="rw3-title">
         {dict.footer.responsible}
       </h1>
-      <p className="mt-4 text-[var(--ink-secondary)]">
+      <p className="mt-4 text-[13px] leading-relaxed" style={{ color: "var(--muted)" }}>
         Gambling should be entertainment, not a way to make money. Only bet what
         you can afford to lose. This site is intended for adults aged 18 or older
         (or the legal age in your jurisdiction).
       </p>
-      <ul className="mt-4 list-disc space-y-2 pl-6 text-[var(--ink-secondary)]">
+      <ul className="mt-4 list-disc space-y-2 pl-6 text-[13px] leading-relaxed" style={{ color: "var(--muted)" }}>
         <li>Set deposit and time limits before you play.</li>
         <li>Never chase losses.</li>
         <li>Take regular breaks and self-exclude if needed.</li>
@@ -39,7 +39,7 @@ export default function Page({ params }: { params: { locale: Locale } }) {
           as GamCare, BeGambleAware or Gamblers Anonymous.
         </li>
       </ul>
-      <p className="mt-6 font-semibold text-brand-light">
+      <p className="mt-6 font-semibold" style={{ color: "var(--accent)" }}>
         {dict.footer.ageWarning}
       </p>
     </article>

@@ -29,19 +29,19 @@ export async function HomepagePublishedAccas({ locale }: { locale: string }) {
  if (scan.views.length === 0) return null;
 
  return (
- <section className="container-wide mt-12" aria-labelledby="published-accas">
+ <section className="mt-10 px-5" aria-labelledby="published-accas">
  <div className="flex flex-wrap items-baseline justify-between gap-2">
  <h2 id="published-accas" className="text-lg font-semibold">
  Recently published Accas
  </h2>
  <Link
  href={publicAccaIndexPath(locale)}
- className="text-sm text-brand underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="text-[13px] underline underline-offset-2" style={{ color: "var(--accent)" }}
  >
  All published Accas
  </Link>
  </div>
- <p className="mt-1 max-w-2xl text-sm text-[var(--ink-secondary)]">
+ <p className="rw3-meta mt-1 max-w-2xl">
  Combinations published with the evidence behind them and the price recorded at the time.
  Not tips.
  </p>

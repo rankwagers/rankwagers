@@ -34,10 +34,13 @@ test("rhythm is two steps, and the difference is what paces the page", () => {
 });
 
 test("grounds are canvas, surface and ink, and ink inverts its text", () => {
-  assert.match(GROUND.canvas, /--hero-canvas/);
-  assert.match(GROUND.surface, /--hero-surface/);
-  assert.match(GROUND.ink, /--hero-ink/);
-  assert.match(GROUND.ink, /text-white/, "an inverted ground must set its own text colour");
+  // V3 reconciliation: the grounds speak the Bible V3 tokens now — canvas is
+  // --bg, surface is --surface, and the inverted band swaps --text/--bg. The
+  // law is unchanged: three grounds, and the inverted one states its own text.
+  assert.match(GROUND.canvas, /--bg/);
+  assert.match(GROUND.surface, /--surface/);
+  assert.match(GROUND.ink, /bg-\[var\(--text\)\]/);
+  assert.match(GROUND.ink, /text-\[var\(--bg\)\]/, "an inverted ground must set its own text colour");
   // Every ground states a text colour rather than relying on inheritance.
   for (const g of [GROUND.canvas, GROUND.surface, GROUND.ink]) {
     assert.match(g, /text-/);

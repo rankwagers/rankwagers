@@ -42,7 +42,7 @@ export function ProvenanceBlock({
       {compact ? (
         <button
           type="button"
-          className={`${evidenceUiTokens.touchTarget} text-body-sm font-medium text-brand underline-offset-2 hover:underline`}
+          className={`${evidenceUiTokens.touchTarget} text-[13px] font-medium text-[var(--accent)] underline-offset-2 hover:underline`}
           onClick={toggle}
           aria-expanded={open}
         >
@@ -52,22 +52,22 @@ export function ProvenanceBlock({
         <h3 className={evidenceUiTokens.label}>Source</h3>
       )}
       {open ? (
-        <dl className="mt-2 grid gap-2 text-body-sm sm:grid-cols-2">
+        <dl className="mt-2 grid gap-2 text-[13px] sm:grid-cols-2">
           <div>
-            <dt className="text-muted-foreground">Provider</dt>
-            <dd className="font-medium text-foreground">{provenance.provider}</dd>
+            <dt className="rw3-meta">Provider</dt>
+            <dd className="font-medium">{provenance.provider}</dd>
           </div>
           <div>
-            <dt className="text-muted-foreground">Calculation</dt>
-            <dd className="font-medium text-foreground">{provenance.calculationSource}</dd>
+            <dt className="rw3-meta">Calculation</dt>
+            <dd className="font-medium">{provenance.calculationSource}</dd>
           </div>
           <div>
-            <dt className="text-muted-foreground">Qualification engine</dt>
-            <dd className="font-medium text-foreground">{provenance.qualificationEngine}</dd>
+            <dt className="rw3-meta">Qualification engine</dt>
+            <dd className="font-medium">{provenance.qualificationEngine}</dd>
           </div>
           <div>
-            <dt className="text-muted-foreground">Last verified</dt>
-            <dd className="font-medium text-foreground">{provenance.lastVerifiedLabel}</dd>
+            <dt className="rw3-meta">Last verified</dt>
+            <dd className="font-medium">{provenance.lastVerifiedLabel}</dd>
           </div>
         </dl>
       ) : null}

@@ -37,6 +37,11 @@ import type { PublicAccaView } from "@/lib/acca-publication/publicView";
 
 const AHEAD = new Set(["ACTIVE", "PARTIALLY_STARTED"]);
 
+/* rw3 idiom: links carry text ink and an underline; the keyboard ring comes
+ * from the scoped `.rw3 :focus-visible` law in globals.css. */
+const LINK_CLASS = "underline underline-offset-2";
+const LINK_STYLE = { color: "var(--text)" } as const;
+
 export function PublicAccaIndexView({
  locale,
  views,
@@ -62,7 +67,7 @@ export function PublicAccaIndexView({
  const filtered = Boolean(query && (query.profile || query.competition || query.state));
 
  return (
- <div className="container-wide pb-20">
+ <div className="mx-auto w-full max-w-[1080px] px-5 pb-20">
  <AccaIndexAnalytics
  locale={locale}
  page={page?.page ?? 1}
@@ -71,11 +76,11 @@ export function PublicAccaIndexView({
  />
 
  <header className="pt-8">
- <h1 className="text-2xl font-semibold">{p.nvAccasPublished}</h1>
- <p className="mt-2 max-w-2xl text-sm text-[var(--ink-secondary)]">
+ <h1 className="rw3-title">{p.nvAccasPublished}</h1>
+ <p className="mt-2 max-w-2xl text-[13px]" style={{ color: "var(--muted)" }}>
  {p.apxLede} {NOT_ADVICE_NOTE}
  </p>
- <p className="mt-2 max-w-2xl text-sm text-[var(--ink-secondary)]">
+ <p className="mt-2 max-w-2xl text-[13px]" style={{ color: "var(--muted)" }}>
  {p.apxLede2}
  </p>
  </header>
@@ -85,20 +90,28 @@ export function PublicAccaIndexView({
  ) : null}
 
  {views.length === 0 ? (
- <section className="mt-8 card p-6">
- <h2 className="text-base font-semibold">
+ <section
+ className="mt-8 p-6"
+ style={{
+ border: "1px solid var(--line)",
+ background: "var(--surface)",
+ borderRadius: 6,
+ }}
+ >
+ <h2 className="text-[14px] font-semibold">
  {filtered ? p.apxNothingFilter : p.apxNothingYet}
  </h2>
- <p className="mt-2 max-w-2xl text-sm text-[var(--ink-secondary)]">
+ <p className="mt-2 max-w-2xl text-[13px]" style={{ color: "var(--muted)" }}>
  {filtered
  ? p.apxNothingFilterDesc
  : p.apxNothingYetDesc}
  </p>
- <ul className="mt-4 space-y-2 text-sm">
+ <ul className="mt-4 space-y-2 text-[13px]">
  <li>
  <Link
  href={`/${locale}`}
- className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className={LINK_CLASS}
+ style={LINK_STYLE}
  >
  {p.nvToday}
  </Link>{" "}
@@ -108,7 +121,8 @@ export function PublicAccaIndexView({
  <li data-acca-builder-entry="">
  <Link
  href={`/${locale}/acca/builder`}
- className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className={LINK_CLASS}
+ style={LINK_STYLE}
  >
  {p.acBuilderTitle}
  </Link>{" "}
@@ -118,7 +132,8 @@ export function PublicAccaIndexView({
  <li>
  <Link
  href={`/${locale}/archive`}
- className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className={LINK_CLASS}
+ style={LINK_STYLE}
  >
  {p.arcIndexTitle}
  </Link>{" "}
@@ -130,10 +145,10 @@ export function PublicAccaIndexView({
  <>
  {ahead.length > 0 ? (
  <section className="mt-8" aria-labelledby="accas-ahead">
- <h2 id="accas-ahead" className="text-lg font-semibold">
+ <h2 id="accas-ahead" className="text-[14px] font-semibold">
  {p.apxStillAhead}
  </h2>
- <p className="mt-1 text-sm text-[var(--ink-secondary)]">
+ <p className="mt-1 text-[13px]" style={{ color: "var(--muted)" }}>
  {p.apxStillAheadNote}
  </p>
  <div className="mt-4 grid gap-4 sm:grid-cols-2">
@@ -146,14 +161,15 @@ export function PublicAccaIndexView({
 
  {closed.length > 0 ? (
  <section className="mt-10" aria-labelledby="accas-closed">
- <h2 id="accas-closed" className="text-lg font-semibold">
+ <h2 id="accas-closed" className="text-[14px] font-semibold">
  {p.apxClosed}
  </h2>
- <p className="mt-1 text-sm text-[var(--ink-secondary)]">
+ <p className="mt-1 text-[13px]" style={{ color: "var(--muted)" }}>
  {p.apxSettledNote}{" "}
  <Link
  href={`/${locale}/archive`}
- className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className={LINK_CLASS}
+ style={LINK_STYLE}
  >
  {p.nvArchive} →
  </Link>
@@ -181,32 +197,34 @@ export function PublicAccaIndexView({
  ) : null}
 
  {page?.truncated ? (
- <p className="mt-4 max-w-2xl text-xs text-[var(--hero-ink-2)]">
+ <p className="mt-4 max-w-2xl text-[11px]" style={{ color: "var(--muted)" }}>
  {formatDict(p.apxOlderNote, { n: String(PUBLIC_ACCA_MAX_SCAN) })}
  </p>
  ) : null}
 
- <p className="mt-6 max-w-2xl text-xs text-[var(--hero-ink-2)]">
+ <p className="mt-6 max-w-2xl text-[11px]" style={{ color: "var(--muted)" }}>
  {CAPTURED_ODDS_NOTE} A page marks its prices as older once more than{""}
  {ACCA_ODDS_STALE_AFTER_HOURS} hours have passed since they were captured.
  </p>
  </>
  )}
 
- <p className="mt-6 text-sm">
+ <p className="mt-6 text-[13px]">
  <Link
  href={`/${locale}/methodology`}
- className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className={LINK_CLASS}
+ style={LINK_STYLE}
  >
  {p.apxHowBuilt}
  </Link>
  </p>
 
  {views.length > 0 && builderEntryEnabled ? (
- <p className="mt-2 text-sm" data-acca-builder-entry="">
+ <p className="mt-2 text-[13px]" data-acca-builder-entry="">
  <Link
  href={`/${locale}/acca/builder`}
- className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className={LINK_CLASS}
+ style={LINK_STYLE}
  >
  Build your own from the same qualified lists
  </Link>

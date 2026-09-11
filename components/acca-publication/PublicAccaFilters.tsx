@@ -25,9 +25,12 @@ import {
  * filtered view lead to detail pages that should stay reachable.
  */
 
-const LINK_CLASS = "rounded-full border px-3 py-1 text-xs focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400";
-const SELECTED_CLASS = "border-[var(--green-primary)] bg-[var(--green-surface)] text-[var(--hero-ink)]";
-const UNSELECTED_CLASS = "border-border text-[var(--ink-secondary)] hover:text-foreground";
+/* rw3 idiom: each option is a pill; selection is carried by the accent border
+ * plus `aria-current`, never by colour alone. The keyboard ring comes from the
+ * scoped `.rw3 :focus-visible` law in globals.css. */
+const LINK_CLASS = "rw3-pill rw3-hoverable px-3 py-1";
+const SELECTED_CLASS = "border-[var(--accent)]";
+const UNSELECTED_CLASS = "text-[var(--muted)] hover:text-[var(--text)]";
 
 function FacetRow({
  label,
@@ -44,7 +47,7 @@ function FacetRow({
  if (options.length === 0) return null;
  return (
  <div className="flex flex-wrap items-center gap-2">
- <span className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{label}</span>
+ <span className="rw3-label">{label}</span>
  <Link
  href={hrefFor(null)}
  aria-current={activeValue === null ? "true" : undefined}
@@ -61,7 +64,7 @@ function FacetRow({
  aria-current={selected ? "true" : undefined}
  className={`${LINK_CLASS} ${selected ? SELECTED_CLASS : UNSELECTED_CLASS}`}
  >
- {option.label} <span className="tabular-nums text-[var(--hero-ink-2)]">({option.count})</span>
+ {option.label} <span className="tabular-nums text-[var(--muted)]">({option.count})</span>
  </Link>
  );
  })}

@@ -37,7 +37,7 @@ export function EvidenceCard({ metric }: { metric: EvidenceMetricView }) {
       {metric.qualificationSummary ? (
         <div className="mt-4">
           <p className={evidenceUiTokens.label}>Qualification</p>
-          <p className="mt-1.5 text-body-sm leading-relaxed text-foreground">
+          <p className="mt-1.5 text-[13px] leading-relaxed">
             {metric.qualificationSummary}
           </p>
         </div>
@@ -46,7 +46,7 @@ export function EvidenceCard({ metric }: { metric: EvidenceMetricView }) {
       {metric.notes ? <p className={`mt-4 ${evidenceUiTokens.note}`}>{metric.notes}</p> : null}
 
       {metric.updatedLabel ? (
-        <p className="mt-4 text-metadata text-muted-foreground">Updated: {metric.updatedLabel}</p>
+        <p className="rw3-meta mt-4">Updated: {metric.updatedLabel}</p>
       ) : null}
     </article>
   );

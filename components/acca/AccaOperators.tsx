@@ -67,52 +67,51 @@ export function AccaOperators({ locale, p }: { locale: string; p: PredictionStri
   return (
     <section
       aria-labelledby="acca-operators-heading"
-      className="mt-5 border-t border-[var(--hero-line)] pt-4"
+      className="mt-5 pt-4"
+      style={{ borderTop: "1px solid var(--line)" }}
     >
-      <h3 id="acca-operators-heading" className="rw-m text-[var(--hero-ink-2)]">
+      <h3 id="acca-operators-heading" className="rw3-label">
         {p.acOperatorsTitle}
       </h3>
-      <p className="mt-1 text-xs leading-relaxed text-[var(--hero-ink-2)]">
+      <p className="rw3-meta mt-1 leading-relaxed">
         {p.acOperatorsNote}
       </p>
       {loading ? (
-        <p className="rw-m mt-3 text-[var(--hero-ink-2)]" role="status">
+        <p className="rw3-meta mt-3" role="status">
           {p.acOperatorsLoading}
         </p>
       ) : null}
       {error ? (
-        <p className="mt-3 text-xs text-[var(--hero-ink-2)]" role="alert">
+        <p className="rw3-meta mt-3" role="alert">
           {p.acOperatorsError}
         </p>
       ) : null}
-      <ul className="mt-3 border-t border-[var(--hero-line)]">
+      <ul className="mt-3" style={{ borderTop: "1px solid var(--line)" }}>
         {offers.map((op) => (
           <li
             key={op.slug}
-            className="border-b border-[var(--hero-line)] py-3 pl-1"
+            className="py-3 pl-1"
+            style={{ borderBottom: "1px solid var(--line)" }}
           >
             <div className="flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
               <div className="min-w-0">
-                <p className="text-sm font-semibold tracking-[-0.01em] text-[var(--hero-ink)]">
+                <p className="text-[14px] font-semibold">
                   {op.name}
                 </p>
-                <p className="rw-m mt-0.5 text-[var(--hero-ink-2)]">
+                <p className="rw3-meta mt-0.5">
                   {op.available ? p.acAvailable : p.acUnavailable}
                   {op.verified ? ` · ${p.opVerified}` : ""}
                 </p>
               </div>
               <div className="flex shrink-0 flex-wrap items-center gap-2">
-                <a
-                  href={op.detailHref}
-                  className="rw-m inline-flex min-h-9 items-center border border-[var(--hero-line)] px-2.5 text-[var(--hero-ink-2)] transition-colors hover:border-[var(--hero-ink)] hover:text-[var(--hero-ink)]"
-                >
+                <a href={op.detailHref} className="rw3-ghost min-h-9">
                   {p.acDetailLink}
                 </a>
                 {op.available && op.signedHref ? (
                   <a
                     href={op.signedHref}
                     rel="nofollow sponsored noopener"
-                    className="rw-m inline-flex min-h-9 items-center border border-[var(--hero-ink)] px-3 text-[var(--hero-ink)] transition-colors hover:bg-[var(--hero-ink)] hover:text-[var(--hero-canvas)]"
+                    className="rw3-ghost min-h-9"
                     onClick={() => {
                       trackAccaEvent("acca_operator_selected", {
                         locale,
@@ -136,10 +135,10 @@ export function AccaOperators({ locale, p }: { locale: string; p: PredictionStri
                 {op.observedOdds.map((row, i) => (
                   <li
                     key={`${row.market}:${i}`}
-                    className="rw-m flex items-baseline justify-between gap-x-3 text-[var(--hero-ink-2)]"
+                    className="rw3-meta flex items-baseline justify-between gap-x-3"
                   >
                     <span>{row.market}</span>
-                    <span className="rw-tnum font-bold text-[var(--hero-ink)]">
+                    <span style={{ fontWeight: 600, color: "var(--text)" }}>
                       {row.decimal.toFixed(2)}
                     </span>
                   </li>
@@ -149,7 +148,7 @@ export function AccaOperators({ locale, p }: { locale: string; p: PredictionStri
           </li>
         ))}
       </ul>
-      <p className="rw-m mt-3 normal-case tracking-[0.04em] text-[var(--hero-ink-2)]">
+      <p className="rw3-meta mt-3">
         {p.fxOperatorsNote}
       </p>
     </section>

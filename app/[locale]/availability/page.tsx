@@ -22,25 +22,36 @@ export default function Page({ params }: { params: { locale: Locale } }) {
   const dict = getDictionary(params.locale);
   const countries = Object.keys(COUNTRY_LOCALE).sort();
   return (
-    <article className="container-wide max-w-3xl">
-      <p className="text-metadata font-medium uppercase tracking-label text-brand">
-        Availability
-      </p>
-      <h1 className="mt-2 font-display text-3xl font-semibold text-foreground">
-        {dict.footer.geo}
-      </h1>
-      <p className="mt-4 text-sm leading-relaxed text-[var(--ink-secondary)] md:text-base">
-        {dict.footer.availabilityBody}
-      </p>
-      <p className="mt-6 text-xs text-muted-foreground">
+    <article style={{ paddingBottom: 80 }}>
+      <header style={{ padding: "14px 20px", borderBottom: "1px solid var(--line)" }}>
+        <p className="rw3-label" style={{ margin: 0 }}>
+          Availability
+        </p>
+        <h1 className="rw3-title" style={{ margin: "2px 0 0", color: "var(--text)" }}>
+          {dict.footer.geo}
+        </h1>
+        <p
+          style={{
+            margin: "4px 0 0",
+            maxWidth: "62ch",
+            fontSize: 13,
+            lineHeight: 1.55,
+            color: "var(--muted)",
+          }}
+        >
+          {dict.footer.availabilityBody}
+        </p>
+      </header>
+      <p className="rw3-meta" style={{ margin: 0, padding: "14px 20px 0" }}>
         Country codes below indicate locales we personalize for. Operator registration
         decisions remain with each sportsbook.
       </p>
-      <div className="mt-6 flex flex-wrap gap-2">
+      <div className="flex flex-wrap gap-2" style={{ padding: "12px 20px 0" }}>
         {countries.map((c) => (
           <span
             key={c}
-            className="rounded-md border border-border bg-[var(--canvas-secondary)] px-2.5 py-1 font-mono text-sm text-foreground"
+            className="rw3-pill font-mono"
+            style={{ background: "var(--surface)" }}
           >
             {c}
           </span>

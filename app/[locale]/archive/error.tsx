@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { reportError } from "@/lib/monitoring/logger";
 
-/* Route-level error state for the archive family — form-guide idiom. Honest and
+/* Route-level error state for the archive family — Bible V3 idiom. Honest and
    quiet: names what happened, offers retry, promises nothing. Boundary copy is
    hardcoded EN like the root boundary — the dictionary stays out of the client
    bundle. */
@@ -21,25 +21,28 @@ export default function ArchiveError({
   }, [error]);
 
   return (
-    <div className="rw-hero container-wide bg-[var(--hero-canvas)] pb-24">
-      <div
-        className="mx-auto max-w-3xl px-4 pt-16"
-        role="alert"
+    <div role="alert" style={{ padding: "14px 20px 64px" }}>
+      <p className="rw3-label" style={{ margin: 0 }}>
+        Archive
+      </p>
+      <h1 className="rw3-title" style={{ margin: "10px 0 0" }}>
+        This page failed to render
+      </h1>
+      <p
+        className="max-w-md"
+        style={{ margin: "10px 0 0", fontSize: 13, lineHeight: 1.55, color: "var(--muted)" }}
       >
-        <p className="rw-label">Archive</p>
-        <h1 className="rw-h mt-3 text-2xl">This page failed to render</h1>
-        <p className="mt-4 max-w-md text-sm leading-relaxed text-[var(--hero-ink-2)]">
-          A temporary error interrupted the archive view. Nothing in the
-          research record was changed — retry, or come back shortly.
-        </p>
-        <button
-          type="button"
-          onClick={reset}
-          className="rw-m mt-8 border border-[var(--hero-ink)] px-5 py-2.5 text-xs uppercase tracking-wider transition-colors hover:bg-[var(--hero-ink)] hover:text-[var(--hero-canvas)] active:bg-[var(--hero-ink)] active:text-[var(--hero-canvas)]"
-        >
-          Try again
-        </button>
-      </div>
+        A temporary error interrupted the archive view. Nothing in the
+        research record was changed — retry, or come back shortly.
+      </p>
+      <button
+        type="button"
+        onClick={reset}
+        className="rw3-ghost"
+        style={{ marginTop: 24 }}
+      >
+        Try again
+      </button>
     </div>
   );
 }

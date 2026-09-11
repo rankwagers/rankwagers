@@ -109,13 +109,15 @@ export function AccaShareControls({
     }
   };
 
+  /* rw3 idiom: the buttons are ghost-tier actions; the keyboard ring comes
+   * from the scoped `.rw3 :focus-visible` law in globals.css. */
   return (
     <div className="mt-3">
       <div className="flex flex-wrap items-center gap-2">
         <button
           type="button"
           onClick={onCopy}
-          className="inline-flex items-center rounded-lg border border-border bg-card px-3 py-2 text-sm font-medium hover:bg-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+          className="rw3-ghost px-3 py-2"
         >
           Copy link
         </button>
@@ -123,14 +125,14 @@ export function AccaShareControls({
           <button
             type="button"
             onClick={onNativeShare}
-            className="inline-flex items-center rounded-lg border border-border bg-card px-3 py-2 text-sm font-medium hover:bg-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+            className="rw3-ghost px-3 py-2"
           >
             Share…
           </button>
         ) : null}
       </div>
 
-      <label htmlFor={inputId} className="mt-3 block text-xs uppercase tracking-label text-[var(--hero-ink-2)]">
+      <label htmlFor={inputId} className="rw3-label mt-3 block">
         Link to this page
       </label>
       <input
@@ -140,10 +142,16 @@ export function AccaShareControls({
         readOnly
         value={url}
         onFocus={(event) => event.currentTarget.select()}
-        className="mt-1 w-full max-w-xl rounded-lg border border-border bg-black/20 px-3 py-2 font-mono text-xs text-[var(--ink-secondary)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+        className="mt-1 w-full max-w-xl px-3 py-2 font-mono text-[11px]"
+        style={{
+          border: "1px solid var(--line)",
+          background: "var(--bg)",
+          color: "var(--muted)",
+          borderRadius: 6,
+        }}
       />
 
-      <p role="status" aria-live="polite" className="mt-2 min-h-[1.25rem] text-xs text-[var(--ink-secondary)]">
+      <p role="status" aria-live="polite" className="mt-2 min-h-[1.25rem] text-[11px]" style={{ color: "var(--muted)" }}>
         {status}
       </p>
     </div>

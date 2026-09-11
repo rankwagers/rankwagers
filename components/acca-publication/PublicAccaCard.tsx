@@ -17,7 +17,7 @@ import type { PublicAccaView } from "@/lib/acca-publication/publicView";
  * measure impressions and clicks by reading the DOM, which is what allows this card to stay a
  * plain server component with no hydration at all.
  *
- * STATE IS NEVER COLOUR-ONLY. The availability label is words; the amber warning line states its
+ * STATE IS NEVER COLOUR-ONLY. The availability label is words; the warning line states its
  * own count. Nothing here depends on a reader distinguishing two shades.
  */
 export function PublicAccaCard({
@@ -36,7 +36,12 @@ export function PublicAccaCard({
 
  return (
  <article
- className="card p-4"
+ className="rw3-hoverable p-4"
+ style={{
+ border: "1px solid var(--line)",
+ background: "var(--surface)",
+ borderRadius: 6,
+ }}
  data-acca-card=""
  data-acca-id={view.publicId}
  data-acca-legs={view.legCount}
@@ -45,42 +50,42 @@ export function PublicAccaCard({
  {...(view.profile ? {"data-acca-profile": view.profile } : {})}
  {...(position ? {"data-acca-position": position } : {})}
  >
- <h3 className="text-base font-semibold">
+ <h3 className="text-[14px] font-semibold">
  <Link
  href={publicAccaPath(view.locale, view.publicId)}
- className="underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="underline-offset-2 hover:underline"
  >
  {view.title}
  </Link>
  </h3>
 
- {view.summary ? <p className="mt-1 text-sm text-[var(--ink-secondary)]">{view.summary}</p> : null}
+ {view.summary ? <p className="mt-1 text-[13px]" style={{ color: "var(--muted)" }}>{view.summary}</p> : null}
 
- <dl className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-sm">
+ <dl className="mt-3 flex flex-wrap gap-x-6 gap-y-2 text-[13px]">
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdSelections}</dt>
+ <dt className="rw3-label">{p.apdSelections}</dt>
  <dd className="tabular-nums">{view.legCount}</dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.appCombinedOdds}</dt>
+ <dt className="rw3-label">{p.appCombinedOdds}</dt>
  <dd className="tabular-nums">{view.combinedOdds.display}</dd>
  </div>
  {earliest ? (
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.apxFirstKickoff}</dt>
+ <dt className="rw3-label">{p.apxFirstKickoff}</dt>
  <dd>
  <time dateTime={earliest}>{`${earliest.slice(0, 10)} ${earliest.slice(11, 16)} UTC`}</time>
  </dd>
  </div>
  ) : null}
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdState}</dt>
+ <dt className="rw3-label">{p.apdState}</dt>
  <dd>{availability.label}</dd>
  </div>
  </dl>
 
  {warningCount > 0 ? (
- <p className="mt-3 text-xs text-[var(--amber-primary)]">
+ <p className="mt-3 text-[11px]" style={{ color: "var(--loss)" }}>
  {formatDict(p.apxLimitationsNoted, { n: String(warningCount) })}
  </p>
  ) : null}

@@ -23,13 +23,13 @@ export function GraphEntityPanel({
 
   return (
     <section
-      className="border-b border-[var(--border-subtle)] py-8"
+      className="border-b border-[var(--line)] py-8"
       aria-labelledby="knowledge-graph"
     >
-      <h2 id="knowledge-graph" className="font-display text-xl font-semibold text-foreground">
+      <h2 id="knowledge-graph" className="rw3-title">
         Connected research
       </h2>
-      <p className="mt-2 max-w-3xl text-sm text-[var(--ink-secondary)]">
+      <p className="mt-2 max-w-3xl text-[13px]" style={{ color: "var(--muted)" }}>
         Automatic links from this {entityType} across the RankWagers knowledge graph.
         Factual relationships only — no tips or editorial rankings.
       </p>
@@ -57,7 +57,7 @@ export function GraphEntityPanel({
           if (!items.length) return null;
           return (
             <div key={section.label}>
-              <h3 className="text-metadata font-semibold uppercase tracking-label text-muted-foreground">
+              <h3 className="rw3-label">
                 {section.label}
               </h3>
               <ul className="mt-2 space-y-1.5">
@@ -72,7 +72,7 @@ export function GraphEntityPanel({
                       locale={locale}
                       section={section.label}
                       intent={intent}
-                      className="text-sm font-medium text-brand hover:underline"
+                      className="text-[13px] font-medium hover:text-[var(--accent)] hover:underline"
                     >
                       {item.title}
                     </GraphNavLink>

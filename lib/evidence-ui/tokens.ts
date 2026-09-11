@@ -1,7 +1,7 @@
 import type { BaselineRelation, EvidenceStrength } from "./types";
 
 /**
- * Shared presentation tokens mapped to Design Bible CSS variables.
+ * Shared presentation tokens mapped to the rw3 scope's CSS variables (Bible V3).
  *
  * Enclosure is tonal, not drawn. `card` carries the only border in the evidence surface — a
  * hairline at the subtle step — and everything nested inside it separates by background tone
@@ -9,16 +9,16 @@ import type { BaselineRelation, EvidenceStrength } from "./types";
  * page.
  */
 export const evidenceUiTokens = {
-  section: "border-b border-[var(--border-subtle)] py-8",
-  card: "rounded-lg border border-[var(--border-subtle)] bg-[var(--canvas-secondary)] p-5",
+  section: "border-b border-[var(--line)] py-8",
+  card: "border border-[var(--line)] bg-[var(--surface)] p-5 [border-radius:6px]",
   /** Nested block. Deliberately borderless: it sits inside `card` and is separated by tone. */
-  cardMuted: "rounded-lg bg-[var(--canvas-primary)] p-4",
-  label: "text-metadata font-medium uppercase tracking-label text-muted-foreground",
+  cardMuted: "bg-[var(--bg)] p-4 [border-radius:6px]",
+  label: "rw3-label",
   /** The focal figure of a card. Tabular so a column of values shares one optical rhythm. */
-  value: "font-mono text-2xl font-semibold leading-none tabular-nums text-foreground",
-  note: "text-caption leading-relaxed text-muted-foreground",
+  value: "text-[16px] font-semibold leading-none tabular-nums",
+  note: "text-[12px] leading-relaxed text-[var(--muted)]",
   stickyNav:
-    "sticky top-14 z-20 -mx-4 mb-4 flex gap-2 overflow-x-auto border-b border-border bg-[var(--canvas-primary)]/95 px-4 py-2 backdrop-blur md:top-16",
+    "sticky top-14 z-20 -mx-4 mb-4 flex gap-2 overflow-x-auto border-b border-[var(--line)] bg-[var(--bg)] px-4 py-2 md:top-16",
   touchTarget: "min-h-11 min-w-11",
 } as const;
 
@@ -34,13 +34,13 @@ export function strengthBadgeClass(strength: EvidenceStrength): string {
   switch (strength) {
     case "very_strong":
     case "strong":
-      return "bg-[var(--ink-primary)] text-[var(--canvas-primary)]";
+      return "bg-[var(--text)] text-[var(--bg)]";
     case "moderate":
-      return "bg-[var(--canvas-primary)] text-foreground";
+      return "bg-[var(--pctbg)] text-[var(--text)]";
     case "limited":
-      return "bg-[var(--canvas-primary)] text-[var(--ink-secondary)]";
+      return "bg-[var(--pctbg)] text-[var(--muted)]";
     case "insufficient":
-      return "bg-transparent text-muted-foreground";
+      return "bg-transparent text-[var(--muted)]";
   }
 }
 

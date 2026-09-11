@@ -18,10 +18,11 @@ export function EntityGrid({
         <li key={`${item.entityType}-${item.slug}`}>
           <Link
             href={item.href}
-            className="block border border-border px-3 py-2.5 text-sm text-foreground transition-colors hover:border-brand/40 hover:text-brand"
+            className="rw3-hoverable block border border-[var(--line)] bg-[var(--surface)] px-3 py-2.5 text-[13px]"
+            style={{ borderRadius: 6 }}
           >
             <span className="font-medium">{item.title}</span>
-            <span className="mt-1 block text-metadata uppercase tracking-label text-muted-foreground">
+            <span className="rw3-label mt-1 block">
               {item.entityType}
             </span>
           </Link>

@@ -46,9 +46,9 @@ function Section({
  const border =
  tone === "warn" ? "border-[var(--amber-border)] bg-[var(--amber-surface)]" : "border-border bg-card";
  return (
- <section className={`mt-6 rounded-lg border p-4 ${border}`}>
+ <section className={`mt-6 rounded border p-4 ${border}`}>
  <h2 className="text-sm font-semibold text-foreground">{title}</h2>
- {description ? <p className="mt-1 text-xs text-[var(--hero-ink-2)]">{description}</p> : null}
+ {description ? <p className="mt-1 text-xs text-[var(--ink-secondary)]">{description}</p> : null}
  <div className="mt-3">{children}</div>
  </section>
  );
@@ -59,7 +59,7 @@ function Facts({ rows }: { rows: Array<[string, React.ReactNode]> }) {
  <dl className="grid gap-x-6 gap-y-3 sm:grid-cols-2">
  {rows.map(([label, value]) => (
  <div key={label}>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{label}</dt>
+ <dt className="text-xs uppercase tracking-label text-[var(--ink-secondary)]">{label}</dt>
  <dd className="mt-0.5 break-words text-sm text-foreground">{value}</dd>
  </div>
  ))}
@@ -76,18 +76,18 @@ export async function AccaDetailView({ accaId }: { accaId: string }) {
  return (
  <AdminShell title="Acca" activePath={PATH}>
  <p className="mb-4 text-sm">
- <Link href={PATH} className="text-[var(--hero-ink)] underline underline-offset-2">
+ <Link href={PATH} className="text-foreground underline underline-offset-2">
  ← All Accas
  </Link>
  </p>
- <section className="rounded-lg border border-[var(--red-primary)] bg-[var(--red-surface)] p-4">
+ <section className="rounded border border-[var(--red-primary)] bg-[var(--red-surface)] p-4">
  <h2 className="text-sm font-semibold text-[var(--red-primary)]">This accumulator could not be loaded.</h2>
  <p className="mt-1 text-sm text-[var(--red-primary)]" role="alert">
  The Acca could not be read.
  </p>
  <Link
  href={`${PATH}/${accaId}`}
- className="mt-3 inline-flex min-h-10 items-center rounded-md border border-border px-3 text-sm text-foreground hover:bg-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="mt-3 inline-flex min-h-10 items-center rounded border border-border px-3 text-sm text-foreground hover:bg-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  Retry
  </Link>
@@ -113,13 +113,13 @@ export async function AccaDetailView({ accaId }: { accaId: string }) {
  <p className="mb-4 text-sm">
  <Link
  href={PATH}
- className="text-[var(--hero-ink)] underline underline-offset-2 hover:text-[var(--hero-ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="text-foreground underline underline-offset-2 hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  ← All Accas
  </Link>
  </p>
 
- <section className="rounded-lg border border-border bg-card p-4">
+ <section className="rounded border border-border bg-card p-4">
  <h2 className="text-sm font-semibold text-foreground">{acca.title}</h2>
  <p className="mt-1 text-sm text-[var(--ink-secondary)]">{textOrAbsent(acca.summary, ABSENT.notProvided)}</p>
  <div className="mt-3">
@@ -164,7 +164,7 @@ export async function AccaDetailView({ accaId }: { accaId: string }) {
  unavailableReason={action.reason}
  storageIsDurable={durability.durable}
  />
- <p className="mt-3 text-xs text-[var(--hero-ink-2)]">
+ <p className="mt-3 text-xs text-[var(--ink-secondary)]">
  Publishing marks this Acca publicly visible. Public Acca pages do not exist yet — they
  arrive in a later stage — so publishing today changes visibility state only.
  </p>
@@ -218,10 +218,10 @@ export async function AccaDetailView({ accaId }: { accaId: string }) {
  title="Selections"
  description="An immutable snapshot. Displayed exactly as stored — never re-fetched and never recomputed."
  >
- <div className="overflow-x-auto rounded-lg border border-border">
+ <div className="overflow-x-auto rounded border border-border">
  <table className="w-full text-sm">
  <caption className="sr-only">Selections in this Acca</caption>
- <thead className="bg-card text-xs uppercase text-[var(--hero-ink-2)]">
+ <thead className="bg-card text-xs uppercase text-[var(--ink-secondary)]">
  <tr>
  <th scope="col" className="px-3 py-2 text-left">#</th>
  <th scope="col" className="px-3 py-2 text-left">Fixture</th>
@@ -255,7 +255,7 @@ export async function AccaDetailView({ accaId }: { accaId: string }) {
  </tbody>
  <tfoot>
  <tr className="border-t border-border bg-card">
- <td className="px-3 py-2 text-xs uppercase tracking-label text-[var(--hero-ink-2)]" colSpan={7}>
+ <td className="px-3 py-2 text-xs uppercase tracking-label text-[var(--ink-secondary)]" colSpan={7}>
  Combined odds (server-calculated)
  </td>
  <td className="px-3 py-2 text-right font-semibold tabular-nums text-foreground">
@@ -265,8 +265,8 @@ export async function AccaDetailView({ accaId }: { accaId: string }) {
  </tfoot>
  </table>
  </div>
- <p className="mt-3 text-xs text-[var(--hero-ink-2)]">{CAPTURED_ODDS_NOTE}</p>
- <p className="mt-1 text-xs text-[var(--hero-ink-2)]">{NOT_ADVICE_NOTE}</p>
+ <p className="mt-3 text-xs text-[var(--ink-secondary)]">{CAPTURED_ODDS_NOTE}</p>
+ <p className="mt-1 text-xs text-[var(--ink-secondary)]">{NOT_ADVICE_NOTE}</p>
  </Section>
 
  <Section
@@ -298,7 +298,7 @@ export async function AccaDetailView({ accaId }: { accaId: string }) {
  <Link
  key="cand"
  href={`/admin/builder-approval/${acca.sourceCandidateId}`}
- className="font-mono text-xs text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="font-mono text-xs text-foreground underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  {acca.sourceCandidateId}
  </Link>,

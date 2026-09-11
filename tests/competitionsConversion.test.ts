@@ -378,8 +378,9 @@ test("the kill list stays dead on every Family B surface", () => {
 test("the competitions family has route-level loading and error states in the new language", () => {
   const loading = SRC("app/[locale]/competitions/loading.tsx");
   const error = SRC("app/[locale]/competitions/error.tsx");
-  assert.match(loading, /rw-hero/);
-  assert.match(error, /rw-hero/);
+  // V3 reconciliation: the ground marker moved with the reskin — rw3, not rw-hero.
+  assert.match(loading, /rw3-label/);
+  assert.match(error, /rw3-label/);
   assert.match(error, /reportError/);
   assert.match(error, /competitions_error_boundary/);
 });

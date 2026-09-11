@@ -123,13 +123,19 @@ test("the API passes each selection's kickoff through to the freeze", () => {
 
 /* ── shells + kill list ─────────────────────────────────────────────────── */
 
-test("the acca page shells stand on the form-guide ground with dictionary strings", () => {
+test("the acca page shells stand on the family's visual ground with dictionary strings", () => {
   for (const [file, keys] of [
     ["app/[locale]/acca/page.tsx", ["acStudioEyebrow", "acStudioTitle", "acStudioLede"]],
     ["app/[locale]/acca/builder/page.tsx", ["acBuilderTitle", "acBuilderLede"]],
   ] as const) {
     const src = SRC(file);
-    assert.match(src, /rw-hero/, `${file} stands on the form-guide ground`);
+    /* V3 reconciliation: the shared ground was the `.rw-hero` form-guide
+     * surface; the acca family now renders inside the locale layout's `.rw3`
+     * scope, so the marker of standing on it is the rw3 idiom classes — and
+     * the v2 ground class must be gone. The LAW is unchanged: both shells
+     * speak one visual language and wire their dictionary keys. */
+    assert.match(src, /rw3-(title|label|meta)/, `${file} stands on the rw3 ground`);
+    assert.doesNotMatch(src, /rw-hero/, `${file} still carries the v2 ground class`);
     for (const key of keys) {
       assert.ok(src.includes(`p.${key}`), `${file} wires ${key}`);
     }

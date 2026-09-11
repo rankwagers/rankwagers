@@ -58,7 +58,13 @@ export function LiveStatisticsTable({
   if (statistics.availability !== "available") {
     return (
       <p
-        className="rounded-lg border border-[var(--border-subtle)] bg-[var(--canvas-secondary)] px-4 py-5 text-sm text-muted-foreground"
+        className="px-4 py-5 text-[13px]"
+        style={{
+          border: "1px solid var(--line)",
+          background: "var(--surface)",
+          borderRadius: 6,
+          color: "var(--muted)",
+        }}
         data-testid="live-statistics-empty"
       >
         {statistics.message ?? "In-play statistics are not available for this fixture."}
@@ -74,12 +80,12 @@ export function LiveStatisticsTable({
   return (
     <div className="space-y-3" data-testid="live-statistics">
       <div className="overflow-x-auto">
-        <table className="min-w-full text-sm" aria-describedby={captionId}>
+        <table className="min-w-full text-[13px]" aria-describedby={captionId}>
           <caption className="sr-only">
             In-play statistics, {homeTeam} versus {awayTeam}
           </caption>
           <thead>
-            <tr className="border-b border-border text-metadata uppercase tracking-label text-muted-foreground">
+            <tr className="rw3-label border-b border-[var(--line)]">
               <th scope="col" className="py-2 pr-3 text-right">
                 {homeTeam}
               </th>
@@ -95,31 +101,36 @@ export function LiveStatisticsTable({
             {visibleItems.map((item) => (
               <tr
                 key={item.key}
-                className="border-b border-[var(--border-subtle)]"
+                className="border-b border-[var(--line)]"
                 data-live-stat={item.key}
               >
-                <td className="py-2 pr-3 text-right font-mono tabular-nums">
+                <td className="py-2 pr-3 text-right tabular-nums">
                   {formatLiveStatValue(item.home, item.unit)}
                 </td>
                 <th
                   scope="row"
-                  className="py-2 text-center text-xs font-medium text-[var(--ink-secondary)]"
+                  className="py-2 text-center text-[12px] font-medium"
+                  style={{ color: "var(--muted)" }}
                 >
                   {item.label}
                   {item.homeShare != null ? (
                     <span
                       aria-hidden="true"
-                      className="mt-1 flex h-1 w-full overflow-hidden rounded-full bg-[var(--border-subtle)]"
+                      className="mt-1 flex h-1 w-full overflow-hidden"
+                      style={{ background: "var(--line)", borderRadius: 9999 }}
                     >
                       <span
-                        className="h-full bg-[var(--green-primary)]"
-                        style={{ width: `${Math.round(item.homeShare * 100)}%` }}
+                        className="h-full"
+                        style={{
+                          background: "var(--accent)",
+                          width: `${Math.round(item.homeShare * 100)}%`,
+                        }}
                       />
-                      <span className="h-full flex-1 bg-[var(--amber-primary)]" />
+                      <span className="h-full flex-1" style={{ background: "var(--muted)" }} />
                     </span>
                   ) : null}
                 </th>
-                <td className="py-2 pl-3 text-left font-mono tabular-nums text-right">
+                <td className="py-2 pl-3 text-left tabular-nums text-right">
                   {formatLiveStatValue(item.away, item.unit)}
                 </td>
               </tr>
@@ -134,7 +145,7 @@ export function LiveStatisticsTable({
           onClick={toggle}
           aria-expanded={expanded}
           aria-controls={panelId}
-          className="min-h-[var(--touch-min)] rounded-md border border-[var(--border-subtle)] px-3 py-1.5 text-xs font-medium text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          className="rw3-ghost min-h-[var(--touch-min)]"
           data-testid="live-statistics-toggle"
         >
           {expanded ? "Show fewer statistics" : `Show ${hiddenCount} more statistics`}
@@ -142,7 +153,7 @@ export function LiveStatisticsTable({
       ) : null}
 
       {statistics.message ? (
-        <p className="text-xs text-muted-foreground">{statistics.message}</p>
+        <p className="rw3-meta">{statistics.message}</p>
       ) : null}
     </div>
   );

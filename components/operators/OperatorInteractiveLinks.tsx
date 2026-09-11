@@ -21,12 +21,22 @@ export function OperatorAffiliateCta({
   enabled: boolean;
   label: string;
 }) {
-  /* DATA-AS-DOOR: the Continue is a visible, chosen commercial step — bordered
-     ink action, rel=sponsored, never a disguised link. Disabled state renders
-     as a plain statement, not a dead button. */
+  /* DATA-AS-DOOR: the Continue is a visible, chosen commercial step — a ghost
+     action (Bible V3 CTA tiers: filled green is curated-only), rel=sponsored,
+     never a disguised link. Disabled state renders as a plain statement, not a
+     dead button. */
   if (!enabled) {
     return (
-      <p className="max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]">
+      <p
+        style={{
+          maxWidth: "52ch",
+          margin: 0,
+          padding: "4px 0 4px 14px",
+          borderLeft: "2px solid var(--line)",
+          fontSize: 13,
+          color: "var(--muted)",
+        }}
+      >
         {label}
       </p>
     );
@@ -36,7 +46,7 @@ export function OperatorAffiliateCta({
       href={href}
       rel="noopener sponsored"
       onClick={() => trackOperatorAffiliateCtaClick({ operatorSlug, locale })}
-      className="rw-m inline-flex min-h-10 items-center border border-[var(--hero-ink)] px-5 text-[var(--hero-ink)] transition-colors hover:bg-[var(--hero-ink)] hover:text-[var(--hero-canvas)]"
+      className="rw3-ghost"
     >
       {label}
     </a>
@@ -64,7 +74,13 @@ export function OperatorRelatedLink({
       onClick={() =>
         trackOperatorRelatedClick({ operatorSlug, locale, kind, target })
       }
-      className="text-[15px] text-[var(--hero-ink)] underline decoration-[var(--hero-line)] underline-offset-4 hover:decoration-[var(--hero-ink)]"
+      style={{
+        fontSize: 13,
+        color: "var(--text)",
+        textDecoration: "underline",
+        textDecorationColor: "var(--line)",
+        textUnderlineOffset: 3,
+      }}
     >
       {children}
     </Link>
@@ -88,7 +104,12 @@ export function OperatorOddsPanelButton({
       onClick={() =>
         trackOperatorOddsPanelInteraction({ operatorSlug, locale, panel })
       }
-      className="rw-m text-[var(--hero-ink-2)] underline decoration-[var(--hero-line)] underline-offset-4 hover:text-[var(--hero-ink)]"
+      className="rw3-meta"
+      style={{
+        textDecoration: "underline",
+        textDecorationColor: "var(--line)",
+        textUnderlineOffset: 3,
+      }}
     >
       {children}
     </button>

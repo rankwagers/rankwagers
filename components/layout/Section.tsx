@@ -1,5 +1,4 @@
 import type { ElementType, ReactNode } from "react";
-import { Reveal } from "@/components/motion/Reveal";
 
 /* ============================================================================
    THE SECTION SHELL
@@ -21,21 +20,22 @@ import { Reveal } from "@/components/motion/Reveal";
              is used RARELY — one inverted band reads as emphasis, three read as
              a theme.
 
-   Reveals come from `docs/design/motion-language.md`: opacity + 6px blur + 12px
-   rise together, `--i` driving the stagger. Only opacity, transform and filter
-   animate, so a section occupies its final height from the first frame and the
-   shell contributes no CLS.
+   V3 reconciliation: the grounds now speak the Bible V3 tokens (--bg /
+   --surface / --text) instead of the retired hero token set, and the entrance
+   wrapper is gone — Bible V3's motion law names four movements, and a section
+   entrance is not one of them. Children render directly; the shell contributes
+   no motion and no CLS.
    ========================================================================== */
 
 export type SectionGround = "canvas" | "surface" | "ink";
 export type SectionRhythm = "quiet" | "heavy" | "masthead";
 
 export const GROUND: Record<SectionGround, string> = {
-  canvas: "bg-[var(--hero-canvas)] text-[var(--hero-ink)]",
-  surface: "bg-[var(--hero-surface)] text-[var(--hero-ink)]",
+  canvas: "bg-[var(--bg)] text-[var(--text)]",
+  surface: "bg-[var(--surface)] text-[var(--text)]",
   // The inverted band. Text colour is set here rather than left to inheritance so a section
   // cannot half-invert if a child forgets.
-  ink: "bg-[var(--hero-ink)] text-white",
+  ink: "bg-[var(--text)] text-[var(--bg)]",
 };
 
 export const RHYTHM: Record<SectionRhythm, string> = {
@@ -67,7 +67,6 @@ export function Section({
   labelledBy,
   className = "",
   as: Tag = "section",
-  reveal = true,
   index = 0,
   analyticsSection,
 }: {
@@ -80,13 +79,13 @@ export function Section({
   labelledBy?: string;
   className?: string;
   as?: ElementType;
-  /** Set false for a section that manages its own entrance (the hero plays on mount). */
+  /** Kept for call-site compatibility; the V3 shell renders children directly, no entrance. */
   reveal?: boolean;
   index?: number;
   /** Preserved verbatim — the analytics surface keys off this attribute. */
   analyticsSection?: string;
 }) {
-  const inner = <div className={MEASURE}>{children}</div>;
+  void index;
   return (
     <Tag
       id={id}
@@ -95,20 +94,14 @@ export function Section({
       className={[
         "scroll-mt-16",
         GROUND[ground],
-        bordered ? "border-t border-[var(--hero-line)]" : "",
+        bordered ? "border-t border-[var(--line)]" : "",
         className,
       ]
         .filter(Boolean)
         .join(" ")}
     >
       <div className={RHYTHM[rhythm]}>
-        {reveal ? (
-          <Reveal index={index} className={MEASURE}>
-            {children}
-          </Reveal>
-        ) : (
-          inner
-        )}
+        <div className={MEASURE}>{children}</div>
       </div>
     </Tag>
   );

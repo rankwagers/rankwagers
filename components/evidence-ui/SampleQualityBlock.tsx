@@ -27,10 +27,10 @@ export function SampleQualityBlock({ sample }: { sample: SampleQualityView }) {
       <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-3 sm:grid-cols-3 lg:grid-cols-5">
         {cells.map((cell) => (
           <div key={cell.term}>
-            <dt className="text-metadata font-medium uppercase tracking-label text-muted-foreground">
+            <dt className="rw3-label">
               {cell.term}
             </dt>
-            <dd className="mt-1 font-mono text-body font-semibold tabular-nums text-foreground">
+            <dd className="mt-1 text-[13px] font-semibold tabular-nums">
               {cell.value}
             </dd>
           </div>

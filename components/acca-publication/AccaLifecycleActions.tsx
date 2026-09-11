@@ -128,12 +128,12 @@ export function AccaLifecycleActions({
  setError(null);
  setConfirming(true);
  }}
- className="inline-flex min-h-10 items-center rounded-md border border-[var(--green-primary)] bg-[var(--green-surface)] px-4 text-sm font-medium text-[var(--hero-ink)] hover:bg-[var(--green-surface)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="inline-flex min-h-10 items-center rounded border border-[var(--green-primary)] bg-[var(--green-surface)] px-4 text-sm font-medium text-foreground hover:bg-[var(--green-surface)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  {copy.button}
  </button>
  ) : (
- <div className="rounded-lg border border-border bg-[var(--surface-elevated)] p-4">
+ <div className="rounded border border-border bg-[var(--surface-elevated)] p-4">
  <h3 className="text-sm font-semibold text-foreground">{copy.heading}</h3>
  <p className="mt-1 text-xs text-[var(--ink-secondary)]">{copy.body}</p>
  <div className="mt-3 flex flex-wrap gap-2">
@@ -141,7 +141,7 @@ export function AccaLifecycleActions({
  type="button"
  onClick={submit}
  disabled={pending}
- className="inline-flex min-h-10 items-center rounded-md border border-[var(--green-primary)] bg-[var(--green-surface)] px-4 text-sm font-medium text-[var(--hero-ink)] hover:bg-[var(--green-surface)] disabled:cursor-not-allowed disabled:opacity-[var(--opacity-disabled)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="inline-flex min-h-10 items-center rounded border border-[var(--green-primary)] bg-[var(--green-surface)] px-4 text-sm font-medium text-foreground hover:bg-[var(--green-surface)] disabled:cursor-not-allowed disabled:opacity-[var(--opacity-disabled)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  {pending ? copy.pending : copy.confirm}
  </button>
@@ -149,7 +149,7 @@ export function AccaLifecycleActions({
  type="button"
  onClick={() => setConfirming(false)}
  disabled={pending}
- className="inline-flex min-h-10 items-center rounded-md border border-border px-4 text-sm text-foreground hover:bg-card disabled:opacity-[var(--opacity-disabled)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="inline-flex min-h-10 items-center rounded border border-border px-4 text-sm text-foreground hover:bg-card disabled:opacity-[var(--opacity-disabled)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  Cancel
  </button>

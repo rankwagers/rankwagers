@@ -26,32 +26,35 @@ export default function LocaleError({
 
   return (
     <div
-      className="container-wide flex min-h-[50vh] flex-col items-center justify-center px-4 py-16 text-center"
+      className="flex min-h-[50vh] flex-col items-center justify-center px-4 py-16 text-center"
       role="alert"
     >
-      <p className="text-metadata font-medium uppercase tracking-label text-brand">
+      <p className="rw3-label" style={{ margin: 0 }}>
         Something went wrong
       </p>
-      <h1 className="mt-3 font-display text-2xl font-semibold text-foreground">
+      <h1 className="rw3-title" style={{ margin: "10px 0 0" }}>
         We could not render this page
       </h1>
-      <p className="mt-3 max-w-md text-sm text-muted-foreground">
+      <p
+        className="max-w-md"
+        style={{ margin: "10px 0 0", fontSize: 13, color: "var(--muted)" }}
+      >
         A temporary error interrupted this view. Your research data was not lost
         — try again or return home.
       </p>
       <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-        <button type="button" onClick={reset} className="btn-primary">
+        <button type="button" onClick={reset} className="rw3-ghost">
           Try again
         </button>
-        <Link href={`/${locale}`} className="btn-ghost">
+        <Link href={`/${locale}`} className="rw3-ghost">
           Go home
         </Link>
-        <Link href={`/${locale}/archive`} className="btn-ghost">
+        <Link href={`/${locale}/archive`} className="rw3-ghost">
           Archive
         </Link>
       </div>
       {error.digest ? (
-        <p className="mt-4 font-mono text-metadata text-muted-foreground">
+        <p className="rw3-meta font-mono" style={{ margin: "16px 0 0" }}>
           Ref {error.digest}
         </p>
       ) : null}

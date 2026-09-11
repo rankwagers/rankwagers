@@ -18,12 +18,14 @@ import {
  * as visually hidden text, so a screen reader hears "Yellow card" rather than "Y C".
  */
 
+/* Live coloring law (Bible V3): the on-air moment carries `--accent`, everything
+ * else stays quiet in `--muted`. Small 11px labels — the mock's live markers
+ * never shout. */
 const TONE_CLASS: Record<LiveEventTone, string> = {
-  critical:
-    "border-[color:color-mix(in_srgb,var(--red-primary)_35%,transparent)] bg-[var(--status-live-bg)] text-[var(--status-live-fg)]",
-  warning: "border-[var(--amber-border)] bg-[var(--amber-surface)] text-[var(--amber-primary)]",
-  phase: "border-[var(--border-subtle)] bg-[var(--canvas-secondary)] text-[var(--ink-secondary)]",
-  neutral: "border-[var(--border-subtle)] bg-transparent text-[var(--ink-secondary)]",
+  critical: "bg-[var(--pctbg)] text-[var(--accent)]",
+  warning: "bg-[var(--pctbg)] text-[var(--muted)]",
+  phase: "bg-[var(--pctbg)] text-[var(--muted)]",
+  neutral: "bg-transparent text-[var(--muted)]",
 };
 
 export function liveEventBadgeTone(type: LiveEventType): LiveEventTone {
@@ -42,14 +44,15 @@ export function LiveEventBadge({
   const tone = LIVE_EVENT_TONE[event.type];
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full border px-2 py-0.5 text-metadata font-medium uppercase tracking-label ${TONE_CLASS[tone]} ${className}`.trim()}
+      className={`inline-flex items-center gap-1.5 px-1.5 py-0.5 text-[11px] font-medium uppercase tracking-[.06em] ${TONE_CLASS[tone]} ${className}`.trim()}
+      style={{ border: "1px solid var(--line)", borderRadius: 6 }}
       data-live-event-type={event.type}
       data-live-event-tone={tone}
     >
       <span aria-hidden="true">{LIVE_EVENT_GLYPH[event.type]}</span>
       <span className="sr-only">{LIVE_EVENT_LABEL[event.type]}</span>
       {showClock ? (
-        <span className="font-mono tabular-nums normal-case">
+        <span className="tabular-nums normal-case">
           {formatEventClock(event)}
         </span>
       ) : null}

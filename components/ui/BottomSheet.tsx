@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, type ReactNode } from "react";
 import { trapTabKey } from "@/lib/ui/focusTrap";
-import { X } from "lucide-react";
+import { Icon } from "@/components/v3/Icon";
 
 /**
  * Accessible mobile bottom sheet — shared by Acca / future drawers.
@@ -57,23 +57,33 @@ export function BottomSheet({
  if (e.target === e.currentTarget) onClose();
  }}
  >
+ {/* Bible V3: no shadows, ever — the sheet separates with a `--line`
+ border on `--surface`, radius 6 inline. */}
  <div
  ref={panelRef}
- className="sheet-enter relative max-h-[90vh] w-full overflow-auto rounded-t-[var(--radius-xl)] border border-border bg-[var(--canvas-secondary)] p-4 pb-[max(1rem,env(safe-area-inset-bottom))] shadow-elevated"
+ className="sheet-enter relative max-h-[90vh] w-full overflow-auto p-4 pb-[max(1rem,env(safe-area-inset-bottom))]"
+ style={{
+ border: "1px solid var(--line)",
+ background: "var(--surface)",
+ borderTopLeftRadius: 6,
+ borderTopRightRadius: 6,
+ }}
  >
  <div className="mb-3 flex items-center justify-between">
  <div
- className="mx-auto h-1 w-10 rounded-full bg-[var(--border-strong)]"
+ className="mx-auto h-1 w-10"
+ style={{ background: "var(--line)", borderRadius: 9999 }}
  aria-hidden
  />
  <button
  ref={closeRef}
  type="button"
  onClick={onClose}
- className="absolute right-3 top-3 inline-flex min-h-10 min-w-10 items-center justify-center rounded-md border border-border text-sm text-muted-foreground transition-colors hover:bg-[var(--canvas-primary)] hover:text-foreground"
+ className="rw3-hoverable absolute right-3 top-3 inline-flex min-h-10 min-w-10 items-center justify-center border border-[var(--line)] text-[13px]"
+ style={{ borderRadius: 6, color: "var(--muted)" }}
  aria-label="Close panel"
  >
- <X className="h-4 w-4" aria-hidden />
+ <Icon name="close" size={16} />
  </button>
  </div>
  {children}

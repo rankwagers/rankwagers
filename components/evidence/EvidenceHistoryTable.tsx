@@ -115,7 +115,7 @@ export function EvidenceHistoryTable({
           move between rows.
         </caption>
         <thead>
-          <tr className="border-b border-border">
+          <tr className="border-b border-[var(--line)]">
             <th scope="col" className={`py-2 pr-3 ${evidenceArchiveTokens.label}`}>
               Snapshot
             </th>
@@ -145,7 +145,7 @@ export function EvidenceHistoryTable({
             return [
               <tr
                 key={snapshot.id}
-                className="border-b border-[var(--border-subtle)] align-top"
+                className="border-b border-[var(--line)] align-top"
                 data-snapshot-id={snapshot.id}
               >
                 <th scope="row" className="py-2 pr-3">
@@ -158,7 +158,8 @@ export function EvidenceHistoryTable({
                     onKeyDown={(event) => onKeyDown(event, index)}
                     aria-expanded={isOpen}
                     aria-controls={detailId}
-                    className={`inline-flex items-center gap-1 rounded-md px-1 py-1 text-body-sm font-medium text-foreground ${evidenceArchiveTokens.focusRing}`}
+                    className={`rw3-hoverable inline-flex items-center gap-1 px-1 py-1 text-[13px] font-medium ${evidenceArchiveTokens.focusRing}`}
+                    style={{ borderRadius: 6 }}
                   >
                     <span aria-hidden="true">{isOpen ? "−" : "+"}</span>
                     <span>#{snapshot.sequence}</span>
@@ -167,11 +168,11 @@ export function EvidenceHistoryTable({
                     </span>
                   </button>
                 </th>
-                <td className="py-2 pr-3 text-body-sm text-foreground">
+                <td className="py-2 pr-3 text-[13px]">
                   <time dateTime={snapshot.capturedAt}>{snapshot.capturedAtLabel}</time>
                 </td>
-                <td className="py-2 pr-3 text-body-sm text-foreground">
-                  <span className="font-mono">
+                <td className="py-2 pr-3 text-[13px]">
+                  <span className="tabular-nums">
                     {formatEvidenceScore(snapshot.evidenceScore)}
                   </span>
                   {snapshot.scoreDelta === null ? null : (

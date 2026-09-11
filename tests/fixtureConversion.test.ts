@@ -270,9 +270,13 @@ test("zero flagEmoji references survive on the three routes, and the SVG mechani
 
 /* ------------------------------------------------------------------ badge */
 
-test("StatusBadge is monochrome: state is glyph and weight, never hue", () => {
+test("StatusBadge speaks one status map: glyph plus the scoped tones, never the v1 colour classes", () => {
+  /* V3 reconciliation: the form-guide stated status in ink alone; Bible V3
+     grants the record exactly three status inks — --win, --loss, --muted.
+     What stays pinned is the law both versions share: one map (STATUS_MONO)
+     drives the badge, and the v1 coloured tone machinery stays disconnected. */
   const badge = src("components/homepage/sectionChrome.tsx");
   assert.doesNotMatch(badge, /STATUS_TONE_CLASS/, "the coloured tone map is disconnected");
   assert.doesNotMatch(badge, /status-won-bg|status-lost-bg/, "no status colour tokens");
-  assert.match(badge, /STATUS_MONO/, "the monochrome map drives it");
+  assert.match(badge, /STATUS_MONO/, "the one status map drives it");
 });

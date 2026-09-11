@@ -40,6 +40,17 @@ import {
  * nothing. Every section below is static server-rendered HTML, and the per-selection disclosures
  * are native `<details>` elements that work with scripting disabled.
  */
+
+/* rw3 idiom: links carry text ink and an underline; the keyboard ring comes
+ * from the scoped `.rw3 :focus-visible` law in globals.css. */
+const LINK_CLASS = "underline underline-offset-2";
+const LINK_STYLE = { color: "var(--text)" } as const;
+const CARD_STYLE = {
+ border: "1px solid var(--line)",
+ background: "var(--surface)",
+ borderRadius: 6,
+} as const;
+
 export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  // Server component: the dictionary read stays out of the client graph.
  const p = getDictionary(view.locale as Locale).predictions;
@@ -50,7 +61,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  const withConfidence = view.evidence.legsWithConfidence;
 
  return (
- <article className="container-wide pb-20">
+ <article className="mx-auto w-full max-w-[1080px] px-5 pb-20">
  <AccaDetailAnalytics
  context={{
  publicAccaId: view.publicId,
@@ -62,22 +73,23 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  }}
  />
 
- <nav aria-label="Breadcrumb" className="pt-8 text-sm">
+ <nav aria-label="Breadcrumb" className="pt-8 text-[13px]">
  <Link
  href={publicAccaIndexPath(view.locale)}
- className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className={LINK_CLASS}
+ style={LINK_STYLE}
  >
  ← Published Accas
  </Link>
  </nav>
 
  <header className="mt-4">
- <h1 className="text-2xl font-semibold">{view.title}</h1>
+ <h1 className="rw3-title">{view.title}</h1>
  {view.summary ? (
- <p className="mt-2 max-w-2xl text-sm text-[var(--ink-secondary)]">{view.summary}</p>
+ <p className="mt-2 max-w-2xl text-[13px]" style={{ color: "var(--muted)" }}>{view.summary}</p>
  ) : null}
  {view.publishedAt.machine ? (
- <p className="mt-2 text-xs text-[var(--hero-ink-2)]">
+ <p className="mt-2 rw3-meta">
  Published{""}
  <time dateTime={view.publishedAt.machine}>{view.publishedAt.display}</time>
  </p>
@@ -85,7 +97,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  </header>
 
  {/* The honesty framing sits ABOVE the selections, not buried in a footer. */}
- <p className="mt-4 max-w-2xl card px-4 py-3 text-sm text-[var(--ink-secondary)]">
+ <p className="mt-4 max-w-2xl px-4 py-3 text-[13px]" style={{ ...CARD_STYLE, color: "var(--muted)" }}>
  {NOT_ADVICE_NOTE} {CAPTURED_ODDS_NOTE}
  </p>
 
@@ -93,27 +105,27 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  * 1. Summary
  * ---------------------------------------------------------------- */}
  <section className="mt-8" aria-labelledby="summary">
- <h2 id="summary" className="text-lg font-semibold">
+ <h2 id="summary" className="text-[14px] font-semibold">
  {p.apdAtAGlance}
  </h2>
- <dl className="mt-3 grid gap-x-6 gap-y-4 text-sm sm:grid-cols-3">
+ <dl className="mt-3 grid gap-x-6 gap-y-4 text-[13px] sm:grid-cols-3">
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.appCombinedOdds}</dt>
- <dd className="text-base font-semibold tabular-nums">
+ <dt className="rw3-label">{p.appCombinedOdds}</dt>
+ <dd className="text-[14px] font-semibold tabular-nums">
  {view.combinedOdds.display}
  </dd>
- <dd className="text-xs text-[var(--hero-ink-2)]">{oddsBandLabel(view.oddsBand)}</dd>
+ <dd className="text-[11px]" style={{ color: "var(--muted)" }}>{oddsBandLabel(view.oddsBand)}</dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdSelections}</dt>
- <dd className="text-base font-semibold tabular-nums">{view.legCount}</dd>
+ <dt className="rw3-label">{p.apdSelections}</dt>
+ <dd className="text-[14px] font-semibold tabular-nums">{view.legCount}</dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdBuilderProfile}</dt>
+ <dt className="rw3-label">{p.apdBuilderProfile}</dt>
  <dd>{view.profile ?? ABSENT.notProvided}</dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdGenerated}</dt>
+ <dt className="rw3-label">{p.apdGenerated}</dt>
  <dd>
  {view.generatedAt.machine ? (
  <time dateTime={view.generatedAt.machine}>{view.generatedAt.display}</time>
@@ -123,7 +135,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  </dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdPublished}</dt>
+ <dt className="rw3-label">{p.apdPublished}</dt>
  <dd>
  {view.publishedAt.machine ? (
  <time dateTime={view.publishedAt.machine}>{view.publishedAt.display}</time>
@@ -133,7 +145,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  </dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdState}</dt>
+ <dt className="rw3-label">{p.apdState}</dt>
  <dd>{availability.label}</dd>
  </div>
  </dl>
@@ -143,13 +155,19 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  * 2. Leg breakdown
  * ---------------------------------------------------------------- */}
  <section className="mt-8" aria-labelledby="selections">
- <h2 id="selections" className="text-lg font-semibold">
+ <h2 id="selections" className="text-[14px] font-semibold">
  {formatDict(p.apdSelectionsTitle, { n: String(view.legCount) })}
  </h2>
- <div className="mt-3 overflow-x-auto rounded-lg border border-border">
- <table className="w-full text-sm">
+ <div
+ className="mt-3 overflow-x-auto"
+ style={{ border: "1px solid var(--line)", borderRadius: 6 }}
+ >
+ <table className="w-full text-[13px]">
  <caption className="sr-only">{p.apdTableCaption}</caption>
- <thead className="bg-card text-xs uppercase text-[var(--hero-ink-2)]">
+ <thead
+ className="text-[11px] uppercase"
+ style={{ background: "var(--surface)", color: "var(--muted)" }}
+ >
  <tr>
  <th scope="col" className="px-3 py-2 text-left">{p.apdColFixture}</th>
  <th scope="col" className="px-3 py-2 text-left">{p.apxFilterCompetition}</th>
@@ -162,28 +180,28 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  </thead>
  <tbody>
  {view.legs.map((leg) => (
- <tr key={leg.position} className="border-t border-border">
+ <tr key={leg.position} className="border-t border-[var(--line)]">
  <th scope="row" className="px-3 py-2 text-left font-medium">
  {leg.fixture}
  </th>
- <td className="px-3 py-2 text-[var(--ink-secondary)]">{leg.competition}</td>
+ <td className="px-3 py-2" style={{ color: "var(--muted)" }}>{leg.competition}</td>
  <td className="px-3 py-2">
  {leg.market}
  {leg.selection !== ABSENT.notProvided ? (
- <span className="block text-xs text-[var(--hero-ink-2)]">{leg.selection}</span>
+ <span className="block text-[11px]" style={{ color: "var(--muted)" }}>{leg.selection}</span>
  ) : null}
  </td>
- <td className="px-3 py-2 whitespace-nowrap text-[var(--ink-secondary)]">
+ <td className="px-3 py-2 whitespace-nowrap" style={{ color: "var(--muted)" }}>
  {leg.kickoffAt.machine ? (
  <time dateTime={leg.kickoffAt.machine}>{leg.kickoffAt.display}</time>
  ) : (
  leg.kickoffAt.display
  )}
  {leg.started ? (
- <span className="block text-xs text-[var(--amber-primary)]">Kicked off</span>
+ <span className="block text-[11px]" style={{ color: "var(--loss)" }}>Kicked off</span>
  ) : null}
  </td>
- <td className="px-3 py-2 text-[var(--ink-secondary)]">
+ <td className="px-3 py-2" style={{ color: "var(--muted)" }}>
  {evidenceStrengthLabel(leg.evidenceStrength).label}
  </td>
  <td className="px-3 py-2 text-right tabular-nums">{leg.confidence}</td>
@@ -192,9 +210,9 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  ))}
  </tbody>
  <tfoot>
- <tr className="border-t border-border bg-card">
- <td className="px-3 py-2 text-xs uppercase tracking-label text-[var(--hero-ink-2)]" colSpan={6}>
- {p.appCombinedOdds}
+ <tr className="border-t border-[var(--line)]" style={{ background: "var(--surface)" }}>
+ <td className="px-3 py-2" colSpan={6}>
+ <span className="rw3-label">{p.appCombinedOdds}</span>
  </td>
  <td className="px-3 py-2 text-right font-semibold tabular-nums">
  {view.combinedOdds.display}
@@ -203,7 +221,7 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  </tfoot>
  </table>
  </div>
- <p className="mt-2 text-xs text-[var(--hero-ink-2)]">
+ <p className="mt-2 text-[11px]" style={{ color: "var(--muted)" }}>
  {p.apdCombinedNote}
  </p>
  </section>
@@ -212,10 +230,10 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  * 3. Why these selections
  * ---------------------------------------------------------------- */}
  <section className="mt-8" aria-labelledby="why">
- <h2 id="why" className="text-lg font-semibold">
+ <h2 id="why" className="text-[14px] font-semibold">
  {p.apdWhyTitle}
  </h2>
- <p className="mt-2 max-w-2xl text-sm text-[var(--ink-secondary)]">
+ <p className="mt-2 max-w-2xl text-[13px]" style={{ color: "var(--muted)" }}>
  {p.apdWhyNote}
  </p>
  <div className="mt-4 space-y-2">
@@ -226,24 +244,24 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  key={leg.position}
  data-acca-disclosure="leg"
  data-acca-position={leg.position}
- className="card"
+ style={CARD_STYLE}
  >
- <summary className="cursor-pointer px-4 py-3 text-sm font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400">
+ <summary className="rw3-hoverable cursor-pointer px-4 py-3 text-[13px] font-medium">
  {leg.position}. {leg.fixture} — {leg.market}{""}
- <span className="font-normal text-[var(--hero-ink-2)]">({strength.label})</span>
+ <span className="font-normal" style={{ color: "var(--muted)" }}>({strength.label})</span>
  </summary>
- <div className="border-t border-border px-4 py-3 text-sm">
- <p className="text-[var(--ink-secondary)]">{strength.detail}</p>
+ <div className="border-t border-[var(--line)] px-4 py-3 text-[13px]">
+ <p style={{ color: "var(--muted)" }}>{strength.detail}</p>
  {leg.reasons.length > 0 ? (
- <ul className="mt-2 list-disc space-y-1 pl-5 text-[var(--ink-secondary)]">
+ <ul className="mt-2 list-disc space-y-1 pl-5" style={{ color: "var(--muted)" }}>
  {leg.reasons.map((reason, i) => (
  <li key={i}>{reason}</li>
  ))}
  </ul>
  ) : null}
- <dl className="mt-3 grid gap-x-6 gap-y-2 text-xs sm:grid-cols-2">
+ <dl className="mt-3 grid gap-x-6 gap-y-2 text-[11px] sm:grid-cols-2">
  <div>
- <dt className="uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdQualification}</dt>
+ <dt className="rw3-label">{p.apdQualification}</dt>
  <dd>
  {leg.qualified
  ? p.apdQualifiedLine
@@ -251,15 +269,15 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  </dd>
  </div>
  <div>
- <dt className="uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdColPotential}</dt>
+ <dt className="rw3-label">{p.apdColPotential}</dt>
  <dd className="tabular-nums">{leg.confidence}</dd>
  </div>
  <div>
- <dt className="uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdPriceRecorded}</dt>
+ <dt className="rw3-label">{p.apdPriceRecorded}</dt>
  <dd className="tabular-nums">{leg.capturedOdds}</dd>
  </div>
  <div>
- <dt className="uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdProvenance}</dt>
+ <dt className="rw3-label">{p.apdProvenance}</dt>
  <dd>{leg.provenance.basis}</dd>
  </div>
  </dl>
@@ -274,25 +292,25 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  * 4. Evidence and provenance
  * ---------------------------------------------------------------- */}
  <section className="mt-8" aria-labelledby="evidence">
- <h2 id="evidence" className="text-lg font-semibold">
+ <h2 id="evidence" className="text-[14px] font-semibold">
  {p.apdBuiltOn}
  </h2>
 
  {view.evidence.summary.length > 0 ? (
- <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-[var(--ink-secondary)]">
+ <ul className="mt-3 list-disc space-y-1 pl-5 text-[13px]" style={{ color: "var(--muted)" }}>
  {view.evidence.summary.map((line, i) => (
  <li key={i}>{line}</li>
  ))}
  </ul>
  ) : (
- <p className="mt-3 text-sm text-[var(--ink-secondary)]">
+ <p className="mt-3 text-[13px]" style={{ color: "var(--muted)" }}>
  {p.apdNoAggregateNotes}
  </p>
  )}
 
- <dl className="mt-4 grid gap-x-6 gap-y-3 text-sm sm:grid-cols-3">
+ <dl className="mt-4 grid gap-x-6 gap-y-3 text-[13px] sm:grid-cols-3">
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">
+ <dt className="rw3-label">
  {p.apdWithPotential}
  </dt>
  <dd className="tabular-nums">
@@ -300,13 +318,13 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  </dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdAvgPotential}</dt>
+ <dt className="rw3-label">{p.apdAvgPotential}</dt>
  <dd className="tabular-nums">
  {view.evidence.averageConfidence ?? ABSENT.notProvided}
  </dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdCompleteness}</dt>
+ <dt className="rw3-label">{p.apdCompleteness}</dt>
  <dd className="tabular-nums">
  {view.evidence.completeness ?? ABSENT.notProvided}
  </dd>
@@ -315,15 +333,16 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
 
  <details
  data-acca-disclosure="evidence"
- className="mt-4 card"
+ className="mt-4"
+ style={CARD_STYLE}
  >
- <summary className="cursor-pointer px-4 py-3 text-sm font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400">
+ <summary className="rw3-hoverable cursor-pointer px-4 py-3 text-[13px] font-medium">
  {p.apdProvenanceTitle}
  </summary>
- <div className="border-t border-border px-4 py-3">
- <dl className="grid gap-x-6 gap-y-3 text-sm sm:grid-cols-2">
+ <div className="border-t border-[var(--line)] px-4 py-3">
+ <dl className="grid gap-x-6 gap-y-3 text-[13px] sm:grid-cols-2">
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">
+ <dt className="rw3-label">
  {p.apdWithReasons}
  </dt>
  <dd className="tabular-nums">
@@ -331,28 +350,29 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  </dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdOddsCaptured}</dt>
+ <dt className="rw3-label">{p.apdOddsCaptured}</dt>
  <dd>{view.generatedAt.display}</dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">{p.apdPriceAge}</dt>
+ <dt className="rw3-label">{p.apdPriceAge}</dt>
  <dd>{oddsAge.label}</dd>
  </div>
  <div>
- <dt className="text-xs uppercase tracking-label text-[var(--hero-ink-2)]">
+ <dt className="rw3-label">
  {p.apdPublicationFormat}
  </dt>
- <dd className="font-mono text-xs">{view.publicationFormatVersion}</dd>
+ <dd className="font-mono text-[11px]">{view.publicationFormatVersion}</dd>
  </div>
  </dl>
- <p className="mt-3 text-xs text-[var(--ink-secondary)]">{oddsAge.detail}</p>
- <p className="mt-2 text-xs text-[var(--ink-secondary)]">
+ <p className="mt-3 text-[11px]" style={{ color: "var(--muted)" }}>{oddsAge.detail}</p>
+ <p className="mt-2 text-[11px]" style={{ color: "var(--muted)" }}>
  The version above identifies the publication format this record was written in. The
  generation methodology itself is not versioned on the stored snapshot, so it is not
  stated here rather than guessed — the rules in force are described on the{""}
  <Link
  href={`/${view.locale}/methodology`}
- className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className={LINK_CLASS}
+ style={LINK_STYLE}
  >
  methodology page
  </Link>
@@ -366,13 +386,13 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  * 5. Status
  * ---------------------------------------------------------------- */}
  <section className="mt-8" aria-labelledby="status">
- <h2 id="status" className="text-lg font-semibold">
+ <h2 id="status" className="text-[14px] font-semibold">
  Is this still current?
  </h2>
- <dl className="mt-3 space-y-3 text-sm">
+ <dl className="mt-3 space-y-3 text-[13px]">
  <div>
  <dt className="font-medium">{availability.label}</dt>
- <dd className="text-[var(--ink-secondary)]">{availability.detail}</dd>
+ <dd style={{ color: "var(--muted)" }}>{availability.detail}</dd>
  </div>
  {freshness.legCount > 0 && freshness.legsStarted > 0 ? (
  <div>
@@ -380,18 +400,18 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  <span className="tabular-nums">{freshness.legsStarted}</span> of{""}
  <span className="tabular-nums">{freshness.legCount}</span> fixtures have kicked off
  </dt>
- <dd className="text-[var(--ink-secondary)]">
+ <dd style={{ color: "var(--muted)" }}>
  Those selections can no longer be taken at any price.
  </dd>
  </div>
  ) : null}
  <div>
  <dt className="font-medium">{oddsAge.label}</dt>
- <dd className="text-[var(--ink-secondary)]">{oddsAge.detail}</dd>
+ <dd style={{ color: "var(--muted)" }}>{oddsAge.detail}</dd>
  </div>
  <div>
  <dt className="font-medium">{settlement.label}</dt>
- <dd className="text-[var(--ink-secondary)]">{settlement.detail}</dd>
+ <dd style={{ color: "var(--muted)" }}>{settlement.detail}</dd>
  </div>
  </dl>
  </section>
@@ -400,22 +420,22 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  * 6. Limitations
  * ---------------------------------------------------------------- */}
  <section className="mt-8" aria-labelledby="limitations">
- <h2 id="limitations" className="text-lg font-semibold">
+ <h2 id="limitations" className="text-[14px] font-semibold">
  Limitations
  </h2>
  {view.evidence.warnings.length > 0 ? (
- <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-[var(--amber-primary)]">
+ <ul className="mt-3 list-disc space-y-1 pl-5 text-[13px]" style={{ color: "var(--loss)" }}>
  {view.evidence.warnings.map((line, i) => (
  <li key={i}>{line}</li>
  ))}
  </ul>
  ) : (
- <p className="mt-3 text-sm text-[var(--ink-secondary)]">
+ <p className="mt-3 text-[13px]" style={{ color: "var(--muted)" }}>
  No specific correlation or data limitations were recorded for this combination. That is
  not a statement that none exist.
  </p>
  )}
- <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-[var(--ink-secondary)]">
+ <ul className="mt-3 list-disc space-y-1 pl-5 text-[13px]" style={{ color: "var(--muted)" }}>
  <li>
  Every selection must land for the combination to return anything. Combining selections
  multiplies both the price and the ways it can fail.
@@ -437,10 +457,10 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  * 7. Methodology
  * ---------------------------------------------------------------- */}
  <section className="mt-8" aria-labelledby="methodology">
- <h2 id="methodology" className="text-lg font-semibold">
+ <h2 id="methodology" className="text-[14px] font-semibold">
  How this was put together
  </h2>
- <ul className="mt-3 list-disc space-y-1 pl-5 text-sm text-[var(--ink-secondary)]">
+ <ul className="mt-3 list-disc space-y-1 pl-5 text-[13px]" style={{ color: "var(--muted)" }}>
  <li>
  Construction is deterministic. The same qualified fixture list and the same
  configuration produce the same combination — no randomness, no editorial pick, no
@@ -470,10 +490,10 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  * 8. Share
  * ---------------------------------------------------------------- */}
  <section className="mt-8" aria-labelledby="share">
- <h2 id="share" className="text-lg font-semibold">
+ <h2 id="share" className="text-[14px] font-semibold">
  Share this page
  </h2>
- <p className="mt-2 max-w-2xl text-sm text-[var(--ink-secondary)]">
+ <p className="mt-2 max-w-2xl text-[13px]" style={{ color: "var(--muted)" }}>
  The link below is this page&apos;s permanent address. It does not expire, needs no
  account, and carries no tracking parameters.
  </p>
@@ -500,14 +520,15 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  * 9. Internal links
  * ---------------------------------------------------------------- */}
  <section className="mt-8" aria-labelledby="more">
- <h2 id="more" className="text-lg font-semibold">
+ <h2 id="more" className="text-[14px] font-semibold">
  Check the record
  </h2>
- <ul className="mt-3 space-y-2 text-sm">
+ <ul className="mt-3 space-y-2 text-[13px]">
  <li>
  <Link
  href={`/${view.locale}/methodology`}
- className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className={LINK_CLASS}
+ style={LINK_STYLE}
  >
  How selections qualify
  </Link>{""}
@@ -516,7 +537,8 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  <li>
  <Link
  href={`/${view.locale}/archive`}
- className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className={LINK_CLASS}
+ style={LINK_STYLE}
  >
  Settled prediction archive
  </Link>{""}
@@ -525,7 +547,8 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  <li>
  <Link
  href={publicAccaIndexPath(view.locale)}
- className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className={LINK_CLASS}
+ style={LINK_STYLE}
  >
  Every published Acca
  </Link>{""}
@@ -534,7 +557,8 @@ export function PublicAccaDetailView({ view }: { view: PublicAccaView }) {
  <li data-acca-builder-entry="">
  <Link
  href={`/${view.locale}/acca/builder`}
- className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className={LINK_CLASS}
+ style={LINK_STYLE}
  >
  Build your own
  </Link>{""}

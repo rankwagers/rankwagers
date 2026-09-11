@@ -38,7 +38,7 @@ export function EntityDiscoverySection({
 
   return (
     <section
-      className="border-t border-[var(--border-subtle)] py-10"
+      className="border-t border-[var(--line)] py-10"
       aria-labelledby="entity-discovery"
     >
       <RecommendationImpressionTracker
@@ -47,10 +47,10 @@ export function EntityDiscoverySection({
         locale={locale}
         country={country}
       />
-      <h2 id="entity-discovery" className="font-display text-2xl font-semibold text-foreground">
+      <h2 id="entity-discovery" className="rw3-title">
         Discover connected research
       </h2>
-      <p className="mt-2 max-w-3xl text-sm text-muted-foreground">
+      <p className="mt-2 max-w-3xl text-[13px]" style={{ color: "var(--muted)" }}>
         Recommendations from the knowledge graph and analytics — integrity-validated entities
         only. No editorial lists or AI suggestions.
       </p>

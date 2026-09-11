@@ -82,3 +82,15 @@ Restyle in place, keeping every existing truth probe:
 Studio, builder and panel chrome to the rw3 language; clear the residual
 `--hero-*` usages; then the closing probe — zero legacy tokens/classes on
 every reader route — turns the no-deploy rule into a test.
+
+DECIDED — the retired v2 corpus stays in-tree, unreachable. The dead v2
+home and its organs (RankWagersHome, the hero stage, the live desk,
+BibleFixtureExplorer/OperatorStrip, the old Header/Footer/SiteTopChrome/
+WorldCupTickerBar) are pinned by ~30 suites that document their laws;
+deleting them means demolishing that recorded history for no reader-facing
+gain. Instead the close-out probe walks the REAL import graph from
+`app/[locale]` and the root 404: every reachable source must be free of
+the v2 language, and the corpus is asserted unreachable by name — the day
+something imports it back onto a route, the probe fails on that file.
+Removing the corpus (and its suites) wholesale is future housekeeping,
+deliberately out of this branch's scope.

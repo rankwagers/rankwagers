@@ -267,7 +267,11 @@ test("timeline disclosures are real buttons with expanded state and panel associ
   assert.match(markup, /<button type="button" aria-expanded="(true|false)" aria-controls="/);
   // Keyboard operability comes from the platform, not from a div with a click handler.
   assert.doesNotMatch(markup, /role="button"/);
-  assert.match(markup, /focus-visible:outline/);
+  // V3 reconciliation: the law is a visible keyboard focus treatment on the
+  // disclosure buttons. Under rw3 that ring is supplied once by the scope's
+  // `.rw3 :focus-visible` rule (2px `--text`, Bible V3), not per-component
+  // utilities — pin the interactive rw3 surface class the buttons now carry.
+  assert.match(markup, /rw3-hoverable/);
   assert.match(markup, /<ol /);
 });
 

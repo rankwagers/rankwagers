@@ -4,9 +4,9 @@
  * Client Components must import from HERE, never from `@/lib/evidence` (the barrel) or
  * `hash.ts` / `snapshot.ts` / `integrity.ts`, all of which pull in `node:crypto`.
  *
- * Class strings map onto the Design Bible CSS variables already used by
- * `lib/evidence-ui/tokens.ts`, so archive UI sits visually inside the existing system
- * without depending on that module.
+ * Class strings map onto the Bible V3 rw3 custom properties (`--line`, `--surface`,
+ * `--win`, `--loss`, `--muted`, …) scoped in `app/globals.css`, so archive UI sits
+ * visually inside the v3 system without depending on any other token module.
  */
 
 import type {
@@ -18,23 +18,23 @@ import type {
 } from "@/types/evidence";
 
 export const evidenceArchiveTokens = {
-  section: "border-t border-[var(--border-subtle)] pt-8",
+  section: "border-t border-[var(--line)] pt-8",
   /*
-   * Re-pointed at the shared primitives (spec 8/11). These were a second card and a second
-   * badge implementation living beside the ones in globals.css: same intent, different radius
-   * and border token, so evidence surfaces drifted from every other card on the site. The
-   * recipes are gone; only the surface that differs (a muted card sits on page canvas, not
-   * card canvas) is still expressed here, as a utility override.
+   * Re-pointed at the shared primitives (spec 8/11), then re-derived for Bible V3: the
+   * v2 `.card` recipe carried its own radius and shadow, both retired under rw3. A card
+   * is a `--line` border on `--surface`, radius 6, no elevation; only the surface that
+   * differs (a muted card sits on page canvas, not card canvas) is still expressed here.
    */
-  card: "card card-compact",
-  cardMuted: "card card-compact bg-background",
-  label: "text-metadata font-medium uppercase tracking-label text-muted-foreground",
-  value: "font-mono text-h3 font-semibold text-foreground",
-  note: "text-caption leading-snug text-muted-foreground",
-  mono: "font-mono text-metadata text-muted-foreground",
-  badge: "badge",
+  card: "border border-[var(--line)] bg-[var(--surface)] p-3 [border-radius:6px]",
+  cardMuted: "border border-[var(--line)] bg-[var(--bg)] p-3 [border-radius:6px]",
+  label: "rw3-label",
+  value: "text-[16px] font-semibold tabular-nums",
+  note: "rw3-meta leading-snug",
+  mono: "rw3-meta tabular-nums",
+  badge:
+    "inline-flex items-center gap-1 whitespace-nowrap border px-1.5 py-0.5 text-[11px] font-medium uppercase tracking-[.06em] [border-radius:6px]",
   focusRing:
-    "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--focus-ring,currentColor)]",
+    "focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-[var(--text)]",
   touchTarget: "min-h-11 min-w-11",
 } as const;
 
@@ -46,26 +46,26 @@ export function shortHash(hash: string, length = 12): string {
 export function qualificationBadgeClass(value: EvidenceQualification): string {
   switch (value) {
     case "qualified":
-      return "border-[var(--green-primary)]/30 bg-[var(--green-surface)] text-[var(--green-deep)]";
+      return "border-[var(--line)] bg-[var(--pctbg)] text-[var(--win)]";
     case "provisional":
-      return "border-[var(--amber-border)] bg-[var(--amber-surface)] text-[var(--amber-primary)]";
+      return "border-[var(--line)] bg-[var(--pctbg)] text-[var(--muted)]";
     case "unqualified":
-      return "border-border bg-[var(--canvas-secondary)] text-foreground";
+      return "border-[var(--line)] bg-transparent text-[var(--text)]";
     case "excluded":
-      return "border-[var(--red-primary)]/25 bg-[var(--red-surface)] text-[var(--red-primary)]";
+      return "border-[var(--line)] bg-[var(--pctbg)] text-[var(--loss)]";
   }
 }
 
 export function scoreBandClass(band: EvidenceScoreBand): string {
   switch (band) {
     case "high":
-      return "border-[var(--green-primary)]/30 bg-[var(--green-surface)] text-[var(--green-deep)]";
+      return "border-[var(--line)] bg-[var(--pctbg)] text-[var(--win)]";
     case "moderate":
-      return "border-border bg-[var(--canvas-secondary)] text-foreground";
+      return "border-[var(--line)] bg-transparent text-[var(--text)]";
     case "low":
-      return "border-[var(--amber-border)] bg-[var(--amber-surface)] text-[var(--amber-primary)]";
+      return "border-[var(--line)] bg-[var(--pctbg)] text-[var(--muted)]";
     case "insufficient":
-      return "border-[var(--red-primary)]/25 bg-[var(--red-surface)] text-[var(--red-primary)]";
+      return "border-[var(--line)] bg-[var(--pctbg)] text-[var(--loss)]";
   }
 }
 
@@ -78,16 +78,16 @@ export function scoreBandClass(band: EvidenceScoreBand): string {
 export function validationBadgeClass(state: ValidationState): string {
   switch (state) {
     case "won":
-      return "border-[var(--green-primary)]/30 bg-[var(--green-surface)] text-[var(--green-deep)]";
+      return "border-[var(--line)] bg-[var(--pctbg)] text-[var(--win)]";
     case "lost":
-      return "border-[var(--red-primary)]/25 bg-[var(--red-surface)] text-[var(--red-primary)]";
+      return "border-[var(--line)] bg-[var(--pctbg)] text-[var(--loss)]";
     case "pending":
-      return "border-[var(--amber-border)] bg-[var(--amber-surface)] text-[var(--amber-primary)]";
+      return "border-[var(--line)] bg-[var(--pctbg)] text-[var(--muted)]";
     case "void":
     case "cancelled":
     case "postponed":
     case "abandoned":
-      return "border-border bg-[var(--canvas-secondary)] text-muted-foreground";
+      return "border-[var(--line)] bg-transparent text-[var(--muted)]";
   }
 }
 

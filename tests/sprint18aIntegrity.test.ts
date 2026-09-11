@@ -123,12 +123,16 @@ test("saved fixture toggle is deterministic and serializable", () => {
   assert.equal(removed.length, 0);
 });
 
-test("availability page uses light Design Bible classes", () => {
+test("availability page uses the design system's ink tokens", () => {
+  /* V3 reconciliation: the law is unchanged — the page states its ink through
+     the design system's tokens, never a raw colour. Under Bible V3 the token
+     is the scoped `var(--text)` (the `text-foreground` utility was the v2
+     spelling of the same commitment). */
   const src = readFileSync(
     path.join(root, "app/[locale]/availability/page.tsx"),
     "utf8"
   );
-  assert.match(src, /text-foreground/);
+  assert.match(src, /var\(--text\)/);
   assert.doesNotMatch(src, /text-white/);
   assert.doesNotMatch(src, /text-slate-300/);
 });

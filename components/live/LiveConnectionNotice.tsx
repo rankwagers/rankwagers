@@ -17,7 +17,13 @@ export function LiveConnectionNotice() {
   if (connection.connection === "error") {
     return (
       <div
-        className="flex flex-wrap items-center gap-3 rounded-md border border-[var(--amber-border)] bg-[var(--amber-surface)] px-3 py-2 text-xs text-[var(--amber-primary)]"
+        className="flex flex-wrap items-center gap-3 px-3 py-2 text-[12px]"
+        style={{
+          border: "1px solid var(--line)",
+          background: "var(--surface)",
+          borderRadius: 6,
+          color: "var(--muted)",
+        }}
         role="status"
         data-testid="live-connection-error"
       >
@@ -28,7 +34,7 @@ export function LiveConnectionNotice() {
         <button
           type="button"
           onClick={connection.retry}
-          className="min-h-[var(--touch-min)] rounded-md border border-current px-3 py-1 font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+          className="rw3-ghost min-h-[var(--touch-min)]"
         >
           Retry live updates
         </button>
@@ -38,7 +44,7 @@ export function LiveConnectionNotice() {
 
   if (connection.connection === "stopped") {
     return (
-      <p className="text-xs text-muted-foreground" data-testid="live-connection-stopped">
+      <p className="rw3-meta" data-testid="live-connection-stopped">
         Live updates have ended for this fixture.
       </p>
     );

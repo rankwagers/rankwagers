@@ -24,7 +24,7 @@ export function MatchRelatedLink({
   return (
     <Link
       href={href}
-      className={className ?? "hover:text-brand"}
+      className={className ?? "hover:text-[var(--accent)]"}
       onClick={() =>
         trackMatchRelatedClick({ matchId, locale, kind, target })
       }

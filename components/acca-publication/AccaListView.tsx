@@ -42,7 +42,7 @@ function Panel({
  const border =
  tone === "warn" ? "border-[var(--amber-border)] bg-[var(--amber-surface)]" : "border-border bg-card";
  return (
- <section className={`rounded-lg border p-4 ${border}`} aria-label={title}>
+ <section className={`rounded border p-4 ${border}`} aria-label={title}>
  <h2 className="text-sm font-semibold text-foreground">{title}</h2>
  <div className="mt-2 text-sm text-[var(--ink-secondary)]">{children}</div>
  </section>
@@ -83,7 +83,7 @@ export async function AccaListView({
  </p>
  <Link
  href={PATH}
- className="mt-3 inline-flex min-h-10 items-center rounded-md border border-border px-3 text-sm text-foreground hover:bg-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="mt-3 inline-flex min-h-10 items-center rounded border border-border px-3 text-sm text-foreground hover:bg-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  Clear filters
  </Link>
@@ -102,7 +102,7 @@ export async function AccaListView({
  <p role="alert">The Acca list could not be loaded.</p>
  <Link
  href={PATH}
- className="mt-3 inline-flex min-h-10 items-center rounded-md border border-border px-3 text-sm text-foreground hover:bg-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="mt-3 inline-flex min-h-10 items-center rounded border border-border px-3 text-sm text-foreground hover:bg-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  Retry
  </Link>
@@ -149,9 +149,9 @@ export async function AccaListView({
  <Link
  href={filterHref({ status: null, offset: null })}
  aria-current={!parsed.filters.status ? "page" : undefined}
- className={`inline-flex min-h-10 items-center rounded-md px-3 text-sm font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400 ${
+ className={`inline-flex min-h-10 items-center rounded px-3 text-sm font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400 ${
  !parsed.filters.status
- ?"bg-[var(--green-surface)] text-[var(--hero-ink)]"
+ ?"bg-[var(--green-surface)] text-foreground"
  :"border border-border text-[var(--ink-secondary)] hover:bg-card"
  }`}
  >
@@ -162,9 +162,9 @@ export async function AccaListView({
  key={status}
  href={filterHref({ status, offset: null })}
  aria-current={parsed.filters.status === status ? "page" : undefined}
- className={`inline-flex min-h-10 items-center rounded-md px-3 text-sm font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400 ${
+ className={`inline-flex min-h-10 items-center rounded px-3 text-sm font-medium focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400 ${
  parsed.filters.status === status
- ?"bg-[var(--green-surface)] text-[var(--hero-ink)]"
+ ?"bg-[var(--green-surface)] text-foreground"
  :"border border-border text-[var(--ink-secondary)] hover:bg-card"
  }`}
  >
@@ -175,21 +175,21 @@ export async function AccaListView({
 
  <section className="mt-4" aria-label="Accas">
  {page.rows.length === 0 ? (
- <p className="rounded-lg border border-border bg-card p-4 text-sm text-[var(--ink-secondary)]" role="status">
+ <p className="rounded border border-border bg-card p-4 text-sm text-[var(--ink-secondary)]" role="status">
  No Accas match this view. Accas are created from an approved candidate in{""}
  <Link
  href="/admin/builder-approval"
- className="text-[var(--hero-ink)] underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="text-foreground underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  Builder approval
  </Link>
  .
  </p>
  ) : (
- <div className="overflow-x-auto rounded-lg border border-border">
+ <div className="overflow-x-auto rounded border border-border">
  <table className="w-full text-sm">
  <caption className="sr-only">Accas, newest first</caption>
- <thead className="bg-card text-xs uppercase text-[var(--hero-ink-2)]">
+ <thead className="bg-card text-xs uppercase text-[var(--ink-secondary)]">
  <tr>
  <th scope="col" className="px-3 py-2 text-left">Title</th>
  <th scope="col" className="px-3 py-2 text-left">Status</th>
@@ -209,11 +209,11 @@ export async function AccaListView({
  <td className="px-3 py-2">
  <Link
  href={`${PATH}/${acca.accaId}`}
- className="text-[var(--hero-ink)] underline underline-offset-2 hover:text-[var(--hero-ink)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="text-foreground underline underline-offset-2 hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  {acca.title}
  </Link>
- <span className="mt-0.5 block font-mono text-metadata text-[var(--hero-ink-2)]">
+ <span className="mt-0.5 block font-mono text-metadata text-[var(--ink-secondary)]">
  {acca.slug}
  </span>
  </td>
@@ -242,7 +242,7 @@ export async function AccaListView({
  )}
  </section>
 
- <p className="mt-3 text-xs text-[var(--hero-ink-2)]">{CAPTURED_ODDS_NOTE}</p>
+ <p className="mt-3 text-xs text-[var(--ink-secondary)]">{CAPTURED_ODDS_NOTE}</p>
 
  <nav aria-label="Pagination" className="mt-4 flex flex-wrap items-center gap-3 text-sm">
  <span className="text-[var(--ink-secondary)]">
@@ -253,7 +253,7 @@ export async function AccaListView({
  {model.hasPrev ? (
  <Link
  href={filterHref({ offset: String(model.prevOffset) })}
- className="inline-flex min-h-10 items-center rounded-md border border-border px-3 text-foreground hover:bg-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="inline-flex min-h-10 items-center rounded border border-border px-3 text-foreground hover:bg-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  ← Previous
  </Link>
@@ -261,7 +261,7 @@ export async function AccaListView({
  {model.hasNext ? (
  <Link
  href={filterHref({ offset: String(model.nextOffset) })}
- className="inline-flex min-h-10 items-center rounded-md border border-border px-3 text-foreground hover:bg-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="inline-flex min-h-10 items-center rounded border border-border px-3 text-foreground hover:bg-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
  >
  Next →
  </Link>

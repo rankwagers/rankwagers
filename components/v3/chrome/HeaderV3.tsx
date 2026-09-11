@@ -28,7 +28,9 @@ export function HeaderV3({ locale, strings }: { locale: Locale; strings: HeaderV
   const items = [
     { href: `/${locale}`, label: strings.predictions, exact: true },
     { href: `/${locale}/markets`, label: strings.bettingTips, exact: false },
-    { href: `/${locale}/best-betting-sites`, label: strings.bettingSites, exact: false },
+    /* The sites door points at the canonical hub, never at a retired
+       redirect (commercial conversion law — a door page is not a link target). */
+    { href: `/${locale}/operators`, label: strings.bettingSites, exact: false },
     { href: `/${locale}/free-bets`, label: strings.freeBets, exact: false },
   ];
   const isActive = (item: { href: string; exact: boolean }) =>

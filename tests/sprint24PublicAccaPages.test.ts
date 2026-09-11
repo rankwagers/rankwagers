@@ -1231,7 +1231,16 @@ test("SHARE: controls are keyboard-operable native buttons with an announced sta
   assert.match(markup, /Copy link/);
   assert.match(markup, /role="status"/);
   assert.match(markup, /aria-live="polite"/);
-  assert.match(markup, /focus-visible:outline/);
+  // V3 reconciliation: the visible keyboard ring is no longer a per-element
+  // utility class — it is the scoped `.rw3 :focus-visible` law in globals.css.
+  // The law stays pinned: the buttons stand in the ghost tier inside that
+  // scope, and the scope itself must carry the focus-visible outline rule.
+  assert.match(markup, /rw3-ghost/);
+  assert.match(
+    readSource("app/globals.css"),
+    /\.rw3 :focus-visible\s*{[^}]*outline:\s*2px solid var\(--text\)/,
+    "the .rw3 scope must provide the keyboard focus ring the buttons rely on",
+  );
   // The fallback is reachable without scripting and is labelled.
   assert.match(markup, /<label for="/);
   assert.match(markup, /readonly/);

@@ -52,6 +52,11 @@ export function FooterV3({ dict, locale }: { dict: FullDictionary; locale: Local
         <Link href={`/${locale}/privacy`}>{dict.footer.privacy}</Link>
         <Link href={`/${locale}/methodology`}>{p.navMethodology}</Link>
         <Link href={`/${locale}/archive`}>{p.v3SeeRecord}</Link>
+        {/* Explore doors (block I): the crawl/trust links the v2 footer
+            carried — competitions, markets, operators — live on in v3. */}
+        <Link href={`/${locale}/competitions`}>{p.cmpIndexTitle}</Link>
+        <Link href={`/${locale}/markets`}>{p.nvMarkets}</Link>
+        <Link href={`/${locale}/operators`}>{p.opIndexTitle}</Link>
       </div>
     </footer>
   );

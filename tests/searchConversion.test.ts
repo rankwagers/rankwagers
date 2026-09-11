@@ -156,8 +156,10 @@ test("the kill list stays dead on every search surface", () => {
 test("the search family has route-level loading and error states in the new language", () => {
   const loading = SRC("app/[locale]/search/loading.tsx");
   const error = SRC("app/[locale]/search/error.tsx");
-  assert.match(loading, /rw-hero/);
-  assert.match(error, /rw-hero/);
+  // V3 reconciliation: the ground marker moved with the reskin — the states
+  // now stand on the Bible V3 scope (rw3-label), not the form-guide's rw-hero.
+  assert.match(loading, /rw3-label/);
+  assert.match(error, /rw3-label/);
   assert.match(error, /reportError/);
   assert.match(error, /search_error_boundary/);
 });

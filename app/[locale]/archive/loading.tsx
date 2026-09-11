@@ -1,23 +1,29 @@
-/* Route-level loading state for the archive family — form-guide idiom: quiet,
-   ruled, monochrome. No spinners, no color; the same ground the page lands on. */
+/* Route-level loading state for the archive family — Bible V3 idiom: quiet,
+   static, line-toned. No spinners, no motion (Bible V3 motion law gives
+   loading states no movement); the same ground the page lands on. */
 export default function ArchiveLoading() {
   return (
-    <div className="rw-hero container-wide bg-[var(--hero-canvas)] pb-24">
-      <div className="mx-auto max-w-3xl px-4 pt-16" aria-busy="true">
-        <p className="rw-label">Loading</p>
-        <div className="mt-6 space-y-0 border-t border-[var(--hero-line)]">
-          {[0, 1, 2, 3, 4].map((i) => (
+    <div style={{ padding: "14px 20px 64px" }} aria-busy="true">
+      <p className="rw3-label" style={{ margin: 0 }}>
+        Loading
+      </p>
+      <div style={{ marginTop: 16, borderTop: "1px solid var(--line)" }}>
+        {[0, 1, 2, 3, 4].map((i) => (
+          <div
+            key={i}
+            style={{ borderBottom: "1px solid var(--line)", padding: "16px 0" }}
+          >
             <div
-              key={i}
-              className="border-b border-[var(--hero-line)] py-4"
-            >
-              <div
-                className="h-3 animate-pulse bg-[var(--hero-line)]"
-                style={{ width: `${72 - i * 9}%` }}
-              />
-            </div>
-          ))}
-        </div>
+              style={{
+                height: 12,
+                width: `${72 - i * 9}%`,
+                background: "var(--surface)",
+                border: "1px solid var(--line)",
+                borderRadius: 6,
+              }}
+            />
+          </div>
+        ))}
       </div>
     </div>
   );

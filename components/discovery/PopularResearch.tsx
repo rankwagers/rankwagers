@@ -20,10 +20,10 @@ export function PopularResearch({
   if (layout === "carousel") {
     return (
       <section className="mt-8" aria-labelledby="popular-research">
-        <h2 id="popular-research" className="font-display text-xl font-semibold text-foreground">
+        <h2 id="popular-research" className="rw3-title">
           Popular Research
         </h2>
-        <p className="mt-2 text-sm text-muted-foreground">
+        <p className="mt-2 text-[13px]" style={{ color: "var(--muted)" }}>
           Ranked from analytics views and clicks — not editorial lists.
         </p>
         <EntityCarousel items={items} labelledBy="popular-research" />
@@ -33,13 +33,13 @@ export function PopularResearch({
 
   return (
     <section className="mt-8" aria-labelledby="popular-research">
-      <h2 id="popular-research" className="font-display text-xl font-semibold text-foreground">
+      <h2 id="popular-research" className="rw3-title">
         Popular Research
       </h2>
-      <p className="mt-2 text-sm text-muted-foreground">
+      <p className="mt-2 text-[13px]" style={{ color: "var(--muted)" }}>
         Ranked from analytics views and clicks — not editorial lists.
       </p>
-      <ul className="mt-3 divide-y divide-border border-y border-border">
+      <ul className="mt-3 divide-y divide-[var(--line)] border-y border-[var(--line)]">
         {items.map((item) => (
           <li key={`${item.entityType}-${item.slug}`}>
             <DiscoveryTrackLink
@@ -51,10 +51,10 @@ export function PopularResearch({
               position={item.position}
               locale={locale}
               country={country}
-              className="flex items-baseline justify-between gap-3 py-2.5 text-sm text-foreground hover:text-brand"
+              className="rw3-hoverable flex items-baseline justify-between gap-3 py-2.5 text-[13px]"
             >
               <span>{item.title}</span>
-              <span className="shrink-0 text-metadata uppercase tracking-label text-muted-foreground">
+              <span className="rw3-label shrink-0">
                 {item.entityType}
               </span>
             </DiscoveryTrackLink>

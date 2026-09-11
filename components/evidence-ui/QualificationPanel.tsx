@@ -11,7 +11,7 @@ function ListBlock({ title, items }: { title: string; items: string[] }) {
   return (
     <div>
       <h3 className={evidenceUiTokens.label}>{title}</h3>
-      <ul className="mt-2.5 list-disc space-y-1.5 pl-5 text-body-sm leading-relaxed text-foreground">
+      <ul className="mt-2.5 list-disc space-y-1.5 pl-5 text-[13px] leading-relaxed">
         {items.map((item) => (
           <li key={item}>{item}</li>
         ))}
@@ -48,7 +48,7 @@ export function QualificationPanel({
 
   return (
     <section className={evidenceUiTokens.card} aria-labelledby="qualification-panel">
-      <h2 id="qualification-panel" className="font-display text-h3 text-foreground">
+      <h2 id="qualification-panel" className="text-[14px] font-semibold">
         Qualification
       </h2>
       {(qualification.threshold != null || qualification.difference != null) && (
@@ -56,7 +56,7 @@ export function QualificationPanel({
           {qualification.threshold != null ? (
             <div className={evidenceUiTokens.cardMuted}>
               <dt className={evidenceUiTokens.label}>Threshold</dt>
-              <dd className="mt-1.5 font-mono text-h3 font-semibold tabular-nums text-foreground">
+              <dd className="rw3-pct mt-1.5">
                 {qualification.threshold}%
               </dd>
             </div>
@@ -64,7 +64,7 @@ export function QualificationPanel({
           {qualification.difference != null ? (
             <div className={evidenceUiTokens.cardMuted}>
               <dt className={evidenceUiTokens.label}>Difference</dt>
-              <dd className="mt-1.5 font-mono text-h3 font-semibold tabular-nums text-foreground">
+              <dd className="rw3-pct mt-1.5">
                 {qualification.difference >= 0 ? "+" : ""}
                 {Math.round(qualification.difference)} pp
               </dd>

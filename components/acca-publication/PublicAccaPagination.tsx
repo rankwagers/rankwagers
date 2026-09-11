@@ -31,8 +31,15 @@ export function PublicAccaPagination({
 }) {
   if (page.totalPages <= 1) return null;
 
-  const linkClass =
-    "rounded-lg border border-border px-3 py-2 text-sm hover:bg-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400";
+  /* rw3 idiom: page steps are ghost buttons; a step with nowhere to go keeps
+   * the frame but drops to muted ink. Focus ring comes from the scoped
+   * `.rw3 :focus-visible` law in globals.css. */
+  const linkClass = "rw3-ghost px-3 py-2";
+  const disabledStyle = {
+    border: "1px solid var(--line)",
+    borderRadius: 6,
+    color: "var(--muted)",
+  } as const;
 
   return (
     <nav aria-label={p.apxPagesAria} className="mt-8 flex items-center gap-3">
@@ -45,12 +52,12 @@ export function PublicAccaPagination({
           ← {p.arcPrev}
         </Link>
       ) : (
-        <span className="rounded-lg border border-border px-3 py-2 text-sm text-[var(--hero-ink-2)]">
+        <span className="px-3 py-2 text-[12px]" style={disabledStyle}>
           ← {p.arcPrev}
         </span>
       )}
 
-      <p className="text-sm text-[var(--ink-secondary)]" aria-current="page">
+      <p className="text-[13px]" style={{ color: "var(--muted)" }} aria-current="page">
         {formatDict(p.arcPageOf, { page: String(page.page), total: String(page.totalPages) })}
       </p>
 
@@ -63,7 +70,7 @@ export function PublicAccaPagination({
           {p.arcNext} →
         </Link>
       ) : (
-        <span className="rounded-lg border border-border px-3 py-2 text-sm text-[var(--hero-ink-2)]">
+        <span className="px-3 py-2 text-[12px]" style={disabledStyle}>
           {p.arcNext} →
         </span>
       )}

@@ -103,9 +103,19 @@ function AccaLauncher() {
   * shown. `pointer-events-none` plus `aria-hidden`/`tabIndex=-1` take it out of pointer, screen
   * reader and keyboard reach together, so nothing invisible stays focusable.
   */
- className={`rw-hero fixed bottom-4 right-4 z-40 inline-flex min-h-12 items-center justify-center gap-1.5 rounded-full border border-[var(--hero-ink)] bg-[var(--hero-canvas)] px-4 text-sm font-semibold text-[var(--hero-ink)] shadow-elevated transition-opacity duration-fast hover:bg-[var(--hero-ink)] hover:text-[var(--hero-canvas)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--hero-ink)] lg:bottom-6 lg:right-6 ${
+ /*
+  * The chrome mounts OUTSIDE the layout's `.rw3` div (AccaWorkspace wraps the
+  * shell), so each fixed surface carries the scope class itself — tokens and
+  * the `.rw3 :focus-visible` ring then apply to everything inside.
+  */
+ className={`rw3 fixed bottom-4 right-4 z-40 inline-flex min-h-12 items-center justify-center gap-1.5 border border-[var(--line)] px-4 text-[13px] font-semibold hover:bg-[var(--hover)] lg:bottom-6 lg:right-6 ${
  coversProofBand ? "pointer-events-none opacity-0" : ""
  }`}
+ style={{
+ borderRadius: 6,
+ color: "var(--text)",
+ transition: "background 120ms ease-out, opacity 120ms ease-out",
+ }}
  aria-hidden={coversProofBand || undefined}
  tabIndex={coversProofBand ? -1 : undefined}
  aria-haspopup="dialog"
@@ -115,7 +125,8 @@ function AccaLauncher() {
  >
  Acca
  <span
- className="inline-flex min-h-6 min-w-6 items-center justify-center rounded-full border border-[var(--hero-line)] px-1.5 font-mono text-xs"
+ className="rw3-pct"
+ style={{ fontSize: 12 }}
  aria-label={`${count} selections`}
  >
  {count}
@@ -130,7 +141,8 @@ function AccaDesktopPanel({ locale, p }: { locale: string; p: PredictionStrings 
  return (
  <aside
  id="acca-workspace"
- className="rw-hero panel-enter fixed bottom-0 right-0 top-14 z-40 hidden w-[min(100vw,380px)] overflow-y-auto border-l border-[var(--hero-line)] bg-[var(--hero-canvas)] p-4 shadow-elevated lg:block"
+ className="rw3 fixed bottom-0 right-0 top-14 z-40 hidden w-[min(100vw,380px)] overflow-y-auto p-4 lg:block"
+ style={{ background: "var(--surface)", borderLeft: "1px solid var(--line)" }}
  aria-labelledby="acca-panel-title"
  role="complementary"
  >
@@ -147,7 +159,7 @@ function AccaMobileSheet({ locale, p }: { locale: string; p: PredictionStrings }
  titleId="acca-panel-title"
  onClose={() => setPanelOpen(false)}
  >
- <div id="acca-workspace" className="rw-hero">
+ <div id="acca-workspace" className="rw3" style={{ background: "var(--surface)" }}>
  <AccaPanelBody locale={locale} p={p} onClose={() => setPanelOpen(false)} />
  </div>
  </BottomSheet>

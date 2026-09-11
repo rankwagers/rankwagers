@@ -159,7 +159,13 @@ test("homepage page loads trust model server-side", () => {
 });
 
 test("footer exposes explore + trust internal links", () => {
-  const footer = readFileSync(path.join(root, "components/Footer.tsx"), "utf8");
+  // V3 reconciliation: the v2 Footer died with the v2 shell (block I). The
+  // law — the footer carries the explore and trust doors so every page
+  // links the research surfaces and the record — transfers to FooterV3.
+  const footer = readFileSync(
+    path.join(root, "components/v3/chrome/FooterV3.tsx"),
+    "utf8"
+  );
   assert.match(footer, /\/competitions/);
   assert.match(footer, /\/markets/);
   assert.match(footer, /\/operators/);

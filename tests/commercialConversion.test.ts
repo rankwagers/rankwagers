@@ -75,9 +75,19 @@ test("retired routes are out of the sitemap and the footer", () => {
     assert.equal(sitemap.includes(gone), false, `sitemap still advertises ${gone}`);
   }
   assert.equal(sitemap.includes('"compare"'), false, "the compare shard is gone");
-  const footer = SRC("components/Footer.tsx");
-  for (const gone of ["best-betting-sites", "/bonuses"]) {
-    assert.equal(footer.includes(gone), false, `footer still links ${gone}`);
+  // V3 reconciliation: the live chrome is the v3 shell — the same law
+  // (retired doors are never advertised) now guards HeaderV3, FooterV3 and
+  // the mobile tabs; the dead v2 Footer stays covered as written history.
+  for (const chrome of [
+    "components/Footer.tsx",
+    "components/v3/chrome/FooterV3.tsx",
+    "components/v3/chrome/HeaderV3.tsx",
+    "components/v3/chrome/MobileTabsV3.tsx",
+  ]) {
+    const src = withoutComments(SRC(chrome));
+    for (const gone of ["best-betting-sites", "/bonuses"]) {
+      assert.equal(src.includes(gone), false, `${chrome} still links ${gone}`);
+    }
   }
 });
 
@@ -281,7 +291,8 @@ test("no gambling instruction enters through an operator translation", () => {
 test("the operators family has route-level loading and error states in the new language", () => {
   const loading = SRC("app/[locale]/operators/loading.tsx");
   const error = SRC("app/[locale]/operators/error.tsx");
-  assert.match(loading, /rw-hero/);
-  assert.match(error, /rw-hero/);
+  // V3 reconciliation: the ground marker moved with the reskin — rw3, not rw-hero.
+  assert.match(loading, /rw3-label/);
+  assert.match(error, /rw3-label/);
   assert.match(error, /operators_error_boundary/);
 });

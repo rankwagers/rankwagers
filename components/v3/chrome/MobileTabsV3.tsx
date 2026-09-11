@@ -21,7 +21,7 @@ export function MobileTabsV3({ locale, strings }: { locale: Locale; strings: Mob
   const pathname = usePathname() ?? "";
   const tabs = [
     { href: `/${locale}`, icon: "navPred" as const, label: strings.predictions, exact: true },
-    { href: `/${locale}/best-betting-sites`, icon: "navSites" as const, label: strings.sites, exact: false },
+    { href: `/${locale}/operators`, icon: "navSites" as const, label: strings.sites, exact: false },
     { href: `/${locale}/free-bets`, icon: "navFree" as const, label: strings.freeBets, exact: false },
     { href: `/${locale}/archive`, icon: "navRecord" as const, label: strings.record, exact: false },
   ];

@@ -51,13 +51,13 @@ export function RecentlyViewed({
 
   return (
     <section className="mt-8" aria-labelledby="recently-viewed">
-      <h2 id="recently-viewed" className="font-display text-xl font-semibold text-foreground">
+      <h2 id="recently-viewed" className="rw3-title">
         Recently Viewed
       </h2>
-      <p className="mt-2 text-sm text-muted-foreground">
+      <p className="mt-2 text-[13px]" style={{ color: "var(--muted)" }}>
         Stored in this browser only — not synced to the server.
       </p>
-      <ul className="mt-3 divide-y divide-border border-y border-border">
+      <ul className="mt-3 divide-y divide-[var(--line)] border-y border-[var(--line)]">
         {items.map((item) => (
           <li key={`${item.entityType}-${item.slug}-${item.viewedAt}`}>
             <DiscoveryTrackLink
@@ -68,10 +68,10 @@ export function RecentlyViewed({
               relationship="recent"
               locale={locale}
               country={country}
-              className="flex items-baseline justify-between gap-3 py-2.5 text-sm text-foreground hover:text-brand"
+              className="rw3-hoverable flex items-baseline justify-between gap-3 py-2.5 text-[13px]"
             >
               <span>{item.title}</span>
-              <span className="shrink-0 text-metadata uppercase tracking-label text-muted-foreground">
+              <span className="rw3-label shrink-0">
                 {item.entityType}
               </span>
             </DiscoveryTrackLink>

@@ -321,8 +321,9 @@ test("the kill list stays dead on every archive surface", () => {
 test("the archive family has route-level loading and error states in the new language", () => {
   const loading = SRC("app/[locale]/archive/loading.tsx");
   const error = SRC("app/[locale]/archive/error.tsx");
-  assert.match(loading, /rw-hero/);
-  assert.match(error, /rw-hero/);
+  // V3 reconciliation: the ground marker moved with the reskin — rw3, not rw-hero.
+  assert.match(loading, /rw3-label/);
+  assert.match(error, /rw3-label/);
   assert.match(error, /reportError/);
   assert.match(error, /archive_error_boundary/);
 });

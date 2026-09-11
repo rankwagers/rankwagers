@@ -232,19 +232,24 @@ export function AccaBuilderView({
  <form
  id={formId}
  onSubmit={onGenerate}
- className="rounded-xl border border-border bg-[var(--canvas)] p-4 sm:p-5"
+ className="p-4 sm:p-5"
+ style={{
+ border: "1px solid var(--line)",
+ background: "var(--surface)",
+ borderRadius: 6,
+ }}
  >
  <fieldset className="space-y-4">
- <legend className="rw-display text-lg font-semibold text-foreground">
+ <legend className="rw3-title">
  {p.apbConfigTitle}
  </legend>
- <p className="text-sm text-[var(--ink-secondary)]">
+ <p className="text-[13px]" style={{ color: "var(--muted)" }}>
  Uses today&apos;s published FootyStats list markets and bounded odds
  enrichment. Risk labels are not guarantees.
  </p>
 
  <div>
- <p className="text-xs font-semibold uppercase tracking-label text-[var(--hero-ink-2)]">
+ <p className="rw3-label">
  {p.apbRiskMode}
  </p>
  <div
@@ -274,14 +279,21 @@ export function AccaBuilderView({
  { locale, properties: { riskMode: mode } }
  );
  }}
- className={`min-h-11 rounded-md border px-3 py-2 text-left text-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
- selected
- ? "border-brand bg-[var(--green-surface)] font-semibold text-[var(--hero-ink)]"
- : "border-border bg-[var(--canvas-secondary)]"
- }`}
+ className="rw3-hoverable min-h-11 px-3 py-2 text-left text-[13px]"
+ style={{
+ border: selected
+ ? "1px solid var(--accent)"
+ : "1px solid var(--line)",
+ background: selected ? "var(--hover)" : "var(--bg)",
+ borderRadius: 6,
+ fontWeight: selected ? 600 : 400,
+ }}
  >
  <span className="capitalize">{mode}</span>
- <span className="mt-1 block text-xs font-normal text-[var(--hero-ink-2)]">
+ <span
+ className="mt-1 block text-[11px] font-normal"
+ style={{ color: "var(--muted)" }}
+ >
  min {rules.minConfidence}% · max {rules.maxLegs} legs
  </span>
  </button>
@@ -292,7 +304,7 @@ export function AccaBuilderView({
  </div>
 
  <div className="grid gap-4 sm:grid-cols-2">
- <label className="block text-sm">
+ <label className="block text-[13px]">
  <span className="font-medium">Legs ({config.legCount})</span>
  <input
  type="range"
@@ -305,7 +317,7 @@ export function AccaBuilderView({
  className="mt-2 w-full"
  />
  </label>
- <label className="block text-sm">
+ <label className="block text-[13px]">
  <span className="font-medium">
  Min confidence ({config.minConfidence}%)
  </span>
@@ -323,14 +335,15 @@ export function AccaBuilderView({
  </div>
 
  <fieldset>
- <legend className="text-sm font-medium">{p.apbAllowedMarkets}</legend>
+ <legend className="text-[13px] font-medium">{p.apbAllowedMarkets}</legend>
  <div className="mt-2 flex flex-wrap gap-2">
  {BUILDER_LIST_MARKETS.map((m) => {
  const checked = config.markets.includes(m);
  return (
  <label
  key={m}
- className="inline-flex min-h-10 items-center gap-2 rounded-md border border-border px-3 text-sm"
+ className="inline-flex min-h-10 items-center gap-2 px-3 text-[13px]"
+ style={{ border: "1px solid var(--line)", borderRadius: 6 }}
  >
  <input
  type="checkbox"
@@ -350,7 +363,7 @@ export function AccaBuilderView({
  </fieldset>
 
  <div className="grid gap-3 sm:grid-cols-2">
- <label className="block text-sm">
+ <label className="block text-[13px]">
  <span className="font-medium">{p.apbTargetMin}</span>
  <input
  type="number"
@@ -367,10 +380,15 @@ export function AccaBuilderView({
  properties: { bound: "min", value: v ?? 0 },
  });
  }}
- className="mt-1 w-full min-h-11 rounded-md border border-border bg-[var(--canvas-secondary)] px-3"
+ className="mt-1 w-full min-h-11 px-3"
+ style={{
+ border: "1px solid var(--line)",
+ background: "var(--bg)",
+ borderRadius: 6,
+ }}
  />
  </label>
- <label className="block text-sm">
+ <label className="block text-[13px]">
  <span className="font-medium">{p.apbTargetMax}</span>
  <input
  type="number"
@@ -383,12 +401,17 @@ export function AccaBuilderView({
  const v = e.target.value === "" ? null : Number(e.target.value);
  patchConfig({ targetOddsMax: v });
  }}
- className="mt-1 w-full min-h-11 rounded-md border border-border bg-[var(--canvas-secondary)] px-3"
+ className="mt-1 w-full min-h-11 px-3"
+ style={{
+ border: "1px solid var(--line)",
+ background: "var(--bg)",
+ borderRadius: 6,
+ }}
  />
  </label>
  </div>
 
- <label className="block text-sm">
+ <label className="block text-[13px]">
  <span className="font-medium">{p.apbExcludeTeams}</span>
  <input
  type="text"
@@ -401,12 +424,17 @@ export function AccaBuilderView({
  .filter(Boolean),
  })
  }
- className="mt-1 w-full min-h-11 rounded-md border border-border bg-[var(--canvas-secondary)] px-3"
+ className="mt-1 w-full min-h-11 px-3"
+ style={{
+ border: "1px solid var(--line)",
+ background: "var(--bg)",
+ borderRadius: 6,
+ }}
  placeholder="e.g. Arsenal"
  />
  </label>
 
- <label className="block text-sm">
+ <label className="block text-[13px]">
  <span className="font-medium">
  {p.apbCompetitionFilter}
  </span>
@@ -421,12 +449,17 @@ export function AccaBuilderView({
  .filter(Boolean),
  })
  }
- className="mt-1 w-full min-h-11 rounded-md border border-border bg-[var(--canvas-secondary)] px-3"
+ className="mt-1 w-full min-h-11 px-3"
+ style={{
+ border: "1px solid var(--line)",
+ background: "var(--bg)",
+ borderRadius: 6,
+ }}
  placeholder="e.g. Premier League"
  />
  </label>
 
- <div className="flex flex-wrap gap-4 text-sm">
+ <div className="flex flex-wrap gap-4 text-[13px]">
  <label className="inline-flex items-center gap-2">
  <input
  type="checkbox"
@@ -457,13 +490,13 @@ export function AccaBuilderView({
  <button
  type="submit"
  disabled={uiState === "loading"}
- className="rw-m inline-flex items-center justify-center border border-[var(--hero-ink)] px-4 text-[var(--hero-ink)] transition-colors hover:bg-[var(--hero-ink)] hover:text-[var(--hero-canvas)] min-h-11"
+ className="rw3-ghost min-h-11 justify-center px-4"
  >
  {uiState === "loading" ? p.apbGenerating : p.apbGenerate}
  </button>
  <Link
  href={`/${locale}/acca`}
- className="inline-flex min-h-11 items-center rounded-md border border-border px-4 text-sm font-medium"
+ className="rw3-ghost min-h-11 px-4"
  >
  {p.apbOpenAccas}
  </Link>
@@ -472,16 +505,21 @@ export function AccaBuilderView({
 
  {(errorMessage || uiState === "initial") && (
  <div
- className="rounded-lg border border-border bg-[var(--canvas-secondary)] px-4 py-3 text-sm"
+ className="px-4 py-3 text-[13px]"
+ style={{
+ border: "1px solid var(--line)",
+ background: "var(--surface)",
+ borderRadius: 6,
+ }}
  role="status"
  >
  {uiState === "initial" && !errorMessage ? (
  <p>{p.apbIdleNote}</p>
  ) : (
- <p className="text-[var(--amber-primary)]">{errorMessage}</p>
+ <p style={{ color: "var(--loss)" }}>{errorMessage}</p>
  )}
  {requestId ? (
- <p className="mt-1 font-mono text-xs text-[var(--hero-ink-2)]">
+ <p className="mt-1 font-mono text-[11px]" style={{ color: "var(--muted)" }}>
  requestId: {requestId}
  </p>
  ) : null}
@@ -494,11 +532,11 @@ export function AccaBuilderView({
  <div>
  <h2
  id="builder-results-heading"
- className="rw-display text-xl font-semibold"
+ className="rw3-title"
  >
  {p.apbRanked}
  </h2>
- <p className="mt-1 text-sm text-[var(--ink-secondary)]">
+ <p className="mt-1 text-[12px]" style={{ color: "var(--muted)" }}>
  {result.diagnostics.message} · {result.eligibleCount} eligible /{" "}
  {result.candidateCount} candidates
  </p>
@@ -507,7 +545,14 @@ export function AccaBuilderView({
  </div>
 
  {!result.combinations.length ? (
- <div className="rounded-lg border border-dashed border-border px-4 py-8 text-sm text-[var(--hero-ink-2)]">
+ <div
+ className="px-4 py-8 text-[13px]"
+ style={{
+ border: "1px dashed var(--line)",
+ borderRadius: 6,
+ color: "var(--muted)",
+ }}
+ >
  {p.apbNoCombo}
  </div>
  ) : (
@@ -551,7 +596,13 @@ export function AccaBuilderView({
 
  {result.warnings.length ? (
  <aside
- className="rounded-md border border-[var(--amber-border)] bg-[var(--amber-surface)] px-3 py-2 text-xs text-[var(--amber-primary)]"
+ className="px-3 py-2 text-[11px]"
+ style={{
+ border: "1px solid var(--line)",
+ background: "var(--surface)",
+ borderRadius: 6,
+ color: "var(--muted)",
+ }}
  aria-label={p.apbWarningsAria}
  >
  <ul className="list-disc space-y-1 pl-4">
@@ -563,7 +614,7 @@ export function AccaBuilderView({
  ) : null}
 
  {requestId ? (
- <p className="font-mono text-xs text-[var(--hero-ink-2)]">
+ <p className="font-mono text-[11px]" style={{ color: "var(--muted)" }}>
  Diagnostic requestId: {requestId} · snapshot: {result.snapshotId}
  </p>
  ) : null}
@@ -578,11 +629,18 @@ export function AccaBuilderView({
  className="fixed inset-0 z-50 flex items-end justify-center bg-black/40 p-4 sm:items-center"
  ref={transferDialogRef}
  >
- <div className="w-full max-w-md rounded-xl border border-border bg-[var(--canvas)] p-5 shadow-card">
- <h3 id="transfer-title" className="rw-display text-lg font-semibold">
+ <div
+ className="w-full max-w-md p-5"
+ style={{
+ border: "1px solid var(--line)",
+ background: "var(--surface)",
+ borderRadius: 6,
+ }}
+ >
+ <h3 id="transfer-title" className="rw3-title">
  {p.apbAddOne}
  </h3>
- <p className="mt-2 text-sm text-[var(--ink-secondary)]">
+ <p className="mt-2 text-[13px]" style={{ color: "var(--muted)" }}>
  Your Studio already has {acca.slip.selections.length} selection
  {acca.slip.selections.length === 1 ? "" : "s"}. Merge keeps existing
  legs (fixture conflicts replace), or replace the whole Acca.
@@ -590,21 +648,22 @@ export function AccaBuilderView({
  <div className="mt-4 flex flex-wrap gap-2">
  <button
  type="button"
- className="rw-m inline-flex items-center justify-center border border-[var(--hero-ink)] px-4 text-[var(--hero-ink)] transition-colors hover:bg-[var(--hero-ink)] hover:text-[var(--hero-canvas)] min-h-11"
+ className="rw3-ghost min-h-11 justify-center px-4"
  onClick={() => confirmTransfer("merge")}
  >
  Merge
  </button>
  <button
  type="button"
- className="inline-flex min-h-11 items-center rounded-md border border-border px-3 text-sm font-semibold"
+ className="rw3-ghost min-h-11 px-3"
  onClick={() => confirmTransfer("replace")}
  >
  {p.apbReplace}
  </button>
  <button
  type="button"
- className="inline-flex min-h-11 items-center rounded-md px-3 text-sm"
+ className="rw3-hoverable inline-flex min-h-11 items-center px-3 text-[13px]"
+ style={{ color: "var(--muted)", borderRadius: 6 }}
  onClick={() => setTransferCombo(null)}
  >
  {p.apbCancel}
@@ -624,13 +683,18 @@ function ProviderStatus({ result }: { result: AccaBuilderResult }) {
  ["Archive", result.providerAvailability.archiveHistory],
  ] as const;
  return (
- <ul className="flex flex-wrap gap-2 text-xs" aria-label="Provider availability">
+ <ul className="flex flex-wrap gap-2 text-[11px]" aria-label="Provider availability">
  {items.map(([label, value]) => (
  <li
  key={label}
- className="rounded border border-border px-2 py-1 text-[var(--hero-ink-2)]"
+ className="px-2 py-1"
+ style={{
+ border: "1px solid var(--line)",
+ borderRadius: 6,
+ color: "var(--muted)",
+ }}
  >
- <span className="font-medium text-foreground">{label}</span>: {value}
+ <span className="font-medium" style={{ color: "var(--text)" }}>{label}</span>: {value}
  </li>
  ))}
  </ul>
@@ -658,30 +722,37 @@ function CombinationCard({
  : p.apbHigherRisk;
 
  return (
- <li className="rounded-xl border border-border bg-[var(--canvas)] p-4">
+ <li
+ className="p-4"
+ style={{
+ border: "1px solid var(--line)",
+ background: "var(--surface)",
+ borderRadius: 6,
+ }}
+ >
  <div className="flex flex-wrap items-start justify-between gap-3">
  <div>
- <p className="text-metadata font-medium uppercase tracking-label text-[var(--hero-ink)]">
+ <p className="rw3-label">
  {label}
  </p>
- <p className="mt-1 text-sm text-[var(--ink-secondary)]">
+ <p className="mt-1 text-[12px]" style={{ color: "var(--muted)" }}>
  {combo.legCount} legs · risk {combo.riskMode}
  {combo.averageConfidence != null
  ? ` · avg confidence ${combo.averageConfidence}%`
  : ""}
  {` · evidence ${combo.evidenceCompleteness}%`}
  </p>
- <p className="mt-2 rw-display text-2xl font-semibold tabular-nums">
+ <p className="mt-2 text-[16px] font-semibold tabular-nums">
  {combo.combinedOdds != null && combo.oddsComplete
  ? combo.combinedOdds.toFixed(2)
  : p.apbOddsUnavailable}
  </p>
- <p className="text-xs text-[var(--hero-ink-2)]">{combo.freshnessSummary}</p>
+ <p className="text-[11px]" style={{ color: "var(--muted)" }}>{combo.freshnessSummary}</p>
  </div>
  <button
  type="button"
  onClick={onAdd}
- className="rw-m inline-flex items-center justify-center border border-[var(--hero-ink)] px-4 text-[var(--hero-ink)] transition-colors hover:bg-[var(--hero-ink)] hover:text-[var(--hero-canvas)] min-h-11"
+ className="rw3-ghost min-h-11 justify-center px-4"
  >
  {p.apbAddAll}
  </button>
@@ -691,30 +762,35 @@ function CombinationCard({
  {combo.legs.map((leg, idx) => (
  <li
  key={leg.id}
- className="rounded-md border border-border bg-[var(--canvas-secondary)] px-3 py-2"
+ className="px-3 py-2"
+ style={{
+ border: "1px solid var(--line)",
+ background: "var(--bg)",
+ borderRadius: 6,
+ }}
  >
  <div className="flex flex-wrap items-baseline justify-between gap-2">
- <p className="text-sm font-semibold">
+ <p className="text-[13px] font-semibold">
  {idx + 1}. {leg.homeTeam} vs {leg.awayTeam}
  </p>
- <p className="text-xs tabular-nums text-[var(--hero-ink-2)]">
+ <p className="text-[11px] tabular-nums" style={{ color: "var(--muted)" }}>
  {leg.odds != null ? `@ ${leg.odds.toFixed(2)}` : "odds n/a"} ·{" "}
  {leg.confidence}%
  </p>
  </div>
- <p className="mt-0.5 text-xs text-[var(--ink-secondary)]">
+ <p className="mt-0.5 text-[11px]" style={{ color: "var(--muted)" }}>
  {leg.marketLabel} · {leg.competition}
  </p>
  <details
- className="mt-2 text-xs"
+ className="mt-2 text-[11px]"
  onToggle={(e) => {
  if ((e.target as HTMLDetailsElement).open) onEvidence();
  }}
  >
- <summary className="cursor-pointer font-medium text-[var(--hero-ink)]">
+ <summary className="cursor-pointer font-medium" style={{ color: "var(--text)" }}>
  {p.apbWhyLeg}
  </summary>
- <ul className="mt-1 list-disc space-y-0.5 pl-4 text-[var(--hero-ink-2)]">
+ <ul className="mt-1 list-disc space-y-0.5 pl-4" style={{ color: "var(--muted)" }}>
  {leg.evidenceSummary.map((line) => (
  <li key={line}>{line}</li>
  ))}
@@ -729,7 +805,8 @@ function CombinationCard({
  </details>
  <Link
  href={leg.matchHref || `/${locale}/fixtures/${leg.matchId}`}
- className="mt-1 inline-block text-xs font-medium text-[var(--hero-ink)] hover:underline"
+ className="mt-1 inline-block text-[11px] font-medium hover:underline"
+ style={{ color: "var(--text)" }}
  >
  {p.appMatchDetail}
  </Link>
@@ -739,7 +816,7 @@ function CombinationCard({
 
  {(combo.correlationWarnings.length > 0 ||
  combo.limitations.length > 0) && (
- <ul className="mt-3 list-disc space-y-1 pl-4 text-xs text-[var(--hero-ink-2)]">
+ <ul className="mt-3 list-disc space-y-1 pl-4 text-[11px]" style={{ color: "var(--muted)" }}>
  {[...combo.correlationWarnings, ...combo.limitations].map((w) => (
  <li key={w}>{w}</li>
  ))}

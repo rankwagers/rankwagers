@@ -224,8 +224,19 @@ test("focus states are declared on every interactive element", () => {
   const html = withFlag("true", () => renderList());
   const interactive = html.match(/<(a|button|summary)\s[^>]*>/g) ?? [];
   assert.ok(interactive.length > 0);
+  // V3 reconciliation: the law stands — every interactive element shows a
+  // visible focus state. Under rw3, focus has ONE treatment: the scope-level
+  // `.rw3 :focus-visible` 2px ring in `--text` (Bible V3, interaction law),
+  // not per-element ring utilities. The marker moves to (a) the scope rule
+  // existing and (b) no element opting out of it.
+  const css = readFileSync(path.join(process.cwd(), "app/globals.css"), "utf8");
+  assert.match(css, /\.rw3 :focus-visible\s*\{[^}]*outline: 2px solid var\(--text\)/);
   for (const el of interactive) {
-    assert.match(el, /focus-visible:ring/, `missing visible focus state: ${el.slice(0, 80)}`);
+    assert.doesNotMatch(
+      el,
+      /outline-none|focus:outline-0|focus-visible:outline-none/,
+      `focus ring suppressed: ${el.slice(0, 80)}`,
+    );
   }
 });
 

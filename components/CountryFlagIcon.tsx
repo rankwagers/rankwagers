@@ -22,7 +22,7 @@ export function CountryFlagIcon({ code }: { code: string | null | undefined }) {
       height={12}
       loading="lazy"
       decoding="async"
-      className="inline-block shrink-0 self-center outline outline-[0.5px] outline-[var(--hero-line)]"
+      className="inline-block shrink-0 self-center outline outline-[0.5px] outline-[var(--line)]"
     />
   );
 }

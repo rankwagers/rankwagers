@@ -34,7 +34,7 @@ export function RelatedEntities({
       {balanced.map((section) =>
         layout === "grid" ? (
           <section key={section.id} className="mt-8" aria-labelledby={section.id}>
-            <h2 id={section.id} className="font-display text-xl font-semibold text-foreground">
+            <h2 id={section.id} className="rw3-title">
               {section.title}
             </h2>
             <EntityGrid items={section.items} labelledBy={section.id} />

@@ -68,7 +68,13 @@ export function LiveTimelineCard({
   if (timeline.availability !== "available") {
     return (
       <p
-        className="rounded-lg border border-[var(--border-subtle)] bg-[var(--canvas-secondary)] px-4 py-5 text-sm text-muted-foreground"
+        className="px-4 py-5 text-[13px]"
+        style={{
+          border: "1px solid var(--line)",
+          background: "var(--surface)",
+          borderRadius: 6,
+          color: "var(--muted)",
+        }}
         data-testid="live-timeline-empty"
       >
         {timeline.message ?? "Timeline data is not available for this fixture."}
@@ -82,7 +88,7 @@ export function LiveTimelineCard({
   return (
     <div className="space-y-2" data-testid="live-timeline">
       {timeline.message ? (
-        <p className="text-xs text-muted-foreground">{timeline.message}</p>
+        <p className="rw3-meta">{timeline.message}</p>
       ) : null}
 
       {timeline.segments.map((segment) => {
@@ -91,7 +97,8 @@ export function LiveTimelineCard({
         return (
           <section
             key={segment.key}
-            className="overflow-hidden rounded-lg border border-[var(--border-subtle)]"
+            className="overflow-hidden"
+            style={{ border: "1px solid var(--line)", borderRadius: 6 }}
           >
             <h3>
               <button
@@ -99,10 +106,13 @@ export function LiveTimelineCard({
                 aria-expanded={isOpen}
                 aria-controls={panelId}
                 onClick={() => toggle(segment.key, segment.events.length)}
-                className="flex min-h-[var(--touch-min)] w-full items-center justify-between gap-3 bg-[var(--canvas-secondary)] px-4 py-2 text-left text-sm font-semibold text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+                className="rw3-hoverable flex min-h-[var(--touch-min)] w-full items-center justify-between gap-3 bg-[var(--surface)] px-4 py-2 text-left text-[13px] font-semibold"
               >
                 <span>{segment.label}</span>
-                <span className="flex items-center gap-2 text-xs font-normal text-muted-foreground">
+                <span
+                  className="flex items-center gap-2 text-[12px] font-normal"
+                  style={{ color: "var(--muted)" }}
+                >
                   {segment.events.length}{" "}
                   {segment.events.length === 1 ? "event" : "events"}
                   <span aria-hidden="true">{isOpen ? "−" : "+"}</span>
@@ -110,33 +120,36 @@ export function LiveTimelineCard({
               </button>
             </h3>
             <div id={panelId} hidden={!isOpen}>
-              <ol className="divide-y divide-[var(--border-subtle)]">
+              <ol className="divide-y divide-[var(--line)]">
                 {segment.events.map((event) => (
                   <li
                     key={event.id}
-                    className="flex items-start gap-3 px-4 py-2 text-sm"
+                    className="flex items-start gap-3 px-4 py-2 text-[13px]"
                     data-live-event-id={event.id}
                   >
-                    <span className="w-12 shrink-0 font-mono text-xs tabular-nums text-muted-foreground">
+                    <span
+                      className="w-12 shrink-0 text-[12px] tabular-nums"
+                      style={{ color: "var(--muted)" }}
+                    >
                       {formatEventClock(event)}
                     </span>
                     <LiveEventBadge event={event} />
                     <span className="min-w-0 flex-1">
-                      <span className="block truncate font-medium text-foreground">
+                      <span className="block font-medium">
                         {event.label}
                       </span>
                       {sideLabel(event.side) ? (
-                        <span className="block text-xs text-muted-foreground">
+                        <span className="rw3-meta block">
                           {sideLabel(event.side)}
                         </span>
                       ) : null}
                       {event.detail ? (
-                        <span className="block text-xs text-muted-foreground">
+                        <span className="rw3-meta block">
                           {event.detail}
                         </span>
                       ) : null}
                       {event.origin === "derived" ? (
-                        <span className="block text-metadata uppercase tracking-label text-muted-foreground">
+                        <span className="rw3-label block">
                           Derived from match phase
                         </span>
                       ) : null}
@@ -151,18 +164,16 @@ export function LiveTimelineCard({
 
       {timeline.undatedEvents.length ? (
         <section
-          className="rounded-lg border border-dashed border-[var(--border-subtle)] px-4 py-3"
+          className="px-4 py-3"
+          style={{ border: "1px dashed var(--line)", borderRadius: 6 }}
           aria-labelledby={`${headingId}-undated`}
         >
-          <h3
-            id={`${headingId}-undated`}
-            className="text-xs font-semibold uppercase tracking-label text-muted-foreground"
-          >
+          <h3 id={`${headingId}-undated`} className="rw3-label">
             Reported without a minute
           </h3>
           <ul className="mt-2 space-y-1">
             {timeline.undatedEvents.map((event) => (
-              <li key={event.id} className="flex items-center gap-2 text-sm">
+              <li key={event.id} className="flex items-center gap-2 text-[13px]">
                 <LiveEventBadge event={event} />
                 <span>{event.label}</span>
               </li>

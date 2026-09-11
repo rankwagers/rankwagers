@@ -95,42 +95,62 @@ export function OperatorDetailView({
       <JsonLd data={operatorBreadcrumbLd({ operator, locale })} />
       {relatedItemList && <JsonLd data={relatedItemList} />}
 
-      <div className="rw-hero container-wide bg-[var(--hero-canvas)] pb-24">
-        <nav aria-label="Breadcrumb" className="rw-m pt-5 text-[var(--hero-ink-2)]">
-          <Link href={`/${locale}`} className="hover:text-[var(--hero-ink)]">
+      <div style={{ paddingBottom: 80 }}>
+        <nav
+          aria-label="Breadcrumb"
+          className="rw3-meta"
+          style={{ padding: "12px 20px 0" }}
+        >
+          <Link href={`/${locale}`} style={{ color: "var(--muted)" }}>
             {p.nvHome}
           </Link>
           <span className="mx-1.5" aria-hidden>
             /
           </span>
-          <Link href={operatorsIndexPath(locale)} className="hover:text-[var(--hero-ink)]">
+          <Link href={operatorsIndexPath(locale)} style={{ color: "var(--muted)" }}>
             {p.opIndexTitle}
           </Link>
           <span className="mx-1.5" aria-hidden>
             /
           </span>
-          <span className="text-[var(--hero-ink)]">{operator.name}</span>
+          <span style={{ color: "var(--text)" }}>{operator.name}</span>
         </nav>
 
-        <header className="mt-6 border-b border-[var(--hero-line)] pb-10">
-          <span aria-hidden className="block h-[2px] w-10 bg-[var(--hero-ink)]" />
-          <p className="rw-m mt-3.5 text-[var(--hero-ink-2)]">{p.opIndexEyebrow}</p>
-          <div className="mt-1.5 flex items-start gap-4">
+        <header
+          style={{
+            marginTop: 6,
+            padding: "14px 20px",
+            borderBottom: "1px solid var(--line)",
+          }}
+        >
+          <p className="rw3-label" style={{ margin: 0 }}>
+            {p.opIndexEyebrow}
+          </p>
+          <div className="flex items-start gap-3" style={{ marginTop: 6 }}>
             {operator.logo ? (
               <Image
                 src={operator.logo}
                 alt={`${operator.name} logo`}
-                width={56}
-                height={56}
-                sizes="56px"
-                className="mt-1.5 h-14 w-14 border border-[var(--hero-line)] object-contain"
+                width={32}
+                height={32}
+                sizes="32px"
+                className="h-8 w-8 object-contain"
+                style={{ border: "1px solid var(--line)", borderRadius: 6 }}
               />
             ) : null}
             <div>
-              <h1 className="rw-h text-[clamp(2.125rem,4.4vw,2.875rem)] text-[var(--hero-ink)]">
+              <h1 className="rw3-title" style={{ margin: 0 }}>
                 {operator.name}
               </h1>
-              <p className="mt-2.5 max-w-[62ch] text-[15px] leading-[1.55] text-[var(--hero-ink-2)]">
+              <p
+                style={{
+                  margin: "4px 0 0",
+                  maxWidth: "62ch",
+                  fontSize: 13,
+                  lineHeight: 1.55,
+                  color: "var(--muted)",
+                }}
+              >
                 {operator.description}
               </p>
             </div>
@@ -138,28 +158,60 @@ export function OperatorDetailView({
         </header>
 
         {/* LEAD — the two preconditions: availability, then verification. */}
-        <section aria-labelledby="op-lead-heading" className="mt-14">
-          <p className="rw-m text-[var(--hero-ink-2)]">{p.mktLeadEyebrow}</p>
+        <section aria-labelledby="op-lead-heading" style={{ padding: "16px 20px 0" }}>
+          <p className="rw3-label" style={{ margin: 0 }}>
+            {p.mktLeadEyebrow}
+          </p>
           <h2
             id="op-lead-heading"
-            className="rw-h mt-2.5 max-w-[30ch] text-[clamp(1.5rem,3.2vw,2.1rem)] text-[var(--hero-ink)]"
+            style={{
+              margin: "6px 0 0",
+              maxWidth: "40ch",
+              fontSize: 14,
+              fontWeight: 600,
+            }}
           >
             {formatDict(
               availability.available ? p.opLeadAvailable : p.opLeadUnavailable,
               { operator: operator.name, country: availability.visitorCountry }
             )}
           </h2>
-          <ul className="mt-6 border-t-[1.5px] border-[var(--hero-ink)]">
-            <li className="rw-row border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] text-[var(--hero-ink)]">
+          <ul
+            style={{
+              margin: "14px 0 0",
+              padding: 0,
+              listStyle: "none",
+              borderTop: "1px solid var(--line)",
+            }}
+          >
+            <li
+              style={{
+                padding: "10px 0",
+                borderBottom: "1px solid var(--line)",
+                fontSize: 13,
+              }}
+            >
               {formatDict(p.opVerificationRow, { status: verificationWord })}
             </li>
-            <li className="rw-row border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] text-[var(--hero-ink)]">
+            <li
+              style={{
+                padding: "10px 0",
+                borderBottom: "1px solid var(--line)",
+                fontSize: 13,
+              }}
+            >
               {formatDict(p.opSupportsMarketsLine, {
                 n: String(operator.supportedMarkets.length),
               })}
             </li>
             {operator.supportedCountries.length > 0 ? (
-              <li className="rw-row border-b border-[var(--hero-line)] py-3 pl-3.5 text-[15px] text-[var(--hero-ink)]">
+              <li
+                style={{
+                  padding: "10px 0",
+                  borderBottom: "1px solid var(--line)",
+                  fontSize: 13,
+                }}
+              >
                 {formatDict(p.opSupportsCountriesLine, {
                   n: String(operator.supportedCountries.length),
                 })}
@@ -171,22 +223,34 @@ export function OperatorDetailView({
         {/* EVIDENCE — stored observations only; empty means not observed. */}
         <section
           aria-labelledby="op-evidence-heading"
-          className="mt-16 border-t border-[var(--hero-line)] pt-12"
+          style={{
+            margin: "20px 20px 0",
+            paddingTop: 16,
+            borderTop: "1px solid var(--line)",
+          }}
         >
           <OperatorOddsPanelBeacon
             operatorSlug={operator.slug}
             locale={locale}
             panel="best_odds"
           />
-          <h2 id="op-evidence-heading" className="rw-m text-[var(--hero-ink-2)]">
+          <h2 id="op-evidence-heading" className="rw3-label" style={{ margin: 0 }}>
             {p.mktOddsTitle}
           </h2>
-          <p className="mt-1.5 max-w-[52ch] text-[13px] leading-relaxed text-[var(--hero-ink-2)]">
+          <p
+            style={{
+              margin: "6px 0 0",
+              maxWidth: "52ch",
+              fontSize: 13,
+              lineHeight: 1.55,
+              color: "var(--muted)",
+            }}
+          >
             {p.opEvidenceNote}
           </p>
           {performance.sampleSize > 0 ? (
             <>
-              <dl className="mt-5 border-t border-[var(--hero-line)]">
+              <dl style={{ margin: "14px 0 0", borderTop: "1px solid var(--line)" }}>
                 {performance.highestOdds !== null ? (
                   <Row label={p.mktOddsBest} value={performance.highestOdds.toFixed(2)} />
                 ) : null}
@@ -206,25 +270,47 @@ export function OperatorDetailView({
                   />
                 ) : null}
               </dl>
-              <p className="rw-m mt-3 normal-case tracking-[0.04em] text-[var(--hero-ink-2)]">
+              <p className="rw3-meta" style={{ margin: "10px 0 0" }}>
                 {formatDict(p.opSamplesLine, { n: String(performance.sampleSize) })}
                 {" · "}
                 {p.mktOddsWindowNote}
               </p>
             </>
           ) : (
-            <p className="mt-4 max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]">
+            <p
+              style={{
+                margin: "12px 0 0",
+                maxWidth: "52ch",
+                padding: "4px 0 4px 14px",
+                borderLeft: "2px solid var(--line)",
+                fontSize: 13,
+                color: "var(--muted)",
+              }}
+            >
               {p.mktOddsEmpty}
             </p>
           )}
 
-          <div className="mt-8">
-            <h3 className="rw-label text-[var(--hero-ink-2)]">{p.opMarketsTitle}</h3>
-            <ul className="mt-2.5 border-t border-[var(--hero-line)]">
+          <div style={{ marginTop: 20 }}>
+            <h3 className="rw3-label" style={{ margin: 0 }}>
+              {p.opMarketsTitle}
+            </h3>
+            <ul
+              style={{
+                margin: "8px 0 0",
+                padding: 0,
+                listStyle: "none",
+                borderTop: "1px solid var(--line)",
+              }}
+            >
               {operator.supportedMarkets.map((market) => (
                 <li
                   key={market}
-                  className="rw-row flex flex-wrap items-baseline justify-between gap-x-4 border-b border-[var(--hero-line)] py-2.5 pl-3.5"
+                  className="flex flex-wrap items-baseline justify-between gap-x-4"
+                  style={{
+                    padding: "9px 0",
+                    borderBottom: "1px solid var(--line)",
+                  }}
                 >
                   <OperatorRelatedLink
                     href={operatorMarketHref(locale, market)}
@@ -235,7 +321,7 @@ export function OperatorDetailView({
                   >
                     {marketLabel(market)}
                   </OperatorRelatedLink>
-                  <span className="rw-m text-[var(--hero-ink-2)]">
+                  <span className="rw3-meta">
                     {OPERATOR_MARKET_META[market].line}
                     {performance.marketsObserved.includes(market)
                       ? ` · ${p.opVerified}`
@@ -247,9 +333,14 @@ export function OperatorDetailView({
           </div>
 
           {performance.recentFixtureIds.length > 0 ? (
-            <div className="mt-8">
-              <h3 className="rw-label text-[var(--hero-ink-2)]">{p.opRecentFixtures}</h3>
-              <ul className="mt-2.5 space-y-1.5">
+            <div style={{ marginTop: 20 }}>
+              <h3 className="rw3-label" style={{ margin: 0 }}>
+                {p.opRecentFixtures}
+              </h3>
+              <ul
+                className="space-y-1.5"
+                style={{ margin: "8px 0 0", padding: 0, listStyle: "none" }}
+              >
                 {performance.recentFixtureIds.map((fixtureId) => (
                   <li key={fixtureId}>
                     <OperatorRelatedLink
@@ -271,27 +362,51 @@ export function OperatorDetailView({
         {/* TERMS — the operator's own claims, demoted, claimed-not-verified. */}
         <section
           aria-labelledby="op-terms-heading"
-          className="mt-16 border-t border-[var(--hero-line)] pt-12"
+          style={{
+            margin: "20px 20px 0",
+            paddingTop: 16,
+            borderTop: "1px solid var(--line)",
+          }}
         >
-          <h2 id="op-terms-heading" className="rw-m text-[var(--hero-ink-2)]">
+          <h2 id="op-terms-heading" className="rw3-label" style={{ margin: 0 }}>
             {p.opTermsTitle}
           </h2>
-          <p className="mt-1.5 max-w-[52ch] text-[13px] leading-relaxed text-[var(--hero-ink-2)]">
+          <p
+            style={{
+              margin: "6px 0 0",
+              maxWidth: "52ch",
+              fontSize: 13,
+              lineHeight: 1.55,
+              color: "var(--muted)",
+            }}
+          >
             {p.opTermsNote}
           </p>
           {operator.highlights.length > 0 ? (
-            <ul className="mt-5 border-t border-[var(--hero-line)]">
+            <ul
+              style={{
+                margin: "14px 0 0",
+                padding: 0,
+                listStyle: "none",
+                borderTop: "1px solid var(--line)",
+              }}
+            >
               {operator.highlights.slice(0, 6).map((item) => (
                 <li
                   key={item}
-                  className="rw-row border-b border-[var(--hero-line)] py-2.5 pl-3.5 text-[15px] text-[var(--hero-ink-2)]"
+                  style={{
+                    padding: "9px 0",
+                    borderBottom: "1px solid var(--line)",
+                    fontSize: 13,
+                    color: "var(--muted)",
+                  }}
                 >
                   {item}
                 </li>
               ))}
             </ul>
           ) : null}
-          <div className="rw-m mt-4 space-y-1 normal-case tracking-[0.04em] text-[var(--hero-ink-2)]">
+          <div className="rw3-meta space-y-1" style={{ marginTop: 12 }}>
             {operator.foundedYear ? (
               <p>{formatDict(p.opFoundedRow, { year: String(operator.foundedYear) })}</p>
             ) : null}
@@ -303,17 +418,23 @@ export function OperatorDetailView({
             ) : null}
           </div>
           {operator.supportedCountries.length > 0 ? (
-            <div className="mt-6">
-              <h3 className="rw-label text-[var(--hero-ink-2)]">{p.opCountriesTitle}</h3>
-              <ul className="mt-2.5 flex flex-wrap gap-2">
+            <div style={{ marginTop: 16 }}>
+              <h3 className="rw3-label" style={{ margin: 0 }}>
+                {p.opCountriesTitle}
+              </h3>
+              <ul
+                className="flex flex-wrap gap-2"
+                style={{ margin: "8px 0 0", padding: 0, listStyle: "none" }}
+              >
                 {operator.supportedCountries.map((code) => (
                   <li
                     key={code}
-                    className={`rw-m inline-flex border px-2.5 py-1 ${
+                    className="rw3-pill"
+                    style={
                       code === availability.visitorCountry
-                        ? "border-[var(--hero-ink)] text-[var(--hero-ink)]"
-                        : "border-[var(--hero-line)] text-[var(--hero-ink-2)]"
-                    }`}
+                        ? { borderColor: "var(--text)", color: "var(--text)" }
+                        : { color: "var(--muted)" }
+                    }
                   >
                     {countryName(code)} ({code})
                   </li>
@@ -321,7 +442,16 @@ export function OperatorDetailView({
               </ul>
             </div>
           ) : (
-            <p className="mt-6 max-w-[52ch] border-l-2 border-[var(--hero-line)] py-1 pl-5 text-[15px] text-[var(--hero-ink-2)]">
+            <p
+              style={{
+                margin: "16px 0 0",
+                maxWidth: "52ch",
+                padding: "4px 0 4px 14px",
+                borderLeft: "2px solid var(--line)",
+                fontSize: 13,
+                color: "var(--muted)",
+              }}
+            >
               {p.opCountriesNone}
             </p>
           )}
@@ -330,15 +460,24 @@ export function OperatorDetailView({
         {/* DETAIL — related research, above the commercial block. */}
         <section
           aria-labelledby="op-detail-heading"
-          className="mt-16 border-t border-[var(--hero-line)] pt-12"
+          style={{
+            margin: "20px 20px 0",
+            paddingTop: 16,
+            borderTop: "1px solid var(--line)",
+          }}
         >
-          <h2 id="op-detail-heading" className="rw-m text-[var(--hero-ink-2)]">
+          <h2 id="op-detail-heading" className="rw3-label" style={{ margin: 0 }}>
             {p.cmpDetailTitle}
           </h2>
           {relatedOperators.length > 0 ? (
-            <div className="mt-6">
-              <h3 className="rw-label text-[var(--hero-ink-2)]">{p.opRelatedOperators}</h3>
-              <ul className="mt-2.5 flex flex-wrap gap-2">
+            <div style={{ marginTop: 14 }}>
+              <h3 className="rw3-label" style={{ margin: 0 }}>
+                {p.opRelatedOperators}
+              </h3>
+              <ul
+                className="flex flex-wrap gap-2"
+                style={{ margin: "8px 0 0", padding: 0, listStyle: "none" }}
+              >
                 {relatedOperators.map((related) => (
                   <li key={related.slug}>
                     <OperatorRelatedLink
@@ -355,10 +494,15 @@ export function OperatorDetailView({
               </ul>
             </div>
           ) : null}
-          <p className="mt-6">
+          <p style={{ margin: "14px 0 0", fontSize: 13 }}>
             <Link
               href={operatorEvidenceHref(locale)}
-              className="rw-m text-[var(--hero-ink-2)] underline decoration-[var(--hero-line)] underline-offset-4 hover:text-[var(--hero-ink)]"
+              style={{
+                color: "var(--muted)",
+                textDecoration: "underline",
+                textDecorationColor: "var(--line)",
+                textUnderlineOffset: 3,
+              }}
             >
               {p.cmpMethodologyLink}
             </Link>
@@ -379,15 +523,27 @@ export function OperatorDetailView({
         {/* CONTINUE — one commercial action, last, visibly commercial. */}
         <section
           aria-labelledby="op-continue-heading"
-          className="mt-16 border-t border-[var(--hero-line)] pt-12"
+          style={{
+            margin: "20px 20px 0",
+            paddingTop: 16,
+            borderTop: "1px solid var(--line)",
+          }}
         >
-          <h2 id="op-continue-heading" className="rw-m text-[var(--hero-ink-2)]">
+          <h2 id="op-continue-heading" className="rw3-label" style={{ margin: 0 }}>
             {p.opContinueTitle}
           </h2>
-          <p className="mt-2 max-w-[52ch] text-[13px] leading-relaxed text-[var(--hero-ink-2)]">
+          <p
+            style={{
+              margin: "8px 0 0",
+              maxWidth: "52ch",
+              fontSize: 13,
+              lineHeight: 1.55,
+              color: "var(--muted)",
+            }}
+          >
             {p.opContinueBody}
           </p>
-          <div className="mt-5">
+          <div style={{ marginTop: 14 }}>
             <OperatorAffiliateCta
               href={affiliateHref}
               operatorSlug={operator.slug}
@@ -400,7 +556,7 @@ export function OperatorDetailView({
               }
             />
           </div>
-          <p className="rw-m mt-3 normal-case tracking-[0.04em] text-[var(--hero-ink-2)]">
+          <p className="rw3-meta" style={{ margin: "10px 0 0" }}>
             {p.fxOperatorsNote}
           </p>
         </section>
@@ -411,10 +567,14 @@ export function OperatorDetailView({
 
 function Row({ label, value }: { label: string; value: string }) {
   return (
-    <div className="rw-row flex items-baseline justify-between gap-x-4 border-b border-[var(--hero-line)] py-2.5 pl-3.5">
-      <dt className="rw-m text-[var(--hero-ink-2)]">{label}</dt>
-      <dd className="rw-tnum text-[15px] font-bold text-[var(--hero-ink)]">{value}</dd>
+    <div
+      className="flex items-baseline justify-between gap-x-4"
+      style={{ padding: "9px 0", borderBottom: "1px solid var(--line)" }}
+    >
+      <dt className="rw3-meta">{label}</dt>
+      <dd className="rw3-pct" style={{ margin: 0 }}>
+        {value}
+      </dd>
     </div>
   );
 }
-

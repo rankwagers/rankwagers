@@ -50,11 +50,12 @@ export function SplitCard({
             type="button"
             role="tab"
             aria-selected={mode === key}
-            className={`${evidenceUiTokens.touchTarget} rounded-md border px-3 py-2 text-body-sm capitalize ${
+            className={`${evidenceUiTokens.touchTarget} border px-3 py-2 text-[13px] capitalize ${
               mode === key
-                ? "border-brand bg-accent font-medium text-brand"
-                : "border-border text-muted-foreground hover:bg-muted"
+                ? "border-[var(--accent)] bg-[var(--pctbg)] font-medium text-[var(--accent)]"
+                : "rw3-hoverable border-[var(--line)] text-[var(--muted)]"
             }`}
+            style={{ borderRadius: 6 }}
             onClick={() => select(key)}
           >
             {key}
@@ -68,18 +69,18 @@ export function SplitCard({
         </div>
         <div>
           <dt className={evidenceUiTokens.label}>Sample</dt>
-          <dd className="font-mono text-body font-semibold">{active.sampleSize}</dd>
+          <dd className="text-[13px] font-semibold tabular-nums">{active.sampleSize}</dd>
         </div>
         <div>
           <dt className={evidenceUiTokens.label}>Difference</dt>
-          <dd className="font-mono text-body font-semibold">{split.differenceDisplay}</dd>
+          <dd className="text-[13px] font-semibold tabular-nums">{split.differenceDisplay}</dd>
         </div>
       </dl>
       {split.coveragePercent != null ? (
         <p className={`mt-2 ${evidenceUiTokens.note}`}>Coverage {split.coveragePercent}%</p>
       ) : null}
       {split.cautionNote ? (
-        <p className="mt-2 text-caption text-[var(--amber-primary)]" role="note">
+        <p className="mt-2 text-[12px]" style={{ color: "var(--loss)" }} role="note">
           {split.cautionNote}
         </p>
       ) : null}

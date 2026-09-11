@@ -38,31 +38,26 @@ export default function AccaStudioPage({
 }) {
   const p = getDictionary(params.locale).predictions;
   return (
-    <div className="rw-hero container-wide bg-[var(--hero-canvas)] pb-24">
-      <nav aria-label="Breadcrumb" className="rw-m pt-5 text-[var(--hero-ink-2)]">
-        <Link href={`/${params.locale}`} className="hover:text-[var(--hero-ink)]">
+    <div style={{ maxWidth: 1080, margin: "0 auto", padding: "0 20px 96px" }}>
+      <nav aria-label="Breadcrumb" className="rw3-meta pt-5">
+        <Link href={`/${params.locale}`} className="hover:underline">
           {p.nvHome}
         </Link>
         <span className="mx-1.5" aria-hidden>
           /
         </span>
-        <span className="text-[var(--hero-ink)]">{p.acStudioTitle}</span>
+        <span style={{ color: "var(--text)" }}>{p.acStudioTitle}</span>
       </nav>
 
-      <header className="mt-6 border-b border-[var(--hero-line)] pb-10">
-        <span aria-hidden className="block h-[2px] w-10 bg-[var(--hero-ink)]" />
-        <p className="rw-m mt-3.5 text-[var(--hero-ink-2)]">{p.acStudioEyebrow}</p>
-        <h1 className="rw-h mt-1.5 text-[clamp(2.125rem,4.4vw,2.875rem)] text-[var(--hero-ink)]">
-          {p.acStudioTitle}
-        </h1>
-        <p className="mt-2.5 max-w-[62ch] text-[15px] leading-[1.55] text-[var(--hero-ink-2)]">
+      <header className="mt-6 pb-10" style={{ borderBottom: "1px solid var(--line)" }}>
+        <span aria-hidden className="block" style={{ height: 2, width: 40, background: "var(--line)" }} />
+        <p className="rw3-label mt-3.5">{p.acStudioEyebrow}</p>
+        <h1 className="rw3-title mt-1.5">{p.acStudioTitle}</h1>
+        <p className="mt-2.5 max-w-[62ch] text-[13px] leading-relaxed" style={{ color: "var(--muted)" }}>
           {p.acStudioLede}
         </p>
         <p className="mt-3">
-          <Link
-            href={`/${params.locale}/acca/builder`}
-            className="rw-m text-[var(--hero-ink)] underline decoration-[var(--hero-line)] underline-offset-4 hover:decoration-[var(--hero-ink)]"
-          >
+          <Link href={`/${params.locale}/acca/builder`} className="rw3-ghost">
             {p.acBuilderTitle}
           </Link>
         </p>

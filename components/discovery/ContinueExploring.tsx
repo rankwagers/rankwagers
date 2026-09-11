@@ -15,17 +15,17 @@ export function ContinueExploring({
   if (!steps.length) return null;
   return (
     <nav className="mt-8" aria-labelledby="continue-exploring">
-      <h2 id="continue-exploring" className="font-display text-xl font-semibold text-foreground">
+      <h2 id="continue-exploring" className="rw3-title">
         Continue Exploring
       </h2>
-      <p className="mt-2 max-w-2xl text-sm text-muted-foreground">
+      <p className="mt-2 max-w-2xl text-[13px]" style={{ color: "var(--muted)" }}>
         A graph-derived path through related research entities — no editorial picks.
       </p>
-      <ol className="mt-4 flex flex-wrap items-center gap-2 text-sm">
+      <ol className="mt-4 flex flex-wrap items-center gap-2 text-[13px]">
         {steps.map((step, index) => (
           <li key={`${step.entityType}-${step.slug}`} className="flex items-center gap-2">
             {index > 0 ? (
-              <span className="text-muted-foreground" aria-hidden>
+              <span style={{ color: "var(--muted)" }} aria-hidden>
                 →
               </span>
             ) : null}
@@ -38,7 +38,7 @@ export function ContinueExploring({
               position={step.position}
               locale={locale}
               country={country}
-              className="rounded-md border border-border px-2.5 py-1.5 text-foreground hover:border-brand/40 hover:text-brand"
+              className="rw3-ghost"
             >
               {step.title}
             </DiscoveryTrackLink>

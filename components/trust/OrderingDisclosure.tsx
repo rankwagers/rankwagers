@@ -48,9 +48,10 @@ export function OrderingDisclosure({
  return (
  <section
  aria-label="How this list is ordered"
- className={`card px-4 py-3 ${className}`}
+ className={`border border-[var(--line)] bg-[var(--surface)] px-4 py-3 ${className}`}
+ style={{ borderRadius: 6 }}
  >
- <p className="text-sm text-[var(--ink-secondary)]">{orderingDisclosure(basis)}</p>
+ <p className="text-[13px]" style={{ color: "var(--muted)" }}>{orderingDisclosure(basis)}</p>
 
  {/*
  The commercial relationship, on the surface rather than inside the expander.
@@ -64,22 +65,22 @@ export function OrderingDisclosure({
  It stays a member of RANKING_LIMITATIONS (imported, never re-typed) and is filtered out of
  the list below so the same sentence is never shown twice.
  */}
- <p className="mt-2 text-sm font-medium text-foreground">{COMMISSION_DISCLOSURE}</p>
+ <p className="mt-2 text-[13px] font-medium">{COMMISSION_DISCLOSURE}</p>
 
  <details className="mt-2 group">
- <summary className="cursor-pointer text-xs text-brand underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400">
+ <summary className="cursor-pointer text-[12px] underline-offset-2 hover:underline" style={{ color: "var(--accent)" }}>
  What we assess, and what we don&apos;t
  </summary>
 
  <div className="mt-3">
- <h3 className="text-xs font-semibold uppercase tracking-label text-[var(--ink-secondary)]">
+ <h3 className="rw3-label">
  What we assess
  </h3>
  <dl className="mt-2 space-y-1.5">
  {RANKING_CRITERIA.map((criterion) => (
- <div key={criterion.dimension} className="text-xs">
- <dt className="inline font-medium text-foreground">{criterion.label}: </dt>
- <dd className="inline text-[var(--ink-secondary)]">{criterion.describes}</dd>
+ <div key={criterion.dimension} className="text-[12px]">
+ <dt className="inline font-medium">{criterion.label}: </dt>
+ <dd className="inline" style={{ color: "var(--muted)" }}>{criterion.describes}</dd>
  </div>
  ))}
  </dl>
@@ -88,10 +89,10 @@ export function OrderingDisclosure({
  Stated with the same prominence as the criteria. A list of what is covered, on its
  own, implies everything else was checked. It was not.
  */}
- <h3 className="mt-3 text-xs font-semibold uppercase tracking-label text-[var(--amber-primary)]">
+ <h3 className="rw3-label mt-3">
  What we don&apos;t
  </h3>
- <ul className="mt-2 list-disc space-y-1 pl-4 text-xs text-[var(--ink-secondary)]">
+ <ul className="mt-2 list-disc space-y-1 pl-4 text-[12px]" style={{ color: "var(--muted)" }}>
  {RANKING_LIMITATIONS.filter(
  (limitation) => limitation !== COMMISSION_DISCLOSURE,
  ).map((limitation) => (
@@ -105,10 +106,11 @@ export function OrderingDisclosure({
  reader has to find twice.
  */}
  {locale ? (
- <p className="mt-3 text-xs">
+ <p className="mt-3 text-[12px]">
  <Link
  href={`/${locale}/how-we-rank`}
- className="text-brand underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
+ className="underline underline-offset-2"
+ style={{ color: "var(--accent)" }}
  >
  How we rank operators
  </Link>

@@ -10,13 +10,13 @@ export function BaselineComparison({ baseline }: { baseline: BaselineView }) {
     <div className={evidenceUiTokens.cardMuted} aria-label={`Baseline comparison: ${relation}`}>
       <p className={evidenceUiTokens.label}>{baseline.label}</p>
       <div className="mt-2 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-        <p className="font-mono text-h3 font-semibold tabular-nums text-foreground">
+        <p className="rw3-pct">
           {baseline.displayValue}
         </p>
-        <p className="text-body-sm text-[var(--ink-secondary)]" role="status">
+        <p className="text-[13px]" style={{ color: "var(--muted)" }} role="status">
           {relation}
           {baseline.deltaDisplay ? (
-            <span className="ml-2 font-mono tabular-nums text-muted-foreground">
+            <span className="ml-2 tabular-nums" style={{ fontSize: 11, color: "var(--muted)" }}>
               {baseline.deltaDisplay}
             </span>
           ) : null}

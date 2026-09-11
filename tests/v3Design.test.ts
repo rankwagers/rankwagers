@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFileSync, readdirSync, statSync } from "node:fs";
+import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import path from "node:path";
 import test from "node:test";
 
@@ -364,6 +364,102 @@ test("an empty day renders the illustration + one line — never a placeholder t
   assert.match(markup, /The pitch is empty today\./, "exactly one line of microcopy");
   assert.doesNotMatch(markup, /rw3-table-row/, "no fake rows");
   assert.doesNotMatch(markup, /spinner|loading/i, "no spinner");
+});
+
+/* ── probe: zero legacy tokens on the reader routes (block I close-out) ── */
+
+/*
+ * THE NO-DEPLOY RULE, MECHANIZED. Every source a reader route can render —
+ * app/[locale] and the root 404, plus everything they transitively import —
+ * must be free of the v2 visual language. The walk follows real import
+ * edges, so the RETIRED v2 corpus (RankWagersHome, the hero stage, the live
+ * desk, the old chrome — kept in-tree because ~30 suites document its laws)
+ * is proven unreachable rather than assumed: the day something imports it
+ * back onto a route, this probe names the file.
+ */
+const LEGACY_TOKENS: ReadonlyArray<{ name: string; pattern: RegExp }> = [
+  { name: "--hero-* design token", pattern: /--hero-(ink|line|canvas|accent|pos|neg)/ },
+  { name: "rw-hero ground", pattern: /\brw-hero\b/ },
+  { name: "v2 type classes", pattern: /\brw-(m|h|display|label|row|tnum|mono|live|explain)\b/ },
+  { name: "container-wide", pattern: /\bcontainer-wide\b/ },
+  { name: "v2 border/ink vars", pattern: /--border-subtle|--ink-secondary/ },
+  { name: "v2 theme utilities", pattern: /text-brand|font-display|text-muted-foreground|btn-primary|btn-ghost|badge-gold/ },
+  { name: "v2 status surfaces", pattern: /--amber-|--green-surface|--status-/ },
+];
+
+function stripCommentsForProbe(src: string): string {
+  return src.replace(/\/\*[\s\S]*?\*\//g, "").replace(/^\s*\/\/.*$/gm, "");
+}
+
+function readerRouteSources(): Array<{ file: string; text: string }> {
+  const roots = [
+    ...walk(path.join(ROOT, "app", "[locale]")).filter((f) => /\.(ts|tsx)$/.test(f)),
+    path.join(ROOT, "app", "not-found.tsx"),
+  ];
+  const seen = new Set<string>();
+  const queue = [...roots];
+  while (queue.length) {
+    const file = queue.pop()!;
+    if (seen.has(file)) continue;
+    seen.add(file);
+    let raw: string;
+    try {
+      raw = readFileSync(file, "utf8");
+    } catch {
+      continue;
+    }
+    for (const match of stripCommentsForProbe(raw).matchAll(
+      /from\s+["'](@\/[^"']+|\.\.?\/[^"']+)["']/g
+    )) {
+      const spec = match[1];
+      const base = spec.startsWith("@/")
+        ? path.join(ROOT, spec.slice(2))
+        : path.resolve(path.dirname(file), spec);
+      for (const candidate of [
+        base,
+        `${base}.ts`,
+        `${base}.tsx`,
+        path.join(base, "index.ts"),
+        path.join(base, "index.tsx"),
+      ]) {
+        if (/\.(ts|tsx)$/.test(candidate) && existsSync(candidate)) {
+          queue.push(candidate);
+          break;
+        }
+      }
+    }
+  }
+  return [...seen].map((file) => ({
+    file: path.relative(ROOT, file),
+    text: stripCommentsForProbe(readFileSync(file, "utf8")),
+  }));
+}
+
+test("zero legacy tokens/classes on every reader-route source (the no-deploy rule)", () => {
+  const sources = readerRouteSources();
+  assert.ok(sources.length > 100, "the import walk must actually reach the component tree");
+  const offenders: string[] = [];
+  for (const { file, text } of sources) {
+    for (const token of LEGACY_TOKENS) {
+      if (token.pattern.test(text)) offenders.push(`${file}: ${token.name}`);
+    }
+  }
+  assert.deepEqual(offenders, [], "a reader route still speaks the v2 language");
+});
+
+test("the retired v2 corpus stays unreachable from reader routes", () => {
+  const reached = new Set(readerRouteSources().map(({ file }) => file));
+  for (const retired of [
+    "components/bible/RankWagersHome.tsx",
+    "components/homepage/hero/HeroStage.tsx",
+    "components/predictions/LiveFeedPanel.tsx",
+    "components/Header.tsx",
+    "components/Footer.tsx",
+    "components/SiteTopChrome.tsx",
+    "components/WorldCupTickerBar.tsx",
+  ]) {
+    assert.ok(!reached.has(retired), `${retired} is imported by a reader route again`);
+  }
 });
 
 test("rw3-filled appears only in the curated register", () => {

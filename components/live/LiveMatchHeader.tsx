@@ -46,7 +46,12 @@ export function LiveMatchHeader({
 
   return (
     <div
-      className="flex flex-wrap items-center justify-between gap-4 rounded-lg border border-[var(--border-subtle)] bg-[var(--canvas-secondary)] px-4 py-3"
+      className="flex flex-wrap items-center justify-between gap-4 px-4 py-3"
+      style={{
+        border: "1px solid var(--line)",
+        background: "var(--surface)",
+        borderRadius: 6,
+      }}
       role="status"
       aria-live="polite"
       aria-atomic="true"
@@ -54,43 +59,48 @@ export function LiveMatchHeader({
       data-testid="live-match-header"
     >
       <div className="flex min-w-0 items-center gap-3">
+        {/* The mock's live markers are quiet: an 11px pill, `--accent` text, a
+            static dot — never a pulse (Bible V3: no decorative motion). */}
         <span
-          className="inline-flex items-center gap-1.5 rounded-full bg-[var(--status-live-bg)] px-2.5 py-1 text-metadata font-semibold uppercase tracking-label text-[var(--status-live-fg)]"
+          className="rw3-pill uppercase"
+          style={{ color: "var(--accent)" }}
           data-testid="live-status-pill"
         >
           <span
             aria-hidden="true"
-            className="h-1.5 w-1.5 rounded-full bg-current motion-safe:animate-pulse"
+            className="h-1.5 w-1.5 bg-current"
+            style={{ borderRadius: "50%" }}
           />
           {status.isLive ? "Live" : LIVE_PHASE_LABEL[status.phase]}
         </span>
-        <p className="min-w-0 truncate text-sm font-medium text-foreground" id={headingId}>
-          {homeTeam} <span className="text-muted-foreground">vs</span> {awayTeam}
+        <p className="min-w-0 text-[13px] font-medium" id={headingId}>
+          {homeTeam} <span style={{ color: "var(--muted)" }}>vs</span> {awayTeam}
         </p>
       </div>
 
       <div className="flex items-center gap-4">
         <p
-          className="font-mono text-2xl font-semibold tabular-nums text-foreground"
+          className="text-[16px] font-semibold tabular-nums"
           aria-label={`Live score, ${homeTeam} ${status.score.home ?? "unknown"}, ${awayTeam} ${status.score.away ?? "unknown"}`}
         >
           {scoreText(status.score)}
         </p>
         <div className="text-right">
-          <p className="font-mono text-sm font-semibold tabular-nums text-[var(--status-live-fg)]">
+          <p
+            className="text-[13px] font-semibold tabular-nums"
+            style={{ color: "var(--accent)" }}
+          >
             {status.clockLabel ?? status.label}
           </p>
-          <p className="text-metadata uppercase tracking-label text-muted-foreground">
-            {FRESHNESS_COPY[status.freshness]}
-          </p>
+          <p className="rw3-label">{FRESHNESS_COPY[status.freshness]}</p>
         </div>
       </div>
 
       {status.interruptionReason ? (
-        <p className="w-full text-xs text-[var(--amber-primary)]">{status.interruptionReason}</p>
+        <p className="rw3-meta w-full">{status.interruptionReason}</p>
       ) : null}
       {status.freshness === "stale" ? (
-        <p className="w-full text-xs text-muted-foreground">
+        <p className="rw3-meta w-full">
           The provider has not sent an update recently. Figures below are the last observed
           values, not a live reading.
         </p>

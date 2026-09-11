@@ -100,7 +100,13 @@ export function LiveMomentumGraph({
     <div ref={containerRef} className="space-y-3" data-testid="live-momentum">
       {momentum.availability === "unavailable" ? (
         <p
-          className="rounded-lg border border-[var(--border-subtle)] bg-[var(--canvas-secondary)] px-4 py-5 text-sm text-muted-foreground"
+          className="px-4 py-5 text-[13px]"
+          style={{
+            border: "1px solid var(--line)",
+            background: "var(--surface)",
+            borderRadius: 6,
+            color: "var(--muted)",
+          }}
           data-testid="live-momentum-empty"
         >
           {momentum.message ?? "Momentum is not available for this fixture."}
@@ -109,9 +115,9 @@ export function LiveMomentumGraph({
 
       {momentum.availability !== "unavailable" ? (
         <>
-          <p className="text-sm text-foreground">{summary}</p>
+          <p className="text-[13px]">{summary}</p>
           {momentum.message ? (
-            <p className="text-xs text-muted-foreground">{momentum.message}</p>
+            <p className="rw3-meta">{momentum.message}</p>
           ) : null}
         </>
       ) : null}
@@ -138,8 +144,8 @@ export function LiveMomentumGraph({
                     y={0}
                     width={width}
                     height={GRAPH_HEIGHT}
-                    fill="var(--canvas-secondary)"
-                    stroke="var(--border-subtle)"
+                    fill="var(--surface)"
+                    stroke="var(--line)"
                     strokeDasharray="4 4"
                   />
                 );
@@ -152,39 +158,42 @@ export function LiveMomentumGraph({
                     y={0}
                     width={width}
                     height={homeHeight}
-                    fill="var(--green-primary)"
+                    fill="var(--accent)"
                   />
                   <rect
                     x={x}
                     y={homeHeight}
                     width={width}
                     height={GRAPH_HEIGHT - homeHeight}
-                    fill="var(--amber-primary)"
+                    fill="var(--muted)"
                   />
                 </g>
               );
             })}
           </svg>
 
-          <ul className="flex flex-wrap gap-x-4 gap-y-1 text-metadata uppercase tracking-label text-muted-foreground">
+          <ul className="rw3-label flex flex-wrap gap-x-4 gap-y-1">
             <li className="flex items-center gap-1">
               <span
                 aria-hidden="true"
-                className="inline-block h-2 w-2 rounded-sm bg-[var(--green-primary)]"
+                className="inline-block h-2 w-2"
+                style={{ background: "var(--accent)", borderRadius: 2 }}
               />
               {homeTeam}
             </li>
             <li className="flex items-center gap-1">
               <span
                 aria-hidden="true"
-                className="inline-block h-2 w-2 rounded-sm bg-[var(--amber-primary)]"
+                className="inline-block h-2 w-2"
+                style={{ background: "var(--muted)", borderRadius: 2 }}
               />
               {awayTeam}
             </li>
             <li className="flex items-center gap-1">
               <span
                 aria-hidden="true"
-                className="inline-block h-2 w-2 rounded-sm border border-dashed border-[var(--border-subtle)]"
+                className="inline-block h-2 w-2"
+                style={{ border: "1px dashed var(--line)", borderRadius: 2 }}
               />
               No events observed
             </li>
@@ -215,7 +224,7 @@ export function LiveMomentumGraph({
         </>
       ) : null}
 
-      <p className="text-xs text-muted-foreground" data-testid="live-momentum-method">
+      <p className="rw3-meta" data-testid="live-momentum-method">
         {momentum.method}
       </p>
     </div>

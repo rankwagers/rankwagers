@@ -20,17 +20,17 @@ export function generateMetadata({
 export default function Page({ params }: { params: { locale: Locale } }) {
   const dict = getDictionary(params.locale);
   return (
-    <article className="max-w-3xl">
-      <h1 className="text-3xl font-semibold text-foreground">
+    <article className="max-w-3xl" style={{ padding: "14px 20px 40px" }}>
+      <h1 className="rw3-title">
         {dict.footer.privacy}
       </h1>
-      <p className="mt-4 text-[var(--ink-secondary)]">
+      <p className="mt-4 text-[13px] leading-relaxed" style={{ color: "var(--muted)" }}>
         We use privacy-friendly analytics to understand aggregate traffic and to
         measure the performance of outbound links. When you click an outbound
         offer link, a tracking identifier (subid) may be passed to the operator
         for attribution.
       </p>
-      <p className="mt-4 text-[var(--ink-secondary)]">
+      <p className="mt-4 text-[13px] leading-relaxed" style={{ color: "var(--muted)" }}>
         We do not sell personal data. Cookies, if used, are limited to essential
         and analytics purposes. You can control cookies in your browser
         settings.

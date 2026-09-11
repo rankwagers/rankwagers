@@ -318,8 +318,9 @@ test("the kill list stays dead on every Family A surface", () => {
 test("the markets family has route-level loading and error states in the new language", () => {
   const loading = SRC("app/[locale]/markets/loading.tsx");
   const error = SRC("app/[locale]/markets/error.tsx");
-  assert.match(loading, /rw-hero/, "the loading state stands on the form-guide ground");
-  assert.match(error, /rw-hero/, "the error state stands on the form-guide ground");
+  // V3 reconciliation: the ground marker moved with the reskin — rw3, not rw-hero.
+  assert.match(loading, /rw3-label/, "the loading state stands on the Bible V3 ground");
+  assert.match(error, /rw3-label/, "the error state stands on the Bible V3 ground");
   assert.match(error, /reportError/, "the error is reported, not swallowed");
   assert.match(error, /reset/, "retry is offered");
   assert.doesNotMatch(error, /your (bets|winnings)/i, "no invented reassurance");

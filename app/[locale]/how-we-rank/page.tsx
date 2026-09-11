@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import { BRANDS } from "@/lib/brands";
 import { locales, type Locale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
 import {
- RANKING_CRITERIA,
- RANKING_LIMITATIONS,
- SCORE_DIMENSIONS,
- deriveOrderingBasis,
- orderingDisclosure,
+  RANKING_CRITERIA,
+  RANKING_LIMITATIONS,
+  SCORE_DIMENSIONS,
+  deriveOrderingBasis,
+  orderingDisclosure,
 } from "@/lib/trust/rankingCriteria";
 
 /**
@@ -45,137 +46,177 @@ export const dynamic = "force-dynamic";
 const TITLE = "How we rank operators — criteria, limits and commercial disclosure";
 const DESCRIPTION = "The criteria RankWagers uses to order sportsbook operators, what we deliberately do not assess, and how we earn money. Stated so you can check it rather than take our word for it.";
 
+/* Body copy register (Bible V3): 13px, 62ch measure, muted ink. */
+const BODY: CSSProperties = {
+  margin: "8px 0 0",
+  maxWidth: "62ch",
+  fontSize: 13,
+  lineHeight: 1.55,
+  color: "var(--muted)",
+};
+
+const H2: CSSProperties = { margin: 0, fontSize: 14, fontWeight: 600 };
+
+const TEXT_LINK: CSSProperties = {
+  fontWeight: 600,
+  color: "var(--text)",
+  textDecoration: "underline",
+  textDecorationColor: "var(--line)",
+  textUnderlineOffset: 3,
+};
+
 export function generateStaticParams() {
- return locales.map((locale) => ({ locale }));
+  return locales.map((locale) => ({ locale }));
 }
 
 export function generateMetadata({ params }: { params: { locale: Locale } }): Metadata {
- return pageMetadata({
- locale: params.locale,
- path: "/how-we-rank",
- title: TITLE,
- description: DESCRIPTION,
- });
+  return pageMetadata({
+    locale: params.locale,
+    path: "/how-we-rank",
+    title: TITLE,
+    description: DESCRIPTION,
+  });
 }
 
 export default function HowWeRankPage({ params }: { params: { locale: Locale } }) {
- // Derived, never asserted. If the operator list stops following its scores, this page says so
- // — the same self-correcting rule every comparison surface uses.
- const basis = deriveOrderingBasis(BRANDS);
+  // Derived, never asserted. If the operator list stops following its scores, this page says so
+  // — the same self-correcting rule every comparison surface uses.
+  const basis = deriveOrderingBasis(BRANDS);
 
- return (
- <div className="container-wide pb-20">
- <header className="pt-8">
- <p className="text-metadata font-medium uppercase tracking-label text-brand">
- Commercial transparency
- </p>
- <h1 className="mt-3 font-display text-3xl font-semibold tracking-display md:text-4xl">
- How we rank operators
- </h1>
- <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[var(--ink-secondary)] md:text-base">
- We earn commission from some of the operators we list. That is a reason to be more
- explicit about how they are ordered, not less. This page states the criteria, what we do
- not check, and how the order is actually produced.
- </p>
- </header>
+  return (
+    <div style={{ paddingBottom: 80 }}>
+      <header style={{ padding: "14px 20px", borderBottom: "1px solid var(--line)" }}>
+        <p className="rw3-label" style={{ margin: 0 }}>
+          Commercial transparency
+        </p>
+        <h1 className="rw3-title" style={{ margin: "2px 0 0" }}>
+          How we rank operators
+        </h1>
+        <p style={{ ...BODY, margin: "4px 0 0" }}>
+          We earn commission from some of the operators we list. That is a reason to be more
+          explicit about how they are ordered, not less. This page states the criteria, what we do
+          not check, and how the order is actually produced.
+        </p>
+      </header>
 
- <section className="mt-8 card p-4" aria-labelledby="current">
- <h2 id="current" className="font-display text-xl font-semibold">
- How the current lists are ordered
- </h2>
- <p className="mt-2 max-w-2xl text-sm text-[var(--ink-secondary)]">{orderingDisclosure(basis)}</p>
- </section>
+      <section
+        aria-labelledby="current"
+        style={{
+          margin: "16px 20px 0",
+          padding: "12px 14px",
+          background: "var(--surface)",
+          border: "1px solid var(--line)",
+          borderRadius: 6,
+        }}
+      >
+        <h2 id="current" style={H2}>
+          How the current lists are ordered
+        </h2>
+        <p style={BODY}>{orderingDisclosure(basis)}</p>
+      </section>
 
- <section className="mt-8" aria-labelledby="criteria">
- <h2 id="criteria" className="font-display text-xl font-semibold">
- What we assess
- </h2>
- <p className="mt-2 max-w-2xl text-sm text-[var(--ink-secondary)]">
- Each operator carries a score on every dimension below. The composite is their
- unweighted mean — unweighted deliberately, because any weighting is an editorial
- judgement and a weighted number that looks objective would be false precision.
- </p>
- <dl className="mt-4 space-y-3">
- {RANKING_CRITERIA.map((criterion) => (
- <div key={criterion.dimension} className="rounded-lg border border-border p-3">
- <dt className="text-sm font-semibold text-foreground">{criterion.label}</dt>
- <dd className="mt-1 text-sm text-[var(--ink-secondary)]">{criterion.describes}</dd>
- </div>
- ))}
- </dl>
- <p className="mt-3 text-xs text-muted-foreground">
- {SCORE_DIMENSIONS.length} dimensions, applied to every operator. An operator missing any
- of them is not treated as ranked at all, rather than being scored on a partial average.
- </p>
- </section>
+      <section style={{ padding: "16px 20px 0" }} aria-labelledby="criteria">
+        <h2 id="criteria" style={H2}>
+          What we assess
+        </h2>
+        <p style={BODY}>
+          Each operator carries a score on every dimension below. The composite is their
+          unweighted mean — unweighted deliberately, because any weighting is an editorial
+          judgement and a weighted number that looks objective would be false precision.
+        </p>
+        <dl className="space-y-3" style={{ margin: "12px 0 0" }}>
+          {RANKING_CRITERIA.map((criterion) => (
+            <div
+              key={criterion.dimension}
+              style={{
+                padding: "10px 12px",
+                border: "1px solid var(--line)",
+                borderRadius: 6,
+              }}
+            >
+              <dt style={{ fontSize: 13, fontWeight: 600, color: "var(--text)" }}>
+                {criterion.label}
+              </dt>
+              <dd style={{ margin: "4px 0 0", fontSize: 13, color: "var(--muted)" }}>
+                {criterion.describes}
+              </dd>
+            </div>
+          ))}
+        </dl>
+        <p className="rw3-meta" style={{ margin: "10px 0 0" }}>
+          {SCORE_DIMENSIONS.length} dimensions, applied to every operator. An operator missing any
+          of them is not treated as ranked at all, rather than being scored on a partial average.
+        </p>
+      </section>
 
- <section className="mt-8" aria-labelledby="limits">
- <h2 id="limits" className="font-display text-xl font-semibold text-[var(--amber-primary)]">
- What we do not assess
- </h2>
- <p className="mt-2 max-w-2xl text-sm text-[var(--ink-secondary)]">
- A criteria list that only says what is covered implies everything else was checked. It
- was not.
- </p>
- <ul className="mt-3 max-w-2xl list-disc space-y-2 pl-5 text-sm text-[var(--ink-secondary)]">
- {RANKING_LIMITATIONS.map((limitation) => (
- <li key={limitation}>{limitation}</li>
- ))}
- </ul>
- </section>
+      <section style={{ padding: "16px 20px 0" }} aria-labelledby="limits">
+        <h2 id="limits" style={H2}>
+          What we do not assess
+        </h2>
+        <p style={BODY}>
+          A criteria list that only says what is covered implies everything else was checked. It
+          was not.
+        </p>
+        <ul className="list-disc space-y-2 pl-5" style={{ ...BODY, marginTop: 10 }}>
+          {RANKING_LIMITATIONS.map((limitation) => (
+            <li key={limitation}>{limitation}</li>
+          ))}
+        </ul>
+      </section>
 
- <section className="mt-8" aria-labelledby="whatthismeans">
- <h2 id="whatthismeans" className="font-display text-xl font-semibold">
- What position does and does not mean
- </h2>
- <ul className="mt-3 max-w-2xl list-disc space-y-2 pl-5 text-sm text-[var(--ink-secondary)]">
- <li>
- Position reflects the criteria above and nothing else. It is not a judgement about
- which operator suits you — that depends on your country, your payment method and how
- you intend to play.
- </li>
- <li>
- We do not sell placement. An operator cannot pay to move up this list.
- </li>
- <li>
- Availability and terms vary by jurisdiction. An operator listed here may not accept
- you, and the terms shown may not be the terms you are offered.
- </li>
- <li>
- None of this is advice, and none of it predicts an outcome. Check the operator&apos;s
- own terms and your local regulator before depositing.
- </li>
- </ul>
- </section>
+      <section style={{ padding: "16px 20px 0" }} aria-labelledby="whatthismeans">
+        <h2 id="whatthismeans" style={H2}>
+          What position does and does not mean
+        </h2>
+        <ul className="list-disc space-y-2 pl-5" style={{ ...BODY, marginTop: 10 }}>
+          <li>
+            Position reflects the criteria above and nothing else. It is not a judgement about
+            which operator suits you — that depends on your country, your payment method and how
+            you intend to play.
+          </li>
+          <li>
+            We do not sell placement. An operator cannot pay to move up this list.
+          </li>
+          <li>
+            Availability and terms vary by jurisdiction. An operator listed here may not accept
+            you, and the terms shown may not be the terms you are offered.
+          </li>
+          <li>
+            None of this is advice, and none of it predicts an outcome. Check the operator&apos;s
+            own terms and your local regulator before depositing.
+          </li>
+        </ul>
+      </section>
 
- <nav aria-label="Related" className="mt-10 border-t border-border pt-6">
- <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm">
- <li>
- <Link
- href={`/${params.locale}/operators`}
- className="text-brand underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
- >
- Operator profiles
- </Link>
- </li>
- <li>
- <Link
- href={`/${params.locale}/methodology`}
- className="text-brand underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
- >
- How predictions work
- </Link>
- </li>
- <li>
- <Link
- href={`/${params.locale}/responsible-gambling`}
- className="text-brand underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-400"
- >
- Responsible gambling
- </Link>
- </li>
- </ul>
- </nav>
- </div>
- );
+      <nav
+        aria-label="Related"
+        style={{
+          margin: "24px 20px 0",
+          paddingTop: 14,
+          borderTop: "1px solid var(--line)",
+        }}
+      >
+        <ul
+          className="flex flex-wrap gap-x-6 gap-y-2"
+          style={{ margin: 0, padding: 0, listStyle: "none", fontSize: 13 }}
+        >
+          <li>
+            <Link href={`/${params.locale}/operators`} style={TEXT_LINK}>
+              Operator profiles
+            </Link>
+          </li>
+          <li>
+            <Link href={`/${params.locale}/methodology`} style={TEXT_LINK}>
+              How predictions work
+            </Link>
+          </li>
+          <li>
+            <Link href={`/${params.locale}/responsible-gambling`} style={TEXT_LINK}>
+              Responsible gambling
+            </Link>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  );
 }

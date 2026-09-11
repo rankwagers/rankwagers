@@ -10,7 +10,7 @@ import {
 } from "@/lib/operators/evidenceCard";
 import { getFeatureFlags } from "@/lib/config/featureFlags";
 import { OperatorEvidenceCardAnalytics } from "./OperatorEvidenceCardAnalytics";
-import { Check, Minus } from "lucide-react";
+import { Icon } from "@/components/v3/Icon";
 
 /**
  * Evidence-aware operator recommendation card (Sprint 21).
@@ -38,13 +38,17 @@ function ScoreMeter({ score, max }: { score: number; max: number }) {
   return (
     <div className="flex items-center gap-2">
       <div
-        className="h-1.5 w-24 overflow-hidden rounded-full bg-muted"
+        className="h-1.5 w-24 overflow-hidden"
+        style={{ background: "var(--pctbg)", borderRadius: 9999 }}
         role="img"
         aria-label={`Ranking score ${score} out of ${max}`}
       >
-        <div className="h-full rounded-full bg-brand" style={{ width: `${pct}%` }} />
+        <div
+          className="h-full"
+          style={{ background: "var(--accent)", borderRadius: 9999, width: `${pct}%` }}
+        />
       </div>
-      <span className="font-mono text-xs text-muted-foreground">
+      <span className="rw3-meta tabular-nums">
         {score}/{max}
       </span>
     </div>
@@ -85,7 +89,8 @@ export function OperatorEvidenceCard({
       }}
     >
       <article
-        className="rounded-lg border border-[var(--border-subtle)] bg-background p-4"
+        className="border border-[var(--line)] bg-[var(--surface)] p-4"
+        style={{ borderRadius: 6 }}
         aria-labelledby={`${detailsId}-name`}
         data-operator-slug={card.slug}
         data-evidence-score={card.evidenceScore}
@@ -101,36 +106,35 @@ export function OperatorEvidenceCard({
                 width={40}
                 height={40}
                 loading="lazy"
-                className="h-10 w-10 shrink-0 rounded-md object-contain"
+                className="h-10 w-10 shrink-0 object-contain"
+                style={{ borderRadius: 6 }}
               />
             ) : (
               <span
                 aria-hidden="true"
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-md border border-[var(--border-subtle)] font-display text-sm"
+                className="flex h-10 w-10 shrink-0 items-center justify-center border border-[var(--line)] text-[13px] font-semibold"
+                style={{ borderRadius: 6 }}
               >
                 {card.name.slice(0, 2).toUpperCase()}
               </span>
             )}
             <div>
-              <h3 id={`${detailsId}-name`} className="font-display text-base font-semibold">
+              <h3 id={`${detailsId}-name`} className="rw3-title">
                 <span className="sr-only">{`Rank ${position}: `}</span>
                 {card.name}
               </h3>
-              <p className="text-xs text-muted-foreground">{card.availabilityLabel}</p>
+              <p className="rw3-meta">{card.availabilityLabel}</p>
             </div>
           </div>
 
           <div className="text-right">
-            <span
-              className="inline-block rounded-full border border-[var(--border-subtle)] px-2 py-0.5 text-xs"
-              title={card.qualificationExplanation}
-            >
+            <span className="rw3-pill" title={card.qualificationExplanation}>
               {card.qualificationLabel}
             </span>
           </div>
         </div>
 
-        <dl className="mt-3 grid grid-cols-2 gap-3 text-sm sm:grid-cols-3">
+        <dl className="mt-3 grid grid-cols-2 gap-3 text-[13px] sm:grid-cols-3">
           {/*
             THE SCORE METER NEEDS A PRICE TO MEAN ANYTHING. With no observed price at ANY
             operator in the set, every card scores identically on availability alone, and a row
@@ -141,20 +145,20 @@ export function OperatorEvidenceCard({
           {showScore ? (
             <div>
               {/* An operator ranking, not football evidence — §18.4 keeps the two words apart. */}
-              <dt className="text-xs text-muted-foreground">Ranking score</dt>
+              <dt className="rw3-label">Ranking score</dt>
               <dd className="mt-1">
                 <ScoreMeter score={card.evidenceScore} max={card.maxEvidenceScore} />
               </dd>
             </div>
           ) : null}
           <div>
-            <dt className="text-xs text-muted-foreground">Observed price</dt>
-            <dd className="mt-1 font-mono">
-              {card.observedPriceLabel ?? <span className="text-muted-foreground">Not observed</span>}
+            <dt className="rw3-label">Observed price</dt>
+            <dd className="mt-1 tabular-nums">
+              {card.observedPriceLabel ?? <span style={{ color: "var(--muted)" }}>Not observed</span>}
             </dd>
           </div>
           <div>
-            <dt className="text-xs text-muted-foreground">Markets</dt>
+            <dt className="rw3-label">Markets</dt>
             <dd className="mt-1">{card.supportedMarkets.length}</dd>
           </div>
         </dl>
@@ -164,7 +168,8 @@ export function OperatorEvidenceCard({
             {card.supportedMarkets.map((m) => (
               <li
                 key={m.key}
-                className="rounded border border-[var(--border-subtle)] px-1.5 py-0.5 text-xs text-muted-foreground"
+                className="border border-[var(--line)] px-1.5 py-0.5 text-[11px]"
+                style={{ borderRadius: 6, color: "var(--muted)" }}
               >
                 {m.label}
               </li>
@@ -177,16 +182,19 @@ export function OperatorEvidenceCard({
           JavaScript. The analytics wrapper only listens; it does not drive this.
         */}
         <details className="mt-3 group">
-          <summary className="cursor-pointer list-none text-sm font-medium underline-offset-4 outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 hover:underline">
+          <summary className="cursor-pointer list-none text-[13px] font-medium underline-offset-4 hover:underline">
             Why this operator?
           </summary>
           <ul className="mt-2 space-y-1" aria-label={`Evidence for ${card.name}`}>
             {card.reasons.map((reason) => (
-              <li key={reason.code} className="flex items-start gap-2 text-sm">
-                <span aria-hidden="true" className={reason.satisfied ? "text-brand" : "text-muted-foreground"}>
-                  {reason.satisfied ? <Check className="h-3.5 w-3.5" aria-hidden /> : <Minus className="h-3.5 w-3.5" aria-hidden />}
+              <li key={reason.code} className="flex items-start gap-2 text-[13px]">
+                <span
+                  aria-hidden="true"
+                  style={{ color: reason.satisfied ? "var(--win)" : "var(--muted)" }}
+                >
+                  {reason.satisfied ? "✓" : "–"}
                 </span>
-                <span className={reason.satisfied ? "" : "text-muted-foreground"}>
+                <span style={reason.satisfied ? undefined : { color: "var(--muted)" }}>
                   <span className="sr-only">{reason.satisfied ? "Met: " : "Not met: "}</span>
                   {reason.label}
                 </span>
@@ -194,29 +202,33 @@ export function OperatorEvidenceCard({
             ))}
           </ul>
           {card.freshnessLabel && (
-            <p className="mt-2 text-xs text-muted-foreground">{card.freshnessLabel}</p>
+            <p className="rw3-meta mt-2">{card.freshnessLabel}</p>
           )}
         </details>
 
         <div className="mt-4 flex flex-wrap items-center gap-2">
+          {/* CTA tiers (Bible V3): FILLED green is curated-only — table/list odds are
+              GHOST, arrow icon and all, filling green on hover. */}
           {isOutbound ? (
             <a
               href={primaryHref}
               data-operator-cta="primary"
               rel="sponsored nofollow noopener"
               target="_blank"
-              className="rounded-md bg-brand px-3 py-2 text-sm font-medium text-background outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
+              className="rw3-ghost"
+              style={{ padding: "8px 12px" }}
             >
-              View odds
+              View odds <Icon name="external" size={12} />
               <span className="sr-only">{` at ${card.name} (opens in a new tab)`}</span>
             </a>
           ) : (
             <Link
               href={secondaryHref}
               data-operator-cta="primary"
-              className="rounded-md bg-brand px-3 py-2 text-sm font-medium text-background outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
+              className="rw3-ghost"
+              style={{ padding: "8px 12px" }}
             >
-              View odds
+              View odds <Icon name="arrow" size={12} />
               <span className="sr-only">{` at ${card.name}`}</span>
             </Link>
           )}
@@ -224,7 +236,8 @@ export function OperatorEvidenceCard({
           <Link
             href={secondaryHref}
             data-operator-cta="secondary"
-            className="rounded-md border border-[var(--border-subtle)] px-3 py-2 text-sm outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
+            className="rw3-ghost"
+            style={{ padding: "8px 12px" }}
           >
             Operator details
             <span className="sr-only">{` for ${card.name}`}</span>
@@ -274,15 +287,17 @@ export function OperatorEvidenceCardList({
 
   return (
     <section
-      className="border-b border-[var(--border-subtle)] py-8"
+      className="border-b border-[var(--line)] py-8"
       aria-labelledby={headingId}
       data-analytics-section="operator_evidence_cards"
     >
-      <h2 id={headingId} className="font-display text-xl font-semibold text-foreground">
+      <h2 id={headingId} className="rw3-title">
         {heading}
       </h2>
 
-      <p className="mt-2 max-w-3xl text-sm text-muted-foreground">{OPERATOR_RANKING_BASIS}</p>
+      <p className="mt-2 max-w-3xl text-[13px]" style={{ color: "var(--muted)" }}>
+        {OPERATOR_RANKING_BASIS}
+      </p>
 
       <div className="mt-4 grid gap-3">
         {cards.map((card, index) => (
@@ -300,7 +315,7 @@ export function OperatorEvidenceCardList({
         ))}
       </div>
 
-      <ul className="mt-4 space-y-1 text-xs text-muted-foreground">
+      <ul className="rw3-meta mt-4 space-y-1">
         {OPERATOR_RANKING_LIMITATIONS.map((limitation) => (
           <li key={limitation}>{limitation}</li>
         ))}

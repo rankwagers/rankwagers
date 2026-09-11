@@ -34,11 +34,10 @@ export function AddToAccaButton({
     (s) => s.matchId === draft.matchId && s.id !== id
   );
 
-  const base =
-    className ??
-    (compact
-      ? "inline-flex min-h-9 items-center rounded-md border border-brand/30 bg-[var(--green-surface)] px-2.5 text-xs font-semibold text-[var(--hero-ink)] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
-      : "inline-flex min-h-10 items-center rounded-md border border-brand/35 bg-[var(--green-surface)] px-3 text-sm font-semibold text-[var(--hero-ink)] transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand");
+  /* The add/transfer action is register-gated to GHOST (Bible V3 CTA tiers):
+   * filled green is curated-commercial only, and this button is neither. The
+   * `.rw3` scope's global :focus-visible ring carries keyboard focus. */
+  const base = className ?? (compact ? "rw3-ghost min-h-9" : "rw3-ghost min-h-10");
 
   if (exact) {
     return (

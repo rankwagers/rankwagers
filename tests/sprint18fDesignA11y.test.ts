@@ -46,9 +46,13 @@ test("tailwind colors wire to css variables", () => {
 });
 
 test("status and risk tone maps are complete", () => {
-  assert.ok(STATUS_TONE_CLASS.won.includes("status-won"));
-  assert.ok(STATUS_TONE_CLASS.live.includes("status-live"));
-  assert.ok(RISK_TONE_CLASS.very_aggressive.includes("risk-very-aggressive"));
+  // V3 reconciliation: the law is that each tone carries a distinct, token-driven
+  // treatment. The v2 `--status-*` / `--risk-*` variables retired with the rw3
+  // reskin; the markers now pin the Bible V3 colour law — win `--win`,
+  // live/on-air `--accent`, worst-risk `--loss`.
+  assert.ok(STATUS_TONE_CLASS.won.includes("--win"));
+  assert.ok(STATUS_TONE_CLASS.live.includes("--accent"));
+  assert.ok(RISK_TONE_CLASS.very_aggressive.includes("--loss"));
   assert.match(TOUCH_TARGET_CLASS, /touch-min/);
 });
 
