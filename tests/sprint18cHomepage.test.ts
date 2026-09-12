@@ -149,11 +149,14 @@ test("hero never ships a synthetic reading", () => {
 });
 
 test("homepage page loads trust model server-side", () => {
-  // V3 reconciliation: the trust model still builds server-side, but the v3
-  // page passes its verified pair down as `verified` (null omits the card —
-  // the empty-state law) instead of threading the whole model as a prop.
+  // V3 reconciliation (polish group 7): the law — the verified record is
+  // built server-side from REAL settled data and reaches the render as
+  // `verified` (null omits the card) — now holds against the ARCHIVE's own
+  // summary: buildVerifiedRecordCard is the same queryArchive call /archive
+  // prints, replacing the private 3-day trust window. Equality with the
+  // archive metrics is pinned functionally in tests/verifiedRecord.test.ts.
   const page = readFileSync(path.join(root, "app/[locale]/page.tsx"), "utf8");
-  assert.match(page, /buildHomepageTrustModel/);
+  assert.match(page, /buildVerifiedRecordCard/);
   assert.match(page, /pageMetadata/);
   assert.match(page, /verified=\{verified\}/);
 });

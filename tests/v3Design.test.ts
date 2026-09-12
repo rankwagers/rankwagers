@@ -232,6 +232,7 @@ function homeMarkup(withOffer: boolean): string {
       continue: "Continue",
       terms: "Terms.",
       smallSample: "small sample",
+      nSettled: "{n} settled",
     },
     band: {
       editorPick: "Editor's pick",
@@ -294,7 +295,7 @@ function homeMarkup(withOffer: boolean): string {
           continueHref: "/go/op?ctx=y",
         },
       ],
-      verified: { hitRatePct: 80, won: 2058, lost: 507, windowLabel: "window" },
+      verified: { hitRatePct: 80, won: 2058, lost: 507, settled: 2565, windowLabel: "window" },
       highPotential: [],
       offer: withOffer
         ? {

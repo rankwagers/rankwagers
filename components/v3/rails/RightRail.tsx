@@ -21,6 +21,8 @@ export type VerifiedCard = {
   hitRatePct: number;
   won: number;
   lost: number;
+  /** Group 7: the archive's settled count — the card states its whole base. */
+  settled: number;
   windowLabel: string;
 };
 
@@ -36,6 +38,8 @@ export type RightRailStrings = {
   terms: string;
   /** "small sample" — n<5 markets say so and render muted (group 5). */
   smallSample: string;
+  /** "{n} settled" — the archive's own vocabulary (group 7). */
+  nSettled: string;
 };
 
 export function RightRail({
@@ -78,7 +82,8 @@ export function RightRail({
             </span>
             <LockTick size={16} />
             <span style={{ fontSize: 12, color: "var(--muted)" }}>
-              {verified.won} <span style={{ color: "var(--win)" }}>W</span> · {verified.lost}{" "}
+              {formatDict(strings.nSettled, { n: String(verified.settled) })} · {verified.won}{" "}
+              <span style={{ color: "var(--win)" }}>W</span> · {verified.lost}{" "}
               <span style={{ color: "var(--loss)" }}>L</span>
             </span>
           </div>

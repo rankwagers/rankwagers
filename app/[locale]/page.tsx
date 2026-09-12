@@ -2,10 +2,8 @@ import type { Metadata } from "next";
 import { getDictionary } from "@/lib/dictionaries";
 import { type Locale } from "@/lib/i18n";
 import { pageMetadata } from "@/lib/seo";
-import { todayMatchDateStr } from "@/lib/footystats/client";
 import type { MatchListKind } from "@/lib/footystats/types";
 import { getRequestCountryContext } from "@/lib/personalization/server";
-import { buildHomepageTrustModel } from "@/lib/homepage/trustPerformance";
 import { PredictionsPageJsonLd } from "@/components/predictions/PredictionsPageJsonLd";
 import { HomepagePublishedAccas } from "@/components/homepage/HomepagePublishedAccas";
 import { HomeV3, type HomeV3Strings } from "@/components/v3/home/HomeV3";
@@ -25,6 +23,7 @@ import {
   buildRailSites,
 } from "@/lib/v3/homeRails.server";
 import { buildEditorBandPicks } from "@/lib/v3/editorPicks.server";
+import { buildVerifiedRecordCard } from "@/lib/v3/verifiedRecord.server";
 import { readEditorPicksDocument } from "@/lib/editor-picks/store";
 import { formatDict } from "@/lib/formatDict";
 
@@ -70,7 +69,6 @@ export default async function LocaleHomePage({
   const dict = getDictionary(locale);
   const p = dict.predictions as unknown as Record<string, string>;
   const countryContext = getRequestCountryContext(searchParams?.country);
-  const today = todayMatchDateStr();
 
   const day = parseDayParam(searchParams?.day);
   const market = parseMarket(searchParams?.market);
@@ -99,7 +97,7 @@ export default async function LocaleHomePage({
   const { pinnedOperatorSlug } = await readEditorPicksDocument();
   const fallbackOperator = resolveFallbackOperator(countryContext, pinnedOperatorSlug);
 
-  const [{ rows, totalRows }, picks, highPotential, trust] = await Promise.all([
+  const [{ rows, totalRows }, picks, highPotential, verified] = await Promise.all([
     buildTableRows({
       lists: selected.lists,
       locale,
@@ -117,29 +115,15 @@ export default async function LocaleHomePage({
       fallbackOperator,
     }),
     buildHighPotentialToday(todayData.lists),
-    buildHomepageTrustModel({
-      locale,
-      today,
-      selectedDate: today,
-      lists: todayData.lists,
-      countryContext,
-    }),
+    /* GROUP 7 — the verified card IS the archive summary: same query, same
+       window, same numbers /archive prints; probe-pinned equal. */
+    buildVerifiedRecordCard(locale),
   ]);
 
   const { leagues, totalMatches } = buildPopularLeagues(selected.lists);
   const sites = buildRailSites(countryContext, locale);
   const offer = buildOfferOfTheDay(countryContext, locale, pinnedOperatorSlug);
   const live = buildLiveStrip(todayData.lists);
-
-  const verified =
-    trust.verified.hitRatePct !== null
-      ? {
-          hitRatePct: trust.verified.hitRatePct,
-          won: trust.verified.won,
-          lost: trust.verified.lost,
-          windowLabel: trust.verified.windowLabel,
-        }
-      : null;
 
   /* When today is empty, tomorrow's real count and first kickoff make the
      one-line microcopy — real data or the generic line, never invented. */
@@ -192,6 +176,7 @@ export default async function LocaleHomePage({
       continue: p.v3Continue,
       terms: dict.footer.disclaimer,
       smallSample: p.v3SmallSample,
+      nSettled: p.arcSettledLine,
     },
     band: {
       editorPick: p.v3EditorPick,
