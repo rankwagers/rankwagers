@@ -77,6 +77,32 @@ Restyle in place, keeping every existing truth probe:
   adds the period picker.
 - `search`
 
+## Fixture v3.1 — the approved match-page design
+
+Source: `design/v3/match-v31.pdf` — a MOCK, adapted to real data, never
+cloned. All standing laws hold: the five-layer law, the truth laws,
+DATA-AS-DOOR, dictionary births ×30, the fixtures bundle ceiling (≤140 kB),
+and the DECIDED no-standings rule (the mock's rank/points/round fields are
+OMITTED — no provider standings source exists). The settlement/evidence
+truth surfaces (research table, record, timeline, evidence history) are
+retained below the five layers, untouched in law.
+
+Blocks, one commit each:
+
+| Block | Scope |
+|-------|-------|
+| V1 | Layer 1 — header (32px crests, names, league · kickoff · venue, last-5 form chips from real results) + the VERDICT (the page's ONE >18px number, 32–36px, probe-pinned; market pill · scope · sample; ±pp-vs-league chip, green only when direction favors the claim; the 5-segment SAMPLE STRENGTH bar — tiers <5:1, 5–9:2, 10–14:3, 15–24:4, 25+:5, never called "confidence"; provenance line; lead sentence + editor note) + "Play this market" (availability-first, verified-first, one Best badge, ghost odds, sponsored no-number fallback, odds-as-of line) + right-rail other-markets/offer. All v3.1 dictionary births land here (one locale pass). |
+| V2 | Layer 2 — evidence rows (rank · sentence · icon+scope · 14px pct · deviation bar with league-average marker · ±pp chip · form dots where FT scores can answer); sorted by the engine's weighted score; rows beyond three collapse under "N more signals ▾" (chips), expanding inline via `<details>` — no navigation, no JS. Unmeasured / n<5 never appear here. |
+| V3 | Layer 3 — head-to-head (only at ≥3 meetings): W/D/L share bar (data-semantic green/gray/red), market rates over the available window with samples and the "last N meetings · years" label, last-5 result cards; n<5 muted + small sample. MODEL VIEW: 2–4 sentences from a TEMPLATE REGISTRY — each template names its computed inputs and is omitted whole when any input is missing; no ranking claim without a computed rank (none is, so none claims); ends with the lock line + See the record. |
+| V4 | Layer 4 — team comparison: two cards (form chips overall/home/away + points-per-match derived from real fixtures; stats table with samples; paired horizontal bars for the key stats). Missing stat → row omitted, never 0. No standings fields. |
+| V5 | Layer 5 — operators × markets matrix (logo chip · name · one Best; ghost observed prices; the market's TOP price outlined — the mock outlines the highest and decimal odds' best IS the highest, deviating deliberately from the instruction's "min"; "—" muted for no observation; ghost Continue per row) + mobile composition (verdict first, play-panel under it, compact evidence, H2H scroll, stacked comparison, per-market accordion) + the probe sweep + bundle ceiling check. |
+
+DECIDED — best price = HIGHEST decimal. The instruction's probe line says
+"min over observed prices", but the approved mock outlines the highest
+price in every column and the repo's standing best-price law
+(`bestPriceForRow`) has always taken the highest decimal — the punter's
+best. Implemented as max; flagged in the session report.
+
 ### I — Acca chrome to v3, and the legacy-token close-out
 
 Studio, builder and panel chrome to the rw3 language; clear the residual
