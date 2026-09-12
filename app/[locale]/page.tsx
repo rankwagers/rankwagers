@@ -20,6 +20,7 @@ import {
 import {
   buildHighPotentialToday,
   buildOfferOfTheDay,
+  resolveFallbackOperator,
   buildPopularLeagues,
   buildRailSites,
 } from "@/lib/v3/homeRails.server";
@@ -93,6 +94,11 @@ export default async function LocaleHomePage({
     weekend: countDistinctMatches(weekendData.lists),
   };
 
+  /* The admin pin (block F) selects the offer of the day AND the no-price
+     fallback operator (polish group 4); the ranked default otherwise. */
+  const { pinnedOperatorSlug } = await readEditorPicksDocument();
+  const fallbackOperator = resolveFallbackOperator(countryContext, pinnedOperatorSlug);
+
   const [{ rows, totalRows }, picks, highPotential, trust] = await Promise.all([
     buildTableRows({
       lists: selected.lists,
@@ -101,12 +107,14 @@ export default async function LocaleHomePage({
       marketFilter: market,
       sort,
       limit: showAll ? Number.MAX_SAFE_INTEGER : VISIBLE_ROWS,
+      fallbackOperator,
     }),
     buildEditorBandPicks({
       lists: todayData.lists,
       locale,
       country: countryContext.country ?? null,
       p: dict.predictions,
+      fallbackOperator,
     }),
     buildHighPotentialToday(todayData.lists),
     buildHomepageTrustModel({
@@ -120,10 +128,6 @@ export default async function LocaleHomePage({
 
   const { leagues, totalMatches } = buildPopularLeagues(selected.lists);
   const sites = buildRailSites(countryContext, locale);
-  /* The admin pin (block F) selects the offer of the day when set; the
-     ranked default otherwise. An unconfigured pin falls through inside the
-     builder — the card is never fabricated for a pin that cannot pay out. */
-  const { pinnedOperatorSlug } = await readEditorPicksDocument();
   const offer = buildOfferOfTheDay(countryContext, locale, pinnedOperatorSlug);
   const live = buildLiveStrip(todayData.lists);
 
@@ -188,7 +192,7 @@ export default async function LocaleHomePage({
       continue: p.v3Continue,
       terms: dict.footer.disclaimer,
     },
-    band: { editorPick: p.v3EditorPick, more: p.v3More },
+    band: { editorPick: p.v3EditorPick, more: p.v3More, sponsored: p.v3Sponsored18 },
     tabs: {
       today: p.v3Today,
       tomorrow: p.v3Tomorrow,
@@ -209,6 +213,7 @@ export default async function LocaleHomePage({
       colBestOdds: p.v3ColBestOdds,
       nMoreMatches: p.v3NMoreMatches,
       sponsoredLinks: p.v3SponsoredLinks,
+      sponsored: p.v3Sponsored18,
     },
     live: p.v3Live,
     seeRecord: p.v3SeeRecord,

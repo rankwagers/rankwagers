@@ -8,7 +8,8 @@ import { getDictionary } from "@/lib/dictionaries";
 import { loadMatchPageBundle } from "@/lib/fixtures/loadMatchPage.server";
 import { activeEditorPickForMatch } from "@/lib/v3/editorPicks.server";
 import { readEditorPicksDocument } from "@/lib/editor-picks/store";
-import { buildOfferOfTheDay } from "@/lib/v3/homeRails.server";
+import { buildOfferOfTheDay, resolveFallbackOperator } from "@/lib/v3/homeRails.server";
+import { buildGoPath } from "@/lib/operators/go-path";
 import { buildPricePanelData } from "@/lib/operators/pricePanel.server";
 import { parseFixtureMatchId } from "@/lib/fixtures/paths";
 import { locales, type Locale } from "@/lib/i18n";
@@ -148,6 +149,30 @@ export default async function FixtureMatchPage({
      block under L1. No pick or no note → nothing (never an empty frame). */
   const editorNote = (await activeEditorPickForMatch(matchId))?.longNote ?? null;
 
+  /* Polish group 4: the lead market's sponsored no-price ghost — the same
+     pinned/Best operator as everywhere, signed for THIS fixture. */
+  const fallbackOperator = resolveFallbackOperator(
+    countryContext,
+    editorPicks.pinnedOperatorSlug
+  );
+  const priceFallback = fallbackOperator
+    ? {
+        name: fallbackOperator.name,
+        mark: fallbackOperator.mark,
+        logo: fallbackOperator.logo,
+        continueHref: buildGoPath({
+          slug: fallbackOperator.slug,
+          placement: "price_row_fallback",
+          subid: `prf_fx_${matchId}_${fallbackOperator.slug}`.toLowerCase(),
+          locale: String(params.locale),
+          country: countryContext.country ?? undefined,
+          availability: "unknown",
+          deeplinkType: "football_landing",
+        }),
+        sponsoredTitle: dict.predictions.v3Sponsored18,
+      }
+    : null;
+
   return (
     <>
       <MatchDetailView
@@ -160,6 +185,7 @@ export default async function FixtureMatchPage({
         offer={offer}
         offerTerms={dict.footer.disclaimer}
         editorNote={editorNote}
+        priceFallback={priceFallback}
       />
       {/*
         Sprint 23 — Evidence History. Rendered as a sibling of the match view rather than

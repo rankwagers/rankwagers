@@ -124,6 +124,48 @@ export function buildRailSites(
   });
 }
 
+/* ── the day's fallback operator (polish group 4) ──────────────────────── */
+
+export type FallbackOperator = {
+  slug: string;
+  name: string;
+  mark: string;
+  logo: string | null;
+};
+
+/**
+ * The operator behind the sponsored no-price fallback: the admin's pinned
+ * operator when set and eligible, else the day's Best (top-ranked). The
+ * caller signs per surface — one placement (`price_row_fallback`), one
+ * subid per row, never a fabricated price. Null when nobody qualifies:
+ * the affordance is omitted, not placeholdered.
+ */
+export function resolveFallbackOperator(
+  countryContext: CountryContext,
+  pinnedSlug?: string | null
+): FallbackOperator | null {
+  const configured = affiliatePartners.filter(
+    (partner) =>
+      partner.isConfigured &&
+      (!partner.acceptedCountries.length ||
+        partner.acceptedCountries.includes(countryContext.country))
+  );
+  if (!configured.length) return null;
+  const pinned = pinnedSlug
+    ? configured.find((partner) => partner.slug === pinnedSlug)
+    : undefined;
+  const partner = pinned ?? sortPartnersForCountry(configured, countryContext)[0];
+  if (!partner) return null;
+  const brand = getBrand(partner.slug);
+  if (!brand) return null;
+  return {
+    slug: partner.slug,
+    name: partner.canonicalName,
+    mark: markFor(partner.canonicalName),
+    logo: brand.logo ?? null,
+  };
+}
+
 /* ── offer of the day ──────────────────────────────────────────────────── */
 
 export type OfferOfTheDay = {

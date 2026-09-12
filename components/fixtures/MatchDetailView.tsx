@@ -37,6 +37,7 @@ export function MatchDetailView({
   offer,
   offerTerms,
   editorNote,
+  priceFallback,
 }: {
   locale: Locale;
   bundle: MatchPageBundle;
@@ -52,6 +53,14 @@ export function MatchDetailView({
   offerTerms?: string;
   /** Block F: the active manual pick's long note — the editor-note block under L1. */
   editorNote?: string | null;
+  /** Polish group 4: the sponsored no-price ghost for the lead market. */
+  priceFallback?: {
+    name: string;
+    mark: string;
+    logo: string | null;
+    continueHref: string;
+    sponsoredTitle: string;
+  } | null;
 }) {
   const { model, focusMarket, detail } = bundle;
   const { header } = model;
@@ -245,7 +254,14 @@ export function MatchDetailView({
         the reader meets the strongest real signal first, or meets the model directly.
       */}
       <div className="mt-8">
-        <FixtureSignalLevels report={signalReport} teams={teams} p={p} prices={prices} locale={locale} />
+        <FixtureSignalLevels
+          report={signalReport}
+          teams={teams}
+          p={p}
+          prices={prices}
+          locale={locale}
+          fallback={priceFallback}
+        />
       </div>
 
       {/*

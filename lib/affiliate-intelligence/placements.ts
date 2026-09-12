@@ -327,6 +327,25 @@ export const AFFILIATE_PLACEMENTS: readonly PlacementRecord[] = [
     ],
   },
   {
+    placementId: "price_row_fallback",
+    pageType: "home",
+    componentPath:
+      "components/v3/home/PredictionTable.tsx + EditorBand.tsx + components/fixtures/FixtureSignalLevels.tsx",
+    userIntentStage: "conversion",
+    operatorSelection: "admin pin, else the day's top-ranked partner (resolveFallbackOperator)",
+    attributionSchema: ["operator", "placement", "locale", "market", "fixture", "country"],
+    signingMethod: "buildGoPath (server), one subid per row/card/fixture",
+    availabilityRule: "affiliate configured + accepted country",
+    fallbackBehavior: "no qualifying operator → no affordance (never a fabricated price)",
+    eventNames: ["operator_impression", "operator_click", "go_redirect"],
+    duplicateCtaRisk: "medium",
+    prominence: "secondary",
+    qualityStatus: "ok",
+    notes: [
+      "Polish group 4: where no publication price was observed, a sponsored ghost (logo + name + arrow, NO number, title Sponsored · 18+) stands in. The observed-price CTA always wins when a price exists.",
+    ],
+  },
+  {
     placementId: "price_row",
     pageType: "home",
     componentPath: "components/v3/home/PredictionTable.tsx",

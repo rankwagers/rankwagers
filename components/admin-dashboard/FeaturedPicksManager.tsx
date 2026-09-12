@@ -126,6 +126,7 @@ export function FeaturedPicksManager() {
             hasLongNote: Boolean(pick.longNote?.trim()),
             isManual: true,
             bestOdds: null,
+            fallbackOdds: null,
           },
         ];
       }),
@@ -517,7 +518,7 @@ export function FeaturedPicksManager() {
             <EditorBand
               picks={previewCards}
               locale="en"
-              strings={{ editorPick: p.v3EditorPick, more: p.v3More }}
+              strings={{ editorPick: p.v3EditorPick, more: p.v3More, sponsored: p.v3Sponsored18 }}
             />
           </div>
         ) : (

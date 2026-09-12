@@ -25,6 +25,8 @@ export type TableStrings = {
   colBestOdds: string;
   nMoreMatches: string;
   sponsoredLinks: string;
+  /** "Sponsored · 18+" — the no-price fallback ghost's title (group 4). */
+  sponsored: string;
 };
 
 /* Crests render 24px (polish group 3) — the provider asset is larger than
@@ -163,6 +165,30 @@ export function PredictionTable({
                   row.bestOdds.mark
                 )}{" "}
                 {row.bestOdds.decimal} <Icon name="arrow" size={12} />
+              </a>
+            ) : row.fallbackOdds ? (
+              /* No observed price → the sponsored ghost: logo + name +
+                 arrow, NO number — never a fabricated price (group 4). */
+              <a
+                href={row.fallbackOdds.continueHref}
+                rel="nofollow sponsored noopener"
+                className="rw3-ghost"
+                title={strings.sponsored}
+                style={{ display: "inline-flex", alignItems: "center", gap: 5 }}
+              >
+                {row.fallbackOdds.logo ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={row.fallbackOdds.logo}
+                    alt=""
+                    width={14}
+                    height={14}
+                    style={{ objectFit: "contain", borderRadius: 3 }}
+                  />
+                ) : (
+                  row.fallbackOdds.mark
+                )}{" "}
+                {row.fallbackOdds.name} <Icon name="arrow" size={12} />
               </a>
             ) : null}
           </span>

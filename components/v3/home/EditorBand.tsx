@@ -20,6 +20,8 @@ import type { CSSProperties } from "react";
 export type EditorBandStrings = {
   editorPick: string;
   more: string;
+  /** "Sponsored · 18+" — the no-price fallback ghost's title (group 4). */
+  sponsored: string;
 };
 
 function Crest({ src, name }: { src: string | null; name: string }) {
@@ -217,6 +219,35 @@ export function EditorBand({
                     pick.bestOdds.mark
                   )}{" "}
                   {pick.bestOdds.decimal} <Icon name="arrow" size={10} />
+                </a>
+              ) : pick.fallbackOdds ? (
+                /* No observed price → the sponsored ghost, no number (group 4). */
+                <a
+                  href={pick.fallbackOdds.continueHref}
+                  rel="nofollow sponsored noopener"
+                  className="rw3-ghost"
+                  title={strings.sponsored}
+                  style={{
+                    fontSize: 11,
+                    padding: "3px 9px",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 5,
+                  }}
+                >
+                  {pick.fallbackOdds.logo ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={pick.fallbackOdds.logo}
+                      alt=""
+                      width={14}
+                      height={14}
+                      style={{ objectFit: "contain", borderRadius: 3 }}
+                    />
+                  ) : (
+                    pick.fallbackOdds.mark
+                  )}{" "}
+                  {pick.fallbackOdds.name} <Icon name="arrow" size={10} />
                 </a>
               ) : null}
             </div>

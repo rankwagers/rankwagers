@@ -229,7 +229,7 @@ function homeMarkup(withOffer: boolean): string {
       continue: "Continue",
       terms: "Terms.",
     },
-    band: { editorPick: "Editor's pick", more: "more" },
+    band: { editorPick: "Editor's pick", more: "more", sponsored: "Sponsored · 18+" },
     tabs: {
       today: "Today",
       tomorrow: "Tomorrow",
@@ -250,6 +250,7 @@ function homeMarkup(withOffer: boolean): string {
       colBestOdds: "Best odds",
       nMoreMatches: "{n} more matches",
       sponsoredLinks: "Sponsored links · 18+",
+      sponsored: "Sponsored · 18+",
     },
     live: "Live",
     seeRecord: "See the record",
@@ -317,6 +318,68 @@ test("the offer of the day appears exactly once per page", () => {
     (withoutOffer.match(/data-offer-of-the-day/g) ?? []).length,
     0,
     "no qualifying partner → the slot is omitted, not placeholdered"
+  );
+});
+
+test("the no-price fallback ghost carries NO number (polish group 4)", () => {
+  const { PredictionTable } =
+    require("../components/v3/home/PredictionTable") as typeof import("../components/v3/home/PredictionTable");
+  const markup = renderToStaticMarkup(
+    React.createElement(PredictionTable, {
+      rows: [
+        {
+          matchId: 7,
+          kickoffTime: 0,
+          timeLabel: "17:30",
+          home: "Alpha",
+          away: "Beta",
+          homeImage: null,
+          awayImage: null,
+          league: "Test League",
+          countryCode: null,
+          marketKind: "over15",
+          marketLabel: "Over 1.5",
+          ratePct: 82,
+          sample: "9/11",
+          form: [],
+          bestOdds: null,
+          fallbackOdds: {
+            operatorSlug: "op",
+            name: "OpBet",
+            mark: "OP",
+            logo: null,
+            continueHref: "/go/op?ctx=f",
+          },
+          isLive: false,
+        },
+      ],
+      totalRows: 1,
+      locale: "en",
+      strings: {
+        colTime: "Time",
+        colMatch: "Match",
+        colLeague: "League",
+        colMarket: "Market",
+        colRate: "Rate",
+        colSample: "Sample",
+        colForm: "Form",
+        colBestOdds: "Best odds",
+        nMoreMatches: "{n} more matches",
+        sponsoredLinks: "Sponsored links · 18+",
+        sponsored: "Sponsored · 18+",
+      },
+      moreHref: null,
+    } as Parameters<typeof PredictionTable>[0])
+  );
+  assert.match(markup, /OpBet/, "the fallback names the operator");
+  assert.match(markup, /title="Sponsored · 18\+"/, "the ghost is titled sponsored");
+  const anchorStart = markup.indexOf("<a ", markup.indexOf("rw3-c-odds"));
+  const anchor = markup.slice(anchorStart, markup.indexOf("</a>", anchorStart));
+  const ctaText = anchor.replace(/<[^>]*>/g, " ").replace(/^[^>]*>/, " ");
+  assert.doesNotMatch(
+    ctaText,
+    /\d/,
+    "no number inside the fallback CTA — a price that was not observed is never fabricated"
   );
 });
 

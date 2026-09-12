@@ -137,6 +137,18 @@ export type TableRow = {
     decimal: string;
     continueHref: string;
   } | null;
+  /**
+   * Polish group 4: when NO price was observed, the sponsored no-number
+   * ghost (day's pinned/Best operator) — placement price_row_fallback.
+   * Never rendered beside a real price; null when nobody qualifies.
+   */
+  fallbackOdds: {
+    operatorSlug: string;
+    name: string;
+    mark: string;
+    logo: string | null;
+    continueHref: string;
+  } | null;
   isLive: boolean;
 };
 
@@ -225,8 +237,10 @@ export async function buildTableRows(input: {
   marketFilter: MatchListKind | null;
   sort: "rate" | "time";
   limit: number;
+  /** Polish group 4: the day's pinned/Best operator for the no-price ghost. */
+  fallbackOperator?: import("./homeRails.server").FallbackOperator | null;
 }): Promise<{ rows: TableRow[]; totalRows: number }> {
-  const { lists, locale, country, marketFilter, sort, limit } = input;
+  const { lists, locale, country, marketFilter, sort, limit, fallbackOperator } = input;
   const kinds: MatchListKind[] = ["fh", "over15", "over25", "sh"];
   const byFixture = new Map<number, { row: FootyMatchRow; kinds: Map<MatchListKind, number> }>();
   for (const kind of kinds) {
@@ -267,6 +281,25 @@ export async function buildTableRows(input: {
     locale
   );
 
+  const fallbackFor = (row: FootyMatchRow, kind: MatchListKind) =>
+    fallbackOperator
+      ? {
+          operatorSlug: fallbackOperator.slug,
+          name: fallbackOperator.name,
+          mark: fallbackOperator.mark,
+          logo: fallbackOperator.logo,
+          continueHref: buildGoPath({
+            slug: fallbackOperator.slug,
+            placement: "price_row_fallback",
+            subid: `prf_${row.matchId}_${kind}_${fallbackOperator.slug}`.toLowerCase(),
+            locale: String(locale),
+            country: country ?? undefined,
+            availability: "unknown",
+            deeplinkType: "football_landing",
+          }),
+        }
+      : null;
+
   const rows = await Promise.all(
     visible.map(async ({ row, kind }) => {
       const detail = details.get(row.matchId) ?? undefined;
@@ -277,6 +310,7 @@ export async function buildTableRows(input: {
         stat && stat.played > 0 && stat.measured !== false
           ? { ratePct: Math.round((stat.hits / stat.played) * 100), sample: `${stat.hits}/${stat.played}` }
           : { ratePct: null, sample: null };
+      const bestOdds = await bestPriceForRow(row, kind, locale, country);
       return {
         matchId: row.matchId,
         kickoffTime: row.kickoffTime,
@@ -292,7 +326,9 @@ export async function buildTableRows(input: {
         ratePct: paired.ratePct,
         sample: paired.sample,
         form: formFromHistory(detail, kind),
-        bestOdds: await bestPriceForRow(row, kind, locale, country),
+        bestOdds,
+        /* The real price always wins; the ghost stands in only for silence. */
+        fallbackOdds: bestOdds ? null : fallbackFor(row, kind),
         isLive: Boolean(row.isLive),
       } satisfies TableRow;
     })

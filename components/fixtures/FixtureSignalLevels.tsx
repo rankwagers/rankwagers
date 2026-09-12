@@ -5,6 +5,7 @@ import {
   type SignalTeams,
 } from "@/lib/fixtures/signalPresentation";
 import { FixtureSignalsExplainer } from "./FixtureSignalsExplainer";
+import { Icon } from "@/components/v3/Icon";
 import { PricePanel } from "@/components/odds/PricePanel";
 import type { PricePanelData } from "@/lib/operators/pricePanel.server";
 import { PRICE_PANEL_MARKET_BY_SIGNAL } from "@/lib/operators/pricePanel.server";
@@ -28,6 +29,7 @@ export function FixtureSignalLevels({
   p,
   prices,
   locale,
+  fallback,
 }: {
   report: FixtureSignalReport;
   teams: SignalTeams;
@@ -35,6 +37,18 @@ export function FixtureSignalLevels({
   /** Observed publication prices by odds-history market — absent market, no affordance. */
   prices?: PricePanelData;
   locale?: string;
+  /**
+   * Polish group 4: when the LEAD's market has no observed price, the
+   * sponsored no-number ghost (day's pinned/Best operator, server-signed,
+   * placement price_row_fallback). Null → no affordance.
+   */
+  fallback?: {
+    name: string;
+    mark: string;
+    logo: string | null;
+    continueHref: string;
+    sponsoredTitle: string;
+  } | null;
 }) {
   const { lead, supports } = report;
   if (!lead && supports.length === 0) return null;
@@ -55,6 +69,41 @@ export function FixtureSignalLevels({
           >
             {signalSentence(lead, teams, p)}
           </h2>
+          {/* The play-this-market line: an observed price renders inline on
+              the supports below; when the lead's market has NONE, the
+              sponsored ghost stands in — logo + name + arrow, no number. */}
+          {!rowsFor(lead.market) && fallback ? (
+            <p className="mt-2.5">
+              <a
+                href={fallback.continueHref}
+                rel="nofollow sponsored noopener"
+                className="rw3-ghost"
+                title={fallback.sponsoredTitle}
+                style={{
+                  fontSize: 12,
+                  padding: "3px 10px",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: 6,
+                }}
+              >
+                {fallback.logo ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={fallback.logo}
+                    alt=""
+                    width={14}
+                    height={14}
+                    style={{ objectFit: "contain", borderRadius: 3 }}
+                  />
+                ) : (
+                  fallback.mark
+                )}{" "}
+                {fallback.name} <Icon name="arrow" size={11} />
+              </a>{" "}
+              <span className="rw3-meta">{fallback.sponsoredTitle}</span>
+            </p>
+          ) : null}
         </>
       ) : (
         <h2 id="fx-signals-heading" className="sr-only">

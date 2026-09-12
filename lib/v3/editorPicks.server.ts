@@ -13,7 +13,35 @@ import { signalSentence } from "@/lib/fixtures/signalPresentation";
 import type { PredictionStrings } from "@/lib/translations/predictionsEn";
 import { marketForListKind } from "@/lib/research/fixturePresentation";
 import { bestPriceForRow, type TableRow } from "@/lib/v3/homeTable.server";
+import type { FallbackOperator } from "@/lib/v3/homeRails.server";
+import { buildGoPath } from "@/lib/operators/go-path";
 import type { Locale } from "@/lib/i18n";
+
+/** Polish group 4: the band card's sponsored no-number ghost — signed per card. */
+function bandFallback(
+  operator: FallbackOperator | null | undefined,
+  matchId: number,
+  kind: MatchListKind,
+  locale: Locale,
+  country: string | null
+): TableRow["fallbackOdds"] {
+  if (!operator) return null;
+  return {
+    operatorSlug: operator.slug,
+    name: operator.name,
+    mark: operator.mark,
+    logo: operator.logo,
+    continueHref: buildGoPath({
+      slug: operator.slug,
+      placement: "price_row_fallback",
+      subid: `prfb_${matchId}_${kind}_${operator.slug}`.toLowerCase(),
+      locale: String(locale),
+      country: country ?? undefined,
+      availability: "unknown",
+      deeplinkType: "football_landing",
+    }),
+  };
+}
 
 /* ============================================================================
    THE EDITOR BAND'S PICKS (Bible V3, blocks C + F).
@@ -56,6 +84,8 @@ export type EditorPickView = {
   /** Manual (admin) picks carry the editor badge; auto-fill shows the league. */
   isManual: boolean;
   bestOdds: TableRow["bestOdds"];
+  /** Polish group 4: sponsored no-number ghost when no price was observed. */
+  fallbackOdds: TableRow["fallbackOdds"];
 };
 
 function timeLabelFor(row: FootyMatchRow): string {
@@ -99,6 +129,8 @@ export async function buildEditorBandPicks(input: {
   country: string | null;
   p: PredictionStrings;
   now?: number;
+  /** Polish group 4: the day's pinned/Best operator for the no-price ghost. */
+  fallbackOperator?: FallbackOperator | null;
 }): Promise<EditorPickView[]> {
   const { lists, locale, country, p } = input;
   const now = input.now ?? Date.now();
@@ -123,6 +155,7 @@ export async function buildEditorBandPicks(input: {
       });
       if (!lead) continue; // no sample-backed number → no card (no fake precision)
       const kind = SIGNAL_TO_KIND[lead.market] as MatchListKind;
+      const manualBest = await bestPriceForRow(row, kind, locale, country);
       manualViews.push({
         matchId: pick.matchId,
         home: row.homeTeam,
@@ -139,14 +172,24 @@ export async function buildEditorBandPicks(input: {
         sentence: pick.sentence,
         hasLongNote: Boolean(pick.longNote?.trim()),
         isManual: true,
-        bestOdds: await bestPriceForRow(row, kind, locale, country),
+        bestOdds: manualBest,
+        fallbackOdds: manualBest
+          ? null
+          : bandFallback(input.fallbackOperator, pick.matchId, kind, locale, country),
       });
     }
   }
 
   if (manualViews.length >= 4) return manualViews.slice(0, 4);
   const taken = new Set(manualViews.map((view) => view.matchId));
-  const auto = await buildAutoFillPicks({ lists, locale, country, p, limit: 4 + taken.size });
+  const auto = await buildAutoFillPicks({
+    lists,
+    locale,
+    country,
+    p,
+    limit: 4 + taken.size,
+    fallbackOperator: input.fallbackOperator,
+  });
   return [
     ...manualViews,
     ...auto.filter((view) => !taken.has(view.matchId)).slice(0, 4 - manualViews.length),
@@ -158,7 +201,7 @@ export async function buildEditorBandPicks(input: {
 export type PickCardPreview =
   | ({ matchId: number; ok: true } & Omit<
       EditorPickView,
-      "sentence" | "hasLongNote" | "isManual" | "bestOdds"
+      "sentence" | "hasLongNote" | "isManual" | "bestOdds" | "fallbackOdds"
     >)
   | { matchId: number; ok: false; reason: "off_board" | "no_lead" };
 
@@ -220,6 +263,8 @@ export async function buildAutoFillPicks(input: {
   country: string | null;
   p: PredictionStrings;
   limit?: number;
+  /** Polish group 4: the day's pinned/Best operator for the no-price ghost. */
+  fallbackOperator?: FallbackOperator | null;
 }): Promise<EditorPickView[]> {
   const { lists, locale, country, p } = input;
   const limit = input.limit ?? 4;
@@ -257,6 +302,7 @@ export async function buildAutoFillPicks(input: {
     const row = rowFor(lists, fixture.matchId);
     if (!row) continue;
     const kind = SIGNAL_TO_KIND[lead.market] as MatchListKind;
+    const autoBest = await bestPriceForRow(row, kind, locale, country);
     picks.push({
       matchId: fixture.matchId,
       home: row.homeTeam,
@@ -273,7 +319,10 @@ export async function buildAutoFillPicks(input: {
       sentence: signalSentence(lead, { home: row.homeTeam, away: row.awayTeam }, p),
       hasLongNote: false,
       isManual: false,
-      bestOdds: await bestPriceForRow(row, kind, locale, country),
+      bestOdds: autoBest,
+      fallbackOdds: autoBest
+        ? null
+        : bandFallback(input.fallbackOperator, fixture.matchId, kind, locale, country),
     });
   }
   return picks;
