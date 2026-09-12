@@ -73,8 +73,10 @@ export function buildPopularLeagues(lists: DailyMatchLists, limit = 9): {
 export type RailSite = {
   slug: string;
   name: string;
-  /** Two-letter mark for the mono-tinted square. */
+  /** Letter fallback when the brand has no logo asset (polish group 1). */
   mark: string;
+  /** The real brand asset — the operator cards' own file. */
+  logo: string | null;
   offer: string;
   best: boolean;
   continueHref: string;
@@ -106,6 +108,7 @@ export function buildRailSites(
         slug: partner.slug,
         name: partner.canonicalName,
         mark: markFor(partner.canonicalName),
+        logo: brand.logo ?? null,
         offer: bonusForLocale(brand, locale),
         best: index === 0,
         continueHref: buildGoPath({
@@ -127,6 +130,7 @@ export type OfferOfTheDay = {
   slug: string;
   name: string;
   mark: string;
+  logo: string | null;
   offer: string;
   continueHref: string;
 };
@@ -156,6 +160,7 @@ export function buildOfferOfTheDay(
     slug: partner.slug,
     name: partner.canonicalName,
     mark: markFor(partner.canonicalName),
+    logo: brand.logo ?? null,
     offer: bonusForLocale(brand, locale),
     continueHref: buildGoPath({
       slug: partner.slug,

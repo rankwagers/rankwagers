@@ -195,9 +195,28 @@ export function EditorBand({
                   href={pick.bestOdds.continueHref}
                   rel="nofollow sponsored noopener"
                   className="rw3-filled"
-                  style={{ fontSize: 11, padding: "3px 9px" }}
+                  style={{
+                    fontSize: 11,
+                    padding: "3px 9px",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 5,
+                  }}
                 >
-                  {pick.bestOdds.mark} {pick.bestOdds.decimal} <Icon name="arrow" size={10} />
+                  {/* The real brand asset, mark only as fallback (group 1). */}
+                  {pick.bestOdds.logo ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={pick.bestOdds.logo}
+                      alt=""
+                      width={14}
+                      height={14}
+                      style={{ objectFit: "contain", borderRadius: 3 }}
+                    />
+                  ) : (
+                    pick.bestOdds.mark
+                  )}{" "}
+                  {pick.bestOdds.decimal} <Icon name="arrow" size={10} />
                 </a>
               ) : null}
             </div>

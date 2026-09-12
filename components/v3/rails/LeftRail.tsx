@@ -1,5 +1,6 @@
 import { CountryFlagIcon } from "@/components/CountryFlagIcon";
 import { Icon } from "@/components/v3/Icon";
+import { OperatorLogo } from "@/components/v3/OperatorLogo";
 import { SponsoredLabel } from "@/components/v3/SponsoredLabel";
 import type { PopularLeague, RailSite } from "@/lib/v3/homeRails.server";
 
@@ -120,30 +121,15 @@ export function LeftRail({
               key={site.slug}
               style={{
                 display: "grid",
-                gridTemplateColumns: "24px minmax(0,1fr) auto",
+                gridTemplateColumns: "20px minmax(0,1fr) auto",
                 gap: "2px 10px",
                 alignItems: "center",
                 padding: "9px 16px",
                 borderBottom: "1px solid var(--line)",
               }}
             >
-              <span
-                aria-hidden
-                style={{
-                  width: 24,
-                  height: 24,
-                  display: "grid",
-                  placeItems: "center",
-                  fontSize: 8,
-                  fontWeight: 600,
-                  background: "var(--pctbg)",
-                  color: "var(--text)",
-                  border: "1px solid var(--line)",
-                  borderRadius: 6,
-                  gridRow: "span 2",
-                }}
-              >
-                {site.mark}
+              <span style={{ gridRow: "span 2", display: "flex" }}>
+                <OperatorLogo logo={site.logo} mark={site.mark} name={site.name} size={20} />
               </span>
               <span
                 style={{

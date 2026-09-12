@@ -1,5 +1,6 @@
 import { Icon } from "@/components/v3/Icon";
 import { LockTick } from "@/components/v3/LockTick";
+import { OperatorLogo } from "@/components/v3/OperatorLogo";
 import { FormDots } from "@/components/v3/motion";
 import { SponsoredLabel } from "@/components/v3/SponsoredLabel";
 import { formatDict } from "@/lib/formatDict";
@@ -193,24 +194,7 @@ export function OfferOfTheDayCard({
         <SponsoredLabel text={strings.sponsored} size={11} />
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <span
-          aria-hidden
-          style={{
-            width: 28,
-            height: 28,
-            display: "grid",
-            placeItems: "center",
-            fontSize: 9,
-            fontWeight: 600,
-            background: "var(--pctbg)",
-            color: "var(--text)",
-            border: "1px solid var(--line)",
-            borderRadius: 6,
-            flex: "none",
-          }}
-        >
-          {offer.mark}
-        </span>
+        <OperatorLogo logo={offer.logo} mark={offer.mark} name={offer.name} size={24} />
         <div style={{ display: "flex", flexDirection: "column", minWidth: 0 }}>
           <span style={{ fontWeight: 600 }}>{offer.name}</span>
           <span style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.35 }}>

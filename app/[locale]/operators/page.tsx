@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import { JsonLd } from "@/components/JsonLd";
 import { OrderingDisclosure } from "@/components/trust/OrderingDisclosure";
+import { OperatorLogo } from "@/components/v3/OperatorLogo";
 import { BRANDS } from "@/lib/brands";
 import { deriveOrderingBasis } from "@/lib/trust/rankingCriteria";
 import { type Locale } from "@/lib/i18n";
@@ -74,33 +74,12 @@ export default function OperatorsIndexPage({
                 borderBottom: "1px solid var(--line)",
               }}
             >
-              {operator.logo ? (
-                <Image
-                  src={operator.logo}
-                  alt=""
-                  width={28}
-                  height={28}
-                  className="h-7 w-7 object-contain"
-                  style={{ border: "1px solid var(--line)", borderRadius: 6 }}
-                />
-              ) : (
-                <span
-                  aria-hidden
-                  style={{
-                    width: 28,
-                    height: 28,
-                    display: "grid",
-                    placeItems: "center",
-                    fontSize: 9,
-                    fontWeight: 600,
-                    background: "var(--pctbg)",
-                    border: "1px solid var(--line)",
-                    borderRadius: 6,
-                  }}
-                >
-                  {operator.name.slice(0, 2).toUpperCase()}
-                </span>
-              )}
+              <OperatorLogo
+                logo={operator.logo ?? null}
+                mark={operator.name.slice(0, 2).toUpperCase()}
+                name={operator.name}
+                size={24}
+              />
               <span style={{ minWidth: 0, display: "flex", flexDirection: "column" }}>
                 <span style={{ fontWeight: 600, fontSize: 13 }}>{operator.name}</span>
                 <span className="rw3-meta">

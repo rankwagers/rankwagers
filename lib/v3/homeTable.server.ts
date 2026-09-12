@@ -132,6 +132,8 @@ export type TableRow = {
   bestOdds: {
     operatorSlug: string;
     mark: string;
+    /** The real brand asset for the CTA (polish group 1); mark is the fallback. */
+    logo: string | null;
     decimal: string;
     continueHref: string;
   } | null;
@@ -198,6 +200,7 @@ export async function bestPriceForRow(
     return {
       operatorSlug: best.operator.slug,
       mark: markFor(best.operator.name),
+      logo: best.operator.logo ?? null,
       decimal: best.price.decimal.toFixed(2),
       continueHref: buildGoPath({
         slug: best.operator.slug,

@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Icon } from "@/components/v3/Icon";
 import { LockTick } from "@/components/v3/LockTick";
+import { OperatorLogo } from "@/components/v3/OperatorLogo";
 import { LeftRail, type LeftRailStrings } from "@/components/v3/rails/LeftRail";
 import { RightRail, type RightRailStrings, type VerifiedCard } from "@/components/v3/rails/RightRail";
 import { LiveStrip } from "@/components/v3/home/LiveStrip";
@@ -166,22 +167,8 @@ export function HomeV3(props: {
                   borderBottom: "1px solid var(--line)",
                 }}
               >
-                <span
-                  aria-hidden
-                  style={{
-                    width: 24,
-                    height: 24,
-                    display: "grid",
-                    placeItems: "center",
-                    fontSize: 8,
-                    fontWeight: 600,
-                    background: "var(--pctbg)",
-                    border: "1px solid var(--line)",
-                    borderRadius: 6,
-                    gridRow: "span 2",
-                  }}
-                >
-                  {site.mark}
+                <span style={{ gridRow: "span 2", display: "flex" }}>
+                  <OperatorLogo logo={site.logo} mark={site.mark} name={site.name} size={20} />
                 </span>
                 <span style={{ fontWeight: 600, fontSize: 12 }}>{site.name}</span>
                 <a

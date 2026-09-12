@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { EmptyStateV3, IllustrationNoOffers } from "@/components/v3/illustrations";
+import { OperatorLogo } from "@/components/v3/OperatorLogo";
 import { SponsoredLabel } from "@/components/v3/SponsoredLabel";
 
 /* ============================================================================
@@ -20,8 +21,10 @@ import { SponsoredLabel } from "@/components/v3/SponsoredLabel";
 export type OfferCardModel = {
   slug: string;
   name: string;
-  /** Initials for the mono-tinted square mark. */
+  /** Letter fallback when the brand has no logo asset (polish group 1). */
   mark: string;
+  /** The real brand asset — the operator cards' own file. */
+  logo: string | null;
   /** The brand's localized bonus sentence — the offer, verbatim. */
   offer: string;
   /** Internal operator intelligence page. */
@@ -63,22 +66,7 @@ export function OfferCard({
       }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <span
-          aria-hidden
-          style={{
-            width: 26,
-            height: 26,
-            display: "grid",
-            placeItems: "center",
-            fontSize: 8,
-            fontWeight: 600,
-            background: "var(--pctbg)",
-            border: "1px solid var(--line)",
-            borderRadius: 6,
-          }}
-        >
-          {card.mark}
-        </span>
+        <OperatorLogo logo={card.logo} mark={card.mark} name={card.name} size={24} />
         <Link href={card.operatorHref} style={{ fontWeight: 600 }}>
           {card.name}
         </Link>

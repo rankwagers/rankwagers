@@ -144,8 +144,22 @@ export function PredictionTable({
                 href={row.bestOdds.continueHref}
                 rel="nofollow sponsored noopener"
                 className="rw3-ghost"
+                style={{ display: "inline-flex", alignItems: "center", gap: 5 }}
               >
-                {row.bestOdds.mark} {row.bestOdds.decimal} <Icon name="arrow" size={12} />
+                {/* The real brand asset, mark only as fallback (group 1). */}
+                {row.bestOdds.logo ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img
+                    src={row.bestOdds.logo}
+                    alt=""
+                    width={14}
+                    height={14}
+                    style={{ objectFit: "contain", borderRadius: 3 }}
+                  />
+                ) : (
+                  row.bestOdds.mark
+                )}{" "}
+                {row.bestOdds.decimal} <Icon name="arrow" size={12} />
               </a>
             ) : null}
           </span>

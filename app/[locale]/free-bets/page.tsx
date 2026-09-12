@@ -72,6 +72,7 @@ export default function FreeBetsPage({
         slug: operator.slug,
         name: operator.name,
         mark: markFor(operator.name),
+        logo: operator.logo ?? null,
         offer: bonusForLocale(brand, params.locale),
         operatorHref: operatorPath(params.locale, operator.slug),
         continueHref: buildGoPath({
