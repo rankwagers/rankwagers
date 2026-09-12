@@ -233,12 +233,14 @@ function homeMarkup(withOffer: boolean): string {
       terms: "Terms.",
       smallSample: "small sample",
       nSettled: "{n} settled",
+      marketLabels: { fh: "1H Over 0.5", over15: "Over 1.5", over25: "Over 2.5", sh: "2H Over 0.5" },
     },
     band: {
       editorPick: "Editor's pick",
       more: "more",
       sponsored: "Sponsored · 18+",
       strongestSignals: "Strongest signals",
+      marketLabels: { fh: "1H Over 0.5", over15: "Over 1.5", over25: "Over 2.5", sh: "2H Over 0.5" },
     },
     tabs: {
       today: "Today",
@@ -262,6 +264,7 @@ function homeMarkup(withOffer: boolean): string {
       sponsoredLinks: "Sponsored links · 18+",
       sponsored: "Sponsored · 18+",
       smallSample: "small sample",
+      marketLabels: { fh: "1H Over 0.5", over15: "Over 1.5", over25: "Over 2.5", sh: "2H Over 0.5" },
     },
     live: "Live",
     seeRecord: "See the record",
@@ -381,6 +384,7 @@ test("the no-price fallback ghost carries NO number (polish group 4)", () => {
         sponsoredLinks: "Sponsored links · 18+",
         sponsored: "Sponsored · 18+",
         smallSample: "small sample",
+        marketLabels: { fh: "1H Over 0.5", over15: "Over 1.5", over25: "Over 2.5", sh: "2H Over 0.5" },
       },
       moreHref: null,
     } as Parameters<typeof PredictionTable>[0])
@@ -536,6 +540,26 @@ test("the retired v2 corpus stays unreachable from reader routes", () => {
     "components/WorldCupTickerBar.tsx",
   ]) {
     assert.ok(!reached.has(retired), `${retired} is imported by a reader route again`);
+  }
+});
+
+test("pills never truncate: nowrap without clipping, and no overflow hidden (group 8)", () => {
+  const scope = rw3CssScope();
+  const pillBlock = scope.slice(
+    scope.indexOf(".rw3 .rw3-pill"),
+    scope.indexOf("}", scope.indexOf(".rw3 .rw3-pill"))
+  );
+  assert.match(pillBlock, /white-space:\s*nowrap/, "a pill keeps its label on one line");
+  assert.doesNotMatch(pillBlock, /overflow:\s*hidden|text-overflow/, "…by growing, never clipping");
+  // No use-site may re-add clipping onto a pill.
+  for (const { file, text } of v3Files()) {
+    for (const match of text.matchAll(/className="rw3-pill"[^>]{0,200}/g)) {
+      assert.doesNotMatch(
+        match[0],
+        /overflow.{0,4}hidden/i,
+        `${file}: a pill use-site clips its label`
+      );
+    }
   }
 });
 

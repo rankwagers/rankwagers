@@ -24,6 +24,8 @@ export type EditorBandStrings = {
   sponsored: string;
   /** "Strongest signals" — the engine's own cards say whose words they are (group 6). */
   strongestSignals: string;
+  /** Group 8: dictionary short labels drive the market pill. */
+  marketLabels: Record<EditorPickView["marketKind"], string>;
 };
 
 function Crest({ src, name }: { src: string | null; name: string }) {
@@ -172,7 +174,7 @@ export function EditorBand({
                 <span style={{ color: "var(--muted)", display: "inline-flex" }}>
                   <Icon name={RW3_MARKET_ICON_BY_LIST_KIND[pick.marketKind]} size={20} strokePx={1.75} />
                 </span>
-                {pick.marketLabel}
+                {strings.marketLabels[pick.marketKind]}
               </span>
               <span className="rw3-pct" style={{ fontSize: 12, padding: "1px 5px" }}>
                 {pick.ratePct}%

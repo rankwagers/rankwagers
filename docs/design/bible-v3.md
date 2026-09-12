@@ -53,7 +53,8 @@ Inter only, via the existing font pipeline. Archivo is retired.
 ## Layout
 
 - Desktop ≥1200: `224px` left rail · fluid center · `300px` right rail
-- Table columns: `44 · 1fr · 112 · 88 · 42 · 44 · 72 · 104` (gap 12px)
+- Table columns: `44 · 1fr · 112 · 110 · 42 · 44 · 72 · 104` (gap 12px) — the
+  market column widened for the longest short label (polish 1, group 8)
 - Row padding `17px 0`
 - Pills: padding `1px 6px`, radius 6px
 - ≥10 table rows above the fold at 1440×900

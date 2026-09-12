@@ -40,6 +40,8 @@ export type RightRailStrings = {
   smallSample: string;
   /** "{n} settled" — the archive's own vocabulary (group 7). */
   nSettled: string;
+  /** Group 8: dictionary short labels drive the market names. */
+  marketLabels: Record<HighPotentialMarket["marketKey"], string>;
 };
 
 export function RightRail({
@@ -128,7 +130,7 @@ export function RightRail({
                 alignItems: "center",
               }}
             >
-              <span style={{ fontWeight: 500 }}>{market.marketLabel}</span>
+              <span style={{ fontWeight: 500 }}>{strings.marketLabels[market.marketKey]}</span>
               <span
                 className="rw3-pct"
                 style={market.smallSample ? { color: "var(--muted)", fontWeight: 500 } : undefined}

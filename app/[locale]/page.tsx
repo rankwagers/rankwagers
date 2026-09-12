@@ -148,11 +148,12 @@ export default async function LocaleHomePage({
     });
   }
 
+  /* GROUP 8 — the dictionary's market short labels drive every pill. */
   const marketLabels: Record<MatchListKind, string> = {
-    fh: p.tabFh,
-    over15: p.tabOver15,
-    over25: p.tabOver25,
-    sh: p.tabSh,
+    fh: p.v3MktFh,
+    over15: p.v3MktOver15,
+    over25: p.v3MktOver25,
+    sh: p.v3MktSh,
   };
 
   const strings: HomeV3Strings = {
@@ -177,12 +178,14 @@ export default async function LocaleHomePage({
       terms: dict.footer.disclaimer,
       smallSample: p.v3SmallSample,
       nSettled: p.arcSettledLine,
+      marketLabels,
     },
     band: {
       editorPick: p.v3EditorPick,
       more: p.v3More,
       sponsored: p.v3Sponsored18,
       strongestSignals: p.v3StrongestSignals,
+      marketLabels,
     },
     tabs: {
       today: p.v3Today,
@@ -203,6 +206,7 @@ export default async function LocaleHomePage({
       colForm: p.v3ColForm,
       colBestOdds: p.v3ColBestOdds,
       nMoreMatches: p.v3NMoreMatches,
+      marketLabels,
       sponsoredLinks: p.v3SponsoredLinks,
       sponsored: p.v3Sponsored18,
       smallSample: p.v3SmallSample,

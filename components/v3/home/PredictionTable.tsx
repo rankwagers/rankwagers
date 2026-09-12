@@ -29,6 +29,8 @@ export type TableStrings = {
   sponsored: string;
   /** "small sample" — n<5 rows say so and render muted (group 5). */
   smallSample: string;
+  /** Group 8: dictionary short labels drive the market pill. */
+  marketLabels: Record<TableRow["marketKind"], string>;
 };
 
 /* Crests render 24px (polish group 3) — the provider asset is larger than
@@ -119,7 +121,7 @@ export function PredictionTable({
               <span style={{ color: "var(--muted)", display: "inline-flex" }}>
                 <Icon name={RW3_MARKET_ICON_BY_LIST_KIND[row.marketKind]} size={20} strokePx={1.75} />
               </span>
-              {row.marketLabel}
+              {strings.marketLabels[row.marketKind]}
             </span>
             {row.ratePct !== null ? (
               <span

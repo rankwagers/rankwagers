@@ -523,6 +523,12 @@ export function FeaturedPicksManager() {
                 more: p.v3More,
                 sponsored: p.v3Sponsored18,
                 strongestSignals: p.v3StrongestSignals,
+                marketLabels: {
+                  fh: p.v3MktFh,
+                  over15: p.v3MktOver15,
+                  over25: p.v3MktOver25,
+                  sh: p.v3MktSh,
+                },
               }}
             />
           </div>
