@@ -7,6 +7,10 @@ import path from "path";
 
 const root = process.cwd();
 const nextDir = path.join(root, ".next");
+// Atomic build swap candidate (scripts/build-swap.mjs builds here before
+// renaming to .next). A crashed build can leave it — and its types/ output —
+// behind; it is never valid input for dev or a fresh build.
+const candidateDir = path.join(root, ".next-build");
 
 function loadDotEnvFile(name) {
   const envPath = path.join(root, name);
@@ -146,9 +150,20 @@ function isMixedDevProdOutput() {
   return isProductionAppBundle() || isProductionPagesBundle();
 }
 
+function purgeCandidate() {
+  if (!fs.existsSync(candidateDir)) return;
+  fs.rmSync(candidateDir, { recursive: true, force: true });
+  console.log("[prepare-dev] Removed leftover .next-build candidate (incl. types output).");
+}
+
 function purge(reason) {
   fs.rmSync(nextDir, { recursive: true, force: true });
+  purgeCandidate();
   console.log(`[prepare-dev] Removed stale .next (${reason}).`);
+}
+
+if (isDevStart || isBuild) {
+  purgeCandidate();
 }
 
 if (!fs.existsSync(nextDir)) {

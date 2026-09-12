@@ -141,6 +141,19 @@ pm2 reload deploy/ecosystem.config.cjs --update-env
 
 **Windows’tan sadece dosya attıktan sonra sunucuda mutlaka `build` çalıştırın.** Windows `.next` klasörünü taşımayın.
 
+### Atomic builds
+
+**Neden:** Eski `npm run build` önce `.next`'i silip doğrudan içine build alıyordu — build ortasında hata verirse çalışan sunucunun servis ettiği `.next` eksik/bozuk kalıyordu (iki kez yaşandı). Başarısız bir build, çalışan build'i asla bozmamalı.
+
+**Nasıl:** `npm run build` artık `scripts/build-swap.mjs` çalıştırır:
+
+1. `scripts/prepare-dev.mjs` (SITE_URL guard + stale çıktı temizliği) eskisi gibi çalışır.
+2. Build, `NEXT_DIST_DIR=.next-build` ile **aday** klasöre alınır — canlı `.next`'e build boyunca dokunulmaz.
+3. Sadece **başarıda**: `.next` → `.next.old`, `.next-build` → `.next` (aynı dosya sisteminde `rename`, atomik), sonra `.next.old` silinir.
+4. **Hatada**: script sıfır-dışı kodla çıkar, `.next-build` çöpü silinir, mevcut `.next` olduğu gibi kalır.
+
+**Operasyon notu:** Silme adımı yarıda kalırsa geride bir `.next.old` kalabilir — sadece önceki build'in yedeğidir, elle silmek güvenlidir (`rm -rf .next.old`).
+
 ---
 
 ## 7) Kontrol listesi

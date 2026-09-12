@@ -7,9 +7,11 @@ const nextConfig = {
   reactStrictMode: true,
   poweredByHeader: false,
   compress: true,
-  // Enables an isolated production verification build without disrupting a
-  // running local development server.
-  distDir: process.env.NEXT_DIST_DIR || ".next",
+  // Atomic build swap: `npm run build` (scripts/build-swap.mjs) builds into a
+  // candidate dir (NEXT_DIST_DIR=.next-build) and only renames it to .next on
+  // success, so a failed build can never remove or corrupt the .next the
+  // running server is serving. Also enables isolated verification builds.
+  distDir: process.env.NEXT_DIST_DIR?.trim() || ".next",
   experimental: {
     instrumentationHook: true,
     /** Tree-shake lucide icon imports — reduces client JS for CWV. */

@@ -47,6 +47,8 @@ __pycache__/
 # --- Build output --------------------------------------------------------
 .next
 .next-*
+# Atomic build swap: transient backup of the previous build (build-swap.mjs).
+.next.old
 out/
 build/
 dist/
