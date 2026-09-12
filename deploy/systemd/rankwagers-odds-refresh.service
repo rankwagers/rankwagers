@@ -1,0 +1,38 @@
+# Odds refresh. Oneshot; scheduled by the paired .timer.
+#
+# MIRROR OF THE LIVE INSTALL (2026-09): this pair was installed by hand on production before it
+# existed in the tree; the file here restates exactly what runs there so the repo is the record.
+#
+# POST /api/internal/cron/odds-refresh → runOddsRefreshJob → refreshComboPreparedSnapshot with
+# enrichOdds: true — rebuilds the combo_prepared snapshot (the day's qualified lists projection,
+# validate → candidate → activate atomically; a failed build never replaces the active valid
+# snapshot) INCLUDING a provider odds fetch when the prepared data carries none. Runs under the
+# evidence_prepare advisory lock; an overlapping fire answers 409/skipped, which is the designed
+# outcome, not an error to chase.
+#
+# GATED TWICE. This unit only issues the request; ENABLE_CRON inside the app decides whether any
+# work happens, and the route rejects an unauthenticated POST (CRON_SECRET from the shared env).
+#
+# Install (as root):
+#   cp deploy/systemd/rankwagers-odds-refresh.* /etc/systemd/system/
+#   systemctl daemon-reload && systemctl enable --now rankwagers-odds-refresh.timer
+[Unit]
+Description=RankWagers odds refresh (combo snapshot rebuild with odds)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+# Root for the same reason as the prepare unit: keeps CRON_SECRET out of a rankdev-readable
+# process environment. The unit only curls localhost.
+Type=oneshot
+WorkingDirectory=/var/www/rankwagers
+EnvironmentFile=-/opt/rankwagers/shared/.env
+Environment=BASE_URL=http://127.0.0.1:3000
+# --max-time 90 sits above the route's own 60s maxDuration so curl never severs a request the
+# route would still have completed; -f turns a non-2xx into a unit failure rather than a silent
+# success, which is the whole point of scheduling this at all.
+ExecStart=/usr/bin/curl -fsS --max-time 90 -X POST \
+  -H "x-cron-secret: ${CRON_SECRET}" \
+  ${BASE_URL}/api/internal/cron/odds-refresh
+Nice=10
+IOSchedulingClass=idle

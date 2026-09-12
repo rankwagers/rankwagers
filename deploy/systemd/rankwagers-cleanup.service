@@ -1,0 +1,41 @@
+# Retention cleanup. Oneshot; scheduled by the paired .timer.
+#
+# POST /api/internal/cron/cleanup → runCleanupJob, under the snapshot_cleanup advisory lock.
+# Two deletions, both retention-bounded and both refusing anything load-bearing:
+#
+#   1. Expired combo_prepared snapshots — rows past their own expiresAt (written at mint as
+#      now + SNAPSHOT_FRESH_EXPIRED_SEC, default 24h). The ACTIVE snapshot and its
+#      previous-valid pointer are never deleted, whatever their age: cleanup trims history,
+#      it cannot take the board down.
+#   2. Attribution clicks past retention — purgeExpired at DEFAULT_RETENTION_MS = 90 days
+#      (the privacy-retention commitment; see docs/privacy-retention.md).
+#
+# The route accepts x-cron-dry-run: 1 for a counted no-op pass; this unit runs the real thing.
+# Deleted-row counts land in cleanup_deleted_rows_total metrics.
+#
+# GATED TWICE. This unit only issues the request; ENABLE_CRON inside the app decides whether any
+# work happens, and the route rejects an unauthenticated POST (CRON_SECRET from the shared env).
+#
+# Install (as root):
+#   cp deploy/systemd/rankwagers-cleanup.* /etc/systemd/system/
+#   systemctl daemon-reload && systemctl enable --now rankwagers-cleanup.timer
+[Unit]
+Description=RankWagers retention cleanup (expired snapshots + attribution purge)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+# Root for the same reason as the prepare unit: keeps CRON_SECRET out of a rankdev-readable
+# process environment. The unit only curls localhost.
+Type=oneshot
+WorkingDirectory=/var/www/rankwagers
+EnvironmentFile=-/opt/rankwagers/shared/.env
+Environment=BASE_URL=http://127.0.0.1:3000
+# --max-time 90 sits above the route's own 60s maxDuration so curl never severs a request the
+# route would still have completed; -f turns a non-2xx into a unit failure rather than a silent
+# success, which is the whole point of scheduling this at all.
+ExecStart=/usr/bin/curl -fsS --max-time 90 -X POST \
+  -H "x-cron-secret: ${CRON_SECRET}" \
+  ${BASE_URL}/api/internal/cron/cleanup
+Nice=10
+IOSchedulingClass=idle

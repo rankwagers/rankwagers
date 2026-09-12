@@ -1,0 +1,26 @@
+# Odds refresh — every 15 minutes, all day. MIRROR OF THE LIVE INSTALL (2026-09).
+#
+# INTERVAL, AND WHY 15 MINUTES
+# ----------------------------
+# The snapshot freshness classifier calls a snapshot `current` up to 15 minutes old
+# (SNAPSHOT_FRESH_CURRENT_SEC default 900). Firing at :05,:20,:35,:50 keeps the active snapshot
+# inside that band continuously, and the offset from :00/:30 de-synchronises it from the
+# evidence-capture timer and from the prepare unit's :40 fires so the shared advisory lock is
+# rarely contested. A lost fire costs one band — the next fire is at most ~16 minutes away.
+#
+# RandomizedDelaySec=60: enough jitter to avoid the herd on the shared box, negligible against
+# the 15-minute budget.
+#
+# Persistent=false: a missed fire must NOT be caught up — the band it served has passed, the
+# next fire rebuilds everything the catch-up would have, and a boot-time burst helps nobody.
+[Unit]
+Description=RankWagers odds refresh every 15 minutes
+
+[Timer]
+OnCalendar=*:05,20,35,50
+RandomizedDelaySec=60
+Persistent=false
+Unit=rankwagers-odds-refresh.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,26 @@
+# Fixtures refresh — every 15 minutes, the odds-off replacement schedule.
+#
+# ██ ENABLE ONLY WHEN rankwagers-odds-refresh.timer IS DISABLED ██ (see the .service comment:
+# both rebuild and activate the same snapshot pointer; interleaving them degrades odds).
+#
+# INTERVAL, AND WHY THE SAME 15 MINUTES AS ODDS-REFRESH
+# -----------------------------------------------------
+# This timer is a drop-in replacement for the odds-refresh cadence when the odds fetch is off,
+# so it inherits the same freshness argument: the classifier calls a snapshot `current` up to
+# 15 minutes old (SNAPSHOT_FRESH_CURRENT_SEC default 900), and :05,:20,:35,:50 keeps the active
+# snapshot inside that band while staying offset from evidence-capture (:00,:30) and the prepare
+# unit (:40). The job is cheap without the odds fetch — list reads and a validate/activate write.
+#
+# RandomizedDelaySec=60 and Persistent=false for the odds-refresh reasons: jitter that is
+# negligible against the budget, and no boot-time catch-up for a band that has already passed.
+[Unit]
+Description=RankWagers fixtures refresh every 15 minutes (odds-off schedule)
+
+[Timer]
+OnCalendar=*:05,20,35,50
+RandomizedDelaySec=60
+Persistent=false
+Unit=rankwagers-fixtures-refresh.service
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,27 @@
+# Retention cleanup — once daily, in the quiet hour.
+#
+# INTERVAL, AND WHY DAILY AT 04:15 UTC
+# ------------------------------------
+# Both deletions are retention-bounded (snapshot expiresAt is 24h, attribution retention 90
+# days), so the finest cadence that changes anything is daily — anything faster deletes the
+# same rows on a different fire. 04:15 UTC sits in the board's quietest stretch, clear of the
+# prepare fires (:40 at 00/06/12/18), the refresh band (:05,:20,:35,:50), capture (:00,:30) and
+# the backup unit's window, so the deletes never compete with a build for the database.
+#
+# RandomizedDelaySec=300: with a whole day of budget, generous jitter costs nothing and keeps
+# this off any shared-box herd.
+#
+# Persistent=true, unlike the refresh timers: a cleanup missed while the host was down is still
+# worth running at boot — the expired rows are still expired, and retention is a commitment,
+# not a freshness band.
+[Unit]
+Description=RankWagers retention cleanup, daily
+
+[Timer]
+OnCalendar=*-*-* 04:15:00
+RandomizedDelaySec=300
+Persistent=true
+Unit=rankwagers-cleanup.service
+
+[Install]
+WantedBy=timers.target

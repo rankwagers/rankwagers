@@ -1,0 +1,43 @@
+# Fixtures refresh. Oneshot; scheduled by the paired .timer.
+#
+# POST /api/internal/cron/fixtures-refresh → runFixturesRefreshJob → the SAME
+# refreshComboPreparedSnapshot as odds-refresh, with enrichOdds: false — the odds-free variant.
+# It rebuilds and ACTIVATES a new combo_prepared snapshot from the day's qualified lists without
+# spending a provider odds fetch. Same evidence_prepare advisory lock, same atomic
+# candidate→activate discipline.
+#
+# ██ DO NOT CO-SCHEDULE WITH rankwagers-odds-refresh ██
+# Both timers activate the same snapshot pointer. Every activation REPLACES the previous
+# snapshot, so an odds-free rebuild landing after an odds-enriched one publishes a snapshot with
+# fewer odds — a live degradation, not a refresh. This unit exists for the configuration where
+# the odds provider is disabled (or its budget exhausted) and the board still needs a fresh
+# fixture projection. Enable EXACTLY ONE of the two refresh timers:
+#   odds provider on  → rankwagers-odds-refresh.timer, this one stays disabled
+#   odds provider off → this timer
+#
+# GATED TWICE. This unit only issues the request; ENABLE_CRON inside the app decides whether any
+# work happens, and the route rejects an unauthenticated POST (CRON_SECRET from the shared env).
+#
+# Install (as root):
+#   cp deploy/systemd/rankwagers-fixtures-refresh.* /etc/systemd/system/
+#   systemctl daemon-reload && systemctl enable --now rankwagers-fixtures-refresh.timer
+[Unit]
+Description=RankWagers fixtures refresh (combo snapshot rebuild, odds-free)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+# Root for the same reason as the prepare unit: keeps CRON_SECRET out of a rankdev-readable
+# process environment. The unit only curls localhost.
+Type=oneshot
+WorkingDirectory=/var/www/rankwagers
+EnvironmentFile=-/opt/rankwagers/shared/.env
+Environment=BASE_URL=http://127.0.0.1:3000
+# --max-time 90 sits above the route's own 60s maxDuration so curl never severs a request the
+# route would still have completed; -f turns a non-2xx into a unit failure rather than a silent
+# success, which is the whole point of scheduling this at all.
+ExecStart=/usr/bin/curl -fsS --max-time 90 -X POST \
+  -H "x-cron-secret: ${CRON_SECRET}" \
+  ${BASE_URL}/api/internal/cron/fixtures-refresh
+Nice=10
+IOSchedulingClass=idle
