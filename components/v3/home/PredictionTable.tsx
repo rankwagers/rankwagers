@@ -110,7 +110,7 @@ export function PredictionTable({
           <span className="rw3-c-meta">
             <span className="rw3-pill" style={{ justifySelf: "start" }}>
               <span style={{ color: "var(--muted)", display: "inline-flex" }}>
-                <Icon name={RW3_MARKET_ICON_BY_LIST_KIND[row.marketKind]} size={12} />
+                <Icon name={RW3_MARKET_ICON_BY_LIST_KIND[row.marketKind]} size={20} strokePx={1.75} />
               </span>
               {row.marketLabel}
             </span>

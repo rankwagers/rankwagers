@@ -64,7 +64,7 @@ export function RightRail({
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <span style={{ display: "inline-flex", alignItems: "center", gap: 5, fontWeight: 600 }}>
               <span style={{ color: "var(--win)", display: "inline-flex" }}>
-                <Icon name="verified" size={14} />
+                <Icon name="verified" size={20} strokePx={1.75} />
               </span>
               {strings.verifiedHitRate}
             </span>

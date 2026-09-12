@@ -33,11 +33,19 @@ export function IconSprite() {
 export function Icon({
   name,
   size = 16,
+  strokePx,
   className,
   label,
 }: {
   name: Rw3IconName;
   size?: number;
+  /**
+   * Rendered stroke weight in DEVICE pixels (polish group 2): the sprite is
+   * a 24-unit grid, so the viewBox stroke is scaled from this. Pills and
+   * status labels render at size 20 with strokePx 1.75; omitted, the
+   * grid-native 1.5 units apply (the block A default).
+   */
+  strokePx?: number;
   className?: string;
   /** Accessible name. Omit when adjacent text already names the meaning. */
   label?: string;
@@ -49,7 +57,7 @@ export function Icon({
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      strokeWidth={1.5}
+      strokeWidth={strokePx ? (strokePx * 24) / size : 1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
       className={className}

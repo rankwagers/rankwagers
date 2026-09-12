@@ -16,7 +16,7 @@ export function SponsoredLabel({ text, size = 10 }: { text: string; size?: 10 | 
         whiteSpace: "nowrap",
       }}
     >
-      <Icon name="sponsored" size={size + 1} />
+      <Icon name="sponsored" size={20} strokePx={1.75} />
       {text}
     </span>
   );

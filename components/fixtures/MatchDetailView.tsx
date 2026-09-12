@@ -267,7 +267,7 @@ export function MatchDetailView({
           }}
         >
           <span className="rw3-label" style={{ display: "inline-flex", alignItems: "center", gap: 4 }}>
-            <Icon name="editor" size={11} />
+            <Icon name="editor" size={20} strokePx={1.75} />
             {p.v3EditorNote}
           </span>
           <span className="text-[13px]" style={{ lineHeight: 1.45 }}>

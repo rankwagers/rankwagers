@@ -143,7 +143,7 @@ export function HomeTabs({
                 }}
               >
                 <span style={{ color: "var(--muted)", display: "inline-flex" }}>
-                  <Icon name={RW3_MARKET_ICON_BY_LIST_KIND[kind]} size={12} />
+                  <Icon name={RW3_MARKET_ICON_BY_LIST_KIND[kind]} size={20} strokePx={1.75} />
                 </span>
                 {strings.marketLabels[kind]}
               </Link>

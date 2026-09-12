@@ -156,7 +156,7 @@ export function LeftRail({
                       borderRadius: 4,
                     }}
                   >
-                    <Icon name="best" size={10} />
+                    <Icon name="best" size={20} strokePx={1.75} />
                     {strings.best}
                   </span>
                 ) : null}

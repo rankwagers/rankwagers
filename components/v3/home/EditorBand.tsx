@@ -130,7 +130,7 @@ export function EditorBand({
               >
                 {index === 0 || pick.isManual ? (
                   <>
-                    <Icon name="editor" size={11} />
+                    <Icon name="editor" size={20} strokePx={1.75} />
                     {strings.editorPick}
                   </>
                 ) : (
@@ -162,7 +162,7 @@ export function EditorBand({
             >
               <span className="rw3-pill" style={{ padding: "1px 6px" }}>
                 <span style={{ color: "var(--muted)", display: "inline-flex" }}>
-                  <Icon name={RW3_MARKET_ICON_BY_LIST_KIND[pick.marketKind]} size={11} />
+                  <Icon name={RW3_MARKET_ICON_BY_LIST_KIND[pick.marketKind]} size={20} strokePx={1.75} />
                 </span>
                 {pick.marketLabel}
               </span>

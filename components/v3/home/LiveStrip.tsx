@@ -24,7 +24,7 @@ export function LiveStrip({ items, liveLabel }: { items: LiveStripItem[]; liveLa
     >
       <span style={{ display: "flex", alignItems: "center", gap: 5, fontWeight: 600 }}>
         <span style={{ color: "var(--loss)", display: "inline-flex" }}>
-          <Icon name="live" size={14} />
+          <Icon name="live" size={20} strokePx={1.75} />
         </span>
         {liveLabel} · {items.length}
       </span>
