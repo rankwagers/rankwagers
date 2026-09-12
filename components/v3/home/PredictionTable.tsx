@@ -27,18 +27,21 @@ export type TableStrings = {
   sponsoredLinks: string;
 };
 
+/* Crests render 24px (polish group 3) — the provider asset is larger than
+   24 CSS px, so a plain scale-down is already ≥2x sharp on dense screens. */
 function TeamMark({ src, name }: { src: string | null; name: string }) {
   if (!src) {
     return (
       <span
         aria-hidden
         style={{
-          width: 16,
-          height: 16,
+          width: 24,
+          height: 24,
           borderRadius: "50%",
           background: "var(--pctbg)",
           border: "1px solid var(--line)",
           flex: "none",
+          alignSelf: "center",
         }}
       />
     );
@@ -49,9 +52,9 @@ function TeamMark({ src, name }: { src: string | null; name: string }) {
       src={src}
       alt=""
       aria-hidden
-      width={16}
-      height={16}
-      style={{ borderRadius: "50%", objectFit: "contain", flex: "none" }}
+      width={24}
+      height={24}
+      style={{ borderRadius: "50%", objectFit: "contain", flex: "none", alignSelf: "center" }}
     />
   );
 }

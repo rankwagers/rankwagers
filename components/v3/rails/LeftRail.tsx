@@ -19,6 +19,8 @@ export type LeftRailStrings = {
   commission: string;
 };
 
+/* League logos render 18px (polish group 3), vertically centered; the flag
+   stays the fallback for a league with no provider mark. */
 function LeagueMark({ league }: { league: PopularLeague }) {
   if (league.leagueImage) {
     return (
@@ -27,9 +29,9 @@ function LeagueMark({ league }: { league: PopularLeague }) {
         src={league.leagueImage}
         alt=""
         aria-hidden
-        width={14}
-        height={14}
-        style={{ borderRadius: 3, flex: "none", objectFit: "contain" }}
+        width={18}
+        height={18}
+        style={{ borderRadius: 3, flex: "none", objectFit: "contain", alignSelf: "center" }}
       />
     );
   }
@@ -67,8 +69,8 @@ export function LeftRail({
         <span
           aria-hidden
           style={{
-            width: 14,
-            height: 14,
+            width: 18,
+            height: 18,
             borderRadius: 3,
             background: "var(--pctbg)",
             border: "1px solid var(--line)",

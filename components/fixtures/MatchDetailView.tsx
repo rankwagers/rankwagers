@@ -572,14 +572,14 @@ function TeamBlock({
         <Image
           src={logo}
           alt=""
-          width={28}
-          height={28}
-          className="h-7 w-7 object-contain"
-          style={{ borderRadius: "50%" }}
+          width={24}
+          height={24}
+          className="h-6 w-6 object-contain"
+          style={{ borderRadius: "50%", alignSelf: "center" }}
         />
       ) : (
         <span
-          className="flex h-7 w-7 items-center justify-center text-[11px] font-semibold"
+          className="flex h-6 w-6 items-center justify-center text-[11px] font-semibold"
           style={{
             background: "var(--pctbg)",
             border: "1px solid var(--line)",
