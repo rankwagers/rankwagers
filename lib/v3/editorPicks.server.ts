@@ -6,7 +6,7 @@ import { activeManualPicks, type EditorPickRecord } from "@/lib/editor-picks/con
 import { readEditorPicksDocument } from "@/lib/editor-picks/store";
 import {
   mapDailyListsToQualifiedFixtures,
-  topRankedFixtures,
+  type QualifiedFixture,
 } from "@/lib/research/qualifiedFixture";
 import { scoreFixtureSignals, type FixtureSignal } from "@/lib/fixtureSignals";
 import { signalSentence } from "@/lib/fixtures/signalPresentation";
@@ -131,6 +131,8 @@ export async function buildEditorBandPicks(input: {
   now?: number;
   /** Polish group 4: the day's pinned/Best operator for the no-price ghost. */
   fallbackOperator?: FallbackOperator | null;
+  /** Injectable for the band probe; production always uses getMatchDetails. */
+  loadDetails?: typeof getMatchDetails;
 }): Promise<EditorPickView[]> {
   const { lists, locale, country, p } = input;
   const now = input.now ?? Date.now();
@@ -189,11 +191,18 @@ export async function buildEditorBandPicks(input: {
     p,
     limit: 4 + taken.size,
     fallbackOperator: input.fallbackOperator,
+    loadDetails: input.loadDetails,
   });
-  return [
+  const combined = [
     ...manualViews,
     ...auto.filter((view) => !taken.has(view.matchId)).slice(0, 4 - manualViews.length),
   ];
+  /*
+   * POLISH 2, GROUP 1 — the band renders whenever at least TWO qualifying
+   * picks exist (four when available). A single card is not a band; below
+   * two, the section is omitted whole rather than rendered thin.
+   */
+  return combined.length >= 2 ? combined : [];
 }
 
 /* ── admin previews (block F) ──────────────────────────────────────────── */
@@ -265,35 +274,64 @@ export async function buildAutoFillPicks(input: {
   limit?: number;
   /** Polish group 4: the day's pinned/Best operator for the no-price ghost. */
   fallbackOperator?: FallbackOperator | null;
+  /** Injectable for the band probe; production always uses getMatchDetails. */
+  loadDetails?: typeof getMatchDetails;
 }): Promise<EditorPickView[]> {
   const { lists, locale, country, p } = input;
   const limit = input.limit ?? 4;
-  const ranked = topRankedFixtures(mapDailyListsToQualifiedFixtures(lists));
-  if (!ranked.length) return [];
-  const details = await getMatchDetails(
-    ranked.map((fixture) => fixture.matchId),
-    locale
-  );
+  const loadDetails = input.loadDetails ?? getMatchDetails;
 
-  const scored = ranked.flatMap((fixture) => {
-    const detail = details.get(fixture.matchId);
-    if (!detail) return [];
-    const report = scoreFixtureSignals({
-      homeAtHome: detail.homeAtHome,
-      awayAtAway: detail.awayAtAway,
-      leagueSeason: detail.leagueSeason,
-      history: detail.history,
-    });
-    /* The card's market pill, pct/sample and odds must all describe ONE
-     * market, so the pick's signal is the strongest one whose market is a
-     * list kind (btts/over35 leads have no bucket, no pill, no price). */
-    const lead = [report.lead, ...report.supports].find(
-      (signal): signal is FixtureSignal =>
-        signal !== null && SIGNAL_TO_KIND[signal.market] !== undefined
+  /*
+   * POLISH 2, GROUP 1 — THE POOL IS THE WHOLE RANKED BOARD, NOT SIX ROWS.
+   * The live incident: the band vanished on a day whose table held many
+   * n≥9 rows, because auto-fill drew only from `topRankedFixtures` (the
+   * ranked section's SIX, by provider potential) and none of those six
+   * yielded a list-kind lead. Provider potential ranks the scan order —
+   * it never caps it. Details are fetched in chunks of 8 down the ranked
+   * list until the band has its picks or the scan cap (32 fixtures, cost
+   * guard over cached lookups) is reached.
+   */
+  const byMatch = new Map<number, QualifiedFixture>();
+  for (const fixture of mapDailyListsToQualifiedFixtures(lists)) {
+    const existing = byMatch.get(fixture.matchId);
+    if (!existing || fixture.modelProbability > existing.modelProbability) {
+      byMatch.set(fixture.matchId, fixture);
+    }
+  }
+  const ranked = [...byMatch.values()].sort(
+    (a, b) => b.modelProbability - a.modelProbability
+  );
+  if (!ranked.length) return [];
+
+  const SCAN_CAP = 32;
+  const scored: Array<{ fixture: QualifiedFixture; lead: FixtureSignal }> = [];
+  for (let start = 0; start < Math.min(ranked.length, SCAN_CAP); start += 8) {
+    const chunk = ranked.slice(start, start + 8);
+    const details = await loadDetails(
+      chunk.map((fixture) => fixture.matchId),
+      locale
     );
-    if (!lead) return [];
-    return [{ fixture, lead }];
-  });
+    for (const fixture of chunk) {
+      const detail = details.get(fixture.matchId);
+      if (!detail) continue;
+      const report = scoreFixtureSignals({
+        homeAtHome: detail.homeAtHome,
+        awayAtAway: detail.awayAtAway,
+        leagueSeason: detail.leagueSeason,
+        history: detail.history,
+      });
+      /* The card's market pill, pct/sample and odds must all describe ONE
+       * market, so the pick's signal is the strongest one whose market is a
+       * list kind (btts/over35 leads have no bucket, no pill, no price). */
+      const lead = [report.lead, ...report.supports].find(
+        (signal): signal is FixtureSignal =>
+          signal !== null && SIGNAL_TO_KIND[signal.market] !== undefined
+      );
+      if (!lead) continue;
+      scored.push({ fixture, lead });
+    }
+    if (scored.length >= limit) break;
+  }
 
   scored.sort((a, b) => b.lead.score - a.lead.score);
 
