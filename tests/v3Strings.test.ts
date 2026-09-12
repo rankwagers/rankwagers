@@ -19,10 +19,12 @@ import { predictionsByLocale } from "../lib/translations/predictionsLocales";
 
 const V3_KEYS = Object.keys(predictionsEn).filter((k) => /^v3[A-Z]/.test(k));
 
-test("the v3 family is exactly 77 keys", () => {
+test("the v3 family is exactly 121 keys", () => {
   // 55 born with the shell (block B) + 4 with block D + 6 with block H +
-  // 11 with polish 1 + 1 with polish 2 (the no-sample note).
-  assert.equal(V3_KEYS.length, 77, "the family changed size — re-derive this pin deliberately");
+  // 11 with polish 1 + 1 with polish 2 + 41 with fixture v3.1 (the five
+  // layers' labels, the sample-strength vocabulary, the model-view
+  // templates, the comparison/matrix labels and three signal-market short labels).
+  assert.equal(V3_KEYS.length, 121, "the family changed size — re-derive this pin deliberately");
 });
 
 test("all 30 locales resolve every v3 key non-empty", () => {
@@ -51,6 +53,20 @@ const PLACEHOLDERS: Record<string, string[]> = {
   v3NActiveOffers: ["{n}"],
   v3NMatches: ["{n}"],
   v3H2hLast: ["{n}"],
+  v3PpVsLeague: ["{pp}"],
+  v3SnapshotLine: ["{time}", "{version}", "{n}"],
+  v3LeagueAvgIs: ["{pct}"],
+  v3NMoreSignals: ["{n}"],
+  v3LastNMeetings: ["{n}", "{from}", "{to}"],
+  v3NWinsPct: ["{n}", "{pct}"],
+  v3NDrawsPct: ["{n}", "{pct}"],
+  v3CleanSheetFor: ["{team}"],
+  v3WhyMarket: ["{market}"],
+  v3TplHomeGoals: ["{team}", "{avg}"],
+  v3TplAwayConceded: ["{team}", "{avg}"],
+  v3TplLeagueGoals: ["{avg}"],
+  v3TplEarlyGoals: ["{pct}", "{team}"],
+  v3TplResultTight: ["{team}", "{pct}"],
 };
 
 test("every locale preserves the family's placeholders", () => {

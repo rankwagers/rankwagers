@@ -192,10 +192,17 @@ test("LocalTime SSR emits explicit UTC; the header renders through it", () => {
     React.createElement(LocalTime, { iso: "2026-08-09T18:00:00.000Z", locale: "en" })
   );
   assert.match(html, /UTC/, "the server pass is explicit UTC, honest without JavaScript");
+  // V3.1 reconciliation: kickoff render moved into the v3.1 header — the
+  // one-clock law is unchanged: the view hands header.kickoffAt down and
+  // the header renders it through LocalTime; the update stamp stays here.
   const view = src("components/fixtures/MatchDetailView.tsx");
-  assert.match(view, /<LocalTime iso=\{header\.kickoffAt\}/, "kickoff renders on the one clock");
-  assert.match(view, /<LocalTime iso=\{header\.lastUpdatedAt\}/, "so does the update stamp");
-  assert.doesNotMatch(view, /toLocaleString/, "no server-zone rendering remains in the view");
+  assert.match(view, /kickoffAt=\{header\.kickoffAt\}/, "kickoff flows to the v3.1 header");
+  assert.match(view, /<LocalTime iso=\{header\.lastUpdatedAt\}/, "the update stamp on the one clock");
+  const headerV31 = src("components/fixtures/v31/FixtureHeaderV31.tsx");
+  assert.match(headerV31, /<LocalTime iso=\{kickoffAt\}/, "kickoff renders on the one clock");
+  for (const source of [view, headerV31]) {
+    assert.doesNotMatch(source, /toLocaleString/, "no server-zone rendering remains");
+  }
 });
 
 /* ================================================================== *

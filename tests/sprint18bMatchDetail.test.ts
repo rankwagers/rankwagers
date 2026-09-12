@@ -226,7 +226,13 @@ test("match detail UI preserves a11y score announcement and state surfaces", () 
     path.join(root, "components/fixtures/MatchDetailView.tsx"),
     "utf8"
   );
-  assert.match(view, /aria-label=\{`Score/);
+  // V3.1 reconciliation: the score announcement lives in the v3.1 header
+  // component now — the law (an accessible score sentence) is unchanged.
+  const headerV31 = readFileSync(
+    path.join(root, "components/fixtures/v31/FixtureHeaderV31.tsx"),
+    "utf8"
+  );
+  assert.match(headerV31, /aria-label=\{`Score/);
   assert.match(view, /aria-label=["']Breadcrumb["']/);
   assert.match(view, /MatchPredictionsPanel/);
   assert.doesNotMatch(view, /buildGoPath/);

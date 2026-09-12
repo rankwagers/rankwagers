@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { JsonLd } from "@/components/JsonLd";
@@ -21,11 +20,10 @@ import { MatchPredictionsPanel } from "./MatchPredictionsPanel";
 import { MatchRelatedLink } from "./MatchRelatedLink";
 import { Icon } from "@/components/v3/Icon";
 import { OfferOfTheDayCard } from "@/components/v3/rails/RightRail";
-
-function scoreText(home: number | null, away: number | null): string {
-  if (home == null || away == null) return "–";
-  return `${home}–${away}`;
-}
+import { FixtureHeaderV31 } from "./v31/FixtureHeaderV31";
+import { VerdictBlock } from "./v31/VerdictBlock";
+import { formPack, signalMarketLabel } from "@/lib/fixtures/v31";
+import { PRICE_PANEL_MARKET_BY_SIGNAL } from "@/lib/operators/pricePanel.server";
 
 export function MatchDetailView({
   locale,
@@ -101,6 +99,13 @@ export function MatchDetailView({
       ? { pct: Math.round(focusPrediction.confidence), marketLabel: focusPrediction.marketLabel }
       : null;
 
+  /* Fixture v3.1 — layer 1's real-data derivations. */
+  const homeForm = formPack(detail?.history?.homeAtHome ?? [], header.homeTeam);
+  const awayForm = formPack(detail?.history?.awayAtAway ?? [], header.awayTeam);
+  const verdictPlayRows = signalReport.lead
+    ? (prices?.[PRICE_PANEL_MARKET_BY_SIGNAL[signalReport.lead.market] ?? ""] ?? [])
+    : [];
+
   return (
     <div className="rw3-match-grid">
       <MatchDetailTracker
@@ -152,125 +157,92 @@ export function MatchDetailView({
         </ol>
       </nav>
 
-      <header className="pb-4 pt-3.5" style={{ borderBottom: "1px solid var(--line)" }}>
-        {/* The document's one h1 — the heading order below it walks the five levels. */}
-        <h1 className="sr-only">
-          {header.homeTeam} vs {header.awayTeam}
-        </h1>
-        <div
-          className="grid items-center gap-5 py-3"
-          style={{
-            gridTemplateColumns: "minmax(0,1fr) auto minmax(0,1fr)",
-            borderTop: "1px solid var(--line)",
-            borderBottom: "1px solid var(--line)",
-          }}
-        >
-          <div className="flex items-center justify-end">
-            <TeamBlock
-              name={header.homeTeam}
-              logo={header.homeLogo}
-              href={model.related.homeTeamHref}
-              matchId={header.matchId}
-              locale={locale}
-              align="left"
-            />
-          </div>
-          <div className="text-center">
-            {/*
-              Live state is load-bearing, not decoration. The framing above claims a market
-              prices differently in play while the score is still goalless — a page that cannot
-              show the minute and the score cannot support that claim.
-            */}
-            <p
-              className="text-[16px] font-semibold"
-              aria-label={`Score ${scoreText(header.score.home, header.score.away)}`}
-            >
-              {scoreText(header.score.home, header.score.away)}
-            </p>
-            <p className="rw3-label mt-1" style={{ letterSpacing: ".06em" }}>
-              <span
-                style={
-                  header.isLive
-                    ? { color: "var(--accent)" }
-                    : header.lifecycle === "finished"
-                      ? { color: "var(--win)" }
-                      : undefined
-                }
-              >
-                {header.statusLabel}
-              </span>
-              {header.minute != null ? (
-                <span style={header.isLive ? { color: "var(--accent)" } : undefined}>
-                  {" · "}
-                  {header.minute}&apos;
-                </span>
-              ) : null}
-            </p>
-            {(header.htScore.home != null || header.ftScore.home != null) && (
-              <p className="mt-1 text-[12px]" style={{ color: "var(--muted)" }}>
-                {header.htScore.home != null
-                  ? `HT ${scoreText(header.htScore.home, header.htScore.away)}`
-                  : ""}
-                {header.ftScore.home != null
-                  ? `${header.htScore.home != null ? " · " : ""}FT ${scoreText(header.ftScore.home, header.ftScore.away)}`
-                  : ""}
-              </p>
-            )}
-          </div>
-          <div className="flex items-center">
-            <TeamBlock
-              name={header.awayTeam}
-              logo={header.awayLogo}
-              href={model.related.awayTeamHref}
-              matchId={header.matchId}
-              locale={locale}
-              align="right"
-            />
-          </div>
-        </div>
-        <p className="mt-2.5 text-[11px]" style={{ color: "var(--muted)" }}>
-          <LocalTime iso={header.kickoffAt} locale={locale} />
-          {header.venue ? <> · {header.venue}</> : null}
-          {/* The eyebrow's law survives the v3 header: it joins the meta line
-              only when there is a value — never a separator with nothing after it. */}
-          {competitionEyebrow ? (
-            <> · {competitionEyebrow}</>
-          ) : null}
-        </p>
-        {header.lastUpdatedAt ? (
-          <p className="mt-1 text-[11px]" style={{ color: "var(--muted)" }}>
-            Updated <LocalTime iso={header.lastUpdatedAt} locale={locale} /> ·{" "}
-            {header.dataFreshness === "live_ok"
-              ? "live refresh enabled"
-              : header.dataFreshness === "unavailable"
-                ? p.fxLiveUnavailable
-                : "snapshot"}
-          </p>
+      {/*
+        FIXTURE v3.1 HEADER — crests 32, names, venue · league, last-5 form
+        chips from the REAL venue histories. Live state stays load-bearing:
+        score/minute take the center the moment they exist. The eyebrow's
+        law survives — the competition joins the header only when it has a
+        value ({competitionEyebrow ? ( it ) : null} below). No standings.
+      */}
+      <FixtureHeaderV31
+        homeTeam={header.homeTeam}
+        awayTeam={header.awayTeam}
+        homeLogo={header.homeLogo}
+        awayLogo={header.awayLogo}
+        competition={competitionEyebrow ? (
+          competitionEyebrow
         ) : null}
-      </header>
+        kickoffAt={header.kickoffAt}
+        venue={header.venue}
+        homeForm={homeForm}
+        awayForm={awayForm}
+        locale={locale}
+        p={p}
+        score={header.score}
+        statusLabel={header.statusLabel}
+        minute={header.minute}
+        isLive={header.isLive}
+        finished={header.lifecycle === "finished"}
+      />
+      {header.lastUpdatedAt ? (
+        <p className="mt-1 text-[11px]" style={{ color: "var(--muted)" }}>
+          Updated <LocalTime iso={header.lastUpdatedAt} locale={locale} /> ·{" "}
+          {header.dataFreshness === "live_ok"
+            ? "live refresh enabled"
+            : header.dataFreshness === "unavailable"
+              ? p.fxLiveUnavailable
+              : "snapshot"}
+        </p>
+      ) : null}
 
       {/*
-        L1 + L2 — THE LEAD FINDING AND ITS SUPPORTS. Omitted whole when nothing clears the bar:
-        the reader meets the strongest real signal first, or meets the model directly.
+        LAYER 1 — THE VERDICT (fixture v3.1). The lead finding as the page's
+        one display number, sample strength, ±pp chip, provenance, the lead
+        sentence, the editor's note, and Play This Market. No lead → no
+        verdict (empty-state law); the supports below then open the page.
+      */}
+      {signalReport.lead ? (
+        <VerdictBlock
+          lead={signalReport.lead}
+          teams={teams}
+          p={p}
+          latest={latestSnapshot}
+          editorNote={editorNote}
+          playRows={verdictPlayRows}
+          playFallback={
+            priceFallback
+              ? {
+                  name: priceFallback.name,
+                  logo: priceFallback.logo,
+                  continueHref: priceFallback.continueHref,
+                }
+              : null
+          }
+          marketLabel={signalMarketLabel(signalReport.lead, p)}
+        />
+      ) : null}
+
+      {/*
+        L2 (interim until block V2) — the SUPPORTS only: the lead already
+        spoke in the verdict, and no sentence appears at two levels.
       */}
       <div className="mt-8">
         <FixtureSignalLevels
-          report={signalReport}
+          report={{ ...signalReport, lead: signalReport.lead ? null : signalReport.lead }}
           teams={teams}
           p={p}
           prices={prices}
           locale={locale}
-          fallback={priceFallback}
+          fallback={signalReport.lead ? null : priceFallback}
         />
       </div>
 
       {/*
-        THE EDITOR NOTE (block F, rw3-match mock's Editör notu). Rendered
-        only while an admin pick for this fixture is active AND carries a
-        note — human words under the machine's L1, clearly labelled as the
-        editor's. The note passed the banned-claim scan at save time.
+        THE EDITOR NOTE without a verdict to live under (block F's law): an
+        active pick's note still renders, clearly labelled, when no lead
+        signal cleared the bar.
       */}
-      {editorNote?.trim() ? (
+      {!signalReport.lead && editorNote?.trim() ? (
         <div
           className="mt-4 max-w-[760px]"
           style={{
@@ -564,74 +536,6 @@ export function MatchDetailView({
         ) : null}
       </aside>
     </div>
-  );
-}
-
-function TeamBlock({
-  name,
-  logo,
-  href,
-  matchId,
-  locale,
-  align,
-}: {
-  name: string;
-  logo?: string;
-  href: string | null;
-  matchId: number;
-  locale: string;
-  align: "left" | "right";
-}) {
-  const content = (
-    <>
-      {logo ? (
-        <Image
-          src={logo}
-          alt=""
-          width={24}
-          height={24}
-          className="h-6 w-6 object-contain"
-          style={{ borderRadius: "50%", alignSelf: "center" }}
-        />
-      ) : (
-        <span
-          className="flex h-6 w-6 items-center justify-center text-[11px] font-semibold"
-          style={{
-            background: "var(--pctbg)",
-            border: "1px solid var(--line)",
-            borderRadius: "50%",
-          }}
-        >
-          {name.slice(0, 1)}
-        </span>
-      )}
-      <span
-        className={`min-w-0 text-[16px] font-semibold ${align === "right" ? "text-right" : ""}`}
-      >
-        {name}
-      </span>
-    </>
-  );
-  if (!href) {
-    return (
-      <div
-        className={`flex min-w-0 items-center gap-2.5 ${align === "right" ? "" : "flex-row-reverse"}`}
-      >
-        {content}
-      </div>
-    );
-  }
-  return (
-    <MatchRelatedLink
-      href={href}
-      matchId={matchId}
-      locale={locale}
-      kind="team"
-      target={name}
-      className={`flex min-w-0 items-center gap-2.5 ${align === "right" ? "" : "flex-row-reverse"}`}
-    >
-      {content}
-    </MatchRelatedLink>
   );
 }
 
