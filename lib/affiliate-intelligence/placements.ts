@@ -48,7 +48,8 @@ export const AFFILIATE_PLACEMENTS: readonly PlacementRecord[] = [
   {
     placementId: "post_l2_bridge",
     pageType: "fixture",
-    componentPath: "components/fixtures/FixtureSignalLevels.tsx",
+    /* V3.1 reconciliation: the bridge moved with L2 into the evidence rows. */
+    componentPath: "components/fixtures/v31/EvidenceRows.tsx",
     userIntentStage: "research",
     operatorSelection: "none — same-page anchor to the L5 operators level",
     attributionSchema: ["placement", "locale"],
@@ -330,7 +331,8 @@ export const AFFILIATE_PLACEMENTS: readonly PlacementRecord[] = [
     placementId: "price_row_fallback",
     pageType: "home",
     componentPath:
-      "components/v3/home/PredictionTable.tsx + EditorBand.tsx + components/fixtures/FixtureSignalLevels.tsx",
+      /* V3.1 reconciliation: the fixture's no-price ghost lives in the verdict's play panel now. */
+      "components/v3/home/PredictionTable.tsx + EditorBand.tsx + components/fixtures/v31/VerdictBlock.tsx",
     userIntentStage: "conversion",
     operatorSelection: "admin pin, else the day's top-ranked partner (resolveFallbackOperator)",
     attributionSchema: ["operator", "placement", "locale", "market", "fixture", "country"],

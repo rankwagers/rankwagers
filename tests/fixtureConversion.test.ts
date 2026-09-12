@@ -20,8 +20,15 @@ import test from "node:test";
 const React = require("react") as typeof import("react");
 const { renderToStaticMarkup } = require("react-dom/server") as typeof import("react-dom/server");
 
-const { FixtureSignalLevels } =
-  require("../components/fixtures/FixtureSignalLevels") as typeof import("../components/fixtures/FixtureSignalLevels");
+// V3.1 reconciliation: L1 is the verdict block and L2 the evidence rows now
+// (FixtureSignalLevels retired with the fixture v3.1 reskin). The laws below
+// are unchanged — they re-pin at render level on the new components.
+const { VerdictBlock } =
+  require("../components/fixtures/v31/VerdictBlock") as typeof import("../components/fixtures/v31/VerdictBlock");
+const { EvidenceRows } =
+  require("../components/fixtures/v31/EvidenceRows") as typeof import("../components/fixtures/v31/EvidenceRows");
+const { signalMarketLabel } =
+  require("../lib/fixtures/v31") as typeof import("../lib/fixtures/v31");
 const { FixtureModelWhy } =
   require("../components/fixtures/FixtureModelWhy") as typeof import("../components/fixtures/FixtureModelWhy");
 const { scoreFixtureSignals } =
@@ -73,38 +80,59 @@ const flatReport = () =>
     history: null,
   });
 
-function renderLevels(report: ReturnType<typeof scoreFixtureSignals>): string {
+function renderVerdict(report: ReturnType<typeof scoreFixtureSignals>): string {
+  if (!report.lead) return "";
   return renderToStaticMarkup(
-    React.createElement(FixtureSignalLevels, { report, teams, p: predictionsEn as never })
+    React.createElement(VerdictBlock, {
+      lead: report.lead,
+      teams,
+      p: predictionsEn as never,
+      latest: null,
+      playRows: [],
+      playFallback: null,
+      marketLabel: signalMarketLabel(report.lead, predictionsEn as never),
+    })
+  );
+}
+
+function renderEvidence(report: ReturnType<typeof scoreFixtureSignals>): string {
+  return renderToStaticMarkup(
+    React.createElement(EvidenceRows, {
+      supports: report.supports,
+      teams,
+      p: predictionsEn as never,
+    })
   );
 }
 
 /* ------------------------------------------------------------------ L1/L2 */
 
 test("a strong report leads in the lead register; rendering is deterministic", () => {
-  const html = renderLevels(strongReport());
-  assert.match(html, /Lead finding/, "the eyebrow states the level");
-  // V3 reconciliation: the display face is rw3-title now (16px/600 — Bible V3
-  // caps type at 18px; the lead keeps the page's largest register).
-  assert.match(html, /rw3-title/, "the sentence takes the display face");
+  const html = renderVerdict(strongReport());
+  // V3.1 reconciliation: the lead register is the verdict block — the lead
+  // market's rate as the page's ONE >18px number (the sanctioned exception).
+  assert.match(html, /data-fx31-verdict-number/, "the one display number renders");
   assert.match(html, /league average 50%/, "the grammar carries the baseline");
-  assert.equal(html, renderLevels(strongReport()), "same inputs, same markup");
+  assert.equal(html, renderVerdict(strongReport()), "same inputs, same markup");
 });
 
 test("EMPTY-STATE LAW: weak data renders no lead — and no filler headline", () => {
   const report = flatReport();
   assert.equal(report.lead, null, "precondition: nothing clears the bar");
-  const html = renderLevels(report);
-  assert.equal(html, "", "the whole level is omitted, not padded");
+  // The view gates the verdict on the lead's existence (source pin), and the
+  // evidence rows refuse an empty supports list — nothing pads the page.
+  const view = src("components/fixtures/MatchDetailView.tsx");
+  assert.ok(view.includes("{signalReport.lead ? ("), "the verdict is gated on the lead");
+  assert.equal(renderEvidence(report), "", "no supports → the whole level is omitted, not padded");
 });
 
 test("NO DUPLICATION: the lead sentence appears exactly once across L1+L2", () => {
   const report = strongReport();
-  const html = renderLevels(report);
+  const html = renderVerdict(report) + renderEvidence(report);
   const leadSentenceMatches = html.match(/High-scoring matches keep coming/g) ?? [];
   assert.equal(leadSentenceMatches.length, 1, "the lead's finding prints once, in L1 only");
   // Supports render at most five rows and never repeat one signal.
-  const rows = html.match(/rw-row/g) ?? [];
+  const rows = html.match(/fx31-evidence-row/g) ?? [];
   assert.ok(rows.length <= 5, `at most five support rows — found ${rows.length}`);
   assert.ok(
     report.supports.every((s) => s !== report.lead),

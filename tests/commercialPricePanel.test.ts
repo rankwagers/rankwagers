@@ -100,8 +100,12 @@ test("the affordance cannot render for an unobserved market", () => {
     React.createElement(PricePanel, { rows: [], locale: "en", p: predictionsEn })
   );
   assert.equal(html, "", "no rows, no affordance, no panel");
+  // V3.1 reconciliation: the fixture's price affordance moved into the
+  // verdict's play panel — its rows exist only when prices were OBSERVED
+  // (playRows.length gates the priced list; the sponsored no-number ghost
+  // is the only alternative). The law is unchanged; the guard moved files.
   for (const [file, guard] of [
-    ["components/fixtures/FixtureSignalLevels.tsx", "rowsFor(signal.market)"],
+    ["components/fixtures/v31/VerdictBlock.tsx", "playRows.length"],
     ["components/markets/MarketDetailView.tsx", "pricesByFixture?.[fixture.matchId]?.length"],
   ] as const) {
     assert.ok(SRC(file).includes(guard), `${file} guards the affordance on observation presence`);
@@ -109,7 +113,9 @@ test("the affordance cannot render for an unobserved market", () => {
 });
 
 test("the post-L2 bridge is one quiet anchor to L5 — never a redirect", () => {
-  const src = SRC("components/fixtures/FixtureSignalLevels.tsx");
+  // V3.1 reconciliation: L2 is the evidence-rows component now; the bridge
+  // moved with it, still one anchor, still never a redirect.
+  const src = SRC("components/fixtures/v31/EvidenceRows.tsx");
   assert.match(src, /href="#fx-operators-heading"/, "anchors to the operators level");
   assert.ok(src.includes("p.fxBridgeOperators"), "dictionary-born");
   assert.match(src, /data-placement="post_l2_bridge"/, "its placement is named");

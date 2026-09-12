@@ -12,7 +12,7 @@ import { scoreFixtureSignals } from "@/lib/fixtureSignals";
 import { FixtureModelWhy } from "./FixtureModelWhy";
 import { FixtureResearchSection } from "./FixtureResearchSection";
 import { FixtureRecordSection } from "./FixtureRecordSection";
-import { FixtureSignalLevels } from "./FixtureSignalLevels";
+import { EvidenceRows } from "./v31/EvidenceRows";
 import { LocalTime } from "./LocalTime";
 import { MatchDetailTracker } from "./MatchDetailTracker";
 import { MatchLiveRefresh } from "./MatchLiveRefresh";
@@ -223,19 +223,16 @@ export function MatchDetailView({
       ) : null}
 
       {/*
-        L2 (interim until block V2) — the SUPPORTS only: the lead already
-        spoke in the verdict, and no sentence appears at two levels.
+        LAYER 2 — THE EVIDENCE (fixture v3.1). The SUPPORTS only: the lead
+        already spoke in the verdict, and no sentence appears at two levels.
+        Rows beyond three fold inline; the post-L2 bridge closes the layer.
       */}
-      <div className="mt-8">
-        <FixtureSignalLevels
-          report={{ ...signalReport, lead: signalReport.lead ? null : signalReport.lead }}
-          teams={teams}
-          p={p}
-          prices={prices}
-          locale={locale}
-          fallback={signalReport.lead ? null : priceFallback}
-        />
-      </div>
+      <EvidenceRows
+        supports={signalReport.supports}
+        teams={teams}
+        p={p}
+        history={detail?.history ?? undefined}
+      />
 
       {/*
         THE EDITOR NOTE without a verdict to live under (block F's law): an
