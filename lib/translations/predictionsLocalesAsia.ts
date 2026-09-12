@@ -235,7 +235,7 @@ export const ar = mergePredictions({
   fxFindingCleanSheetsDown: "الشباك النظيفة نادرة",
   fxFindingFailedToScoreUp: "المباريات بلا تسجيل مستمرة",
   fxFindingFailedToScoreDown: "المباريات بلا تسجيل نادرة",
-  fxModelTitle: "قراءة النموذج",
+  fxModelTitle: "تفاصيل الأدلة",
   fxModelPotentialLine:
     "إمكان المزوِّد {pct}٪ في {market} — الرقم المنشور من المزوِّد. ليس ثقةً ولا سعرًا، وبلا عينة.",
   fxWhyTitle: "لماذا",
@@ -921,7 +921,7 @@ export const hi = mergePredictions({
   fxFindingCleanSheetsDown: "क्लीन शीट दुर्लभ हैं",
   fxFindingFailedToScoreUp: "बिना गोल किए मैच जारी हैं",
   fxFindingFailedToScoreDown: "बिना गोल किए मैच दुर्लभ हैं",
-  fxModelTitle: "मॉडल की दृष्टि",
+  fxModelTitle: "प्रमाण का विवरण",
   fxModelPotentialLine:
     "{market} पर प्रदाता क्षमता {pct}% — प्रदाता का प्रकाशित अंक। न भरोसा, न क़ीमत, और बिना नमूने के।",
   fxWhyTitle: "क्यों",
@@ -1614,7 +1614,7 @@ export const ja = mergePredictions({
   fxFindingCleanSheetsDown: "無失点試合は稀",
   fxFindingFailedToScoreUp: "無得点試合が続いている",
   fxFindingFailedToScoreDown: "無得点試合は稀",
-  fxModelTitle: "モデルの見立て",
+  fxModelTitle: "根拠の詳細",
   fxModelPotentialLine: "{market}のプロバイダー・ポテンシャル{pct}% — プロバイダーが公表した数字です。信頼度でも価格でもなく、標本を伴いません。",
   fxWhyTitle: "なぜ",
   fxWhyIntro: "上位のシグナルが、この試合に対するモデル自身の読みとどう出会うか。",
@@ -2264,7 +2264,7 @@ export const ko = mergePredictions({
   fxFindingCleanSheetsDown: "무실점 경기가 드물다",
   fxFindingFailedToScoreUp: "무득점 경기가 이어지고 있다",
   fxFindingFailedToScoreDown: "무득점 경기가 드물다",
-  fxModelTitle: "모델의 판단",
+  fxModelTitle: "근거 상세",
   fxModelPotentialLine: "{market}의 공급자 잠재력 {pct}% — 공급자가 공표한 수치입니다. 신뢰도도 가격도 아니며 표본이 없습니다.",
   fxWhyTitle: "왜",
   fxWhyIntro: "위에 순위화된 신호가 이 경기에 대한 모델 자신의 읽기와 어떻게 만나는지.",
@@ -2918,7 +2918,7 @@ export const th = mergePredictions({
   fxFindingCleanSheetsDown: "คลีนชีตหายาก",
   fxFindingFailedToScoreUp: "เกมไม่มีประตูของตัวเองยังต่อเนื่อง",
   fxFindingFailedToScoreDown: "เกมไม่มีประตูของตัวเองหายาก",
-  fxModelTitle: "มุมมองของโมเดล",
+  fxModelTitle: "รายละเอียดหลักฐาน",
   fxModelPotentialLine:
     "ศักยภาพผู้ให้บริการ {pct}% ที่ {market} — ตัวเลขที่ผู้ให้บริการเผยแพร่ ไม่ใช่ความเชื่อมั่น ไม่ใช่ราคา และไม่มีตัวอย่างกำกับ",
   fxWhyTitle: "ทำไม",
@@ -3614,7 +3614,7 @@ export const vi = mergePredictions({
   fxFindingCleanSheetsDown: "Giữ sạch lưới hiếm gặp",
   fxFindingFailedToScoreUp: "Các trận không ghi bàn vẫn tiếp diễn",
   fxFindingFailedToScoreDown: "Các trận không ghi bàn hiếm gặp",
-  fxModelTitle: "Góc nhìn của mô hình",
+  fxModelTitle: "Chi tiết bằng chứng",
   fxModelPotentialLine:
     "Tiềm năng nhà cung cấp {pct}% ở {market} — con số nhà cung cấp công bố. Không phải độ tin cậy, không phải giá, và không kèm mẫu.",
   fxWhyTitle: "Vì sao",
@@ -4319,7 +4319,7 @@ export const id = mergePredictions({
   fxFindingCleanSheetsDown: "Nirbobol jarang terjadi",
   fxFindingFailedToScoreUp: "Laga tanpa gol sendiri terus berlanjut",
   fxFindingFailedToScoreDown: "Laga tanpa gol sendiri jarang terjadi",
-  fxModelTitle: "Pandangan model",
+  fxModelTitle: "Detail bukti",
   fxModelPotentialLine:
     "Potensi penyedia {pct}% di {market} — angka yang dipublikasikan penyedia. Bukan keyakinan, bukan harga, dan tanpa sampel.",
   fxWhyTitle: "Mengapa",
@@ -5025,7 +5025,7 @@ export const zh = mergePredictions({
   fxFindingCleanSheetsDown: "零封少见",
   fxFindingFailedToScoreUp: "本方零进球的比赛仍在持续",
   fxFindingFailedToScoreDown: "本方零进球的比赛少见",
-  fxModelTitle: "模型的读法",
+  fxModelTitle: "证据明细",
   fxModelPotentialLine: "{market}的供应商潜力{pct}%——供应商公布的数字。既非置信度，也非价格，且不带样本。",
   fxWhyTitle: "为什么",
   fxWhyIntro: "上方排序的信号如何与模型自身对本场比赛的读法相遇。",
@@ -5606,7 +5606,7 @@ export const bn = mergePredictions({
   fxFindingCleanSheetsDown: "ক্লিন শিট বিরল",
   fxFindingFailedToScoreUp: "নিজেদের গোলহীন ম্যাচ চলছেই",
   fxFindingFailedToScoreDown: "নিজেদের গোলহীন ম্যাচ বিরল",
-  fxModelTitle: "মডেলের পাঠ",
+  fxModelTitle: "প্রমাণের বিবরণ",
   fxModelPotentialLine:
     "{market}-এ প্রদানকারীর সম্ভাবনা {pct}% — প্রদানকারীর প্রকাশিত সংখ্যা। আস্থা নয়, দামও নয়, নমুনাও নেই।",
   fxWhyTitle: "কেন",
@@ -6235,7 +6235,7 @@ export const ta = mergePredictions({
   fxFindingCleanSheetsDown: "கிளீன் ஷீட்கள் அரிது",
   fxFindingFailedToScoreUp: "தாம் கோல் அடிக்காத ஆட்டங்கள் தொடர்கின்றன",
   fxFindingFailedToScoreDown: "தாம் கோல் அடிக்காத ஆட்டங்கள் அரிது",
-  fxModelTitle: "மாடலின் பார்வை",
+  fxModelTitle: "சான்றின் விவரம்",
   fxModelPotentialLine:
     "{market}-இல் வழங்குநர் சாத்தியம் {pct}% — வழங்குநர் வெளியிட்ட எண். நம்பிக்கையல்ல, விலையல்ல, மாதிரியும் இல்லை.",
   fxWhyTitle: "ஏன்",
@@ -6877,7 +6877,7 @@ export const te = mergePredictions({
   fxFindingCleanSheetsDown: "క్లీన్ షీట్లు అరుదు",
   fxFindingFailedToScoreUp: "తమ గోల్ లేని మ్యాచ్‌లు కొనసాగుతున్నాయి",
   fxFindingFailedToScoreDown: "తమ గోల్ లేని మ్యాచ్‌లు అరుదు",
-  fxModelTitle: "మోడల్ అభిప్రాయం",
+  fxModelTitle: "ఆధారాల వివరాలు",
   fxModelPotentialLine:
     "{market}పై ప్రొవైడర్ సామర్థ్యం {pct}% — ప్రొవైడర్ ప్రచురించిన సంఖ్య. నమ్మకం కాదు, ధర కాదు, నమూనా లేదు.",
   fxWhyTitle: "ఎందుకు",
@@ -7506,7 +7506,7 @@ export const mr = mergePredictions({
   fxFindingCleanSheetsDown: "क्लीन शीट दुर्मीळ",
   fxFindingFailedToScoreUp: "स्वतःचा गोल नसलेले सामने सुरूच आहेत",
   fxFindingFailedToScoreDown: "स्वतःचा गोल नसलेले सामने दुर्मीळ",
-  fxModelTitle: "मॉडेलची भूमिका",
+  fxModelTitle: "पुराव्याचा तपशील",
   fxModelPotentialLine:
     "{market}वर पुरवठादार क्षमता {pct}% — पुरवठादाराने प्रकाशित केलेला आकडा. विश्वास नाही, किंमत नाही, आणि नमुनाही नाही.",
   fxWhyTitle: "का",
@@ -8199,7 +8199,7 @@ export const sw = mergePredictions({
   fxFindingCleanSheetsDown: "Kutofungwa ni nadra",
   fxFindingFailedToScoreUp: "Mechi bila bao lao zinaendelea",
   fxFindingFailedToScoreDown: "Mechi bila bao lao ni nadra",
-  fxModelTitle: "Mtazamo wa modeli",
+  fxModelTitle: "Maelezo ya ushahidi",
   fxModelPotentialLine:
     "Uwezo wa mtoa huduma {pct}% kwenye {market} — namba iliyochapishwa na mtoa huduma. Si uhakika, si bei, na haina sampuli.",
   fxWhyTitle: "Kwa nini",

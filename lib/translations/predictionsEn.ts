@@ -440,7 +440,7 @@ export const predictionsEn = {
   fxFindingCleanSheetsDown: "Clean sheets are rare",
   fxFindingFailedToScoreUp: "Blanks keep coming",
   fxFindingFailedToScoreDown: "Blanks are rare",
-  fxModelTitle: "The model's view",
+  fxModelTitle: "Evidence detail",
   fxModelPotentialLine:
     "Provider potential {pct}% on {market} — the provider's published figure. Not a confidence, not a price, and it carries no sample.",
   fxWhyTitle: "Why",

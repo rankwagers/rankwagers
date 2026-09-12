@@ -409,7 +409,7 @@ export const nl = euroPredictions({
   fxFindingCleanSheetsDown: "Clean sheets zijn zeldzaam",
   fxFindingFailedToScoreUp: "Wedstrijden zonder eigen doelpunt houden aan",
   fxFindingFailedToScoreDown: "Wedstrijden zonder eigen doelpunt zijn zeldzaam",
-  fxModelTitle: "De lezing van het model",
+  fxModelTitle: "Detail van de onderbouwing",
   fxModelPotentialLine:
     "Provider-potentieel {pct}% op {market} — het gepubliceerde cijfer van de provider. Geen zekerheidsmaat, geen prijs, en zonder steekproef.",
   fxWhyTitle: "Waarom",
@@ -1121,7 +1121,7 @@ export const pl = euroPredictions({
   fxFindingCleanSheetsDown: "Czyste konta są rzadkie",
   fxFindingFailedToScoreUp: "Mecze bez zdobytej bramki trwają",
   fxFindingFailedToScoreDown: "Mecze bez zdobytej bramki są rzadkie",
-  fxModelTitle: "Odczyt modelu",
+  fxModelTitle: "Szczegóły dowodów",
   fxModelPotentialLine:
     "Potencjał dostawcy {pct}% na {market} — liczba opublikowana przez dostawcę. To nie pewność, nie cena i bez próby.",
   fxWhyTitle: "Dlaczego",
@@ -1833,7 +1833,7 @@ export const cs = euroPredictions({
   fxFindingCleanSheetsDown: "Čistá konta jsou vzácná",
   fxFindingFailedToScoreUp: "Zápasy bez vstřelené branky pokračují",
   fxFindingFailedToScoreDown: "Zápasy bez vstřelené branky jsou vzácné",
-  fxModelTitle: "Pohled modelu",
+  fxModelTitle: "Detail podkladů",
   fxModelPotentialLine:
     "Potenciál poskytovatele {pct}% na {market} — číslo zveřejněné poskytovatelem. Není to jistota, není to cena a nenese vzorek.",
   fxWhyTitle: "Proč",
@@ -2537,7 +2537,7 @@ export const da = euroPredictions({
   fxFindingCleanSheetsDown: "Rene bure er sjældne",
   fxFindingFailedToScoreUp: "Kampe uden scoring fortsætter",
   fxFindingFailedToScoreDown: "Kampe uden scoring er sjældne",
-  fxModelTitle: "Modellens læsning",
+  fxModelTitle: "Belæg i detaljer",
   fxModelPotentialLine:
     "Udbyderpotentiale {pct}% på {market} — udbyderens offentliggjorte tal. Ikke en sikkerhed, ikke en pris, og uden stikprøve.",
   fxWhyTitle: "Hvorfor",
@@ -3242,7 +3242,7 @@ export const sv = euroPredictions({
   fxFindingCleanSheetsDown: "Hållna nollor är sällsynta",
   fxFindingFailedToScoreUp: "Matcher utan egna mål fortsätter",
   fxFindingFailedToScoreDown: "Matcher utan egna mål är sällsynta",
-  fxModelTitle: "Modellens läsning",
+  fxModelTitle: "Underlag i detalj",
   fxModelPotentialLine:
     "Leverantörspotential {pct}% på {market} — leverantörens publicerade siffra. Ingen konfidens, inget pris, och utan urval.",
   fxWhyTitle: "Varför",
@@ -3946,7 +3946,7 @@ export const no = euroPredictions({
   fxFindingCleanSheetsDown: "Holdte nuller er sjeldne",
   fxFindingFailedToScoreUp: "Kamper uten egne mål fortsetter",
   fxFindingFailedToScoreDown: "Kamper uten egne mål er sjeldne",
-  fxModelTitle: "Modellens lesning",
+  fxModelTitle: "Grunnlag i detalj",
   fxModelPotentialLine:
     "Leverandørpotensial {pct}% på {market} — leverandørens publiserte tall. Ingen konfidens, ingen pris, og uten utvalg.",
   fxWhyTitle: "Hvorfor",
@@ -4653,7 +4653,7 @@ export const fi = euroPredictions({
   fxFindingCleanSheetsDown: "Nollapelit ovat harvassa",
   fxFindingFailedToScoreUp: "Maalittomat esitykset jatkuvat",
   fxFindingFailedToScoreDown: "Maalittomat esitykset ovat harvassa",
-  fxModelTitle: "Mallin näkemys",
+  fxModelTitle: "Näytön erittely",
   fxModelPotentialLine:
     "Tarjoajan potentiaali {pct}% markkinalla {market} — tarjoajan julkaisema luku. Ei luottamus, ei hinta, eikä sillä ole otosta.",
   fxWhyTitle: "Miksi",
@@ -5356,7 +5356,7 @@ export const ro = euroPredictions({
   fxFindingCleanSheetsDown: "Porțile intacte sunt rare",
   fxFindingFailedToScoreUp: "Meciurile fără gol marcat continuă",
   fxFindingFailedToScoreDown: "Meciurile fără gol marcat sunt rare",
-  fxModelTitle: "Lectura modelului",
+  fxModelTitle: "Detaliul dovezilor",
   fxModelPotentialLine:
     "Potențial furnizor {pct}% pe {market} — cifra publicată de furnizor. Nu e încredere, nu e preț și nu poartă eșantion.",
   fxWhyTitle: "De ce",
@@ -6066,7 +6066,7 @@ export const el = euroPredictions({
   fxFindingCleanSheetsDown: "Τα ανέπαφα τέρματα είναι σπάνια",
   fxFindingFailedToScoreUp: "Οι αγώνες χωρίς δικό τους γκολ συνεχίζονται",
   fxFindingFailedToScoreDown: "Οι αγώνες χωρίς δικό τους γκολ είναι σπάνιοι",
-  fxModelTitle: "Η ανάγνωση του μοντέλου",
+  fxModelTitle: "Λεπτομέρειες στοιχείων",
   fxModelPotentialLine:
     "Δυναμικό παρόχου {pct}% στην αγορά {market} — ο δημοσιευμένος αριθμός του παρόχου. Ούτε βεβαιότητα, ούτε τιμή, και χωρίς δείγμα.",
   fxWhyTitle: "Γιατί",
@@ -6779,7 +6779,7 @@ export const hu = euroPredictions({
   fxFindingCleanSheetsDown: "A kapott gól nélküli meccsek ritkák",
   fxFindingFailedToScoreUp: "A gólszerzés nélküli meccsek folytatódnak",
   fxFindingFailedToScoreDown: "A gólszerzés nélküli meccsek ritkák",
-  fxModelTitle: "A modell olvasata",
+  fxModelTitle: "Bizonyítékok részletei",
   fxModelPotentialLine:
     "Szolgáltatói potenciál {pct}% a(z) {market} piacon — a szolgáltató közzétett száma. Nem bizonyosság, nem ár, és nincs mögötte minta.",
   fxWhyTitle: "Miért",

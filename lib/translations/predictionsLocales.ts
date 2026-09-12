@@ -245,7 +245,7 @@ const pt: PredictionStrings = mergePredictions({
   fxFindingCleanSheetsDown: "Jogos sem sofrer gols são raros",
   fxFindingFailedToScoreUp: "Jogos sem marcar continuam",
   fxFindingFailedToScoreDown: "Jogos sem marcar são raros",
-  fxModelTitle: "A visão do modelo",
+  fxModelTitle: "Detalhe das evidências",
   fxModelPotentialLine:
     "Potencial do provedor {pct}% em {market} — o número publicado pelo provedor. Não é confiança, não é preço e não carrega amostra.",
   fxWhyTitle: "Por quê",
@@ -963,7 +963,7 @@ const es: PredictionStrings = mergePredictions({
   fxFindingCleanSheetsDown: "Las porterías a cero son raras",
   fxFindingFailedToScoreUp: "Los partidos sin marcar continúan",
   fxFindingFailedToScoreDown: "Los partidos sin marcar son raros",
-  fxModelTitle: "La visión del modelo",
+  fxModelTitle: "Detalle de la evidencia",
   fxModelPotentialLine:
     "Potencial del proveedor {pct}% en {market} — la cifra publicada por el proveedor. No es confianza, no es un precio y no lleva muestra.",
   fxWhyTitle: "Por qué",
@@ -1689,7 +1689,7 @@ const de: PredictionStrings = mergePredictions({
   fxFindingCleanSheetsDown: "Zu-null-Spiele sind selten",
   fxFindingFailedToScoreUp: "Torlose Auftritte halten an",
   fxFindingFailedToScoreDown: "Torlose Auftritte sind selten",
-  fxModelTitle: "Die Sicht des Modells",
+  fxModelTitle: "Belege im Detail",
   fxModelPotentialLine:
     "Anbieter-Potenzial {pct}% auf {market} — die veröffentlichte Zahl des Anbieters. Keine Konfidenz, kein Preis, und ohne Stichprobe.",
   fxWhyTitle: "Warum",
@@ -2406,7 +2406,7 @@ const it: PredictionStrings = mergePredictions({
   fxFindingCleanSheetsDown: "Le porte inviolate sono rare",
   fxFindingFailedToScoreUp: "Le partite senza segnare continuano",
   fxFindingFailedToScoreDown: "Le partite senza segnare sono rare",
-  fxModelTitle: "La lettura del modello",
+  fxModelTitle: "Dettaglio delle evidenze",
   fxModelPotentialLine:
     "Potenziale del provider {pct}% su {market} — la cifra pubblicata dal provider. Non è confidenza, non è un prezzo e non porta campione.",
   fxWhyTitle: "Perché",
@@ -3123,7 +3123,7 @@ const fr: PredictionStrings = mergePredictions({
   fxFindingCleanSheetsDown: "Les clean sheets sont rares",
   fxFindingFailedToScoreUp: "Les matchs sans marquer se poursuivent",
   fxFindingFailedToScoreDown: "Les matchs sans marquer sont rares",
-  fxModelTitle: "La lecture du modèle",
+  fxModelTitle: "Détail des indices",
   fxModelPotentialLine:
     "Potentiel du fournisseur {pct}% sur {market} — le chiffre publié par le fournisseur. Ni une confiance, ni un prix, et sans échantillon.",
   fxWhyTitle: "Pourquoi",
