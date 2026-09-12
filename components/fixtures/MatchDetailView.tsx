@@ -22,7 +22,8 @@ import { Icon } from "@/components/v3/Icon";
 import { OfferOfTheDayCard } from "@/components/v3/rails/RightRail";
 import { FixtureHeaderV31 } from "./v31/FixtureHeaderV31";
 import { VerdictBlock } from "./v31/VerdictBlock";
-import { formPack, signalMarketLabel } from "@/lib/fixtures/v31";
+import { H2hSection, ModelViewV31 } from "./v31/HistoryModelView";
+import { formPack, h2hAnalysis, signalMarketLabel } from "@/lib/fixtures/v31";
 import { PRICE_PANEL_MARKET_BY_SIGNAL } from "@/lib/operators/pricePanel.server";
 
 export function MatchDetailView({
@@ -105,6 +106,30 @@ export function MatchDetailView({
   const verdictPlayRows = signalReport.lead
     ? (prices?.[PRICE_PANEL_MARKET_BY_SIGNAL[signalReport.lead.market] ?? ""] ?? [])
     : [];
+
+  /* Fixture v3.1 — layer 3's derivations. The H2H gate (≥3 meetings) lives
+     in h2hAnalysis; the model view speaks only through the template
+     registry, its win record derived from the SAME venue history the form
+     chips show. */
+  const h2h = h2hAnalysis(detail?.history?.headToHead ?? [], header.homeTeam);
+  const homeFullRecord = formPack(
+    detail?.history?.homeAtHome ?? [],
+    header.homeTeam,
+    Number.MAX_SAFE_INTEGER
+  );
+  const modelInputs = {
+    homeTeam: header.homeTeam,
+    awayTeam: header.awayTeam,
+    homeVenue: detail?.homeAtHome,
+    awayVenue: detail?.awayAtAway,
+    leagueAvgGoals: detail?.leagueSeason?.avgGoals,
+    homeWinRecord: homeFullRecord.sample
+      ? {
+          wins: homeFullRecord.chips.filter((chip) => chip.outcome === "won").length,
+          n: homeFullRecord.sample,
+        }
+      : undefined,
+  };
 
   return (
     <div className="rw3-match-grid">
@@ -262,8 +287,24 @@ export function MatchDetailView({
       ) : null}
 
       {/*
-        L3 — THE MODEL'S VIEW AND WHY. The potential for the page's market, the model's scored
-        signals, one honest reconciliation sentence, and the archive's provenance line.
+        LAYER 3 — HISTORY AND THE MODEL'S VIEW (fixture v3.1). H2H only at
+        ≥3 meetings; the model view only through the template registry, 2–4
+        sentences, closing on the lock line and the record's door. Either
+        section missing its data is omitted whole (empty-state law).
+      */}
+      {h2h ? (
+        <H2hSection h2h={h2h} homeTeam={header.homeTeam} awayTeam={header.awayTeam} p={p} />
+      ) : null}
+      <ModelViewV31
+        inputs={modelInputs}
+        marketLabel={signalReport.lead ? signalMarketLabel(signalReport.lead, p) : null}
+        locale={locale}
+        p={p}
+      />
+
+      {/*
+        THE RETAINED TRUTH SURFACES — the model's why, the potential for the
+        page's market, the archive's provenance line: untouched in law.
       */}
       <div className="mt-10 pt-6" style={{ borderTop: "1px solid var(--line)" }}>
         <FixtureModelWhy
