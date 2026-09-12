@@ -53,7 +53,7 @@ export function MarketOddsSection({
     if (odds.clvAveragePercent !== null)
       rows.push({
         label: p.mktOddsClv,
-        value: `${odds.clvAveragePercent > 0 ? "+" : ""}${odds.clvAveragePercent.toFixed(1)}%`,
+        value: `${odds.clvAveragePercent > 0 ? "+" : ""}${Math.round(odds.clvAveragePercent)}%`,
       });
   }
 

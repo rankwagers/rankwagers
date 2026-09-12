@@ -266,7 +266,8 @@ export function OperatorDetailView({
                 {performance.clvAveragePercent !== null ? (
                   <Row
                     label={p.mktOddsClv}
-                    value={`${performance.clvAveragePercent > 0 ? "+" : ""}${performance.clvAveragePercent.toFixed(1)}%`}
+                    /* Group 9: integer percentages everywhere on reader routes. */
+                    value={`${performance.clvAveragePercent > 0 ? "+" : ""}${Math.round(performance.clvAveragePercent)}%`}
                   />
                 ) : null}
               </dl>

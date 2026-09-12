@@ -304,7 +304,7 @@ function MovementsBlock({
                 </span>
                 <span className="font-mono text-xs tabular-nums text-muted-foreground">
                   {move.percentChange > 0 ? "+" : ""}
-                  {move.percentChange.toFixed(1)}% · {move.isSteam ? "steam" : move.severity}
+                  {Math.round(move.percentChange)}% · {move.isSteam ? "steam" : move.severity}
                 </span>
               </button>
             </li>
@@ -350,7 +350,7 @@ function ClvBlock({ rows }: { rows: OddsIntelligencePayload["clv"] }) {
                   }`}
                 >
                   {row.clvPercent > 0 ? "+" : ""}
-                  {row.clvPercent.toFixed(1)}%
+                  {Math.round(row.clvPercent)}%
                 </td>
               </tr>
             ))}
@@ -395,7 +395,7 @@ function ComparisonTable({
               </td>
               <td className="py-1.5 pr-3 text-xs text-muted-foreground">
                 {row.movementPercent !== null
-                  ? `${row.movementDirection} ${row.movementPercent.toFixed(1)}%`
+                  ? `${row.movementDirection} ${Math.round(row.movementPercent)}%`
                   : "—"}
               </td>
               <td className="py-1.5 font-mono tabular-nums text-right">{row.coveragePoints}</td>

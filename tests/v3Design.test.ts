@@ -528,6 +528,28 @@ test("zero legacy tokens/classes on every reader-route source (the no-deploy rul
   assert.deepEqual(offenders, [], "a reader route still speaks the v2 language");
 });
 
+test("integer percentages everywhere on reader routes (polish group 9)", () => {
+  /*
+   * Two layers. Source: no reader-reachable file may format a percentage
+   * with decimals (toFixed(n)% and the ×1000/10 tenth-rounding idiom are
+   * banned; decimal ODDS keep their two places — the ban is scoped to the
+   * percent-adjacent forms). Render: the composed homepage carries no
+   * fractional percent.
+   */
+  const offenders: string[] = [];
+  for (const { file, text } of readerRouteSources()) {
+    if (/toFixed\(\d\)\s*\}?\s*%/.test(text) || /\*\s*1000\)\s*\/\s*10\b/.test(text)) {
+      offenders.push(file);
+    }
+  }
+  assert.deepEqual(offenders, [], "a reader route formats a percentage with decimals");
+  assert.doesNotMatch(
+    homeMarkup(true),
+    /\d+\.\d+%/,
+    "the rendered homepage carries a fractional percent"
+  );
+});
+
 test("the retired v2 corpus stays unreachable from reader routes", () => {
   const reached = new Set(readerRouteSources().map(({ file }) => file));
   for (const retired of [

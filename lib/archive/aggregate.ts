@@ -11,7 +11,9 @@ import type {
 function hitRate(won: number, lost: number): number | null {
   const settled = won + lost;
   if (settled <= 0) return null;
-  return Math.round((won / settled) * 1000) / 10;
+  /* Polish group 9: integer percentages everywhere on reader routes. A
+     tenth of a point was precision theater over a few hundred settlements. */
+  return Math.round((won / settled) * 100);
 }
 
 export function aggregateRecords(
