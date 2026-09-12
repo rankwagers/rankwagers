@@ -83,8 +83,8 @@ export function VerdictBlock({
   return (
     <section
       aria-labelledby="fx31-verdict-heading"
-      className="grid gap-5 py-4"
-      style={{ gridTemplateColumns: "minmax(0,1fr) 300px", borderBottom: "1px solid var(--line)" }}
+      className="fx31-verdict-grid grid gap-5 py-4"
+      style={{ borderBottom: "1px solid var(--line)" }}
     >
       <div>
         <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">

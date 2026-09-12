@@ -211,6 +211,7 @@ export default async function FixtureMatchPage({
           matchId={matchId}
           focusMarket={bundle.focusMarket ?? null}
           p={dict.predictions}
+          prices={prices}
         />
       </div>
     </>

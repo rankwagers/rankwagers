@@ -137,16 +137,24 @@ export type Deviation = {
 };
 
 export function deviationFor(signal: FixtureSignal): Deviation | null {
-  /* Presented space: down-phrased signals invert rate AND baseline together
-     (signalPresentation's law), so a positive pp always reads as "favors
-     the sentence as phrased". */
+  /* Presented space: inverting down-phrasings flip rate AND baseline
+     together (signalPresentation's law), so the pp NUMBER always agrees
+     with the sentence. FAVORING is judged in RAW space against the
+     signal's own direction — a non-inverting down claim ("goals are
+     rare") is favored by a rate BELOW the league line, where presented pp
+     is negative. */
   const presented = presentedNumbers(signal);
-  if (presented.baseline === null) return null;
+  if (presented.baseline === null || signal.baseline === null) return null;
   const pp = Math.round((presented.rate - presented.baseline) * 100);
+  const favors =
+    pp !== 0 &&
+    (signal.direction === "below_baseline"
+      ? signal.rate < signal.baseline
+      : signal.rate > signal.baseline);
   return {
     pp,
     baselinePct: Math.round(presented.baseline * 100),
-    favors: pp > 0,
+    favors,
   };
 }
 

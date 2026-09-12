@@ -1550,6 +1550,44 @@ textarea,
   }
 }
 
+/* Fixture v3.1 — the five layers' frames. Desktop: verdict text · 300px
+ * play panel; two comparison cards; the operators matrix as a table. The
+ * mobile composition (single column) stacks the verdict over its play
+ * panel, stacks the comparison cards, and swaps the matrix for the
+ * per-market accordion — same data, no JS, no navigation. */
+.rw3 .fx31-verdict-grid {
+  grid-template-columns: minmax(0, 1fr) 300px;
+}
+
+.rw3 .fx31-comparison-cards {
+  grid-template-columns: 1fr 1fr;
+}
+
+.rw3 .fx31-matrix-accordion {
+  display: none;
+}
+
+@media (max-width: 859.98px) {
+  .rw3 .fx31-verdict-grid,
+  .rw3 .fx31-comparison-cards {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .rw3 .fx31-matrix-table {
+    display: none;
+  }
+
+  .rw3 .fx31-matrix-accordion {
+    display: block;
+  }
+
+  /* Compact evidence: the row wraps, the deviation bar takes the full
+   * measure on its own line, dots tuck under. */
+  .rw3 .fx31-evidence-row {
+    flex-wrap: wrap;
+  }
+}
+
 /* ==== end of the rw3 scope ==== */
 
 

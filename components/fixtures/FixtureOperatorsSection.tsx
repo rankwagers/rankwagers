@@ -1,7 +1,9 @@
 import { OperatorEvidenceCardList } from "@/components/operators/OperatorEvidenceCard";
+import { OperatorsMatrix } from "@/components/fixtures/v31/OperatorsMatrix";
 import { buildOperatorEvidenceCards, recommendableCards } from "@/lib/operators/evidenceCard";
 import type { Locale } from "@/lib/i18n";
 import type { OperatorCountryAvailability, Operator } from "@/lib/operators/types";
+import type { PricePanelData } from "@/lib/operators/pricePanel.server";
 import type { PredictionStrings } from "@/lib/translations/predictionsEn";
 
 /* ============================================================================
@@ -21,6 +23,7 @@ export function FixtureOperatorsSection({
   matchId,
   focusMarket,
   p,
+  prices,
 }: {
   locale: Locale;
   operators: ReadonlyArray<{ operator: Operator; availability: OperatorCountryAvailability }>;
@@ -28,7 +31,13 @@ export function FixtureOperatorsSection({
   matchId: number;
   focusMarket: string | null;
   p: PredictionStrings;
+  /** Fixture v3.1 — the observed panel data behind the operators × markets matrix. */
+  prices?: PricePanelData;
 }) {
+  const operatorLogos: Record<string, string | null> = {};
+  for (const { operator } of operators) {
+    operatorLogos[operator.slug] = operator.logo ?? null;
+  }
   return (
     <section aria-labelledby="fx-operators-heading" className="mt-20">
       <div
@@ -42,6 +51,13 @@ export function FixtureOperatorsSection({
       <p className="rw3-meta mt-2">
         {p.fxOperatorsNote}
       </p>
+
+      {/*
+        FIXTURE v3.1 — the operators × markets matrix: observed ghost odds,
+        the top price outlined, "—" for no observation, one Best badge, a
+        ghost Continue per row. No observed market → no matrix.
+      */}
+      {prices ? <OperatorsMatrix prices={prices} operatorLogos={operatorLogos} p={p} /> : null}
 
       {/*
         ONE AFFILIATE BLOCK. The signed-offers list that rendered here duplicated the evidence

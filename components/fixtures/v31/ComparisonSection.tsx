@@ -178,7 +178,7 @@ export function ComparisonSection({
         </h2>
         {pairs.length ? <span className="rw3-meta">{p.v3LeadsRow}</span> : null}
       </div>
-      <div className="fx31-comparison-cards mt-3 grid gap-4" style={{ gridTemplateColumns: "1fr 1fr" }}>
+      <div className="fx31-comparison-cards mt-3 grid gap-4">
         {homeRows.length ? (
           <TeamCard team={homeTeam} venueLabel={p.v3HomeShort} form={homeForm} rows={homeRows} p={p} />
         ) : null}
