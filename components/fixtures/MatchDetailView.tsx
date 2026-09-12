@@ -23,7 +23,8 @@ import { OfferOfTheDayCard } from "@/components/v3/rails/RightRail";
 import { FixtureHeaderV31 } from "./v31/FixtureHeaderV31";
 import { VerdictBlock } from "./v31/VerdictBlock";
 import { H2hSection, ModelViewV31 } from "./v31/HistoryModelView";
-import { formPack, h2hAnalysis, signalMarketLabel } from "@/lib/fixtures/v31";
+import { ComparisonSection } from "./v31/ComparisonSection";
+import { formPack, h2hAnalysis, signalMarketLabel, venueStatRows } from "@/lib/fixtures/v31";
 import { PRICE_PANEL_MARKET_BY_SIGNAL } from "@/lib/operators/pricePanel.server";
 
 export function MatchDetailView({
@@ -130,6 +131,18 @@ export function MatchDetailView({
         }
       : undefined,
   };
+
+  /* Fixture v3.1 — layer 4's derivations: one honest venue column per team. */
+  const homeStatRows = venueStatRows(
+    detail?.homeAtHome,
+    detail?.history?.homeAtHome ?? [],
+    header.homeTeam
+  );
+  const awayStatRows = venueStatRows(
+    detail?.awayAtAway,
+    detail?.history?.awayAtAway ?? [],
+    header.awayTeam
+  );
 
   return (
     <div className="rw3-match-grid">
@@ -299,6 +312,21 @@ export function MatchDetailView({
         inputs={modelInputs}
         marketLabel={signalReport.lead ? signalMarketLabel(signalReport.lead, p) : null}
         locale={locale}
+        p={p}
+      />
+
+      {/*
+        LAYER 4 — THE TEAM COMPARISON (fixture v3.1). Two cards, one honest
+        venue column each; paired bars for the stats both venues answer;
+        missing stat → no row. No standings fields (the DECIDED rule).
+      */}
+      <ComparisonSection
+        homeTeam={header.homeTeam}
+        awayTeam={header.awayTeam}
+        homeForm={homeForm}
+        awayForm={awayForm}
+        homeRows={homeStatRows}
+        awayRows={awayStatRows}
         p={p}
       />
 
