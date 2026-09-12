@@ -193,7 +193,12 @@ export default async function LocaleHomePage({
       terms: dict.footer.disclaimer,
       smallSample: p.v3SmallSample,
     },
-    band: { editorPick: p.v3EditorPick, more: p.v3More, sponsored: p.v3Sponsored18 },
+    band: {
+      editorPick: p.v3EditorPick,
+      more: p.v3More,
+      sponsored: p.v3Sponsored18,
+      strongestSignals: p.v3StrongestSignals,
+    },
     tabs: {
       today: p.v3Today,
       tomorrow: p.v3Tomorrow,

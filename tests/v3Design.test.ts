@@ -233,7 +233,12 @@ function homeMarkup(withOffer: boolean): string {
       terms: "Terms.",
       smallSample: "small sample",
     },
-    band: { editorPick: "Editor's pick", more: "more", sponsored: "Sponsored · 18+" },
+    band: {
+      editorPick: "Editor's pick",
+      more: "more",
+      sponsored: "Sponsored · 18+",
+      strongestSignals: "Strongest signals",
+    },
     tabs: {
       today: "Today",
       tomorrow: "Tomorrow",

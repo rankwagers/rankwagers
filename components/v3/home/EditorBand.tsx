@@ -22,6 +22,8 @@ export type EditorBandStrings = {
   more: string;
   /** "Sponsored · 18+" — the no-price fallback ghost's title (group 4). */
   sponsored: string;
+  /** "Strongest signals" — the engine's own cards say whose words they are (group 6). */
+  strongestSignals: string;
 };
 
 function Crest({ src, name }: { src: string | null; name: string }) {
@@ -130,13 +132,17 @@ export function EditorBand({
                   minWidth: 0,
                 }}
               >
-                {index === 0 || pick.isManual ? (
+                {/* GROUP 6 — the label says WHO is speaking: the pencil and
+                    "Editor's pick" belong ONLY to /admin/featured picks; a
+                    card the engine filled says "Strongest signals". A reader
+                    can no longer mistake machine selection for editorial. */}
+                {pick.isManual ? (
                   <>
                     <Icon name="editor" size={20} strokePx={1.75} />
                     {strings.editorPick}
                   </>
                 ) : (
-                  pick.league
+                  strings.strongestSignals
                 )}
               </span>
               <span style={{ marginLeft: "auto" }}>{pick.timeLabel}</span>

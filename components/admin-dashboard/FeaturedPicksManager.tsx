@@ -518,7 +518,12 @@ export function FeaturedPicksManager() {
             <EditorBand
               picks={previewCards}
               locale="en"
-              strings={{ editorPick: p.v3EditorPick, more: p.v3More, sponsored: p.v3Sponsored18 }}
+              strings={{
+                editorPick: p.v3EditorPick,
+                more: p.v3More,
+                sponsored: p.v3Sponsored18,
+                strongestSignals: p.v3StrongestSignals,
+              }}
             />
           </div>
         ) : (
