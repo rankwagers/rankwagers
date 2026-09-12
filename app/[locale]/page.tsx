@@ -117,7 +117,7 @@ export default async function LocaleHomePage({
     buildHighPotentialToday(todayData.lists),
     /* GROUP 7 — the verified card IS the archive summary: same query, same
        window, same numbers /archive prints; probe-pinned equal. */
-    buildVerifiedRecordCard(locale),
+    buildVerifiedRecordCard(locale, p.v3Today),
   ]);
 
   const { leagues, totalMatches } = buildPopularLeagues(selected.lists);

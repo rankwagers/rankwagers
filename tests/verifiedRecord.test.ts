@@ -13,7 +13,7 @@ import { queryArchive } from "../lib/archive/load";
 
 test("card == archive summary: pct, won, lost, settled, and the stated window", async () => {
   const [card, { metrics, dates }] = await Promise.all([
-    buildVerifiedRecordCard("en"),
+    buildVerifiedRecordCard("en", "today"),
     queryArchive("en", {}, { dateLimit: 60 }),
   ]);
   const settled = metrics.won + metrics.lost;
@@ -27,13 +27,25 @@ test("card == archive summary: pct, won, lost, settled, and the stated window", 
   assert.equal(card.settled, settled);
   assert.equal(card.hitRatePct, Math.round(metrics.hitRatePct), "integer pct (group 9)");
   assert.ok(Number.isInteger(card.hitRatePct));
-  for (const bound of [dates[0], dates[dates.length - 1]]) {
-    if (bound) {
-      assert.ok(
-        card.windowLabel.includes(bound) || dates.length === 1,
-        `the card states its window (${bound} ∉ "${card.windowLabel}")`
-      );
-    }
+  // Group 3: the window speaks months, not wrapping ISO dates — the
+  // from-bound as a locale month+year, the to-bound as "today" whenever
+  // the window reaches the present day.
+  assert.doesNotMatch(card.windowLabel, /\d{4}-\d{2}-\d{2}/, "no ISO date in the label");
+  const oldest = dates[dates.length - 1];
+  if (oldest) {
+    const month = new Intl.DateTimeFormat("en", {
+      month: "short",
+      year: "numeric",
+      timeZone: "UTC",
+    }).format(new Date(`${oldest}T00:00:00.000Z`));
+    assert.ok(
+      card.windowLabel.startsWith(month),
+      `the from-bound is the oldest month (${month} ∉ "${card.windowLabel}")`
+    );
+  }
+  const todayIso = new Date().toISOString().slice(0, 10);
+  if (dates[0] && dates[0] >= todayIso) {
+    assert.match(card.windowLabel, /today$/, "an open window ends at 'today'");
   }
 });
 
