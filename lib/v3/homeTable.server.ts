@@ -112,6 +112,17 @@ const PCT_FIELD: Record<MatchListKind, keyof FootyMatchRow> = {
   sh: "shOver05Pct",
 };
 
+/** The league-season baseline field per market (group 5's weighting). */
+const LEAGUE_FIELD: Record<
+  MatchListKind,
+  keyof NonNullable<MatchDetailPublic["leagueSeason"]>
+> = {
+  fh: "fh05",
+  over15: "over15",
+  over25: "over25",
+  sh: "sh05",
+};
+
 export type TableRow = {
   matchId: number;
   kickoffTime: number;
@@ -127,6 +138,17 @@ export type TableRow = {
   /** Venue rate for the market — null renders as omission, never a dash. */
   ratePct: number | null;
   sample: string | null;
+  /**
+   * Polish group 5: n<5 — the pct renders muted with the small-sample
+   * label, and the row can never top the weighted order.
+   */
+  smallSample: boolean;
+  /**
+   * The engine's reliability-weighted score |rate−baseline|×n/(n+5) — the
+   * "By rate" order. 0 when the venue stat or the league baseline is
+   * missing (an unscorable row never outranks a scored one). Not rendered.
+   */
+  weightedScore: number;
   /** Oldest → newest, true = market hit. Empty for half markets (no HT data). */
   form: boolean[];
   bestOdds: {
@@ -274,7 +296,20 @@ export async function buildTableRows(input: {
       ? a.row.kickoffTime - b.row.kickoffTime
       : b.pct - a.pct || a.row.kickoffTime - b.row.kickoffTime
   );
-  const visible = preliminary.slice(0, limit);
+  /*
+   * POLISH GROUP 5 — the weighted sort needs venue stats and the league
+   * baseline, which live in the (cached) fixture details. Fetching every
+   * candidate's detail on a 100-fixture day is a provider storm, so the
+   * candidate pool is a 3× buffer over the visible slice (min 48): the
+   * weighted order is exact within it, and a small-sample row that the raw
+   * pct smuggled in can never displace a reliable one — it sorts behind
+   * every n≥5 row by construction.
+   */
+  const pool = preliminary.slice(
+    0,
+    sort === "rate" ? Math.max(limit === Number.MAX_SAFE_INTEGER ? 0 : limit * 3, 48) : limit
+  );
+  const visible = sort === "rate" && limit !== Number.MAX_SAFE_INTEGER ? pool : preliminary.slice(0, limit);
 
   const details = await getMatchDetails(
     visible.map((v) => v.row.matchId),
@@ -310,6 +345,16 @@ export async function buildTableRows(input: {
         stat && stat.played > 0 && stat.measured !== false
           ? { ratePct: Math.round((stat.hits / stat.played) * 100), sample: `${stat.hits}/${stat.played}` }
           : { ratePct: null, sample: null };
+      /* Group 5: the engine's weighting — |rate−baseline|×n/(n+5). Both
+         halves must be real; a missing baseline scores 0, never a stand-in. */
+      const baselinePct = detail?.leagueSeason
+        ? Number(detail.leagueSeason[LEAGUE_FIELD[kind]])
+        : NaN;
+      const played = stat && stat.measured !== false ? stat.played : 0;
+      const weightedScore =
+        paired.ratePct !== null && Number.isFinite(baselinePct) && played > 0
+          ? (Math.abs(paired.ratePct - baselinePct) / 100) * (played / (played + 5))
+          : 0;
       const bestOdds = await bestPriceForRow(row, kind, locale, country);
       return {
         matchId: row.matchId,
@@ -325,6 +370,8 @@ export async function buildTableRows(input: {
         marketLabel: marketForListKind(kind).label,
         ratePct: paired.ratePct,
         sample: paired.sample,
+        smallSample: paired.ratePct !== null && played > 0 && played < 5,
+        weightedScore,
         form: formFromHistory(detail, kind),
         bestOdds,
         /* The real price always wins; the ghost stands in only for silence. */
@@ -334,9 +381,23 @@ export async function buildTableRows(input: {
     })
   );
 
-  // Re-sort the enriched slice by the pair the reader actually sees.
+  /*
+   * GROUP 5 — "By rate" IS the weighted order: reliable rows (n≥5) by the
+   * engine's score, then small-sample rows (which therefore can never top
+   * the list), unscorable rows last; kickoff breaks ties. The buffer pool
+   * is then cut to the visible limit.
+   */
   if (sort === "rate") {
-    rows.sort((a, b) => (b.ratePct ?? -1) - (a.ratePct ?? -1) || a.kickoffTime - b.kickoffTime);
+    const bucket = (row: TableRow) =>
+      row.ratePct === null ? 2 : row.smallSample ? 1 : 0;
+    rows.sort(
+      (a, b) =>
+        bucket(a) - bucket(b) ||
+        b.weightedScore - a.weightedScore ||
+        (b.ratePct ?? -1) - (a.ratePct ?? -1) ||
+        a.kickoffTime - b.kickoffTime
+    );
+    return { rows: rows.slice(0, limit), totalRows };
   }
   return { rows, totalRows };
 }

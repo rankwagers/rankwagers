@@ -206,6 +206,9 @@ function homeMarkup(withOffer: boolean): string {
     ...pick(9),
     kickoffTime: 0,
     form: [true, false, true],
+    smallSample: false,
+    weightedScore: 0.2,
+    fallbackOdds: null,
     isLive: false,
   };
   const strings = {
@@ -228,6 +231,7 @@ function homeMarkup(withOffer: boolean): string {
       sponsored: "Sponsored · 18+",
       continue: "Continue",
       terms: "Terms.",
+      smallSample: "small sample",
     },
     band: { editorPick: "Editor's pick", more: "more", sponsored: "Sponsored · 18+" },
     tabs: {
@@ -251,6 +255,7 @@ function homeMarkup(withOffer: boolean): string {
       nMoreMatches: "{n} more matches",
       sponsoredLinks: "Sponsored links · 18+",
       sponsored: "Sponsored · 18+",
+      smallSample: "small sample",
     },
     live: "Live",
     seeRecord: "See the record",
@@ -341,6 +346,8 @@ test("the no-price fallback ghost carries NO number (polish group 4)", () => {
           marketLabel: "Over 1.5",
           ratePct: 82,
           sample: "9/11",
+          smallSample: false,
+          weightedScore: 0.2,
           form: [],
           bestOdds: null,
           fallbackOdds: {
@@ -367,6 +374,7 @@ test("the no-price fallback ghost carries NO number (polish group 4)", () => {
         nMoreMatches: "{n} more matches",
         sponsoredLinks: "Sponsored links · 18+",
         sponsored: "Sponsored · 18+",
+        smallSample: "small sample",
       },
       moreHref: null,
     } as Parameters<typeof PredictionTable>[0])

@@ -27,6 +27,8 @@ export type TableStrings = {
   sponsoredLinks: string;
   /** "Sponsored · 18+" — the no-price fallback ghost's title (group 4). */
   sponsored: string;
+  /** "small sample" — n<5 rows say so and render muted (group 5). */
+  smallSample: string;
 };
 
 /* Crests render 24px (polish group 3) — the provider asset is larger than
@@ -120,14 +122,24 @@ export function PredictionTable({
               {row.marketLabel}
             </span>
             {row.ratePct !== null ? (
-              <span className="rw3-pct" style={{ justifySelf: "start" }}>
+              <span
+                className="rw3-pct"
+                style={{
+                  justifySelf: "start",
+                  /* Group 5: a rate on fewer than five matches whispers. */
+                  ...(row.smallSample ? { color: "var(--muted)", fontWeight: 500 } : {}),
+                }}
+              >
                 {row.ratePct}%
               </span>
             ) : (
               <span aria-hidden />
             )}
             {row.sample ? (
-              <span style={{ fontSize: 11, color: "var(--muted)" }}>{row.sample}</span>
+              <span style={{ fontSize: 11, color: "var(--muted)" }}>
+                {row.sample}
+                {row.smallSample ? <> · {strings.smallSample}</> : null}
+              </span>
             ) : (
               <span aria-hidden />
             )}

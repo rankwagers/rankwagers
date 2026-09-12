@@ -228,6 +228,8 @@ export type HighPotentialMarket = {
   todayCount: number;
   /** Last settled outcomes, oldest → newest, true = won. Empty when unknown. */
   form: boolean[];
+  /** Group 5: fewer than 5 settled — muted pct, never tops the rail. */
+  smallSample: boolean;
 };
 
 const loadMarketRecord = unstable_cache(
@@ -253,24 +255,56 @@ const loadMarketRecord = unstable_cache(
   { revalidate: 300 }
 );
 
+/** The whole archive's settled rate — the rail's real baseline (group 5). */
+const loadOverallRecord = unstable_cache(
+  async () => {
+    const { metrics } = await queryArchive("en", {}, { dateLimit: 21 });
+    return { hitRatePct: metrics.hitRatePct };
+  },
+  ["v3-high-potential-overall"],
+  { revalidate: 300 }
+);
+
 export async function buildHighPotentialToday(
   lists: DailyMatchLists
 ): Promise<HighPotentialMarket[]> {
-  const rows = await Promise.all(
-    ARCHIVE_MARKETS.map(async (marketKey) => {
-      const record = await loadMarketRecord(marketKey);
-      return {
-        marketKey,
-        marketLabel: marketForListKind(marketKey).label,
-        hitRatePct: record.hitRatePct,
-        won: record.won,
-        lost: record.lost,
-        todayCount: new Set((lists[marketKey] as FootyMatchRow[]).map((r) => r.matchId)).size,
-        form: record.form,
-      };
-    })
-  );
+  const [overall, rows] = await Promise.all([
+    loadOverallRecord(),
+    Promise.all(
+      ARCHIVE_MARKETS.map(async (marketKey) => {
+        const record = await loadMarketRecord(marketKey);
+        return {
+          marketKey,
+          marketLabel: marketForListKind(marketKey).label,
+          hitRatePct: record.hitRatePct,
+          won: record.won,
+          lost: record.lost,
+          todayCount: new Set((lists[marketKey] as FootyMatchRow[]).map((r) => r.matchId)).size,
+          form: record.form,
+          smallSample: record.won + record.lost > 0 && record.won + record.lost < 5,
+        };
+      })
+    ),
+  ]);
+  /*
+   * GROUP 5 — the same weighting as the table: |rate−baseline|×n/(n+5),
+   * where the baseline is the archive's OWN overall settled rate (does the
+   * market beat the book's record?) and n is the market's settled count.
+   * Small-sample markets sort behind every n≥5 market, whatever their raw
+   * pct says.
+   */
+  const baseline = overall.hitRatePct;
+  const score = (row: (typeof rows)[number]) => {
+    const n = row.won + row.lost;
+    if (row.hitRatePct === null || baseline === null || n === 0) return 0;
+    return (Math.abs(row.hitRatePct - baseline) / 100) * (n / (n + 5));
+  };
   return rows
     .filter((row) => row.hitRatePct !== null && row.won + row.lost > 0)
-    .sort((a, b) => (b.hitRatePct ?? 0) - (a.hitRatePct ?? 0));
+    .sort(
+      (a, b) =>
+        Number(a.smallSample) - Number(b.smallSample) ||
+        score(b) - score(a) ||
+        (b.hitRatePct ?? 0) - (a.hitRatePct ?? 0)
+    );
 }

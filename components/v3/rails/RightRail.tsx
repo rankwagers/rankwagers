@@ -34,6 +34,8 @@ export type RightRailStrings = {
   sponsored: string;
   continue: string;
   terms: string;
+  /** "small sample" — n<5 markets say so and render muted (group 5). */
+  smallSample: string;
 };
 
 export function RightRail({
@@ -122,12 +124,18 @@ export function RightRail({
               }}
             >
               <span style={{ fontWeight: 500 }}>{market.marketLabel}</span>
-              <span className="rw3-pct">{market.hitRatePct}%</span>
+              <span
+                className="rw3-pct"
+                style={market.smallSample ? { color: "var(--muted)", fontWeight: 500 } : undefined}
+              >
+                {market.hitRatePct}%
+              </span>
               <span style={{ fontSize: 11, color: "var(--muted)" }}>
                 {formatDict(strings.nPredictions, { n: String(market.todayCount) })} ·{" "}
                 {market.won}
                 <span style={{ color: "var(--win)" }}>W</span> {market.lost}
                 <span style={{ color: "var(--loss)" }}>L</span>
+                {market.smallSample ? <> · {strings.smallSample}</> : null}
               </span>
               <span style={{ justifySelf: "end" }}>
                 <FormDots results={market.form} />

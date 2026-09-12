@@ -191,6 +191,7 @@ export default async function LocaleHomePage({
       sponsored: p.v3Sponsored18,
       continue: p.v3Continue,
       terms: dict.footer.disclaimer,
+      smallSample: p.v3SmallSample,
     },
     band: { editorPick: p.v3EditorPick, more: p.v3More, sponsored: p.v3Sponsored18 },
     tabs: {
@@ -214,6 +215,7 @@ export default async function LocaleHomePage({
       nMoreMatches: p.v3NMoreMatches,
       sponsoredLinks: p.v3SponsoredLinks,
       sponsored: p.v3Sponsored18,
+      smallSample: p.v3SmallSample,
     },
     live: p.v3Live,
     seeRecord: p.v3SeeRecord,
