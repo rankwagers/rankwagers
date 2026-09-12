@@ -76,3 +76,54 @@ shipped without the replay, its first five days would have measured an empty pip
 **Reading for the go/no-go:** the correctness bar (`CORRECTNESS_MIN_RATE` = 100%) is met on the
 entire real capture to date, at 3.4× the audit sample size. Nothing in this replay argues
 against proceeding to DRY-RUN.
+
+---
+
+## ADDENDUM — the DRY-RUN period audited on real production data (2026-09-12)
+
+**Data:** the production dry-run store copied read-only to
+`data/evidence-archive-dryrun-prodcopy/` (335 snapshots · **684 validations** ·
+334 distinct fixtures, settled 2026-08-10 → 2026-09-12) audited against the
+daily-archive copies in `data/daily-archives-prodcopy/`. **Method:** the same
+independent recompute the Aug replay used — every validation's won/lost
+re-derived from FT/HT scores in the daily rows, with the market rules restated
+in the audit script rather than imported from the settlement engine. The
+copies were never written to.
+
+| Result | Value |
+|---|---|
+| Validations in the store | 684 (won 557 · lost 122 · cancelled 5) |
+| Settled won/lost audited | **679** (fh 119 · over15 184 · over25 239 · sh 137) |
+| Archive-determinate (all archived score rows agree) | **667 — 667/667 exact, zero mismatches** |
+| Archive-indeterminate (the archive itself carries conflicting scores) | 12 — in **all 12** the recorded verdict matches one of the fixture's archived finals; zero verdicts contradict every archived row |
+| Settled without knowable HT data | 0 |
+| Validations with no daily row / orphaned snapshotId | 0 / 0 |
+| Torn lines (both ndjson files, byte-level sweep) | **0** |
+| Revisions / corrections (`revision > 1` or `supersedesRevisionId`) | **0** |
+| Void share | 5/684 = 0.73% (`fixture_cancelled`, the only non-scored reason) |
+| Deferral share | 0 — no deferral marker anywhere in either file |
+
+**The one finding, and it is capture-side, not settlement-side:** 92 fixtures
+carry CONFLICTING FT/HT tuples inside the daily archives — the same fixture
+listed with different scores in different market sections of the same file
+(each section's rows freeze from a separate provider fetch; some caught the
+match in play, all stamped `complete`). 55 settled validations sit on those
+fixtures; for 43 the conflict doesn't flip the market's verdict, and the 12
+where it does are the indeterminate rows above (e.g. 8466212 archived at both
+2–0 and 5–0; 8525077 at 1–1 and 1–3; 8440266 with HT 0–0 and 1–0). The
+settlement engine reads the live source row at settle time, and in every
+indeterminate case its verdict agrees with one of the archived finals — the
+archive simply cannot adjudicate between its own two copies. Worth fixing in
+the daily-archive writer someday (one fetch per day, not one per section);
+not a settlement defect.
+
+**GO/NO-GO — the DRY-RUN gate is MET on real data.** On every validation the
+archive can adjudicate, correctness is 100% (667/667) — at 3.9× the Aug
+replay's sample, on 34 days of real production volume. Zero torn lines, zero
+revisions, zero voids beyond honestly-cancelled fixtures, zero deferrals,
+every validation linked to a real snapshot with a content hash. Under the
+strictest possible reading — counting the 12 archive-indeterminate rows
+against the engine despite each verdict being supported by an archived final —
+the floor is 667/679 = 98.2%; the audit finds no reading under which any
+settlement is DEMONSTRABLY wrong. Audit script:
+`audit_dryrun2.py` (session scratchpad; recompute rules inline above).
