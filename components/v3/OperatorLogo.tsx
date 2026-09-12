@@ -1,30 +1,48 @@
-/* The operator logo chip (v3 polish group 1). The real brand asset — the
-   same file the operator cards use — on a surface chip; the letter mark
-   survives only as the fallback for a brand with no asset. Mono-tint is
-   retired. 20px in rails, 24px on cards. */
+/* ============================================================================
+   THE OPERATOR WORDMARK CHIP (v3 polish 2, group 2).
+
+   One component, three sizes: rail (28px tall, ≤96px wide), card (32px,
+   ≤110px), row-button (16px, ≤56px). Wordmarks — dark and colored — sit on
+   a LIGHT chip (#f5f5f5, radius 6, 4px padding) so every brand asset reads
+   on the dark theme without tinting. The registry carries no white/mono
+   variants today; the day it does, that variant renders instead and the
+   chip can darken.
+
+   A brand with no asset renders its NAME as text in the same chip — never
+   a letter mark (probed): two letters on a chip read as a logo we do not
+   have the right to invent.
+   ========================================================================== */
+
+const SIZES = {
+  rail: { height: 28, maxWidth: 96, fontSize: 10 },
+  card: { height: 32, maxWidth: 110, fontSize: 11 },
+  row: { height: 16, maxWidth: 56, fontSize: 8 },
+} as const;
+
+export type OperatorLogoVariant = keyof typeof SIZES;
 
 export function OperatorLogo({
   logo,
-  mark,
   name,
-  size,
+  variant,
 }: {
   logo: string | null;
-  /** Letter fallback for a brand without an asset. */
-  mark: string;
   name: string;
-  size: 20 | 24;
+  variant: OperatorLogoVariant;
 }) {
+  const size = SIZES[variant];
   return (
     <span
       aria-hidden
+      title={name}
       style={{
-        width: size,
-        height: size,
-        display: "grid",
-        placeItems: "center",
-        background: "var(--surface)",
-        border: "1px solid var(--line)",
+        display: "inline-flex",
+        alignItems: "center",
+        justifyContent: "center",
+        height: size.height + 8,
+        maxWidth: size.maxWidth + 8,
+        padding: 4,
+        background: "#f5f5f5",
         borderRadius: 6,
         flex: "none",
         overflow: "hidden",
@@ -35,13 +53,26 @@ export function OperatorLogo({
         <img
           src={logo}
           alt=""
-          width={size - 4}
-          height={size - 4}
-          style={{ objectFit: "contain" }}
-          title={name}
+          style={{
+            height: size.height,
+            maxWidth: size.maxWidth,
+            width: "auto",
+            objectFit: "contain",
+            display: "block",
+          }}
         />
       ) : (
-        <span style={{ fontSize: size <= 20 ? 7 : 8, fontWeight: 600 }}>{mark}</span>
+        <span
+          style={{
+            fontSize: size.fontSize,
+            fontWeight: 600,
+            color: "#161616",
+            lineHeight: 1.1,
+            whiteSpace: "nowrap",
+          }}
+        >
+          {name}
+        </span>
       )}
     </span>
   );

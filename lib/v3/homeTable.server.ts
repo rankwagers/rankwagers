@@ -153,8 +153,10 @@ export type TableRow = {
   form: boolean[];
   bestOdds: {
     operatorSlug: string;
+    /** The operator's NAME — polish2 group 2's text fallback (never a letter mark). */
+    name: string;
     mark: string;
-    /** The real brand asset for the CTA (polish group 1); mark is the fallback. */
+    /** The real brand asset for the CTA wordmark chip. */
     logo: string | null;
     decimal: string;
     continueHref: string;
@@ -233,6 +235,7 @@ export async function bestPriceForRow(
     if (!best) return null;
     return {
       operatorSlug: best.operator.slug,
+      name: best.operator.name,
       mark: markFor(best.operator.name),
       logo: best.operator.logo ?? null,
       decimal: best.price.decimal.toFixed(2),

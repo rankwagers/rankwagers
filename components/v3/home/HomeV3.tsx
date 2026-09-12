@@ -160,7 +160,7 @@ export function HomeV3(props: {
                 key={site.slug}
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "24px minmax(0,1fr) auto",
+                  gridTemplateColumns: "auto minmax(0,1fr) auto",
                   gap: "1px 10px",
                   alignItems: "center",
                   padding: "8px 14px",
@@ -168,7 +168,7 @@ export function HomeV3(props: {
                 }}
               >
                 <span style={{ gridRow: "span 2", display: "flex" }}>
-                  <OperatorLogo logo={site.logo} mark={site.mark} name={site.name} size={20} />
+                  <OperatorLogo logo={site.logo} name={site.name} variant="rail" />
                 </span>
                 <span style={{ fontWeight: 600, fontSize: 12 }}>{site.name}</span>
                 <a

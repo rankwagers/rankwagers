@@ -197,7 +197,9 @@ function homeMarkup(withOffer: boolean): string {
     isManual: false,
     bestOdds: {
       operatorSlug: "op",
+      name: "OpBet",
       mark: "OP",
+      logo: null,
       decimal: "1.29",
       continueHref: "/go/op?ctx=x",
     },
@@ -333,6 +335,26 @@ test("the offer of the day appears exactly once per page", () => {
     0,
     "no qualifying partner → the slot is omitted, not placeholdered"
   );
+});
+
+test("operator logos: wordmark on the light chip, NAME text fallback, never a letter mark (polish2 group 2)", () => {
+  const { OperatorLogo } =
+    require("../components/v3/OperatorLogo") as typeof import("../components/v3/OperatorLogo");
+  const src = readFileSync(path.join(ROOT, "components/v3/OperatorLogo.tsx"), "utf8");
+  assert.doesNotMatch(src, /slice\(0,\s*2\)|\bmark\b\s*[:}]/, "no letter-mark branch survives");
+
+  const missing = renderToStaticMarkup(
+    React.createElement(OperatorLogo, { logo: null, name: "Melbet", variant: "rail" })
+  );
+  assert.match(missing, /Melbet/, "a missing asset renders the NAME");
+  assert.doesNotMatch(missing, />ME</, "…never a two-letter mark");
+  assert.match(missing, /#f5f5f5/, "on the light chip");
+
+  const present = renderToStaticMarkup(
+    React.createElement(OperatorLogo, { logo: "/brands/1xbet.png", name: "1xBet", variant: "row" })
+  );
+  assert.match(present, /brands\/1xbet\.png/);
+  assert.match(present, /height:16px/, "row-button variant renders 16px tall");
 });
 
 test("the no-price fallback ghost carries NO number (polish group 4)", () => {

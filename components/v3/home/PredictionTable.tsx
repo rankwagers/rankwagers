@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Icon } from "@/components/v3/Icon";
+import { OperatorLogo } from "@/components/v3/OperatorLogo";
 import { RW3_MARKET_ICON_BY_LIST_KIND } from "@/lib/v3/icons";
 import { FormDots } from "@/components/v3/motion";
 import { fixturePath } from "@/lib/fixtures/paths";
@@ -165,19 +166,8 @@ export function PredictionTable({
                 className="rw3-ghost"
                 style={{ display: "inline-flex", alignItems: "center", gap: 5 }}
               >
-                {/* The real brand asset, mark only as fallback (group 1). */}
-                {row.bestOdds.logo ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={row.bestOdds.logo}
-                    alt=""
-                    width={14}
-                    height={14}
-                    style={{ objectFit: "contain", borderRadius: 3 }}
-                  />
-                ) : (
-                  row.bestOdds.mark
-                )}{" "}
+                {/* Polish2 group 2: the row-button wordmark chip. */}
+                <OperatorLogo logo={row.bestOdds.logo} name={row.bestOdds.name} variant="row" />{" "}
                 {row.bestOdds.decimal} <Icon name="arrow" size={12} />
               </a>
             ) : row.fallbackOdds ? (
@@ -190,18 +180,11 @@ export function PredictionTable({
                 title={strings.sponsored}
                 style={{ display: "inline-flex", alignItems: "center", gap: 5 }}
               >
-                {row.fallbackOdds.logo ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={row.fallbackOdds.logo}
-                    alt=""
-                    width={14}
-                    height={14}
-                    style={{ objectFit: "contain", borderRadius: 3 }}
-                  />
-                ) : (
-                  row.fallbackOdds.mark
-                )}{" "}
+                <OperatorLogo
+                  logo={row.fallbackOdds.logo}
+                  name={row.fallbackOdds.name}
+                  variant="row"
+                />{" "}
                 {row.fallbackOdds.name} <Icon name="arrow" size={12} />
               </a>
             ) : null}

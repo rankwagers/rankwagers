@@ -209,7 +209,7 @@ export function OfferOfTheDayCard({
         <SponsoredLabel text={strings.sponsored} size={11} />
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <OperatorLogo logo={offer.logo} mark={offer.mark} name={offer.name} size={24} />
+        <OperatorLogo logo={offer.logo} name={offer.name} variant="card" />
         <div style={{ display: "flex", flexDirection: "column", minWidth: 0 }}>
           <span style={{ fontWeight: 600 }}>{offer.name}</span>
           <span style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.35 }}>

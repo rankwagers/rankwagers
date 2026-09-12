@@ -74,12 +74,7 @@ export default function OperatorsIndexPage({
                 borderBottom: "1px solid var(--line)",
               }}
             >
-              <OperatorLogo
-                logo={operator.logo ?? null}
-                mark={operator.name.slice(0, 2).toUpperCase()}
-                name={operator.name}
-                size={24}
-              />
+              <OperatorLogo logo={operator.logo ?? null} name={operator.name} variant="card" />
               <span style={{ minWidth: 0, display: "flex", flexDirection: "column" }}>
                 <span style={{ fontWeight: 600, fontSize: 13 }}>{operator.name}</span>
                 <span className="rw3-meta">

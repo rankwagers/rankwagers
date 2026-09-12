@@ -123,7 +123,7 @@ export function LeftRail({
               key={site.slug}
               style={{
                 display: "grid",
-                gridTemplateColumns: "20px minmax(0,1fr) auto",
+                gridTemplateColumns: "auto minmax(0,1fr) auto",
                 gap: "2px 10px",
                 alignItems: "center",
                 padding: "9px 16px",
@@ -131,7 +131,7 @@ export function LeftRail({
               }}
             >
               <span style={{ gridRow: "span 2", display: "flex" }}>
-                <OperatorLogo logo={site.logo} mark={site.mark} name={site.name} size={20} />
+                <OperatorLogo logo={site.logo} name={site.name} variant="rail" />
               </span>
               <span
                 style={{

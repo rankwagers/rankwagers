@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Icon } from "@/components/v3/Icon";
+import { OperatorLogo } from "@/components/v3/OperatorLogo";
 import { RW3_MARKET_ICON_BY_LIST_KIND } from "@/lib/v3/icons";
 import { railTintStyle } from "@/components/homepage/hero/leagueTint";
 import { fixturePath } from "@/lib/fixtures/paths";
@@ -213,19 +214,8 @@ export function EditorBand({
                     gap: 5,
                   }}
                 >
-                  {/* The real brand asset, mark only as fallback (group 1). */}
-                  {pick.bestOdds.logo ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={pick.bestOdds.logo}
-                      alt=""
-                      width={14}
-                      height={14}
-                      style={{ objectFit: "contain", borderRadius: 3 }}
-                    />
-                  ) : (
-                    pick.bestOdds.mark
-                  )}{" "}
+                  {/* Polish2 group 2: the row-button wordmark chip. */}
+                  <OperatorLogo logo={pick.bestOdds.logo} name={pick.bestOdds.name} variant="row" />{" "}
                   {pick.bestOdds.decimal} <Icon name="arrow" size={10} />
                 </a>
               ) : pick.fallbackOdds ? (
@@ -243,18 +233,11 @@ export function EditorBand({
                     gap: 5,
                   }}
                 >
-                  {pick.fallbackOdds.logo ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={pick.fallbackOdds.logo}
-                      alt=""
-                      width={14}
-                      height={14}
-                      style={{ objectFit: "contain", borderRadius: 3 }}
-                    />
-                  ) : (
-                    pick.fallbackOdds.mark
-                  )}{" "}
+                  <OperatorLogo
+                    logo={pick.fallbackOdds.logo}
+                    name={pick.fallbackOdds.name}
+                    variant="row"
+                  />{" "}
                   {pick.fallbackOdds.name} <Icon name="arrow" size={10} />
                 </a>
               ) : null}

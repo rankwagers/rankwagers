@@ -6,6 +6,7 @@ import {
 } from "@/lib/fixtures/signalPresentation";
 import { FixtureSignalsExplainer } from "./FixtureSignalsExplainer";
 import { Icon } from "@/components/v3/Icon";
+import { OperatorLogo } from "@/components/v3/OperatorLogo";
 import { PricePanel } from "@/components/odds/PricePanel";
 import type { PricePanelData } from "@/lib/operators/pricePanel.server";
 import { PRICE_PANEL_MARKET_BY_SIGNAL } from "@/lib/operators/pricePanel.server";
@@ -87,18 +88,7 @@ export function FixtureSignalLevels({
                   gap: 6,
                 }}
               >
-                {fallback.logo ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={fallback.logo}
-                    alt=""
-                    width={14}
-                    height={14}
-                    style={{ objectFit: "contain", borderRadius: 3 }}
-                  />
-                ) : (
-                  fallback.mark
-                )}{" "}
+                <OperatorLogo logo={fallback.logo} name={fallback.name} variant="row" />{" "}
                 {fallback.name} <Icon name="arrow" size={11} />
               </a>{" "}
               <span className="rw3-meta">{fallback.sponsoredTitle}</span>

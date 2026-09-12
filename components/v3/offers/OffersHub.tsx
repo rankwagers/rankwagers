@@ -66,7 +66,7 @@ export function OfferCard({
       }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <OperatorLogo logo={card.logo} mark={card.mark} name={card.name} size={24} />
+        <OperatorLogo logo={card.logo} name={card.name} variant="card" />
         <Link href={card.operatorHref} style={{ fontWeight: 600 }}>
           {card.name}
         </Link>
