@@ -266,6 +266,7 @@ function homeMarkup(withOffer: boolean): string {
       sponsoredLinks: "Sponsored links · 18+",
       sponsored: "Sponsored · 18+",
       smallSample: "small sample",
+      noSample: "no sample",
       marketLabels: { fh: "1H Over 0.5", over15: "Over 1.5", over25: "Over 2.5", sh: "2H Over 0.5" },
     },
     live: "Live",
@@ -337,6 +338,62 @@ test("the offer of the day appears exactly once per page", () => {
   );
 });
 
+test("a market with no measured rate says 'no sample' — the pill never implies a rate (polish2 group 4)", () => {
+  const { PredictionTable } =
+    require("../components/v3/home/PredictionTable") as typeof import("../components/v3/home/PredictionTable");
+  const markup = renderToStaticMarkup(
+    React.createElement(PredictionTable, {
+      rows: [
+        {
+          matchId: 9,
+          kickoffTime: 0,
+          timeLabel: "20:00",
+          home: "Gamma",
+          away: "Delta",
+          homeImage: null,
+          awayImage: null,
+          league: "Test League",
+          countryCode: null,
+          marketKind: "sh",
+          marketLabel: "2H Over 0.5",
+          ratePct: null,
+          sample: null,
+          smallSample: false,
+          weightedScore: 0,
+          form: [],
+          bestOdds: null,
+          fallbackOdds: null,
+          isLive: false,
+        },
+      ],
+      totalRows: 1,
+      locale: "en",
+      strings: {
+        colTime: "Time",
+        colMatch: "Match",
+        colLeague: "League",
+        colMarket: "Market",
+        colRate: "Rate",
+        colSample: "Sample",
+        colForm: "Form",
+        colBestOdds: "Best odds",
+        nMoreMatches: "{n} more matches",
+        sponsoredLinks: "Sponsored links · 18+",
+        sponsored: "Sponsored · 18+",
+        smallSample: "small sample",
+        noSample: "no sample",
+        marketLabels: { fh: "1H Over 0.5", over15: "Over 1.5", over25: "Over 2.5", sh: "2H Over 0.5" },
+      },
+      moreHref: null,
+    } as Parameters<typeof PredictionTable>[0])
+  );
+  assert.match(markup, />no sample</, "the absence is said in words");
+  assert.doesNotMatch(markup, /rw3-pct/, "no rate chip renders for a rate that is not there");
+  // The pill itself stays (the market list membership is a real fact) but muted.
+  const pill = markup.slice(markup.indexOf('class="rw3-pill"'), markup.indexOf("</span>", markup.indexOf('class="rw3-pill"')));
+  assert.match(pill, /color:var\(--muted\)/, "the no-rate pill whispers");
+});
+
 test("operator logos: wordmark on the light chip, NAME text fallback, never a letter mark (polish2 group 2)", () => {
   const { OperatorLogo } =
     require("../components/v3/OperatorLogo") as typeof import("../components/v3/OperatorLogo");
@@ -406,6 +463,7 @@ test("the no-price fallback ghost carries NO number (polish group 4)", () => {
         sponsoredLinks: "Sponsored links · 18+",
         sponsored: "Sponsored · 18+",
         smallSample: "small sample",
+        noSample: "no sample",
         marketLabels: { fh: "1H Over 0.5", over15: "Over 1.5", over25: "Over 2.5", sh: "2H Over 0.5" },
       },
       moreHref: null,

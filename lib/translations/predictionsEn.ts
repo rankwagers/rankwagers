@@ -976,6 +976,7 @@ export const predictionsEn = {
   v3To: "To",
   /* V3 polish 1 — group 5 (reliability weighting) + group 8 (market short labels). */
   v3SmallSample: "small sample",
+  v3NoSample: "no sample",
   v3StrongestSignals: "Strongest signals",
   v3MktOver15: "Over 1.5",
   v3MktOver25: "Over 2.5",

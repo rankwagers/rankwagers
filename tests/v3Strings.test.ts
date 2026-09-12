@@ -19,11 +19,10 @@ import { predictionsByLocale } from "../lib/translations/predictionsLocales";
 
 const V3_KEYS = Object.keys(predictionsEn).filter((k) => /^v3[A-Z]/.test(k));
 
-test("the v3 family is exactly 76 keys", () => {
+test("the v3 family is exactly 77 keys", () => {
   // 55 born with the shell (block B) + 4 with block D + 6 with block H +
-  // 11 with polish 1 (small-sample, Strongest signals, and the nine
-  // market short labels of group 8).
-  assert.equal(V3_KEYS.length, 76, "the family changed size — re-derive this pin deliberately");
+  // 11 with polish 1 + 1 with polish 2 (the no-sample note).
+  assert.equal(V3_KEYS.length, 77, "the family changed size — re-derive this pin deliberately");
 });
 
 test("all 30 locales resolve every v3 key non-empty", () => {

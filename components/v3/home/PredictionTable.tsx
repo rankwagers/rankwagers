@@ -30,6 +30,8 @@ export type TableStrings = {
   sponsored: string;
   /** "small sample" — n<5 rows say so and render muted (group 5). */
   smallSample: string;
+  /** "no sample" — a market with no measured rate says so (polish2 group 4). */
+  noSample: string;
   /** Group 8: dictionary short labels drive the market pill. */
   marketLabels: Record<TableRow["marketKind"], string>;
 };
@@ -118,7 +120,18 @@ export function PredictionTable({
           </span>
 
           <span className="rw3-c-meta">
-            <span className="rw3-pill" style={{ justifySelf: "start" }}>
+            {/* POLISH2 GROUP 4 — a pill must never imply a rate that is not
+                there. The market tag itself is an honest fact (the fixture
+                sits on this market's qualified list), so it stays — but a
+                row with NO measured venue rate wears the pill muted and the
+                sample cell says "no sample" in words. */}
+            <span
+              className="rw3-pill"
+              style={{
+                justifySelf: "start",
+                ...(row.ratePct === null ? { color: "var(--muted)" } : {}),
+              }}
+            >
               <span style={{ color: "var(--muted)", display: "inline-flex" }}>
                 <Icon name={RW3_MARKET_ICON_BY_LIST_KIND[row.marketKind]} size={20} strokePx={1.75} />
               </span>
@@ -144,7 +157,7 @@ export function PredictionTable({
                 {row.smallSample ? <> · {strings.smallSample}</> : null}
               </span>
             ) : (
-              <span aria-hidden />
+              <span style={{ fontSize: 11, color: "var(--muted)" }}>{strings.noSample}</span>
             )}
             <span style={{ display: "flex", gap: 3 }}>
               <FormDots

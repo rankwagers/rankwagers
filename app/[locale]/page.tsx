@@ -210,6 +210,7 @@ export default async function LocaleHomePage({
       sponsoredLinks: p.v3SponsoredLinks,
       sponsored: p.v3Sponsored18,
       smallSample: p.v3SmallSample,
+      noSample: p.v3NoSample,
     },
     live: p.v3Live,
     seeRecord: p.v3SeeRecord,
