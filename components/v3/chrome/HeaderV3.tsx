@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { Locale } from "@/lib/i18n";
-import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { LocaleSwitcherV3 } from "@/components/v3/chrome/LocaleSwitcherV3";
 import { Icon } from "@/components/v3/Icon";
 
 /* The v3 header (Bible V3, shell): logo · four destinations · search · locale
@@ -120,7 +120,7 @@ export function HeaderV3({ locale, strings }: { locale: Locale; strings: HeaderV
             {strings.search}
           </Link>
           <span className="rw3-locale-switcher" style={{ display: "flex" }}>
-            <LanguageSwitcher current={locale} />
+            <LocaleSwitcherV3 current={locale} />
           </span>
           <span
             style={{
